@@ -1,0 +1,9 @@
+id: beat:setup-bracken-breathes
+summary: Ebb bell tolls; the Bracken-Channel Wards cough up silted stairs and eel-slick alleys
+  as the Tidal Mother Map re-inks itself under Marin’s hand.
+beat_class: structural
+purpose: setup
+entities:
+- location:bracken-channel-wards
+- object:tidal-mother-map
+- character:marin-vale

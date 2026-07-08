@@ -1,0 +1,31 @@
+id: passage:p-bracken-threshold
+summary: At the Ebb bell the Bracken-Channel Wards heave up eel-slick stairs and alley stitches
+  as Marin palms her mother’s salt-scored Tidal Mother Map, which inks a hairline night-street
+  toward the Ledger vault. Auditors stir as the old name tugs her wrist; barges nose for the
+  newborn cut, a sigil-bowl waits at the submerged threshold, and her sounding says the route
+  will hold only for tight, quiet steps.
+entities:
+- location:bracken-channel-wards
+- object:tidal-mother-map
+- character:marin-vale
+- faction:ledger-of-depths
+beats:
+- beat:hard-pre-map-opens-vault
+- beat:hard-pre-threshold-bowl
+- beat:hard-pre-watchers-stir
+- beat:setup-bracken-breathes
+- beat:setup-ledger-murmur
+- beat:soft-pre-sounding
+- beat:soft-pre-traffic-risk
+- beat:soft-pre-whisper-street
+choices:
+- label: Unfurl the map under the Ledger's lamps and claim a curfew writ
+  grants:
+  - flag:map-flagged-for-audit
+  - flag:writ-curfew
+  to: passage:p-writ-imposed
+- label: Hide the map and lead my neighbors through the newborn cut
+  grants:
+  - flag:quiet-trust-network
+  - flag:solo-risk-escalates
+  to: passage:p-secret-walk

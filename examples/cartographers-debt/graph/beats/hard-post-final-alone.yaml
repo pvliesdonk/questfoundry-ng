@@ -1,0 +1,14 @@
+id: beat:hard-post-final-alone
+summary: She keeps her autonomy and a small, stubborn lantern, guiding who she can by memory
+  as the sanctioned night-streets fade from her reach.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: advances
+entities:
+- character:marin-vale
+- location:bracken-channel-wards
+- object:tidal-mother-map
+is_ending: true
+belongs_to:
+- path:sever-bond

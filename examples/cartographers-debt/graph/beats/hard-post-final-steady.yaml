@@ -1,0 +1,15 @@
+id: beat:hard-post-final-steady
+summary: Before dawn she walks the sealed night-street with authority and ache, the map obedient
+  at her touch as her future salts down to pay the wards’ safety.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: advances
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+- object:tidal-mother-map
+is_ending: true
+belongs_to:
+- path:assume-debt

@@ -1,0 +1,25 @@
+id: passage:p-curfew-lamplight
+summary: Audit-lanterns hiss along damp stilts; the curfew writ prickles at her wrists as
+  sanctioned ink scents the air like compliance at her neck. At the threshold, inheritance
+  and duty press close and wait for her hand.
+entities:
+- Marin
+- flag:writ-curfew
+- audit-lanterns
+- brine
+- ink
+irrelevant_flags:
+- flag:map-flagged-for-audit
+beats:
+- beat:residue-amnesty-lamplight
+choices:
+- label: Press my thumb to the bowl and take the name
+  grants:
+  - flag:ledgers-stewardship
+  - flag:life-tithe-sigil
+  to: passage:p-steward-tithe
+- label: Tip the sigil-bowl and drown the mark
+  grants:
+  - flag:map-unmoored
+  - flag:ward-exposed
+  to: passage:p-unmoored-lantern

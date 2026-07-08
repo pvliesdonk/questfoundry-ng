@@ -1,0 +1,13 @@
+id: beat:soft-post-rumor-wakes
+summary: By cockle dawn a Ledger runner trades rumors of an unlicensed wayfinder; watchers
+  start cross-checking margins and lamp patterns.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: complicates
+entities:
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+- character:marin-vale
+belongs_to:
+- path:walk-in-secret

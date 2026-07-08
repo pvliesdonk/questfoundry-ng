@@ -1,0 +1,58 @@
+flags:
+- id: flag:ledgers-stewardship
+  description: faction:ledger-of-depths recognizes character:marin-vale as a bonded steward
+    of the one-night streets and assigns auditors to her routes.
+  source: dilemma
+  path: path:assume-debt
+  derived_from:
+  - consequence:ledgers-stewardship
+- id: flag:life-tithe-sigil
+  description: a life-tithe sigil measures down character:marin-vale's brine-years with each
+    curfew she directs, while object:tidal-mother-map's obedience is secured under countersigns.
+  source: dilemma
+  path: path:assume-debt
+  derived_from:
+  - consequence:life-tithe-sigil
+- id: flag:map-flagged-for-audit
+  description: object:tidal-mother-map is flagged for audit and may be requisitioned at dawn,
+    placing character:marin-vale under continuing scrutiny.
+  source: dilemma
+  path: path:seek-amnesty
+  derived_from:
+  - consequence:map-flagged-for-audit
+- id: flag:map-unmoored
+  description: object:tidal-mother-map severs from faction:ledger-of-depths and begins redrawing
+    by a private, unruly logic that resists prediction.
+  source: dilemma
+  path: path:sever-bond
+  derived_from:
+  - consequence:map-unmoored
+- id: flag:quiet-trust-network
+  description: neighbors in location:bracken-channel-wards quietly rely on lantern-guidance
+    and unmarked margins, building trust networks around character:marin-vale's anonymous
+    stewardship.
+  source: dilemma
+  path: path:walk-in-secret
+  derived_from:
+  - consequence:quiet-trust-network
+- id: flag:solo-risk-escalates
+  description: without writs, near-misses and injuries mount in the dark, and faction:ledger-of-depths
+    informants start tracing rumors of an unlicensed wayfinder.
+  source: dilemma
+  path: path:walk-in-secret
+  derived_from:
+  - consequence:solo-risk-escalates
+- id: flag:ward-exposed
+  description: location:bracken-channel-wards faces unguided night-streets and rising mishaps
+    as faction:ledger-of-depths withdraws protections and posts watchers.
+  source: dilemma
+  path: path:sever-bond
+  derived_from:
+  - consequence:ward-exposed
+- id: flag:writ-curfew
+  description: faction:ledger-of-depths issues emergency writs that impose curfews and escorts
+    along the fresh one-night street, sharply reducing immediate peril in location:bracken-channel-wards.
+  source: dilemma
+  path: path:seek-amnesty
+  derived_from:
+  - consequence:writ-curfew

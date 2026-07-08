@@ -303,6 +303,11 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   the utility model misread). Budget across all four attempts: 40
   calls, gpt-5 46k in / 83k out, utility pennies — **~$0.90 total**;
   repair rounds: finalize 3 attempts, everything else first-shot.
+  The project is preserved as `examples/cartographers-debt/` (like
+  the Winding House, PR #14): project/vision/voice, graph, prose —
+  snapshots, ledger, cache, and exports excluded. Structurally it is
+  the fork-rejoin story: both residue beats splice before both hard
+  commits, the topology the fix exists for.
 
 - **2026-07-08 (review contract legibility):** Fourth live-run lesson,
   extending the first run's reviewer-discipline fix: the utility

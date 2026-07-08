@@ -1,0 +1,18 @@
+id: object:tidal-mother-map
+name: The Tidal Mother Map
+concept: A salt-scarred vellum chart that redraws at every ebb, revealing one-night streets
+  that exist only until the next flood.
+base:
+  material: Vellum with waterlines and brined-black compass rose.
+  voice: Whispers directions at low tide in a tone like wetted paper.
+  temperament: Cryptic, insistent, oddly protective.
+  constraint: Obeys the tide cycle; cannot reveal more than one night's web.
+  mark: A drowned-woman’s sigil pressed faintly in the margin.
+  ink: At ebb the brined-black ink beads, then sinks into the vellum in thin, living lines.
+  vellum-seam: A faint spine-line runs the length of the chart, taking stitch and salt like
+    a healed wound.
+  folding_alignment: When folded, the vellum’s faint spine-line rests over the drowned-woman’s
+    sigil as if closing an eye.
+  spine_stitch: Waxed gut that goes tacky with salt in damp.
+  salt_scent: When it wakes at ebb, the vellum carries a steady kelp-and-rope scent that lingers
+    on her hands.

@@ -1,0 +1,9 @@
+name: The Cartographer's Debt
+stage: fill
+llm:
+  provider: openai
+  models:
+    architect: gpt-5
+    writer: gpt-5
+    utility: gpt-4.1-mini
+ifid: C9A502CE-8288-486C-A20C-EC31944DF1B7

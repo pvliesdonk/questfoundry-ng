@@ -1,0 +1,21 @@
+id: passage:p-unmoored-lantern
+summary: She drowns the glowing mark and rips the countersign free; the Tidal Mother Map shivers
+  into its own tidal logic, shedding Ledger rule. Protections thin across the Wards as watchers
+  tighten posts, and she keeps her small lantern and stubborn memory to guide who she can.
+entities:
+- character:marin-vale
+- object:tidal-mother-map
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+ending:
+  id: e-unmoored-lantern
+  title: Lantern Against the Tide
+irrelevant_flags:
+- flag:map-flagged-for-audit
+- flag:quiet-trust-network
+- flag:writ-curfew
+beats:
+- beat:hard-commit-sever-drown
+- beat:hard-post-final-alone
+- beat:hard-post-map-unruly
+- beat:hard-post-wards-unguarded

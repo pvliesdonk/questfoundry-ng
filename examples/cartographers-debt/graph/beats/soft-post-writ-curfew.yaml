@@ -1,0 +1,14 @@
+id: beat:soft-post-writ-curfew
+summary: Clerks and debt-spirits swing chains and lanterns to impose a curfew and escorts
+  along the newborn street, turning families and barges by her countersigned margins.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: advances
+entities:
+- faction:ledger-of-depths
+- character:marin-vale
+- location:bracken-channel-wards
+- object:tidal-mother-map
+belongs_to:
+- path:seek-amnesty

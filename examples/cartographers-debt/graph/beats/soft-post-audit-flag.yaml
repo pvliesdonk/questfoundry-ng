@@ -1,0 +1,13 @@
+id: beat:soft-post-audit-flag
+summary: A clerk needles a red fiber into the map’s seam, flagging it for dawn audit and possible
+  requisition; Marin feels eyes tracking her routes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: complicates
+entities:
+- faction:ledger-of-depths
+- object:tidal-mother-map
+- character:marin-vale
+belongs_to:
+- path:seek-amnesty

@@ -1,0 +1,15 @@
+id: beat:soft-pre-sounding
+summary: She drops a lead-line and tests the silt edge; the route will hold for hours if walked
+  tight and quiet, but a stumble would take a life.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: advances
+entities:
+- character:marin-vale
+- object:tidal-mother-map
+- location:bracken-channel-wards
+flexibility: Soundings can share space with any Ledger counting-shack scene by the waterline.
+belongs_to:
+- path:seek-amnesty
+- path:walk-in-secret

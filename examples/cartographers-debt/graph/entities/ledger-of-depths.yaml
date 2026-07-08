@@ -1,0 +1,13 @@
+id: faction:ledger-of-depths
+name: The Ledger of Depths
+concept: A semi-official tangle of aqueous debt-spirits and mortal clerks who reckon canal-oaths
+  and collect what is owed in life-tithes and routes.
+base:
+  influence: Permits, tolls, funerary rights, and night-curfews through the wards.
+  face: Bailiff Greve—damp, exacting, unfailingly polite.
+  motive: Balance ledgers so the canals ‘flow true’.
+  rumor: They can only collect along marked paths and named crossings.
+  jurisdiction: Expands quietly wherever maps bear their countersign.
+  lamps: Their brine-lamps burn a steady salt-blue flame that holds against the channel wind.
+  brine-stamp: Their seals are kept in shallow bowls of pickled salt and hiss like surf when
+    pressed to vellum.

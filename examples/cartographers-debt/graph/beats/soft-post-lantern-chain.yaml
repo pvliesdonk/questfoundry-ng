@@ -1,0 +1,13 @@
+id: beat:soft-post-lantern-chain
+summary: They move single-file on her whispered counts, skirts brushing kelp ropes; two near-slips
+  are caught by her palm and a chalked symbol on a piling.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: advances
+entities:
+- character:marin-vale
+- location:bracken-channel-wards
+- object:tidal-mother-map
+belongs_to:
+- path:walk-in-secret

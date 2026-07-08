@@ -1,0 +1,10 @@
+id: path:assume-debt
+name: Bind the Ledger
+explores: answer:assume-debt
+consequences:
+- id: consequence:ledgers-stewardship
+  text: faction:ledger-of-depths recognizes character:marin-vale as a bonded steward of the
+    one-night streets and assigns auditors to her routes.
+- id: consequence:life-tithe-sigil
+  text: a life-tithe sigil measures down character:marin-vale's brine-years with each curfew
+    she directs, while object:tidal-mother-map's obedience is secured under countersigns.

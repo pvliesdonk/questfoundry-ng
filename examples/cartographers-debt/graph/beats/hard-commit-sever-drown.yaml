@@ -1,0 +1,16 @@
+id: beat:hard-commit-sever-drown
+summary: She tips the sigil-bowl into the canal, drowns the glowing mark, and declares the
+  claim denied as she tears the countersign ribbon from the map.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: commits
+entities:
+- character:marin-vale
+- object:tidal-mother-map
+- faction:ledger-of-depths
+temporal_hints:
+- dilemma: dilemma:expose-or-solo
+  position: after_commit
+belongs_to:
+- path:sever-bond

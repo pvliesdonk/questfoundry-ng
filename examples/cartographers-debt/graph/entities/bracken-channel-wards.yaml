@@ -1,0 +1,9 @@
+id: location:bracken-channel-wards
+name: The Bracken-Channel Wards
+concept: A dense lattice of lock-steps, stilt-houses, and silt lanes where low tide reveals
+  furtive streets and high tide swallows the unwary.
+base:
+  atmosphere: Kelp-smell, bell-buoys, glimmering pitch on pilings.
+  hazards: Sink-silt pockets, sudden surges, blind corners on bridge-backs.
+  populace: Watermen, rope-workers, widows, mudlarks, and runners.
+  soundscape: Whispering slats, chain creak, distant oar-chop.

@@ -1,0 +1,8 @@
+id: intersection:sounding-at-threshold
+location: location:bracken-channel-wards
+rationale: Marin’s lead-line soundings along the silted edge occur right where the submerged
+  sigil-bowl marks the vault threshold, with the map and Ledger presence binding the waterline
+  scene.
+members:
+- beat:hard-pre-threshold-bowl
+- beat:soft-pre-sounding

@@ -1,0 +1,22 @@
+id: dilemma:expose-or-solo
+question: When the map whispers of a fresh night-street that will shear away by dawn, does
+  Marin involve the Ledger for an official curfew and escort, or keep the map secret and personally
+  guide those at risk along the vanishing route?
+why_it_matters: Calling the Ledger may secure temporary writs and wider safety but invites
+  scrutiny and possible confiscation of the map; going alone preserves autonomy and community
+  trust yet heightens personal danger and the chance of costly misreadings.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:seek-amnesty
+  text: She presents the map for an emergency writ, letting the Ledger close and reroute the
+    night traffic under their countersign.
+- id: answer:walk-in-secret
+  text: She keeps the map hidden and shepherds people through the short-lived street by lantern
+    and margin-notes.
+anchored_to:
+- character:marin-vale
+- object:tidal-mother-map
+- faction:ledger-of-depths
+- location:bracken-channel-wards

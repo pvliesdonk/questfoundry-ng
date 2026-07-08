@@ -1,0 +1,14 @@
+id: beat:residue-amnesty-lamplight
+created_by: polish
+summary: Audit-lanterns hiss in the damp as curfew writs prickle at Marin’s wrists; ink-stained
+  brine smells like compliance breathing down her neck.
+beat_class: structural
+purpose: residue
+entities:
+- Marin
+- flag:writ-curfew
+- audit-lanterns
+- brine
+- ink
+requires_flags:
+- flag:writ-curfew

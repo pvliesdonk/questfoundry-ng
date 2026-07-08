@@ -1,0 +1,19 @@
+id: passage:p-writ-imposed
+summary: She steps into a counting-shack and unfurls the map beneath brine-lamps, drawing
+  an emergency countersign and a writ to shutter and reroute the newborn street. Chains and
+  lanterns enforce her margins while a clerk threads a red audit fiber through the seam, and
+  she feels eyes begin to track her way.
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- object:tidal-mother-map
+- location:bracken-channel-wards
+beats:
+- beat:soft-commit-seek-amnesty-writ
+- beat:soft-post-audit-flag
+- beat:soft-post-writ-curfew
+choices:
+- label: Walk the sanctioned night-street by my countersigned margins
+  requires:
+  - flag:writ-curfew
+  to: passage:p-curfew-lamplight

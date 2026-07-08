@@ -1,0 +1,16 @@
+id: character:marin-vale
+name: Marin Vale
+concept: Canal-city scrivener who inherits a tidal map that redraws itself each low tide,
+  torn between her mother's legacy and her own careful way of walking the night.
+base:
+  appearance: Ink-stained fingers, salt-streaked hair, riverlight pallor.
+  manner: Measured and wry; listens before stepping.
+  tools: Bone pen, flood-lantern with shutter, oilskin folio.
+  skills: Copyist's precision, code-sense for marginalia, local tidecraft.
+  drive: Protect neighbors without being consumed by her mother’s debts.
+  flaw: Distrustful of institutions; slow to ask for help.
+  counting_habit: She measures risky crossings in breath-threes, whispering the last number
+    to ground the line.
+  habit_count_steps: Counts under her breath to steady herself and keep others moving.
+  lantern_shutter: Her flood-lantern’s brass shutter sticks on the third notch when the salt
+    swells it; she sets it with a single thumb tap.

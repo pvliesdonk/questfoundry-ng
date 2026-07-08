@@ -1,0 +1,14 @@
+id: beat:hard-post-life-tithe
+summary: A life-tithe sigil rises like frost on her wrist, and with each curfew she directs
+  a brine-year sloughs away into the ward’s safekeeping.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: complicates
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+- object:tidal-mother-map
+belongs_to:
+- path:assume-debt

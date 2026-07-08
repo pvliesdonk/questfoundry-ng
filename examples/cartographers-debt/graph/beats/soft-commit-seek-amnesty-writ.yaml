@@ -1,0 +1,18 @@
+id: beat:soft-commit-seek-amnesty-writ
+summary: Marin strides into a waterside counting-shack and unfurls the map; a brine-stamp
+  hisses as the Ledger issues an emergency countersign and writ to close and reroute traffic.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: commits
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- object:tidal-mother-map
+- location:bracken-channel-wards
+temporal_hints:
+- dilemma: dilemma:inheritance-ledger
+  position: before_commit
+flexibility: Could co-occur with auditors mustering in the same district.
+belongs_to:
+- path:seek-amnesty

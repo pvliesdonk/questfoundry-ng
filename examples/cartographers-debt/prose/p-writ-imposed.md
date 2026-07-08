@@ -1,0 +1,9 @@
+I shoulder through the counting-shack door and salt air follows me in. Brine-lamps burn the steady blue the canals trust. I unbutton the oilskin, spread the vellum on a scarred plank. The ink beads, listens, sinks. Keep left, the map rasps. One file. Do not call.
+
+A clerk with tide on his cuffs leans close. “Show the cut.” I mark the margins with my bone pen. The brine-stamp comes down and hisses, wet as surf. Countersign bites. A writ unfurls from a rack, salt-stiff ribbon crimped with copper teeth. “Emergency curfew,” he says. “Close and reroute by your line.” He slips the writ to my hand like it is warm.
+
+The door yawns and the Ledger spills into the lane. Chains unspool, lanterns swing. Debt-spirits wick from the dark like cool smoke, polite and relentless. They string blue fire along the stilt-rows and set bells at either mouth. Families that had started down the newborn seam are turned without fuss. A mother cradles a boy’s head as she backs away from the cut. Barges mouth the curb then ease off, oars backing water, their poles kept low by my countersigned margins. “Escort here,” a clerk calls, and the lanterns answer him. The short street holds itself like a blade between the stilts, white and thin, and my marks fix its edges in the night.
+
+Inside, a younger clerk takes needle and a length of red fiber from a tin. “For dawn,” he says, voice careful. He finds the faint seam down the vellum’s spine and stitches the warning through. The thread wicks brine and stays. I feel the room go still. Eyes settle, then follow, like gulls learning a hand. Doorways catch auditors the way tide catches scum. I keep my palm on the map. It lifts once, a breath against me. Walk tight. Quiet.
+
+Blue lamps mark the turn. Chains ring soft in the wind. I step back into the salt and start the sanctioned night-street by my countersigned margins.

@@ -1,0 +1,10 @@
+id: beat:setup-ledger-murmur
+summary: Ledger of Depths clerks ferry brine-lamps between stilts, murmuring over oaths; Marin
+  tucks her mother’s salt-scarred map into oilcloth and keeps to shadowed lock-steps.
+beat_class: structural
+purpose: setup
+entities:
+- faction:ledger-of-depths
+- object:tidal-mother-map
+- character:marin-vale
+- location:bracken-channel-wards

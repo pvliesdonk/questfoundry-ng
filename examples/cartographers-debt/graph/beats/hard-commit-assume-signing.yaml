@@ -1,0 +1,16 @@
+id: beat:hard-commit-assume-signing
+summary: Marin presses her brine-wet thumb to the sigil-bowl and signs the water-ledger in
+  her mother’s name and her own; countersigns snap the Tidal Mother Map to heel.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: commits
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- object:tidal-mother-map
+temporal_hints:
+- dilemma: dilemma:expose-or-solo
+  position: after_commit
+belongs_to:
+- path:assume-debt

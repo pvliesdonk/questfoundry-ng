@@ -81,7 +81,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ~/.local/share/uv/python
-          key: uv-python-3.12-{% raw %}${{ runner.os }}{% endraw %}
+          key: uv-python-3.12-${{ runner.os }}
 
       - name: Set up Python
         run: uv python install 3.12
@@ -101,7 +101,7 @@ jobs:
           plugins: 'code-review@claude-code-plugins'
           # `--comment` tells the plugin to actually post (without it, the plugin
           # runs the full review and stops silently — burning ~$3/PR for no output).
-          prompt: '/code-review:code-review --comment {% raw %}${{ github.repository }}{% endraw %}/pull/{% raw %}${{ github.event.pull_request.number }}{% endraw %}'
+          prompt: '/code-review:code-review --comment ${{ github.repository }}/pull/{% raw %}${{ github.event.pull_request.number }}{% endraw %}'
           # Surface progress so a silent failure is visible.
           track_progress: true
           display_report: true

@@ -249,6 +249,34 @@ def test_residue_at_fork_rejoin_reaches_every_world(vision):
     assert errors == []
 
 
+def test_residue_apply_error_names_the_expected_dilemmas(vision, tmp_path):
+    """Live-run lesson (gpt-5, 2026-07-08): the model echoed the prompt's
+    '(residue: light)' annotation into the dilemma field, and the old error
+    ('needs no residue beat') taught nothing across two repair rounds.
+    Repair errors name the expected values (id-contract decision)."""
+    from questfoundry.pipeline.stages.polish import (
+        FinalizeProposal,
+        ResidueSpec,
+        _finalize_apply,
+    )
+
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    proposal = FinalizeProposal(
+        residue=[
+            ResidueSpec(
+                dilemma="dilemma:sub (residue: light)",
+                path="path:sub-a",
+                id="beat:afterglow",
+                summary="s",
+            )
+        ]
+    )
+    with pytest.raises(ApplyError, match=r"must be exactly one of \['dilemma:sub'\]"):
+        _finalize_apply(proposal, project)
+
+
 def test_heavy_residue_at_fork_rejoin_is_reported_not_silent(vision, tmp_path):
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.HEAVY)

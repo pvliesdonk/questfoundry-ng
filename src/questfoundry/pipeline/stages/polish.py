@@ -120,10 +120,16 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     for spec in proposal.residue:
         need = needs.get(spec.dilemma)
         if need is None:
-            raise ApplyError(f"residue {spec.id}: {spec.dilemma} needs no residue beat")
+            raise ApplyError(
+                f"residue {spec.id}: dilemma must be exactly one of {sorted(needs)}; "
+                f"got {spec.dilemma!r}"
+            )
         flag = need.path_flags.get(spec.path)
         if flag is None:
-            raise ApplyError(f"residue {spec.id}: {spec.path} is not a path of {spec.dilemma}")
+            raise ApplyError(
+                f"residue {spec.id}: path must be exactly one of "
+                f"{sorted(need.path_flags)}; got {spec.path!r}"
+            )
         try:
             beat = Beat(
                 id=spec.id,

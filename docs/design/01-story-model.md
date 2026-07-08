@@ -175,7 +175,8 @@ means "comes before." The DAG *is* the story's structure:
   is on every arc and the frontier is one beat **per world** — each of
   the hard dilemma's commits. Residue beats splice between a path's
   exclusive tail and the whole frontier, so they exist in every world.
-  Hard dilemmas never converge; their branches run to separate endings. With more than one
+  Hard dilemmas never converge; their branches run to separate
+  endings. With more than one
   hard dilemma, hard forks **nest**, and the right mental model is the
   weave as a **tensor of Y graphs**: each dilemma contributes its Y as
   one dimension, and a story position is a coordinate in every

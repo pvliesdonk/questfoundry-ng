@@ -1,0 +1,13 @@
+id: beat:hard-post-wards-unguarded
+summary: With protections withdrawn, night mishaps rise in the Bracken-Channel Wards and Ledger
+  watchers post up; Marin slips by them on lived wayfinding.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: complicates
+entities:
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+- character:marin-vale
+belongs_to:
+- path:sever-bond

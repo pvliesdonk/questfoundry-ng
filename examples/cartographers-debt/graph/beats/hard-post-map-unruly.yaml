@@ -1,0 +1,13 @@
+id: beat:hard-post-map-unruly
+summary: The Tidal Mother Map shivers and redraws by a private, tidal logic, shedding Ledger
+  marks and braiding alleys that refuse prediction.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: reveals
+entities:
+- object:tidal-mother-map
+- character:marin-vale
+- location:bracken-channel-wards
+belongs_to:
+- path:sever-bond

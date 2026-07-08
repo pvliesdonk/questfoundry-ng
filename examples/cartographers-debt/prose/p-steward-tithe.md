@@ -1,0 +1,9 @@
+I wet my thumb in the bowl’s brine and ink, then press. The surface shivers. I write her name first, careful, the way she taught, each curve a tide-line. Then mine. The room listens. Countersigns bite, hissing like surf against wood, and the map under my palm stills. Its spine-stitch tightens. It comes to heel.
+
+Clerks notch me into their roll with dry clicks and salt-blue lamplight. One reads back my names without looking up. Another lifts a small bell and lets it speak once. Two auditors step from the wall, their coats damp to the hem, faces patient as old rope. “We shadow your routes,” the near one says. “Bracken-Channel, dusk to ebb.” They take my measure and set their distance, not close, but sure.
+
+Cold gathers at my wrist. A mark rises grain by grain, pale as rime on pilings. It settles into skin with a sting and a weight. The clerks nod like weather. I feel something slough, thin and slow, as if a year made of salt were easing down the boards into the ward’s keeping. The map warms. Serve, it says, austere as a gate.
+
+Before dawn the street seals. Curfew bands the ward like a binding. I walk the white of the one-night way, shutters doused, the city holding its breath. The auditors’ lamps pace me, steady and blue. Keep left, the map says. One file. Do not call. It moves where I move, obedient now, the lines I set hardening for a night and no longer. I taste metal and kelp on the air. The pilings weep. Somewhere a bell answers itself.
+
+I raise my marked hand to the dark and name a crossing safe, though the cost chafes. Authority sits on my shoulders. Ache sits under my breastbone. With each curfew I direct, a brine-year salts away into their ledger, and the ward sleeps through what would have taken it. I walk on, future thinning like tidewater over flats, bright, cold, sure. Salt for safekeeping.

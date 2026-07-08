@@ -1,0 +1,25 @@
+id: dilemma:inheritance-ledger
+question: When the map opens a one-night street to the vault where her mother’s contested
+  debt is tallied, does Marin bind herself by signing and taking custody of the debt, or sever
+  the bond by denying the claim and breaking the map’s obedience?
+why_it_matters: Assuming the debt grants Marin authority to steer and safeguard the night-streets
+  but tithes her life and routes to the canals; severing frees her from legacy and Ledger
+  reach but costs the map’s guided order and lets the one-night web slip beyond her keeping,
+  with neighbors bearing the risk.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:assume-debt
+  text: She signs into the water-ledger, assuming and restructuring the debt in exchange for
+    stewardship over the night-streets.
+- id: answer:sever-bond
+  text: She refuses the claim and drowns the sigil, breaking the map’s obedience and keeping
+    her autonomy as the night-streets go ungoverned or fade from her reach.
+anchored_to:
+- character:marin-vale
+- object:tidal-mother-map
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+wraps:
+- dilemma:expose-or-solo

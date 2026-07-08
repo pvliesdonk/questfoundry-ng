@@ -1,0 +1,15 @@
+id: beat:hard-pre-watchers-stir
+summary: Brine-cold auditors surface in doorways as if sensing inheritance wake; the old name
+  tugs at Marin’s wrist like a tether.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: complicates
+entities:
+- faction:ledger-of-depths
+- character:marin-vale
+- location:bracken-channel-wards
+flexibility: Could share the same counting-shack district as the soft writ or audit scenes.
+belongs_to:
+- path:assume-debt
+- path:sever-bond

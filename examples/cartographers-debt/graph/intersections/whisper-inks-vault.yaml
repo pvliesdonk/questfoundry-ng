@@ -1,0 +1,7 @@
+id: intersection:whisper-inks-vault
+location: location:bracken-channel-wards
+rationale: The tidal-mother-map reveals a one-night street that also points straight toward
+  the Ledger vault, aligning the whisper with the inking in the same ward.
+members:
+- beat:hard-pre-map-opens-vault
+- beat:soft-pre-whisper-street

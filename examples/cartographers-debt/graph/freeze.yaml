@@ -1,0 +1,32 @@
+beats:
+- beat:hard-commit-assume-signing
+- beat:hard-commit-sever-drown
+- beat:hard-post-final-alone
+- beat:hard-post-final-steady
+- beat:hard-post-life-tithe
+- beat:hard-post-map-unruly
+- beat:hard-post-steward-marked
+- beat:hard-post-wards-unguarded
+- beat:hard-pre-map-opens-vault
+- beat:hard-pre-threshold-bowl
+- beat:hard-pre-watchers-stir
+- beat:setup-bracken-breathes
+- beat:setup-ledger-murmur
+- beat:soft-commit-seek-amnesty-writ
+- beat:soft-commit-walk-secret
+- beat:soft-post-audit-flag
+- beat:soft-post-lantern-chain
+- beat:soft-post-rumor-wakes
+- beat:soft-post-writ-curfew
+- beat:soft-pre-sounding
+- beat:soft-pre-traffic-risk
+- beat:soft-pre-whisper-street
+forks:
+  dilemma:inheritance-ledger:
+  - beat:hard-commit-assume-signing
+  - beat:hard-commit-sever-drown
+  dilemma:expose-or-solo:
+  - beat:soft-commit-seek-amnesty-writ
+  - beat:soft-commit-walk-secret
+convergences:
+  dilemma:expose-or-solo: beat:hard-commit-assume-signing

@@ -1,0 +1,14 @@
+id: beat:soft-pre-whisper-street
+summary: The map whispers of a fresh one-night street running under leaning stilts that will
+  shear away by dawn.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: reveals
+entities:
+- object:tidal-mother-map
+- character:marin-vale
+- location:bracken-channel-wards
+belongs_to:
+- path:seek-amnesty
+- path:walk-in-secret

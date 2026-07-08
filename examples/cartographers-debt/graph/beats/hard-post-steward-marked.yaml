@@ -1,0 +1,13 @@
+id: beat:hard-post-steward-marked
+summary: Clerks notch her name into the steward rolls and assign two auditors to shadow her
+  routes through the Bracken-Channel Wards.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: reveals
+entities:
+- faction:ledger-of-depths
+- character:marin-vale
+- location:bracken-channel-wards
+belongs_to:
+- path:assume-debt

@@ -1,0 +1,10 @@
+id: path:sever-bond
+name: Break the Sigil
+explores: answer:sever-bond
+consequences:
+- id: consequence:map-unmoored
+  text: object:tidal-mother-map severs from faction:ledger-of-depths and begins redrawing
+    by a private, unruly logic that resists prediction.
+- id: consequence:ward-exposed
+  text: location:bracken-channel-wards faces unguided night-streets and rising mishaps as
+    faction:ledger-of-depths withdraws protections and posts watchers.

@@ -1,0 +1,25 @@
+id: passage:p-dark-listens
+summary: The canal’s salt breath presses tight, every glimmer from the map too bright, as
+  if the dark itself listens for her counted steps. Alone with the wake her choice will leave,
+  she hovers over the same waiting bowl.
+entities:
+- Marin
+- flag:solo-risk-escalates
+- canal
+- Tidal Mother Map
+- dark
+irrelevant_flags:
+- flag:quiet-trust-network
+beats:
+- beat:residue-secret-wake
+choices:
+- label: Set my thumb to the water-ledger and claim the roll
+  grants:
+  - flag:ledgers-stewardship
+  - flag:life-tithe-sigil
+  to: passage:p-steward-tithe
+- label: Rip the countersign free and cast the bowl aside
+  grants:
+  - flag:map-unmoored
+  - flag:ward-exposed
+  to: passage:p-unmoored-lantern

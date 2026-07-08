@@ -1,0 +1,22 @@
+id: passage:p-steward-tithe
+summary: Marin wets her thumb and signs the water-ledger in both names; the Tidal Mother Map
+  snaps to heel as clerks notch her into the steward rolls and auditors take her shadow. A
+  life-tithe sigil blooms cold on her wrist, and before dawn she walks the sealed night-street
+  with authority and ache.
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- object:tidal-mother-map
+- location:bracken-channel-wards
+ending:
+  id: e-steward-tithe
+  title: Salt for Safekeeping
+irrelevant_flags:
+- flag:map-flagged-for-audit
+- flag:quiet-trust-network
+- flag:solo-risk-escalates
+beats:
+- beat:hard-commit-assume-signing
+- beat:hard-post-final-steady
+- beat:hard-post-life-tithe
+- beat:hard-post-steward-marked

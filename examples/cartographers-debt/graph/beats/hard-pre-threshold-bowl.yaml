@@ -1,0 +1,14 @@
+id: beat:hard-pre-threshold-bowl
+summary: She reaches the submerged threshold where a sigil-bowl waits and a ledger-pennant
+  lists the sum; the map’s corner curls inward as if to obey.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:inheritance-ledger
+  effect: advances
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- object:tidal-mother-map
+belongs_to:
+- path:assume-debt
+- path:sever-bond

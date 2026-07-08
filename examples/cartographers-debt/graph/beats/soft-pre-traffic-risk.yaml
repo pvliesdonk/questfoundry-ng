@@ -1,0 +1,14 @@
+id: beat:soft-pre-traffic-risk
+summary: From a scummed parapet Marin spies a moon-tide barge and night-workers angling toward
+  the cut while no Ledger watch is near.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-solo
+  effect: complicates
+entities:
+- character:marin-vale
+- faction:ledger-of-depths
+- location:bracken-channel-wards
+belongs_to:
+- path:seek-amnesty
+- path:walk-in-secret

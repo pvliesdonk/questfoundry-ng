@@ -1,0 +1,10 @@
+id: path:seek-amnesty
+name: Raise the Writ
+explores: answer:seek-amnesty
+consequences:
+- id: consequence:writ-curfew
+  text: faction:ledger-of-depths issues emergency writs that impose curfews and escorts along
+    the fresh one-night street, sharply reducing immediate peril in location:bracken-channel-wards.
+- id: consequence:map-flagged-for-audit
+  text: object:tidal-mother-map is flagged for audit and may be requisitioned at dawn, placing
+    character:marin-vale under continuing scrutiny.

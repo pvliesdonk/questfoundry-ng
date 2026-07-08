@@ -286,6 +286,23 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Decision log
 
+- **2026-07-08 (review contract legibility):** Fourth live-run lesson,
+  extending the first run's reviewer-discipline fix: the utility
+  reviewer failed a passage twice *for being written in the voice's own
+  required POV* — it misread the review prompt's one-line rule ("a
+  banned pattern appears (banned: ...), or the POV (...) or tense (...)
+  is broken") and treated the required first person as banned, so the
+  write pass could never converge. `fill_review.j2` now separates
+  REQUIRED (pov, tense — prose in them is correct; fail only on
+  departure) from BANNED (a bulleted list), and narrows leakage to
+  naming the machinery itself (ids, or "flag"/"beat"/"path" used
+  mechanically) — in-world objects that flags merely describe are
+  story, not leakage. Prompt-only; positional fixture replay is
+  unaffected. The pattern across both reviewer lessons: contract text
+  that a frontier model reads correctly can still be ambiguous to the
+  small model actually holding the pen — write review contracts for
+  the cheapest reader.
+
 - **2026-07-08 (fork-rejoin convergence):** The id-contract validation
   run surfaced a real structural bug: when the weave places a soft
   dilemma's resolve unit directly before the hard resolve (a legal,

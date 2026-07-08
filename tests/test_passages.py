@@ -236,3 +236,26 @@ def test_active_flags_mirrors_i12(golden):
         "flag:elias-knows",
         "flag:lie-between",
     ]
+
+
+def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
+    """First live run (gpt-5, 2026-07-08): the model audited the right
+    passages but dropped the id namespace ("p-x" for "passage:p-x"),
+    exhausting repairs. The prefix is unambiguous, so accept the slug."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    _passages_apply(_proposal_for(g), project)
+    flagged = [
+        p.id
+        for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
+        if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+    ]
+    assert flagged
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage=pid.split(":", 1)[1], irrelevant=[])  # slug form
+            for pid in flagged
+        ]
+    )
+    _audit_apply(proposal, project)  # normalized, no ApplyError

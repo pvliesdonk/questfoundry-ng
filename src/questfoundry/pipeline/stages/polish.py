@@ -382,8 +382,15 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
     seen = set()
     lines = []
     for entry in proposal.audit:
+        # live models drop the id namespace ("p-x" for "passage:p-x");
+        # the prefix is unambiguous here, so accept the slug form
+        if entry.passage not in expected and f"passage:{entry.passage}" in expected:
+            entry.passage = f"passage:{entry.passage}"
         if entry.passage not in expected:
-            raise ApplyError(f"{entry.passage} is not a passage with active flags")
+            raise ApplyError(
+                f"{entry.passage} is not a passage with active flags; "
+                f"audit exactly these ids: {sorted(expected)}"
+            )
         if entry.passage in seen:
             raise ApplyError(f"{entry.passage} audited twice")
         seen.add(entry.passage)

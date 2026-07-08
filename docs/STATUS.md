@@ -286,6 +286,24 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Decision log
 
+- **2026-07-08 (live run 2 — id-contract validation):** Second live
+  generation ("The Cartographer's Debt", fresh premise, micro scope,
+  gpt-5 architect/writer + gpt-4.1-mini utility — chosen because the
+  Anthropic account has no credits, see open items, and gpt-5 is the
+  distribution that produced the original id failures). Outcome: **a
+  complete story — 24 beats, 7 passages, 4 arcs, ~350-word passages —
+  0 gate errors, 4/4 arcs simulate complete, all three exports
+  round-trip clean.** The id contract **held**: zero id-shaped repairs
+  anywhere — the POLISH audit cited every passage and flag by full id,
+  and all 10 FILL micro-details arrived with exact entity ids, so the
+  retired display-name matcher was never missed. The run took four
+  attempts and each failure was a real engine/prompt bug now fixed
+  with its own entry and test (fork-rejoin convergence; finalize
+  repair errors that didn't name expected values; a review contract
+  the utility model misread). Budget across all four attempts: 40
+  calls, gpt-5 46k in / 83k out, utility pennies — **~$0.90 total**;
+  repair rounds: finalize 3 attempts, everything else first-shot.
+
 - **2026-07-08 (review contract legibility):** Fourth live-run lesson,
   extending the first run's reviewer-discipline fix: the utility
   reviewer failed a passage twice *for being written in the voice's own
@@ -341,7 +359,8 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   Anthropic live run is blocked on billing (see open items), so the
   prompt-side fix was validated with a second live gpt-5 run — the
   distribution that produced the original id failures — on a fresh
-  premise ("The Cartographer's Debt", micro scope); results below.
+  premise ("The Cartographer's Debt", micro scope); results in the
+  "live run 2" entry above.
   Positional fixture replay is unaffected by the instruction change
   (fixtures key on call order, not prompt bytes), and the recorded
   fixtures already cite entities by full id.

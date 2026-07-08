@@ -1,0 +1,17 @@
+id: beat:find-effigy
+summary: Following the path secured by her toll, Maren finally locates Elias's Effigy, its
+  fragile glass frame vibrating with his heartbreaking, familiar song.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: advances
+entities:
+- character:maren
+- object:brother-statue
+- location:drowned-cathedral
+temporal_hints:
+- dilemma: dilemma:the-preliminary-offering
+  position: after_commit
+belongs_to:
+- path:keep-voice
+- path:trade-voice

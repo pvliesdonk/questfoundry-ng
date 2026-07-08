@@ -1,0 +1,14 @@
+id: passage:p-blood-spilled
+summary: Maren spills her warm blood on the freezing stone, illuminating the correct path
+  but infecting her limbs with a necrotic, bone-deep chill.
+entities:
+- character:maren
+- location:drowned-cathedral
+beats:
+- beat:blood-chill
+- beat:blood-spilled
+choices:
+- label: Grit my teeth against the necrotic chill and step forward.
+  requires:
+  - flag:physical-weakness
+  to: passage:p-residue-blood

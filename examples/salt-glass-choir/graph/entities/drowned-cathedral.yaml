@@ -1,0 +1,11 @@
+id: location:drowned-cathedral
+name: The Drowned Cathedral
+concept: An ancient, crumbling gothic edifice rising briefly from the sea, its architecture
+  completely encrusted with barnacles.
+base:
+  atmosphere: Freezing, damp, and overwhelmingly loud with a thousand overlapping, whispered
+    songs.
+  urgency: Tide waters are actively pouring back in through shattered, kelp-strangled rose
+    windows.
+  barnacle_appearance: The barnacles encrusting the lower walls are pale, smooth, and translucent,
+    eerily resembling thousands of tiny, broken teeth.

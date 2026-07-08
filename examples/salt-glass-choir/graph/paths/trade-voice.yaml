@@ -1,0 +1,8 @@
+id: path:trade-voice
+name: A Silent Burden
+explores: answer:trade-voice
+consequences:
+- id: consequence:maren-muted
+  text: Maren is permanently stripped of her living voice.
+- id: consequence:effigy-saved
+  text: Elias's Effigy is successfully retrieved from the cathedral, its song preserved.

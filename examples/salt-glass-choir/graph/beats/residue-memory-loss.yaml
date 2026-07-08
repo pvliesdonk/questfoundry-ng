@@ -1,0 +1,10 @@
+id: beat:residue-memory-loss
+created_by: polish
+summary: A hollow stillness fills Maren's mind, leaving her to stare at the dripping architecture
+  with an empty, aching detachment she cannot fully comprehend.
+beat_class: structural
+purpose: residue
+entities:
+- Maren
+requires_flags:
+- flag:memory-erased

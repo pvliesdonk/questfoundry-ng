@@ -1,0 +1,12 @@
+id: beat:blood-chill
+summary: A crimson vein of light illuminates the stone floor to point the way, but a bone-deep,
+  necrotic chill immediately seizes Maren's limbs and drains her vitality.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: advances
+entities:
+- character:maren
+- location:drowned-cathedral
+belongs_to:
+- path:offer-blood

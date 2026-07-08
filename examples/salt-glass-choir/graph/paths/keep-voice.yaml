@@ -1,0 +1,8 @@
+id: path:keep-voice
+name: Echoes Lost
+explores: answer:keep-voice
+consequences:
+- id: consequence:maren-vocal
+  text: Maren retains her agency and her living voice.
+- id: consequence:effigy-lost
+  text: Elias's Effigy is consumed by the freezing depths, erasing his memory forever.

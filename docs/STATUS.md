@@ -186,14 +186,31 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
-- **A Gemini provider is unbuilt; `GEMINI_API_KEY` reaches new
-  sessions** (author-provided, 2026-07-08 — like the earlier
-  `QF_ANTHROPIC_API_KEY` passthrough, environment changes only reach
-  *new* sessions). Mid-tier work per the tiering policy: add
-  `llm/providers/gemini.py` mirroring `providers/openai.py`'s thin
-  contract, wire it into the CLI's provider switch, and validate with
-  a live run before trusting it. Worth doing next session alongside
-  whatever run it powers.
+- ~~A Gemini provider is unbuilt~~ **Built and validated** (PR #18):
+  `llm/providers/gemini.py` over the google-genai SDK, wired into the
+  CLI (`llm.provider: gemini`; the SDK reads `GEMINI_API_KEY` itself).
+  First Gemini-driven generation ran 2026-07-08 — results in the
+  "live run 4" decision-log entry. All three provider families
+  (Anthropic, OpenAI, Gemini) have now produced a complete story.
+
+- **Crash-resume replay of FILL is leaky** (found 2026-07-08 while
+  probing the live-run 4 artifacts). A mid-stage crash loses no money
+  *in principle* — every call is in the content-addressed cache — but
+  an experiment (re-running FILL from the POLISH snapshot + cache)
+  replayed only voice + 3 passages free, then went live at the first
+  multi-predecessor passage and cascaded: FILL's `window`/`lookahead`
+  render in raw edge-store order (`fill.py::_neighbor_prose`, no
+  sort), and choice edges reload from per-passage YAML in alphabetical
+  file order, not wiring order, so the prompt bytes shift and every
+  downstream cache key misses. Prose itself only reaches disk at the
+  gate-passing checkpoint, so a late crash on a long story re-spends
+  most of the stage. Fixes, complementary: (1) canonicalize context
+  ordering (topo-sort window/lookahead like `beats` already is) plus a
+  round-trip prompt-stability test — in-memory context must equal
+  reloaded-project context; mid-tier work. (2) Flush prose per write
+  pass, not per stage — protects the artifact too, but changes design
+  doc 02's checkpoint semantics (partial FILL state on disk is not a
+  gated checkpoint); needs a frontier-tier design decision first.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
@@ -286,6 +303,25 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (live run 4 — the first Gemini-driven generation):**
+  "The Salt-Glass Choir" (fresh premise, micro scope) on the new
+  `providers/gemini.py` — gemini-3.1-pro-preview architect/writer +
+  gemini-2.5-flash utility — completed **first attempt, end-to-end,
+  with zero engine or prompt bugs surfaced**: 24 beats, 14 passages
+  (two false-branch diamonds, residue beats on both soft-dilemma
+  paths, two bridge beats, and a `wraps` relation exercised), 4 arcs,
+  0 gate errors, 4/4 arcs simulate complete, all three exports
+  round-trip clean; preserved as `examples/salt-glass-choir/`.
+  Budget: 46 calls, pro 42k in / 80k out, flash 23k in / 35k out —
+  roughly ~$1 at pro-tier list pricing; one adapter schema retry
+  total, FILL repair rounds on two passages (2 and 3 attempts),
+  everything else first-shot — the hardened review contract held on a
+  third reviewer family with no new lessons. Provider notes: Gemini's
+  thought tokens are billed as output, so the provider counts
+  candidates + thoughts as `output_tokens`; the models API still
+  *lists* `gemini-3-pro-preview` but calling it returns 404 "no longer
+  available" — probe a model id before pinning it in a model map.
 
 - **2026-07-08 (live run 3 — the first Claude-driven generation):**
   "The Orchard of Hours" (fresh premise, micro scope) on the default

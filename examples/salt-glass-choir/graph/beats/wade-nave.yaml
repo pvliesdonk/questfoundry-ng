@@ -1,0 +1,8 @@
+id: beat:wade-nave
+created_by: polish
+summary: Maren wades straight down the sunken central nave, the dark water soaking her boots
+  as she pushes against the icy current.
+beat_class: structural
+purpose: false_branch
+entities:
+- Maren

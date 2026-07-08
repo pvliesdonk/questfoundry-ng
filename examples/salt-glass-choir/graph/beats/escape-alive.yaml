@@ -1,0 +1,13 @@
+id: beat:escape-alive
+summary: Maren escapes the sinking cathedral with her living voice intact, weeping a solitary
+  song into the night air as her brother's memory sinks into permanent oblivion.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: advances
+entities:
+- character:maren
+- location:drowned-cathedral
+is_ending: true
+belongs_to:
+- path:keep-voice

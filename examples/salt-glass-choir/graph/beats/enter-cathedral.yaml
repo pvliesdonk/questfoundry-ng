@@ -1,0 +1,8 @@
+id: beat:enter-cathedral
+summary: She pushes through barnacle-encrusted doors into a cavernous nave filled with thousands
+  of salt-glass statues, each singing a mournful, echoing note of their drowning.
+beat_class: structural
+purpose: setup
+entities:
+- character:maren
+- location:drowned-cathedral

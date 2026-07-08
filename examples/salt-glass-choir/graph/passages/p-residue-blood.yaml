@@ -1,0 +1,10 @@
+id: passage:p-residue-blood
+summary: Every breath rattles like sea foam over cold stones as an unnatural, sluggish frost
+  makes Maren's heavy limbs incredibly difficult to move.
+entities:
+- Maren
+beats:
+- beat:residue-blood-weakness
+choices:
+- label: Drag my freezing limbs forward to lift Elias's effigy.
+  to: passage:p-trade-demand

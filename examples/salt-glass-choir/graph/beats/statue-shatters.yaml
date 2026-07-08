@@ -1,0 +1,12 @@
+id: beat:statue-shatters
+summary: The Choirmaster brings his baton down in a crashing crescendo, and Elias's Effigy
+  instantly shatters into salt-dust, swallowed by the rising tide.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: advances
+entities:
+- character:choirmaster
+- object:brother-statue
+belongs_to:
+- path:keep-voice

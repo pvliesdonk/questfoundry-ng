@@ -1,0 +1,9 @@
+Your raw, stiffening fingers hover over the pale, glowing shoulders of the crystalline boy. His smooth salt-glass skin hums just beneath your palm, vibrating with a deep, mournful baritone that reverberates through the hollow cage of your own ribs, a familiar melody shivering in the dark. A fragile resonance. The ghost of a song. You lean forward into the bitter spray, preparing to hoist the heavy, ringing weight of him against your chest, to drag his unbroken chord back to the distant surface.
+
+A towering shadow eclipses the tidal archway, sealing the only passage to the shore behind a dense lattice of rotting kelp and jagged rime. 
+
+The Choirmaster descends. An ancient, eyeless mass of translucent ridges and weeping brine, they orchestrate the graveyard of the drowned, exuding an unsettling, harmonic density that presses the air back down your windpipe. A suffocating tide. Slow, crushing pressure.
+
+When the towering monstrosity speaks, the sound manifests as an overlapping cascade of oceanic chimes, grinding like tide-rolled stones against your eardrums. The reverberations rattle the teeth in your skull, imparting a vast, unsentimental decree that crashes over your shivering frame. The effigy is bound to the altar. A crucial chord in a symphony of despair. It cannot be lifted into the waking world unless a living breath is surrendered to the abyss, a vibrant, beating voice willingly yielded to the cold to forever sing in the drowned boy’s place.
+
+Your thumbnail strikes the sputtering glass of your storm lantern, a compulsive, rapid tap matching the exact rhythm of his old knock on the lighthouse door. Tap, tap-tap, tap. A frantic, jagged prayer. Fracturing ice. Brine coats your tongue as a terrible ache swells at the base of your throat, the physical strain of vocalizing already tearing at your exhausted muscles. The dark water waits for a sound. An offering. An eternal silence.

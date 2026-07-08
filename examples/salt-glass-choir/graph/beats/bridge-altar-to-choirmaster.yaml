@@ -1,0 +1,11 @@
+id: beat:bridge-altar-to-choirmaster
+created_by: grow
+summary: As Maren retreats from the suffocating pressure of the altar, her horrified gaze
+  is drawn upward to where the Choirmaster looms over the fragile, salt-carved statue of her
+  brother.
+beat_class: structural
+purpose: bridge
+entities:
+- character:maren
+- character:choirmaster
+- object:brother-statue

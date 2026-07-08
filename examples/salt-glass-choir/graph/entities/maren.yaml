@@ -1,0 +1,10 @@
+id: character:maren
+name: Maren
+concept: A lighthouse keeper's apprentice whose desperation to hold onto the past drives her
+  into the freezing depths.
+base:
+  appearance: Salt-bitten and shivering in an oilskin coat, clutching a sputtering storm lantern.
+  manner: Fiercely determined, though her breath hitches with every sound that reminds her
+    of her brother.
+  anxious_habit: She compulsively taps the glass of her storm lantern with her thumbnail when
+    terrified, mimicking the exact rhythm of her brother's old knock.

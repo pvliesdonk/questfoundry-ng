@@ -1,0 +1,11 @@
+id: beat:refuse-trade
+summary: Maren clenches her jaw and violently shakes her head, backing away from the altar
+  to refuse the ocean her own ability to speak and sing.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: commits
+entities:
+- character:maren
+belongs_to:
+- path:keep-voice

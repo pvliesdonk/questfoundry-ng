@@ -1,0 +1,15 @@
+id: passage:p-memory-whispered
+summary: Maren whispers a cherished memory into the Choirmaster's kelp-woven hands, immediately
+  feeling the image of her brother's smiling face hollow out into an echoing numbness as the
+  path is revealed.
+entities:
+- character:maren
+- character:choirmaster
+beats:
+- beat:memory-hollow
+- beat:memory-whispered
+choices:
+- label: Wander forward through the sudden, emotional void.
+  requires:
+  - flag:memory-erased
+  to: passage:p-residue-memory

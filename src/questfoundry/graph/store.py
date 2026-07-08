@@ -2,8 +2,12 @@
 
 Read access is open; ALL writes go through `questfoundry.graph.mutations`
 (the module-private `_add_node` / `_add_edge` / `_remove_*` methods are
-its implementation surface). A ~`long` story is ~10^3 nodes, so everything
-is in memory and O(V+E) algorithms are fine (design doc 03 §3).
+its implementation surface). Note this is a convention, not an enforced
+access boundary — Python offers none — so the single-write-path guarantee
+is upheld by code review: nothing outside `mutations.py` (and tests of
+this module) may call the underscore methods. A ~`long` story is ~10^3
+nodes, so everything is in memory and O(V+E) algorithms are fine
+(design doc 03 §3).
 """
 
 from __future__ import annotations

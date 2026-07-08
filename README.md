@@ -44,6 +44,9 @@ loads, passes every gate, and renders its beat DAG:
 ```console
 $ uv sync --group dev
 $ uv run qf validate examples/keepers-bargain
+[B3] scope 'micro' targets 15-25 passages, found 7 (advisory)
+
+The Keeper's Bargain @ polish: 0 error(s), 1 warning(s)
 all gates pass
 $ uv run qf graph examples/keepers-bargain --layer passages   # Mermaid to stdout
 ```

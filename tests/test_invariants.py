@@ -5,7 +5,7 @@ from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import Stage
 from questfoundry.models.drama import DilemmaRole
-from questfoundry.models.structure import ImpactEffect
+from questfoundry.models.structure import Beat, BeatClass, ImpactEffect, StructuralPurpose
 from tests.conftest import make_dilemma, make_y_scaffold, narrative_beat
 
 
@@ -78,6 +78,112 @@ def test_i9_fork_change_after_freeze_flagged(golden, vision):
     g = golden.graph
     g.frozen.forks["dilemma:truth"] = ["beat:tell-commit"]  # pretend the fork moved
     assert any("fork changed" in i.message for i in errors_for("I9", g, golden.vision))
+
+
+def _passage_layer(g, d, pa, pb):
+    """Wrap a Y-scaffold in a minimal passage graph: pre -> (a|b endings)."""
+    from questfoundry.models.presentation import Choice, Ending, Passage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:x", created_by=Stage.GROW, description="x", source=FlagSource.DILEMMA, path=pa
+        ),
+    )
+
+    def passage(slug, beats, ending=False):
+        node = Passage(
+            id=f"passage:{slug}",
+            created_by=Stage.POLISH,
+            summary=slug,
+            ending=Ending(id=f"e-{slug}", title=slug) if ending else None,
+        )
+        mutations.add_passage(g, node, beats)
+        return node.id
+
+    pre = passage("pre", ["beat:one-pre"])
+    end_a = passage("end-a", ["beat:one-commit-a", "beat:one-post-a"], ending=True)
+    end_b = passage("end-b", ["beat:one-commit-b", "beat:one-post-b"], ending=True)
+    mutations.add_choice(g, pre, end_a, Choice(label="a", grants=["flag:x"]))
+    mutations.add_choice(g, pre, end_b, Choice(label="b"))
+    return pre, end_a, end_b
+
+
+def test_i10_unsatisfiable_gate_flagged(vision):
+    from questfoundry.models.presentation import Choice
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    pre, end_a, end_b = _passage_layer(g, d, pa, pb)
+    # flag:x is granted at path a's commit — never before the start passage,
+    # so a gate on a choice OUT of the start passage can never be satisfied
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:extra",
+            created_by=Stage.POLISH,
+            summary="x",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        [],
+    )
+    mutations.add_ordering(g, "beat:one-pre", "beat:extra")
+    mutations.add_ordering(g, "beat:extra", "beat:one-commit-a")
+    from questfoundry.models.presentation import Passage
+
+    mutations.add_passage(
+        g, Passage(id="passage:extra", created_by=Stage.POLISH, summary="x"), ["beat:extra"]
+    )
+    mutations.add_choice(g, pre, "passage:extra", Choice(label="gated", requires=["flag:x"]))
+    mutations.add_choice(g, "passage:extra", end_a, Choice(label="on"))
+    issues = errors_for("I10", g, vision, Stage.POLISH)
+    assert any("no arc can satisfy" in i.message for i in issues)
+
+
+def test_i11_beat_in_unrelated_passages_flagged(vision):
+    from questfoundry.models.presentation import Passage
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    _passage_layer(g, d, pa, pb)
+    # the same beat re-presented by a second passage with no variant link
+    mutations.add_passage(
+        g,
+        Passage(id="passage:dup", created_by=Stage.POLISH, summary="dup"),
+        ["beat:one-post-a"],
+    )
+    issues = errors_for("I11", g, vision, Stage.POLISH)
+    assert any("unrelated passages" in i.message for i in issues)
+
+
+def test_i13_second_start_and_choiceless_passage_flagged(vision):
+    from questfoundry.models.presentation import Passage
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    _passage_layer(g, d, pa, pb)
+    # an orphan passage: no incoming choice (second start), no outgoing choice
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:orphan",
+            created_by=Stage.POLISH,
+            summary="o",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        [],
+    )
+    mutations.add_passage(
+        g, Passage(id="passage:orphan", created_by=Stage.POLISH, summary="o"), ["beat:orphan"]
+    )
+    issues = errors_for("I13", g, vision, Stage.POLISH)
+    assert any("exactly one start" in i.message for i in issues)
 
 
 def test_golden_story_passes_all_gates(golden):

@@ -21,6 +21,42 @@ def _ids(g):
     return sorted(n.id for n in g.nodes_of(Node))
 
 
+def test_roundtrip_preserves_intersections_and_child_provenance(vision, tmp_path):
+    """Intersection groups reach disk, and answers/consequences keep a
+    created_by that differs from their parent's (regression: both were
+    silently dropped by save_project)."""
+    from questfoundry.graph import mutations
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage
+    from questfoundry.models.structure import IntersectionGroup
+    from tests.conftest import make_dilemma, make_y_scaffold
+
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "one")
+    d2, p2a, p2b = make_dilemma(g, "two")
+    make_y_scaffold(g, "one", d1, p1a, p1b)
+    make_y_scaffold(g, "two", d2, p2a, p2b)
+    mutations.add_intersection(
+        g,
+        IntersectionGroup(
+            id="intersection:shared-scene",
+            created_by=Stage.GROW,
+            location="location:dock",
+            rationale="both pre-commit scenes happen at the dock",
+        ),
+        ["beat:one-pre", "beat:two-pre"],
+    )
+    # off-default provenance on embedded children
+    g.node("answer:one-a").created_by = Stage.SEED
+    g.node("consequence:two-b").created_by = Stage.GROW
+
+    save_project(Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g))
+    reloaded = load_project(tmp_path)
+    assert graph_signature(reloaded.graph) == graph_signature(g)
+    assert reloaded.graph.node("answer:one-a").created_by == Stage.SEED
+    assert reloaded.graph.node("consequence:two-b").created_by == Stage.GROW
+
+
 def test_roundtrip_is_lossless(golden, tmp_path):
     save_project(
         Project(

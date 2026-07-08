@@ -19,7 +19,7 @@ from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import Vision
 from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
 from questfoundry.models.presentation import Choice, Passage
-from questfoundry.models.structure import Beat, StateFlag
+from questfoundry.models.structure import Beat, IntersectionGroup, StateFlag
 from questfoundry.models.world import Entity
 
 # Default provenance per node kind, so hand-authored files stay terse.
@@ -31,6 +31,7 @@ DEFAULT_STAGE = {
     "consequence": Stage.SEED,
     "beat": Stage.SEED,
     "flag": Stage.GROW,
+    "intersection": Stage.GROW,
     "passage": Stage.POLISH,
 }
 
@@ -94,7 +95,8 @@ def load_project(root: FSPath | str) -> Project:
         raw = _read(f)
         created = _created_by(raw, "dilemma")
         answers = tuple(
-            Answer(created_by=created, **a) for a in raw.pop("answers")
+            Answer(created_by=Stage(a.pop("created_by", created)), **a)
+            for a in raw.pop("answers")
         )
         anchored = raw.pop("anchored_to")
         for key, kind in RELATION_KEYS.items():
@@ -109,13 +111,23 @@ def load_project(root: FSPath | str) -> Project:
         raw = _read(f)
         created = _created_by(raw, "path")
         explores = raw.pop("explores")
-        consequences = [Consequence(created_by=created, **c) for c in raw.pop("consequences", [])]
+        consequences = [
+            Consequence(created_by=Stage(c.pop("created_by", created)), **c)
+            for c in raw.pop("consequences", [])
+        ]
         mutations.add_path(g, Path(created_by=created, **raw), explores, consequences)
 
     for f in _files(root / "graph" / "beats"):
         raw = _read(f)
         belongs_to = raw.pop("belongs_to", [])
         mutations.add_beat(g, Beat(created_by=_created_by(raw, "beat"), **raw), belongs_to)
+
+    for f in _files(root / "graph" / "intersections"):
+        raw = _read(f)
+        members = raw.pop("members")
+        mutations.add_intersection(
+            g, IntersectionGroup(created_by=_created_by(raw, "intersection"), **raw), members
+        )
 
     flags_file = root / "graph" / "flags.yaml"
     if flags_file.exists():
@@ -157,6 +169,16 @@ def _slug(node_id: str) -> str:
     return node_id.split(":", 1)[1]
 
 
+def _dump_child(node, *, parent_stage: Stage) -> dict:
+    """Dump an embedded child node (answer, consequence). The loader
+    defaults a child's `created_by` to its parent's, so emit it only
+    when it differs — keeping files terse and round-trips lossless."""
+    data = {"id": node.id, "text": node.text}
+    if node.created_by != parent_stage:
+        data["created_by"] = node.created_by.value
+    return data
+
+
 def _dump(model, *, drop: set[str] = frozenset()) -> dict:  # type: ignore[assignment]
     data = model.model_dump(mode="json", exclude_defaults=True)
     data["id"] = model.id  # keep id even when it looks like a default
@@ -185,7 +207,7 @@ def save_project(project: Project) -> None:
     for dilemma in g.nodes_of(Dilemma):
         data = _dump(dilemma)
         data["answers"] = [
-            {"id": a, "text": g.node(a).text}  # type: ignore[union-attr]
+            _dump_child(g.node(a), parent_stage=dilemma.created_by)
             for a in g.out_ids(dilemma.id, EdgeKind.HAS_ANSWER)
         ]
         data["anchored_to"] = g.out_ids(dilemma.id, EdgeKind.ANCHORED_TO)
@@ -198,10 +220,15 @@ def save_project(project: Project) -> None:
         data = _dump(path)
         (data["explores"],) = g.out_ids(path.id, EdgeKind.EXPLORES)
         data["consequences"] = [
-            {"id": c, "text": g.node(c).text}  # type: ignore[union-attr]
+            _dump_child(g.node(c), parent_stage=path.created_by)
             for c in g.out_ids(path.id, EdgeKind.HAS_CONSEQUENCE)
         ]
         _write(root / "graph" / "paths" / f"{_slug(path.id)}.yaml", data)
+
+    for group in g.nodes_of(IntersectionGroup):
+        data = _dump(group)
+        data["members"] = sorted(g.in_ids(group.id, EdgeKind.IN_GROUP))
+        _write(root / "graph" / "intersections" / f"{_slug(group.id)}.yaml", data)
 
     for beat in g.nodes_of(Beat):
         data = _dump(beat)
@@ -255,7 +282,7 @@ def scaffold_project(root: FSPath, name: str, scope: str) -> Project:
         root=root, name=name, stage=Stage.DREAM, vision=vision, graph=StoryGraph()
     )
     save_project(project)
-    for sub in ("entities", "dilemmas", "paths", "beats", "passages"):
+    for sub in ("entities", "dilemmas", "paths", "beats", "intersections", "passages"):
         (root / "graph" / sub).mkdir(parents=True, exist_ok=True)
     (root / "prose").mkdir(exist_ok=True)
     return project

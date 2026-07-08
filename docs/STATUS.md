@@ -186,13 +186,14 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
-- **The first Claude-driven generation is blocked on billing.**
-  `QF_ANTHROPIC_API_KEY` reaches sessions and authenticates, but the
-  Anthropic account has no API credits — every call returns 400 "credit
-  balance is too low" (verified live, 2026-07-08). Once credits are
-  added, run a fresh premise at micro scope with the default model map
-  (opus architect/writer + haiku utility) and record the budget data in
-  the decision log, as was done for the OpenAI run.
+- **A Gemini provider is unbuilt; `GEMINI_API_KEY` reaches new
+  sessions** (author-provided, 2026-07-08 — like the earlier
+  `QF_ANTHROPIC_API_KEY` passthrough, environment changes only reach
+  *new* sessions). Mid-tier work per the tiering policy: add
+  `llm/providers/gemini.py` mirroring `providers/openai.py`'s thin
+  contract, wire it into the CLI's provider switch, and validate with
+  a live run before trusting it. Worth doing next session alongside
+  whatever run it powers.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the

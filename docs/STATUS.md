@@ -278,8 +278,8 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   hardening lessons, and budget data in the decision log. Anthropic
   live runs work via the `QF_ANTHROPIC_API_KEY` passthrough (hosted
   environments strip the reserved `ANTHROPIC_API_KEY` name); billing
-  was resolved 2026-07-08 and the first Claude-driven generation's
-  results live in the decision log.
+  was resolved 2026-07-08, unblocking the first Claude-driven
+  generation — its results land in the decision log when it completes.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review

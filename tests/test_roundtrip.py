@@ -57,6 +57,29 @@ def test_roundtrip_preserves_intersections_and_child_provenance(vision, tmp_path
     assert reloaded.graph.node("consequence:two-b").created_by == Stage.GROW
 
 
+def test_roundtrip_preserves_hints_and_flexibility(vision, tmp_path):
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage
+    from questfoundry.models.structure import HintPosition, TemporalHint
+    from tests.conftest import make_dilemma, make_y_scaffold
+
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "one")
+    d2, p2a, p2b = make_dilemma(g, "two")
+    make_y_scaffold(g, "one", d1, p1a, p1b)
+    make_y_scaffold(g, "two", d2, p2a, p2b)
+    beat = g.node("beat:one-pre")
+    beat.temporal_hints = [TemporalHint(dilemma=d2, position=HintPosition.BEFORE_COMMIT)]
+    beat.flexibility = "this scene could happen at the dock"
+
+    save_project(Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g))
+    reloaded = load_project(tmp_path)
+    assert graph_signature(reloaded.graph) == graph_signature(g)
+    loaded = reloaded.graph.node("beat:one-pre")
+    assert loaded.temporal_hints == beat.temporal_hints
+    assert loaded.flexibility == beat.flexibility
+
+
 def test_roundtrip_is_lossless(golden, tmp_path):
     save_project(
         Project(

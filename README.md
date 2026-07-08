@@ -35,15 +35,18 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M1 — front of pipeline.** DREAM → BRAINSTORM → SEED run end-to-end:
-`qf run --to seed` turns a one-paragraph premise into a triaged, scaffolded
-story (paths, Y-shaped beat scaffolds, dilemma ordering) that passes gates
-G0–G2 — against a live Anthropic provider or fully offline via recorded
-fixtures. Under it sits the M0 foundation: the typed story graph, the
-invariant validators (I1–I13), the project-on-disk format, and the `qf`
-CLI. The hand-authored golden story
+🏗️ **M2 — GROW.** DREAM → BRAINSTORM → SEED → GROW run end-to-end:
+`qf run --to grow` turns a one-paragraph premise into a woven, **frozen**
+beat DAG — dilemma scaffolds interleaved on engine-enumerated candidate
+orders (the LLM only picks among them), intersections merging scenes
+across storylines, state flags derived from consequences — passing gates
+G0–G3, against a live Anthropic provider or fully offline via recorded
+fixtures. Under it sit M1 (stage runner, LLM adapter, front-of-pipeline
+stages) and the M0 foundation: the typed story graph, the invariant
+validators (I1–I13), the project-on-disk format, and the `qf` CLI. The
+hand-authored golden story
 ["The Keeper's Bargain"](examples/keepers-bargain/) loads, passes every
-gate, and renders its beat DAG:
+gate, and walks all four of its arcs to their endings:
 
 ```console
 $ uv sync --group dev
@@ -52,7 +55,17 @@ $ uv run qf validate examples/keepers-bargain
 
 The Keeper's Bargain @ polish: 0 error(s), 1 warning(s)
 all gates pass
-$ uv run qf graph examples/keepers-bargain --layer passages   # Mermaid to stdout
+$ uv run qf simulate examples/keepers-bargain --all-arcs
+...
+The bargain holds + The truth shared  (path:keep + path:tell)
+  beat:storm-glass
+  ...
+  beat:tell-commit  (commit, +flag:elias-knows)
+  ...
+  beat:keep-ending  (ending)
+
+4 arc(s): all complete
+$ uv run qf graph examples/keepers-bargain --layer beats      # Mermaid to stdout
 ```
 
 Live progress, milestone state, and the decision log are tracked in

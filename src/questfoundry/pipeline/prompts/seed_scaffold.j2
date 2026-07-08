@@ -35,6 +35,14 @@ REQUIREMENTS:
   soft path at least 1 post-commit payoff beat; do NOT mark soft beats as endings.
 - Each beat's story must read coherently along its own path: if you read one
   path's beats in order they form a complete mini-story.
+- Where a beat's timing relative to ANOTHER dilemma matters, add a temporal hint:
+  hints: [{"dilemma": "dilemma:other", "position": "before_commit" | "after_commit"}]
+  — "this beat should land before/after that dilemma's point of no return". A later
+  stage interleaves the scaffolds and uses these to order scenes. Hints are optional
+  and advisory; use them only where the drama genuinely demands an ordering.
+- Where a beat's scene could flex to co-occur with another dilemma's business (same
+  place, same people), note it in one sentence: flexibility: "the soundings could be
+  read anywhere Elias works". These invite the interleaver to merge scenes. Optional.
 - Beat ids: beat:slug. Reference entity ids in each beat's entities list.
 - Respect the tone. Beats are summaries of events, present tense.
 {% include "_shared.j2" %}

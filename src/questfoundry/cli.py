@@ -130,6 +130,48 @@ def validate(directory: FSPath = typer.Argument(FSPath("."))) -> None:
 
 
 @app.command()
+def simulate(
+    directory: FSPath = typer.Argument(FSPath(".")),
+    all_arcs: bool = typer.Option(
+        True,
+        "--all-arcs",
+        help="Walk every computed arc (the only mode until targeted walks land).",
+    ),
+) -> None:
+    """Walk every arc of the beat DAG and report completeness."""
+    from questfoundry.play import walk_all_arcs
+
+    project = load_project(directory)
+    walks = walk_all_arcs(project.graph)
+    names = queries.path_names(project.graph)
+    failed = False
+    for walk in walks:
+        title = " + ".join(names.get(p, p) for _, p in sorted(walk.selection.items()))
+        console.print(f"\n[bold]{title or '(single arc)'}[/bold]  ({walk.label})")
+        for b in walk.beats:
+            beat = project.graph.node(b)
+            markers = []
+            if getattr(beat, "commits_dilemmas", []):
+                markers.append("[magenta]commit[/magenta]")
+            for flag_id, grant in walk.flags.items():
+                if grant == b:
+                    markers.append(f"[cyan]+{flag_id}[/cyan]")
+            if beat.is_ending:  # type: ignore[union-attr]
+                markers.append("[green]ending[/green]")
+            suffix = f"  ({', '.join(markers)})" if markers else ""
+            console.print(f"  {b}{suffix}")
+        for problem in walk.problems:
+            console.print(f"  [red]{problem}[/red]")
+            failed = True
+    console.print(
+        f"\n{len(walks)} arc(s): "
+        + ("[red]incomplete[/red]" if failed else "[green]all complete[/green]")
+    )
+    if failed:
+        raise typer.Exit(1)
+
+
+@app.command()
 def status(directory: FSPath = typer.Argument(FSPath("."))) -> None:
     """Show a project's stage and node counts."""
     project = load_project(directory)

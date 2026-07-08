@@ -36,6 +36,8 @@ src/questfoundry/
   pipeline/
     runner.py        # the uniform stage loop; checkpoints; resume
     context.py       # per-stage context builders (incl. sliding prose window)
+    weave.py         # GROW's deterministic interleaving core (units,
+                     #   constraints, candidate orders, spine realization)
     stages/          # dream.py .. ship.py — schemas, prompts, gates only
     prompts/         # Jinja2 prompt templates, versioned
   llm/
@@ -218,3 +220,4 @@ interface before that.
 | A6 | Typst for PDF | LaTeX, HTML→print CSS | Generated-input ergonomics; deterministic layout for page-number references |
 | A7 | Python | TypeScript | LLM/data tooling maturity; repo convention (`.gitignore`) |
 | A8 | Arcs computed on demand | Stored arc nodes | Stored arcs go stale and invite arc-level authoring, a known design trap |
+| A9 | GROW weaves atomic fork units on a linear spine; realization recomputes the whole ordering edge set | Per-seam edge patching; LLM emits an ordering | Full recompute is idempotent and cannot leave stale SEED seams; the LLM picking an index among engine-enumerated orders keeps invalid topologies unrepresentable (Principle 2) |

@@ -138,6 +138,14 @@ The hardest stage, split deliberately:
   intersection resolves the scene's location/entities); writing bridge
   beats where adjacent scenes share no entities or place.
 
+Sequencing matters: intersections are proposed *before* the interleaving
+is chosen, so member adjacency enters the candidate enumeration as a
+constraint rather than being retrofitted. The LLM never emits an
+ordering — it returns an index into the engine's candidate list.
+Temporal hints are advisory: a hint that would make the constraints
+unsatisfiable is dropped and reported, never allowed to wedge the weave
+(SEED wrote it without seeing the whole).
+
 After G3 passes, **the topology freezes** (I9). This is the pipeline's
 central commitment point.
 

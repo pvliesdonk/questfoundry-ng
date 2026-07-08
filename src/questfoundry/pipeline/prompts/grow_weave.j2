@@ -1,0 +1,24 @@
+Choose the story's scene order. The engine has interleaved every dilemma's scaffold
+into the candidate orders below — all of them are structurally valid; they differ
+only in dramatic pacing. Pick the one that reads best as a story.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+CANDIDATES:
+{% for c in candidates %}
+#{{ c.index }}:
+{% for step in c.steps %}
+  {{ loop.index }}. {{ step }}
+{% endfor %}
+{% endfor %}
+
+JUDGE BY:
+- Commit points distributed, not clustered — let tension breathe between points of
+  no return.
+- Subplots resolving inside the backbone's rising tension, not tacked on before or
+  after it.
+- Scene-to-scene continuity: adjacent steps should flow (place, cast, cause).
+- A shared beat after a subplot resolves gives its consequences somewhere to land.
+
+Respond with {"choice": <candidate number>, "rationale": "<one sentence>"}.
+{% include "_shared.j2" %}

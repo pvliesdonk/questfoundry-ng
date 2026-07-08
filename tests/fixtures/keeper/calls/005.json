@@ -1,0 +1,1 @@
+{"text": "{\n \"groups\": [\n  {\n   \"id\": \"intersection:wrong-depths\",\n   \"location\": \"location:lighthouse\",\n   \"rationale\": \"The sea's retreat and the impossible soundings are one event seen by two storylines; Elias's instruments register what the bargain is doing.\",\n   \"members\": [\n    \"beat:false-soundings\",\n    \"beat:the-tremor\"\n   ]\n  }\n ]\n}"}

@@ -104,6 +104,30 @@ def test_happy_path_advances_saves_and_checkpoints(tmp_path, monkeypatch):
     assert (tmp_path / "reports" / "dream.md").exists()
 
 
+def test_skip_if_bypasses_the_llm_call(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    skipped = PassSpec(
+        name="optional",
+        role="architect",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=lambda proposal, project: ["should never run"],
+        skip_if=lambda project: "nothing to do",
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(_vision_pass(), skipped), gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience="teens")])
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert report.success
+    assert len(adapter.prompts) == 1  # only the vision pass hit the adapter
+    assert report.passes[1].name == "optional"
+    assert report.passes[1].attempts == 0
+    assert report.passes[1].applied == ["skipped: nothing to do"]
+
+
 def test_repair_loop_restores_graph_and_carries_error_into_prompt(tmp_path, monkeypatch):
     _use_test_templates(monkeypatch)
     project = _scaffold(tmp_path)

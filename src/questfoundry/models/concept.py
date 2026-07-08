@@ -21,6 +21,9 @@ class ScopePreset(BaseModel):
     passages_max: int
     # I7: minimum exclusive post-commit beats per soft path before convergence
     min_payoff_beats: int
+    # B4 (advisory): beats per computed arc, checked at gate G3
+    arc_beats_min: int
+    arc_beats_max: int
     words_per_passage: tuple[int, int]
 
 
@@ -36,6 +39,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             passages_min=15,
             passages_max=25,
             min_payoff_beats=1,
+            arc_beats_min=8,
+            arc_beats_max=24,
             words_per_passage=(150, 450),
         ),
         ScopePreset(
@@ -47,6 +52,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             passages_min=30,
             passages_max=50,
             min_payoff_beats=2,
+            arc_beats_min=14,
+            arc_beats_max=40,
             words_per_passage=(150, 500),
         ),
         ScopePreset(
@@ -58,6 +65,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             passages_min=60,
             passages_max=90,
             min_payoff_beats=2,
+            arc_beats_min=24,
+            arc_beats_max=60,
             words_per_passage=(200, 550),
         ),
         ScopePreset(
@@ -69,6 +78,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             passages_min=100,
             passages_max=150,
             min_payoff_beats=3,
+            arc_beats_min=40,
+            arc_beats_max=100,
             words_per_passage=(200, 600),
         ),
     )

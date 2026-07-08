@@ -42,6 +42,23 @@ def test_counsel_is_a_post_freeze_addition(golden):
     assert all_beats - frozen == {"beat:counsel"}
 
 
+def test_all_arc_walks_are_complete(golden):
+    """M2 exit criterion: four complete, validated arcs through the
+    golden story's beat DAG (`qf simulate --all-arcs`)."""
+    from questfoundry.play import walk_all_arcs
+
+    walks = walk_all_arcs(golden.graph)
+    assert len(walks) == 4
+    for walk in walks:
+        assert walk.problems == [], walk.label
+        assert walk.beats[0] == "beat:storm-glass"
+        assert walk.ending in ("beat:keep-ending", "beat:break-ending")
+        # the two flags of the selected paths are granted, at commit beats
+        assert len(walk.flags) == 2
+        for flag_id, grant in walk.flags.items():
+            assert grant in walk.beats, flag_id
+
+
 def test_start_passage_is_unique(golden):
     assert queries.start_passages(golden.graph) == ["passage:p-arrival"]
 

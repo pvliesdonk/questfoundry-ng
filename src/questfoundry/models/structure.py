@@ -28,6 +28,22 @@ class BeatClass(StrEnum):
     STRUCTURAL = "structural"  # serves the shape; zero impacts, zero belongs_to
 
 
+class HintPosition(StrEnum):
+    BEFORE_COMMIT = "before_commit"
+    AFTER_COMMIT = "after_commit"
+
+
+class TemporalHint(BaseModel):
+    """SEED's guidance to GROW: place this beat before/after another
+    dilemma's commit fork. Hints are advisory — GROW drops them (with a
+    report note) if they make the interleaving unsatisfiable."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str  # dilemma node id
+    position: HintPosition
+
+
 class StructuralPurpose(StrEnum):
     SETUP = "setup"
     EPILOGUE = "epilogue"
@@ -51,6 +67,8 @@ class Beat(Node):
     entities: list[str] = []
     requires_flags: list[str] = []  # conditional traversal (residue beats)
     is_ending: bool = False
+    temporal_hints: list[TemporalHint] = []  # SEED -> GROW interleave guidance
+    flexibility: str = ""  # SEED -> GROW intersection invitation
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:

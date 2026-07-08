@@ -127,6 +127,11 @@ def run_stage(
 
     pass_reports: list[PassReport] = []
     for spec in impl.passes:
+        if spec.skip_if is not None and (reason := spec.skip_if(project)):
+            pass_reports.append(
+                PassReport(name=spec.name, attempts=0, applied=[f"skipped: {reason}"])
+            )
+            continue
         result = _run_pass(project, spec, env, adapter, notes, max_repairs)
         if isinstance(result, str):
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)

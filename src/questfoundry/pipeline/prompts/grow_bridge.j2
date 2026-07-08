@@ -1,0 +1,21 @@
+Write bridge beats. The woven story has adjacent scenes that share no characters,
+place, or object — the cut between them would jar. For each gap below, write ONE
+short structural beat that carries the reader across: a transition, a passage of
+time, a change of place. Bridges serve the story's shape, not any dilemma — they
+must not advance, reveal, or decide anything dramatic.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}.
+
+GAPS:
+{% for gap in gaps %}
+- gap {{ gap.index }}:
+  from: {{ gap.src.id }} — {{ gap.src.summary }} (entities: {{ gap.src.entities | join(", ") }})
+  to:   {{ gap.dst.id }} — {{ gap.dst.summary }} (entities: {{ gap.dst.entities | join(", ") }})
+{% endfor %}
+
+REQUIREMENTS:
+- Exactly one bridge per gap, keyed by its gap number.
+- 1-2 sentence summary, present tense, matching the tone.
+- Beat ids: beat:slug. List the entities the bridge touches (ideally one from each
+  side of the gap).
+{% include "_shared.j2" %}

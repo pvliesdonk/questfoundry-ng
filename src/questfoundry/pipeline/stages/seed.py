@@ -28,6 +28,7 @@ from questfoundry.models.structure import (
     DilemmaImpact,
     ImpactEffect,
     StructuralPurpose,
+    TemporalHint,
 )
 from questfoundry.models.world import Entity
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
@@ -116,6 +117,13 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
 # -- pass 2: scaffold -------------------------------------------------------
 
 
+class HintSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str
+    position: Literal["before_commit", "after_commit"]
+
+
 class BeatSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -124,6 +132,8 @@ class BeatSpec(BaseModel):
     effect: Literal["advances", "reveals", "complicates"] = "advances"
     entities: list[str] = []
     is_ending: bool = False
+    hints: list[HintSpec] = []  # GROW interleave guidance ("before D1's commit")
+    flexibility: str = ""  # intersection invitation ("the docks could be the market")
 
 
 class PathScaffold(BaseModel):
@@ -192,6 +202,10 @@ def _make_beat(
             dilemma_impacts=impacts or [],
             entities=spec.entities,
             is_ending=spec.is_ending,
+            temporal_hints=[
+                TemporalHint(dilemma=h.dilemma, position=h.position) for h in spec.hints
+            ],
+            flexibility=spec.flexibility,
         )
     except ValidationError as e:
         raise ApplyError(f"invalid beat {spec.id}: {e}") from e
@@ -211,6 +225,19 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
             f"scaffolds must cover every dilemma exactly once; "
             f"missing {sorted(expected - covered)}, unknown {sorted(covered - expected)}"
         )
+
+    all_specs = list(proposal.setup) + [
+        s
+        for scaffold in proposal.scaffolds
+        for s in (
+            *scaffold.pre_commit,
+            *(b for p in scaffold.paths for b in (p.commit, *p.post_commit)),
+        )
+    ]
+    for spec in all_specs:
+        for hint in spec.hints:
+            if hint.dilemma not in expected:
+                raise ApplyError(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
 
     for spec in proposal.setup:
         beat = _make_beat(spec, beat_class=BeatClass.STRUCTURAL, purpose=StructuralPurpose.SETUP)

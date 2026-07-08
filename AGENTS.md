@@ -35,6 +35,13 @@ implementation must deviate, change the doc *in the same PR* and record
 the deviation (Departures section in 01/02, mini-ADR table in 03 §9).
 Undocumented divergence is a bug even when the code is better.
 
+When the design docs are **silent** on a story-model question, do not
+derive from first principles: consult `docs/heritage/` (the original
+QuestFoundry source documents, reference-only — see its README) and the
+danger zones in design doc 01 §9 first, then bring the answer into the
+NG docs. Free derivation in doc-silent territory produced a confidently
+wrong invariant claim once already (STATUS decision log, 2026-07-08).
+
 ## Commands
 
 ```bash
@@ -56,8 +63,13 @@ src/questfoundry/
               # structure, presentation) + scope presets with budgets
   graph/      # store.py (typed graph), mutations.py (THE write path),
               # queries.py (computed arcs, DAG walks), validate.py (I1-I13 -> gates)
+  pipeline/   # runner.py (uniform stage loop), weave.py (GROW's deterministic
+              # interleaving core), stages/ (per-stage schemas + apply), prompts/
+  llm/        # adapter.py (schema-validated structured output), providers/
+              # (anthropic, mock fixture replay/record), cache.py, ledger.py
+  play/       # simulate.py (arc walker for QA; engine/TUI arrive with M3)
   project/    # io.py: YAML-per-node project directory, load/save
-  cli.py      # qf new / validate / status / graph
+  cli.py      # qf new / run / validate / status / graph / simulate
 tests/        # invariant negative cases, mutation guards, golden, round-trip
 examples/keepers-bargain/   # hand-authored golden story (must always pass)
 ```

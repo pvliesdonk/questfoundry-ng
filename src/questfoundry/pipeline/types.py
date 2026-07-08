@@ -40,6 +40,10 @@ class PassSpec:
       human-readable summary lines of what was applied. Raise
       `ApplyError` (or let `MutationError` escape) to trigger repair —
       the runner snapshots and restores the graph around failed applies.
+    - `skip_if(project)`: optional; return a reason string to skip the
+      pass (no LLM call, recorded on the report with attempts=0), or
+      None to run it. For passes whose engine-determined work list can
+      be empty (e.g. GROW's bridge pass with no gaps).
     """
 
     name: str
@@ -48,6 +52,7 @@ class PassSpec:
     schema: type[BaseModel]
     build_context: Callable[[Project], dict]
     apply: Callable[[BaseModel, Project], list[str]]
+    skip_if: Callable[[Project], str | None] | None = None
 
 
 @dataclass(frozen=True)

@@ -33,6 +33,18 @@ def test_ordering_rejects_cycles():
         mutations.add_ordering(g, "beat:one-post-a", "beat:one-pre")
 
 
+def test_remove_ordering_requires_an_existing_edge():
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    from questfoundry.models.base import EdgeKind
+
+    mutations.remove_ordering(g, "beat:one-pre", "beat:one-commit-a")
+    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:one-pre", "beat:one-commit-a")
+    with pytest.raises(MutationError, match="no ordering"):
+        mutations.remove_ordering(g, "beat:one-pre", "beat:one-commit-a")
+
+
 def test_freeze_blocks_beat_removal():
     g = StoryGraph()
     d, pa, pb = make_dilemma(g, "one")

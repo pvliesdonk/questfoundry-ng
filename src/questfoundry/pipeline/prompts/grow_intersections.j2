@@ -1,0 +1,29 @@
+Propose intersections: moments where beats from DIFFERENT dilemmas could share one
+scene. The beats stay separate and keep advancing their own dilemmas — an
+intersection only declares "these belong in the same room at the same time", so the
+interleaver places them adjacently and a later stage may merge them into one passage.
+Good intersections braid the storylines: the subplot's business happens *inside* the
+backbone's tension instead of alternating politely with it.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}.
+
+SHARED BEATS (experienced by every player; only these may intersect):
+{% for d in dilemmas %}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}): {{ d.dilemma.question }}
+{% for b in d.beats %}
+  - {{ b.id }} — {{ b.summary }} (entities: {{ b.entities | join(", ") }})
+{% if b.flexibility %}
+    flexibility: {{ b.flexibility }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+REQUIREMENTS:
+- Each group: >=2 members, every member from a DIFFERENT dilemma, taken only from
+  the shared beats listed above. No beat may appear in two groups.
+- Only propose a group when the co-occurrence is natural — shared entities, shared
+  place, or an explicit flexibility note. Forced intersections read as coincidence.
+- Zero groups is a valid answer: {"groups": []}.
+- Group ids: intersection:slug. Set location to the shared place's entity id when
+  one anchors the scene; give a one-sentence rationale.
+{% include "_shared.j2" %}

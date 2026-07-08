@@ -124,6 +124,18 @@ def add_ordering(g: StoryGraph, before: str, after: str) -> None:
     g._add_edge(Edge(kind=EdgeKind.PREDECESSOR, src=before, dst=after))
 
 
+def remove_ordering(g: StoryGraph, before: str, after: str) -> None:
+    """Unwire one ordering edge. GROW rewires SEED's scaffold chains when
+    it splices dilemmas together; whether the resulting topology still
+    honors frozen forks/convergences is the gates' job (I9)."""
+    for b in (before, after):
+        if not isinstance(g.get(b), Beat):
+            raise MutationError(f"{b!r} is not a beat")
+    if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
+        raise MutationError(f"no ordering {before} -> {after} to remove")
+    g._remove_edge(EdgeKind.PREDECESSOR, before, after)
+
+
 def remove_beat(g: StoryGraph, beat_id: str) -> None:
     """Beats are never removed after the freeze (I9)."""
     if not isinstance(g.get(beat_id), Beat):

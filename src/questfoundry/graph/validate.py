@@ -291,6 +291,34 @@ def check_i7_convergence_by_role(ctx: Context) -> None:
                     )
 
 
+def check_g3_flag_derivation(ctx: Context) -> None:
+    """G3: flag derivation is total — every consequence of an explored
+    path yields at least one state flag (design doc 02, gate G3)."""
+    derived = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.DERIVED_FROM}
+    for d in ctx.g.nodes_of(Dilemma):
+        for path_id in queries.explored_paths(ctx.g, d.id):
+            for cid in ctx.g.out_ids(path_id, EdgeKind.HAS_CONSEQUENCE):
+                if cid not in derived:
+                    ctx.error(
+                        "G3-FLAGS", f"consequence {cid} of path {path_id} derives no state flag"
+                    )
+
+
+def check_budget_arc_beats(ctx: Context) -> None:
+    preset = ctx.vision.preset
+    if not ctx.g.nodes_of(Beat):
+        return
+    for selection in queries.arc_selections(ctx.g):
+        label = "/".join(selection[d] for d in sorted(selection)) or "(single arc)"
+        count = len(queries.arc_view(ctx.g, selection))
+        if not preset.arc_beats_min <= count <= preset.arc_beats_max:
+            ctx.warn(
+                "B4",
+                f"arc {label} has {count} beats; scope '{preset.name}' targets "
+                f"{preset.arc_beats_min}-{preset.arc_beats_max} (advisory)",
+            )
+
+
 def check_i8_intersections(ctx: Context) -> None:
     for group in ctx.g.nodes_of(IntersectionGroup):
         members = ctx.g.in_ids(group.id, EdgeKind.IN_GROUP)
@@ -503,6 +531,8 @@ GATES: dict[Stage, list] = {
         check_i7_convergence_by_role,
         check_i8_intersections,
         check_i9_freeze,
+        check_g3_flag_derivation,
+        check_budget_arc_beats,
     ],
     Stage.POLISH: [
         check_i10_gates_satisfiable,

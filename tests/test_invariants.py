@@ -207,6 +207,27 @@ def test_i13_second_start_and_choiceless_passage_flagged(vision):
     assert any("exactly one start" in i.message for i in issues)
 
 
+def test_g3_underived_consequence_flagged(vision):
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    issues = errors_for("G3-FLAGS", g, vision)
+    assert len(issues) == 2  # one consequence per path, neither derived
+    from questfoundry.pipeline.stages.grow import _derive_flags
+
+    _derive_flags(g)
+    assert errors_for("G3-FLAGS", g, vision) == []
+
+
+def test_b4_arc_beat_budget_is_advisory(vision):
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)  # 3 beats per arc; micro targets >=8
+    issues = run_checks(g, vision, Stage.GROW)
+    warnings = [i for i in issues if i.check == "B4"]
+    assert warnings and all(i.severity == Severity.WARNING for i in warnings)
+
+
 def test_golden_story_passes_all_gates(golden):
     issues = run_checks(golden.graph, golden.vision, golden.stage)
     errors = [i for i in issues if i.severity == Severity.ERROR]

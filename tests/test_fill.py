@@ -128,8 +128,8 @@ def test_gate_requires_voice(golden_fill):
 
 
 def _diamond_graph(reverse_wiring: bool):
-    """Two prose-bearing passages converging on a third, wired through
-    the mutation layer in either order."""
+    """A fork into two prose-bearing passages converging on a fourth,
+    wired through the mutation layer in either order."""
     from questfoundry.graph import mutations
     from questfoundry.graph.store import StoryGraph
     from questfoundry.models.base import Stage
@@ -138,19 +138,20 @@ def _diamond_graph(reverse_wiring: bool):
 
     g = StoryGraph()
     d, pa, _pb = make_dilemma(g, "d")
-    for slug in ("left", "right", "join"):
+    for slug in ("start", "left", "right", "join"):
         mutations.add_beat(g, narrative_beat(slug, d), [pa])
         mutations.add_passage(
             g,
             Passage(id=f"passage:p-{slug}", created_by=Stage.POLISH, summary=slug),
             [f"beat:{slug}"],
         )
-    wiring = ["passage:p-left", "passage:p-right"]
+    branches = ["passage:p-left", "passage:p-right"]
     if reverse_wiring:
-        wiring.reverse()
-    for src in wiring:
-        mutations.add_choice(g, src, "passage:p-join", Choice(label=f"via {src}"))
-        mutations.set_passage_prose(g, src, f"prose of {src}")
+        branches.reverse()
+    for branch in branches:
+        mutations.add_choice(g, "passage:p-start", branch, Choice(label=f"to {branch}"))
+        mutations.add_choice(g, branch, "passage:p-join", Choice(label=f"via {branch}"))
+        mutations.set_passage_prose(g, branch, f"prose of {branch}")
     return g
 
 
@@ -181,12 +182,18 @@ def test_write_context_survives_a_save_load_round_trip(tmp_path, vision):
         root=tmp_path, name="t", stage=Stage.FILL, vision=vision,
         graph=_diamond_graph(reverse_wiring=True),
     )
-    before = _write_context_for("passage:p-join")(project)
+    # p-join exercises the window (two in-edges); p-start exercises
+    # lookahead and choices (two out-edges).
+    builders = [_write_context_for(p) for p in ("passage:p-join", "passage:p-start")]
+    before = [b(project) for b in builders]
     save_project(project)
-    after = _write_context_for("passage:p-join")(load_project(tmp_path))
-    for key in ("window", "lookahead", "choices"):
-        assert before[key] == after[key], key
-    assert [b.id for b in before["beats"]] == [b.id for b in after["beats"]]
+    reloaded = load_project(tmp_path)
+    after = [b(reloaded) for b in builders]
+    for b, a in zip(before, after, strict=True):
+        for key in ("window", "lookahead", "choices"):
+            assert b[key] == a[key], key
+        assert [x.id for x in b["beats"]] == [x.id for x in a["beats"]]
+    assert len(before[0]["window"]) == 2 and len(before[1]["choices"]) == 2
 
 
 def test_micro_detail_entity_resolves_ids_and_slugs_only(golden_fill):

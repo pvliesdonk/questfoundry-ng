@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-08 · PR #6 (agent/doc infrastructure)
+> Last updated: 2026-07-08 · PR #7 (model-tiering guidance)
 
 ## Where we are
 
@@ -81,3 +81,9 @@ against recorded fixtures.
 - **2026-07-08 (PR #6):** `AGENTS.md` is the single source of agent
   instructions (`CLAUDE.md` imports it); this file is the living
   hand-off; PR template enforces the documentation contract.
+- **2026-07-08 (PR #7):** Model-tiering policy in `AGENTS.md`: frontier
+  models (Fable/Opus) own semantics/design/integration/final review;
+  mid-tier (Sonnet) implements against written contracts; small tier
+  (Haiku) does mechanical work. Expensive sessions delegate typing;
+  cheap sessions escalate semantics instead of improvising. Mirrors the
+  pipeline's own `architect`/`writer`/`utility` roles (design doc 03 §5).

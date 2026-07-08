@@ -120,6 +120,54 @@ silence is not.
   construction test is incomplete.
 - Never commit scratch files, generated exports, or `cache/` contents.
 
+## Model economics — who thinks, who types
+
+Development runs across many sessions on models with wildly different
+prices. Match the model tier to the work — the same principle the
+pipeline itself applies with its `architect`/`writer`/`utility` roles
+(design doc 03 §5). Note these are two different knobs: 03 §5 configures
+the *story pipeline's runtime* LLM calls; this section governs
+*development sessions* working on this repo. When you are an expensive
+model, delegate; when you are a cheap one, stay inside your tier's lane
+and escalate rather than guess.
+
+**Frontier tier (Fable/Opus-class) — decide what the words should be:**
+
+- Story-model semantics: anything touching invariants, `belongs_to`,
+  the freeze, convergence, arc computation. The narrative-vs-DAG mapping
+  is *the* hard part of this codebase and where subtle wrongness hides.
+- GROW algorithm design (M2), changes to gate/invariant semantics,
+  prose-feasibility rules.
+- Design-doc changes, milestone planning, cross-module integration,
+  and final review of work produced by cheaper tiers.
+
+**Mid tier (Sonnet-class) — make the code match the words:**
+
+- Implementing a module whose design-doc section already specifies its
+  contract (LLM adapter, stage runner plumbing, export writers, CLI
+  commands, play engine).
+- Writing tests for specified behavior; recording fixtures; addressing
+  concrete review findings.
+
+**Small tier (Haiku-class) — mechanical work:**
+
+- Renames, formatting, doc-link fixes, YAML fixture typing, STATUS.md
+  checkbox upkeep, changelog-style edits.
+
+**Session pattern for expensive models:** act as architect + integrator.
+Sharpen the contract first (design-doc section, module interface,
+acceptance checks), hand implementation to cheaper subagents or
+follow-up sessions, then verify their output against the gates and
+review the diff yourself. Don't spend frontier tokens typing code a
+mid-tier model can produce from a good spec — and never hand
+narrative/DAG semantics to a cheap model to save money; that trade
+always loses.
+
+**Escalation rule for cheaper models:** if a task turns out to require
+changing an invariant, a gate, a design doc, or anything in the iron
+rules, stop and flag it for a frontier session (note it in
+`docs/STATUS.md` under open items) instead of improvising.
+
 ## Scope discipline
 
 Milestones are vertical slices (`docs/design/05-roadmap.md`). Build the

@@ -1,0 +1,28 @@
+id: passage:p-orrin-at-gate
+summary: Orrin arrives at first light with a sealed jar, begging Mave to take the hour of
+  his child's coming death; she remembers surrendering her own grief and the years of numb
+  exile since. Tracing the rot spreading from her trunk into her neighbors' roots, she leads
+  Orrin toward the planting bed as he speaks of his daughter's small hands, and takes the
+  warm, thrumming jar into her hands, knowing the ground she would trust it to is failing.
+entities:
+- character:orrin-petitioner
+- character:sexton-mave
+- location:orchard-of-hours
+- object:keepers-fruit
+beats:
+- beat:immunity-as-exile
+- beat:orrin-at-the-gate
+- beat:the-spreading-ground
+- beat:the-unspoken-rot
+- beat:the-weight-of-the-jar
+choices:
+- label: Fold his hands back around the jar and speak the truth
+  grants:
+  - flag:mave-names-orchard-untrustworthy
+  - flag:orrin-sent-home-with-grief
+  to: passage:p-return-jar
+- label: Kneel and open the planting bed for his jar
+  grants:
+  - flag:childs-hour-planted-in-spoiling-soil
+  - flag:office-proven-worth-preserving
+  to: passage:p-take-jar

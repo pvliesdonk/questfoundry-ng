@@ -1,0 +1,11 @@
+The mist does not take the words the way it takes a shape. It holds them. You feel them stand in the cold air where your breath left them, the sentence you were made never to say, and the orchard receives it the way loam receives a stone, closing around the thing without dissolving it.
+
+The rows sour as you listen. You cannot see it happen, only know it, the way you know an hour has gone bad before you lift the jar. The green here was always a held green, a green under keeping. Now the color turns at the edges of your seeing, the leaves going the brown of a bruise pressed too long, the fruit slackening on its stems. The air thins. Whatever hush this ground has carried for the grieving who came and knelt and gave over their heaviest hours, it thins now to something you can see through, and behind it is only ground and cold and your own two hands.
+
+You have told a man his well has gone bad. You have said the water can no longer be trusted. And the well was you. The trust was you.
+
+The oldest row weeps behind you, a slow dark bead of sap gathering at a split you did not cut. The tin tags turn on their strings and catch the grave-cold light and give none of it back. You planted every one of those names with a promise folded under it, that here the weight would be borne for them, that here they might set the hour down and walk out lighter into the grey. Orrin walked out heavier. You made him. You sent his daughter's coming death home in his wrong-buttoned coat because you could no longer swear the ground would keep her whole.
+
+The keeper does not say the orchard is failing. To say it is to have it be. You have said it. It stands in the mist and does not soften and does not go, and the saying has already begun its work in the loam.
+
+Something must be done with a thing that cannot be taken back. Your own fruit hangs near, rotten at the core where your hour lies buried, warm still, yours to reclaim. The grafting knife waits in its oilcloth against your hip, and your forearm is bare under the rolled sleeve, pale in the failing light.

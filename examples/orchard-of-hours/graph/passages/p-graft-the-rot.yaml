@@ -1,0 +1,20 @@
+id: passage:p-graft-the-rot
+summary: Mave opens her forearm with the grafting knife and presses the rotting fruit into
+  the wound, binding the spoil into her flesh; the rot withdraws from the roots and the soil
+  and every donated hour are spared. She carries a grief that was never her own, the office's
+  exile deepened, the keeper who holds what others cannot so the ground stays whole.
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+- location:orchard-of-hours
+ending:
+  id: e-graft-the-rot
+  title: What the Keeper Carries
+irrelevant_flags:
+- flag:childs-hour-planted-in-spoiling-soil
+- flag:mave-names-orchard-untrustworthy
+- flag:orrin-sent-home-with-grief
+beats:
+- beat:graft-the-rot-commit
+- beat:the-grief-never-hers
+- beat:the-ground-spared

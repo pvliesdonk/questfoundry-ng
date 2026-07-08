@@ -1,0 +1,57 @@
+flags:
+- id: flag:childs-hour-planted-in-spoiling-soil
+  description: Orrin's child's hour is planted in ground Mave knows is spoiling, his last
+    mercy wagered against the same rot.
+  source: dilemma
+  path: path:take-the-jar
+  derived_from:
+  - consequence:childs-hour-planted-in-spoiling-soil
+- id: flag:ground-and-hours-spared
+  description: The soil and every donated hour are spared the spreading rot, the orchard kept
+    whole for the grieving who still come.
+  source: dilemma
+  path: path:graft-the-rot
+  derived_from:
+  - consequence:ground-and-hours-spared
+- id: flag:mave-becomes-grievable
+  description: Mave's buried goodbye returns to her; she can grieve again as an ordinary mortal,
+    the office's immunity dissolved from her.
+  source: dilemma
+  path: path:eat-the-fruit
+  derived_from:
+  - consequence:mave-becomes-grievable
+- id: flag:mave-carries-alien-grief
+  description: Mave's body holds a rot that was never hers, deepening the exile of the office
+    and binding her further from being human.
+  source: dilemma
+  path: path:graft-the-rot
+  derived_from:
+  - consequence:mave-carries-alien-grief
+- id: flag:mave-names-orchard-untrustworthy
+  description: Mave is forced to say aloud that her orchard may no longer be safe to hold
+    anyone's grief.
+  source: dilemma
+  path: path:return-the-jar
+  derived_from:
+  - consequence:mave-names-orchard-untrustworthy
+- id: flag:office-proven-worth-preserving
+  description: The act of accepting one more sorrow shows Mave whether the keeper's office
+    is still worth its cost.
+  source: dilemma
+  path: path:take-the-jar
+  derived_from:
+  - consequence:office-proven-worth-preserving
+- id: flag:orchard-loses-keeper-immunity
+  description: The orchard stands without a keeper shielded from grief, its collective sorrow
+    left untended and unprotected for those who come after.
+  source: dilemma
+  path: path:eat-the-fruit
+  derived_from:
+  - consequence:orchard-loses-keeper-immunity
+- id: flag:orrin-sent-home-with-grief
+  description: Orrin leaves carrying the hour of his child's death himself, denied the only
+    relief the orchard offered.
+  source: dilemma
+  path: path:return-the-jar
+  derived_from:
+  - consequence:orrin-sent-home-with-grief

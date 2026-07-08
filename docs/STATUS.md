@@ -278,8 +278,8 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   hardening lessons, and budget data in the decision log. Anthropic
   live runs work via the `QF_ANTHROPIC_API_KEY` passthrough (hosted
   environments strip the reserved `ANTHROPIC_API_KEY` name); billing
-  was resolved 2026-07-08, unblocking the first Claude-driven
-  generation — its results land in the decision log when it completes.
+  was resolved 2026-07-08 and the first Claude-driven generation ran
+  the same day — results in the "live run 3" decision-log entry.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review
@@ -287,7 +287,22 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Decision log
 
-- **2026-07-08 (live run 2 — id-contract validation):** Second live
+- **2026-07-08 (live run 3 — the first Claude-driven generation):**
+  "The Orchard of Hours" (fresh premise, micro scope) on the default
+  model map — claude-opus-4-8 architect/writer + claude-haiku-4-5
+  utility — is **the first story the pipeline generated on Claude**:
+  24 beats, 10 passages (incl. a false-branch diamond and two
+  fork-frontier residue beats — this premise also produced the
+  fork-rejoin topology, handled cleanly by the PR #15 fix), 4 arcs,
+  0 gate errors, 4/4 arcs simulate complete, all three exports
+  round-trip clean; preserved as `examples/orchard-of-hours/`.
+  Budget: 43 calls, opus 76k in / 22k out, haiku pennies —
+  **~$0.95**, with **one repair round total** (intersections), the
+  cleanest live run yet; opus needed ~4x fewer output tokens than
+  gpt-5 for the same shape of work (no reasoning-token inflation on
+  chat completions). One attempt failed mid-FILL and yielded the
+  taste-laundering review-contract lesson (entry below); under the
+  hardened contract all ten writes converged with haiku reviewing. Second live
   generation ("The Cartographer's Debt", fresh premise, micro scope,
   gpt-5 architect/writer + gpt-4.1-mini utility — chosen because the
   Anthropic account has no credits, see open items, and gpt-5 is the

@@ -1,0 +1,15 @@
+id: object:keepers-fruit
+name: The Keeper's Fruit
+concept: The single rotting fruit on Mave's tree — eat it to reclaim her hour and lose her
+  immunity, or graft its rot into her own body to spare the ground.
+base:
+  appearance: dark, split at the seam, honey-heavy and collapsing, warm to the touch as a
+    living thing
+  property: to take back what she gave, at the cost of the office that keeps grief from her
+  detail: the surrendered hour still faintly beats inside the rot, warm as a small living
+    thing
+  interior: Beneath the honeyed pith lies a blackened stone at the fruit's core.
+  stone: Its central stone is black all the way through, takes no light, and stays cold in
+    any hand.
+  detachment: It comes away from the stem too easily, ripe past keeping, warm as a living
+    thing in the hand.

@@ -1,0 +1,12 @@
+id: beat:the-keeper-named-the-rot
+summary: Alone among the souring rows, Mave hears her own confession echo — that her orchard
+  is failing — and knows she has said aloud the thing that unmakes the office she holds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: complicates
+entities:
+- character:sexton-mave
+- location:orchard-of-hours
+belongs_to:
+- path:return-the-jar

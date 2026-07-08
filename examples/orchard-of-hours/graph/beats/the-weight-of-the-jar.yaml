@@ -1,0 +1,15 @@
+id: beat:the-weight-of-the-jar
+summary: Orrin sets the jar in Mave's hands and it is warmer than she expected, thrumming
+  faintly with an hour not yet spent. She understands that to plant it is to risk his last
+  mercy to a ground she knows is failing.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: reveals
+entities:
+- character:orrin-petitioner
+- character:sexton-mave
+- object:keepers-fruit
+belongs_to:
+- path:return-the-jar
+- path:take-the-jar

@@ -1,0 +1,14 @@
+id: beat:the-fruit-splits
+summary: Mave cuts the blackened fruit from her own tree and holds it in her palm, its rot
+  warm and sweet, the buried hour of her long-ago goodbye still faintly beating inside the
+  spoil.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: advances
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+belongs_to:
+- path:eat-the-fruit
+- path:graft-the-rot

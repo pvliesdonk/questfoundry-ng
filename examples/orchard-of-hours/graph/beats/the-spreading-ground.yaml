@@ -1,0 +1,18 @@
+id: beat:the-spreading-ground
+summary: 'She traces the rot creeping from her trunk into the neighboring roots and understands
+  the choice cannot wait: reclaim her own hour, or take the spoil into her body before it
+  poisons the ground for those who come after.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: complicates
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+- location:orchard-of-hours
+temporal_hints:
+- dilemma: dilemma:accept-orrins-hour
+  position: after_commit
+belongs_to:
+- path:eat-the-fruit
+- path:graft-the-rot

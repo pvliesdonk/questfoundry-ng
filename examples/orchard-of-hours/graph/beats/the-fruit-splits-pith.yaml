@@ -1,0 +1,8 @@
+id: beat:the-fruit-splits-pith
+created_by: polish
+summary: The split fruit weeps a pale, honeyed pith down Mave's wrist, cloying and warm as
+  a held breath.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:mave

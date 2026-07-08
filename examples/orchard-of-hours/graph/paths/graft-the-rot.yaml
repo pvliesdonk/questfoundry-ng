@@ -1,0 +1,10 @@
+id: path:graft-the-rot
+name: Bearing the Rot
+explores: answer:graft-the-rot
+consequences:
+- id: consequence:ground-and-hours-spared
+  text: The soil and every donated hour are spared the spreading rot, the orchard kept whole
+    for the grieving who still come.
+- id: consequence:mave-carries-alien-grief
+  text: Mave's body holds a rot that was never hers, deepening the exile of the office and
+    binding her further from being human.

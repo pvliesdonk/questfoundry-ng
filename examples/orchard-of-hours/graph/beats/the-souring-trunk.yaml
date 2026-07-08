@@ -1,0 +1,10 @@
+id: beat:the-souring-trunk
+summary: Mave stops at the oldest tree, grown from the hour she herself surrendered when she
+  took the office. Its single fruit hangs blackened and split, and the rot has begun to creep
+  down the trunk into the soil that feeds the neighboring rows.
+beat_class: structural
+purpose: setup
+entities:
+- location:orchard-of-hours
+- object:keepers-fruit
+- character:sexton-mave

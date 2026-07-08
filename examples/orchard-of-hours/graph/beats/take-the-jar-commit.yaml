@@ -1,0 +1,14 @@
+id: beat:take-the-jar-commit
+summary: Mave kneels at the planting bed and buries Orrin's jar in ground she knows is spoiling,
+  betting the orchard can hold one more sorrow, wagering his last mercy against the same rot.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: commits
+entities:
+- character:sexton-mave
+- character:orrin-petitioner
+- object:keepers-fruit
+- location:orchard-of-hours
+belongs_to:
+- path:take-the-jar

@@ -1,0 +1,20 @@
+id: passage:p-residue-take
+summary: The fresh-turned earth exhales its sweet-rot warmth as Mave stands over the settling
+  soil, one grief heavier and the office intact around her like a well-worn coat, the ground
+  kept whole for whoever comes after.
+entities:
+- character:mave
+- location:the-orchard
+beats:
+- beat:residue-take-the-jar
+choices:
+- label: Lift your own rotting fruit to your mouth
+  grants:
+  - flag:mave-becomes-grievable
+  - flag:orchard-loses-keeper-immunity
+  to: passage:p-eat-the-fruit
+- label: Take up the grafting knife and bare your forearm
+  grants:
+  - flag:ground-and-hours-spared
+  - flag:mave-carries-alien-grief
+  to: passage:p-graft-the-rot

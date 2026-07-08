@@ -1,0 +1,12 @@
+id: beat:orrin-leaves-lightened
+summary: Orrin departs unburdened, thanking the keeper for taking what he could not hold,
+  never seeing the blackened trunk two rows over.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: advances
+entities:
+- character:orrin-petitioner
+- location:orchard-of-hours
+belongs_to:
+- path:take-the-jar

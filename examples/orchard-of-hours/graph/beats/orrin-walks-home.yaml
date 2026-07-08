@@ -1,0 +1,12 @@
+id: beat:orrin-walks-home
+summary: Orrin walks back through the gate with the jar still warm against his chest, denied
+  the only relief he came for, the hour of his daughter's death now his alone to bear.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: advances
+entities:
+- character:orrin-petitioner
+- location:orchard-of-hours
+belongs_to:
+- path:return-the-jar

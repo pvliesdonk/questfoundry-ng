@@ -1,0 +1,10 @@
+id: path:take-the-jar
+name: One More Grief
+explores: answer:take-the-jar
+consequences:
+- id: consequence:childs-hour-planted-in-spoiling-soil
+  text: Orrin's child's hour is planted in ground Mave knows is spoiling, his last mercy wagered
+    against the same rot.
+- id: consequence:office-proven-worth-preserving
+  text: The act of accepting one more sorrow shows Mave whether the keeper's office is still
+    worth its cost.

@@ -1,0 +1,10 @@
+id: path:eat-the-fruit
+name: Reclaiming the Hour
+explores: answer:eat-the-fruit
+consequences:
+- id: consequence:mave-becomes-grievable
+  text: Mave's buried goodbye returns to her; she can grieve again as an ordinary mortal,
+    the office's immunity dissolved from her.
+- id: consequence:orchard-loses-keeper-immunity
+  text: The orchard stands without a keeper shielded from grief, its collective sorrow left
+    untended and unprotected for those who come after.

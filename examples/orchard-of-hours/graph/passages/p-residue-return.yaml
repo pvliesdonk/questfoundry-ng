@@ -1,0 +1,19 @@
+id: passage:p-residue-return
+summary: The rows sour around Mave in the grave-cold light; her admission of failure hangs
+  unretractable in the mist, thinning the orchard's hush to something brittle and exposed.
+entities:
+- character:mave
+- location:the-orchard
+beats:
+- beat:residue-return-the-jar
+choices:
+- label: Lift your own rotting fruit to your mouth
+  grants:
+  - flag:mave-becomes-grievable
+  - flag:orchard-loses-keeper-immunity
+  to: passage:p-eat-the-fruit
+- label: Take up the grafting knife and bare your forearm
+  grants:
+  - flag:ground-and-hours-spared
+  - flag:mave-carries-alien-grief
+  to: passage:p-graft-the-rot

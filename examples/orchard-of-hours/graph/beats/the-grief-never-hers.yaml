@@ -1,0 +1,14 @@
+id: beat:the-grief-never-hers
+summary: Mave carries in her body a spoil that was never her own grief, the office's exile
+  deepened, bound further from being human — the keeper who holds what others cannot, so it
+  does not spoil the ground for those who come after.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: reveals
+entities:
+- character:sexton-mave
+- location:orchard-of-hours
+is_ending: true
+belongs_to:
+- path:graft-the-rot

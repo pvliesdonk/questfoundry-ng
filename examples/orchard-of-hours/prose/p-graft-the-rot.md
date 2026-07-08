@@ -1,0 +1,11 @@
+You take the fruit down. It comes away too easily, ripe past keeping, warm in your hand as a thing that still has its own heat to give. The split at its seam breathes honey. Beneath the pith, where the blackened stone sits cold, you feel the hour still faintly beating, the goodbye you buried folded small and stubborn inside the rot, warm as something living that does not know it is over.
+
+You set your bare forearm across your knee, pale in the failing light, the old sap-stains dark in the creases of the skin. The grafting knife lies where you left it. You lift it. You know the weight of every fruit in this orchard without needing to lift it, and you know the weight of this, and you know there is only the one place left to put it where it will not spoil the ground.
+
+You open the arm. A clean line, the way you would open bark to take a scion, no more pressure than the graft asks for. Then you press the fruit into the wound, the soft collapsing dark of it against the raw of you, and you hold it there while the two griefs find each other. The stone stays cold against the heat of your blood. You feel it root.
+
+Down the rows the sourness turns and draws back. You cannot see it, only know it, the way you know an hour has gone good again before you lift the jar. The oldest trunk stops its weeping. The leaves hold their held green. The soil closes over the small kept life you laid in it and keeps it whole, and every name on every turning tag is spared the thing that came for them, borne now in the arm you bind against your side.
+
+So this is the office, carried past its edge. You have taken a grief that was never yours and given it your body for its ground, and it will take root there and grow, and there is no gate you can walk out lighter through. You are further from the grieving who come than you have ever stood. The dawn lies level and grey on the rows they will kneel in. They will not know your name. They will set their hours down and walk out into the cold, and the ground will keep, because someone stayed behind to hold what the ground could not.
+
+You draw your sleeve down over the binding. The orchard breathes. You go on keeping it.

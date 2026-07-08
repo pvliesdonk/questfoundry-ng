@@ -1,0 +1,10 @@
+id: passage:p-fruit-pith
+summary: The split fruit weeps a pale, honeyed pith down Mave's wrist, cloying and warm as
+  a held breath.
+entities:
+- character:mave
+beats:
+- beat:the-fruit-splits-pith
+choices:
+- label: Wipe the honeyed pith from your wrist and turn to the gate
+  to: passage:p-orrin-at-gate

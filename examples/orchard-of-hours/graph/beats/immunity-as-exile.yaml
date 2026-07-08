@@ -1,0 +1,13 @@
+id: beat:immunity-as-exile
+summary: Mave remembers the day she took the office and gave her grief away, and how the years
+  since have passed without weeping, without mourning — a protection she cannot tell from
+  a slow exile from being human.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: reveals
+entities:
+- character:sexton-mave
+belongs_to:
+- path:eat-the-fruit
+- path:graft-the-rot

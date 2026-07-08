@@ -1,0 +1,12 @@
+id: beat:residue-take-the-jar
+created_by: polish
+summary: The fresh-turned earth exhales its sweet-rot warmth as Mave stands over the settling
+  soil, one grief heavier and the office intact around her like a well-worn coat; the dawn
+  lies quiet, the ground kept whole for whoever comes after.
+beat_class: structural
+purpose: residue
+entities:
+- character:mave
+- location:the-orchard
+requires_flags:
+- flag:office-proven-worth-preserving

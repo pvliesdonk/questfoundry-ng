@@ -1,0 +1,15 @@
+id: beat:orrin-at-the-gate
+summary: Orrin arrives at the orchard wall at first light, a sealed jar cradled against his
+  chest, asking the keeper to take the hour of his child's coming death so he need not carry
+  it alone.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: advances
+entities:
+- character:orrin-petitioner
+- character:sexton-mave
+- location:orchard-of-hours
+belongs_to:
+- path:return-the-jar
+- path:take-the-jar

@@ -52,7 +52,7 @@ def run(
     ),
 ) -> None:
     """Run pipeline stage(s) against the project's configured LLM provider."""
-    from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider
+    from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider, OpenAIProvider
     from questfoundry.models.base import Stage as StageEnum
     from questfoundry.pipeline.runner import RunnerError, run_pipeline
     from questfoundry.pipeline.stages import IMPLS
@@ -69,11 +69,20 @@ def run(
         provider = MockProvider(fixtures)
         cache_dir = None  # replay is already deterministic
     elif provider_name == "anthropic":
-        provider = AnthropicProvider()
+        import os
+
+        # Hosted Claude Code environments strip the reserved name
+        # ANTHROPIC_API_KEY from sessions; QF_ANTHROPIC_API_KEY passes
+        # through and wins when set.
+        provider = AnthropicProvider(api_key=os.environ.get("QF_ANTHROPIC_API_KEY"))
+        cache_dir = project.root / "cache" / "llm"
+    elif provider_name == "openai":
+        provider = OpenAIProvider()
         cache_dir = project.root / "cache" / "llm"
     else:
         console.print(
-            f"[red]unknown llm.provider {provider_name!r}; use 'anthropic' or 'mock'[/red]"
+            f"[red]unknown llm.provider {provider_name!r}; "
+            "use 'anthropic', 'openai', or 'mock'[/red]"
         )
         raise typer.Exit(2)
     adapter = LLMAdapter(

@@ -262,14 +262,41 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 - `export/` package and the rest of `play/` (engine, TUI) arrive with
   M3–M4; `play/simulate.py` landed early because M2's exit criterion
   needs it.
-- Live-provider recording (`MockProvider(record_with=...)`) is wired but
-  unexercised — needs an API key session to record real fixtures.
+- ~~Live-provider recording is wired but unexercised~~ **Exercised**:
+  the first live generation ran on 2026-07-08 (OpenAI gpt-5 architect/
+  writer + gpt-4.1-mini utility via the new `providers/openai.py`) and
+  produced a complete, gate-clean, export-valid story — results, three
+  hardening lessons, and budget data in the decision log. Anthropic
+  live runs are unblocked by the `QF_ANTHROPIC_API_KEY` passthrough
+  (hosted environments strip the reserved `ANTHROPIC_API_KEY` name),
+  but environment-variable changes only reach *new* sessions — the
+  first Claude-driven generation belongs to the next session.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (live run):** First live generation: fresh premise
+  ("The Winding House"), micro scope, gpt-5 architect/writer +
+  gpt-4.1-mini reviewer, record mode. Outcome: **a complete story — 27
+  beats, 17 passages, 4 arcs — with 0 gate errors and 0 runtime
+  problems**, end-to-end in ~1h wall-clock and ~$2.50 (95 calls; gpt-5
+  124k in / 219k out incl. reasoning; the utility reviewer cost
+  pennies). The run surfaced and fixed three robustness gaps, each now
+  a violating-construction test: (1) models drop id namespaces — the
+  POLISH audit accepts slug-form ids and repair errors name the
+  expected set; (2) **a taste-based reviewer under the two-round limit
+  can never converge** — each round finds a fresh stylistic opinion, so
+  the "structure is wrong" halt tripped on style nits; the review
+  prompt now confines *failure* to objectively checkable defects, and
+  post-fix the loop demonstrably converges (fail → fix → pass); (3)
+  models cite entities by display name — micro-detail apply resolves
+  any unambiguous id/slug/name reference. Repair-round rates for budget
+  planning: DREAM/BRAINSTORM 1 attempt, SEED ~2, GROW intersections up
+  to 3, FILL writes averaged ~1.7 attempts. The three failures cost
+  ~$0.60 of the total — cheap tuition.
 
 - **2026-07-08 (M4):** FILL's review is a post-apply hook on the
   uniform repair loop (mini-ADR A10) and its pass list is computed from

@@ -66,7 +66,7 @@ src/questfoundry/
   pipeline/   # runner.py (uniform stage loop), weave.py (GROW's core),
               # passages.py (POLISH's core), stages/ (schemas + apply), prompts/
   llm/        # adapter.py (schema-validated structured output), providers/
-              # (anthropic, mock fixture replay/record), cache.py, ledger.py
+              # (anthropic, openai, mock replay/record), cache.py, ledger.py
   play/       # engine.py + tui.py (qf play), simulate.py (arc walker for QA)
   export/     # runtime_json.py (canonical, self-validating round-trip),
               # html.py (standalone player), twee.py (SugarCube)

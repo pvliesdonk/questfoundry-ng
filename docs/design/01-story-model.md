@@ -168,9 +168,14 @@ means "comes before." The DAG *is* the story's structure:
 
 - A **divergence** is the last shared pre-commit beat having one successor
   per explored path (each successor a commit beat).
-- A **convergence** is a beat reachable from both of a soft dilemma's
-  post-commit chains — the storylines rejoin. Hard dilemmas never
-  converge; their branches run to separate endings. With more than one
+- A **convergence** is where a soft dilemma's post-commit chains rejoin.
+  Precisely: the *rejoin frontier* — the minimal beats reachable from
+  both commits. Usually that is a single shared beat; when the diamond
+  feeds a hard fork directly (a legal and common weave), no single beat
+  is on every arc and the frontier is one beat **per world** — each of
+  the hard dilemma's commits. Residue beats splice between a path's
+  exclusive tail and the whole frontier, so they exist in every world.
+  Hard dilemmas never converge; their branches run to separate endings. With more than one
   hard dilemma, hard forks **nest**, and the right mental model is the
   weave as a **tensor of Y graphs**: each dilemma contributes its Y as
   one dimension, and a story position is a coordinate in every

@@ -286,6 +286,27 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Decision log
 
+- **2026-07-08 (fork-rejoin convergence):** The id-contract validation
+  run surfaced a real structural bug: when the weave places a soft
+  dilemma's resolve unit directly before the hard resolve (a legal,
+  common interleaving), the soft diamond rejoins at the hard fork and
+  there is no single convergence beat. `soft_convergence` ("first beat
+  reachable from both commits, in topo order") returned one **hard
+  commit** — a beat not on every arc — and the residue splice then
+  dead-ended every arc on the other hard branch (two I6 errors at
+  POLISH's gate). Fix, per the tensor model (design doc 01 §5): the
+  rejoin is a *frontier* — the minimal shared descendants of the two
+  commits — usually one beat, one per world at a hard fork. New query
+  `soft_rejoin_frontier`; `soft_convergence` returns a beat only when
+  the frontier is single; the residue splice inherits the tail's edge
+  into every frontier beat, so the residue exists in every world; G4
+  reports heavy residue at a fork-rejoin as explicitly unsupported (M5
+  per-world variants) instead of wiring variants at a wrong beat. The
+  freeze record still stores only single-beat convergences — a fork
+  frontier is the hard dilemma's commits, already frozen under forks.
+  Violating-construction tests build the fork-rejoin story through the
+  real weave. Design doc 01's convergence definition updated.
+
 - **2026-07-08 (id contract):** The PR #12 open item is resolved as
   agreed (mini-ADR A11, design doc 03 §5): the adapter's JSON
   instruction now states the id contract once, globally — every node

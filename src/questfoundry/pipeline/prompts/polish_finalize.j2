@@ -1,0 +1,34 @@
+Finalize the story's structure before it becomes passages. Two jobs, both additions
+(the topology is frozen — nothing moves, nothing is deleted):
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+{% if needs %}
+RESIDUE BEATS (required). Where a subplot's paths rejoin, the choice must still be
+felt. For each convergence below, write a short flag-gated mood-setter per side: one
+beat that establishes how the world feels for a player who took that path, placed
+just before the storylines rejoin. 1-2 sentences, present tense, mood not plot — it
+must not advance, reveal, or decide anything.
+{% for n in needs %}
+- {{ n.dilemma.id }} (residue: light) rejoins at {{ n.convergence.id }} — "{{ n.convergence.summary }}"
+{% for path, flag in n.need.path_flags.items() %}
+  - path {{ path }} (its truth: {{ flag }}) arrives from: {{ n.tails[path].summary }}
+{% endfor %}
+{% endfor %}
+Emit >=1 residue entry per dilemma above (one per path is better when both sides
+carry a distinct mood). Each entry: {"dilemma", "path", "id": "beat:slug",
+"summary", "entities": [...]}.
+{% endif %}
+{% if long_runs %}
+FALSE BRANCHES (optional). These stretches run long without a choice; a cosmetic
+fork keeps the feel of agency without structural cost. You may propose a diamond:
+two 1-sentence beats that are different flavors of the same forward motion, forking
+one existing edge and rejoining immediately.
+{% for run in long_runs %}
+- linear run: {{ run | join(" -> ") }}
+{% endfor %}
+Each entry: {"before": beat id, "after": its successor in the same run,
+"arms": [{"id", "summary", "entities"}, {"id", "summary", "entities"}]}.
+Propose none if the runs read fine as scenes.
+{% endif %}
+{% include "_shared.j2" %}

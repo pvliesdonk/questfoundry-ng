@@ -180,3 +180,71 @@ def test_grown_project_roundtrips_frozen(grown):
     assert reloaded.graph.frozen == project.graph.frozen
     issues = run_checks(reloaded.graph, reloaded.vision, reloaded.stage)
     assert [i for i in issues if i.severity == Severity.ERROR] == []
+
+
+# -- M3: POLISH ---------------------------------------------------------------
+
+
+@pytest.fixture()
+def polished(tmp_path):
+    return _run_to(tmp_path, Stage.POLISH)
+
+
+def test_pipeline_reaches_polish(polished):
+    reports, project = polished
+    assert reports[-1].stage == Stage.POLISH
+    assert all(r.success for r in reports), [r.error or r.issues for r in reports]
+    assert project.stage == Stage.POLISH
+    ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
+    assert len(ledger) == 10  # 7 through GROW + finalize + passages + audit
+
+
+def test_polish_builds_the_passage_layer(polished):
+    _, project = polished
+    g = project.graph
+    from questfoundry.models.presentation import Passage
+
+    passages = g.nodes_of(Passage)
+    assert len(passages) == 8
+    endings = sorted(p.ending.title for p in passages if p.ending)
+    assert endings == ["The Long Watch", "The Wide Water"]
+    # residue beats on both sides of the truth convergence, flag-gated
+    residue = [
+        b
+        for b in g.nodes_of(Beat)
+        if b.beat_class.value == "structural" and b.purpose and b.purpose.value == "residue"
+    ]
+    assert sorted(r.requires_flags[0] for r in residue) == [
+        "flag:elias-knows",
+        "flag:lie-between",
+    ]
+    # the audit kept ending passages inside the I12 cap by marking
+    # the truth flags irrelevant decades later
+    long_watch = next(p for p in passages if p.ending and p.ending.id == "e-long-watch")
+    assert long_watch.irrelevant_flags == ["flag:elias-knows", "flag:lie-between"]
+
+
+def test_polished_story_plays_four_distinct_journeys(polished):
+    _, project = polished
+    from questfoundry.play import Player
+
+    endings = set()
+    routes = set()
+    for first in (0, 1):
+        for last in (0, 1):
+            player = Player(project.graph)
+            player.choose(first)  # tell or hide
+            while player.ending is None:
+                player.choose(last if len(player.choices()) > 1 else 0)
+            endings.add(player.ending.title)
+            routes.add(tuple(player.visited))
+    assert endings == {"The Long Watch", "The Wide Water"}
+    assert len(routes) == 4
+
+
+def test_polished_project_roundtrips(polished):
+    _, project = polished
+    reloaded = load_project(project.root)
+    assert reloaded.stage == Stage.POLISH
+    issues = run_checks(reloaded.graph, reloaded.vision, reloaded.stage)
+    assert [i for i in issues if i.severity == Severity.ERROR] == []

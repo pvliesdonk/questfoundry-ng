@@ -187,6 +187,18 @@ def add_passage(g: StoryGraph, passage: Passage, beats: list[str]) -> None:
         g._add_edge(Edge(kind=EdgeKind.GROUPED_IN, src=beat_id, dst=passage.id))
 
 
+def set_passage_irrelevant_flags(g: StoryGraph, passage_id: str, flags: list[str]) -> None:
+    """POLISH feasibility audit: declare flags this passage's prose must
+    not address (they stop counting against the I12 cap)."""
+    passage = g.get(passage_id)
+    if not isinstance(passage, Passage):
+        raise MutationError(f"{passage_id!r} is not a passage")
+    for flag_id in flags:
+        if not isinstance(g.get(flag_id), StateFlag):
+            raise MutationError(f"irrelevant flag {flag_id!r} is not a flag")
+    passage.irrelevant_flags = sorted(flags)
+
+
 def add_choice(g: StoryGraph, src: str, dst: str, choice: Choice) -> None:
     for p in (src, dst):
         if not isinstance(g.get(p), Passage):

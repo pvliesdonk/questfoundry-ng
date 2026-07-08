@@ -38,6 +38,8 @@ src/questfoundry/
     context.py       # per-stage context builders (incl. sliding prose window)
     weave.py         # GROW's deterministic interleaving core (units,
                      # constraints, candidate orders, spine realization)
+    passages.py      # POLISH's deterministic core (collapse, choice
+                     # topology, residue/false-branch splicing)
     stages/          # dream.py .. ship.py — schemas, prompts, gates only
     prompts/         # Jinja2 prompt templates, versioned
   llm/

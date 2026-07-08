@@ -5,11 +5,45 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-08 · M2 (GROW)
+> Last updated: 2026-07-08 · M3 (POLISH & structural play)
 
 ## Where we are
 
-**M2 is complete.** GROW weaves SEED's disconnected Y scaffolds into one
+**M3 is complete.** POLISH compiles the frozen beat DAG into the passage
+graph, and the story is playable in the terminal with zero prose:
+
+- Deterministic passage core (`pipeline/passages.py`): maximal-linear-run
+  collapse (boundaries at forks/joins; flag-gated beats are singleton
+  passages), choice topology with engine-computed endpoints, gates
+  (target head's `requires_flags`) and grants (commit beats contained in
+  the target), residue/false-branch splicing, convergence-need and
+  long-run detection, I12-style active-flag computation. **The golden
+  story is the oracle**: collapse and choice derivation reproduce its
+  hand-authored passage layer exactly (tested).
+- POLISH stage (`pipeline/stages/polish.py`), three passes: *finalize*
+  (LLM writes flag-gated residue beats for every light-residue soft
+  convergence — required, repair-checked — and may propose false-branch
+  diamonds on long runs; skipped when nothing is needed), *passages*
+  (engine fixes groups and choice wiring; LLM contributes only words:
+  summaries, labels, ending titles, and variant summaries for
+  heavy-residue convergences, which the engine wires behind disjoint
+  gates, skipping variant choices whose gate is unholdable from a
+  source — I10), *audit* (feasibility: LLM marks irrelevant flags;
+  I12 enforces the cap on the rest)
+- Gate G4 additions: `G4` label checks (non-empty; sibling duplicates
+  only behind different gates, for variants) and residue coverage
+  (light convergence → gated residue beat; heavy → variant passages)
+- `qf play` (`play/engine.py` + `play/tui.py`): flag-tracking traversal
+  with hidden-not-disabled gated choices (design doc 04 runtime
+  semantics), rendering beat summaries pre-FILL; `--show-state` for
+  structural debugging. The golden story plays end-to-end — four
+  distinct journeys, gated counsel detour, both endings (tested
+  headlessly and via the CLI)
+- e2e: `run --to polish` on the Keeper's Bargain premise reaches POLISH
+  with 0 gate errors — 8 passages (residue beats on both truth paths),
+  two titled endings, four distinct playable journeys (109 tests total)
+
+**M2 is complete** (PR #9). GROW weaves SEED's disconnected Y scaffolds into one
 frozen beat DAG; `qf run --to grow` goes premise → four complete,
 validated arcs, fully offline against recorded fixtures:
 
@@ -93,19 +127,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 - [x] **M0 — Skeleton & graph engine** (PR #3)
 - [x] **M1 — Front of pipeline (DREAM → BRAINSTORM → SEED)** (PR #8)
-- [x] **M2 — GROW** (the risk milestone: interleaving, intersections, freeze)
-- [ ] **M3 — POLISH & structural play** (`qf play` on beat summaries)
+- [x] **M2 — GROW** (the risk milestone: interleaving, intersections, freeze) (PR #9)
+- [x] **M3 — POLISH & structural play** (`qf play` on beat summaries)
 - [ ] **M4 — FILL & first exports** (JSON, HTML player, Twee)
 - [ ] **M5 — DRESS, print gamebook, scope hardening**
 
-## Next up — M3 scope (from `docs/design/05-roadmap.md`)
+## Next up — M4 scope (from `docs/design/05-roadmap.md`)
 
-Passage collapse, choice wiring, feasibility audit, variants, residue
-beats, false branches, gate G4 (I10–I13 checks already exist);
-`qf play` on beat summaries.
+FILL: Voice record, reference-arc-first work queue, per-passage context
+building (entities w/ overlays, shadows, sliding prose window,
+convergence lookahead), automated review (≤2 rounds), gate G5. First
+exports: runtime JSON + HTML player + Twee; round-trip validation.
 
-**Exit criterion:** the golden story is playable in the terminal
-end-to-end — choices, gates, four distinct journeys — with zero prose.
+**Exit criterion:** a stranger plays "The Keeper's Bargain" in a
+browser, start to one of its endings, and can't tell where the seams
+are.
 
 ## Known deferrals / open items
 
@@ -154,6 +190,21 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   to the generous-brainstorm question: B1 checks *equality* with the
   scope preset, so BRAINSTORM is prompted to produce exact counts rather
   than overgenerating for triage. Revisit both together in M3+.
+- **The G4 pacing report is deferred** (design doc 02 lists it: "no >N
+  consecutive same-intensity passages"). It needs the `scene_type`
+  annotation, which per design doc 01 §10 arrives only when a FILL
+  quality gap demonstrably calls for it — implement both together in
+  M4+ if the gap shows.
+- **Character-arc metadata is deferred to M4** (a POLISH output in
+  design doc 02, but FILL is its only consumer — the field plumbing
+  should be shaped by its consumer, like SEED's hints were in M2).
+- **False branches carry no cosmetic flags yet** (choice-feel diamonds
+  only). The flag machinery exists (`FlagSource.COSMETIC`); wire grants
+  when a residue beat or print codeword actually wants one.
+- **`qf simulate --random N` (false-branch/detour coverage, design doc
+  04 §5) is not implemented** — `--all-arcs` covers dilemma
+  combinations; random walks become interesting once false branches
+  actually occur in generated stories.
 - Fixture passage count (7) is below the `micro` target (15–25); B3 is
   an advisory warning by design — as is B4 (arc beat count), whose
   preset ranges are uncalibrated until generated stories exist.
@@ -168,6 +219,21 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (M3):** Passage collapse is fully deterministic and the
+  golden story is its oracle — the engine reproduces the hand-authored
+  grouping and choice topology (endpoints, gates, grants) exactly; the
+  LLM writes only words (summaries, labels, ending titles, residue and
+  variant content, feasibility judgments). Choice grants derive from
+  commit beats contained in the target passage; gates from the target
+  head's `requires_flags`. Variant passages for heavy-residue
+  convergences are wired behind disjoint per-flag gates, and a variant
+  choice is only offered from sources where its gate is holdable
+  (otherwise I10 would rightly reject it). Gated (residue) beats are
+  always singleton passages. Same-label sibling choices are legal only
+  behind different gates (the runtime hides all but one). `qf play`
+  implements design doc 04's runtime semantics directly on the graph;
+  the runtime JSON arrives with SHIP in M4.
 
 - **2026-07-08 (PR #1):** Design docs merged as authoritative; departures
   from the original QuestFoundry recorded per-doc.

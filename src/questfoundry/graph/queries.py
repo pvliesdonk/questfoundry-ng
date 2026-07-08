@@ -118,6 +118,25 @@ def grant_beat(g: StoryGraph, flag_id: str) -> str | None:
     return commit_beat(g, flag.path)
 
 
+def soft_convergence(g: StoryGraph, dilemma_id: str) -> str | None:
+    """The first beat (in topological order) reachable from both of a
+    dilemma's commit beats — where its paths rejoin."""
+    paths = explored_paths(g, dilemma_id)
+    if len(paths) != 2:
+        return None
+    commits = [commit_beat(g, p) for p in paths]
+    if None in commits:
+        return None
+    shared = descendants(g, commits[0]) & descendants(g, commits[1])  # type: ignore[arg-type]
+    return next((b for b in topological_order(g) or [] if b in shared), None)
+
+
+def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, str]:
+    """path id -> the dilemma flag granted at that path's commit."""
+    paths = set(explored_paths(g, dilemma_id))
+    return {f.path: f.id for f in g.nodes_of(StateFlag) if f.path in paths}
+
+
 # -- arc views -------------------------------------------------------------
 
 

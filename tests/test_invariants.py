@@ -228,6 +228,53 @@ def test_b4_arc_beat_budget_is_advisory(vision):
     assert warnings and all(i.severity == Severity.WARNING for i in warnings)
 
 
+def test_g4_duplicate_sibling_labels_flagged(golden):
+    from questfoundry.models.presentation import Choice
+
+    g = golden.graph
+    # a second identically labeled, identically gated choice from p-tremor
+    mutations.add_choice(
+        g,
+        "passage:p-tremor",
+        "passage:p-fair-weather",
+        Choice(label="Send the ship away and tend the light", requires=[], grants=[]),
+    )
+    issues = errors_for("G4", g, golden.vision, Stage.POLISH)
+    assert any("two choices labeled" in i.message for i in issues)
+
+
+def test_g4_missing_residue_coverage_flagged(vision):
+    from questfoundry.models.presentation import Passage
+    from questfoundry.pipeline.stages.grow import _derive_flags
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")  # soft, light residue
+    make_y_scaffold(g, "one", d, pa, pb)
+    # force a convergence so the light dilemma demands a residue beat
+    for beat_id in ("beat:one-post-a", "beat:one-post-b"):
+        g.node(beat_id).is_ending = False
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:one-after",
+            created_by=Stage.SEED,
+            summary="s",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.EPILOGUE,
+            is_ending=True,
+        ),
+        [],
+    )
+    mutations.add_ordering(g, "beat:one-post-a", "beat:one-after")
+    mutations.add_ordering(g, "beat:one-post-b", "beat:one-after")
+    _derive_flags(g)
+    mutations.add_passage(
+        g, Passage(id="passage:p-one", created_by=Stage.POLISH, summary="s"), ["beat:one-after"]
+    )
+    issues = errors_for("G4", g, vision, Stage.POLISH)
+    assert any("no residue beat" in i.message for i in issues)
+
+
 def test_golden_story_passes_all_gates(golden):
     issues = run_checks(golden.graph, golden.vision, golden.stage)
     errors = [i for i in issues if i.severity == Severity.ERROR]

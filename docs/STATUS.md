@@ -193,6 +193,25 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   "live run 4" decision-log entry. All three provider families
   (Anthropic, OpenAI, Gemini) have now produced a complete story.
 
+- **Crash-resume replay of FILL is leaky** (found 2026-07-08 while
+  probing the live-run 4 artifacts). A mid-stage crash loses no money
+  *in principle* — every call is in the content-addressed cache — but
+  an experiment (re-running FILL from the POLISH snapshot + cache)
+  replayed only voice + 3 passages free, then went live at the first
+  multi-predecessor passage and cascaded: FILL's `window`/`lookahead`
+  render in raw edge-store order (`fill.py::_neighbor_prose`, no
+  sort), and choice edges reload from per-passage YAML in alphabetical
+  file order, not wiring order, so the prompt bytes shift and every
+  downstream cache key misses. Prose itself only reaches disk at the
+  gate-passing checkpoint, so a late crash on a long story re-spends
+  most of the stage. Fixes, complementary: (1) canonicalize context
+  ordering (topo-sort window/lookahead like `beats` already is) plus a
+  round-trip prompt-stability test — in-memory context must equal
+  reloaded-project context; mid-tier work. (2) Flush prose per write
+  pass, not per stage — protects the artifact too, but changes design
+  doc 02's checkpoint semantics (partial FILL state on disk is not a
+  gated checkpoint); needs a frontier-tier design decision first.
+
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
   original source documents ("How Branching Stories Work" §The Cost of

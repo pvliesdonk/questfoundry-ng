@@ -302,7 +302,9 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   gpt-5 for the same shape of work (no reasoning-token inflation on
   chat completions). One attempt failed mid-FILL and yielded the
   taste-laundering review-contract lesson (entry below); under the
-  hardened contract all ten writes converged with haiku reviewing. Second live
+  hardened contract all ten writes converged with haiku reviewing.
+
+- **2026-07-08 (live run 2 — id-contract validation):** Second live
   generation ("The Cartographer's Debt", fresh premise, micro scope,
   gpt-5 architect/writer + gpt-4.1-mini utility — chosen because the
   Anthropic account has no credits, see open items, and gpt-5 is the

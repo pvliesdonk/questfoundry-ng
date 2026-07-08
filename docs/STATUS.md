@@ -113,12 +113,19 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   endings multiply (2 hard → 4 endings). No beat is shared across a
   hard fork, so nothing reconverges; the per-combination beats are the
   accepted, deliberately minimized cost of late-committing backbones.
-  What NG lacks is the duplication machinery: GROW must instantiate the
-  inner dilemma's fork per outer branch, which refines I3's "exactly
-  one commit beat per path" (per branch, not global) and the
-  single-grant-point assumptions in `queries.commit_beat` /
-  `queries.grant_beat` / `FreezeRecord.forks`. Frontier-tier work,
-  needed for M5's `medium` scope.
+  Nothing is ever *duplicated*: "hard" means the commit makes the
+  worlds too different to share, so the inner dilemma resolving in
+  different worlds is different scenes — an authoring cost, never a
+  copy operation (a beat that could be identical across the outer
+  branches would mean the outer dilemma wasn't hard). What NG lacks is
+  that per-world authorship — an LLM pass (SEED or GROW, open) writing
+  the inner dilemma's resolution inside each outer world. Structural
+  consequence: an inner path carries one commit beat *per world*
+  (different scenes locking in the same answer), which refines I3's
+  "exactly one commit beat per path" and the single-grant-point
+  assumptions in `queries.commit_beat` / `queries.grant_beat` /
+  `FreezeRecord.forks`. Frontier-tier work, needed for M5's `medium`
+  scope.
 - **M2 intersections group shared pre-commit beats only.** Intersections
   involving exclusive (post-commit) beats are structurally meaningful
   but interact with arc membership in ways the spine model doesn't
@@ -188,12 +195,14 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   (`consequence:elias-knows` → `flag:elias-knows`). Freeze happens
   inside GROW's gate callable, after checks pass and before checkpoint
   save. Multi-hard weaving deferred to M5: per the original source
-  documents, hard forks nest (per-branch beats, multiplied endings) —
-  M2's weave rejects >1 hard dilemma; see open items for the invariant
-  refinements the duplication machinery needs. (An earlier revision of
-  this entry called multi-hard topology "impossible" — wrong: the
-  original docs settle it via nested forks; only NG's single-commit-
-  beat plumbing assumes one hard dilemma.) M2 was frontier-authored
+  documents, hard forks nest (per-world authored beats, multiplied
+  endings) — M2's weave rejects >1 hard dilemma; see open items for
+  the invariant refinements per-world authorship needs. (Two earlier
+  revisions of this entry were wrong: multi-hard topology is not
+  "impossible" — the original docs settle it via nested forks — and
+  nothing is "duplicated": post-fork content is original per world by
+  the definition of hard; only NG's single-commit-beat plumbing
+  assumes one hard dilemma.) M2 was frontier-authored
   end-to-end: the weave semantics *are* the narrative/DAG mapping, and
   every module touched them (per the tiering policy's escalation rule,
   not despite it).

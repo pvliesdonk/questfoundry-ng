@@ -176,9 +176,12 @@ means "comes before." The DAG *is* the story's structure:
   independently authored per-branch beats — no beat is shared across a
   hard fork, and endings multiply (two hard dilemmas → four endings).
   The per-combination beats after the first hard fork are the accepted
-  cost of late-committing backbones, few by design. Realizing this
-  duplication in GROW is M5 work; it refines I3's "exactly one commit
-  beat" to per-branch rather than global (tracked in `docs/STATUS.md`).
+  cost of late-committing backbones, few by design — and never copies:
+  a hard commit makes the worlds too different to share, so the same
+  dilemma resolving in different worlds is different scenes, authored
+  rather than cloned. Realizing that per-world authorship is M5 work;
+  it refines I3's "exactly one commit beat per path" to one per world
+  (tracked in `docs/STATUS.md`).
 - An **intersection** is a co-occurrence declaration: beats from
   *different* dilemmas grouped into one scene (the keeper studies the
   charts — D2 — while deciding about the light — D1). The beats stay

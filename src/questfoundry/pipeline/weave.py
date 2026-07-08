@@ -12,9 +12,10 @@ PREDECESSOR edge set through the mutation layer.
 
 M2 scope: exactly one hard dilemma and both answers of every dilemma
 explored. Multi-hard weaving nests forks — the remaining hard dilemma
-forks again on each branch of the first, with per-branch beats, so
-endings multiply (design doc 01 §5; source: "How Branching Stories
-Work"). That duplication machinery is M5 work, see docs/STATUS.md.
+forks again on each branch of the first, with per-world *authored*
+beats (different worlds, different scenes — never copies), so endings
+multiply (design doc 01 §5). That per-world authorship is M5 work,
+see docs/STATUS.md.
 """
 
 from __future__ import annotations

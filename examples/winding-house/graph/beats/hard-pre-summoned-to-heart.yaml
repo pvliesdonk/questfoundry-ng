@@ -1,0 +1,18 @@
+id: beat:hard-pre-summoned-to-heart
+summary: Kessa ascends with Calder to the Clocktower’s heart where the Sovereign Wind-Key
+  rests on its velvet cradle and the mainspring’s breath reverberates through brass ribs.
+  Calder speaks of duty as the walls shudder faintly against the Halt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: advances
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- object:sovereign-wind-key
+temporal_hints:
+- dilemma: dilemma:gift-your-hours-to-mira
+  position: after_commit
+belongs_to:
+- path:lock-in-and-defend
+- path:uncouple-and-redistribute

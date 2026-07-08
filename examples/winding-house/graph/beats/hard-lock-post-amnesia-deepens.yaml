@@ -1,0 +1,12 @@
+id: beat:hard-lock-post-amnesia-deepens
+summary: Households lose hours in quiet waves as Kessa oversees precise, merciless tuning
+  that keeps the city bright against the Halt. The ledger grows heavier in her hands.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: complicates
+entities:
+- character:kessa-pinion
+- character:orun-calder
+belongs_to:
+- path:lock-in-and-defend

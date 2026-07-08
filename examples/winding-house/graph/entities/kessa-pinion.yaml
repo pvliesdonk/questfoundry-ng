@@ -1,0 +1,15 @@
+id: character:kessa-pinion
+name: Kessa Pinion
+concept: A gifted apprentice clockmaker who can feel torque in her bones, torn between devotion
+  to her master and a dawning sense of stolen time’s injustice.
+base:
+  appearance: Brass-flecked curls pinned by wire, leather apron, ink-stained fingers.
+  manner: Counts under her breath; speaks softly as if not to startle a spring.
+  keepsake: A worn borrowed-time chit stamped with a lark.
+  skill: Hears misaligned teeth as if they were discordant notes.
+  fear: Letting the city stop on her watch.
+  counting_habit: Mouths numbers in pairs, catching the breath on every fifth tick.
+  wire_pin: She keeps a twist of spring-steel wire in her curls that slides free to shim a
+    stubborn gear or scratch a note on tin.
+  scar: A thin crescent scar sits at the base of her right thumb from a spring that slipped
+    during early training.

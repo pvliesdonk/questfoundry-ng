@@ -1,0 +1,14 @@
+id: beat:soft-hold-post-clarity-preserved
+summary: In the workshop Kessa works clean and fast, keeping her edge for the investigation
+  and the climb ahead. Her ledger remains ordinary, attracting no official glare.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: reveals
+entities:
+- character:kessa-pinion
+temporal_hints:
+- dilemma: dilemma:uncouple-or-lock-in
+  position: before_commit
+belongs_to:
+- path:hold-your-hours

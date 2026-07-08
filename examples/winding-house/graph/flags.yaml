@@ -1,0 +1,57 @@
+flags:
+- id: flag:authority-schism
+  description: Calder’s authority fractures into rival cliques within the Clockkeepers, splitting
+    the city between grateful returnees and fearful loyalists.
+  source: dilemma
+  path: path:uncouple-and-redistribute
+  derived_from:
+  - consequence:authority-schism
+- id: flag:city-slows-walls-ajar
+  description: The mainspring is uncoupled; the city’s tempo slackens and long-sealed gates
+    rasp ajar as the Halt’s quiet breath seeps in.
+  source: dilemma
+  path: path:uncouple-and-redistribute
+  derived_from:
+  - consequence:city-slows-walls-ajar
+- id: flag:investigative-clarity-preserved
+  description: Workshop focus and investigative clarity remain intact, preserving leverage
+    against the Clocktower’s mechanisms.
+  source: dilemma
+  path: path:hold-your-hours
+  derived_from:
+  - consequence:investigative-clarity-preserved
+- id: flag:mira-brightens-apprentice-dims
+  description: Mira’s hands steady and color returns to her days while the apprentice shows
+    frayed stamina and softened recall.
+  source: dilemma
+  path: path:give-your-hours
+  derived_from:
+  - consequence:mira-brightens-apprentice-dims
+- id: flag:mira-fades-neighborhood-sours
+  description: Mira’s stitches slip and memories thin, and the neighborhood’s whispers sour
+    toward the apprentice’s perceived coldness.
+  source: dilemma
+  path: path:hold-your-hours
+  derived_from:
+  - consequence:mira-fades-neighborhood-sours
+- id: flag:siphon-entrenched-crackdown
+  description: The siphon is locked in and fortified; patrols tighten around the Clocktower
+    and dissent is cataloged as a threat to survival.
+  source: dilemma
+  path: path:lock-in-and-defend
+  derived_from:
+  - consequence:siphon-entrenched-crackdown
+- id: flag:slow-erosion-of-homes
+  description: Households continue to lose hours in sanctioned drifts, deepening communal
+    amnesia and hastening the vulnerable toward greyed fatigue.
+  source: dilemma
+  path: path:lock-in-and-defend
+  derived_from:
+  - consequence:slow-erosion-of-homes
+- id: flag:transfer-flags-ledger
+  description: The official time-ledger pings the unusual transfer, focusing Keeper scrutiny
+    on the apprentice’s movements.
+  source: dilemma
+  path: path:give-your-hours
+  derived_from:
+  - consequence:transfer-flags-ledger

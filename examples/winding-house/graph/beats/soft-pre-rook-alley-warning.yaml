@@ -1,0 +1,15 @@
+id: beat:soft-pre-rook-alley-warning
+summary: In a wind-bit alley, Rook Ashfell pulls Kessa aside, naming the siphon for what it
+  is and hinting at a way to face the Halt without theft. His warning makes the ledger’s offer
+  feel like complicity.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: complicates
+entities:
+- character:rook-ashfell
+- character:kessa-pinion
+flexibility: This exchange could flank Kessa’s route between shop and Clocktower.
+belongs_to:
+- path:give-your-hours
+- path:hold-your-hours

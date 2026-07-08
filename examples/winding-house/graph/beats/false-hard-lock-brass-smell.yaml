@@ -1,0 +1,10 @@
+id: beat:false-hard-lock-brass-smell
+created_by: polish
+summary: Brass breath and oil hang thick, and the city feels cinched one notch tighter.
+beat_class: structural
+purpose: false_branch
+entities:
+- City
+- Brass
+- Oil
+- Clocktower

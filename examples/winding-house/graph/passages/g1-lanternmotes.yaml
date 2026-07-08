@@ -1,0 +1,13 @@
+id: passage:g1-lanternmotes
+summary: Lantern motes drift like slow ash in the corridor while you count heartbeats between
+  reluctant ticks.
+entities:
+- Kessa
+- Lanterns
+- Corridor
+- Clocktower
+beats:
+- beat:false-ledger-flag-lanternmotes
+choices:
+- label: I take the alley toward Rook before climbing to Calder.
+  to: passage:g3-alley-pressure

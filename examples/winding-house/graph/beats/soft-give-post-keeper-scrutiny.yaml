@@ -1,0 +1,15 @@
+id: beat:soft-give-post-keeper-scrutiny
+summary: The official ledger flags the unusual transfer, and blue-coated Keepers begin noting
+  Kessa’s routes between shop and Clocktower. Calder’s attention sharpens.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: complicates
+entities:
+- character:kessa-pinion
+- character:orun-calder
+temporal_hints:
+- dilemma: dilemma:uncouple-or-lock-in
+  position: before_commit
+belongs_to:
+- path:give-your-hours

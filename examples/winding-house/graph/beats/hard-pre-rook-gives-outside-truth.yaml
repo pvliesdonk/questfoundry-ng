@@ -1,0 +1,19 @@
+id: beat:hard-pre-rook-gives-outside-truth
+summary: Rook scrambles up through a maintenance hatch, showing a sliver of the outer stillness
+  pressing in and describing a slower rhythm the city might survive without stealing. The
+  choice hardens to steel.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: complicates
+entities:
+- character:rook-ashfell
+- character:kessa-pinion
+- character:orun-calder
+temporal_hints:
+- dilemma: dilemma:gift-your-hours-to-mira
+  position: after_commit
+flexibility: Could co-occur on the same dais as the Key, mid-argument.
+belongs_to:
+- path:lock-in-and-defend
+- path:uncouple-and-redistribute

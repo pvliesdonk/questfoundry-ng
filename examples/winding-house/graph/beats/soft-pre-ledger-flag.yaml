@@ -1,0 +1,15 @@
+id: beat:soft-pre-ledger-flag
+summary: 'The workshop’s time-ledger pings Mira’s deficit and presents Kessa an addendum:
+  authorized kin may transfer apprenticed years to stabilize an endangered worker. The form
+  waits under Calder’s seal as Mira sways on her stool.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: reveals
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+- character:orun-calder
+belongs_to:
+- path:give-your-hours
+- path:hold-your-hours

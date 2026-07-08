@@ -1,0 +1,14 @@
+id: beat:residue-light-give
+created_by: polish
+summary: A soft ache of generosity glows under your skin as the mainspring’s hum seems to
+  lean close. Gazes snag on you like burrs, the blue of authority always somewhere in the
+  corner of sight.
+beat_class: structural
+purpose: residue
+entities:
+- Kessa
+- Mira
+- Keepers
+- Clocktower
+requires_flags:
+- flag:transfer-flags-ledger

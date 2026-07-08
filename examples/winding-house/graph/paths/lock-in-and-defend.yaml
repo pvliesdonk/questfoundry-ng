@@ -1,0 +1,10 @@
+id: path:lock-in-and-defend
+name: Keep the Teeth Engaged
+explores: answer:lock-in-and-defend
+consequences:
+- id: consequence:siphon-entrenched-crackdown
+  text: The siphon is locked in and fortified; patrols tighten around the Clocktower and dissent
+    is cataloged as a threat to survival.
+- id: consequence:slow-erosion-of-homes
+  text: Households continue to lose hours in sanctioned drifts, deepening communal amnesia
+    and hastening the vulnerable toward greyed fatigue.

@@ -1,0 +1,21 @@
+id: passage:g13-locked-ending
+summary: Patrols cinch the tower and dissent is logged as threat; you are praised while sanctioned
+  drifts grey Mira’s edges and Rook is turned from the gates. Households lose hours in quiet
+  waves as you oversee merciless precision, the ledger growing heavier until night lays silk-slow
+  on a strong, forgetful city and you keep the beat beside Calder.
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:mira-threadgill
+- character:rook-ashfell
+ending:
+  id: e-g13-locked-ending
+  title: The Bright Forgetting
+irrelevant_flags:
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:transfer-flags-ledger
+beats:
+- beat:hard-lock-ending-watch-on-the-wall
+- beat:hard-lock-post-amnesia-deepens
+- beat:hard-lock-post-patrols-tighten

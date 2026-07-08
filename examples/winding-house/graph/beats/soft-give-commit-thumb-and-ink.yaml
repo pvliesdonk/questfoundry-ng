@@ -1,0 +1,13 @@
+id: beat:soft-give-commit-thumb-and-ink
+summary: Kessa pricks her thumb into the time-ink and signs over a slice of her apprenticed
+  years to Mira on the ledger, the numerals leaping and the seal biting shut. The debt moves
+  into her bones.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: commits
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+belongs_to:
+- path:give-your-hours

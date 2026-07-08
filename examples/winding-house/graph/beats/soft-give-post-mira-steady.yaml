@@ -1,0 +1,15 @@
+id: beat:soft-give-post-mira-steady
+summary: Color returns to Mira’s face and her stitches run true while Kessa’s hands tremble
+  and fatigue fogs the day’s recall. They hold each other in the humming shop doorway.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: advances
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+temporal_hints:
+- dilemma: dilemma:uncouple-or-lock-in
+  position: before_commit
+belongs_to:
+- path:give-your-hours

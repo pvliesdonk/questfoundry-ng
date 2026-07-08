@@ -1,0 +1,16 @@
+id: character:rook-ashfell
+name: Rook Ashfell
+concept: A wind-chapped outsider who knows what the city winds against—the encroaching Halt—and
+  offers a perilous alternative to theft.
+base:
+  appearance: Coat stitched from sailcloth maps; eyes weather-pale.
+  manner: Soft-voiced, avoids doorways as if they bite.
+  token: A tuning fork that thrums in dead air.
+  knowledge: Claims the city can spin down and survive if it shares its load with the world
+    beyond.
+  scent: Salt and cold metal.
+  tuning_fork_feel: When struck at a threshold, it registers in teeth and ribs rather than
+    as sound.
+  habit: Before any threshold he taps his tuning fork to metal to taste the air in his teeth,
+    then chooses the open road over the doorway.
+  hands: Her hands run salt-cold, steadying with a clean chill when danger tightens the air.

@@ -1,0 +1,15 @@
+id: beat:hard-uncouple-ending-open-gates
+summary: With the city breathing slower and the gates yawning, Kessa shoulders the Sovereign
+  Wind-Key and steps toward the opened world, choosing to meet the Halt on honest terms while
+  factions behind her find a new balance. Wonder and peril enter together.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: advances
+entities:
+- character:kessa-pinion
+- character:rook-ashfell
+- object:sovereign-wind-key
+is_ending: true
+belongs_to:
+- path:uncouple-and-redistribute

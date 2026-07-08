@@ -1,0 +1,13 @@
+id: passage:g2-pigeonwheel
+summary: A clockwing pigeon erupts from a sill, its tinny pinions clattering a rhythm that
+  seems to roost in your teeth.
+entities:
+- Kessa
+- Pigeon
+- Sill
+- Clocktower
+beats:
+- beat:false-ledger-flag-pigeonwheel
+choices:
+- label: I follow the clatter to Rook, then report to the tower.
+  to: passage:g3-alley-pressure

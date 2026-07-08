@@ -1,0 +1,14 @@
+id: beat:residue-light-hold
+created_by: polish
+summary: Your palms are steady, the tower’s breath measured; you keep a private edge like
+  a candle cupped from wind. The lanes feel thinner of laughter, a faint sourness clinging
+  to brick.
+beat_class: structural
+purpose: residue
+entities:
+- Kessa
+- Clocktower
+- Neighborhood
+- Wind
+requires_flags:
+- flag:mira-fades-neighborhood-sours

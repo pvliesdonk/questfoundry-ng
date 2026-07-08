@@ -1,0 +1,15 @@
+id: beat:soft-hold-post-mira-thins
+summary: Mira’s stitches slip and a name goes missing from her tongue; neighbors’ whispers
+  turn brittle toward Kessa’s cold choice. The shop bell sounds as if from farther away.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: complicates
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+temporal_hints:
+- dilemma: dilemma:uncouple-or-lock-in
+  position: before_commit
+belongs_to:
+- path:hold-your-hours

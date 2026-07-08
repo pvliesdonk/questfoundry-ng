@@ -1,0 +1,21 @@
+id: passage:g16-open-gates-ending
+summary: The Clockkeepers split and Calder’s command fractures, some racing to recouple while
+  others hold the release; Rook stands at your side as the factions snarl. With the city breathing
+  slower and the gates yawning, you shoulder the Sovereign Wind-Key and step toward the opened
+  world to meet the Halt on honest terms.
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:rook-ashfell
+- object:sovereign-wind-key
+ending:
+  id: e-g16-open-gates-ending
+  title: Gates of the Honest Slow
+irrelevant_flags:
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:mira-fades-neighborhood-sours
+- flag:transfer-flags-ledger
+beats:
+- beat:hard-uncouple-ending-open-gates
+- beat:hard-uncouple-post-keepers-fracture

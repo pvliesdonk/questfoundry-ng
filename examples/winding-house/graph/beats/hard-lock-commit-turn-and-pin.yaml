@@ -1,0 +1,14 @@
+id: beat:hard-lock-commit-turn-and-pin
+summary: With a grunt Kessa heaves the Sovereign Wind-Key, seating the coupling dogs and driving
+  in ward-pins that fortify the siphon as bells flare; the mainspring bites and holds. Calder’s
+  hand closes warm on her shoulder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: commits
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- object:sovereign-wind-key
+belongs_to:
+- path:lock-in-and-defend

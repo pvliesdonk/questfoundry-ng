@@ -1,0 +1,15 @@
+id: beat:hard-lock-post-patrols-tighten
+summary: Patrols cinch the Clocktower’s base and dissenters are logged as threats to survival;
+  Kessa is praised as a guardian while Mira’s edges grey again under sanctioned drifts. Rook
+  is turned from the gates.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: reveals
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:mira-threadgill
+- character:rook-ashfell
+belongs_to:
+- path:lock-in-and-defend

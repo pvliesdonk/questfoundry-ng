@@ -1,0 +1,10 @@
+id: path:give-your-hours
+name: Stitch Back Dawn
+explores: answer:give-your-hours
+consequences:
+- id: consequence:mira-brightens-apprentice-dims
+  text: Mira’s hands steady and color returns to her days while the apprentice shows frayed
+    stamina and softened recall.
+- id: consequence:transfer-flags-ledger
+  text: The official time-ledger pings the unusual transfer, focusing Keeper scrutiny on the
+    apprentice’s movements.

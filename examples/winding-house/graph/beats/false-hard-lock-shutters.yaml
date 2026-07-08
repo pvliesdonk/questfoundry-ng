@@ -1,0 +1,9 @@
+id: beat:false-hard-lock-shutters
+created_by: polish
+summary: Shutters blink closed in domino hush as your shadow shortens under the watchlights.
+beat_class: structural
+purpose: false_branch
+entities:
+- Shutters
+- Watchlights
+- Shadow

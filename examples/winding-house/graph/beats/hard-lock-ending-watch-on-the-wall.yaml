@@ -1,0 +1,14 @@
+id: beat:hard-lock-ending-watch-on-the-wall
+summary: Night settles silk-slow as the city hums strong and forgetful; atop the wall Kessa
+  stands beside Calder, watching the still horizon and accepting the ledger’s weight as the
+  necessary cost. She keeps the beat and lets the years go.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: advances
+entities:
+- character:kessa-pinion
+- character:orun-calder
+is_ending: true
+belongs_to:
+- path:lock-in-and-defend

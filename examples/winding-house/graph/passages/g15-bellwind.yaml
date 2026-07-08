@@ -1,0 +1,18 @@
+id: passage:g15-bellwind
+summary: Bell-wind rolls down the streets carrying a memory of salt and soot, sweet and stinging
+  with the shape of freedom.
+entities:
+- Bell
+- Wind
+- Memory
+irrelevant_flags:
+- flag:authority-schism
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:mira-fades-neighborhood-sours
+- flag:transfer-flags-ledger
+beats:
+- beat:false-uncouple-bellwind
+choices:
+- label: I follow the gentler tempo into the yawning world.
+  to: passage:g16-open-gates-ending

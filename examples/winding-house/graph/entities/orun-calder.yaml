@@ -1,0 +1,17 @@
+id: character:orun-calder
+name: Master Orun Calder
+concept: Revered Keeper of the Great Mainspring whose secret ledger siphons years from citizens
+  to keep the city wound against an outer stillness.
+base:
+  appearance: Gaunt, silver beard trimmed to a ruler’s edge; oil-blackened nails.
+  manner: Patient and impossibly certain, explains cruelty as calculus.
+  reputation: The only hand trusted to set the city’s tempo.
+  secret: Balances the city’s power by shaving slivers from private clocks.
+  creed: Better a few forgotten hours than a city fallen silent.
+  ink_drier: He dusts fresh entries with pumice sand from a small tin, leaving a faint grit
+    along each margin.
+  palm_heat: His palm carries the lamp’s slow warmth and a faint grit of pumice that lingers
+    after he takes his hand away.
+  thumb-grit: He keeps a trace of pumice grit on his thumb from smoothing burrs by hand.
+  habit: Keeps a dusting of pumice on his thumb pad to feel for burrs when his hand settles
+    on metal or skin.

@@ -1,0 +1,14 @@
+id: beat:soft-pre-calder-pressure
+summary: Master Calder assigns Kessa a precision tuning of the escapements and reminds her
+  that apprentices who squander hours wash out. His praise feels like a leash.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: complicates
+entities:
+- character:orun-calder
+- character:kessa-pinion
+flexibility: This briefing could be staged in the workshop before any climb to the Clocktower.
+belongs_to:
+- path:give-your-hours
+- path:hold-your-hours

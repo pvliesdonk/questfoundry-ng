@@ -8,7 +8,7 @@ hand-edited project passes exactly the same wall as pipeline output.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path as FSPath
 
 import yaml
@@ -42,6 +42,16 @@ RELATION_KEYS = {
 }
 
 
+DEFAULT_LLM_CONFIG = {
+    "provider": "anthropic",
+    "models": {
+        "architect": "claude-opus-4-8",
+        "writer": "claude-opus-4-8",
+        "utility": "claude-haiku-4-5-20251001",
+    },
+}
+
+
 @dataclass
 class Project:
     root: FSPath
@@ -49,6 +59,10 @@ class Project:
     stage: Stage
     vision: Vision
     graph: StoryGraph
+    # LLM configuration: provider name, role -> model map, mock fixture dir
+    llm: dict = field(default_factory=lambda: dict(DEFAULT_LLM_CONFIG))
+    # Author steering notes per stage, injected into that stage's prompts
+    steering: dict[str, str] = field(default_factory=dict)
 
 
 class ProjectError(Exception):
@@ -162,7 +176,15 @@ def load_project(root: FSPath | str) -> Project:
     if freeze_file.exists():
         g.frozen = FreezeRecord.model_validate(_read(freeze_file))
 
-    return Project(root=root, name=meta["name"], stage=stage, vision=vision, graph=g)
+    return Project(
+        root=root,
+        name=meta["name"],
+        stage=stage,
+        vision=vision,
+        graph=g,
+        llm=meta.get("llm", dict(DEFAULT_LLM_CONFIG)),
+        steering=meta.get("steering", {}),
+    )
 
 
 def _slug(node_id: str) -> str:
@@ -194,7 +216,12 @@ def _dump(model, *, drop: set[str] = frozenset()) -> dict:  # type: ignore[assig
 def save_project(project: Project) -> None:
     root = project.root
     g = project.graph
-    _write(root / "project.yaml", {"name": project.name, "stage": project.stage.value})
+    meta: dict = {"name": project.name, "stage": project.stage.value}
+    if project.llm != DEFAULT_LLM_CONFIG:
+        meta["llm"] = project.llm
+    if project.steering:
+        meta["steering"] = project.steering
+    _write(root / "project.yaml", meta)
     _write(root / "vision.yaml", project.vision.model_dump(mode="json", exclude_defaults=True))
 
     for entity in g.nodes_of(Entity):
@@ -279,7 +306,7 @@ def scaffold_project(root: FSPath, name: str, scope: str) -> Project:
         scope=scope,
     )
     project = Project(
-        root=root, name=name, stage=Stage.DREAM, vision=vision, graph=StoryGraph()
+        root=root, name=name, stage=Stage.NEW, vision=vision, graph=StoryGraph()
     )
     save_project(project)
     for sub in ("entities", "dilemmas", "paths", "beats", "intersections", "passages"):

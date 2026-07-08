@@ -1,0 +1,31 @@
+Populate the world for this story. You are creating the CAST and the DILEMMAS —
+the raw dramatic material every later stage builds from. The cast is effectively
+locked after this stage: anyone who matters must exist now.
+
+VISION:
+- Premise: {{ vision.premise }}
+- Genre: {{ vision.genre }}{% if vision.subgenre %} ({{ vision.subgenre }}){% endif %}
+- Tone: {{ vision.tone }}
+- Themes: {{ vision.themes | join("; ") }}
+{% if vision.content_notes.include %}- Embrace: {{ vision.content_notes.include | join("; ") }}{% endif %}
+{% if vision.content_notes.avoid %}- Avoid: {{ vision.content_notes.avoid | join("; ") }}{% endif %}
+
+REQUIREMENTS:
+- Between {{ scope.cast_min }} and {{ scope.cast_max }} entities. Ids are category-prefixed
+  slugs: character:..., location:..., object:..., faction:... (lowercase, hyphens).
+  Each entity gets a name, a one-sentence concept, and optionally a few base details
+  (appearance, manner) as key-value pairs.
+- Exactly {{ scope.hard_dilemmas }} HARD dilemma(s) and {{ scope.soft_dilemmas }} SOFT dilemma(s).
+  A dilemma is a binary dramatic question where BOTH answers are compelling and
+  choosing costs something. Hard dilemmas are the backbone: they commit near the
+  climax and their outcomes never reconverge. Soft dilemmas are subplots: they
+  resolve mid-story and storylines rejoin afterward.
+- Each dilemma: id (dilemma:slug), the question, why_it_matters (the stakes — what
+  lasting mark the choice leaves), role (hard/soft), residue_weight (heavy/light/
+  cosmetic — how much prose must differ where arcs share structure), ending_salience
+  (high/low/none — how much endings differ by this choice), exactly TWO answers
+  (id answer:slug + one-sentence text; the answers are equals — neither is a default),
+  and anchored_to: the entity ids central to it.
+- At least two dilemmas must share an anchored entity, or the story becomes
+  parallel novels instead of a woven world.
+{% include "_shared.j2" %}

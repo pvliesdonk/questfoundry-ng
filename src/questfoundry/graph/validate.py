@@ -15,7 +15,7 @@ from enum import StrEnum
 from questfoundry.graph import queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.concept import Vision
+from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.drama import Dilemma, DilemmaRole
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
@@ -51,6 +51,23 @@ class Context:
 
 
 # --------------------------------------------------------------------------
+# Gate G0 (DREAM)
+# --------------------------------------------------------------------------
+
+
+def check_g0_vision_complete(ctx: Context) -> None:
+    v = ctx.vision
+    for name in ("premise", "genre", "tone"):
+        value = getattr(v, name).strip()
+        if not value or value.upper().startswith("TODO"):
+            ctx.error("G0", f"vision.{name} is missing or a TODO placeholder")
+    if not v.themes:
+        ctx.error("G0", "vision.themes is empty")
+    if v.scope not in SCOPE_PRESETS:
+        ctx.error("G0", f"vision.scope {v.scope!r} is not a known preset")
+
+
+# --------------------------------------------------------------------------
 # Gate G1 (BRAINSTORM)
 # --------------------------------------------------------------------------
 
@@ -70,6 +87,32 @@ def check_i2_anchoring(ctx: Context) -> None:
         ]
         if not retained:
             ctx.error("I2", f"dilemma {d.id} is not anchored to any retained entity")
+
+
+def check_g1_entity_anchoring(ctx: Context) -> None:
+    """Advisory: an entity anchoring no dilemma is a triage candidate."""
+    anchored = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    for entity in ctx.g.nodes_of(Entity):
+        if entity.retained and entity.id not in anchored:
+            ctx.warn(
+                "G1",
+                f"entity {entity.id} anchors no dilemma — connect it or cut it at triage",
+            )
+
+
+def check_g1_shared_entity(ctx: Context) -> None:
+    """Dilemmas that share no entities produce parallel novels, not a
+    woven story (design doc 02, gate G1)."""
+    dilemmas = ctx.g.nodes_of(Dilemma)
+    if len(dilemmas) < 2:
+        return
+    anchors = {d.id: set(ctx.g.out_ids(d.id, EdgeKind.ANCHORED_TO)) for d in dilemmas}
+    ids = sorted(anchors)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1 :]:
+            if anchors[a] & anchors[b]:
+                return
+    ctx.error("G1", "no two dilemmas share an anchored entity (parallel-novels risk)")
 
 
 def check_budget_dilemmas(ctx: Context) -> None:
@@ -443,9 +486,12 @@ def check_budget_passages(ctx: Context) -> None:
 # --------------------------------------------------------------------------
 
 GATES: dict[Stage, list] = {
+    Stage.DREAM: [check_g0_vision_complete],
     Stage.BRAINSTORM: [
         check_i1_two_answers,
         check_i2_anchoring,
+        check_g1_entity_anchoring,
+        check_g1_shared_entity,
         check_budget_dilemmas,
         check_budget_cast,
     ],

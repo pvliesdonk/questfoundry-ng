@@ -16,9 +16,15 @@ from questfoundry.graph import queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import SCOPE_PRESETS, Vision
-from questfoundry.models.drama import Dilemma, DilemmaRole
+from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
 from questfoundry.models.presentation import Choice, Passage
-from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
+from questfoundry.models.structure import (
+    Beat,
+    BeatClass,
+    IntersectionGroup,
+    StateFlag,
+    StructuralPurpose,
+)
 from questfoundry.models.world import Entity
 
 
@@ -525,9 +531,6 @@ def check_g4_residue_coverage(ctx: Context) -> None:
     at the convergence (design doc 02, gate G4)."""
     if not ctx.g.nodes_of(Passage):
         return
-    from questfoundry.models.drama import ResidueWeight
-    from questfoundry.models.structure import StructuralPurpose
-
     for d in ctx.g.nodes_of(Dilemma):
         if d.role != DilemmaRole.SOFT:
             continue

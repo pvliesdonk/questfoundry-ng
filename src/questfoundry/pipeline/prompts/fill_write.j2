@@ -1,0 +1,65 @@
+Write the prose for ONE passage. {{ words_min }}-{{ words_max }} words of finished,
+publishable markdown paragraphs (no headings, no lists). This is the passage the
+player reads; everything below is context, none of it may leak as jargon.
+
+VOICE (binding):
+- POV: {{ voice.pov }} | tense: {{ voice.tense }} | diction: {{ voice.diction }}
+- Rhythm: {{ voice.rhythm }}
+- Banned: {{ voice.banned | join("; ") }}
+- Notes: {{ voice.notes }}
+
+PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
+summary: {{ passage.summary }}
+Realize these beats, in order, as one continuous scene:
+{% for b in beats %}
+- {{ b.summary }}
+{% endfor %}
+
+CAST IN SCENE:
+{% for e in entities %}
+- {{ e.name }} ({{ e.id }}): {{ e.concept }}{% if e.base %} | facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}{% endif %}
+{% if e.overlays %}
+{% for o in e.overlays %}
+  - when {{ o.when | join(" & ") }}: {% for k, v in o.details.items() %}{{ k }}: {{ v }}; {% endfor %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+WORLD STATE AT THIS PASSAGE:
+{% for f in flags %}
+- {{ f.flag.description }} — {{ f.status }}{% if f.status == "possible" %} (may or may not be true here: the prose must be honest either way){% endif %}
+{% endfor %}
+{% if not flags %}
+- nothing committed yet
+{% endif %}
+
+THE ROADS NOT TAKEN (shadows — let their weight color the prose, never name them):
+{% for s in shadows %}
+- {{ s.dilemma.question }} {% for a in s.answers %}[{{ a.text }}{% if not a.explored %} — never explored{% endif %}] {% endfor %}
+{% endfor %}
+
+{% if window %}
+WHAT THE READER JUST READ (continue from it seamlessly):
+{% for w in window %}
+--- from {{ w.passage.id }} (arrived via "{{ w.label }}"):
+{{ w.passage.prose }}
+{% endfor %}
+{% endif %}
+{% if lookahead %}
+WHAT AWAITS (already written — land so it follows naturally):
+{% for w in lookahead %}
+--- toward {{ w.passage.id }} (via "{{ w.label }}"):
+{{ w.passage.prose }}
+{% endfor %}
+{% endif %}
+
+{% if choices %}
+The passage ends where these choices can naturally follow: {{ choices | join(" / ") }}.
+{% else %}
+This is an ending: land it completely.
+{% endif %}
+
+You may also report up to 2 micro_details: small universal facts about an entity
+discovered while writing (a habit, an object) — true on every playthrough, never
+path-dependent. Omit freely.
+{% include "_shared.j2" %}

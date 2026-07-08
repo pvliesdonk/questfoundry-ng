@@ -248,3 +248,84 @@ def test_polished_project_roundtrips(polished):
     assert reloaded.stage == Stage.POLISH
     issues = run_checks(reloaded.graph, reloaded.vision, reloaded.stage)
     assert [i for i in issues if i.severity == Severity.ERROR] == []
+
+
+# -- M4: FILL & first exports --------------------------------------------------
+
+
+@pytest.fixture()
+def filled(tmp_path):
+    return _run_to(tmp_path, Stage.FILL)
+
+
+def test_pipeline_reaches_fill_through_one_review_round(filled):
+    reports, project = filled
+    fill = reports[-1]
+    assert fill.stage == Stage.FILL and fill.success, fill.error or fill.issues
+    assert project.stage == Stage.FILL
+    by_name = {p.name: p for p in fill.passes}
+    assert by_name["voice"].attempts == 1
+    # the first-written passage failed review once and was rewritten
+    assert by_name["write:p-wrong-depths"].attempts == 2
+    ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
+    assert len(ledger) == 29  # 10 through POLISH + voice + 8x(write+review) + 1 revision pair
+
+
+def test_fill_wrote_every_passage_within_budget(filled):
+    _, project = filled
+    from questfoundry.models.presentation import Passage
+
+    lo, hi = project.vision.preset.words_per_passage
+    for p in project.graph.nodes_of(Passage):
+        count = len(p.prose.split())
+        assert lo <= count <= hi, f"{p.id}: {count} words"
+    assert project.voice is not None
+    assert (project.root / "voice.yaml").exists()
+    assert (project.root / "prose" / "p-the-offer.md").exists()
+
+
+def test_fill_micro_details_landed_on_base_state(filled):
+    _, project = filled
+    keeper = project.graph.node("character:keeper")
+    cartographer = project.graph.node("character:cartographer")
+    assert "habit" in keeper.base or "habit" in cartographer.base
+
+
+def test_filled_story_exports_and_replays(filled):
+    _, project = filled
+    from questfoundry.export.html import build_html
+    from questfoundry.export.runtime_json import build_runtime, validate_runtime
+    from questfoundry.export.twee import build_twee
+
+    data = build_runtime(project)
+    assert validate_runtime(data) == []
+    html = build_html(project)
+    assert '"questfoundry-runtime"' in html
+    twee = build_twee(project, "E2E-IFID")
+    assert ":: p-wrong-depths" in twee
+
+    # the runtime document alone supports all four journeys
+    endings = set()
+    for first in (0, 1):
+        for last in (0, 1):
+            at, flags = data["start"], set()
+            while data["passages"][at]["ending"] is None:
+                offered = [
+                    c
+                    for c in data["passages"][at]["choices"]
+                    if set(c["requires"]) <= flags
+                ]
+                pick = offered[first if at == data["start"] else (last if len(offered) > 1 else 0)]
+                flags |= set(pick["grants"])
+                at = pick["to"]
+            endings.add(data["passages"][at]["ending"]["title"])
+    assert endings == {"The Long Watch", "The Wide Water"}
+
+
+def test_filled_project_roundtrips(filled):
+    _, project = filled
+    reloaded = load_project(project.root)
+    assert reloaded.stage == Stage.FILL
+    assert reloaded.voice == project.voice
+    issues = run_checks(reloaded.graph, reloaded.vision, reloaded.stage)
+    assert [i for i in issues if i.severity == Severity.ERROR] == []

@@ -26,7 +26,8 @@ class Choice(BaseModel):
 
 class Passage(Node):
     """A prose container holding one or more beats (grouped_in edges).
-    Prose lives in a sibling markdown file, not on the node."""
+    In memory the prose lives on the node; on disk it is a sibling
+    markdown file (`prose/<slug>.md`), not part of the passage YAML."""
 
     summary: str
     entities: list[str] = []
@@ -34,3 +35,4 @@ class Passage(Node):
     # POLISH feasibility audit: flags declared irrelevant to this passage
     # (omitted from prose); the remainder must stay within the I12 cap.
     irrelevant_flags: list[str] = []
+    prose: str = ""  # markdown; written by FILL through the mutation layer

@@ -570,6 +570,30 @@ def check_budget_passages(ctx: Context) -> None:
 
 
 # --------------------------------------------------------------------------
+# Gate G5 (FILL)
+# --------------------------------------------------------------------------
+
+
+def check_g5_prose_presence(ctx: Context) -> None:
+    for passage in ctx.g.nodes_of(Passage):
+        if not passage.prose.strip():
+            ctx.error("G5", f"passage {passage.id} has no prose")
+
+
+def check_b5_word_budget(ctx: Context) -> None:
+    preset = ctx.vision.preset
+    lo, hi = preset.words_per_passage
+    for passage in ctx.g.nodes_of(Passage):
+        count = len(passage.prose.split())
+        if passage.prose.strip() and not lo <= count <= hi:
+            ctx.warn(
+                "B5",
+                f"passage {passage.id} has {count} words; scope '{preset.name}' "
+                f"budgets {lo}-{hi} (advisory)",
+            )
+
+
+# --------------------------------------------------------------------------
 # Gate registry
 # --------------------------------------------------------------------------
 
@@ -602,6 +626,10 @@ GATES: dict[Stage, list] = {
         check_g4_choice_labels,
         check_g4_residue_coverage,
         check_budget_passages,
+    ],
+    Stage.FILL: [
+        check_g5_prose_presence,
+        check_b5_word_budget,
     ],
 }
 

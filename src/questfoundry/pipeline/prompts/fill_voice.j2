@@ -1,0 +1,24 @@
+Lock the story's voice before any prose is written. The voice document is the
+operational descendant of the vision: where the vision names a mood, the voice
+makes concrete, checkable commitments every one of the {{ passage_count }} passages
+must obey.
+
+VISION: {{ vision.genre }}{% if vision.subgenre %} / {{ vision.subgenre }}{% endif %}, {{ vision.tone }}.
+Themes: {{ vision.themes | join("; ") }}. Audience: {{ vision.audience }}.
+POV hint (advisory): {{ vision.pov_hint or "none" }}.
+
+THE STORY'S SHAPE:
+{% for d in dilemmas %}
+- {{ d.question }} ({{ d.role }})
+{% endfor %}
+Endings: {{ endings | join(" / ") }}.
+
+Decide:
+- pov: whose head, how close ("third person limited (Maren)", "second person").
+- tense: past or present.
+- diction: the register in a phrase ("spare, salt-worn, literary").
+- rhythm: one line of sentence-rhythm rules.
+- banned: 3-6 concrete patterns to forbid (punctuation habits, idiom classes,
+  words that would puncture the tone).
+- notes: one line of guidance for the writer.
+{% include "_shared.j2" %}

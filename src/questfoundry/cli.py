@@ -130,6 +130,61 @@ def validate(directory: FSPath = typer.Argument(FSPath("."))) -> None:
 
 
 @app.command()
+def export(
+    fmt: str = typer.Argument(..., help="'json', 'html', or 'twee' ('pdf' arrives with M5)"),
+    directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
+    out: FSPath | None = typer.Option(None, "--out", help="Output file (default: exports/)"),
+) -> None:
+    """Export the story (design doc 04). The runtime JSON is canonical;
+    HTML and Twee are derived from it."""
+    import json as jsonlib
+    import uuid
+
+    from questfoundry.export.html import build_html
+    from questfoundry.export.runtime_json import build_runtime, validate_runtime
+    from questfoundry.export.twee import build_twee
+
+    project = load_project(directory)
+    problems = validate_runtime(build_runtime(project))
+    if problems:
+        for problem in problems:
+            console.print(f"[red]{problem}[/red]")
+        console.print("[red]export blocked: the runtime round-trip check failed[/red]")
+        raise typer.Exit(1)
+
+    if fmt == "json":
+        content = jsonlib.dumps(build_runtime(project), indent=2, ensure_ascii=False) + "\n"
+        suffix = "json"
+    elif fmt == "html":
+        content = build_html(project)
+        suffix = "html"
+    elif fmt == "twee":
+        if not project.ifid:
+            # persist just the IFID — an export must not rewrite the project
+            project.ifid = str(uuid.uuid4()).upper()
+            meta_path = project.root / "project.yaml"
+            import yaml as yamllib
+
+            meta = yamllib.safe_load(meta_path.read_text())
+            meta["ifid"] = project.ifid
+            meta_path.write_text(yamllib.safe_dump(meta, sort_keys=False, allow_unicode=True))
+        content = build_twee(project, project.ifid)
+        suffix = "twee"
+    elif fmt == "pdf":
+        console.print("[red]the print gamebook pipeline arrives with M5[/red]")
+        raise typer.Exit(2)
+    else:
+        console.print(f"[red]unknown format {fmt!r}; use json, html, or twee[/red]")
+        raise typer.Exit(2)
+
+    slug = project.name.lower().replace(" ", "-").replace("'", "")
+    target = out or (project.root / "exports" / f"{slug}.{suffix}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding="utf-8")
+    console.print(f"[green]exported[/green] {target} (round-trip check: 0 problems)")
+
+
+@app.command()
 def play(
     directory: FSPath = typer.Argument(FSPath(".")),
     show_state: bool = typer.Option(

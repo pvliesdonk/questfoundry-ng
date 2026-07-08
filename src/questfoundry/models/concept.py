@@ -93,6 +93,20 @@ class ContentNotes(BaseModel):
     avoid: list[str] = []
 
 
+class Voice(BaseModel):
+    """Singleton prose contract created by FILL before any prose — the
+    operational descendant of the vision (design doc 01 §2)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    pov: str
+    tense: str
+    diction: str  # the design docs' "register"; renamed (pydantic shadow)
+    rhythm: str = ""
+    banned: list[str] = []
+    notes: str = ""
+
+
 class Vision(BaseModel):
     """Singleton creative contract produced by DREAM."""
 

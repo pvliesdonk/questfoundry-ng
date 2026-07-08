@@ -199,6 +199,31 @@ def set_passage_irrelevant_flags(g: StoryGraph, passage_id: str, flags: list[str
     passage.irrelevant_flags = sorted(flags)
 
 
+def set_passage_prose(g: StoryGraph, passage_id: str, prose: str) -> None:
+    """FILL's write path: prose for one passage."""
+    passage = g.get(passage_id)
+    if not isinstance(passage, Passage):
+        raise MutationError(f"{passage_id!r} is not a passage")
+    if not prose.strip():
+        raise MutationError(f"prose for {passage_id} is empty")
+    passage.prose = prose
+
+
+def add_entity_detail(g: StoryGraph, entity_id: str, key: str, value: str) -> None:
+    """A universal micro-detail discovered while writing: appended to the
+    entity's base state, true on every arc (design doc 01 §3). Never
+    overwrites an existing fact."""
+    entity = g.get(entity_id)
+    if not isinstance(entity, Entity):
+        raise MutationError(f"{entity_id!r} is not an entity")
+    if key in entity.base and entity.base[key] != value:
+        raise MutationError(
+            f"{entity_id} already has {key!r} = {entity.base[key]!r}; "
+            "micro-details never overwrite established facts"
+        )
+    entity.base[key] = value
+
+
 def add_choice(g: StoryGraph, src: str, dst: str, choice: Choice) -> None:
     for p in (src, dst):
         if not isinstance(g.get(p), Passage):

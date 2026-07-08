@@ -16,7 +16,7 @@ import yaml
 from questfoundry.graph import mutations
 from questfoundry.graph.store import FreezeRecord, StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.concept import Vision
+from questfoundry.models.concept import Vision, Voice
 from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, IntersectionGroup, StateFlag
@@ -59,6 +59,12 @@ class Project:
     stage: Stage
     vision: Vision
     graph: StoryGraph
+    # FILL's prose contract; None until FILL locks it
+    voice: Voice | None = None
+    # Seed for FILL's reference-arc selection (author-overridable)
+    fill_seed: int = 0
+    # Twine IFID, generated on first Twee export and stable thereafter
+    ifid: str = ""
     # LLM configuration: provider name, role -> model map, mock fixture dir
     llm: dict = field(default_factory=lambda: dict(DEFAULT_LLM_CONFIG))
     # Author steering notes per stage, injected into that stage's prompts
@@ -176,12 +182,25 @@ def load_project(root: FSPath | str) -> Project:
     if freeze_file.exists():
         g.frozen = FreezeRecord.model_validate(_read(freeze_file))
 
+    prose_dir = root / "prose"
+    if prose_dir.is_dir():
+        for f in sorted(prose_dir.glob("*.md")):
+            passage_id = f"passage:{f.stem}"
+            if passage_id in g:
+                mutations.set_passage_prose(g, passage_id, f.read_text(encoding="utf-8"))
+
+    voice_file = root / "voice.yaml"
+    voice = Voice.model_validate(_read(voice_file)) if voice_file.exists() else None
+
     return Project(
         root=root,
         name=meta["name"],
         stage=stage,
         vision=vision,
         graph=g,
+        voice=voice,
+        fill_seed=int(meta.get("fill_seed", 0)),
+        ifid=meta.get("ifid", ""),
         llm=meta.get("llm", dict(DEFAULT_LLM_CONFIG)),
         steering=meta.get("steering", {}),
     )
@@ -217,12 +236,18 @@ def save_project(project: Project) -> None:
     root = project.root
     g = project.graph
     meta: dict = {"name": project.name, "stage": project.stage.value}
+    if project.fill_seed:
+        meta["fill_seed"] = project.fill_seed
+    if project.ifid:
+        meta["ifid"] = project.ifid
     if project.llm != DEFAULT_LLM_CONFIG:
         meta["llm"] = project.llm
     if project.steering:
         meta["steering"] = project.steering
     _write(root / "project.yaml", meta)
     _write(root / "vision.yaml", project.vision.model_dump(mode="json", exclude_defaults=True))
+    if project.voice is not None:
+        _write(root / "voice.yaml", project.voice.model_dump(mode="json", exclude_defaults=True))
 
     for entity in g.nodes_of(Entity):
         default = DEFAULT_STAGE["entity"]
@@ -279,7 +304,11 @@ def save_project(project: Project) -> None:
         _write(root / "graph" / "edges.yaml", {"ordering": ordering})
 
     for passage in g.nodes_of(Passage):
-        data = _dump(passage)
+        data = _dump(passage, drop={"prose"})
+        if passage.prose:
+            path = root / "prose" / f"{_slug(passage.id)}.md"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(passage.prose, encoding="utf-8")
         data["beats"] = sorted(g.in_ids(passage.id, EdgeKind.GROUPED_IN))
         choices = []
         for e in g.out_edges(passage.id, EdgeKind.CHOICE):

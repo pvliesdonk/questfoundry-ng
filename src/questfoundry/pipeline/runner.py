@@ -76,16 +76,33 @@ def _run_pass(
         )
         graph_backup = copy.deepcopy(project.graph)
         vision_backup = copy.deepcopy(project.vision)
+        voice_backup = copy.deepcopy(project.voice)
         try:
             applied = spec.apply(proposal, project)
         except (ApplyError, MutationError) as exc:
             project.graph = graph_backup
             project.vision = vision_backup
+            project.voice = voice_backup
             repair_errors.append(str(exc))
             repairs_used += 1
             if repairs_used > max_repairs:
                 return f"pass {spec.name!r} exhausted repairs: {repair_errors[-1]}"
             continue
+        if spec.review is not None:
+            issues = spec.review(proposal, project, adapter)
+            if issues:
+                project.graph = graph_backup
+                project.vision = vision_backup
+                project.voice = voice_backup
+                repair_errors.extend(issues)
+                repairs_used += 1
+                if repairs_used > max_repairs:
+                    return (
+                        f"pass {spec.name!r} failed review {max_repairs} times — the "
+                        f"structure is wrong, not the words (design doc 02, FILL): "
+                        f"{'; '.join(issues)}"
+                    )
+                continue
         return PassReport(name=spec.name, attempts=1 + repairs_used, applied=applied)
 
 
@@ -100,8 +117,11 @@ def _checkpoint(project: Project, report: StageReport) -> None:
     snap_dir.mkdir(parents=True)
     shutil.copy2(root / "project.yaml", snap_dir / "project.yaml")
     shutil.copy2(root / "vision.yaml", snap_dir / "vision.yaml")
-    if (root / "graph").exists():
-        shutil.copytree(root / "graph", snap_dir / "graph", dirs_exist_ok=True)
+    if (root / "voice.yaml").exists():
+        shutil.copy2(root / "voice.yaml", snap_dir / "voice.yaml")
+    for sub in ("graph", "prose"):
+        if (root / sub).exists():
+            shutil.copytree(root / sub, snap_dir / sub, dirs_exist_ok=True)
 
     lines = [f"# Stage: {project.stage.value}", ""]
     for p in report.passes:
@@ -125,8 +145,9 @@ def run_stage(
     _require_predecessor(project, impl)
     env = _environment()
 
+    passes = impl.passes(project) if callable(impl.passes) else impl.passes
     pass_reports: list[PassReport] = []
-    for spec in impl.passes:
+    for spec in passes:
         if spec.skip_if is not None and (reason := spec.skip_if(project)):
             pass_reports.append(
                 PassReport(name=spec.name, attempts=0, applied=[f"skipped: {reason}"])

@@ -68,8 +68,10 @@ src/questfoundry/
   llm/        # adapter.py (schema-validated structured output), providers/
               # (anthropic, mock fixture replay/record), cache.py, ledger.py
   play/       # engine.py + tui.py (qf play), simulate.py (arc walker for QA)
+  export/     # runtime_json.py (canonical, self-validating round-trip),
+              # html.py (standalone player), twee.py (SugarCube)
   project/    # io.py: YAML-per-node project directory, load/save
-  cli.py      # qf new / run / validate / status / graph / simulate / play
+  cli.py      # qf new / run / validate / status / graph / simulate / play / export
 tests/        # invariant negative cases, mutation guards, golden, round-trip
 examples/keepers-bargain/   # hand-authored golden story (must always pass)
 ```

@@ -35,39 +35,31 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M3 — POLISH & structural play.** DREAM → BRAINSTORM → SEED → GROW →
-POLISH run end-to-end: `qf run --to polish` turns a one-paragraph premise
-into a **playable passage graph** — beats collapsed into passages, every
-choice wired with engine-computed gates and consequences, flag-gated
-residue beats keeping the subplot's choice alive after its storylines
-rejoin — passing gates G0–G4, against a live Anthropic provider or fully
-offline via recorded fixtures. The structure is playable before a word
-of prose exists: `qf play` renders beat summaries, hides gated choices,
-and tracks flags exactly as the exported runtimes will. Under it sit M2
-(the weave), M1 (stage runner, LLM adapter), and the M0 foundation. The
-hand-authored golden story
-["The Keeper's Bargain"](examples/keepers-bargain/) passes every gate
-and plays end-to-end — four distinct journeys, zero prose:
+🏗️ **M4 — FILL & first exports.** The full creative pipeline runs
+end-to-end: `qf run --to fill` turns a one-paragraph premise into a
+finished, prose-complete branching story — voice locked first, passages
+written reference-arc-first with rich context (entities, overlays,
+shadows, adjacent prose), every draft passing an automated review with
+at most two revision rounds — and `qf export html` ships it as a
+self-contained player you can open in any browser. The runtime JSON is
+canonical and self-validating; Twee export opens the Twine escape
+hatch. Under it sit M3 (passage compilation, `qf play`), M2 (the
+weave), M1 (stage runner, LLM adapter), and the M0 foundation. The
+golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
+carries hand-authored prose and has been played in a real browser,
+start to ending:
 
 ```console
 $ uv sync --group dev
 $ uv run qf validate examples/keepers-bargain
 [B3] scope 'micro' targets 15-25 passages, found 7 (advisory)
 
-The Keeper's Bargain @ polish: 0 error(s), 1 warning(s)
+The Keeper's Bargain @ fill: 0 error(s), 1 warning(s)
 all gates pass
-$ uv run qf play examples/keepers-bargain
-...
-  1. Send the ship away and tend the light
-  2. Cap the lamp and go aboard
-  3. Ask Elias what he would do        # only shown if he knows the truth
-choice [1/2/3]: 1
-...
-╭────────────────╮
-│ The Long Watch │
-╰────────────────╯
-$ uv run qf simulate examples/keepers-bargain --all-arcs   # 4 arc(s): all complete
-$ uv run qf graph examples/keepers-bargain --layer passages
+$ uv run qf export html --dir examples/keepers-bargain
+exported examples/keepers-bargain/exports/the-keepers-bargain.html (round-trip check: 0 problems)
+$ uv run qf play examples/keepers-bargain     # or play it in the terminal
+$ uv run qf export twee --dir examples/keepers-bargain   # take it to Twine
 ```
 
 Live progress, milestone state, and the decision log are tracked in

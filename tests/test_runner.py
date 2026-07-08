@@ -128,6 +128,76 @@ def test_skip_if_bypasses_the_llm_call(tmp_path, monkeypatch):
     assert report.passes[1].applied == ["skipped: nothing to do"]
 
 
+def test_review_hook_rides_the_repair_loop(tmp_path, monkeypatch):
+    """A failing review restores state and re-prompts with the issues;
+    a pass on the retry succeeds with attempts=2."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    verdicts = iter([["too purple"], []])
+
+    def review(proposal, project, adapter):
+        return next(verdicts)
+
+    spec = PassSpec(
+        name="vision",
+        role="writer",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=_vision_pass().apply,
+        review=review,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience="one"), VisionProposal(audience="two")])
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert report.success
+    assert report.passes[0].attempts == 2
+    assert project.vision.audience == "two"  # the reviewed-out draft was restored away
+    assert "Repair error: too purple" in adapter.prompts[1]
+
+
+def test_review_exhaustion_names_the_structure(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    spec = PassSpec(
+        name="vision",
+        role="writer",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=_vision_pass().apply,
+        review=lambda proposal, project, adapter: ["still wrong"],
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience=str(i)) for i in range(3)])
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert not report.success
+    assert "structure is wrong" in (report.error or "")
+    assert project.vision.audience != "2"  # nothing from the failed drafts stuck
+
+
+def test_dynamic_pass_lists_are_computed_from_the_project(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    project.vision.premise = "two-pass premise"
+
+    def passes(p):
+        assert p.vision.premise == "two-pass premise"
+        return (_vision_pass("first"), _vision_pass("second"))
+
+    impl = StageImpl(stage=Stage.DREAM, passes=passes, gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience="a"), VisionProposal(audience="b")])
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert report.success
+    assert [p.name for p in report.passes] == ["first", "second"]
+
+
 def test_repair_loop_restores_graph_and_carries_error_into_prompt(tmp_path, monkeypatch):
     _use_test_templates(monkeypatch)
     project = _scaffold(tmp_path)

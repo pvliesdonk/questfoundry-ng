@@ -15,8 +15,9 @@ story model, carried here verbatim (plus an import banner):
 files carry their original "Status: Authoritative" banners — that
 status applied to the *original* project and does not transfer. NG
 deliberately departs from the original in recorded ways (see the
-Departures sections in design docs 01–03); treating these files as
-binding would silently reopen those decisions.
+Departures sections in design docs 01/02 and the mini-ADR table in
+03 §9); treating these files as binding would silently reopen those
+decisions.
 
 ## Why they are in the repo at all
 

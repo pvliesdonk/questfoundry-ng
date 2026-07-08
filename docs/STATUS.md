@@ -276,10 +276,10 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   writer + gpt-4.1-mini utility via the new `providers/openai.py`) and
   produced a complete, gate-clean, export-valid story — results, three
   hardening lessons, and budget data in the decision log. Anthropic
-  live runs are unblocked by the `QF_ANTHROPIC_API_KEY` passthrough
-  (hosted environments strip the reserved `ANTHROPIC_API_KEY` name),
-  but environment-variable changes only reach *new* sessions — the
-  first Claude-driven generation belongs to the next session.
+  live runs work via the `QF_ANTHROPIC_API_KEY` passthrough (hosted
+  environments strip the reserved `ANTHROPIC_API_KEY` name); billing
+  was resolved 2026-07-08 and the first Claude-driven generation's
+  results live in the decision log.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review
@@ -325,7 +325,13 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   unaffected. The pattern across both reviewer lessons: contract text
   that a frontier model reads correctly can still be ambiguous to the
   small model actually holding the pen — write review contracts for
-  the cheapest reader.
+  the cheapest reader. *Extended same day (first Claude run):* the
+  haiku reviewer laundered taste through the objective categories —
+  a cliché became "state dishonesty", the ordinary verb "beats"
+  became "potential leakage". The contract now says taste must not be
+  relabeled as a rule, requires each issue to cite its rule number
+  and quote the text, and rules out hedged findings ("risks",
+  "potential", "could be") outright.
 
 - **2026-07-08 (fork-rejoin convergence):** The id-contract validation
   run surfaced a real structural bug: when the weave places a soft

@@ -1,0 +1,10 @@
+id: beat:the-walled-grove
+summary: Dawn comes grave-cold over the Orchard of Hours, where each tree bears a single fruit
+  heavy with an hour someone chose to give away. Mave walks the rows as she has for decades,
+  immune to the grief she tends, breathing the sweet-rot smell that has begun to sour the
+  air.
+beat_class: structural
+purpose: setup
+entities:
+- location:orchard-of-hours
+- character:sexton-mave

@@ -1,0 +1,12 @@
+id: character:sexton-mave
+name: Mave
+concept: The orchard's keeper, immune to grief by the office she took, who now watches the
+  tree grown from her own donated hour begin to rot.
+base:
+  appearance: weathered hands stained with soil and sap, a pruning knife worn to her grip,
+    grey coming into her braid
+  manner: unhurried, sparing with words, speaks to the trees more easily than to people
+  the_given_hour: she once donated the hour of a deathbed goodbye she could not bear to say
+  habit: reads each tree's tin tag with her thumb as she passes, knowing the weight of every
+    hour without needing to see it
+  knowing: She knows the weight of every fruit in the orchard without lifting it.

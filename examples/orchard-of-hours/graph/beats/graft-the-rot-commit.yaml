@@ -1,0 +1,13 @@
+id: beat:graft-the-rot-commit
+summary: Mave opens her own forearm with the grafting knife and presses the rotting fruit
+  into the wound, binding the spoil into her flesh so it takes root in her body instead of
+  the soil.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: commits
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+belongs_to:
+- path:graft-the-rot

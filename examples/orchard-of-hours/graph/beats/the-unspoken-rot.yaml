@@ -1,0 +1,18 @@
+id: beat:the-unspoken-rot
+summary: Mave leads Orrin through the rows toward a planting bed, saying nothing of the blackened
+  trunk they pass. He speaks of his daughter's small hands while Mave weighs the spreading
+  spoil against his desperate hope.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: complicates
+entities:
+- character:orrin-petitioner
+- character:sexton-mave
+- location:orchard-of-hours
+temporal_hints:
+- dilemma: dilemma:eat-or-graft
+  position: before_commit
+belongs_to:
+- path:return-the-jar
+- path:take-the-jar

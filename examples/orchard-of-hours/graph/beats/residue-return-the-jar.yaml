@@ -1,0 +1,12 @@
+id: beat:residue-return-the-jar
+created_by: polish
+summary: The rows sour around Mave in the grave-cold light, and the air holds the shape of
+  a word already spoken; her own admission of failure hangs in the mist, unretractable, thinning
+  the orchard's hush to something brittle and exposed.
+beat_class: structural
+purpose: residue
+entities:
+- character:mave
+- location:the-orchard
+requires_flags:
+- flag:mave-names-orchard-untrustworthy

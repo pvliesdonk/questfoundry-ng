@@ -1,0 +1,29 @@
+beats:
+- beat:eat-the-fruit-commit
+- beat:graft-the-rot-commit
+- beat:immunity-as-exile
+- beat:orchard-without-a-keeper
+- beat:orrin-at-the-gate
+- beat:orrin-leaves-lightened
+- beat:orrin-walks-home
+- beat:return-the-jar-commit
+- beat:take-the-jar-commit
+- beat:the-fruit-splits
+- beat:the-goodbye-returns
+- beat:the-grief-never-hers
+- beat:the-ground-spared
+- beat:the-keeper-named-the-rot
+- beat:the-office-weighed
+- beat:the-souring-trunk
+- beat:the-spreading-ground
+- beat:the-unspoken-rot
+- beat:the-walled-grove
+- beat:the-weight-of-the-jar
+forks:
+  dilemma:eat-or-graft:
+  - beat:eat-the-fruit-commit
+  - beat:graft-the-rot-commit
+  dilemma:accept-orrins-hour:
+  - beat:return-the-jar-commit
+  - beat:take-the-jar-commit
+convergences: {}

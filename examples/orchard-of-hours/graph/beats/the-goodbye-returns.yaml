@@ -1,0 +1,13 @@
+id: beat:the-goodbye-returns
+summary: The buried goodbye returns whole — the face she gave away, the weight she never let
+  herself carry — and Mave weeps for the first time in the office's long silence, an ordinary
+  mortal again, grievable and unshielded.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: advances
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+belongs_to:
+- path:eat-the-fruit

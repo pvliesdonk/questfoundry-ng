@@ -1,0 +1,13 @@
+id: beat:eat-the-fruit-commit
+summary: Mave lifts the rotting fruit to her mouth and bites through the spoil, swallowing
+  back the hour she once surrendered, and grief floods into her all at once as the office's
+  immunity dissolves from her body.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: commits
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+belongs_to:
+- path:eat-the-fruit

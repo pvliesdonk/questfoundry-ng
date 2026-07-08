@@ -1,0 +1,10 @@
+id: passage:p-fruit-stone
+summary: The split fruit lays bare its blackened stone, hard and cold as a swallowed word
+  at its center.
+entities:
+- character:mave
+beats:
+- beat:the-fruit-splits-stone
+choices:
+- label: Close your fist around the cold stone and turn to the gate
+  to: passage:p-orrin-at-gate

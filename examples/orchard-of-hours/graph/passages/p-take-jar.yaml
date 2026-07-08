@@ -1,0 +1,19 @@
+id: passage:p-take-jar
+summary: Mave kneels and buries Orrin's jar in ground she knows is spoiling, wagering his
+  last mercy on the orchard's failing hold; he departs unburdened, never seeing the blackened
+  trunk two rows over. Watching the fresh-turned soil settle, she weighs the true cost of
+  the office against this one accepted grief.
+entities:
+- character:sexton-mave
+- character:orrin-petitioner
+- object:keepers-fruit
+- location:orchard-of-hours
+beats:
+- beat:orrin-leaves-lightened
+- beat:take-the-jar-commit
+- beat:the-office-weighed
+choices:
+- label: Smooth the fresh-turned soil over the buried hour
+  requires:
+  - flag:office-proven-worth-preserving
+  to: passage:p-residue-take

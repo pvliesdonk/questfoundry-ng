@@ -1,0 +1,13 @@
+id: beat:the-office-weighed
+summary: Watching the fresh-turned soil settle over the buried hour, Mave feels the true cost
+  of the office measured against this one accepted grief, and learns whether it is still worth
+  what it takes from her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: reveals
+entities:
+- character:sexton-mave
+- location:orchard-of-hours
+belongs_to:
+- path:take-the-jar

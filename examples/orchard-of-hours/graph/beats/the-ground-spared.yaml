@@ -1,0 +1,12 @@
+id: beat:the-ground-spared
+summary: The creeping rot withdraws from the roots; the soil and every donated hour are spared,
+  the orchard kept whole for the grieving who still come to its gate.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: advances
+entities:
+- location:orchard-of-hours
+- object:keepers-fruit
+belongs_to:
+- path:graft-the-rot

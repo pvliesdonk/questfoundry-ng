@@ -1,0 +1,23 @@
+id: dilemma:eat-or-graft
+question: Does Mave eat the fruit to reclaim her own given hour, or graft the rot into herself
+  to keep the orchard whole for those who come after?
+why_it_matters: Eating restores her buried goodbye and her ordinary human grief but strips
+  the orchard of its keeper's immunity, leaving no one shielded to tend the collective sorrow;
+  grafting saves the ground and everyone's spared hours but binds her to carry a rot that
+  is not hers, deepening the exile of the office.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:eat-the-fruit
+  text: She eats the fruit, taking back her hour and becoming grievable again, and the orchard
+    loses its keeper's protection.
+- id: answer:graft-the-rot
+  text: She grafts the rot into her own body, sparing the ground and the spared hours, and
+    carries a grief that was never hers.
+anchored_to:
+- character:sexton-mave
+- object:keepers-fruit
+- location:orchard-of-hours
+wraps:
+- dilemma:accept-orrins-hour

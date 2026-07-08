@@ -1,0 +1,10 @@
+id: location:orchard-of-hours
+name: The Orchard of Hours
+concept: A walled grove where each tree fruits with a single hour someone chose to give away,
+  now spoiling outward from one rotting trunk.
+base:
+  atmosphere: grave-cold dawn light, the sweet-rot smell of overripe fruit, rows of trees
+    each labeled with a small tin tag
+  the_keeper's_tree: grown from Mave's own hour, its bark weeping dark sap, the blight creeping
+    to neighbors
+  trees: Each tree bears a single low, heavy fruit marked with a small tin tag.

@@ -1,0 +1,20 @@
+id: passage:p-eat-the-fruit
+summary: Mave bites through the spoil and swallows back the hour she surrendered; the office's
+  immunity dissolves and grief floods in whole, the buried goodbye and its face returning
+  as she weeps, mortal and unshielded again. Dawn finds the orchard standing unguarded, fruiting
+  on for those who come after with no one exiled to protect them.
+entities:
+- character:sexton-mave
+- object:keepers-fruit
+- location:orchard-of-hours
+ending:
+  id: e-eat-the-fruit
+  title: The Keeper Made Mortal
+irrelevant_flags:
+- flag:childs-hour-planted-in-spoiling-soil
+- flag:mave-names-orchard-untrustworthy
+- flag:office-proven-worth-preserving
+beats:
+- beat:eat-the-fruit-commit
+- beat:orchard-without-a-keeper
+- beat:the-goodbye-returns

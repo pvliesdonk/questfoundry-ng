@@ -1,0 +1,21 @@
+id: dilemma:accept-orrins-hour
+question: Does Mave accept Orrin's donation of his dying child's hour into the failing orchard,
+  or refuse it and send him home to keep the grief himself?
+why_it_matters: Accepting plants a fresh tree in soil she knows is spoiling, risking his last
+  mercy to the same rot — and shows her whether the office is worth preserving; refusing denies
+  a grieving father the only relief the orchard offers and forces her to name aloud that her
+  orchard may no longer be safe to trust.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:take-the-jar
+  text: She takes Orrin's jar and plants his hour, betting the orchard can still hold one
+    more grief.
+- id: answer:return-the-jar
+  text: She returns the jar and tells him to carry the hour himself, refusing to risk his
+    mercy to the rot.
+anchored_to:
+- character:sexton-mave
+- character:orrin-petitioner
+- location:orchard-of-hours

@@ -1,0 +1,14 @@
+id: beat:orchard-without-a-keeper
+summary: Dawn finds the orchard standing unguarded, its collective sorrow no longer shielded
+  by any keeper immune to grief, the trees fruiting on for those who come after with no one
+  exiled to protect them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:eat-or-graft
+  effect: advances
+entities:
+- location:orchard-of-hours
+- character:sexton-mave
+is_ending: true
+belongs_to:
+- path:eat-the-fruit

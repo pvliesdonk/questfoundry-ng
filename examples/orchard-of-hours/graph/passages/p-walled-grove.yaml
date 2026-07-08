@@ -1,0 +1,18 @@
+id: passage:p-walled-grove
+summary: Dawn comes grave-cold over the Orchard of Hours, where each tree bears a fruit heavy
+  with a surrendered hour; Mave walks the souring rows to her own oldest tree, its single
+  fruit blackened and split, the rot creeping down the trunk into the soil. She cuts the spoiled
+  fruit free and holds it, her long-ago goodbye still faintly beating inside the warm rot.
+entities:
+- location:orchard-of-hours
+- character:sexton-mave
+- object:keepers-fruit
+beats:
+- beat:the-fruit-splits
+- beat:the-souring-trunk
+- beat:the-walled-grove
+choices:
+- label: Press your thumb into the weeping pith
+  to: passage:p-fruit-pith
+- label: Cut deeper to the blackened stone
+  to: passage:p-fruit-stone

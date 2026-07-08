@@ -1,0 +1,13 @@
+id: beat:return-the-jar-commit
+summary: Mave presses the jar back into Orrin's arms and tells him plainly that the orchard
+  may no longer be safe to hold anyone's grief, that he must carry his child's hour himself.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:accept-orrins-hour
+  effect: commits
+entities:
+- character:sexton-mave
+- character:orrin-petitioner
+- object:keepers-fruit
+belongs_to:
+- path:return-the-jar

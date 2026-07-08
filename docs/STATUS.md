@@ -186,13 +186,14 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
-- **The first Claude-driven generation is blocked on billing.**
-  `QF_ANTHROPIC_API_KEY` reaches sessions and authenticates, but the
-  Anthropic account has no API credits — every call returns 400 "credit
-  balance is too low" (verified live, 2026-07-08). Once credits are
-  added, run a fresh premise at micro scope with the default model map
-  (opus architect/writer + haiku utility) and record the budget data in
-  the decision log, as was done for the OpenAI run.
+- **A Gemini provider is unbuilt; `GEMINI_API_KEY` reaches new
+  sessions** (author-provided, 2026-07-08 — like the earlier
+  `QF_ANTHROPIC_API_KEY` passthrough, environment changes only reach
+  *new* sessions). Mid-tier work per the tiering policy: add
+  `llm/providers/gemini.py` mirroring `providers/openai.py`'s thin
+  contract, wire it into the CLI's provider switch, and validate with
+  a live run before trusting it. Worth doing next session alongside
+  whatever run it powers.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
@@ -275,16 +276,33 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   writer + gpt-4.1-mini utility via the new `providers/openai.py`) and
   produced a complete, gate-clean, export-valid story — results, three
   hardening lessons, and budget data in the decision log. Anthropic
-  live runs are unblocked by the `QF_ANTHROPIC_API_KEY` passthrough
-  (hosted environments strip the reserved `ANTHROPIC_API_KEY` name),
-  but environment-variable changes only reach *new* sessions — the
-  first Claude-driven generation belongs to the next session.
+  live runs work via the `QF_ANTHROPIC_API_KEY` passthrough (hosted
+  environments strip the reserved `ANTHROPIC_API_KEY` name); billing
+  was resolved 2026-07-08 and the first Claude-driven generation ran
+  the same day — results in the "live run 3" decision-log entry.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (live run 3 — the first Claude-driven generation):**
+  "The Orchard of Hours" (fresh premise, micro scope) on the default
+  model map — claude-opus-4-8 architect/writer + claude-haiku-4-5
+  utility — is **the first story the pipeline generated on Claude**:
+  24 beats, 10 passages (incl. a false-branch diamond and two
+  fork-frontier residue beats — this premise also produced the
+  fork-rejoin topology, handled cleanly by the PR #15 fix), 4 arcs,
+  0 gate errors, 4/4 arcs simulate complete, all three exports
+  round-trip clean; preserved as `examples/orchard-of-hours/`.
+  Budget: 43 calls, opus 76k in / 22k out, haiku pennies —
+  **~$0.95**, with **one repair round total** (intersections), the
+  cleanest live run yet; opus needed ~4x fewer output tokens than
+  gpt-5 for the same shape of work (no reasoning-token inflation on
+  chat completions). One attempt failed mid-FILL and yielded the
+  taste-laundering review-contract lesson (entry below); under the
+  hardened contract all ten writes converged with haiku reviewing.
 
 - **2026-07-08 (live run 2 — id-contract validation):** Second live
   generation ("The Cartographer's Debt", fresh premise, micro scope,
@@ -324,7 +342,13 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   unaffected. The pattern across both reviewer lessons: contract text
   that a frontier model reads correctly can still be ambiguous to the
   small model actually holding the pen — write review contracts for
-  the cheapest reader.
+  the cheapest reader. *Extended same day (first Claude run):* the
+  haiku reviewer laundered taste through the objective categories —
+  a cliché became "state dishonesty", the ordinary verb "beats"
+  became "potential leakage". The contract now says taste must not be
+  relabeled as a rule, requires each issue to cite its rule number
+  and quote the text, and rules out hedged findings ("risks",
+  "potential", "could be") outright.
 
 - **2026-07-08 (fork-rejoin convergence):** The id-contract validation
   run surfaced a real structural bug: when the weave places a soft

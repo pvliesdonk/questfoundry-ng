@@ -1,0 +1,10 @@
+id: path:return-the-jar
+name: The Refused Mercy
+explores: answer:return-the-jar
+consequences:
+- id: consequence:orrin-sent-home-with-grief
+  text: Orrin leaves carrying the hour of his child's death himself, denied the only relief
+    the orchard offered.
+- id: consequence:mave-names-orchard-untrustworthy
+  text: Mave is forced to say aloud that her orchard may no longer be safe to hold anyone's
+    grief.

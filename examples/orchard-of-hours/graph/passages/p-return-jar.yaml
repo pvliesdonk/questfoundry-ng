@@ -1,0 +1,19 @@
+id: passage:p-return-jar
+summary: Mave presses the jar back into Orrin's arms and tells him plainly the orchard may
+  no longer be safe to hold anyone's grief; he walks home through the gate, the hour of his
+  daughter's death now his alone to bear. Alone among the souring rows, Mave hears her own
+  confession echo — that her orchard is failing — the thing that unmakes the office she holds.
+entities:
+- character:sexton-mave
+- character:orrin-petitioner
+- object:keepers-fruit
+- location:orchard-of-hours
+beats:
+- beat:orrin-walks-home
+- beat:return-the-jar-commit
+- beat:the-keeper-named-the-rot
+choices:
+- label: Stand alone in the mist and listen to what you have said
+  requires:
+  - flag:mave-names-orchard-untrustworthy
+  to: passage:p-residue-return

@@ -181,6 +181,12 @@ def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
         assert isinstance(other, Passage)
         if other.prose:
             seen.append({"passage": other, "label": e.payload.get("label", "")})
+    # Canonical order, not store order: choice edges reload from disk
+    # grouped by source file, so store order differs between a live run
+    # and a resumed one — a shifted window changes prompt bytes and
+    # breaks cache replay (STATUS 2026-07-08). Parallel neighbors are
+    # alternative branches with no narrative order to preserve.
+    seen.sort(key=lambda n: (n["passage"].id, n["label"]))
     return seen
 
 

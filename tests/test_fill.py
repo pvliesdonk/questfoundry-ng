@@ -127,6 +127,68 @@ def test_gate_requires_voice(golden_fill):
     assert any("no voice record" in i.message for i in issues)
 
 
+def _diamond_graph(reverse_wiring: bool):
+    """Two prose-bearing passages converging on a third, wired through
+    the mutation layer in either order."""
+    from questfoundry.graph import mutations
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage
+    from questfoundry.models.presentation import Choice, Passage
+    from tests.conftest import make_dilemma, narrative_beat
+
+    g = StoryGraph()
+    d, pa, _pb = make_dilemma(g, "d")
+    for slug in ("left", "right", "join"):
+        mutations.add_beat(g, narrative_beat(slug, d), [pa])
+        mutations.add_passage(
+            g,
+            Passage(id=f"passage:p-{slug}", created_by=Stage.POLISH, summary=slug),
+            [f"beat:{slug}"],
+        )
+    wiring = ["passage:p-left", "passage:p-right"]
+    if reverse_wiring:
+        wiring.reverse()
+    for src in wiring:
+        mutations.add_choice(g, src, "passage:p-join", Choice(label=f"via {src}"))
+        mutations.set_passage_prose(g, src, f"prose of {src}")
+    return g
+
+
+def test_window_order_is_canonical_not_wiring_order():
+    """Crash-resume replay (STATUS, 2026-07-08): a reloaded project
+    rebuilds choice edges grouped by source file, not in wiring order,
+    so any store-order dependence in the write context shifts prompt
+    bytes and invalidates the call cache on resume. The window must
+    come out identical however the edges were inserted."""
+    from questfoundry.pipeline.stages.fill import _neighbor_prose
+
+    windows = [
+        _neighbor_prose(_diamond_graph(rev), "passage:p-join", "in") for rev in (False, True)
+    ]
+    assert [n["passage"].id for n in windows[0]] == [n["passage"].id for n in windows[1]]
+    assert windows[0] == windows[1]
+
+
+def test_write_context_survives_a_save_load_round_trip(tmp_path, vision):
+    """The stronger form: the write context built from the live in-memory
+    graph must equal the one built after save + reload, or resuming a
+    crashed FILL re-spends the cache. Wiring order is deliberately the
+    reverse of filename order so the reload genuinely reorders edges."""
+    from questfoundry.models.base import Stage
+    from questfoundry.project.io import save_project
+
+    project = Project(
+        root=tmp_path, name="t", stage=Stage.FILL, vision=vision,
+        graph=_diamond_graph(reverse_wiring=True),
+    )
+    before = _write_context_for("passage:p-join")(project)
+    save_project(project)
+    after = _write_context_for("passage:p-join")(load_project(tmp_path))
+    for key in ("window", "lookahead", "choices"):
+        assert before[key] == after[key], key
+    assert [b.id for b in before["beats"]] == [b.id for b in after["beats"]]
+
+
 def test_micro_detail_entity_resolves_ids_and_slugs_only(golden_fill):
     """Id-contract decision (STATUS, 2026-07-08): the adapter states the
     contract once; the engine restores only the unambiguous slug form.

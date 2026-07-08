@@ -310,7 +310,42 @@ design.
 - **I13** The passage graph has no dead ends: every non-ending passage
   has ≥1 always-satisfiable choice; every ending is reachable.
 
-## 9. Departures from the original QuestFoundry model
+## 9. Where the mapping breaks (danger zones)
+
+Places where the intuitive graph reading diverges from the narrative
+meaning. Each stranded the original QuestFoundry, or nearly stranded
+NG, by producing changes that were architecturally reasonable and
+narratively wrong. When work touches one of these seams, re-read the
+entry first; when the NG docs are silent, consult `docs/heritage/`
+before deriving from first principles.
+
+1. **Graph convergence ≠ narrative convergence.** When soft paths
+   rejoin a shared beat, only the DAG has converged: flags, overlays,
+   and residue beats keep differentiating arcs. Treating convergence as
+   equivalence makes the story forget the choice exactly where it
+   should be felt.
+2. **Path membership ≠ scene participation.** `belongs_to` says which
+   dilemma's storyline a beat *serves*, never which arcs reach it.
+   Co-occurrence is an intersection group; cross-dilemma `belongs_to`
+   is always wrong (I5). The original modeled intersections as
+   cross-assigned `belongs_to` and got structurally impossible scenes.
+3. **Arcs are computed, never authored.** "This arc needs a scene" is a
+   phantom requirement — nobody authored an arc; they authored paths
+   and beats (iron rule 2, invariant-adjacent to I6).
+4. **Copied structure ≠ duplicated content (the tensor).** The weave is
+   a tensor of Y graphs (§5): soft dimensions collapse into state; hard
+   dimensions stay expanded, so with several hard dilemmas an inner
+   beat materializes once per world — same inner-Y node (meaning),
+   different outer-Y node (context), distinct realized beats. Two
+   symmetric misreadings, both made and corrected on 2026-07-08
+   (STATUS decision log): "beats are never cloned, therefore multi-hard
+   is impossible," and "multi-hard needs duplication machinery."
+5. **State multiplication ≠ world expansion.** Soft dilemmas multiply
+   *states* on shared nodes (flags/overlays — no new beats); hard
+   dilemmas multiply *worlds* (the DAG splits — new beats). Budgets,
+   feasibility audits, and cost reasoning must not swap the two.
+
+## 10. Departures from the original QuestFoundry model
 
 Kept because it earns its keep: the five-layer model, binary dilemmas,
 hard/soft roles with derived convergence, the Y-scaffold and `belongs_to`

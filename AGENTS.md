@@ -35,6 +35,13 @@ implementation must deviate, change the doc *in the same PR* and record
 the deviation (Departures section in 01/02, mini-ADR table in 03 §9).
 Undocumented divergence is a bug even when the code is better.
 
+When the design docs are **silent** on a story-model question, do not
+derive from first principles: consult `docs/heritage/` (the original
+QuestFoundry source documents, reference-only — see its README) and the
+danger zones in design doc 01 §9 first, then bring the answer into the
+NG docs. Free derivation in doc-silent territory produced a confidently
+wrong invariant claim once already (STATUS decision log, 2026-07-08).
+
 ## Commands
 
 ```bash

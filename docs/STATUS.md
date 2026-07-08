@@ -43,6 +43,11 @@ validated arcs, fully offline against recorded fixtures:
 - e2e: `run --to grow` on the Keeper's Bargain premise reaches GROW with
   0 gate errors — 16 beats, single root, the soft dilemma converging on
   the shared `beat:the-offer` (90 tests total)
+- Documentation hardening after the multi-hard episode: the original
+  QuestFoundry source documents now live in `docs/heritage/` (reference-
+  only, NG design docs remain the single authority) and design doc 01
+  gained §9 "Where the mapping breaks" — the danger zones that stranded
+  the original or nearly stranded NG
 
 **M1 is complete** (PR #8). The front of the pipeline runs end-to-end,
 fully offline against recorded fixtures:
@@ -211,7 +216,12 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   invariant refinements it needs. (This entry was revised three times
   — "impossible" → "duplication machinery" → tensor-of-graphs — a real
   misunderstanding corrected against the source documents; kept here
-  as the record.) M2 was frontier-authored
+  as the record.) Hardening from the episode: heritage source docs
+  imported reference-only under `docs/heritage/`, danger zones recorded
+  as design doc 01 §9, and AGENTS.md now directs doc-silent questions to
+  heritage before first-principles derivation — the stranding mode of
+  the original was exactly this understanding decaying across sessions.
+  M2 was frontier-authored
   end-to-end: the weave semantics *are* the narrative/DAG mapping, and
   every module touched them (per the tiering policy's escalation rule,
   not despite it).

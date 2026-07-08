@@ -6,11 +6,17 @@ structured, schema-valid output, provider-agnostic. Used only by
 from __future__ import annotations
 
 from questfoundry.llm.adapter import AdapterError, LLMAdapter, LLMResult, ModelRole, Provider, Usage
-from questfoundry.llm.providers import AnthropicProvider, MockProvider, OpenAIProvider
+from questfoundry.llm.providers import (
+    AnthropicProvider,
+    GeminiProvider,
+    MockProvider,
+    OpenAIProvider,
+)
 
 __all__ = [
     "AdapterError",
     "AnthropicProvider",
+    "GeminiProvider",
     "LLMAdapter",
     "LLMResult",
     "MockProvider",

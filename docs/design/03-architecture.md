@@ -44,7 +44,7 @@ src/questfoundry/
     prompts/         # Jinja2 prompt templates, versioned
   llm/
     adapter.py       # complete(prompt, schema) -> validated model
-    providers/       # anthropic.py, openai.py, mock.py
+    providers/       # anthropic.py, openai.py, gemini.py, mock.py
     cache.py         # content-addressed call cache
     ledger.py        # token/cost accounting per stage/run
   export/

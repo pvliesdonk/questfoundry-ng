@@ -69,7 +69,12 @@ def run(
         provider = MockProvider(fixtures)
         cache_dir = None  # replay is already deterministic
     elif provider_name == "anthropic":
-        provider = AnthropicProvider()
+        import os
+
+        # Hosted Claude Code environments strip the reserved name
+        # ANTHROPIC_API_KEY from sessions; QF_ANTHROPIC_API_KEY passes
+        # through and wins when set.
+        provider = AnthropicProvider(api_key=os.environ.get("QF_ANTHROPIC_API_KEY"))
         cache_dir = project.root / "cache" / "llm"
     elif provider_name == "openai":
         provider = OpenAIProvider()

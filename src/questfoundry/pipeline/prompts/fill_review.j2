@@ -3,8 +3,13 @@ fail, list concrete, actionable issues (each one sentence).
 
 FAIL ONLY FOR OBJECTIVE DEFECTS — things a second reviewer would independently
 flag the same way:
-1. A banned pattern appears (banned: {{ voice.banned | join("; ") }}), or the POV
-   ({{ voice.pov }}) or tense ({{ voice.tense }}) is broken.
+1. Voice contract broken. The contract REQUIRES this point of view and tense —
+   prose written in them is correct; fail only if the prose departs from them:
+   - required POV: {{ voice.pov }}
+   - required tense: {{ voice.tense }}
+   These patterns are BANNED — fail if any of them appears:
+   - {{ voice.banned | join("
+   - ") }}
 2. Beat infidelity — a required beat is missing, out of order, or contradicted:
 {% for b in beats %}
    - {{ b.summary }}
@@ -19,7 +24,10 @@ flag the same way:
 {% for f in flags %}
    - {{ f.flag.description }} ({{ f.status }})
 {% endfor %}
-5. Leakage — mentions flags, dilemmas, beats, paths, or any machinery.
+5. Leakage — the prose names the machinery itself: ids like flag:x / beat:x,
+   or the words "flag", "dilemma", "beat", "path", "arc" used mechanically.
+   In-world objects and events that flags merely describe are story, not
+   leakage.
 
 MATTERS OF DEGREE ARE NOT FAILURES. Register, rhythm, metaphor quality, and
 "too literary / too spare" judgments are taste; a writer cannot converge on

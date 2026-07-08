@@ -130,6 +130,25 @@ def validate(directory: FSPath = typer.Argument(FSPath("."))) -> None:
 
 
 @app.command()
+def play(
+    directory: FSPath = typer.Argument(FSPath(".")),
+    show_state: bool = typer.Option(
+        False, "--show-state", help="Reveal passage ids and active flags while playing."
+    ),
+) -> None:
+    """Play the story in the terminal (beat summaries before FILL, prose after)."""
+    from questfoundry.models.presentation import Passage as PassageNode
+    from questfoundry.play.tui import play as run_tui
+
+    project = load_project(directory)
+    if not project.graph.nodes_of(PassageNode):
+        console.print("[red]no passages yet — run the pipeline through polish first[/red]")
+        raise typer.Exit(1)
+    console.print(f"[bold]{project.name}[/bold]")
+    run_tui(project.graph, console, show_state=show_state)
+
+
+@app.command()
 def simulate(
     directory: FSPath = typer.Argument(FSPath(".")),
     all_arcs: bool = typer.Option(

@@ -498,6 +498,63 @@ def check_i13_passage_graph(ctx: Context) -> None:
             ctx.error("I13", f"passage {p.id} is unreachable on every arc")
 
 
+def check_g4_choice_labels(ctx: Context) -> None:
+    """G4: sibling choice labels are non-empty and distinct. Same-label
+    siblings are allowed only behind different gates (variant passages:
+    the runtime hides all but one, so the player never sees the twins)."""
+    for passage in ctx.g.nodes_of(Passage):
+        seen: set[tuple[str, tuple[str, ...]]] = set()
+        for e in ctx.g.out_edges(passage.id, EdgeKind.CHOICE):
+            label = e.payload.get("label", "")
+            if not label.strip():
+                ctx.error("G4", f"choice {passage.id} -> {e.dst} has an empty label")
+                continue
+            key = (label, tuple(sorted(e.payload.get("requires", []))))
+            if key in seen:
+                ctx.error(
+                    "G4",
+                    f"passage {passage.id} offers two choices labeled {label!r} "
+                    "behind the same gate",
+                )
+            seen.add(key)
+
+
+def check_g4_residue_coverage(ctx: Context) -> None:
+    """G4: every light-residue soft convergence has a residue beat gated
+    on one of the dilemma's flags; every heavy one has variant passages
+    at the convergence (design doc 02, gate G4)."""
+    if not ctx.g.nodes_of(Passage):
+        return
+    from questfoundry.models.drama import ResidueWeight
+    from questfoundry.models.structure import StructuralPurpose
+
+    for d in ctx.g.nodes_of(Dilemma):
+        if d.role != DilemmaRole.SOFT:
+            continue
+        convergence = queries.soft_convergence(ctx.g, d.id)
+        if convergence is None:
+            continue
+        flags = set(queries.dilemma_flags(ctx.g, d.id).values())
+        if d.residue_weight == ResidueWeight.LIGHT:
+            covered = any(
+                b.purpose == StructuralPurpose.RESIDUE and set(b.requires_flags) & flags
+                for b in ctx.g.nodes_of(Beat)
+            )
+            if not covered:
+                ctx.error(
+                    "G4",
+                    f"light-residue dilemma {d.id} converges at {convergence} "
+                    "with no residue beat gated on its flags",
+                )
+        elif d.residue_weight == ResidueWeight.HEAVY:
+            if len(queries.passages_of_beat(ctx.g, convergence)) < 2:
+                ctx.error(
+                    "G4",
+                    f"heavy-residue dilemma {d.id} converges at {convergence} "
+                    "without variant passages",
+                )
+
+
 def check_budget_passages(ctx: Context) -> None:
     preset = ctx.vision.preset
     count = len(ctx.g.nodes_of(Passage))
@@ -539,6 +596,8 @@ GATES: dict[Stage, list] = {
         check_i11_grouping,
         check_i12_feasibility,
         check_i13_passage_graph,
+        check_g4_choice_labels,
+        check_g4_residue_coverage,
         check_budget_passages,
     ],
 }

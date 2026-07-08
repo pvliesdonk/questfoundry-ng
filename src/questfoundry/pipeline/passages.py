@@ -1,0 +1,197 @@
+"""POLISH's deterministic core: passage collapse and choice topology
+(design doc 02, POLISH; 01 §6).
+
+The engine computes everything computable — collapse boundaries, choice
+endpoints, gates (`requires`), grants, residue/variant needs — and the
+LLM contributes only judgment and words: beat content for residue and
+false-branch insertions, passage summaries, choice labels, ending
+titles, feasibility calls. Collapse groups maximal linear runs:
+boundaries fall at divergences and convergences, and flag-gated beats
+(residue) are always singleton passages.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from questfoundry.graph import mutations, queries
+from questfoundry.graph.store import StoryGraph
+from questfoundry.models.base import EdgeKind
+from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
+from questfoundry.models.structure import Beat, StateFlag
+
+# -- collapse ----------------------------------------------------------------
+
+
+def _beat(g: StoryGraph, beat_id: str) -> Beat:
+    node = g.node(beat_id)
+    assert isinstance(node, Beat)
+    return node
+
+
+def collapse_groups(g: StoryGraph) -> list[list[str]]:
+    """Maximal linear runs of beats, in topological order of their heads.
+
+    A run extends across a -> b iff a has exactly one successor, b has
+    exactly one predecessor, and neither is flag-gated (gated beats are
+    singleton passages — they enter the passage layer behind a gate).
+    """
+    order = queries.topological_order(g)
+    if order is None:
+        raise ValueError("beat graph has a cycle; collapse needs a DAG")
+
+    def merges(a: str, b: str) -> bool:
+        if len(queries.successors(g, a)) != 1 or len(queries.predecessors(g, b)) != 1:
+            return False
+        return not _beat(g, a).requires_flags and not _beat(g, b).requires_flags
+
+    groups: list[list[str]] = []
+    group_of: dict[str, int] = {}
+    for b in order:
+        preds = queries.predecessors(g, b)
+        if len(preds) == 1 and merges(preds[0], b):
+            idx = group_of[preds[0]]
+            groups[idx].append(b)
+            group_of[b] = idx
+        else:
+            group_of[b] = len(groups)
+            groups.append([b])
+    return groups
+
+
+def group_edges(groups: list[list[str]], g: StoryGraph) -> list[tuple[int, int]]:
+    """Cross-group beat edges, deduplicated, as (from_group, to_group).
+    Runs guarantee cross edges leave tails and enter heads."""
+    index = {b: i for i, grp in enumerate(groups) for b in grp}
+    seen: set[tuple[int, int]] = set()
+    result: list[tuple[int, int]] = []
+    for e in g.edges:
+        if e.kind != EdgeKind.PREDECESSOR:
+            continue
+        a, b = index[e.src], index[e.dst]
+        if a != b and (a, b) not in seen:
+            seen.add((a, b))
+            result.append((a, b))
+    return sorted(result)
+
+
+def choice_requires(g: StoryGraph, target_group: list[str]) -> list[str]:
+    """A choice into a gated (residue) passage carries its head's gate."""
+    return sorted(_beat(g, target_group[0]).requires_flags)
+
+
+def choice_grants(g: StoryGraph, target_group: list[str]) -> list[str]:
+    """Entering a passage that contains a path's commit beat locks the
+    choice in: the choice edge grants that path's flags."""
+    beats = set(target_group)
+    grants = []
+    for flag in g.nodes_of(StateFlag):
+        if flag.path is not None and queries.grant_beat(g, flag.id) in beats:
+            grants.append(flag.id)
+    return sorted(grants)
+
+
+def group_entities(g: StoryGraph, group: list[str]) -> list[str]:
+    seen: list[str] = []
+    for b in group:
+        for entity in _beat(g, b).entities:
+            if entity not in seen:
+                seen.append(entity)
+    return seen
+
+
+def ending_beat(g: StoryGraph, group: list[str]) -> str | None:
+    for b in group:
+        if _beat(g, b).is_ending:
+            return b
+    return None
+
+
+# -- residue / variant needs ---------------------------------------------------
+
+
+@dataclass(frozen=True)
+class ConvergenceNeed:
+    """A soft dilemma's convergence and what its residue weight demands."""
+
+    dilemma: str
+    weight: ResidueWeight
+    convergence: str  # the beat where the paths rejoin
+    path_flags: dict[str, str]  # path id -> dilemma flag id
+
+
+def convergence_needs(g: StoryGraph) -> list[ConvergenceNeed]:
+    """Light- and heavy-residue soft convergences (cosmetic needs nothing
+    structural — it is handled in prose wording alone)."""
+    needs = []
+    for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
+        if d.role != DilemmaRole.SOFT or d.residue_weight == ResidueWeight.COSMETIC:
+            continue
+        convergence = queries.soft_convergence(g, d.id)
+        if convergence is None:
+            continue
+        needs.append(
+            ConvergenceNeed(
+                dilemma=d.id,
+                weight=d.residue_weight,
+                convergence=convergence,
+                path_flags=queries.dilemma_flags(g, d.id),
+            )
+        )
+    return needs
+
+
+def insert_residue_beat(g: StoryGraph, beat: Beat, path_id: str, convergence: str) -> None:
+    """Splice a flag-gated residue beat between a path's exclusive tail
+    and the convergence beat: tail -> residue -> convergence."""
+    tails = [
+        b
+        for b in queries.exclusive_beats(g, path_id)
+        if convergence in queries.successors(g, b)
+    ]
+    if len(tails) != 1:
+        raise mutations.MutationError(
+            f"path {path_id} has {len(tails)} edge(s) into convergence {convergence}; "
+            "residue insertion needs exactly one"
+        )
+    (tail,) = tails
+    mutations.add_beat(g, beat, [])
+    mutations.remove_ordering(g, tail, convergence)
+    mutations.add_ordering(g, tail, beat.id)
+    mutations.add_ordering(g, beat.id, convergence)
+
+
+# -- false branches -------------------------------------------------------------
+
+
+def long_linear_runs(groups: list[list[str]], min_beats: int = 4) -> list[int]:
+    """Groups long enough that the player goes a while without a choice —
+    candidates for a false-branch diamond."""
+    return [i for i, grp in enumerate(groups) if len(grp) >= min_beats]
+
+
+def insert_false_branch(g: StoryGraph, arm_a: Beat, arm_b: Beat, before: str, after: str) -> None:
+    """Splice a cosmetic diamond into a linear edge: before -> {a, b} -> after."""
+    if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
+        raise mutations.MutationError(f"no linear edge {before} -> {after} to fork")
+    for arm in (arm_a, arm_b):
+        mutations.add_beat(g, arm, [])
+    mutations.remove_ordering(g, before, after)
+    for arm in (arm_a, arm_b):
+        mutations.add_ordering(g, before, arm.id)
+        mutations.add_ordering(g, arm.id, after)
+
+
+# -- feasibility ---------------------------------------------------------------
+
+
+def active_flags(g: StoryGraph, group: list[str]) -> list[str]:
+    """Flags possibly active at this passage (the I12 computation)."""
+    active = set()
+    for flag in g.nodes_of(StateFlag):
+        grant = queries.grant_beat(g, flag.id)
+        if grant is None:
+            continue
+        if grant in group or any(grant in queries.ancestors(g, b) for b in group):
+            active.add(flag.id)
+    return sorted(active)

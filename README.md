@@ -35,18 +35,19 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M2 — GROW.** DREAM → BRAINSTORM → SEED → GROW run end-to-end:
-`qf run --to grow` turns a one-paragraph premise into a woven, **frozen**
-beat DAG — dilemma scaffolds interleaved on engine-enumerated candidate
-orders (the LLM only picks among them), intersections merging scenes
-across storylines, state flags derived from consequences — passing gates
-G0–G3, against a live Anthropic provider or fully offline via recorded
-fixtures. Under it sit M1 (stage runner, LLM adapter, front-of-pipeline
-stages) and the M0 foundation: the typed story graph, the invariant
-validators (I1–I13), the project-on-disk format, and the `qf` CLI. The
+🏗️ **M3 — POLISH & structural play.** DREAM → BRAINSTORM → SEED → GROW →
+POLISH run end-to-end: `qf run --to polish` turns a one-paragraph premise
+into a **playable passage graph** — beats collapsed into passages, every
+choice wired with engine-computed gates and consequences, flag-gated
+residue beats keeping the subplot's choice alive after its storylines
+rejoin — passing gates G0–G4, against a live Anthropic provider or fully
+offline via recorded fixtures. The structure is playable before a word
+of prose exists: `qf play` renders beat summaries, hides gated choices,
+and tracks flags exactly as the exported runtimes will. Under it sit M2
+(the weave), M1 (stage runner, LLM adapter), and the M0 foundation. The
 hand-authored golden story
-["The Keeper's Bargain"](examples/keepers-bargain/) loads, passes every
-gate, and walks all four of its arcs to their endings:
+["The Keeper's Bargain"](examples/keepers-bargain/) passes every gate
+and plays end-to-end — four distinct journeys, zero prose:
 
 ```console
 $ uv sync --group dev
@@ -55,17 +56,18 @@ $ uv run qf validate examples/keepers-bargain
 
 The Keeper's Bargain @ polish: 0 error(s), 1 warning(s)
 all gates pass
-$ uv run qf simulate examples/keepers-bargain --all-arcs
+$ uv run qf play examples/keepers-bargain
 ...
-The bargain holds + The truth shared  (path:keep + path:tell)
-  beat:storm-glass
-  ...
-  beat:tell-commit  (commit, +flag:elias-knows)
-  ...
-  beat:keep-ending  (ending)
-
-4 arc(s): all complete
-$ uv run qf graph examples/keepers-bargain --layer beats      # Mermaid to stdout
+  1. Send the ship away and tend the light
+  2. Cap the lamp and go aboard
+  3. Ask Elias what he would do        # only shown if he knows the truth
+choice [1/2/3]: 1
+...
+╭────────────────╮
+│ The Long Watch │
+╰────────────────╯
+$ uv run qf simulate examples/keepers-bargain --all-arcs   # 4 arc(s): all complete
+$ uv run qf graph examples/keepers-bargain --layer passages
 ```
 
 Live progress, milestone state, and the decision log are tracked in

@@ -1,0 +1,26 @@
+Prose-feasibility audit. At each passage below, the listed world-states may be
+active when the player arrives. A writer can honor at most {{ cap }} states in one
+passage. For each passage, decide which states its prose should NOT address —
+states that are true but irrelevant to this scene ("don't mention the romance in
+the vault heist"). What you leave relevant, the writer must honor.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}.
+
+PASSAGES:
+{% for p in passages %}
+- {{ p.passage.id }}: {{ p.passage.summary }}
+  possibly active:
+{% for flag, text in p.active %}
+  - {{ flag }}: {{ text }}
+{% endfor %}
+{% endfor %}
+
+REQUIREMENTS:
+- One entry per passage above: {"passage": id, "irrelevant": [flag ids]}. An empty
+  list means every active state matters in that scene.
+- Mark a state irrelevant only when the scene genuinely doesn't touch it — the
+  audit is about honesty, not budget. But where more than {{ cap }} states are
+  active, you MUST bring the relevant count within {{ cap }}.
+- A state that the passage's own beats grant or directly pay off is never
+  irrelevant there.
+{% include "_shared.j2" %}

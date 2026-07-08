@@ -39,6 +39,7 @@ def make_dilemma(
     slug: str,
     role: DilemmaRole = DilemmaRole.SOFT,
     entity: str | None = None,
+    residue: ResidueWeight = ResidueWeight.LIGHT,
 ) -> tuple[str, str, str]:
     """Add a dilemma with two explored paths. Returns (dilemma, path_a, path_b)."""
     if entity is None:
@@ -55,7 +56,7 @@ def make_dilemma(
             question="?",
             why_it_matters="stakes",
             role=role,
-            residue_weight=ResidueWeight.LIGHT,
+            residue_weight=residue,
             ending_salience=EndingSalience.LOW,
         ),
         (

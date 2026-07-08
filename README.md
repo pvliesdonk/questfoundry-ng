@@ -51,6 +51,11 @@ all gates pass
 $ uv run qf graph examples/keepers-bargain --layer passages   # Mermaid to stdout
 ```
 
+Live progress, milestone state, and the decision log are tracked in
+[`docs/STATUS.md`](docs/STATUS.md). Working instructions for contributors
+— human or AI agent — live in [`AGENTS.md`](AGENTS.md) (imported by
+`CLAUDE.md`); automated-review norms in [`REVIEW.md`](REVIEW.md).
+
 The design lives in [`docs/design/`](docs/design/):
 
 | Document | Contents |

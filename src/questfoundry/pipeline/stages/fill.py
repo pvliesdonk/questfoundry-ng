@@ -223,6 +223,24 @@ def _write_context_for(passage_id: str):
     return build
 
 
+def _resolve_entity(g, ref: str) -> str:
+    """Live models cite entities by display name ('Kessa Pinion') or bare
+    slug as often as by id; resolve any unambiguous reference."""
+    if isinstance(g.get(ref), Entity):
+        return ref
+    entities = [e for e in g.nodes_of(Entity) if e.retained]
+    matches = {
+        e.id
+        for e in entities
+        if e.name.lower() == ref.lower() or e.id.split(":", 1)[1] == ref.lower()
+    }
+    if len(matches) == 1:
+        return matches.pop()
+    raise ApplyError(
+        f"{ref!r} is not an entity; use one of: {sorted(e.id for e in entities)}"
+    )
+
+
 def _write_apply_for(passage_id: str):
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         lo, hi = project.vision.preset.words_per_passage
@@ -234,8 +252,9 @@ def _write_apply_for(passage_id: str):
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
         for d in proposal.micro_details:
-            mutations.add_entity_detail(project.graph, d.entity, d.key, d.value)
-            lines.append(f"micro-detail: {d.entity}.{d.key} = {d.value}")
+            entity_id = _resolve_entity(project.graph, d.entity)
+            mutations.add_entity_detail(project.graph, entity_id, d.key, d.value)
+            lines.append(f"micro-detail: {entity_id}.{d.key} = {d.value}")
         return lines
 
     return apply

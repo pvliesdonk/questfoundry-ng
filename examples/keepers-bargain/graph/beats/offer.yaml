@@ -1,0 +1,10 @@
+id: beat:offer
+summary: >-
+  Elias's ship is provisioned and rides at anchor. He offers Maren the
+  seat beside him when it sails at dawn.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: complicates
+entities: [character:keeper, character:cartographer]
+belongs_to: [path:keep, path:break]

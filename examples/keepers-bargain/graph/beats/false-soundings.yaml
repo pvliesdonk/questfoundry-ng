@@ -1,0 +1,10 @@
+id: beat:false-soundings
+summary: >-
+  Elias's soundings keep coming back wrong; he shows Maren depths that
+  should not exist. She has to answer him with something.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: complicates
+entities: [character:keeper, character:cartographer, character:sleeper]
+belongs_to: [path:tell, path:hide]

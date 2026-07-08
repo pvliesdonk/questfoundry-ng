@@ -1,0 +1,17 @@
+id: dilemma:bargain
+question: Does Maren keep the bargain or break it?
+why_it_matters: >-
+  The light is the only thing keeping the sleeper down. Keeping the
+  bargain costs Maren the sea, the mainland, and Elias; breaking it buys
+  her life back at the coast's expense. Either way, the ledger closes in
+  her hand.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:bargain-kept
+  text: She keeps the light burning, whatever it costs her.
+- id: answer:bargain-broken
+  text: She lets the light die and takes her life back.
+anchored_to: [character:keeper, character:sleeper, location:lighthouse]
+wraps: [dilemma:truth]

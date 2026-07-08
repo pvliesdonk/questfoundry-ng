@@ -1,0 +1,10 @@
+id: beat:elias-lands
+summary: >-
+  Elias Wren lands with his chart cases, hired to map the shoals — and
+  full of questions about the light's odd schedule.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: advances
+entities: [character:keeper, character:cartographer]
+belongs_to: [path:tell, path:hide]

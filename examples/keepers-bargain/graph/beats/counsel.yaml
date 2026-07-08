@@ -1,0 +1,9 @@
+id: beat:counsel
+summary: >-
+  In the lamp room, Elias — who knows what the light holds — tells Maren
+  he will stay or sail by her word, but he will not choose for her.
+beat_class: structural
+purpose: residue
+created_by: polish
+entities: [character:keeper, character:cartographer, location:lighthouse]
+requires_flags: [flag:elias-knows]

@@ -1,0 +1,10 @@
+id: character:sleeper
+name: The Sleeper
+concept: The vast thing below the shoals that the light keeps dreaming.
+base:
+  appearance: never fully seen; a shadow the size of weather
+  manner: patient as tide
+overlays:
+- when: [flag:sleeper-waking]
+  details:
+    manner: surfacing by inches, following heat and heartbeat

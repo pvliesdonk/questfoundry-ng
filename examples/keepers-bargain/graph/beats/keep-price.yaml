@@ -1,0 +1,10 @@
+id: beat:keep-price
+summary: >-
+  The sea settles like a dog by a fire. The coast never learns what it
+  was spared, which is the shape of the price.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: advances
+entities: [character:keeper, character:sleeper]
+belongs_to: [path:keep]

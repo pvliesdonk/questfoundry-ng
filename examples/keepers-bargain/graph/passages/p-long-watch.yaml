@@ -1,0 +1,8 @@
+id: passage:p-long-watch
+summary: The bargain holds; the sea settles; the long watch begins.
+entities: [character:keeper, character:sleeper, location:lighthouse]
+beats: [beat:keep-commit, beat:keep-price, beat:keep-ending]
+irrelevant_flags: [flag:lie-between]
+ending:
+  id: e-long-watch
+  title: The Long Watch

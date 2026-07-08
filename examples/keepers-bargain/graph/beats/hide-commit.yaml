@@ -1,0 +1,10 @@
+id: beat:hide-commit
+summary: >-
+  Maren laughs off the soundings — bad instruments, worse weather — and
+  burns the ledger page he nearly saw.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: commits
+entities: [character:keeper, character:cartographer]
+belongs_to: [path:hide]

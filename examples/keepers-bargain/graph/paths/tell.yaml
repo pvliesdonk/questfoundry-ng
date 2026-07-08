@@ -1,0 +1,6 @@
+id: path:tell
+name: The truth shared
+explores: answer:truth-told
+consequences:
+- id: consequence:elias-knows
+  text: Elias knows what the light holds.

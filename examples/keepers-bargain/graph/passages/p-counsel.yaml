@@ -1,0 +1,12 @@
+id: passage:p-counsel
+summary: Elias will stay or sail by her word, but he will not choose for her.
+created_by: polish
+entities: [character:keeper, character:cartographer, location:lighthouse]
+beats: [beat:counsel]
+choices:
+- to: passage:p-long-watch
+  label: Send the ship away and tend the light
+  grants: [flag:bound-to-light]
+- to: passage:p-wide-water
+  label: Cap the lamp and go aboard
+  grants: [flag:sleeper-waking]

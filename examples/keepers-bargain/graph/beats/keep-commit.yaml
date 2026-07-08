@@ -1,0 +1,10 @@
+id: beat:keep-commit
+summary: >-
+  At dawn Maren sends the ship away and trims the wick. The bargain
+  holds, and the blank line in the ledger gets her name.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: commits
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:keep]

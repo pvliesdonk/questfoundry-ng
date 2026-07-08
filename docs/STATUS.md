@@ -186,6 +186,27 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
+- **The id-contract boundary needs a policy decision (first item for
+  the next session).** The three live-run fixes (PR #12) sit on
+  different sides of a line the author has questioned: predicting and
+  correcting nondeterministic model behavior engine-side vs. stating
+  the contract better prompt-side. Agreed direction, to implement and
+  then prune: (1) the **adapter's** JSON instruction should state the
+  id contract once, globally — "every node reference must be the full
+  `kind:slug` id exactly as it appears in the prompt" — instead of
+  per-pass engine tolerances; (2) repair errors always name the
+  expected values (already the practice); (3) engine canonicalization
+  only for provably unambiguous forms (the `passage:` prefix
+  restoration is parsing, not prediction — keep); (4) **no fuzzy
+  name-matching** — once (1) proves out in the next live run, retire
+  `_resolve_entity`'s display-name branch in `stages/fill.py`, keeping
+  only id/slug. Rationale: fuzzy acceptance is a treadmill against a
+  distribution and can convert loud failures into quiet wrong answers;
+  but note the verification asymmetry — engine normalization is
+  CI-testable forever, prompt fixes are hope until a live run — so
+  pair (1) with the Anthropic live run the next session will do anyway
+  (`QF_ANTHROPIC_API_KEY` reaches new sessions).
+
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
   original source documents ("How Branching Stories Work" §The Cost of

@@ -175,15 +175,15 @@ means "comes before." The DAG *is* the story's structure:
   is on every arc and the frontier is one beat **per world** — each of
   the hard dilemma's commits. Residue beats splice between a path's
   exclusive tail and the whole frontier, so they exist in every world.
-  Hard dilemmas never converge; their branches run to separate
-  endings. With more than one
-  hard dilemma, hard forks **nest**, and the right mental model is the
-  weave as a **tensor of Y graphs**: each dilemma contributes its Y as
-  one dimension, and a story position is a coordinate in every
-  dilemma's Y at once. Soft dimensions *collapse* at convergence — the
-  coordinate leaves the DAG and lives on as flags, overlays, residue.
-  Hard dimensions *never collapse* — the coordinate stays in the DAG
-  as position, so endings multiply (two hard dilemmas → four endings).
+  Hard dilemmas never converge; their branches run to separate endings.
+  With more than one hard dilemma, hard forks **nest**, and the right
+  mental model is the weave as a **tensor of Y graphs**: each dilemma
+  contributes its Y as one dimension, and a story position is a
+  coordinate in every dilemma's Y at once. Soft dimensions *collapse*
+  at convergence — the coordinate leaves the DAG and lives on as
+  flags, overlays, residue. Hard dimensions *never collapse* — the
+  coordinate stays in the DAG as position, so endings multiply (two
+  hard dilemmas → four endings).
   Where two hard dimensions are expanded at once, an inner-dilemma
   beat materializes once per world: the instances project to the same
   node of the inner Y (same dilemma-relative meaning) and to different

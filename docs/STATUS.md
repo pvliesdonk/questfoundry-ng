@@ -314,8 +314,13 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   prompt — and `_resolve_entity`'s display-name branch is retired;
   micro-detail apply accepts only exact ids and the unambiguous bare
   slug (prefix restoration is parsing, not prediction). Repair errors
-  keep naming the expected ids. The violating-construction test now
-  asserts display names are *rejected*. Validation: the intended
+  keep naming the expected ids — and the validation run exposed one
+  straggler: POLISH's finalize residue errors named only the offending
+  value, so the repair loop couldn't converge when the model echoed a
+  prompt annotation ("(residue: light)") into the dilemma field; both
+  errors now enumerate the expected set, with a test mirroring the
+  live failure. The violating-construction test for `_resolve_entity`
+  now asserts display names are *rejected*. Validation: the intended
   Anthropic live run is blocked on billing (see open items), so the
   prompt-side fix was validated with a second live gpt-5 run — the
   distribution that produced the original id failures — on a fresh

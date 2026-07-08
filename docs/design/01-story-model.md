@@ -170,7 +170,15 @@ means "comes before." The DAG *is* the story's structure:
   per explored path (each successor a commit beat).
 - A **convergence** is a beat reachable from both of a soft dilemma's
   post-commit chains — the storylines rejoin. Hard dilemmas never
-  converge; their branches run to separate endings.
+  converge; their branches run to separate endings. With more than one
+  hard dilemma, hard forks **nest**: after the first hard commit, the
+  remaining hard dilemma forks again on *each* branch, with its own
+  independently authored per-branch beats — no beat is shared across a
+  hard fork, and endings multiply (two hard dilemmas → four endings).
+  The per-combination beats after the first hard fork are the accepted
+  cost of late-committing backbones, few by design. Realizing this
+  duplication in GROW is M5 work; it refines I3's "exactly one commit
+  beat" to per-branch rather than global (tracked in `docs/STATUS.md`).
 - An **intersection** is a co-occurrence declaration: beats from
   *different* dilemmas grouped into one scene (the keeper studies the
   charts — D2 — while deciding about the light — D1). The beats stay

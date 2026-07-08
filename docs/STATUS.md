@@ -104,14 +104,21 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
 
 ## Known deferrals / open items
 
-- **Two hard dilemmas are structurally impossible under the current
-  invariants.** Beats are single nodes, so after one hard fork the
-  second hard dilemma's commits cannot appear on both branches without
-  reconverging them (I7) — yet `medium`/`long` presets promise 2 hard
-  dilemmas. Needs a real design decision (beat duplication? ending
-  trees? per-branch sub-dilemmas?) before M5's `medium` hardening.
-  Frontier-tier work; the weave currently rejects >1 hard dilemma with
-  a clear error.
+- **Multi-hard weaving is not implemented** (the weave rejects >1 hard
+  dilemma with a clear error). The intended topology is settled by the
+  original source documents ("How Branching Stories Work" §The Cost of
+  Branching; ontology §The 2^N Law): hard forks **nest** — after the
+  first hard commit, the remaining hard dilemma forks again on *each*
+  branch, with its own independently authored per-branch beats, and
+  endings multiply (2 hard → 4 endings). No beat is shared across a
+  hard fork, so nothing reconverges; the per-combination beats are the
+  accepted, deliberately minimized cost of late-committing backbones.
+  What NG lacks is the duplication machinery: GROW must instantiate the
+  inner dilemma's fork per outer branch, which refines I3's "exactly
+  one commit beat per path" (per branch, not global) and the
+  single-grant-point assumptions in `queries.commit_beat` /
+  `queries.grant_beat` / `FreezeRecord.forks`. Frontier-tier work,
+  needed for M5's `medium` scope.
 - **M2 intersections group shared pre-commit beats only.** Intersections
   involving exclusive (post-commit) beats are structurally meaningful
   but interact with arc membership in ways the spine model doesn't
@@ -180,8 +187,13 @@ end-to-end — choices, gates, four distinct journeys — with zero prose.
   candidates. Flag ids reuse their consequence's slug
   (`consequence:elias-knows` → `flag:elias-knows`). Freeze happens
   inside GROW's gate callable, after checks pass and before checkpoint
-  save. Discovered and recorded: 2-hard-dilemma topology is impossible
-  under I5/I6/I7 as written (see open items). M2 was frontier-authored
+  save. Multi-hard weaving deferred to M5: per the original source
+  documents, hard forks nest (per-branch beats, multiplied endings) —
+  M2's weave rejects >1 hard dilemma; see open items for the invariant
+  refinements the duplication machinery needs. (An earlier revision of
+  this entry called multi-hard topology "impossible" — wrong: the
+  original docs settle it via nested forks; only NG's single-commit-
+  beat plumbing assumes one hard dilemma.) M2 was frontier-authored
   end-to-end: the weave semantics *are* the narrative/DAG mapping, and
   every module touched them (per the tiering policy's escalation rule,
   not despite it).

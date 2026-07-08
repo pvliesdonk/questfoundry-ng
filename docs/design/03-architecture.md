@@ -37,7 +37,7 @@ src/questfoundry/
     runner.py        # the uniform stage loop; checkpoints; resume
     context.py       # per-stage context builders (incl. sliding prose window)
     weave.py         # GROW's deterministic interleaving core (units,
-                     #   constraints, candidate orders, spine realization)
+                     # constraints, candidate orders, spine realization)
     stages/          # dream.py .. ship.py — schemas, prompts, gates only
     prompts/         # Jinja2 prompt templates, versioned
   llm/

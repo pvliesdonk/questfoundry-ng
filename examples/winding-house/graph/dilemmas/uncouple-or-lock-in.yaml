@@ -1,0 +1,26 @@
+id: dilemma:uncouple-or-lock-in
+question: At the heart of the Clocktower, do you turn the Sovereign Wind-Key to uncouple the
+  great mainspring and return its hoarded years to the people, or lock in Calder’s siphon
+  to keep the city wound against the encroaching Halt?
+why_it_matters: This sets the city’s fate—either a just but perilous slow-down that exposes
+  the walls to what waits outside, or continued survival bought by sanctioned theft—marking
+  Kessa’s legacy, Mira’s future, Calder’s authority, the outsider’s trust, and the rhythm
+  of every life within the gears.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:uncouple-and-redistribute
+  text: Uncouple the mainspring and release the stored years back to the citizens, accepting
+    that the city will slow, the walls may open, and the Halt must be met on honest terms.
+- id: answer:lock-in-and-defend
+  text: Lock in the siphon and keep the city over‑wound against the Halt, protecting its rhythm
+    for now while consigning citizens—including Mira—to continued theft and structured forgetting.
+anchored_to:
+- character:kessa-pinion
+- character:orun-calder
+- character:rook-ashfell
+- object:sovereign-wind-key
+- character:mira-threadgill
+wraps:
+- dilemma:gift-your-hours-to-mira

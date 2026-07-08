@@ -1,0 +1,13 @@
+id: passage:g7-residue-hold
+summary: Your palms stay steady and the tower’s breath is measured, a private edge cupped
+  from the wind; the lanes feel thinner of laughter, a faint sourness drying on brick.
+entities:
+- Kessa
+- Clocktower
+- Neighborhood
+- Wind
+beats:
+- beat:residue-light-hold
+choices:
+- label: I climb for the hidden panel and the hatch Rook named.
+  to: passage:g8-secret-ledger-outside

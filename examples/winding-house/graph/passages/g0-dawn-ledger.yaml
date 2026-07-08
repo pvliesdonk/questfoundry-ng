@@ -1,0 +1,21 @@
+id: passage:g0-dawn-ledger
+summary: At dawn the city thrums to the Great Mainspring while the Halt scowls beyond the
+  walls; you feel the torque in your bones as you carry Mira Threadgill’s debt chit from the
+  greying shop. In the Clocktower’s heart beside Master Calder, the Sovereign Wind-Key gleams
+  and a ledger addendum waits under his seal—kin may gift apprenticed years to steady a failing
+  life.
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+- character:orun-calder
+- object:sovereign-wind-key
+beats:
+- beat:hard-pre-summoned-to-heart
+- beat:setup-mira-greying-ledger
+- beat:setup-quiet-hum-and-halt
+- beat:soft-pre-ledger-flag
+choices:
+- label: I step into the dim corridor and count the breaths between ticks.
+  to: passage:g1-lanternmotes
+- label: I lean by the pigeonwheel and listen for the metal flutter.
+  to: passage:g2-pigeonwheel

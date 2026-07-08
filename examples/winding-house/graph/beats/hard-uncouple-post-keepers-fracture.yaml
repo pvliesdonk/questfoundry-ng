@@ -1,0 +1,14 @@
+id: beat:hard-uncouple-post-keepers-fracture
+summary: The Clockkeepers split into rival cliques, some rushing to recouple while others
+  defend the release; Calder’s command fractures and his eyes burn with betrayal. Rook stands
+  as Kessa’s ally amid the clamor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: complicates
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:rook-ashfell
+belongs_to:
+- path:uncouple-and-redistribute

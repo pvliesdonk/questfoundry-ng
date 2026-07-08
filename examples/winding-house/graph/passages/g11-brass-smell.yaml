@@ -1,0 +1,19 @@
+id: passage:g11-brass-smell
+summary: Brass breath and oil thicken the air while the city cinches one notch tighter beneath
+  your hands.
+entities:
+- City
+- Brass
+- Oil
+- Clocktower
+irrelevant_flags:
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:mira-fades-neighborhood-sours
+- flag:slow-erosion-of-homes
+- flag:transfer-flags-ledger
+beats:
+- beat:false-hard-lock-brass-smell
+choices:
+- label: I stand the watch and keep the beat unbroken.
+  to: passage:g13-locked-ending

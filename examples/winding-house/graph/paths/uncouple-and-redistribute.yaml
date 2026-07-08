@@ -1,0 +1,10 @@
+id: path:uncouple-and-redistribute
+name: Loose the Hoarded Beat
+explores: answer:uncouple-and-redistribute
+consequences:
+- id: consequence:city-slows-walls-ajar
+  text: The mainspring is uncoupled; the city’s tempo slackens and long-sealed gates rasp
+    ajar as the Halt’s quiet breath seeps in.
+- id: consequence:authority-schism
+  text: Calder’s authority fractures into rival cliques within the Clockkeepers, splitting
+    the city between grateful returnees and fearful loyalists.

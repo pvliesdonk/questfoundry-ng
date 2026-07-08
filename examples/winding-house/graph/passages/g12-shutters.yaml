@@ -1,0 +1,15 @@
+id: passage:g12-shutters
+summary: Shutters blink closed in a domino hush as watchlights draw your shadow short.
+entities:
+- Shutters
+- Watchlights
+- Shadow
+irrelevant_flags:
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:slow-erosion-of-homes
+beats:
+- beat:false-hard-lock-shutters
+choices:
+- label: I climb to the wall and hold fast beside Calder.
+  to: passage:g13-locked-ending

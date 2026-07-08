@@ -1,0 +1,20 @@
+id: dilemma:gift-your-hours-to-mira
+question: When Mira’s daily hours are shaved thin and she begins to grey at the edges, do
+  you sign over a portion of your own apprenticed years to restore her now, or keep them to
+  stay sharp and solvent for the investigation?
+why_it_matters: This choice either scars Kessa’s capacity and recall to buy Mira relief, or
+  lets Mira’s harm deepen to preserve leverage against the system—reshaping trust, small-scene
+  textures, and whose time is carried into the end.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:give-your-hours
+  text: Sign over a portion of your own years to Mira, buying her breath and brightness at
+    the cost of your stamina, recall, and a slice of your future.
+- id: answer:hold-your-hours
+  text: Keep your years to preserve focus and leverage against the system, even as Mira dulls
+    and the harm becomes personal.
+anchored_to:
+- character:kessa-pinion
+- character:mira-threadgill

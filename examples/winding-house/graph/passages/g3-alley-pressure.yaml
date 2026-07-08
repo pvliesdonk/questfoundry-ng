@@ -1,0 +1,22 @@
+id: passage:g3-alley-pressure
+summary: In a wind-bit alley, Rook Ashfell names the siphon as theft and hints at another
+  way to face the Halt; moments later Calder’s praise in the workshop tightens into a warning
+  about duty and waste. The offer in the ledger turns from mercy to complicity in your hands.
+entities:
+- character:rook-ashfell
+- character:kessa-pinion
+- character:orun-calder
+beats:
+- beat:soft-pre-calder-pressure
+- beat:soft-pre-rook-alley-warning
+choices:
+- label: I press my bleeding thumb to the ledger and sign the years.
+  grants:
+  - flag:mira-brightens-apprentice-dims
+  - flag:transfer-flags-ledger
+  to: passage:g4-give-transfer
+- label: I set down the quill and keep my hours close.
+  grants:
+  - flag:investigative-clarity-preserved
+  - flag:mira-fades-neighborhood-sours
+  to: passage:g5-hold-refusal

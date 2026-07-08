@@ -1,0 +1,7 @@
+Your palms stay steady. The tower’s breath keeps to its slow count, a chest you can hear through stone, the exhale washing a coolness over your fingers. You hold your edge close, thumb to the crescent welt, a candle cupped from the wind, not for show, only to keep the flame from licking sideways and wasting itself on air.
+
+The lanes narrow. Laughter thins to a thread drawn too hard and left to kink. You smell iron and old paste, and a faint sourness dries on brick where damp once held a skin of warmth. Windows blink once and go dim. Names that used to greet you slip past like teeth without purchase, and the murmur that trails you weighs you by what you did not give. You mark it, notch by notch, and refuse to spend attention where it will not return.
+
+You test each tool. Wire pin. Oiled rag. Hook for a pinion you hope is there. The lark chit rides flat against your ribs, a small heat that insists on its own tally, and you press it down as if to flatten a burr. Your count firms. Fifth step. Sixth to stretch the knee. Seventh to catch the breath and lay it along the tower’s pace until your pulse and its draw near even. The city ticks in a wider gait, a fraction slow, as if a hand drags a sleeve along the minute. You tighten the apron, breathe once to seat the weight where you can carry it without rattle, and turn into the stair that spirals through the works.
+
+You climb for the hidden panel and the hatch Rook named.

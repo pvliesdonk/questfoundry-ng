@@ -1,0 +1,13 @@
+id: beat:soft-hold-commit-refuse-signature
+summary: At the ledger desk Kessa sets down the quill and withdraws her hand, whispering that
+  she needs her hours to pry at larger gears; Mira nods but her eyes dim. The clerk stamps
+  “DECLINED.”
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:gift-your-hours-to-mira
+  effect: commits
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+belongs_to:
+- path:hold-your-hours

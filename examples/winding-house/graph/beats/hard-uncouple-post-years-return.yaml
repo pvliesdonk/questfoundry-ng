@@ -1,0 +1,13 @@
+id: beat:hard-uncouple-post-years-return
+summary: In streets below, people inhale as color and memory surge back; Mira lifts her head,
+  stitches mending their own small truth as the bells fall to a gentler pace. Kessa steadies
+  herself against the slowing world.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: reveals
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+belongs_to:
+- path:uncouple-and-redistribute

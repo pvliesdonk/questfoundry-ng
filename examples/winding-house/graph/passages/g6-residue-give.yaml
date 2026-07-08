@@ -1,0 +1,13 @@
+id: passage:g6-residue-give
+summary: A soft ache of giving glows under your skin as the mainspring’s hum seems near enough
+  to breathe; gazes snag like burrs and the blue of authority lingers at every corner.
+entities:
+- Kessa
+- Mira
+- Keepers
+- Clocktower
+beats:
+- beat:residue-light-give
+choices:
+- label: I follow the tower’s seam toward what Calder hides.
+  to: passage:g8-secret-ledger-outside

@@ -1,0 +1,15 @@
+id: character:mira-threadgill
+name: Mira Threadgill
+concept: A seamstress and Kessa’s oldest friend whose hours are bleeding away, greying her
+  memories and slipping stitches from her hands.
+base:
+  appearance: Thread bracelets at each wrist; fingertip pinpricks like constellations.
+  manner: Hums winding songs to keep pace, loses the refrain mid-note.
+  tie: Shared bell-quarters childhood with Kessa.
+  condition: Losing hours in ragged mouthfuls; afternoons collapse into blinks.
+  pride: Refuses charity even as time frays.
+  habit: She hums a half-remembered loom tune to catch the hour when work begins to drift.
+  thimble: She favors a dented brass thimble with a crescent nick that kisses the same finger
+    each time she sets a hem.
+  dented-brass-thimble: She works with a dented brass thimble that kisses the same finger
+    each time she sews.

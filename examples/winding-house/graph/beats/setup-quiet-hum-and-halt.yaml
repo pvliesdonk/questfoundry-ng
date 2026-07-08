@@ -1,0 +1,8 @@
+id: beat:setup-quiet-hum-and-halt
+summary: At dawn the city thrums to the Great Mainspring while, beyond the walls, the horizon
+  sits unnaturally still—the Halt as a fixed bruise. Kessa feels the torque in her bones as
+  bell teeth kiss, knowing the rhythm is tended by hands like hers.
+beat_class: structural
+purpose: setup
+entities:
+- character:kessa-pinion

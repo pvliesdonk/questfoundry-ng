@@ -1,0 +1,21 @@
+id: passage:g9-turn-and-pin
+summary: With a grunt you heave the Sovereign Wind-Key, seat the coupling dogs, and drive
+  the ward-pins that fortify the siphon as bells flare the bright beat. Calder’s hand lands
+  warm on your shoulder.
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- object:sovereign-wind-key
+irrelevant_flags:
+- flag:investigative-clarity-preserved
+- flag:mira-brightens-apprentice-dims
+- flag:mira-fades-neighborhood-sours
+- flag:slow-erosion-of-homes
+- flag:transfer-flags-ledger
+beats:
+- beat:hard-lock-commit-turn-and-pin
+choices:
+- label: I breathe brass and oil until the teeth seat.
+  to: passage:g11-brass-smell
+- label: I watch shutters fall as watchlights find my shadow.
+  to: passage:g12-shutters

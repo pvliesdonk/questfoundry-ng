@@ -1,0 +1,23 @@
+id: passage:g10-uncouple-release
+summary: You wrench the Key backward and uncouple the hungry gear; stored years exhale through
+  the tower as the city’s tempo slackens and the long-sealed gates rasp toward open. Down
+  in the streets color and memory surge—Mira lifts her head—as you steady yourself against
+  the gentler world.
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:rook-ashfell
+- object:sovereign-wind-key
+- character:mira-threadgill
+irrelevant_flags:
+- flag:authority-schism
+- flag:investigative-clarity-preserved
+- flag:transfer-flags-ledger
+beats:
+- beat:hard-uncouple-commit-release
+- beat:hard-uncouple-post-years-return
+choices:
+- label: I watch green push through the cracks.
+  to: passage:g14-grass-through-stone
+- label: I listen as the bell-wind carries something sweet and stinging.
+  to: passage:g15-bellwind

@@ -1,0 +1,11 @@
+id: beat:false-ledger-flag-lanternmotes
+created_by: polish
+summary: Lantern motes drift in the corridor like slow ash as you count the heartbeats between
+  ticks.
+beat_class: structural
+purpose: false_branch
+entities:
+- Kessa
+- Lanterns
+- Corridor
+- Clocktower

@@ -1,0 +1,9 @@
+id: beat:setup-mira-greying-ledger
+summary: In Mira Threadgill’s shop, dropped stitches and greying edges mark hours shaved thin;
+  the neighborhood clerk tallies her losses into the public ledger. Kessa pockets the chit,
+  a promise burning her palm.
+beat_class: structural
+purpose: setup
+entities:
+- character:kessa-pinion
+- character:mira-threadgill

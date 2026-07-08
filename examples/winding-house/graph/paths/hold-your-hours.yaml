@@ -1,0 +1,10 @@
+id: path:hold-your-hours
+name: Keep the Edge
+explores: answer:hold-your-hours
+consequences:
+- id: consequence:mira-fades-neighborhood-sours
+  text: Mira’s stitches slip and memories thin, and the neighborhood’s whispers sour toward
+    the apprentice’s perceived coldness.
+- id: consequence:investigative-clarity-preserved
+  text: Workshop focus and investigative clarity remain intact, preserving leverage against
+    the Clocktower’s mechanisms.

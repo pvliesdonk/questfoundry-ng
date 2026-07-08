@@ -1,0 +1,16 @@
+id: passage:g5-hold-refusal
+summary: You withdraw the quill and keep your hours for the gears ahead, the clerk’s stamp
+  thudding ‘DECLINED’ as Mira’s stitches slip and the neighborhood cools toward you. In the
+  workshop your focus stays sharp, your ledger ordinary and unseen.
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+beats:
+- beat:soft-hold-commit-refuse-signature
+- beat:soft-hold-post-clarity-preserved
+- beat:soft-hold-post-mira-thins
+choices:
+- label: I turn away with my edge intact and feel the lanes cool.
+  requires:
+  - flag:mira-fades-neighborhood-sours
+  to: passage:g7-residue-hold

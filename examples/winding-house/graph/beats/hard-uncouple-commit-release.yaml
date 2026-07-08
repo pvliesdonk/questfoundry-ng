@@ -1,0 +1,15 @@
+id: beat:hard-uncouple-commit-release
+summary: Kessa wrenches the Key backward and yanks the coupling free; stored years exhale
+  through the tower like summer wind as the city’s tempo slackens and the long-sealed gates
+  rasp ajar. Calder staggers; Rook grabs Kessa’s arm.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:uncouple-or-lock-in
+  effect: commits
+entities:
+- character:kessa-pinion
+- character:orun-calder
+- character:rook-ashfell
+- object:sovereign-wind-key
+belongs_to:
+- path:uncouple-and-redistribute

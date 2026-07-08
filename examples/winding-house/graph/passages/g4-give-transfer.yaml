@@ -1,0 +1,17 @@
+id: passage:g4-give-transfer
+summary: You prick your thumb into time-ink and sign away a slice of your apprenticed years;
+  the seal bites and the numerals leap, the debt settling into your bones. Color returns to
+  Mira as your hands shake, and blue-coated eyes begin to follow your routes.
+entities:
+- character:kessa-pinion
+- character:mira-threadgill
+- character:orun-calder
+beats:
+- beat:soft-give-commit-thumb-and-ink
+- beat:soft-give-post-keeper-scrutiny
+- beat:soft-give-post-mira-steady
+choices:
+- label: I walk home with the new weight humming under my skin.
+  requires:
+  - flag:transfer-flags-ledger
+  to: passage:g6-residue-give

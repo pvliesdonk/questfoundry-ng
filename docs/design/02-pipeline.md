@@ -104,10 +104,16 @@ between:
 2. **Scaffold** — per explored path, the Y-shape: pre-commit chain
    (shared, dual `belongs_to`), one commit beat, post-commit chain. Each
    path's beats must read as a complete story alone — GROW interleaves,
-   it must never have to invent missing spine. Beats get **flexibility
-   annotations** ("the docks could be the market"; "the spy could be the
-   informant") — invitations GROW uses to create intersections — and
-   **temporal hints** ("before D1's commit") guiding interleave order.
+   it must never have to invent missing spine. SEED wires the
+   *intra-dilemma* ordering edges itself (pre-commit chain → per-path
+   commit → post-commit chain), since the Y's internal order is a fact
+   of the scaffold, not an interleaving decision; after SEED the beat
+   graph is a set of disconnected Y components (plus a setup chain), and
+   GROW's job is exclusively the *cross-dilemma* weave. Beats also get
+   **flexibility annotations** ("the docks could be the market"; "the
+   spy could be the informant") — invitations GROW uses to create
+   intersections — and **temporal hints** ("before D1's commit") guiding
+   interleave order.
 3. **Order & sketch** — declare pairwise dilemma relations; sketch where
    soft paths reconverge and with what residue weight.
 

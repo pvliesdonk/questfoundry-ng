@@ -35,11 +35,15 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M0 — graph engine.** The typed story graph, the invariant validators
-(I1–I13), the project-on-disk format, and the `qf` CLI (`new`, `validate`,
-`status`, `graph`) are implemented; the LLM pipeline stages arrive in M1+.
-The hand-authored golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
-loads, passes every gate, and renders its beat DAG:
+🏗️ **M1 — front of pipeline.** DREAM → BRAINSTORM → SEED run end-to-end:
+`qf run --to seed` turns a one-paragraph premise into a triaged, scaffolded
+story (paths, Y-shaped beat scaffolds, dilemma ordering) that passes gates
+G0–G2 — against a live Anthropic provider or fully offline via recorded
+fixtures. Under it sits the M0 foundation: the typed story graph, the
+invariant validators (I1–I13), the project-on-disk format, and the `qf`
+CLI. The hand-authored golden story
+["The Keeper's Bargain"](examples/keepers-bargain/) loads, passes every
+gate, and renders its beat DAG:
 
 ```console
 $ uv sync --group dev

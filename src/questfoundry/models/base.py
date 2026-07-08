@@ -16,6 +16,7 @@ ID_RE = re.compile(r"^[a-z][a-z0-9_]*:[a-z0-9][a-z0-9-]*$")
 
 
 class Stage(StrEnum):
+    NEW = "new"  # scaffolded, no stage completed yet
     DREAM = "dream"
     BRAINSTORM = "brainstorm"
     SEED = "seed"

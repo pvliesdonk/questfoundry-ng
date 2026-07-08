@@ -1,0 +1,3 @@
+{
+ "text": "{\n \"relations\": [\n  {\n   \"kind\": \"wraps\",\n   \"a\": \"dilemma:bargain\",\n   \"b\": \"dilemma:truth\"\n  }\n ]\n}"
+}

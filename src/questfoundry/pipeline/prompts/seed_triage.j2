@@ -1,0 +1,29 @@
+Triage the brainstormed material into a cohesive ensemble, then commit to the
+storylines ("paths") that will be developed.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+CAST:
+{% for e in entities %}
+- {{ e.id }} — {{ e.name }}: {{ e.concept }}
+{% endfor %}
+
+DILEMMAS AND THEIR ANSWERS:
+{% for d in dilemmas %}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}): {{ d.dilemma.question }}
+  Why it matters: {{ d.dilemma.why_it_matters }}
+{% for a in d.answers %}
+  - {{ a.id }}: {{ a.text }}
+{% endfor %}
+{% endfor %}
+
+YOUR TASKS:
+1. cut_entities: cut any entity that doesn't serve a dilemma or the ensemble
+   (id + one-line reason). Keep at least {{ scope.cast_min }} entities, and never cut an
+   entity that would leave a dilemma with no retained anchor. Cutting nothing is fine.
+2. paths: create exactly one path per answer, for BOTH answers of EVERY dilemma.
+   Each path: id (path:slug), an optional short name, explores (the answer id), and
+   1-2 consequences. A consequence is the narrative outcome of the choice, phrased
+   as WORLD STATE ("the mentor is hostile"), never as player action ("player chose
+   to distrust"). Consequence ids: consequence:slug.
+{% include "_shared.j2" %}

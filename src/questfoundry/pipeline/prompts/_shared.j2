@@ -1,0 +1,10 @@
+{% if notes %}
+AUTHOR STEERING (must be respected):
+{{ notes }}
+{% endif %}
+{% if repair_errors %}
+YOUR PREVIOUS PROPOSAL WAS REJECTED. Fix these problems and return a corrected proposal:
+{% for e in repair_errors %}
+- {{ e }}
+{% endfor %}
+{% endif %}

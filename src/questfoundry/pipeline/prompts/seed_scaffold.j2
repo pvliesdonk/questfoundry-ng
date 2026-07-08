@@ -1,0 +1,40 @@
+Scaffold every path with beats. A beat is one concrete story moment (1-3 sentence
+summary of what HAPPENS — events, not prose). Each dilemma gets a Y-shaped scaffold:
+a shared pre-commit chain experienced by every player, then a fork into the two
+paths, each with its commit beat (the point of no return, where the choice locks in)
+and post-commit beats (playing out that answer's consequences).
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+RETAINED CAST:
+{% for e in entities %}
+- {{ e.id }} — {{ e.name }}: {{ e.concept }}
+{% endfor %}
+
+DILEMMAS AND PATHS:
+{% for d in dilemmas %}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}): {{ d.dilemma.question }}
+{% for p in d.paths %}
+  - {{ p.id }}: answer "{{ p.answer }}" — consequences: {{ p.consequences | join("; ") }}
+{% endfor %}
+{% endfor %}
+
+REQUIREMENTS:
+- setup: 1-2 structural beats of world-building that open the story before any
+  dilemma is introduced.
+- scaffolds: one entry per dilemma (cover every dilemma exactly once), naming its
+  two paths exactly as listed above.
+- pre_commit: 2-3 beats per dilemma that introduce and develop the question —
+  every player sees these regardless of their eventual choice. Use effect
+  "advances", "reveals" (a truth surfaces), or "complicates" (doubt deepens).
+- Each path: one commit beat (the irreversible act itself — concrete and dramatic)
+  and 1-3 post_commit beats proving that answer.
+- HARD dilemma paths never rejoin: their final post-commit beat is an ending
+  (is_ending: true) that resolves the whole story for that world.
+- SOFT dilemma paths will reconverge later (a later stage wires it): give each
+  soft path at least 1 post-commit payoff beat; do NOT mark soft beats as endings.
+- Each beat's story must read coherently along its own path: if you read one
+  path's beats in order they form a complete mini-story.
+- Beat ids: beat:slug. Reference entity ids in each beat's entities list.
+- Respect the tone. Beats are summaries of events, present tense.
+{% include "_shared.j2" %}

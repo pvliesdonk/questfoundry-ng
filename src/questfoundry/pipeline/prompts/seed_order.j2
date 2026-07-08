@@ -1,0 +1,16 @@
+Declare how the dilemmas relate in the story's timeline. These relations guide the
+later interleaving of the scaffolds into one branching narrative.
+
+DILEMMAS:
+{% for d in dilemmas %}
+- {{ d.id }} ({{ d.role }}): {{ d.question }}
+{% endfor %}
+
+RELATIONS (emit one entry per meaningful pair):
+- "wraps": A introduces before B and B resolves before A commits. The backbone
+  wraps the subplots — hard dilemmas normally wrap soft ones.
+- "serial": A fully resolves before B introduces. Serial subplots never interact.
+- "concurrent": both active at once, interleaved, neither nesting the other.
+
+Do not create cycles (if A wraps B, B cannot wrap or precede A).
+{% include "_shared.j2" %}

@@ -15,7 +15,7 @@ from enum import StrEnum
 from questfoundry.graph import queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.concept import Vision
+from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.drama import Dilemma, DilemmaRole
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
@@ -48,6 +48,23 @@ class Context:
 
     def warn(self, check: str, message: str) -> None:
         self.issues.append(Issue(check, Severity.WARNING, message))
+
+
+# --------------------------------------------------------------------------
+# Gate G0 (DREAM)
+# --------------------------------------------------------------------------
+
+
+def check_g0_vision_complete(ctx: Context) -> None:
+    v = ctx.vision
+    for name in ("premise", "genre", "tone"):
+        value = getattr(v, name).strip()
+        if not value or value.upper().startswith("TODO"):
+            ctx.error("G0", f"vision.{name} is missing or a TODO placeholder")
+    if not v.themes:
+        ctx.error("G0", "vision.themes is empty")
+    if v.scope not in SCOPE_PRESETS:
+        ctx.error("G0", f"vision.scope {v.scope!r} is not a known preset")
 
 
 # --------------------------------------------------------------------------
@@ -443,6 +460,7 @@ def check_budget_passages(ctx: Context) -> None:
 # --------------------------------------------------------------------------
 
 GATES: dict[Stage, list] = {
+    Stage.DREAM: [check_g0_vision_complete],
     Stage.BRAINSTORM: [
         check_i1_two_answers,
         check_i2_anchoring,

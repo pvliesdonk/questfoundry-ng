@@ -34,8 +34,65 @@ def new(
         raise typer.Exit(2)
     root = directory or FSPath(name)
     scaffold_project(root, name=name, scope=scope)
-    console.print(f"[green]created[/green] {root}/ (scope: {scope}, stage: dream)")
-    console.print("next: edit vision.yaml, then run the pipeline (M1+).")
+    console.print(f"[green]created[/green] {root}/ (scope: {scope}, stage: new)")
+    console.print("next: edit the premise in vision.yaml, then: qf run --to seed")
+
+
+@app.command()
+def run(
+    stage: str = typer.Argument("", help="Stage to run, or empty with --to"),
+    directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
+    to: str = typer.Option("", "--to", help="Run every remaining stage up to this one"),
+    yes: bool = typer.Option(False, "--yes", help="Batch mode (checkpoints auto-approve)"),
+) -> None:
+    """Run pipeline stage(s) against the project's configured LLM provider."""
+    from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider
+    from questfoundry.models.base import Stage as StageEnum
+    from questfoundry.pipeline.runner import RunnerError, run_pipeline
+    from questfoundry.pipeline.stages import IMPLS
+
+    if bool(stage) == bool(to):
+        console.print("[red]specify exactly one of a stage name or --to <stage>[/red]")
+        raise typer.Exit(2)
+    project = load_project(directory)
+    target = StageEnum(to or stage)
+
+    provider_name = project.llm.get("provider", "anthropic")
+    if provider_name == "mock":
+        fixtures = project.root / project.llm.get("fixtures", "fixtures")
+        provider = MockProvider(fixtures)
+        cache_dir = None  # replay is already deterministic
+    else:
+        provider = AnthropicProvider()
+        cache_dir = project.root / "cache" / "llm"
+    adapter = LLMAdapter(
+        provider,
+        project.llm.get("models", {}),
+        cache_dir=cache_dir,
+        ledger_path=project.root / "reports" / "ledger.jsonl",
+    )
+    notes = {StageEnum(k): v for k, v in project.steering.items()}
+    try:
+        reports = run_pipeline(project, target, IMPLS, adapter, notes_by_stage=notes)
+    except RunnerError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(1) from e
+    failed = False
+    for report in reports:
+        status = "[green]ok[/green]" if report.success else "[red]FAILED[/red]"
+        console.print(f"{report.stage.value}: {status}")
+        for p in report.passes:
+            attempts = f" ({p.attempts} attempts)" if p.attempts > 1 else ""
+            console.print(f"  {p.name}{attempts}: " + "; ".join(p.applied))
+        for issue in report.issues:
+            color = "red" if issue.severity == Severity.ERROR else "yellow"
+            console.print(f"  [{color}]{issue}[/{color}]")
+        if report.error:
+            console.print(f"  [red]{report.error}[/red]")
+        failed = failed or not report.success
+    if failed:
+        raise typer.Exit(1)
+    console.print(f"[green]project is now at stage {project.stage.value}[/green]")
 
 
 @app.command()

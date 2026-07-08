@@ -48,6 +48,16 @@ def add_dilemma(
         g._add_edge(Edge(kind=EdgeKind.ANCHORED_TO, src=dilemma.id, dst=entity_id))
 
 
+def set_entity_disposition(g: StoryGraph, entity_id: str, *, retained: bool) -> None:
+    """SEED triage: mark an entity retained or cut. Cut entities stay in
+    the graph (the record of what was considered) but stop counting for
+    anchoring (I2) and cast budgets (B2)."""
+    entity = g.get(entity_id)
+    if not isinstance(entity, Entity):
+        raise MutationError(f"{entity_id!r} is not an entity")
+    entity.retained = retained
+
+
 def add_dilemma_relation(g: StoryGraph, kind: EdgeKind, a: str, b: str) -> None:
     if kind not in (EdgeKind.WRAPS, EdgeKind.SERIAL, EdgeKind.CONCURRENT):
         raise MutationError(f"{kind} is not a dilemma ordering relation")

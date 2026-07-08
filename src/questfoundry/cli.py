@@ -52,7 +52,7 @@ def run(
     ),
 ) -> None:
     """Run pipeline stage(s) against the project's configured LLM provider."""
-    from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider
+    from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider, OpenAIProvider
     from questfoundry.models.base import Stage as StageEnum
     from questfoundry.pipeline.runner import RunnerError, run_pipeline
     from questfoundry.pipeline.stages import IMPLS
@@ -71,9 +71,13 @@ def run(
     elif provider_name == "anthropic":
         provider = AnthropicProvider()
         cache_dir = project.root / "cache" / "llm"
+    elif provider_name == "openai":
+        provider = OpenAIProvider()
+        cache_dir = project.root / "cache" / "llm"
     else:
         console.print(
-            f"[red]unknown llm.provider {provider_name!r}; use 'anthropic' or 'mock'[/red]"
+            f"[red]unknown llm.provider {provider_name!r}; "
+            "use 'anthropic', 'openai', or 'mock'[/red]"
         )
         raise typer.Exit(2)
     adapter = LLMAdapter(

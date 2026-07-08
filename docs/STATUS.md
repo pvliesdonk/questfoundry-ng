@@ -262,8 +262,12 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 - `export/` package and the rest of `play/` (engine, TUI) arrive with
   M3–M4; `play/simulate.py` landed early because M2's exit criterion
   needs it.
-- Live-provider recording (`MockProvider(record_with=...)`) is wired but
-  unexercised — needs an API key session to record real fixtures.
+- ~~Live-provider recording is wired but unexercised~~ **Exercised**:
+  the first live generation ran on 2026-07-08 (OpenAI gpt-5 architect/
+  writer + gpt-4.1-mini utility via the new `providers/openai.py`;
+  this environment carries an OpenAI key but no Anthropic key). Results
+  and budget data in the decision log. Anthropic live runs still await
+  an `ANTHROPIC_API_KEY` in the environment.
 - **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
   02 §3) are not implemented; batch is currently the only mode. The flag
   is accepted for forward compatibility. Wire real interactive review

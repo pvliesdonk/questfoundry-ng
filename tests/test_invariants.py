@@ -275,6 +275,21 @@ def test_g4_missing_residue_coverage_flagged(vision):
     assert any("no residue beat" in i.message for i in issues)
 
 
+def test_g5_missing_prose_flagged(golden):
+    g = golden.graph
+    g.node("passage:p-tremor").prose = ""
+    issues = errors_for("G5", g, golden.vision, Stage.FILL)
+    assert any("no prose" in i.message for i in issues)
+
+
+def test_b5_word_budget_is_advisory(golden):
+    g = golden.graph
+    g.node("passage:p-tremor").prose = "barely any words here"
+    issues = run_checks(g, golden.vision, Stage.FILL)
+    warnings = [i for i in issues if i.check == "B5"]
+    assert warnings and all(i.severity == Severity.WARNING for i in warnings)
+
+
 def test_golden_story_passes_all_gates(golden):
     issues = run_checks(golden.graph, golden.vision, golden.stage)
     errors = [i for i in issues if i.severity == Severity.ERROR]

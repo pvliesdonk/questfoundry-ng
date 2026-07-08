@@ -88,10 +88,35 @@ def test_roundtrip_is_lossless(golden, tmp_path):
             stage=golden.stage,
             vision=golden.vision,
             graph=golden.graph,
+            voice=golden.voice,
+            ifid=golden.ifid,
         )
     )
     reloaded = load_project(tmp_path)
     assert reloaded.name == golden.name
     assert reloaded.stage == golden.stage
     assert reloaded.vision == golden.vision
+    assert reloaded.voice == golden.voice
+    assert reloaded.ifid == golden.ifid
     assert graph_signature(reloaded.graph) == graph_signature(golden.graph)
+
+
+def test_roundtrip_preserves_prose_as_sibling_files(golden, tmp_path):
+    assert golden.voice is not None  # the golden story carries a voice
+    arrival = golden.graph.node("passage:p-arrival")
+    assert arrival.prose.strip()
+    save_project(
+        Project(
+            root=tmp_path,
+            name=golden.name,
+            stage=golden.stage,
+            vision=golden.vision,
+            graph=golden.graph,
+            voice=golden.voice,
+        )
+    )
+    # prose is a sibling markdown file, never part of the passage YAML
+    assert (tmp_path / "prose" / "p-arrival.md").read_text() == arrival.prose
+    assert "prose" not in (tmp_path / "graph" / "passages" / "p-arrival.yaml").read_text()
+    reloaded = load_project(tmp_path)
+    assert reloaded.graph.node("passage:p-arrival").prose == arrival.prose

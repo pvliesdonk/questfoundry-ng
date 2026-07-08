@@ -223,3 +223,4 @@ interface before that.
 | A7 | Python | TypeScript | LLM/data tooling maturity; repo convention (`.gitignore`) |
 | A8 | Arcs computed on demand | Stored arc nodes | Stored arcs go stale and invite arc-level authoring, a known design trap |
 | A9 | GROW weaves atomic fork units on a linear spine; realization recomputes the whole ordering edge set | Per-seam edge patching; LLM emits an ordering | Full recompute is idempotent and cannot leave stale SEED seams; the LLM picking an index among engine-enumerated orders keeps invalid topologies unrepresentable (Principle 2) |
+| A10 | FILL's automated review is a post-apply hook on the uniform repair loop | Bespoke write-review-revise orchestration inside FILL | One loop owns retries, restore, and the halt ('structure is wrong, not the words'); review issues re-enter the prompt exactly like validation errors, so ≤2 revision rounds is `max_repairs`, not new machinery |

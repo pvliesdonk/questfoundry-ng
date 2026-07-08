@@ -5,11 +5,51 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-08 · M3 (POLISH & structural play)
+> Last updated: 2026-07-08 · M4 (FILL & first exports)
 
 ## Where we are
 
-**M3 is complete.** POLISH compiles the frozen beat DAG into the passage
+**M4 is complete.** FILL writes the prose and the story ships to its
+first playable formats — `qf run --to fill` then `qf export html` puts
+"The Keeper's Bargain" in a browser:
+
+- FILL (`pipeline/stages/fill.py`) rides two small runner extensions:
+  `StageImpl.passes` may be computed from the project (the work queue —
+  one write pass per passage, reference-arc-first; the reference arc is
+  seeded FILL-local scheduling state, `fill_seed` in project.yaml), and
+  `PassSpec.review` runs a post-apply LLM judgment whose issues re-enter
+  the ordinary repair loop — so "≤2 revision rounds, then halt: the
+  structure is wrong, not the words" is `max_repairs`, not bespoke
+  orchestration (mini-ADR A10)
+- Per-passage write context: voice, beats, entities (base + overlays),
+  flag statuses (certain / possible / foreclosed — gated residue
+  passages count their gate as certain), shadows, window of
+  already-written predecessor prose, convergence lookahead, choice
+  labels, word budget (deterministically enforced at apply, repairable)
+- Voice is a singleton `voice.yaml` (locked before any prose; skipped
+  when author-provided); prose lives on the Passage node in memory and
+  as sibling `prose/<slug>.md` files on disk; universal entity
+  micro-details merge into base state through the mutation layer and
+  never overwrite established facts
+- Gate G5: prose presence (error), B5 word budget (advisory), voice
+  presence (checked in the stage gate)
+- First exports (`export/`): canonical runtime JSON with a
+  self-contained round-trip validator (re-walks the exported document
+  alone — I10/I13 at the export boundary), standalone HTML player
+  (dependency-free, gated choices hidden, journey recap, one save
+  slot), Twee 3 / SugarCube (entry `<<set>>` grants, `<<if>>`-guarded
+  links, IFID persisted in project.yaml without rewriting the project);
+  `qf export json|html|twee`, always round-trip-checked first
+- The golden story now carries hand-authored prose (7 passages + voice,
+  stage: fill) and was played **in an actual browser** (headless
+  Chromium over the exported HTML) start to "The Long Watch" — the M4
+  exit criterion
+- e2e: `run --to fill` writes all 8 passages offline with one staged
+  review-fail/revise round exercised (29 ledger calls), exports
+  validate clean, and the runtime document alone replays all four
+  journeys (132 tests total)
+
+**M3 is complete** (PR #10). POLISH compiles the frozen beat DAG into the passage
 graph, and the story is playable in the terminal with zero prose:
 
 - Deterministic passage core (`pipeline/passages.py`): maximal-linear-run
@@ -128,20 +168,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M0 — Skeleton & graph engine** (PR #3)
 - [x] **M1 — Front of pipeline (DREAM → BRAINSTORM → SEED)** (PR #8)
 - [x] **M2 — GROW** (the risk milestone: interleaving, intersections, freeze) (PR #9)
-- [x] **M3 — POLISH & structural play** (`qf play` on beat summaries)
-- [ ] **M4 — FILL & first exports** (JSON, HTML player, Twee)
+- [x] **M3 — POLISH & structural play** (`qf play` on beat summaries) (PR #10)
+- [x] **M4 — FILL & first exports** (JSON, HTML player, Twee)
 - [ ] **M5 — DRESS, print gamebook, scope hardening**
 
-## Next up — M4 scope (from `docs/design/05-roadmap.md`)
+## Next up — M5 scope (from `docs/design/05-roadmap.md`)
 
-FILL: Voice record, reference-arc-first work queue, per-passage context
-building (entities w/ overlays, shadows, sliding prose window,
-convergence lookahead), automated review (≤2 rounds), gate G5. First
-exports: runtime JSON + HTML player + Twee; round-trip validation.
+DRESS (art direction, briefs, optional images, codex; gate G6), the
+print gamebook PDF pipeline (codeword projection, residue-variant
+lowering, seeded numbering/shuffling, Typst layout, lint), `qf rerun
+--keep` partial regeneration, and `short`/`medium` scope hardening —
+which needs the multi-hard weave expansion (tensor model, see open
+items) and a live-provider recording session for real fixtures.
 
-**Exit criterion:** a stranger plays "The Keeper's Bargain" in a
-browser, start to one of its endings, and can't tell where the seams
-are.
+**Exit criterion:** a printable PDF gamebook with working codeword
+play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
@@ -195,9 +236,19 @@ are.
   annotation, which per design doc 01 §10 arrives only when a FILL
   quality gap demonstrably calls for it — implement both together in
   M4+ if the gap shows.
-- **Character-arc metadata is deferred to M4** (a POLISH output in
-  design doc 02, but FILL is its only consumer — the field plumbing
-  should be shaped by its consumer, like SEED's hints were in M2).
+- **Character-arc metadata remains unbuilt** (a POLISH output in design
+  doc 02, deferred to be shaped by its consumer). M4's FILL wrote a
+  micro story well without it — entities+overlays+shadows+window proved
+  sufficient context at this scale. Per the annotation discipline
+  (design doc 01 §10), add it when a FILL quality gap at `short`+
+  scope demonstrably calls for it, and update doc 02 if it never earns
+  its keep.
+- **The HTML player has no codex panel yet** (design doc 04 §2 lists
+  one) — there is no codex before DRESS (M5). Add the panel when codex
+  entries exist.
+- **Twee prose mapping is bounded and unlinted** — the lint step that
+  flags constructs that don't survive SugarCube conversion arrives with
+  SHIP (design doc 04 §3).
 - **False branches carry no cosmetic flags yet** (choice-feel diamonds
   only). The flag machinery exists (`FlagSource.COSMETIC`); wire grants
   when a residue beat or print codeword actually wants one.
@@ -219,6 +270,23 @@ are.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (M4):** FILL's review is a post-apply hook on the
+  uniform repair loop (mini-ADR A10) and its pass list is computed from
+  the project — the runner stays the only orchestrator. The reference
+  arc is `fill_seed`-selected, stage-local, and tested to be genuinely
+  seed-sensitive. Prose is stored on Passage nodes in memory and as
+  sibling `prose/*.md` on disk (the YAML never carries it). Micro-
+  details go through `add_entity_detail`, which refuses to overwrite
+  established facts. Exports: the runtime JSON validator re-walks the
+  exported document with no graph access, so export-only bugs can't
+  hide behind graph validators; `qf export` refuses to write anything
+  that fails it; the Twee IFID is persisted by touching project.yaml
+  only (an export must not rewrite the project). Golden prose and the
+  e2e prose fixtures were drafted by mid-tier subagents against written
+  contracts and reviewed here — the tiering policy's intended shape.
+  Voice's design-doc field "register" is `diction` in code (pydantic
+  shadow warning); recorded here so nobody "fixes" it back.
 
 - **2026-07-08 (M3):** Passage collapse is fully deterministic and the
   golden story is its oracle — the engine reproduces the hand-authored

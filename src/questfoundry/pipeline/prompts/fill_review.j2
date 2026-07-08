@@ -1,0 +1,28 @@
+Review one passage of prose against its contract. Verdict "pass" or "fail"; on
+fail, list concrete, actionable issues (each one sentence). Fail ONLY for real
+defects — this gate exists to catch drift, not to impose taste.
+
+CHECK FOR:
+1. Voice drift — violates the voice: POV {{ voice.pov }}, tense {{ voice.tense }},
+   diction {{ voice.diction }}, banned patterns ({{ voice.banned | join("; ") }}).
+2. Beat fidelity — a required beat is missing, out of order, or contradicted:
+{% for b in beats %}
+   - {{ b.summary }}
+{% endfor %}
+3. Continuity — contradicts the adjacent prose{% if not window and not lookahead %} (none written yet — skip this check){% endif %}.
+{% if window %}
+{% for w in window %}
+   preceding ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
+{% endfor %}
+{% endif %}
+4. State honesty — asserts something marked merely possible:
+{% for f in flags %}
+   - {{ f.flag.description }} ({{ f.status }})
+{% endfor %}
+5. Leakage — mentions flags, dilemmas, beats, paths, or any machinery.
+
+THE PROSE:
+---
+{{ prose }}
+---
+Respond {"verdict": "pass"} or {"verdict": "fail", "issues": ["..."]}.

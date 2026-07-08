@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel
 
@@ -44,6 +44,11 @@ class PassSpec:
       pass (no LLM call, recorded on the report with attempts=0), or
       None to run it. For passes whose engine-determined work list can
       be empty (e.g. GROW's bridge pass with no gaps).
+    - `review(proposal, project, adapter)`: optional post-apply LLM
+      judgment (FILL's automated prose review). Return issue strings;
+      any issue restores the graph and re-enters the repair loop with
+      them, so "≤2 revision rounds, then halt" (design doc 02, FILL)
+      is the ordinary repair contract, not bespoke machinery.
     """
 
     name: str
@@ -53,11 +58,15 @@ class PassSpec:
     build_context: Callable[[Project], dict]
     apply: Callable[[BaseModel, Project], list[str]]
     skip_if: Callable[[Project], str | None] | None = None
+    review: Callable[[BaseModel, Project, Any], list[str]] | None = None
 
 
 @dataclass(frozen=True)
 class StageImpl:
     """A pipeline stage: ordered passes sharing one exit gate.
+
+    `passes` may be a callable computing the pass list from the project
+    at stage start — FILL's per-passage work queue depends on the story.
 
     `gate(project)` returns validation issues; the stage succeeds iff
     none are errors. Most stages use `graph.validate.run_checks` at
@@ -65,7 +74,7 @@ class StageImpl:
     """
 
     stage: Stage
-    passes: tuple[PassSpec, ...]
+    passes: tuple[PassSpec, ...] | Callable[[Project], tuple[PassSpec, ...]]
     gate: Callable[[Project], list[Issue]]
 
 

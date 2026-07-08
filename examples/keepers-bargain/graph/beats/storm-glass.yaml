@@ -1,0 +1,7 @@
+id: beat:storm-glass
+summary: >-
+  Storm season on the Stilt Light. Maren tends the lamp alone; below the
+  waterline, something turns over in its sleep.
+beat_class: structural
+purpose: setup
+entities: [character:keeper, location:lighthouse]

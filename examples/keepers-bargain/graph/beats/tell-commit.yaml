@@ -1,0 +1,10 @@
+id: beat:tell-commit
+summary: >-
+  Maren takes Elias down to the lamp room at slack tide and tells him
+  what the light holds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: commits
+entities: [character:keeper, character:cartographer, location:lighthouse]
+belongs_to: [path:tell]

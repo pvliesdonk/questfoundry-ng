@@ -1,0 +1,8 @@
+id: passage:p-wide-water
+summary: The light goes dark; something follows the ship; Maren is free.
+entities: [character:keeper, character:sleeper]
+beats: [beat:break-commit, beat:break-price, beat:break-ending]
+irrelevant_flags: [flag:lie-between]
+ending:
+  id: e-wide-water
+  title: The Wide Water

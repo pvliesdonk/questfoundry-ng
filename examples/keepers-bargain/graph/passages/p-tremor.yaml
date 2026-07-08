@@ -1,0 +1,16 @@
+id: passage:p-tremor
+summary: >-
+  The sea pulls back and the lamp gutters; the bargain comes due as
+  Elias offers Maren the dawn sailing.
+entities: [character:keeper, character:cartographer, character:sleeper]
+beats: [beat:tremor, beat:offer]
+choices:
+- to: passage:p-long-watch
+  label: Send the ship away and tend the light
+  grants: [flag:bound-to-light]
+- to: passage:p-wide-water
+  label: Cap the lamp and go aboard
+  grants: [flag:sleeper-waking]
+- to: passage:p-counsel
+  label: Ask Elias what he would do
+  requires: [flag:elias-knows]

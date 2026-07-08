@@ -1,0 +1,6 @@
+id: path:hide
+name: The lie kept
+explores: answer:truth-hidden
+consequences:
+- id: consequence:lie-between
+  text: A lie stands between Maren and Elias.

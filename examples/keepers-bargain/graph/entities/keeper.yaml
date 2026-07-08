@@ -1,0 +1,13 @@
+id: character:keeper
+name: Maren Voss
+concept: Keeper of the Stilt Light, third of her family to hold the bargain.
+base:
+  appearance: weathered hands, oilskin coat, eyes the grey of harbor water
+  manner: economical with words, exact with ropes and wicks
+overlays:
+- when: [flag:bound-to-light]
+  details:
+    manner: serene and immovable, like a post driven to bedrock
+- when: [flag:sleeper-waking]
+  details:
+    manner: free-handed and haunted, forever glancing at the wake

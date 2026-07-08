@@ -1,0 +1,10 @@
+id: beat:tell-payoff
+summary: >-
+  Elias stays. He learns the lamp's rhythm and stands the night watch
+  beside her, chart abandoned on the table.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: advances
+entities: [character:keeper, character:cartographer]
+belongs_to: [path:tell]

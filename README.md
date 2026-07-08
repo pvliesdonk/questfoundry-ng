@@ -35,7 +35,20 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **Design phase.** No code yet. The design lives in [`docs/design/`](docs/design/):
+🏗️ **M0 — graph engine.** The typed story graph, the invariant validators
+(I1–I13), the project-on-disk format, and the `qf` CLI (`new`, `validate`,
+`status`, `graph`) are implemented; the LLM pipeline stages arrive in M1+.
+The hand-authored golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
+loads, passes every gate, and renders its beat DAG:
+
+```console
+$ uv sync --group dev
+$ uv run qf validate examples/keepers-bargain
+all gates pass
+$ uv run qf graph examples/keepers-bargain --layer passages   # Mermaid to stdout
+```
+
+The design lives in [`docs/design/`](docs/design/):
 
 | Document | Contents |
 |---|---|

@@ -1,0 +1,10 @@
+id: beat:break-commit
+summary: >-
+  At dawn Maren caps the lamp and steps aboard. Behind her, for the
+  first time in three generations, the Stilt Light goes dark.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: commits
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:break]

@@ -1,0 +1,13 @@
+id: character:cartographer
+name: Elias Wren
+concept: A coastal cartographer hired to chart the shoals, curious to a fault.
+base:
+  appearance: ink-stained cuffs, a tidy beard going salt-and-pepper
+  manner: asks one question too many, means every kindness
+overlays:
+- when: [flag:elias-knows]
+  details:
+    manner: steady and watchful, a man who has chosen his post
+- when: [flag:lie-between]
+  details:
+    manner: polite and distant, keeping his soundings to himself

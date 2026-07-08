@@ -1,0 +1,6 @@
+id: path:keep
+name: The bargain holds
+explores: answer:bargain-kept
+consequences:
+- id: consequence:bound-to-light
+  text: Maren is bound to the light for good.

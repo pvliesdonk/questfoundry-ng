@@ -1,0 +1,10 @@
+id: beat:the-ledger
+summary: >-
+  Maren re-reads her grandmother's ledger — the bargain's terms, the
+  price already paid, the line left blank for her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: advances
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:keep, path:break]

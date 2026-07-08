@@ -1,0 +1,10 @@
+id: beat:break-price
+summary: >-
+  The sea does not settle. Something follows the ship the way a storm
+  follows heat, and the shoals empty of birds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: advances
+entities: [character:keeper, character:sleeper]
+belongs_to: [path:break]

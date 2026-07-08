@@ -1,0 +1,21 @@
+flags:
+- id: flag:elias-knows
+  description: Elias knows what the light holds.
+  source: dilemma
+  path: path:tell
+  derived_from: [consequence:elias-knows]
+- id: flag:lie-between
+  description: A lie stands between Maren and Elias.
+  source: dilemma
+  path: path:hide
+  derived_from: [consequence:lie-between]
+- id: flag:bound-to-light
+  description: Maren is bound to the light for good.
+  source: dilemma
+  path: path:keep
+  derived_from: [consequence:bound-to-light]
+- id: flag:sleeper-waking
+  description: The sleeper is waking.
+  source: dilemma
+  path: path:break
+  derived_from: [consequence:sleeper-wakes]

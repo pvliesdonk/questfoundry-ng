@@ -1,0 +1,7 @@
+id: passage:p-fair-weather
+summary: Maren lies well; Elias grows quiet, and the lie keeps its own watch.
+entities: [character:keeper, character:cartographer]
+beats: [beat:hide-commit, beat:hide-payoff]
+choices:
+- to: passage:p-tremor
+  label: Let the weather take the blame and the days pass

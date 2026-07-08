@@ -1,0 +1,10 @@
+id: beat:hide-payoff
+summary: >-
+  Elias grows quiet and watchful; the lie sits between them at every
+  shared meal, patient as the thing below.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:truth
+  effect: complicates
+entities: [character:keeper, character:cartographer]
+belongs_to: [path:hide]

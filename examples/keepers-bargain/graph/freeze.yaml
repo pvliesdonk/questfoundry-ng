@@ -1,0 +1,22 @@
+beats:
+- beat:break-commit
+- beat:break-ending
+- beat:break-price
+- beat:elias-lands
+- beat:false-soundings
+- beat:hide-commit
+- beat:hide-payoff
+- beat:keep-commit
+- beat:keep-ending
+- beat:keep-price
+- beat:offer
+- beat:storm-glass
+- beat:tell-commit
+- beat:tell-payoff
+- beat:the-ledger
+- beat:tremor
+forks:
+  dilemma:bargain: [beat:break-commit, beat:keep-commit]
+  dilemma:truth: [beat:hide-commit, beat:tell-commit]
+convergences:
+  dilemma:truth: beat:tremor

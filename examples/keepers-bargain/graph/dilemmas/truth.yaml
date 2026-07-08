@@ -1,0 +1,15 @@
+id: dilemma:truth
+question: Does Maren tell Elias what the light holds?
+why_it_matters: >-
+  Telling him makes Elias an ally and puts him inside the bargain's
+  danger; hiding it keeps him safe and builds a lie between them that
+  will stand at her shoulder when the choice comes.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:truth-told
+  text: She tells him what sleeps under the shoals.
+- id: answer:truth-hidden
+  text: She blames the instruments and burns the page.
+anchored_to: [character:keeper, character:cartographer]

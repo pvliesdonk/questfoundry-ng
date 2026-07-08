@@ -1,0 +1,11 @@
+id: beat:break-ending
+summary: >-
+  'Ending — The Wide Water: Maren is free, and the deep is awake. She
+  keeps no lamp now, but she still wakes at the hour of the trimming.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: advances
+entities: [character:keeper, character:sleeper]
+belongs_to: [path:break]
+is_ending: true

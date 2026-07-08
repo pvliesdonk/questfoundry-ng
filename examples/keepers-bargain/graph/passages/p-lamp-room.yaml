@@ -1,0 +1,7 @@
+id: passage:p-lamp-room
+summary: Maren tells Elias what the light holds; he stays and learns the watch.
+entities: [character:keeper, character:cartographer, location:lighthouse]
+beats: [beat:tell-commit, beat:tell-payoff]
+choices:
+- to: passage:p-tremor
+  label: Stand the watch together until the sea turns

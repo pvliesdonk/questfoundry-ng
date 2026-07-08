@@ -1,0 +1,11 @@
+id: beat:keep-ending
+summary: >-
+  'Ending — The Long Watch: the coast sleeps because Maren does not.
+  Some nights, a chart arrives by post, corrected in a tidy hand.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: advances
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:keep]
+is_ending: true

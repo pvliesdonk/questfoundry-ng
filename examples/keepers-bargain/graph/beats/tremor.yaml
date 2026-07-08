@@ -1,0 +1,10 @@
+id: beat:tremor
+summary: >-
+  The sea pulls back from the stilts; the lamp gutters blue. The sleeper
+  turns, and the bargain begins to come due.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:bargain
+  effect: reveals
+entities: [character:keeper, character:sleeper, location:lighthouse]
+belongs_to: [path:keep, path:break]

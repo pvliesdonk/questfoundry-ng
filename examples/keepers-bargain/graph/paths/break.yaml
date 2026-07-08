@@ -1,0 +1,6 @@
+id: path:break
+name: The light goes dark
+explores: answer:bargain-broken
+consequences:
+- id: consequence:sleeper-wakes
+  text: The sleeper is waking, and it remembers the light.

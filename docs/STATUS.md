@@ -301,8 +301,9 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 - **2026-07-08 (live run):** First live generation: fresh premise
   ("The Winding House"), micro scope, gpt-5 architect/writer +
-  gpt-4.1-mini reviewer, record mode. Outcome: **a complete story — 27
-  beats, 17 passages, 4 arcs — with 0 gate errors and 0 runtime
+  gpt-4.1-mini reviewer, record mode. Outcome: **a complete story — 30
+  beats (22 frozen + 8 POLISH-added, incl. live false branches), 17
+  passages, 4 arcs — with 0 gate errors and 0 runtime
   problems**, end-to-end in ~1h wall-clock and ~$2.50 (95 calls; gpt-5
   124k in / 219k out incl. reasoning; the utility reviewer cost
   pennies). The run surfaced and fixed three robustness gaps, each now

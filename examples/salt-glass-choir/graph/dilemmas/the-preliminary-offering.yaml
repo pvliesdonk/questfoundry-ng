@@ -1,0 +1,20 @@
+id: dilemma:the-preliminary-offering
+question: What does Maren offer the Choirmaster in order to locate her brother's exact effigy
+  among the thousands of singing figures?
+why_it_matters: Offering a memory fractures Maren's connection to her own past and numbs her
+  emotions, while offering her blood physically weakens her against the freezing, rising waters
+  of the cathedral.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:offer-memory
+  text: She whispers a precious, irreplaceable memory of her childhood into the Choirmaster's
+    kelp-woven hands, forgetting it forever.
+- id: answer:offer-blood
+  text: She spills a drop of her warm, living blood onto the salt-rimed altar, draining her
+    physical vitality and warmth.
+anchored_to:
+- character:choirmaster
+- object:brother-statue
+- location:drowned-cathedral

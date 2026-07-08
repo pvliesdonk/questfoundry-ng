@@ -1,0 +1,22 @@
+id: passage:p-choirmaster
+summary: Locating her brother's vibrating glass effigy, Maren is confronted by the towering,
+  salt-glass Choirmaster, who demands a toll at a rime-encrusted altar to attune the cathedral's
+  acoustics to Elias's resonance.
+entities:
+- character:maren
+- object:brother-statue
+- location:drowned-cathedral
+- character:choirmaster
+beats:
+- beat:altar-toll
+- beat:choirmaster-emerges
+- beat:find-effigy
+choices:
+- label: Spill my warm blood upon the rime-encrusted altar.
+  grants:
+  - flag:physical-weakness
+  to: passage:p-blood-spilled
+- label: Whisper my brightest memory into his kelp-woven hands.
+  grants:
+  - flag:memory-erased
+  to: passage:p-memory-whispered

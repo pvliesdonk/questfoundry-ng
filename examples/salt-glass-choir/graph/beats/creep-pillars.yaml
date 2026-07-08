@@ -1,0 +1,8 @@
+id: beat:creep-pillars
+created_by: polish
+summary: Maren creeps cautiously along the flooded perimeter, using the barnacled pillars
+  to shield herself from the abyssal center of the chamber.
+beat_class: structural
+purpose: false_branch
+entities:
+- Maren

@@ -1,0 +1,11 @@
+id: beat:blood-spilled
+summary: Maren draws a blade across her palm, letting her warm, living blood sizzle against
+  the freezing salt of the altar.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: commits
+entities:
+- character:maren
+belongs_to:
+- path:offer-blood

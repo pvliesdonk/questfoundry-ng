@@ -1,0 +1,10 @@
+id: beat:residue-blood-weakness
+created_by: polish
+summary: Every breath rattles in Maren's chest like sea foam over cold stones, her limbs heavy
+  with a sluggish, unnatural frost.
+beat_class: structural
+purpose: residue
+entities:
+- Maren
+requires_flags:
+- flag:physical-weakness

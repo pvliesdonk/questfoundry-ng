@@ -1,0 +1,9 @@
+name: The Salt-Glass Choir
+stage: fill
+llm:
+  provider: gemini
+  models:
+    architect: gemini-3.1-pro-preview
+    writer: gemini-3.1-pro-preview
+    utility: gemini-2.5-flash
+ifid: 465F8A83-FE06-406B-B3E1-FE9A514720B1

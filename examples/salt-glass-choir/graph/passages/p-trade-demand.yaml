@@ -1,0 +1,22 @@
+id: passage:p-trade-demand
+summary: Before Maren can lift the statue, the Choirmaster blocks the tidal exit, declaring
+  that she must surrender her own living voice to replace her brother's note in the chorus.
+entities:
+- character:choirmaster
+- character:maren
+- object:brother-statue
+irrelevant_flags:
+- flag:memory-erased
+beats:
+- beat:trade-demand
+choices:
+- label: Clench my jaw and fiercely refuse to be silenced.
+  grants:
+  - flag:effigy-lost
+  - flag:maren-vocal
+  to: passage:p-refuse-trade
+- label: Open my mouth and give the ocean my voice.
+  grants:
+  - flag:effigy-saved
+  - flag:maren-muted
+  to: passage:p-accept-trade

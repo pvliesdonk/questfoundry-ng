@@ -1,0 +1,17 @@
+id: passage:p-escape-alive
+summary: The deafening crack of the shattered statue violently shakes the cathedral's foundations,
+  jolting Maren into a desperate escape where she weeps a solitary, living song into the night
+  as her brother's memory sinks into oblivion.
+entities:
+- object:brother-statue
+- character:maren
+- location:drowned-cathedral
+ending:
+  id: e-escape-alive
+  title: The Living Voice
+irrelevant_flags:
+- flag:memory-erased
+- flag:physical-weakness
+beats:
+- beat:bridge-ruin-to-escape
+- beat:escape-alive

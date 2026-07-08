@@ -1,0 +1,15 @@
+id: beat:trade-demand
+summary: Before she can lift the statue, the Choirmaster blocks the tidal exit, declaring
+  that the effigy cannot be removed unless Maren's living voice is surrendered to replace
+  its note in the choir.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: complicates
+entities:
+- character:choirmaster
+- character:maren
+- object:brother-statue
+belongs_to:
+- path:keep-voice
+- path:trade-voice

@@ -1,0 +1,13 @@
+id: passage:p-flee-resolute
+summary: Maren turns her back entirely on the destroyed effigy, swallowing her despair to
+  sprint blindly toward the collapsing archway.
+entities:
+- Maren
+irrelevant_flags:
+- flag:maren-vocal
+- flag:memory-erased
+beats:
+- beat:flee-resolute
+choices:
+- label: Sprint blindly out of the sinking cathedral.
+  to: passage:p-escape-alive

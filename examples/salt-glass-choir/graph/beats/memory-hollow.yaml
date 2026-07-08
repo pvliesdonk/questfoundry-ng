@@ -1,0 +1,12 @@
+id: beat:memory-hollow
+summary: The Choirmaster gestures toward the correct aisle, but Maren stumbles, emotionally
+  numb and suddenly unable to picture her brother's smiling face from her youth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: advances
+entities:
+- character:maren
+- character:choirmaster
+belongs_to:
+- path:offer-memory

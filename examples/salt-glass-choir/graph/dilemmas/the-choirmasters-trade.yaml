@@ -1,0 +1,22 @@
+id: dilemma:the-choirmasters-trade
+question: Will Maren surrender her own living voice to carry her brother's memory back to
+  shore?
+why_it_matters: 'This choice determines the ultimate thematic resolution: whether Maren sacrifices
+  her own future agency to preserve the echoes of the past, or chooses the painful salvation
+  of moving forward while letting the dead truly die.'
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:trade-voice
+  text: Maren gives her voice to the Choirmaster, condemning herself to a life of silence
+    to save her brother's memory.
+- id: answer:keep-voice
+  text: Maren refuses the trade and keeps her voice, forcing her to listen as her brother's
+    memory sinks into permanent oblivion.
+anchored_to:
+- character:choirmaster
+- object:brother-statue
+- character:maren
+wraps:
+- dilemma:the-preliminary-offering

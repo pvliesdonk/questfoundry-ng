@@ -1,0 +1,12 @@
+id: beat:choir-swells
+summary: The cathedral's chorus swells as Maren's stolen voice joins the drowned, leaving
+  her gasping in agonizing, suffocating silence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: reveals
+entities:
+- character:maren
+- location:drowned-cathedral
+belongs_to:
+- path:trade-voice

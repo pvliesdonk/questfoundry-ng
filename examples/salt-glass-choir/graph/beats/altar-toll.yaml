@@ -1,0 +1,13 @@
+id: beat:altar-toll
+summary: He gestures to a rime-encrusted altar, explaining that Maren must give a piece of
+  her living self to attune the cathedral's acoustics to her brother's specific resonance.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: complicates
+entities:
+- character:choirmaster
+- character:maren
+belongs_to:
+- path:offer-blood
+- path:offer-memory

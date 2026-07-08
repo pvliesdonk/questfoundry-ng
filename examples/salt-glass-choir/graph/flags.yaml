@@ -1,0 +1,38 @@
+flags:
+- id: flag:effigy-lost
+  description: Elias's Effigy is consumed by the freezing depths, erasing his memory forever.
+  source: dilemma
+  path: path:keep-voice
+  derived_from:
+  - consequence:effigy-lost
+- id: flag:effigy-saved
+  description: Elias's Effigy is successfully retrieved from the cathedral, its song preserved.
+  source: dilemma
+  path: path:trade-voice
+  derived_from:
+  - consequence:effigy-saved
+- id: flag:maren-muted
+  description: Maren is permanently stripped of her living voice.
+  source: dilemma
+  path: path:trade-voice
+  derived_from:
+  - consequence:maren-muted
+- id: flag:maren-vocal
+  description: Maren retains her agency and her living voice.
+  source: dilemma
+  path: path:keep-voice
+  derived_from:
+  - consequence:maren-vocal
+- id: flag:memory-erased
+  description: A foundational piece of Maren's childhood is permanently wiped from her mind,
+    emotionally numbing her.
+  source: dilemma
+  path: path:offer-memory
+  derived_from:
+  - consequence:memory-erased
+- id: flag:physical-weakness
+  description: Maren is severely weakened and vulnerable to the cathedral's freezing temperatures.
+  source: dilemma
+  path: path:offer-blood
+  derived_from:
+  - consequence:physical-weakness

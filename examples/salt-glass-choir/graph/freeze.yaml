@@ -1,0 +1,28 @@
+beats:
+- beat:accept-trade
+- beat:altar-toll
+- beat:arrival
+- beat:blood-chill
+- beat:blood-spilled
+- beat:bridge-altar-to-choirmaster
+- beat:bridge-ruin-to-escape
+- beat:choir-swells
+- beat:choirmaster-emerges
+- beat:enter-cathedral
+- beat:escape-alive
+- beat:find-effigy
+- beat:memory-hollow
+- beat:memory-whispered
+- beat:refuse-trade
+- beat:return-silent
+- beat:statue-shatters
+- beat:trade-demand
+forks:
+  dilemma:the-choirmasters-trade:
+  - beat:accept-trade
+  - beat:refuse-trade
+  dilemma:the-preliminary-offering:
+  - beat:blood-spilled
+  - beat:memory-whispered
+convergences:
+  dilemma:the-preliminary-offering: beat:trade-demand

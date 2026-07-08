@@ -1,0 +1,13 @@
+id: beat:memory-whispered
+summary: Maren leans into the Choirmaster's kelp-woven hands and whispers a cherished childhood
+  memory of her brother, feeling the warmth of the recollection instantly evaporate from her
+  mind.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: commits
+entities:
+- character:maren
+- character:choirmaster
+belongs_to:
+- path:offer-memory

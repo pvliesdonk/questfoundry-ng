@@ -1,0 +1,8 @@
+id: beat:arrival
+summary: Maren rows her splintering skiff to the jagged spires of the Drowned Cathedral as
+  it groans upward from the freezing, salt-bitten waves.
+beat_class: structural
+purpose: setup
+entities:
+- character:maren
+- location:drowned-cathedral

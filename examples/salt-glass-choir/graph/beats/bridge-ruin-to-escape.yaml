@@ -1,0 +1,11 @@
+id: beat:bridge-ruin-to-escape
+created_by: grow
+summary: The deafening crack of the ruined statue echoes through the brine-soaked nave, violently
+  shaking the drowned cathedral's foundations and jolting Maren into a desperate sprint for
+  the exit.
+beat_class: structural
+purpose: bridge
+entities:
+- object:brother-statue
+- character:maren
+- location:drowned-cathedral

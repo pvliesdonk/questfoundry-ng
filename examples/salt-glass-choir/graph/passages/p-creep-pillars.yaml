@@ -1,0 +1,10 @@
+id: passage:p-creep-pillars
+summary: Maren sticks to the flooded perimeter, using barnacle-encrusted pillars to shield
+  herself as she creeps cautiously around the deep, abyssal center.
+entities:
+- Maren
+beats:
+- beat:creep-pillars
+choices:
+- label: Leave the shadows to follow the mournful resonance.
+  to: passage:p-choirmaster

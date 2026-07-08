@@ -1,0 +1,14 @@
+id: beat:choirmaster-emerges
+summary: The Choirmaster rises from a tangle of rotting kelp, his massive salt-glass body
+  scraping together as he demands a toll to guide Maren through the deafening chorus.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-preliminary-offering
+  effect: advances
+entities:
+- character:maren
+- character:choirmaster
+- location:drowned-cathedral
+belongs_to:
+- path:offer-blood
+- path:offer-memory

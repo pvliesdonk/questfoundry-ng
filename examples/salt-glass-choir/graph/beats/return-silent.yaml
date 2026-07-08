@@ -1,0 +1,14 @@
+id: beat:return-silent
+summary: Maren trudges back to the shore, clutching Elias's singing Effigy to her chest in
+  a silent, freezing world, having forever sacrificed her agency to keep the ghost of the
+  past alive.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: advances
+entities:
+- character:maren
+- object:brother-statue
+is_ending: true
+belongs_to:
+- path:trade-voice

@@ -1,0 +1,12 @@
+id: beat:accept-trade
+summary: Maren opens her mouth and the Choirmaster plunges a kelp-wrapped hand down her throat,
+  violently extracting her voice in a glowing, ethereal thread.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-choirmasters-trade
+  effect: commits
+entities:
+- character:maren
+- character:choirmaster
+belongs_to:
+- path:trade-voice

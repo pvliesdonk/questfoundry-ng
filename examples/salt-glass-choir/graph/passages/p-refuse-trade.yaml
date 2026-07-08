@@ -1,0 +1,19 @@
+id: passage:p-refuse-trade
+summary: Maren violently refuses to be silenced, watching in horror as the Choirmaster brings
+  down his baton and shatters Elias's salt-glass effigy into dust.
+entities:
+- character:maren
+- character:choirmaster
+- object:brother-statue
+irrelevant_flags:
+- flag:memory-erased
+- flag:physical-weakness
+beats:
+- beat:bridge-altar-to-choirmaster
+- beat:refuse-trade
+- beat:statue-shatters
+choices:
+- label: Look back at the ruined salt-dust.
+  to: passage:p-glance-ruins
+- label: Turn my back and run from the wreckage.
+  to: passage:p-flee-resolute

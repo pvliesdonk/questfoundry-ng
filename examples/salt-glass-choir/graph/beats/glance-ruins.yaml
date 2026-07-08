@@ -1,0 +1,8 @@
+id: beat:glance-ruins
+created_by: polish
+summary: Maren gives the shattered pieces of the effigy one last, grief-stricken glance before
+  forcing her eyes toward the crumbling exit.
+beat_class: structural
+purpose: false_branch
+entities:
+- Maren

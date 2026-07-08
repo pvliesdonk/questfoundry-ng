@@ -1,0 +1,10 @@
+id: passage:p-residue-memory
+summary: A hollow stillness overtakes Maren's mind, leaving her to stare at the cathedral's
+  dripping architecture with an empty, aching detachment she cannot fully comprehend.
+entities:
+- Maren
+beats:
+- beat:residue-memory-loss
+choices:
+- label: Approach the altar through the numb silence to claim Elias's effigy.
+  to: passage:p-trade-demand

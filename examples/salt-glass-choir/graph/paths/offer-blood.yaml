@@ -1,0 +1,6 @@
+id: path:offer-blood
+name: Blood Spilled
+explores: answer:offer-blood
+consequences:
+- id: consequence:physical-weakness
+  text: Maren is severely weakened and vulnerable to the cathedral's freezing temperatures.

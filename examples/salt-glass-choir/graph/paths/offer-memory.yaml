@@ -1,0 +1,7 @@
+id: path:offer-memory
+name: Mind Fractured
+explores: answer:offer-memory
+consequences:
+- id: consequence:memory-erased
+  text: A foundational piece of Maren's childhood is permanently wiped from her mind, emotionally
+    numbing her.

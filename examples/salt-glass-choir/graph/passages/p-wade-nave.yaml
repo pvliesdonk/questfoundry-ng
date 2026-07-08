@@ -1,0 +1,10 @@
+id: passage:p-wade-nave
+summary: Forging straight down the sunken central nave, Maren fights against the dark, icy
+  current soaking her boots.
+entities:
+- Maren
+beats:
+- beat:wade-nave
+choices:
+- label: Push through the dark current toward the singing.
+  to: passage:p-choirmaster

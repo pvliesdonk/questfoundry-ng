@@ -1,0 +1,17 @@
+id: passage:p-accept-trade
+summary: Maren sacrifices her voice to the Choirmaster's kelp-wrapped hands, returning to
+  a freezing world in agonizing silence, forever clutching the singing ghost of her brother.
+entities:
+- character:maren
+- character:choirmaster
+- location:drowned-cathedral
+- object:brother-statue
+ending:
+  id: e-accept-trade
+  title: The Choral Price
+irrelevant_flags:
+- flag:memory-erased
+beats:
+- beat:accept-trade
+- beat:choir-swells
+- beat:return-silent

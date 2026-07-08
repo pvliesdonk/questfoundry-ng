@@ -1,0 +1,8 @@
+id: beat:flee-resolute
+created_by: polish
+summary: Swallowing her despair, Maren turns her back entirely on the destroyed visage to
+  sprint blindly toward the collapsing archway.
+beat_class: structural
+purpose: false_branch
+entities:
+- Maren

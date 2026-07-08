@@ -1,0 +1,15 @@
+id: passage:p-arrival
+summary: Maren rows her splintering skiff to the jagged spires of the Drowned Cathedral, pushing
+  through barnacled doors into a cavernous nave filled with thousands of mournfully singing
+  salt-glass statues.
+entities:
+- character:maren
+- location:drowned-cathedral
+beats:
+- beat:arrival
+- beat:enter-cathedral
+choices:
+- label: Wade directly down the flooded central aisle.
+  to: passage:p-wade-nave
+- label: Skirt the abyssal center via the barnacled pillars.
+  to: passage:p-creep-pillars

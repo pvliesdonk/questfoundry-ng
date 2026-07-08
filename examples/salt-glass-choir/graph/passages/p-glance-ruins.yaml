@@ -1,0 +1,14 @@
+id: passage:p-glance-ruins
+summary: Giving the shattered salt-glass one last, grief-stricken glance, Maren forces her
+  tear-filled eyes toward the crumbling exit.
+entities:
+- Maren
+irrelevant_flags:
+- flag:maren-vocal
+- flag:memory-erased
+- flag:physical-weakness
+beats:
+- beat:glance-ruins
+choices:
+- label: Flee through the crumbling archway.
+  to: passage:p-escape-alive

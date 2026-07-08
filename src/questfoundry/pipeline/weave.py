@@ -11,11 +11,14 @@ topological orders of the units. The LLM only *chooses among* candidates
 PREDECESSOR edge set through the mutation layer.
 
 M2 scope: exactly one hard dilemma and both answers of every dilemma
-explored. Multi-hard weaving nests forks — the remaining hard dilemma
-forks again on each branch of the first, with per-world *authored*
-beats (different worlds, different scenes — never copies), so endings
-multiply (design doc 01 §5). That per-world authorship is M5 work,
-see docs/STATUS.md.
+explored. The general model is the weave as a tensor of Y graphs (one
+dimension per dilemma): soft dimensions collapse at convergence into
+flags/residue; hard dimensions stay expanded, so with several hard
+dilemmas the inner Y materializes once per world (same dilemma-relative
+meaning, different context, distinct beats) and endings multiply
+(design doc 01 §5). The spine here is the flattened one-hard special
+case — at most one dimension expanded at a time; true expansion is M5
+work, see docs/STATUS.md.
 """
 
 from __future__ import annotations

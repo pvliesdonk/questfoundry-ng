@@ -171,17 +171,22 @@ means "comes before." The DAG *is* the story's structure:
 - A **convergence** is a beat reachable from both of a soft dilemma's
   post-commit chains — the storylines rejoin. Hard dilemmas never
   converge; their branches run to separate endings. With more than one
-  hard dilemma, hard forks **nest**: after the first hard commit, the
-  remaining hard dilemma forks again on *each* branch, with its own
-  independently authored per-branch beats — no beat is shared across a
-  hard fork, and endings multiply (two hard dilemmas → four endings).
-  The per-combination beats after the first hard fork are the accepted
-  cost of late-committing backbones, few by design — and never copies:
-  a hard commit makes the worlds too different to share, so the same
-  dilemma resolving in different worlds is different scenes, authored
-  rather than cloned. Realizing that per-world authorship is M5 work;
-  it refines I3's "exactly one commit beat per path" to one per world
-  (tracked in `docs/STATUS.md`).
+  hard dilemma, hard forks **nest**, and the right mental model is the
+  weave as a **tensor of Y graphs**: each dilemma contributes its Y as
+  one dimension, and a story position is a coordinate in every
+  dilemma's Y at once. Soft dimensions *collapse* at convergence — the
+  coordinate leaves the DAG and lives on as flags, overlays, residue.
+  Hard dimensions *never collapse* — the coordinate stays in the DAG
+  as position, so endings multiply (two hard dilemmas → four endings).
+  Where two hard dimensions are expanded at once, an inner-dilemma
+  beat materializes once per world: the instances project to the same
+  node of the inner Y (same dilemma-relative meaning) and to different
+  nodes of the outer Y (a genuinely different context — that
+  difference is what "hard" means). Structure is copied per world;
+  content follows the full coordinate, so the realized beats are
+  distinct, few by design under late-committing backbones. Realizing
+  the expanded case is M5 work; it refines I3's "exactly one commit
+  beat per path" to one per world (tracked in `docs/STATUS.md`).
 - An **intersection** is a co-occurrence declaration: beats from
   *different* dilemmas grouped into one scene (the keeper studies the
   charts — D2 — while deciding about the light — D1). The beats stay

@@ -170,10 +170,16 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details |
 | Gate G5 | Every passage has prose within its word budget; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
-Order matters: FILL locks the Voice first, then writes the **canonical
-arc** end-to-end (establishing shared-passage prose), then writes each
-remaining arc *toward* the already-written convergence points, with the
-awaiting prose in context so branches land smoothly.
+Order matters: FILL locks the Voice first, then picks a **reference
+arc** — one arbitrary complete playthrough, chosen by seeded selection
+(author-overridable) — and writes it end-to-end, establishing
+shared-passage prose. Each remaining arc is then written *toward* the
+already-written convergence points, with the awaiting prose in context so
+branches land smoothly. The reference arc is FILL-internal scheduling
+state, not a story property: it exists only so convergence-point prose
+has a first author, it is invisible to every other stage, and nothing
+about it may influence depth, length, or quality budgets — G5 applies the
+same word budgets and review bar to every arc.
 
 Per-passage context is rich by design: voice, beat summaries, full entity
 state (base + active overlays), a sliding window of preceding prose,

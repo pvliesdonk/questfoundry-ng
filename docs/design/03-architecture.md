@@ -106,9 +106,10 @@ snapshots, stage reports, resume-from-snapshot, the spend ledger, and
 `--interactive` pauses. Multi-pass stages (SEED, FILL) are expressed as
 sub-stages sharing one gate.
 
-FILL additionally gets a **work queue**: passages ordered canonical-arc-
-first, then per-arc toward convergence points; each item carries its
-sliding-window context. The queue is resumable mid-stage — prose is the
+FILL additionally gets a **work queue**: passages ordered reference-arc-
+first (the reference arc is FILL-local scheduling state — seeded,
+author-overridable, invisible to other stages), then per-arc toward
+convergence points; each item carries its sliding-window context. The queue is resumable mid-stage — prose is the
 expensive stage, and a crash at passage 61/90 must not cost 60 passages.
 
 ## 5. The LLM adapter

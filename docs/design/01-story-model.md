@@ -98,10 +98,15 @@ properties:
 - **Ending salience** — `high` / `low` / `none`: how much endings must
   differ by this dilemma's resolution.
 
-**Answer** — one of exactly two responses per dilemma. One is marked
-`canonical`: FILL writes that arc first, so its prose for shared passages
-is established first. Canonical is an *operational* privilege (writing
-order), never a narrative one — both answers get stories of equal depth.
+**Answer** — one of exactly two responses per dilemma. Answers are
+**strictly equal**: no answer is default, primary, or canonical, and the
+data model carries no marker that could suggest otherwise. (FILL must
+write *some* arc first so that shared-passage prose exists at convergence
+points, but that is a scheduling choice made inside FILL — see
+[02 § FILL](02-pipeline.md) — never a property of an answer. A previous
+QuestFoundry marked one answer `canonical` and every downstream LLM stage
+quietly invested more in that side; the marker is gone so the bias has
+nothing to attach to.)
 
 **Path** — one answer explored as a storyline: an ordered scaffold of
 beats proving that answer, plus `has_consequence` links. An answer with no
@@ -256,7 +261,8 @@ The engine enforces these mechanically (see gates in
 design.
 
 **Drama**
-- **I1** Every dilemma has exactly two answers; exactly one canonical.
+- **I1** Every dilemma has exactly two answers, strictly equal — no
+  default/primary/canonical marker exists in the model.
 - **I2** Every dilemma is anchored to ≥1 surviving entity.
 - **I3** Every explored path has a complete Y-scaffold: ≥1 pre-commit
   beat, exactly one commit beat, ≥1 post-commit beat.
@@ -296,6 +302,14 @@ discipline, frozen topology, computed arcs, flag/codeword split,
 intersection-as-co-occurrence, overlays embedded on entities.
 
 Changed:
+
+0. **No canonical answer.** The original marked one answer per dilemma
+   `is_canonical` (née `is_default_path`) to fix FILL's writing order —
+   a residue of spine-first writing, and a known bias vector: any stage
+   that sees the marker treats that side as the "real" story. NG removes
+   the concept from the data model. FILL's need for a first-written arc
+   is met by a **reference arc** chosen inside FILL (seeded, stage-local
+   working data) that no other stage can see.
 
 1. **One structural beat type, five purposes** — the original's seven
    subtypes (setup, epilogue, transition, micro-beat, gap, residue,

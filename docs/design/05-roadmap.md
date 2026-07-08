@@ -44,7 +44,7 @@ choices, gates, four distinct journeys — with zero prose written.
 
 ## M4 — FILL & first exports
 
-Voice, canonical-arc-first work queue, per-passage context building,
+Voice, reference-arc-first work queue, per-passage context building,
 automated review (≤2 rounds), gate G5; exports: runtime JSON + HTML
 player + Twee; round-trip validation.
 

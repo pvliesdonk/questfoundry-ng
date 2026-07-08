@@ -89,6 +89,32 @@ def check_i2_anchoring(ctx: Context) -> None:
             ctx.error("I2", f"dilemma {d.id} is not anchored to any retained entity")
 
 
+def check_g1_entity_anchoring(ctx: Context) -> None:
+    """Advisory: an entity anchoring no dilemma is a triage candidate."""
+    anchored = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    for entity in ctx.g.nodes_of(Entity):
+        if entity.retained and entity.id not in anchored:
+            ctx.warn(
+                "G1",
+                f"entity {entity.id} anchors no dilemma — connect it or cut it at triage",
+            )
+
+
+def check_g1_shared_entity(ctx: Context) -> None:
+    """Dilemmas that share no entities produce parallel novels, not a
+    woven story (design doc 02, gate G1)."""
+    dilemmas = ctx.g.nodes_of(Dilemma)
+    if len(dilemmas) < 2:
+        return
+    anchors = {d.id: set(ctx.g.out_ids(d.id, EdgeKind.ANCHORED_TO)) for d in dilemmas}
+    ids = sorted(anchors)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1 :]:
+            if anchors[a] & anchors[b]:
+                return
+    ctx.error("G1", "no two dilemmas share an anchored entity (parallel-novels risk)")
+
+
 def check_budget_dilemmas(ctx: Context) -> None:
     preset = ctx.vision.preset
     by_role = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
@@ -464,6 +490,8 @@ GATES: dict[Stage, list] = {
     Stage.BRAINSTORM: [
         check_i1_two_answers,
         check_i2_anchoring,
+        check_g1_entity_anchoring,
+        check_g1_shared_entity,
         check_budget_dilemmas,
         check_budget_cast,
     ],

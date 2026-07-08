@@ -90,6 +90,10 @@ story's beat DAG.
 - `export/`, `play/` packages arrive with M3–M4.
 - Live-provider recording (`MockProvider(record_with=...)`) is wired but
   unexercised — needs an API key session to record real fixtures.
+- **`qf run --yes` is a stub.** Interactive checkpoint pauses (design doc
+  02 §3) are not implemented; batch is currently the only mode. The flag
+  is accepted for forward compatibility. Wire real interactive review
+  when the review UX milestone lands.
 
 ## Decision log
 

@@ -43,7 +43,13 @@ def run(
     stage: str = typer.Argument("", help="Stage to run, or empty with --to"),
     directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
     to: str = typer.Option("", "--to", help="Run every remaining stage up to this one"),
-    yes: bool = typer.Option(False, "--yes", help="Batch mode (checkpoints auto-approve)"),
+    yes: bool = typer.Option(
+        False,
+        "--yes",
+        help="Batch mode. Currently the only mode: interactive checkpoint"
+        " pauses are deferred (see docs/STATUS.md), so this flag is accepted"
+        " for forward compatibility and has no effect yet.",
+    ),
 ) -> None:
     """Run pipeline stage(s) against the project's configured LLM provider."""
     from questfoundry.llm import AnthropicProvider, LLMAdapter, MockProvider
@@ -62,16 +68,25 @@ def run(
         fixtures = project.root / project.llm.get("fixtures", "fixtures")
         provider = MockProvider(fixtures)
         cache_dir = None  # replay is already deterministic
-    else:
+    elif provider_name == "anthropic":
         provider = AnthropicProvider()
         cache_dir = project.root / "cache" / "llm"
+    else:
+        console.print(
+            f"[red]unknown llm.provider {provider_name!r}; use 'anthropic' or 'mock'[/red]"
+        )
+        raise typer.Exit(2)
     adapter = LLMAdapter(
         provider,
         project.llm.get("models", {}),
         cache_dir=cache_dir,
         ledger_path=project.root / "reports" / "ledger.jsonl",
     )
-    notes = {StageEnum(k): v for k, v in project.steering.items()}
+    try:
+        notes = {StageEnum(k): v for k, v in project.steering.items()}
+    except ValueError as e:
+        console.print(f"[red]bad stage name in project.yaml steering: {e}[/red]")
+        raise typer.Exit(2) from e
     try:
         reports = run_pipeline(project, target, IMPLS, adapter, notes_by_stage=notes)
     except RunnerError as e:

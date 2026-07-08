@@ -14,6 +14,27 @@ def errors_for(check: str, g, vision, stage=Stage.GROW):
     return [i for i in issues if i.check == check and i.severity == Severity.ERROR]
 
 
+def test_g1_disjoint_dilemmas_flagged(vision):
+    g = StoryGraph()
+    make_dilemma(g, "one")  # each helper dilemma gets its own anchor entity,
+    make_dilemma(g, "two")  # so two of them share nothing
+    issues = errors_for("G1", g, vision, Stage.BRAINSTORM)
+    assert any("share an anchored entity" in i.message for i in issues)
+
+
+def test_g1_unanchored_entity_warned(vision):
+    from questfoundry.models.world import Entity
+
+    g = StoryGraph()
+    make_dilemma(g, "one")
+    mutations.add_entity(
+        g, Entity(id="character:extra", created_by=Stage.BRAINSTORM, name="X", concept="c")
+    )
+    issues = run_checks(g, vision, Stage.BRAINSTORM)
+    warnings = [i for i in issues if i.check == "G1" and i.severity == Severity.WARNING]
+    assert any("character:extra" in i.message for i in warnings)
+
+
 def test_i3_incomplete_scaffold_flagged(vision):
     g = StoryGraph()
     d, pa, pb = make_dilemma(g, "one")

@@ -186,26 +186,13 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
-- **The id-contract boundary needs a policy decision (first item for
-  the next session).** The three live-run fixes (PR #12) sit on
-  different sides of a line the author has questioned: predicting and
-  correcting nondeterministic model behavior engine-side vs. stating
-  the contract better prompt-side. Agreed direction, to implement and
-  then prune: (1) the **adapter's** JSON instruction should state the
-  id contract once, globally — "every node reference must be the full
-  `kind:slug` id exactly as it appears in the prompt" — instead of
-  per-pass engine tolerances; (2) repair errors always name the
-  expected values (already the practice); (3) engine canonicalization
-  only for provably unambiguous forms (the `passage:` prefix
-  restoration is parsing, not prediction — keep); (4) **no fuzzy
-  name-matching** — once (1) proves out in the next live run, retire
-  `_resolve_entity`'s display-name branch in `stages/fill.py`, keeping
-  only id/slug. Rationale: fuzzy acceptance is a treadmill against a
-  distribution and can convert loud failures into quiet wrong answers;
-  but note the verification asymmetry — engine normalization is
-  CI-testable forever, prompt fixes are hope until a live run — so
-  pair (1) with the Anthropic live run the next session will do anyway
-  (`QF_ANTHROPIC_API_KEY` reaches new sessions).
+- **The first Claude-driven generation is blocked on billing.**
+  `QF_ANTHROPIC_API_KEY` reaches sessions and authenticates, but the
+  Anthropic account has no API credits — every call returns 400 "credit
+  balance is too low" (verified live, 2026-07-08). Once credits are
+  added, run a fresh premise at micro scope with the default model map
+  (opus architect/writer + haiku utility) and record the budget data in
+  the decision log, as was done for the OpenAI run.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
@@ -298,6 +285,23 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (id contract):** The PR #12 open item is resolved as
+  agreed (mini-ADR A11, design doc 03 §5): the adapter's JSON
+  instruction now states the id contract once, globally — every node
+  reference is the full `kind:slug` id exactly as it appears in the
+  prompt — and `_resolve_entity`'s display-name branch is retired;
+  micro-detail apply accepts only exact ids and the unambiguous bare
+  slug (prefix restoration is parsing, not prediction). Repair errors
+  keep naming the expected ids. The violating-construction test now
+  asserts display names are *rejected*. Validation: the intended
+  Anthropic live run is blocked on billing (see open items), so the
+  prompt-side fix was validated with a second live gpt-5 run — the
+  distribution that produced the original id failures — on a fresh
+  premise ("The Cartographer's Debt", micro scope); results below.
+  Positional fixture replay is unaffected by the instruction change
+  (fixtures key on call order, not prompt bytes), and the recorded
+  fixtures already cite entities by full id.
 
 - **2026-07-08 (live run):** First live generation: fresh premise
   ("The Winding House"), micro scope, gpt-5 architect/writer +

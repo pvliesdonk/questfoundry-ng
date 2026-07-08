@@ -224,20 +224,17 @@ def _write_context_for(passage_id: str):
 
 
 def _resolve_entity(g, ref: str) -> str:
-    """Live models cite entities by display name ('Kessa Pinion') or bare
-    slug as often as by id; resolve any unambiguous reference."""
+    """The id contract lives in the adapter's JSON instruction; engine-side
+    only the provably unambiguous slug form is restored (parsing, not
+    prediction — display names are rejected, see the STATUS decision log)."""
     if isinstance(g.get(ref), Entity):
         return ref
     entities = [e for e in g.nodes_of(Entity) if e.retained]
-    matches = {
-        e.id
-        for e in entities
-        if e.name.lower() == ref.lower() or e.id.split(":", 1)[1] == ref.lower()
-    }
+    matches = {e.id for e in entities if e.id.split(":", 1)[1] == ref}
     if len(matches) == 1:
         return matches.pop()
     raise ApplyError(
-        f"{ref!r} is not an entity; use one of: {sorted(e.id for e in entities)}"
+        f"{ref!r} is not an entity id; use one of: {sorted(e.id for e in entities)}"
     )
 
 

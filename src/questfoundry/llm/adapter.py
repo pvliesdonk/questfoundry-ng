@@ -21,7 +21,9 @@ M = TypeVar("M", bound=BaseModel)
 
 _JSON_INSTRUCTION = (
     "Respond with ONLY a JSON object matching this JSON Schema "
-    "(no prose, no markdown fences):"
+    "(no prose, no markdown fences). Wherever a field refers to a node, "
+    "use the full `kind:slug` id exactly as it appears above (for example "
+    "`passage:p-arrival`, never `p-arrival` or a display name):"
 )
 
 

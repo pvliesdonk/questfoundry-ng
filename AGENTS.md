@@ -125,9 +125,11 @@ silence is not.
 Development runs across many sessions on models with wildly different
 prices. Match the model tier to the work — the same principle the
 pipeline itself applies with its `architect`/`writer`/`utility` roles
-(design doc 03 §5). When you are an expensive model, delegate; when you
-are a cheap one, stay inside your tier's lane and escalate rather than
-guess.
+(design doc 03 §5). Note these are two different knobs: 03 §5 configures
+the *story pipeline's runtime* LLM calls; this section governs
+*development sessions* working on this repo. When you are an expensive
+model, delegate; when you are a cheap one, stay inside your tier's lane
+and escalate rather than guess.
 
 **Frontier tier (Fable/Opus-class) — decide what the words should be:**
 

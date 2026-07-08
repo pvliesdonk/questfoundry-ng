@@ -125,6 +125,13 @@ BaseModel`.
   from the proposal model; responses are parsed and validated before the
   pipeline sees them. Free-text generation exists only *inside* schema
   fields (prose is a `str` field of a `PassageProse` proposal).
+- **The id contract is stated once, adapter-side.** The JSON instruction
+  accompanying every schema requires node references to be the full
+  `kind:slug` id exactly as rendered in the prompt. Engine-side
+  canonicalization is limited to provably unambiguous forms (restoring a
+  dropped kind prefix is parsing); fuzzy matching such as display-name
+  resolution is out — it converts loud repair failures into quiet wrong
+  answers. Repair errors always name the expected ids.
 - **Model roles, not model names.** Stages request a role — `architect`
   (SEED/GROW judgment), `writer` (FILL prose), `utility` (labels,
   summaries) — mapped to concrete provider/model in project config.
@@ -224,3 +231,4 @@ interface before that.
 | A8 | Arcs computed on demand | Stored arc nodes | Stored arcs go stale and invite arc-level authoring, a known design trap |
 | A9 | GROW weaves atomic fork units on a linear spine; realization recomputes the whole ordering edge set | Per-seam edge patching; LLM emits an ordering | Full recompute is idempotent and cannot leave stale SEED seams; the LLM picking an index among engine-enumerated orders keeps invalid topologies unrepresentable (Principle 2) |
 | A10 | FILL's automated review is a post-apply hook on the uniform repair loop | Bespoke write-review-revise orchestration inside FILL | One loop owns retries, restore, and the halt ('structure is wrong, not the words'); review issues re-enter the prompt exactly like validation errors, so ≤2 revision rounds is `max_repairs`, not new machinery |
+| A11 | Id contract stated once in the adapter's JSON instruction; engine canonicalizes only provably unambiguous forms | Per-pass engine tolerances; fuzzy name matching | Fuzzy acceptance is a treadmill against a model distribution and can turn loud repair failures into quiet wrong answers; slug-prefix restoration is parsing, not prediction |

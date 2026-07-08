@@ -92,7 +92,7 @@ def _finalize_context(project: Project) -> dict:
             {
                 "need": need,
                 "dilemma": g.node(need.dilemma),
-                "convergence": g.node(need.convergence),
+                "rejoin": [g.node(b) for b in need.rejoin],
                 "tails": {
                     path: g.node(t)
                     for path, t in _convergence_tails(project, need).items()
@@ -107,7 +107,7 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
     tails = {}
     for path in need.path_flags:
         for b in queries.exclusive_beats(g, path):
-            if need.convergence in queries.successors(g, b):
+            if set(need.rejoin) & set(queries.successors(g, b)):
                 tails[path] = b
     return tails
 
@@ -120,10 +120,16 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     for spec in proposal.residue:
         need = needs.get(spec.dilemma)
         if need is None:
-            raise ApplyError(f"residue {spec.id}: {spec.dilemma} needs no residue beat")
+            raise ApplyError(
+                f"residue {spec.id}: dilemma must be exactly one of {sorted(needs)}; "
+                f"got {spec.dilemma!r}"
+            )
         flag = need.path_flags.get(spec.path)
         if flag is None:
-            raise ApplyError(f"residue {spec.id}: {spec.path} is not a path of {spec.dilemma}")
+            raise ApplyError(
+                f"residue {spec.id}: path must be exactly one of "
+                f"{sorted(need.path_flags)}; got {spec.path!r}"
+            )
         try:
             beat = Beat(
                 id=spec.id,
@@ -136,9 +142,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             )
         except ValidationError as e:
             raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
-        pc.insert_residue_beat(g, beat, spec.path, need.convergence)
+        pc.insert_residue_beat(g, beat, spec.path, need.rejoin)
         covered.add(spec.dilemma)
-        lines.append(f"{spec.id} sets {spec.path}'s mood before {need.convergence}")
+        lines.append(f"{spec.id} sets {spec.path}'s mood before {'/'.join(need.rejoin)}")
     missing = set(needs) - covered
     if missing:
         raise ApplyError(
@@ -207,11 +213,13 @@ class PassagesProposal(BaseModel):
 
 
 def _variant_needs(g) -> dict[str, list[str]]:
-    """convergence beat -> path flags, for heavy-residue soft dilemmas."""
+    """convergence beat -> path flags, for heavy-residue soft dilemmas.
+    A multi-beat rejoin (hard fork) has no convergence passage to hold
+    variants — G4 reports that case as unsupported (M5 per-world work)."""
     return {
-        n.convergence: sorted(n.path_flags.values())
+        n.rejoin[0]: sorted(n.path_flags.values())
         for n in pc.convergence_needs(g)
-        if n.weight == "heavy"
+        if n.weight == "heavy" and len(n.rejoin) == 1
     }
 
 

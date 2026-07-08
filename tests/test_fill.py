@@ -127,14 +127,17 @@ def test_gate_requires_voice(golden_fill):
     assert any("no voice record" in i.message for i in issues)
 
 
-def test_micro_detail_entity_resolves_names_and_slugs(golden_fill):
-    """Third live-run lesson (gpt-5, 2026-07-08): models cite entities by
-    display name; resolve any unambiguous reference."""
+def test_micro_detail_entity_resolves_ids_and_slugs_only(golden_fill):
+    """Id-contract decision (STATUS, 2026-07-08): the adapter states the
+    contract once; the engine restores only the unambiguous slug form.
+    Display names are rejected — fuzzy acceptance converts loud failures
+    into quiet wrong answers."""
     from questfoundry.pipeline.stages.fill import _resolve_entity
 
     g = golden_fill.graph
     assert _resolve_entity(g, "character:keeper") == "character:keeper"
-    assert _resolve_entity(g, g.node("character:keeper").name) == "character:keeper"
     assert _resolve_entity(g, "keeper") == "character:keeper"
+    with pytest.raises(ApplyError, match="use one of"):
+        _resolve_entity(g, g.node("character:keeper").name)
     with pytest.raises(ApplyError, match="use one of"):
         _resolve_entity(g, "Nobody Anyone Knows")

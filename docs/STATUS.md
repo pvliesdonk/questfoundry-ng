@@ -186,26 +186,13 @@ play, plus a `medium`-scope story generated end-to-end within budget.
 
 ## Known deferrals / open items
 
-- **The id-contract boundary needs a policy decision (first item for
-  the next session).** The three live-run fixes (PR #12) sit on
-  different sides of a line the author has questioned: predicting and
-  correcting nondeterministic model behavior engine-side vs. stating
-  the contract better prompt-side. Agreed direction, to implement and
-  then prune: (1) the **adapter's** JSON instruction should state the
-  id contract once, globally — "every node reference must be the full
-  `kind:slug` id exactly as it appears in the prompt" — instead of
-  per-pass engine tolerances; (2) repair errors always name the
-  expected values (already the practice); (3) engine canonicalization
-  only for provably unambiguous forms (the `passage:` prefix
-  restoration is parsing, not prediction — keep); (4) **no fuzzy
-  name-matching** — once (1) proves out in the next live run, retire
-  `_resolve_entity`'s display-name branch in `stages/fill.py`, keeping
-  only id/slug. Rationale: fuzzy acceptance is a treadmill against a
-  distribution and can convert loud failures into quiet wrong answers;
-  but note the verification asymmetry — engine normalization is
-  CI-testable forever, prompt fixes are hope until a live run — so
-  pair (1) with the Anthropic live run the next session will do anyway
-  (`QF_ANTHROPIC_API_KEY` reaches new sessions).
+- **The first Claude-driven generation is blocked on billing.**
+  `QF_ANTHROPIC_API_KEY` reaches sessions and authenticates, but the
+  Anthropic account has no API credits — every call returns 400 "credit
+  balance is too low" (verified live, 2026-07-08). Once credits are
+  added, run a fresh premise at micro scope with the default model map
+  (opus architect/writer + haiku utility) and record the budget data in
+  the decision log, as was done for the OpenAI run.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
@@ -298,6 +285,85 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (live run 2 — id-contract validation):** Second live
+  generation ("The Cartographer's Debt", fresh premise, micro scope,
+  gpt-5 architect/writer + gpt-4.1-mini utility — chosen because the
+  Anthropic account has no credits, see open items, and gpt-5 is the
+  distribution that produced the original id failures). Outcome: **a
+  complete story — 24 beats, 7 passages, 4 arcs, ~350-word passages —
+  0 gate errors, 4/4 arcs simulate complete, all three exports
+  round-trip clean.** The id contract **held**: zero id-shaped repairs
+  anywhere — the POLISH audit cited every passage and flag by full id,
+  and all 10 FILL micro-details arrived with exact entity ids, so the
+  retired display-name matcher was never missed. The run took four
+  attempts and each failure was a real engine/prompt bug now fixed
+  with its own entry and test (fork-rejoin convergence; finalize
+  repair errors that didn't name expected values; a review contract
+  the utility model misread). Budget across all four attempts: 40
+  calls, gpt-5 46k in / 83k out, utility pennies — **~$0.90 total**;
+  repair rounds: finalize 3 attempts, everything else first-shot.
+
+- **2026-07-08 (review contract legibility):** Fourth live-run lesson,
+  extending the first run's reviewer-discipline fix: the utility
+  reviewer failed a passage twice *for being written in the voice's own
+  required POV* — it misread the review prompt's one-line rule ("a
+  banned pattern appears (banned: ...), or the POV (...) or tense (...)
+  is broken") and treated the required first person as banned, so the
+  write pass could never converge. `fill_review.j2` now separates
+  REQUIRED (pov, tense — prose in them is correct; fail only on
+  departure) from BANNED (a bulleted list), and narrows leakage to
+  naming the machinery itself (ids, or "flag"/"beat"/"path" used
+  mechanically) — in-world objects that flags merely describe are
+  story, not leakage. Prompt-only; positional fixture replay is
+  unaffected. The pattern across both reviewer lessons: contract text
+  that a frontier model reads correctly can still be ambiguous to the
+  small model actually holding the pen — write review contracts for
+  the cheapest reader.
+
+- **2026-07-08 (fork-rejoin convergence):** The id-contract validation
+  run surfaced a real structural bug: when the weave places a soft
+  dilemma's resolve unit directly before the hard resolve (a legal,
+  common interleaving), the soft diamond rejoins at the hard fork and
+  there is no single convergence beat. `soft_convergence` ("first beat
+  reachable from both commits, in topo order") returned one **hard
+  commit** — a beat not on every arc — and the residue splice then
+  dead-ended every arc on the other hard branch (two I6 errors at
+  POLISH's gate). Fix, per the tensor model (design doc 01 §5): the
+  rejoin is a *frontier* — the minimal shared descendants of the two
+  commits — usually one beat, one per world at a hard fork. New query
+  `soft_rejoin_frontier`; `soft_convergence` returns a beat only when
+  the frontier is single; the residue splice inherits the tail's edge
+  into every frontier beat, so the residue exists in every world; G4
+  reports heavy residue at a fork-rejoin as explicitly unsupported (M5
+  per-world variants) instead of wiring variants at a wrong beat. The
+  freeze record still stores only single-beat convergences — a fork
+  frontier is the hard dilemma's commits, already frozen under forks.
+  Violating-construction tests build the fork-rejoin story through the
+  real weave. Design doc 01's convergence definition updated.
+
+- **2026-07-08 (id contract):** The PR #12 open item is resolved as
+  agreed (mini-ADR A11, design doc 03 §5): the adapter's JSON
+  instruction now states the id contract once, globally — every node
+  reference is the full `kind:slug` id exactly as it appears in the
+  prompt — and `_resolve_entity`'s display-name branch is retired;
+  micro-detail apply accepts only exact ids and the unambiguous bare
+  slug (prefix restoration is parsing, not prediction). Repair errors
+  keep naming the expected ids — and the validation run exposed one
+  straggler: POLISH's finalize residue errors named only the offending
+  value, so the repair loop couldn't converge when the model echoed a
+  prompt annotation ("(residue: light)") into the dilemma field; both
+  errors now enumerate the expected set, with a test mirroring the
+  live failure. The violating-construction test for `_resolve_entity`
+  now asserts display names are *rejected*. Validation: the intended
+  Anthropic live run is blocked on billing (see open items), so the
+  prompt-side fix was validated with a second live gpt-5 run — the
+  distribution that produced the original id failures — on a fresh
+  premise ("The Cartographer's Debt", micro scope); results in the
+  "live run 2" entry above.
+  Positional fixture replay is unaffected by the instruction change
+  (fixtures key on call order, not prompt bytes), and the recorded
+  fixtures already cite entities by full id.
 
 - **2026-07-08 (live run):** First live generation: fresh premise
   ("The Winding House"), micro scope, gpt-5 architect/writer +

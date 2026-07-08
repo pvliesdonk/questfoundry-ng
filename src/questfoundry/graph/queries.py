@@ -118,17 +118,29 @@ def grant_beat(g: StoryGraph, flag_id: str) -> str | None:
     return commit_beat(g, flag.path)
 
 
-def soft_convergence(g: StoryGraph, dilemma_id: str) -> str | None:
-    """The first beat (in topological order) reachable from both of a
-    dilemma's commit beats — where its paths rejoin."""
+def soft_rejoin_frontier(g: StoryGraph, dilemma_id: str) -> list[str]:
+    """The beat(s) where a soft dilemma's paths rejoin: the minimal shared
+    descendants of its two commits. Usually a single convergence beat; one
+    beat per world when the diamond feeds a hard fork directly (the soft
+    coordinate collapses into each world separately — design doc 01 §5)."""
     paths = explored_paths(g, dilemma_id)
     if len(paths) != 2:
-        return None
+        return []
     commits = [commit_beat(g, p) for p in paths]
     if None in commits:
-        return None
+        return []
     shared = descendants(g, commits[0]) & descendants(g, commits[1])  # type: ignore[arg-type]
-    return next((b for b in topological_order(g) or [] if b in shared), None)
+    interior: set[str] = set()
+    for b in shared:
+        interior |= descendants(g, b)
+    return sorted(shared - interior)
+
+
+def soft_convergence(g: StoryGraph, dilemma_id: str) -> str | None:
+    """The single beat where a soft dilemma's paths rejoin, or None when
+    the rejoin frontier is a hard fork (no one beat is on every arc)."""
+    frontier = soft_rejoin_frontier(g, dilemma_id)
+    return frontier[0] if len(frontier) == 1 else None
 
 
 def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, str]:

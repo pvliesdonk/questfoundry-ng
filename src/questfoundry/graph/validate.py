@@ -534,8 +534,8 @@ def check_g4_residue_coverage(ctx: Context) -> None:
     for d in ctx.g.nodes_of(Dilemma):
         if d.role != DilemmaRole.SOFT:
             continue
-        convergence = queries.soft_convergence(ctx.g, d.id)
-        if convergence is None:
+        frontier = queries.soft_rejoin_frontier(ctx.g, d.id)
+        if not frontier:
             continue
         flags = set(queries.dilemma_flags(ctx.g, d.id).values())
         if d.residue_weight == ResidueWeight.LIGHT:
@@ -546,14 +546,21 @@ def check_g4_residue_coverage(ctx: Context) -> None:
             if not covered:
                 ctx.error(
                     "G4",
-                    f"light-residue dilemma {d.id} converges at {convergence} "
+                    f"light-residue dilemma {d.id} rejoins at {', '.join(frontier)} "
                     "with no residue beat gated on its flags",
                 )
         elif d.residue_weight == ResidueWeight.HEAVY:
-            if len(queries.passages_of_beat(ctx.g, convergence)) < 2:
+            if len(frontier) > 1:
                 ctx.error(
                     "G4",
-                    f"heavy-residue dilemma {d.id} converges at {convergence} "
+                    f"heavy-residue dilemma {d.id} rejoins inside a hard fork "
+                    f"({', '.join(frontier)}); per-world variant passages are "
+                    "not built yet (M5 multi-hard work)",
+                )
+            elif len(queries.passages_of_beat(ctx.g, frontier[0])) < 2:
+                ctx.error(
+                    "G4",
+                    f"heavy-residue dilemma {d.id} converges at {frontier[0]} "
                     "without variant passages",
                 )
 

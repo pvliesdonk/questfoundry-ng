@@ -34,7 +34,9 @@ class FreezeRecord(BaseModel):
     beats: list[str]
     # dilemma id -> its commit beat ids (the fork structure)
     forks: dict[str, list[str]]
-    # soft dilemma id -> first beat reachable from both post-commit chains
+    # soft dilemma id -> the single beat where its paths rejoin; omitted
+    # when the rejoin frontier is a hard fork (those beats are the hard
+    # dilemma's commits, already frozen under forks)
     convergences: dict[str, str]
 
 

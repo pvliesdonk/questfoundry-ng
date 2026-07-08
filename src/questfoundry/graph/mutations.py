@@ -251,11 +251,11 @@ def freeze_topology(g: StoryGraph) -> FreezeRecord:
         if commits:
             forks[dilemma.id] = commits
         if dilemma.role == DilemmaRole.SOFT and len(commits) == 2:
-            shared = queries.descendants(g, commits[0]) & queries.descendants(g, commits[1])
-            order = queries.topological_order(g) or []
-            first = next((b for b in order if b in shared), None)
-            if first:
-                convergences[dilemma.id] = first
+            # A fork-rejoin frontier (>1 beat) is the hard dilemma's commits,
+            # already frozen under forks — record only single-beat convergences.
+            convergence = queries.soft_convergence(g, dilemma.id)
+            if convergence:
+                convergences[dilemma.id] = convergence
     record = FreezeRecord(
         beats=sorted(b.id for b in g.nodes_of(Beat)),
         forks=forks,

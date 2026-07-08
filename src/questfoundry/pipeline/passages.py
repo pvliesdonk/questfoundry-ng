@@ -12,6 +12,7 @@ boundaries fall at divergences and convergences, and flag-gated beats
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 from questfoundry.graph import mutations, queries
@@ -112,11 +113,11 @@ def ending_beat(g: StoryGraph, group: list[str]) -> str | None:
 
 @dataclass(frozen=True)
 class ConvergenceNeed:
-    """A soft dilemma's convergence and what its residue weight demands."""
+    """A soft dilemma's rejoin frontier and what its residue weight demands."""
 
     dilemma: str
     weight: ResidueWeight
-    convergence: str  # the beat where the paths rejoin
+    rejoin: tuple[str, ...]  # beat(s) where the paths rejoin; >1 at a hard fork
     path_flags: dict[str, str]  # path id -> dilemma flag id
 
 
@@ -127,38 +128,44 @@ def convergence_needs(g: StoryGraph) -> list[ConvergenceNeed]:
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
         if d.role != DilemmaRole.SOFT or d.residue_weight == ResidueWeight.COSMETIC:
             continue
-        convergence = queries.soft_convergence(g, d.id)
-        if convergence is None:
+        frontier = queries.soft_rejoin_frontier(g, d.id)
+        if not frontier:
             continue
         needs.append(
             ConvergenceNeed(
                 dilemma=d.id,
                 weight=d.residue_weight,
-                convergence=convergence,
+                rejoin=tuple(frontier),
                 path_flags=queries.dilemma_flags(g, d.id),
             )
         )
     return needs
 
 
-def insert_residue_beat(g: StoryGraph, beat: Beat, path_id: str, convergence: str) -> None:
-    """Splice a flag-gated residue beat between a path's exclusive tail
-    and the convergence beat: tail -> residue -> convergence."""
+def insert_residue_beat(
+    g: StoryGraph, beat: Beat, path_id: str, rejoin: Sequence[str]
+) -> None:
+    """Splice a flag-gated residue beat between a path's exclusive tail and
+    the rejoin frontier: tail -> residue -> each frontier beat the tail fed.
+    When the frontier is a hard fork, the residue beat inherits the tail's
+    edge into every world, so no arc dead-ends at it (I6)."""
+    targets = set(rejoin)
     tails = [
         b
         for b in queries.exclusive_beats(g, path_id)
-        if convergence in queries.successors(g, b)
+        if targets & set(queries.successors(g, b))
     ]
     if len(tails) != 1:
         raise mutations.MutationError(
-            f"path {path_id} has {len(tails)} edge(s) into convergence {convergence}; "
-            "residue insertion needs exactly one"
+            f"path {path_id} has {len(tails)} beat(s) with edges into the rejoin "
+            f"frontier {sorted(targets)}; residue insertion needs exactly one"
         )
     (tail,) = tails
     mutations.add_beat(g, beat, [])
-    mutations.remove_ordering(g, tail, convergence)
+    for target in sorted(targets & set(queries.successors(g, tail))):
+        mutations.remove_ordering(g, tail, target)
+        mutations.add_ordering(g, beat.id, target)
     mutations.add_ordering(g, tail, beat.id)
-    mutations.add_ordering(g, beat.id, convergence)
 
 
 # -- false branches -------------------------------------------------------------

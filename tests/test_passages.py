@@ -73,7 +73,7 @@ def test_convergence_needs_on_golden(golden):
     (need,) = pc.convergence_needs(golden.graph)
     assert need.dilemma == "dilemma:truth"
     assert need.weight == ResidueWeight.LIGHT
-    assert need.convergence == "beat:tremor"
+    assert need.rejoin == ("beat:tremor",)
     assert need.path_flags == {
         "path:tell": "flag:elias-knows",
         "path:hide": "flag:lie-between",
@@ -138,7 +138,7 @@ def test_heavy_residue_creates_gated_variants(vision, tmp_path):
     assert _finalize_skip(project)  # heavy needs no residue beats; runs are short
 
     _passages_apply(_proposal_for(g), project)
-    (convergence,) = [n.convergence for n in pc.convergence_needs(g)]
+    (convergence,) = [n.rejoin[0] for n in pc.convergence_needs(g)]
     holders = queries.passages_of_beat(g, convergence)
     assert len(holders) == 2
     va, vb = sorted(holders)
@@ -186,13 +186,105 @@ def test_residue_insertion_preserves_convergence(vision):
         purpose=StructuralPurpose.RESIDUE,
         requires_flags=[need.path_flags["path:sub-a"]],
     )
-    pc.insert_residue_beat(g, beat, "path:sub-a", need.convergence)
+    pc.insert_residue_beat(g, beat, "path:sub-a", need.rejoin)
     issues = run_checks(g, vision, Stage.GROW)
     assert [i for i in issues if i.check == "I9"] == []  # freeze intact
-    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:afterglow", need.convergence)
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:afterglow", need.rejoin[0])
     # gated beats become singleton passages
     groups = pc.collapse_groups(g)
     assert ["beat:afterglow"] in groups
+
+
+def _fork_rejoin_story(g: StoryGraph, sub_residue: ResidueWeight) -> None:
+    """Same story, woven so the soft diamond feeds the hard fork directly —
+    no shared beat between sub's payoff and main's commits. The rejoin is
+    per world (each hard commit)."""
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD, residue=sub_residue)
+    d2, p2a, p2b = make_dilemma(g, "sub", role=DilemmaRole.SOFT, residue=sub_residue)
+    scaffold(g, "main", d1, p1a, p1b)
+    scaffold(g, "sub", d2, p2a, p2b, endings=False)
+    mutations.add_dilemma_relation(g, EdgeKind.WRAPS, d1, d2)
+    planned = weave.plan(g)
+    chosen = next(
+        order
+        for order in weave.candidates(planned)
+        if tuple(order[-2:]) == ("resolve:dilemma:sub", "resolve:dilemma:main")
+    )
+    weave.realize(g, planned, chosen)
+    _derive_flags(g)
+
+
+def test_fork_rejoin_frontier_is_per_world():
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    assert queries.soft_rejoin_frontier(g, "dilemma:sub") == [
+        "beat:main-commit-a",
+        "beat:main-commit-b",
+    ]
+    assert queries.soft_convergence(g, "dilemma:sub") is None
+    (need,) = pc.convergence_needs(g)
+    assert need.rejoin == ("beat:main-commit-a", "beat:main-commit-b")
+
+
+def test_residue_at_fork_rejoin_reaches_every_world(vision):
+    """Violating construction (first fork-rejoin live story, 2026-07-08):
+    a residue beat spliced before only one hard commit dead-ended every
+    arc that took the other hard branch (I6)."""
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    (need,) = pc.convergence_needs(g)
+    mutations.freeze_topology(g)
+    beat = Beat(
+        id="beat:afterglow",
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"]],
+    )
+    pc.insert_residue_beat(g, beat, "path:sub-a", need.rejoin)
+    assert set(queries.successors(g, "beat:afterglow")) == set(need.rejoin)
+    issues = run_checks(g, vision, Stage.GROW)
+    errors = [i for i in issues if i.check in ("I6", "I9") and i.severity == Severity.ERROR]
+    assert errors == []
+
+
+def test_residue_apply_error_names_the_expected_dilemmas(vision, tmp_path):
+    """Live-run lesson (gpt-5, 2026-07-08): the model echoed the prompt's
+    '(residue: light)' annotation into the dilemma field, and the old error
+    ('needs no residue beat') taught nothing across two repair rounds.
+    Repair errors name the expected values (id-contract decision)."""
+    from questfoundry.pipeline.stages.polish import (
+        FinalizeProposal,
+        ResidueSpec,
+        _finalize_apply,
+    )
+
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    proposal = FinalizeProposal(
+        residue=[
+            ResidueSpec(
+                dilemma="dilemma:sub (residue: light)",
+                path="path:sub-a",
+                id="beat:afterglow",
+                summary="s",
+            )
+        ]
+    )
+    with pytest.raises(ApplyError, match=r"must be exactly one of \['dilemma:sub'\]"):
+        _finalize_apply(proposal, project)
+
+
+def test_heavy_residue_at_fork_rejoin_is_reported_not_silent(vision, tmp_path):
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.HEAVY)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    assert _variant_needs(g) == {}  # no convergence passage exists to hold variants
+    _passages_apply(_proposal_for(g), project)
+    issues = run_checks(g, vision, Stage.POLISH)
+    assert any(i.check == "G4" and "hard fork" in i.message for i in issues)
 
 
 def test_false_branch_splice_and_long_run_detection():

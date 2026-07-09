@@ -333,3 +333,66 @@ def test_html_omits_codex_panel_when_no_entries(golden):
     )
     html = build_html(project)
     assert 'id="codex"' not in html
+
+
+def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatch):
+    """DRESS's codex review shares FILL's anchored + arbitrated contract
+    (validation run, 2026-07-09: the reviewer quoted the conditional-
+    material list from its own context as 'the entry's assertion'). A
+    second failure is architect-arbitrated; the arbiter's verdict is
+    final in both directions."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+    from questfoundry.pipeline.stages.dress import ReviewVerdict, _codex_review_for
+
+    class ScriptedAdapter:
+        def __init__(self, script):
+            self.script = list(script)
+            self.prompts: list[tuple[str, str]] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            expected_role, verdict = self.script.pop(0)
+            assert role == expected_role
+            self.prompts.append((role, prompt))
+            return verdict
+
+    env = Environment(
+        loader=DictLoader(
+            {
+                "dress_codex_review.j2": (
+                    "{% if arbitration %}ARB[{{ arbitration | join(';') }}]{% endif %}"
+                    "prior[{{ prior_issues | join(';') }}]"
+                )
+            }
+        )
+    )
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    proposal = CodexProposal(entries=[CodexItem(entity="entity:x", title="t", body="b")])
+
+    # arbitration overturns the second strike: entries accepted
+    review = _codex_review_for()
+    adapter = ScriptedAdapter(
+        [
+            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
+            ("utility", ReviewVerdict(verdict="fail", issues=["fresh taste"])),
+            ("architect", ReviewVerdict(verdict="pass")),
+        ]
+    )
+    assert review(proposal, golden, adapter) == ["real defect"]
+    assert review(proposal, golden, adapter) == []
+    assert adapter.prompts[-1][0] == "architect"
+    assert "ARB[fresh taste]" in adapter.prompts[-1][1]
+    assert "prior[real defect]" in adapter.prompts[-1][1]
+
+    # arbitration upholds: the halt is real and carries the arbiter's issues
+    review = _codex_review_for()
+    adapter = ScriptedAdapter(
+        [
+            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
+            ("utility", ReviewVerdict(verdict="fail", issues=["still broken"])),
+            ("architect", ReviewVerdict(verdict="fail", issues=["confirmed"])),
+        ]
+    )
+    assert review(proposal, golden, adapter) == ["real defect"]
+    assert review(proposal, golden, adapter) == ["confirmed"]

@@ -464,7 +464,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   (22 passages at micro vs 7–17 in every earlier run), and B6 measured
   ~1072 words/choice even so — the diamonds each add prose along with
   their choice, so the marginal rate improves slowly; closing the feel
-  gap needs the locked-dilemmas effort, exactly as planned. Four
+  gap needs the locked-dilemmas effort, exactly as planned. Five
   findings, all fixed in-flight: (1) *review rule 1 misread POV* — a
   scene opening on another character's actions was failed as "third
   person"; rule 1 now defines a departure (narrator in the wrong

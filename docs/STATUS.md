@@ -193,24 +193,16 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   "live run 4" decision-log entry. All three provider families
   (Anthropic, OpenAI, Gemini) have now produced a complete story.
 
-- **Crash-resume replay of FILL is leaky** (found 2026-07-08 while
-  probing the live-run 4 artifacts). A mid-stage crash loses no money
-  *in principle* — every call is in the content-addressed cache — but
-  an experiment (re-running FILL from the POLISH snapshot + cache)
-  replayed only voice + 3 passages free, then went live at the first
-  multi-predecessor passage and cascaded: FILL's `window`/`lookahead`
-  render in raw edge-store order (`fill.py::_neighbor_prose`, no
-  sort), and choice edges reload from per-passage YAML in alphabetical
-  file order, not wiring order, so the prompt bytes shift and every
-  downstream cache key misses. Prose itself only reaches disk at the
-  gate-passing checkpoint, so a late crash on a long story re-spends
-  most of the stage. Fixes, complementary: (1) canonicalize context
-  ordering (topo-sort window/lookahead like `beats` already is) plus a
-  round-trip prompt-stability test — in-memory context must equal
-  reloaded-project context; mid-tier work. (2) Flush prose per write
-  pass, not per stage — protects the artifact too, but changes design
-  doc 02's checkpoint semantics (partial FILL state on disk is not a
-  gated checkpoint); needs a frontier-tier design decision first.
+- **Crash-resume replay of FILL was leaky — the cache half is fixed**
+  (found and fixed 2026-07-08; see the decision log). What remains
+  open is the artifact half: prose still reaches disk only at the
+  gate-passing checkpoint, so a mid-FILL crash loses the *files*
+  (recoverable via the now-exact cache replay, but wall-clock, and
+  only while the cache and code are unchanged). Flushing prose per
+  write pass instead of per stage would protect the artifact directly,
+  but changes design doc 02's checkpoint semantics (partial FILL state
+  on disk is not a gated checkpoint) — needs a frontier-tier design
+  decision first.
 
 - **Multi-hard weaving is not implemented** (the weave rejects >1 hard
   dilemma with a clear error). The intended topology is settled by the
@@ -303,6 +295,25 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-08 (crash-resume replay made exact):** The leak recorded
+  after live run 4 is fixed at its root: `fill.py::_neighbor_prose`
+  now returns window/lookahead entries in canonical (passage id,
+  label) order instead of raw edge-store order. Store order was the
+  only context ingredient that differed between a live run and a
+  reloaded project (choice edges reload grouped by source file; beats
+  were already topo-sorted, flags already id-sorted, out-edge order is
+  file-order-stable), so the write-context prompt is now byte-stable
+  across save/load and cache replay of a crashed FILL is exact and
+  free. Parallel predecessors are alternative branches with no
+  narrative order to preserve, so id order is as principled as any.
+  Two violating-construction tests: same window regardless of wiring
+  order, and in-memory context == reloaded-project context with
+  wiring deliberately reversed from filename order. One-time cost:
+  cache entries recorded before this change key on the old prompt
+  bytes, so replays of pre-fix runs (e.g. the Salt-Glass Choir cache)
+  re-spend at multi-predecessor passages once. The per-pass prose
+  flush question stays open (see open items).
 
 - **2026-07-08 (live run 4 — the first Gemini-driven generation):**
   "The Salt-Glass Choir" (fresh premise, micro scope) on the new

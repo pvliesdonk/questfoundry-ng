@@ -329,6 +329,19 @@ PR #5) and this agent/doc infrastructure (PR #6).
   keep; BRAINSTORM should generate ingredients knowing triage whittles
   them. Ride along with M6's prompt work.
 
+- **Established entity attributes don't reliably survive FILL**
+  (medium run, review-caught): Tavi Okonkwo's base fields use
+  they/them, but most passages (and even FILL's own new micro-detail
+  on the same entity) drifted to she/her — internally inconsistent
+  prose that no gate can catch, since it's words, not structure. The
+  base facts *are* in the write context; they lose to the model's
+  prior. Fix path, with M6's prompt work: make load-bearing attributes
+  explicit (e.g. a `pronouns` entity field rendered prominently, not
+  buried in flowing `base` text) and add pronoun/attribute consistency
+  to the FILL review's numbered objective rules — it is exactly the
+  kind of checkable, taste-free defect that contract confines failure
+  to.
+
 - **Medium preset ranges don't match what the pipeline builds.** The
   run produced 20 passages against B3's 60–90 target: SEED's 3+3+3
   beats per Y × 4 dilemmas yields ~46 beats ≈ 20 passages, so hitting

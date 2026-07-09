@@ -1,0 +1,55 @@
+style: Rain-soaked painterly illustration with soft edges and intimate framing; wet ink and
+  watercolor washes bleeding at the borders, lantern-lit interiors against dark streets, figures
+  rendered tenderly and close, with a hush that suggests something about to end.
+palette: Wet-street darks and rain-grey blues, warmed by lantern amber and ink-black; muted
+  browns of damp paper and worn cloth; translucent, dissolving pale edges where being-known
+  is collected; the cool sheen of brass.
+notes: 'Every scene reads as the last hour before something ends: rain always present or just-stopped,
+  light always warm against wet dark. Translucency is a visual language reserved for Emery''s
+  edges only.'
+profiles:
+- entity: character:emery
+  appearance: A lantern-warm face whose edges go translucent, thinning into the surrounding
+    air as her being-known is collected; ink-stained fingers; wrapped in a shawl that smells
+    of someone else's kitchen. Her thumb worries the frayed hem of whatever cloth is nearest
+    when she is quieted or unsure.
+  iconography:
+  - translucent dissolving edges
+  - ink-stained fingers
+  - borrowed shawl
+  - thumb worrying a frayed cloth hem
+  - 'small worn keepsakes wrapped and rewrapped: a cracked cup, a pressed flower, a nameless
+    ribbon'
+  - packing to vanish
+- entity: character:wren
+  appearance: A courier in a rain-darkened canvas coat, a satchel with a strap worn soft,
+    hands that know every alley by feel. Watchful and quiet; when unsure they keep their hands
+    moving and press forward rather than standing still.
+  iconography:
+  - rain-darkened canvas coat
+  - soft-strapped satchel
+  - hands feeling their way through alleys
+  - restless hands, forward motion
+  - carrying others' parcels of lost memory
+  - untying knots in the dark
+- entity: faction:the-market
+  appearance: The Night Market of Vellamere, a rain-summoned market of stalls selling unclaimed
+    losses; present only in the rain and closing when it stops. At its claiming-table sits
+    a clerk beside a brass scale for weighing debts, its ledger closing unseen with the softness
+    of a book reaching its known ending.
+  iconography:
+  - appears only in rain
+  - closes when the rain stops
+  - brass scale at the claiming-table
+  - clerk with a ledger
+  - stalls of unclaimed losses
+  - a closing book
+  - settling felt as a loosening, not a taking
+- entity: object:wrens-parcel
+  appearance: A parcel of brown paper gone soft with damp, string tied in the market's exact
+    knot, bearing Wren's name in handwriting they almost recognize.
+  iconography:
+  - damp-softened brown paper
+  - the market's exact knot in string
+  - Wren's name in half-familiar handwriting
+  - an unclaimed loss addressed to its owner

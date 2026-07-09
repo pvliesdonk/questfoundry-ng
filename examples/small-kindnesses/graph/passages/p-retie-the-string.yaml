@@ -1,0 +1,16 @@
+id: passage:p-retie-the-string
+summary: Wren pulls the string tight again and sets the parcel back, choosing the old safety
+  of wanting nothing. Their name on the paper goes untouched, and they return to the aisles
+  a carrier still, invisible as ever.
+entities:
+- object:wrens-parcel
+- character:wren
+- faction:the-market
+beats:
+- beat:retie-the-string
+- beat:still-only-a-carrier
+choices:
+- label: Walk back into the aisles, hands empty
+  requires:
+  - flag:parcel-remains-sealed
+  to: passage:p-residue-sealed

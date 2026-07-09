@@ -485,10 +485,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
   `resolve_entity_ref` (types.py) now guards every apply that stores
   entity refs on a beat (SEED scaffold, GROW bridge, POLISH residue
   and arms) — FILL's micro-detail resolver generalized, per mini-ADR
-  A11. Meta-lesson for the record: the reviewer-contract failure
-  class (live runs 1, 3, and now 6) kept yielding to wording fixes
-  one instance at a time; the arbitration mechanism ends the class by
-  making the expensive judgment structural instead of textual.
+  A11. (5) *the codex review had the same disease as FILL's* — it
+  double-failed spoiler-safe entries by quoting the conditional-
+  material list from its own context as "the entry's assertion" (the
+  entry explicitly left the question open, which is what spoiler-safe
+  means); the anchored+arbitrated contract generalized to DRESS
+  (passes become per-run computed so review state can't leak), and
+  rule 1 now defines assertion. Final: **complete at ~$2.75** over all
+  attempts (174 calls, 41 cached; opus 231k in / 58k out) — 22
+  passages, 8,810 words, 4 arcs, 2 endings, full enrichment (codewords
+  KNOTTED / UNFOLDS), all exports round-trip clean; preserved as
+  `examples/small-kindnesses/`. Meta-lesson for the record: the
+  reviewer-contract failure class (live runs 1, 3, and now 6) kept
+  yielding to wording fixes one instance at a time; the arbitration
+  mechanism ends the class by making the expensive judgment structural
+  instead of textual.
 
 - **2026-07-09 (scope recalibration: the passage numbers were beats):**
   The author identified why B3 missed by 3x: the original scale numbers

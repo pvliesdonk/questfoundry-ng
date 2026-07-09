@@ -1,0 +1,11 @@
+id: passage:p-grief-claimed
+summary: Alone in the emptied market, Wren finally names the friendship as the grief of losing
+  it — a loss claimed rather than hoarded, held out openly to the stopping rain.
+entities:
+- character:wren
+- character:emery
+ending:
+  id: e-grief-claimed
+  title: What the Rain Was Owed
+beats:
+- beat:grief-claimed-not-hoarded

@@ -1,0 +1,18 @@
+id: passage:p-last-hour-together
+summary: In the hush before the rain ends, Emery keeps packing and tells Wren not to trade
+  anything — that some things are worth more kept than saved. Wren cannot tell if she means
+  herself or them.
+entities:
+- character:emery
+- character:wren
+beats:
+- beat:last-hour-together
+choices:
+- label: Pull the string tight and set the parcel down
+  grants:
+  - flag:parcel-remains-sealed
+  to: passage:p-retie-the-string
+- label: Loosen the string and fold back the paper
+  grants:
+  - flag:wren-learns-their-want
+  to: passage:p-untie-the-string

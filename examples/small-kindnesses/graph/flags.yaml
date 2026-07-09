@@ -1,0 +1,46 @@
+flags:
+- id: flag:emery-collected
+  description: The market collects Emery in indifferent, contractual erasure while Wren holds
+    her one last moment, keeping intact everything they loved about her.
+  source: dilemma
+  path: path:let-emery-go
+  derived_from:
+  - consequence:emery-collected
+- id: flag:emery-stays-but-forgets
+  description: Emery remains in Vellamere, the debt settled, but the market has taken from
+    Wren the very memories of being known that made her recognition of them possible.
+  source: dilemma
+  path: path:pay-the-debt
+  derived_from:
+  - consequence:emery-stays-but-forgets
+- id: flag:friendship-named-in-grief
+  description: The friendship Wren never dared name is defined at last by the grief of letting
+    go, a loss claimed rather than hoarded.
+  source: dilemma
+  path: path:let-emery-go
+  derived_from:
+  - consequence:friendship-named-in-grief
+- id: flag:parcel-remains-sealed
+  description: The parcel bearing Wren's name stays tied shut, its loss unclaimed, and Wren
+    remains a carrier for others who never buys, never wants for themselves.
+  source: dilemma
+  path: path:leave-it-sealed
+  codeword: KNOTTED
+  derived_from:
+  - consequence:parcel-remains-sealed
+- id: flag:wren-learns-their-want
+  description: Wren claims the loss inside the parcel and finally learns the shape of what
+    they were too afraid to want, entering the night as someone who can hold something for
+    themselves.
+  source: dilemma
+  path: path:open-it
+  codeword: UNFOLDS
+  derived_from:
+  - consequence:wren-learns-their-want
+- id: flag:wren-unseen-again
+  description: Wren stands at the stall as a stranger to the one person who ever saw them,
+    invisible once more even in the moment of saving her.
+  source: dilemma
+  path: path:pay-the-debt
+  derived_from:
+  - consequence:wren-unseen-again

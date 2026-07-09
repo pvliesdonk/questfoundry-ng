@@ -1,0 +1,10 @@
+id: beat:emery-waves-wren-through
+summary: At her stall Emery waves Wren in from the wet as she has for years, but tonight her
+  hands are packing crates, wrapping the small kept things of a life into paper. She tells
+  Wren the market has called in a debt.
+beat_class: structural
+purpose: setup
+entities:
+- character:emery
+- character:wren
+- faction:the-market

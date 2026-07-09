@@ -1,0 +1,14 @@
+id: beat:parcel-with-a-name
+summary: On the market's claiming-table Wren finds a parcel addressed in their own name, tied
+  with string, waiting. A clerk explains it holds a loss of Wren's own, laid out to be claimed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: reveals
+entities:
+- object:wrens-parcel
+- character:wren
+- faction:the-market
+belongs_to:
+- path:leave-it-sealed
+- path:open-it

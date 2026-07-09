@@ -1,0 +1,11 @@
+id: passage:p-emery-hands
+summary: Wren notices how Emery's hands have gone still on the counter, the way hands go still
+  when they already know.
+entities:
+- character:wren
+- character:emery
+beats:
+- beat:arm-emery-hands
+choices:
+- label: Stay with her through the last of the packing
+  to: passage:p-last-hour-together

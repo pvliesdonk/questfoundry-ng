@@ -1,0 +1,8 @@
+id: beat:arm-clerk-ledger
+created_by: polish
+summary: Wren watches the clerk's finger trail down a ledger inked in something that isn't
+  quite ink, each line a name owed.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

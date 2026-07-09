@@ -1,0 +1,8 @@
+id: beat:arm-emptied-mirror
+created_by: polish
+summary: Wren passes a rain-dark pane and finds a reflection that seems to belong to a stranger
+  wearing their coat.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

@@ -1,0 +1,10 @@
+id: beat:arm-collect-lights
+created_by: polish
+summary: One by one the stall-lights fold shut around the space where Emery stood, and the
+  dark comes gently, like a blanket drawn up.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren
+- character:emery
+- faction:the-market

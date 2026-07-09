@@ -1,0 +1,14 @@
+id: beat:market-collects-emery
+summary: The market gathers Emery in quiet, contractual erasure while Wren holds her through
+  the final rain, every memory of her kept whole and aching. She dissolves into the thinning
+  wet.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: advances
+entities:
+- faction:the-market
+- character:emery
+- character:wren
+belongs_to:
+- path:let-emery-go

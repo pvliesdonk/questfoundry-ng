@@ -1,0 +1,10 @@
+id: path:pay-the-debt
+name: The Self Spent to Save Her
+explores: answer:pay-the-debt
+consequences:
+- id: consequence:emery-stays-but-forgets
+  text: Emery remains in Vellamere, the debt settled, but the market has taken from Wren the
+    very memories of being known that made her recognition of them possible.
+- id: consequence:wren-unseen-again
+  text: Wren stands at the stall as a stranger to the one person who ever saw them, invisible
+    once more even in the moment of saving her.

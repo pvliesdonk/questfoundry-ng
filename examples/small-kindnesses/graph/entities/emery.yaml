@@ -1,0 +1,13 @@
+id: character:emery
+name: Emery
+concept: The stall-keeper who waves Wren through the rain like a friend and is now packing
+  to vanish because the market has called in a debt paid only in memories of being known.
+pronouns: she/her
+base:
+  appearance: Lantern-warm face going translucent at the edges as her being-known is collected,
+    ink-stained fingers, a shawl smelling of someone else's kitchen
+  manner: Gentle, teasing, guarded about her own losses; gives easily and receives nothing
+  keepsake: Keeps small worn objects at her stall (a cracked cup, a pressed flower, a nameless
+    ribbon) that she wraps and rewraps.
+  habit: When quieted or unsure, her thumb worries the frayed hem of whatever cloth is nearest.
+  greeting: Greets Wren by saying they always come through the wet.

@@ -1,0 +1,13 @@
+id: beat:always-the-carrier
+summary: Wren realizes they have delivered a thousand such parcels and opened none, have wanted
+  nothing, kept nothing. The string under their thumb feels heavier than any debt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: complicates
+entities:
+- character:wren
+- object:wrens-parcel
+belongs_to:
+- path:leave-it-sealed
+- path:open-it

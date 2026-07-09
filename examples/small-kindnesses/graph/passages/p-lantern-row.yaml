@@ -1,0 +1,10 @@
+id: passage:p-lantern-row
+summary: Wren threads the lantern row, where the vendors' faces glow amber and gutter as the
+  thinning rain worries at the flames.
+entities:
+- character:wren
+beats:
+- beat:arm-lantern-row
+choices:
+- label: Turn toward the claiming-table
+  to: passage:p-parcel-with-a-name

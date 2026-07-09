@@ -1,0 +1,11 @@
+You leave the satchel where it sits and step deeper, following the lantern row because it is easier than standing still. The vendors line the aisle in their pooled gold, faces caught mid-glow, and the rain, thinning now, worries at every flame it can reach. One lantern gutters as you pass. Another steadies. The light does not hold anyone the same way twice.
+
+Here is the woman who sells kept silences, her mouth pressed shut around them. Here is the boy trading the sound of a name no one calls anymore, cupping it like water in his hands. Their faces come amber and go dim as the wind finds the gaps in the canvas, and you move between them the way you always move, quiet, carrying, wanted by no one and known by fewer.
+
+Behind you Emery keeps folding her small things into paper. You can feel the stall at your back like a warmth you are walking away from, and still your feet go forward, one puddle to the next, because forward is what your feet have always done. The strap-shaped ache along your hip stays with you even now that the weight is gone.
+
+The rain slackens. You hear it in the change of the sound, the drum going to patter going to almost nothing, and something in your chest tightens with the same rhythm, counting down against your will. When the wet stops, the market closes its accounts. You have watched it a hundred times. You have never once been the account.
+
+At the end of the row the claiming-table sits under its own low lamp, brass scale on one side, the market's clerk a shape more than a face. It is where debts come due. It is where things are set down for good or taken up. Your name is still on the parcel behind Emery. Her thin edges are still thinning.
+
+You stop at the table's rim. The lamp burns steady here, sheltered, indifferent to the flames guttering at your back. You could turn now toward the scale, toward the ledger, toward whatever coin the night is asking. You have spent your whole life carrying what other people could not bear to keep. The rain is nearly done, and for once the question of what you will lay down, and what you will lift, belongs to you.

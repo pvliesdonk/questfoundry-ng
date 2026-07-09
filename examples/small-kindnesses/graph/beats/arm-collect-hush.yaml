@@ -1,0 +1,9 @@
+id: beat:arm-collect-hush
+created_by: polish
+summary: The market's murmur drops to nothing, a silence so full it presses against Wren's
+  ears.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren
+- faction:the-market

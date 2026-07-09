@@ -1,0 +1,27 @@
+beats:
+- beat:always-the-carrier
+- beat:emery-notices-the-parcel
+- beat:emery-stays-wren-emptied
+- beat:emery-waves-wren-through
+- beat:grief-claimed-not-hoarded
+- beat:last-hour-together
+- beat:market-collects-emery
+- beat:parcel-with-a-name
+- beat:rain-summons-the-market
+- beat:refuse-and-hold
+- beat:retie-the-string
+- beat:someone-who-can-hold
+- beat:still-only-a-carrier
+- beat:stranger-at-the-stall
+- beat:the-debt-explained
+- beat:the-offered-substitution
+- beat:trade-being-known
+- beat:untie-the-string
+forks:
+  dilemma:pay-emerys-debt:
+  - beat:refuse-and-hold
+  - beat:trade-being-known
+  dilemma:open-the-parcel:
+  - beat:retie-the-string
+  - beat:untie-the-string
+convergences: {}

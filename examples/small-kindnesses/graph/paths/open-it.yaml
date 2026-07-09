@@ -1,0 +1,7 @@
+id: path:open-it
+name: Untying the String
+explores: answer:open-it
+consequences:
+- id: consequence:wren-learns-their-want
+  text: Wren claims the loss inside the parcel and finally learns the shape of what they were
+    too afraid to want, entering the night as someone who can hold something for themselves.

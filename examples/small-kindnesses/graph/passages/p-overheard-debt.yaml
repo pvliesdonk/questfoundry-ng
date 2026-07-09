@@ -1,0 +1,10 @@
+id: passage:p-overheard-debt
+summary: Two stallkeepers behind Wren murmur about a debt settled last winter, their voices
+  soft with the pity of the spared.
+entities:
+- character:wren
+beats:
+- beat:arm-overheard-debt
+choices:
+- label: Take up the parcel with your name
+  to: passage:p-always-the-carrier

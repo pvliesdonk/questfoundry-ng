@@ -1,0 +1,11 @@
+You do not say the word the market wants. You do not offer up the years of being seen, the small ledger of your own remembering that would settle her account and leave you a stranger to her in the same breath. You let it go unsaid. Instead you close your hands over hers, ink-stained, warm, still worrying at the frayed hem of her shawl until your fingers still them, and you hold.
+
+The rain is almost done. You can hear it counting itself out, fewer and fewer against the tarps, the pauses growing long between each drop. Somewhere the brass scale finds its balance without you. The market does not argue. It does not need to. It only begins, patient as tide, to take what it is owed.
+
+It starts at her edges, where the lamplight has already gone thin. You feel it more than see it, the give of her under your grip, the way a thing loosens when it is being carried off by careful hands. You do not let go. If she is to be unmade you will not let her be unmade untouched. Every hour she waved you through the wet, every teasing word, the cup she wrapped and rewrapped and never sold, the kitchen-smell of her shawl that was never her own kitchen. You keep all of it. You hold it whole and it costs you and you pay it gladly, the way you have never paid for anything, the way you were always too afraid to want.
+
+Her thumb finds your knuckle once, light, the last of her that is hers to spend. Then the hem slips out of your fingers because there is no hem. There is a lessening in your palms, a warmth thinning the way the rain thins, going to fewer and fewer, going to the space between drops.
+
+The last bead falls somewhere in the dark and does not land.
+
+Your hands are closed on nothing and still they are full. You stand in the emptied aisle with the lamp guttering beside you and the grief settled into you like something set down at last in a place it will not be taken from. You do not look away from where she was. You keep looking, which is the only holding left to you, and you find that you can bear the weight of it. You find that you wanted to.

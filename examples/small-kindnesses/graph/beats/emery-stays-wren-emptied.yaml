@@ -1,0 +1,14 @@
+id: beat:emery-stays-wren-emptied
+summary: Emery remains in Vellamere, safe and unerased, but the market has taken from Wren
+  the very memories that let her recognition of them exist. She turns to thank a face she
+  no longer fully knows.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: advances
+entities:
+- character:emery
+- character:wren
+- faction:the-market
+belongs_to:
+- path:pay-the-debt

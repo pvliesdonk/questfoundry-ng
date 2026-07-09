@@ -1,0 +1,12 @@
+id: beat:someone-who-can-hold
+summary: Holding the claimed loss, Wren enters the rest of the night changed — no longer only
+  a vessel for others' grief but someone who can want, and keep, something of their own.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: reveals
+entities:
+- character:wren
+- object:wrens-parcel
+belongs_to:
+- path:open-it

@@ -1,0 +1,10 @@
+id: beat:rain-summons-the-market
+summary: Rain falls on Vellamere and the Night Market unfurls between the puddles, its stalls
+  trading in the losses people never claimed. Wren walks the aisles with a satchel of parcels,
+  delivering everyone's grief but their own.
+beat_class: structural
+purpose: setup
+entities:
+- faction:the-market
+- character:wren
+- object:wrens-parcel

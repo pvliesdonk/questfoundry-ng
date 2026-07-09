@@ -1,0 +1,12 @@
+id: beat:untie-the-string
+summary: Wren unties the string and folds back the paper, claiming the loss inside for the
+  first time in their life. Whatever they were too afraid to want takes shape in their hands.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: commits
+entities:
+- object:wrens-parcel
+- character:wren
+belongs_to:
+- path:open-it

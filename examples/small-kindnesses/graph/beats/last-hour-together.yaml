@@ -1,0 +1,14 @@
+id: beat:last-hour-together
+summary: In the hush before the rain ends, Emery keeps packing and tells Wren not to trade
+  anything, that some things are worth more kept than saved. Wren cannot tell if she means
+  herself or them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: complicates
+entities:
+- character:emery
+- character:wren
+belongs_to:
+- path:let-emery-go
+- path:pay-the-debt

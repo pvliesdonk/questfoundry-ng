@@ -1,0 +1,22 @@
+id: dilemma:pay-emerys-debt
+question: When the rain thins toward stopping, does Wren offer their own memories of being
+  known to settle Emery's debt to the market?
+why_it_matters: It decides whether Wren spends the self they've kept invisible to save the
+  one person who ever saw them, or lets Emery be collected — either way, someone is erased,
+  and the friendship is defined at last by what it cost.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:pay-the-debt
+  text: Wren trades their own memories of being known, saving Emery but unmaking the version
+    of themselves she recognized.
+- id: answer:let-emery-go
+  text: Wren refuses the trade and holds Emery one last moment, letting the market collect
+    her rather than erase what she loved.
+anchored_to:
+- character:wren
+- character:emery
+- faction:the-market
+wraps:
+- dilemma:open-the-parcel

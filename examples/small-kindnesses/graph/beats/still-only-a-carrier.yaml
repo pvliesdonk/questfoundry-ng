@@ -1,0 +1,14 @@
+id: beat:still-only-a-carrier
+summary: Wren returns to the aisles a carrier still, hands empty of anything owed to themselves,
+  invisible the way they have always chosen to be. The parcel with their name stays behind,
+  unclaimed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: advances
+entities:
+- character:wren
+- object:wrens-parcel
+- faction:the-market
+belongs_to:
+- path:leave-it-sealed

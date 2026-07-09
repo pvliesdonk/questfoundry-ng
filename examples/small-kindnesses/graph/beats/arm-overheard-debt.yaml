@@ -1,0 +1,8 @@
+id: beat:arm-overheard-debt
+created_by: polish
+summary: Two stallkeepers behind Wren murmur about a debt settled last winter, their voices
+  soft with the pity of the spared.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

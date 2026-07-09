@@ -1,0 +1,17 @@
+id: passage:p-trade-being-known
+summary: Wren offers the market their own memories of being known, settling Emery's debt in
+  the last of the rain. She remains in Vellamere, safe and unerased — but the market has taken
+  the very memories that let her recognition of Wren exist, and she turns to thank a face
+  she no longer fully knows.
+entities:
+- character:wren
+- faction:the-market
+- character:emery
+beats:
+- beat:emery-stays-wren-emptied
+- beat:trade-being-known
+choices:
+- label: Look down at your unfamiliar hands
+  to: passage:p-emptied-hands
+- label: Glance at your reflection in the rain-dark glass
+  to: passage:p-emptied-mirror

@@ -1,0 +1,13 @@
+id: beat:grief-claimed-not-hoarded
+summary: Alone in the emptied market, Wren finally names the friendship as the grief of losing
+  it — a loss claimed rather than hoarded, held out openly to the stopping rain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: advances
+entities:
+- character:wren
+- character:emery
+is_ending: true
+belongs_to:
+- path:let-emery-go

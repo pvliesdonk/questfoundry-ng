@@ -83,11 +83,12 @@ def choice_requires(g: StoryGraph, target_group: list[str]) -> list[str]:
 
 def choice_grants(g: StoryGraph, target_group: list[str]) -> list[str]:
     """Entering a passage that contains a path's commit beat locks the
-    choice in: the choice edge grants that path's flags."""
+    choice in: the choice edge grants that path's flags. Commits are per
+    world; each world's commit passage grants the same flag."""
     beats = set(target_group)
     grants = []
     for flag in g.nodes_of(StateFlag):
-        if flag.path is not None and queries.grant_beat(g, flag.id) in beats:
+        if flag.path is not None and beats & set(queries.grant_beats(g, flag.id)):
             grants.append(flag.id)
     return sorted(grants)
 
@@ -113,32 +114,37 @@ def ending_beat(g: StoryGraph, group: list[str]) -> str | None:
 
 @dataclass(frozen=True)
 class ConvergenceNeed:
-    """A soft dilemma's rejoin frontier and what its residue weight demands."""
+    """One world's rejoin frontier of a soft dilemma and what its residue
+    weight demands there. `world` is '' in the shared region; the hard
+    path(s) whose fork created the world otherwise (queries.world_label)."""
 
     dilemma: str
     weight: ResidueWeight
+    world: str
     rejoin: tuple[str, ...]  # beat(s) where the paths rejoin; >1 at a hard fork
     path_flags: dict[str, str]  # path id -> dilemma flag id
 
 
 def convergence_needs(g: StoryGraph) -> list[ConvergenceNeed]:
-    """Light- and heavy-residue soft convergences (cosmetic needs nothing
-    structural — it is handled in prose wording alone)."""
+    """Light- and heavy-residue soft convergences, one need per world
+    (cosmetic needs nothing structural — it is handled in prose wording
+    alone)."""
     needs = []
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
         if d.role != DilemmaRole.SOFT or d.residue_weight == ResidueWeight.COSMETIC:
             continue
-        frontier = queries.soft_rejoin_frontier(g, d.id)
-        if not frontier:
-            continue
-        needs.append(
-            ConvergenceNeed(
-                dilemma=d.id,
-                weight=d.residue_weight,
-                rejoin=tuple(frontier),
-                path_flags=queries.dilemma_flags(g, d.id),
+        for world, frontier in queries.soft_rejoin_frontiers(g, d.id):
+            if not frontier:
+                continue
+            needs.append(
+                ConvergenceNeed(
+                    dilemma=d.id,
+                    weight=d.residue_weight,
+                    world=queries.world_label(g, world),
+                    rejoin=tuple(frontier),
+                    path_flags=queries.dilemma_flags(g, d.id),
+                )
             )
-        )
     return needs
 
 
@@ -147,8 +153,10 @@ def insert_residue_beat(
 ) -> None:
     """Splice a flag-gated residue beat between a path's exclusive tail and
     the rejoin frontier: tail -> residue -> each frontier beat the tail fed.
-    When the frontier is a hard fork, the residue beat inherits the tail's
-    edge into every world, so no arc dead-ends at it (I6)."""
+    The frontier is one world's (a per-world need finds that world's tail —
+    only it has edges into the frontier); when the frontier is itself a
+    deeper hard fork, the residue beat inherits the tail's edge into every
+    sub-world, so no arc dead-ends at it (I6)."""
     targets = set(rejoin)
     tails = [
         b
@@ -193,12 +201,12 @@ def insert_false_branch(g: StoryGraph, arm_a: Beat, arm_b: Beat, before: str, af
 
 
 def active_flags(g: StoryGraph, group: list[str]) -> list[str]:
-    """Flags possibly active at this passage (the I12 computation)."""
+    """Flags possibly active at this passage (the I12 computation).
+    Grants are per world; one in the group's history suffices."""
     active = set()
     for flag in g.nodes_of(StateFlag):
-        grant = queries.grant_beat(g, flag.id)
-        if grant is None:
-            continue
-        if grant in group or any(grant in queries.ancestors(g, b) for b in group):
-            active.add(flag.id)
+        for grant in queries.grant_beats(g, flag.id):
+            if grant in group or any(grant in queries.ancestors(g, b) for b in group):
+                active.add(flag.id)
+                break
     return sorted(active)

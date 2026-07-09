@@ -9,11 +9,40 @@
 
 ## Where we are
 
-**M5 is in progress — the DRESS/print/rerun slice is built** (PR #20).
-All eight stages run, the story prints as a real gamebook, and stages
-can be partially regenerated. What remains for the M5 exit criterion is
-the multi-hard weave expansion and a live `medium`-scope run (see Next
-up):
+**M5 is in progress — multi-hard weaving is built** (this PR), on top
+of the DRESS/print/rerun slice (PR #20). All eight stages run, the
+story prints as a real gamebook, stages can be partially regenerated,
+and the weave now nests hard forks. What remains for the M5 exit
+criterion is the live `medium`-scope run (see Next up):
+
+- **Multi-hard weave expansion** (the tensor model, design doc 01 §5,
+  mini-ADR A14): `weave.realize` walks the chosen order tracking
+  *worlds* — the climax hard resolve is always the final unit; every
+  unit placed after the first hard fork is instantiated once per world
+  (world-suffixed ids, `belongs_to` copied, the template Y removed
+  symmetrically so no world owns the "original"), each further hard
+  resolve multiplies the worlds, and the earlier forks' tails stop
+  being endings (2 hard → 4 endings). Candidates enumerate per viable
+  nesting (an even share of the 64 cap each) so the weave LLM chooses
+  the nesting like any interleaving; `wraps`/`serial` between hards
+  constrain it — `serial(hard, soft)` now legitimately places a whole
+  soft dilemma inside the worlds, cloned per world with per-world
+  convergence. A new GROW pass *contextualize* (skip_if single-hard)
+  rewrites each clone's summary for its world and each de-ended tail
+  to leave the climax question open. Invariants refined: I3 is now
+  "commit beats occupy pairwise distinct worlds" (worlds are made by
+  *other* dilemmas' forks), I6 checks exactly one commit per path per
+  arc, I7 checks hard non-reconvergence pairwise across commit sets
+  and soft payoff per world; `queries.commit_beats`/`grant_beats` are
+  list-valued with any-grant semantics; `FreezeRecord.convergences`
+  records one beat per world (legacy single-beat files coerce on
+  load). POLISH gained per-world variant support: a heavy-residue soft
+  dilemma rejoining at a hard fork now requires variants at every
+  frontier beat (the old G4 "unsupported" error is gone), and light
+  residue coverage is checked per world. Intersections stay
+  constrained to the truly shared region before every hard fork.
+  215 tests; the 2-hard topologies are built through the real weave,
+  never hand-wired.
 
 - DRESS (`pipeline/stages/dress.py`), four passes sharing gate G6:
   *direction* (art direction + one visual profile per retained entity;
@@ -225,7 +254,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M4 — FILL & first exports** (JSON, HTML player, Twee)
 - [ ] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
   `qf export pdf`, and `qf rerun --keep` are built (PR #20); multi-hard
-  weaving and the `medium`-scope live run remain
+  weaving is built (this PR); the `medium`-scope live run remains
 - [ ] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
   design docs 02 §1 and 03 §10) — ground the pipeline's LLM calls in a
   markdown craft corpus via an engine-side research pass; specced, not
@@ -234,18 +263,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
 ## Next up — finishing M5
 
 The first half of the exit criterion — **a printable PDF gamebook with
-working codeword play** — is met (the golden story prints end-to-end).
-Remaining, in order:
+working codeword play** — is met (the golden story prints end-to-end),
+and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
 
-1. **Multi-hard weave expansion** (frontier-tier; the tensor model, see
-   the open item below): GROW instantiates the inner Y per world, I3
-   refines to one commit per world, `queries.commit_beat`/`grant_beat`/
-   `FreezeRecord.forks` generalize, POLISH gains per-world variant
-   support at fork-rejoin frontiers. This unblocks `medium` scope.
-2. **A live `medium`-scope generation within budget** — the second half
-   of the exit criterion; also calibrates the B3/B4 preset ranges and
-   the weave's 64-candidate spread heuristic at real unit counts.
-3. Optional polish: an image backend behind the briefs (design doc 02
+1. **A live `medium`-scope generation within budget** — the second half
+   of the exit criterion; also calibrates the B3/B4 preset ranges, the
+   weave's per-nesting candidate spread at real unit counts, and the
+   contextualize prompt against a real model (it has fixture-level
+   tests but no live exercise yet).
+2. Optional polish: an image backend behind the briefs (design doc 02
    lists illustrations as optional; briefs + the PDF/HTML plumbing are
    in place — `art/images/<passage-slug>.png` is picked up when
    present).
@@ -270,34 +296,12 @@ Remaining, in order:
   on disk is not a gated checkpoint) — needs a frontier-tier design
   decision first.
 
-- **Multi-hard weaving is not implemented** (the weave rejects >1 hard
-  dilemma with a clear error). The intended topology is settled by the
-  original source documents ("How Branching Stories Work" §The Cost of
-  Branching; ontology §The 2^N Law): hard forks **nest** — after the
-  first hard commit, the remaining hard dilemma forks again on *each*
-  branch, with its own independently authored per-branch beats, and
-  endings multiply (2 hard → 4 endings). No beat is shared across a
-  hard fork, so nothing reconverges; the per-combination beats are the
-  accepted, deliberately minimized cost of late-committing backbones.
-  The working mental model (decision log): the weave is a **tensor of
-  Y graphs** — each dilemma one dimension, a story position a
-  coordinate in every dilemma's Y. Soft dimensions *collapse* at
-  convergence (the coordinate leaves the DAG and lives on as flags /
-  overlays / residue — why "beats are not cloned per reachable
-  state"). Hard dimensions *never collapse* (the coordinate stays in
-  the DAG as position). Where two hard dimensions are expanded at
-  once, an inner-dilemma beat materializes once per world: both
-  instances project to the same node of the inner Y (same
-  dilemma-relative meaning) and to different nodes of the outer Y
-  (different context) — structure copied, content contextual, distinct
-  beats. M2's spine weave is the flattened special case (at most one
-  dimension expanded at a time). M5 adds true expansion: GROW
-  instantiates the inner Y's skeleton per world (mechanical) and
-  contextualizes its beat content per world (LLM). Structural
-  consequence: an inner path carries one commit beat *per world*,
-  refining I3's count and the single-grant-point assumptions in
-  `queries.commit_beat` / `queries.grant_beat` / `FreezeRecord.forks`.
-  Frontier-tier work, needed for M5's `medium` scope.
+- ~~Multi-hard weaving is not implemented~~ **Built** (this PR, see
+  Where we are and the decision log): hard forks nest, every unit
+  after the first fork is instantiated per world, endings multiply,
+  and the tensor model (design doc 01 §5) is realized in
+  `weave.realize` + GROW's contextualize pass. Not yet exercised
+  against a live model — that is the `medium`-scope run.
 - **M2 intersections group shared pre-commit beats only.** Intersections
   involving exclusive (post-commit) beats are structurally meaningful
   but interact with arc membership in ways the spine model doesn't
@@ -305,8 +309,12 @@ Remaining, in order:
   hints: only hints on shared beats are consumed (a hint on a beat
   inside an atomic fork unit has nothing to move).
 - **The weave enumerates at most 64 candidates** (deterministic DFS,
-  up to 8 shown to the model, evenly spread). Fine at micro/short unit
-  counts; check the spread heuristic when `medium` stories arrive.
+  up to 8 shown to the model, evenly spread; with several hard
+  dilemmas the cap is split evenly across viable nestings so every
+  nesting is represented). Fine at micro/short unit counts; check the
+  spread heuristic when `medium` stories arrive — the lexicographic
+  DFS varies the tail of the order first, so the spread may
+  under-sample early-position variety at real unit counts.
 - **Every retained dilemma explores both answers in M1.** Locked-dilemma
   shadows (exploring one side only) need an I3 refinement — the current
   check demands dual-membership pre-commit beats, which single-explored
@@ -376,6 +384,38 @@ Remaining, in order:
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-09 (M5: multi-hard weave):** The tensor model (design doc
+  01 §5) is realized with four decisions confirmed with the author.
+  (1) **The nesting order is an interleaving choice**: candidates are
+  enumerated once per viable climax (each hard resolve as final unit,
+  an even share of the cap), the weave LLM picks; `wraps`/`serial`
+  between hards constrain the enumeration — no new SEED contract.
+  (2) **Between-fork placement is in scope**, not just the climax
+  resolve: any unit after the first hard fork (inner pre-commit
+  development, whole soft dilemmas via `serial(hard, soft)`) is
+  instantiated per world — this is the heritage-canonical reading
+  ("an inner-dilemma beat materializes once per world"), and it made
+  soft-convergence, residue coverage, payoff, and heavy variants
+  per-world concepts throughout. (3) **Symmetric instantiation**: the
+  template Y is removed and every world gets a fresh world-suffixed
+  copy — keeping the SEED beats as "world one" would be a
+  canonical-world bias vector, the same trap as the removed canonical
+  answer (mini-ADR A14). (4) **GROW de-ends and rewrites**: SEED still
+  authors every hard Y complete with endings (the mini-story
+  property); realization clears `is_ending` on the earlier forks'
+  tails and the new *contextualize* pass rewrites clone summaries per
+  world and de-ended tails to leave the climax open — structure is
+  copied by the engine, words never are. Two check subtleties worth
+  remembering: worlds are made by *other* dilemmas' hard forks (a
+  dilemma's own commits are its fork, never its coordinate — otherwise
+  a duplicate commit downstream of the first looks like "another
+  world" and I3 goes blind), and G4's light-residue coverage matches
+  residue beats to worlds by hard-commit ancestry, not adjacency.
+  Deferred: units after the *last* hard fork (nothing may follow the
+  endings — the climax resolve is always final), and intersections
+  inside worlds (groups stay in the truly shared region; a cloned
+  "shared scene" isn't shared).
 
 - **2026-07-09 (M6 added: craft-corpus research):** The author's IF
   craft corpus (once `if-craft-corpus`, now living and much extended in

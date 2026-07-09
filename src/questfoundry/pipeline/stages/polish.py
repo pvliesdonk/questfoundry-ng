@@ -41,6 +41,7 @@ class ResidueSpec(BaseModel):
 
     dilemma: str
     path: str  # whose mood this beat sets; gated on that path's flag
+    world: str = ""  # which world's convergence (multi-hard); "" when shared
     id: str
     summary: str
     entities: list[str] = []
@@ -114,15 +115,18 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
 
 def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     g = project.graph
-    needs = {n.dilemma: n for n in _light_needs(project)}
-    covered: set[str] = set()
+    needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
+    covered: set[tuple[str, str]] = set()
     lines = []
     for spec in proposal.residue:
-        need = needs.get(spec.dilemma)
+        need = needs.get((spec.dilemma, spec.world))
         if need is None:
+            expected = sorted(
+                f"dilemma {d}" + (f" in world {w}" if w else "") for d, w in needs
+            )
             raise ApplyError(
-                f"residue {spec.id}: dilemma must be exactly one of {sorted(needs)}; "
-                f"got {spec.dilemma!r}"
+                f"residue {spec.id}: (dilemma, world) must match exactly one "
+                f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}"
             )
         flag = need.path_flags.get(spec.path)
         if flag is None:
@@ -142,13 +146,17 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             )
         except ValidationError as e:
             raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
-        pc.insert_residue_beat(g, beat, spec.path, need.rejoin)
-        covered.add(spec.dilemma)
+        try:
+            pc.insert_residue_beat(g, beat, spec.path, need.rejoin)
+        except KeyError as e:  # duplicate beat id (e.g. one slug reused across worlds)
+            raise ApplyError(f"residue {spec.id}: {e}") from e
+        covered.add((spec.dilemma, spec.world))
         lines.append(f"{spec.id} sets {spec.path}'s mood before {'/'.join(need.rejoin)}")
     missing = set(needs) - covered
     if missing:
+        labels = sorted(f"{d}" + (f" (world {w})" if w else "") for d, w in missing)
         raise ApplyError(
-            f"every light-residue convergence needs >=1 residue beat; missing {sorted(missing)}"
+            f"every light-residue convergence needs >=1 residue beat; missing {labels}"
         )
 
     long_run_beats = {b for run in _long_runs(project) for b in run}
@@ -213,14 +221,18 @@ class PassagesProposal(BaseModel):
 
 
 def _variant_needs(g) -> dict[str, list[str]]:
-    """convergence beat -> path flags, for heavy-residue soft dilemmas.
-    A multi-beat rejoin (hard fork) has no convergence passage to hold
-    variants — G4 reports that case as unsupported (M5 per-world work)."""
-    return {
-        n.rejoin[0]: sorted(n.path_flags.values())
-        for n in pc.convergence_needs(g)
-        if n.weight == "heavy" and len(n.rejoin) == 1
-    }
+    """frontier beat -> path flags, for heavy-residue soft dilemmas. A
+    single-beat frontier is the convergence passage; a multi-beat one is
+    a deeper hard fork, and each world's frontier beat gets its own
+    flag-gated variants (per-world variants, design doc 01 §5)."""
+    needs: dict[str, list[str]] = {}
+    for n in pc.convergence_needs(g):
+        if n.weight != "heavy":
+            continue
+        for beat_id in n.rejoin:
+            merged = set(needs.get(beat_id, [])) | set(n.path_flags.values())
+            needs[beat_id] = sorted(merged)
+    return needs
 
 
 def _passages_context(project: Project) -> dict:
@@ -321,9 +333,9 @@ def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
             lines.append(f"group {i}: {spec.id} ({len(group)} beat(s))")
 
     def gate_holdable_from(group: list[str], flag_id: str) -> bool:
-        grant = queries.grant_beat(g, flag_id)
-        return grant is not None and (
+        return any(
             grant in group or grant in queries.ancestors(g, group[-1])
+            for grant in queries.grant_beats(g, flag_id)
         )
 
     for a, b in edges:

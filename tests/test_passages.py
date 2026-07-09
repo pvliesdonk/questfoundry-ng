@@ -217,12 +217,13 @@ def _fork_rejoin_story(g: StoryGraph, sub_residue: ResidueWeight) -> None:
 def test_fork_rejoin_frontier_is_per_world():
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.LIGHT)
-    assert queries.soft_rejoin_frontier(g, "dilemma:sub") == [
-        "beat:main-commit-a",
-        "beat:main-commit-b",
+    # sub commits before the fork: one shared-region pairing whose
+    # frontier is the hard fork itself, one beat per world
+    assert queries.soft_rejoin_frontiers(g, "dilemma:sub") == [
+        (frozenset(), ["beat:main-commit-a", "beat:main-commit-b"])
     ]
-    assert queries.soft_convergence(g, "dilemma:sub") is None
     (need,) = pc.convergence_needs(g)
+    assert need.world == ""
     assert need.rejoin == ("beat:main-commit-a", "beat:main-commit-b")
 
 
@@ -273,18 +274,26 @@ def test_residue_apply_error_names_the_expected_dilemmas(vision, tmp_path):
             )
         ]
     )
-    with pytest.raises(ApplyError, match=r"must be exactly one of \['dilemma:sub'\]"):
+    with pytest.raises(ApplyError, match=r"of \['dilemma dilemma:sub'\]"):
         _finalize_apply(proposal, project)
 
 
-def test_heavy_residue_at_fork_rejoin_is_reported_not_silent(vision, tmp_path):
+def test_heavy_residue_at_fork_rejoin_needs_per_world_variants(vision, tmp_path):
+    """A heavy-residue soft dilemma rejoining at a hard fork gets variant
+    passages at every frontier beat — one set per world (M5)."""
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.HEAVY)
+    flags = sorted(queries.dilemma_flags(g, "dilemma:sub").values())
+    assert _variant_needs(g) == {
+        "beat:main-commit-a": flags,
+        "beat:main-commit-b": flags,
+    }
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    assert _variant_needs(g) == {}  # no convergence passage exists to hold variants
     _passages_apply(_proposal_for(g), project)
     issues = run_checks(g, vision, Stage.POLISH)
-    assert any(i.check == "G4" and "hard fork" in i.message for i in issues)
+    assert not any(i.check == "G4" and "variant" in i.message for i in issues)
+    for commit in ("beat:main-commit-a", "beat:main-commit-b"):
+        assert len(queries.passages_of_beat(g, commit)) == 2
 
 
 def test_false_branch_splice_and_long_run_detection():

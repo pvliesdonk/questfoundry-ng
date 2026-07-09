@@ -82,4 +82,4 @@ def test_freeze_records_forks_and_convergence():
     record = mutations.freeze_topology(g)
     assert record.forks[d] == ["beat:one-commit-a", "beat:one-commit-b"]
     assert d not in record.convergences  # posts are endings; paths never rejoin
-    assert queries.commit_beat(g, pa) == "beat:one-commit-a"
+    assert queries.commit_beats(g, pa) == ["beat:one-commit-a"]

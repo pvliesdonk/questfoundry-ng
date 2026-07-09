@@ -128,9 +128,10 @@ class ReviewVerdict(BaseModel):
 
 def _flag_status(g, passage_id: str, flag: StateFlag) -> str:
     """certain (granted on every route here, or this passage is gated on
-    it), foreclosed (the other side committed upstream), or possible."""
-    grant = queries.grant_beat(g, flag.id)
-    if grant is None or flag.path is None:
+    it), foreclosed (the other side committed upstream), or possible.
+    Grant/commit beats are per world; one in the ancestry decides."""
+    grants = queries.grant_beats(g, flag.id)
+    if not grants or flag.path is None:
         return "possible"
     beats = queries.beats_of_passage(g, passage_id)
     for b in beats:
@@ -139,19 +140,19 @@ def _flag_status(g, passage_id: str, flag: StateFlag) -> str:
     ancestry = set(beats)
     for b in beats:
         ancestry |= queries.ancestors(g, b)
-    if grant in ancestry:
-        dilemma = queries.dilemma_of_path(g, flag.path)
-        other = [p for p in queries.explored_paths(g, dilemma) if p != flag.path]
-        other_commit = other and queries.commit_beat(g, other[0])
-        if other_commit and other_commit in ancestry:
+    dilemma = queries.dilemma_of_path(g, flag.path)
+    other_commits = [
+        c
+        for p in queries.explored_paths(g, dilemma)
+        if p != flag.path
+        for c in queries.commit_beats(g, p)
+    ]
+    if any(c in ancestry for c in grants):
+        if any(c in ancestry for c in other_commits):
             return "possible"  # both sides upstream: a shared passage
         return "certain"
-    dilemma = queries.dilemma_of_path(g, flag.path)
-    for p in queries.explored_paths(g, dilemma):
-        if p != flag.path:
-            commit = queries.commit_beat(g, p)
-            if commit and commit in ancestry and grant not in ancestry:
-                return "foreclosed"
+    if any(c in ancestry for c in other_commits):
+        return "foreclosed"
     return "possible"
 
 

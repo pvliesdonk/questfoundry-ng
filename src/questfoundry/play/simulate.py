@@ -39,16 +39,16 @@ def walk_arc(g: StoryGraph, selection: dict[str, str]) -> ArcWalk:
     flags: dict[str, str] = {}
     for flag in sorted(g.nodes_of(StateFlag), key=lambda f: f.id):
         if flag.path in selected:
-            grant = queries.grant_beat(g, flag.id)
-            if grant in view:
-                flags[flag.id] = grant  # type: ignore[assignment]
+            for grant in queries.grant_beats(g, flag.id):
+                if grant in view:  # an arc reaches exactly one world's grant
+                    flags[flag.id] = grant
+                    break
 
     endings = [b for b in beats if g.node(b).is_ending]  # type: ignore[union-attr]
     if len(endings) != 1:
         problems.append(f"expected exactly one ending, found {endings or 'none'}")
     for path_id in selection.values():
-        commit = queries.commit_beat(g, path_id)
-        if commit is None or commit not in view:
+        if not any(c in view for c in queries.commit_beats(g, path_id)):
             problems.append(f"never commits {path_id}")
     for b in beats:
         beat = g.node(b)

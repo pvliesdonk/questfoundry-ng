@@ -80,6 +80,29 @@ def test_roundtrip_preserves_hints_and_flexibility(vision, tmp_path):
     assert loaded.flexibility == beat.flexibility
 
 
+def test_save_prunes_removed_nodes(vision, tmp_path):
+    """Violating construction (crash-resumed medium live run, 2026-07-09):
+    the weave removes the template Y beats, but save_project left their
+    files on disk — reloading resurrected them as orphan roots still
+    carrying commit impacts (I9 fork drift, duplicate commits, I6 x24).
+    Saving must delete per-node files whose node is gone."""
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage
+    from tests.test_multihard import realize_first, two_hard_story
+
+    g = StoryGraph()
+    two_hard_story(g)
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    save_project(project)  # the template Y reaches disk at the SEED checkpoint
+    assert (tmp_path / "graph" / "beats" / "twist-commit-a.yaml").exists()
+
+    realize_first(g, lambda o: o[-1] == "resolve:dilemma:twist")  # removes the template Y
+    save_project(project)
+    assert not (tmp_path / "graph" / "beats" / "twist-commit-a.yaml").exists()
+    reloaded = load_project(tmp_path)
+    assert graph_signature(reloaded.graph) == graph_signature(g)
+
+
 def test_roundtrip_is_lossless(golden, tmp_path):
     save_project(
         Project(

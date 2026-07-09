@@ -106,6 +106,18 @@ def _files(directory: FSPath) -> list[FSPath]:
     return sorted(directory.glob("*.yaml"))
 
 
+def _prune(directory: FSPath, keep: set[str], pattern: str = "*.yaml") -> None:
+    """Nodes removed from the graph must not survive on disk: a stale
+    per-node file resurrects the node on reload (the weave removes the
+    template Y beats; a crash-resumed run then found them back as orphan
+    roots still carrying commit impacts — 2026-07-09)."""
+    if not directory.is_dir():
+        return
+    for f in sorted(directory.glob(pattern)):
+        if f.name not in keep:
+            f.unlink()
+
+
 def _created_by(raw: dict, kind: str) -> Stage:
     return Stage(raw.pop("created_by", DEFAULT_STAGE[kind]))
 
@@ -339,6 +351,14 @@ def save_project(project: Project) -> None:
         if belongs := g.out_ids(beat.id, EdgeKind.BELONGS_TO):
             data["belongs_to"] = sorted(belongs)
         _write(root / "graph" / "beats" / f"{_slug(beat.id)}.yaml", data)
+    for kind, nodes in (
+        ("entities", g.nodes_of(Entity)),
+        ("dilemmas", g.nodes_of(Dilemma)),
+        ("paths", g.nodes_of(Path)),
+        ("intersections", g.nodes_of(IntersectionGroup)),
+        ("beats", g.nodes_of(Beat)),
+    ):
+        _prune(root / "graph" / kind, {f"{_slug(n.id)}.yaml" for n in nodes})
 
     if flags := g.nodes_of(StateFlag):
         entries = []
@@ -372,6 +392,9 @@ def save_project(project: Project) -> None:
         if bases := g.out_ids(passage.id, EdgeKind.VARIANT_OF):
             (data["variant_of"],) = bases
         _write(root / "graph" / "passages" / f"{_slug(passage.id)}.yaml", data)
+    passage_slugs = {_slug(p.id) for p in g.nodes_of(Passage)}
+    _prune(root / "graph" / "passages", {f"{s}.yaml" for s in passage_slugs})
+    _prune(root / "prose", {f"{s}.md" for s in passage_slugs}, pattern="*.md")
 
     if g.frozen:
         _write(root / "graph" / "freeze.yaml", g.frozen.model_dump(mode="json"))

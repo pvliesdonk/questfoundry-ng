@@ -103,7 +103,12 @@ jobs:
           display_report: true
           # Grant the inline-comment tool (NOT in the default allow-set — this is
           # what lets the reviewer post inline), gh read tools to read CI results,
-          # and scoped `uv run` for targeted investigation (REVIEW.md sets norms).
+          # scoped `uv run` for targeted investigation (REVIEW.md sets norms), and
+          # the subagent tool (Task/Agent, name varies by CLI version): the
+          # code-review plugin fans its find/verify passes out to subagents, and
+          # without it every spawn is silently denied and the review ends with no
+          # findings (PR #22, run 29024524020: 8 permission denials, empty
+          # review). Subagents inherit this same read-only tool set.
           claude_args: |
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh run view:*),Bash(gh run list:*),Bash(uv run pytest:*),Bash(uv run ruff:*),Bash(uv run qf validate:*)"
+            --allowedTools "Task,Agent,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh run view:*),Bash(gh run list:*),Bash(uv run pytest:*),Bash(uv run ruff:*),Bash(uv run qf validate:*)"
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md

@@ -41,6 +41,32 @@ Key properties:
   after each gate. Any stage can be re-run from its predecessor's
   snapshot.
 
+### Craft context (planned — M6)
+
+Stages can be grounded in a craft corpus (design doc [05 §M6](05-roadmap.md))
+without changing the loop above: a **research pass** runs at the stage
+head, in the uniform loop like any other pass (`skip_if` no corpus is
+configured). It emits *queries* — a typed proposal, judged like any
+other — and the engine retrieves. Two query kinds feed one search:
+**standing queries** the engine builds deterministically (from the
+vision's open-vocabulary genre/tone/themes) and **librarian queries**
+the research pass emits for this story's specific needs. Both go
+through hybrid search over the configured corpus, and the top-k
+digests are persisted as a checkpointed,
+author-editable artifact (`research/<stage>.md`). The stage's later
+passes read the artifact, never the search index — so reruns and
+resumes replay retrieval byte-for-byte, and "review = edit +
+revalidate" extends to what the pipeline read before writing.
+
+The rule that keeps this safe: **corpus material may widen or ground,
+never bind.** Injected digests carry an explicit advisory framing and
+cannot override invariants or stage contracts. Style exemplars appear
+at the voice pass as a *contrasting spread* (a map of the possibility
+space, never a nearest-match target), fade from write contexts once
+neighboring prose exists (the window is the true style anchor), and
+never enter review prompts — review judges against the Voice record
+alone, or exemplar-conformance becomes a new taste-laundering channel.
+
 ### Backtracking
 
 Gates fail *backwards*: a problem is fixed at the stage that owns it,

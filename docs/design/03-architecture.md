@@ -41,6 +41,8 @@ src/questfoundry/
                      # constraints, candidate orders, spine realization)
     passages.py      # POLISH's deterministic core (collapse, choice
                      # topology, residue/false-branch splicing)
+    research.py      # craft-corpus retrieval: standing + librarian queries
+                     # -> persisted digests (M6, see §10)
     stages/          # dream.py .. ship.py — schemas, prompts, gates only
     prompts/         # Jinja2 prompt templates, versioned
   llm/
@@ -167,6 +169,7 @@ keepers-bargain/
   prose/p-017.md         # one markdown file per passage/variant — diff-, edit-, review-able
   art/direction.yaml, briefs/, images/
   codex/*.md
+  research/<stage>.md    # persisted craft-corpus digests per stage (M6)
   reports/<run>/<stage>.md   # stage reports (human-readable audit trail)
   snapshots/<run>/<stage>/   # full-graph checkpoint per gate
   cache/llm/                 # call cache (gitignored)
@@ -234,3 +237,34 @@ interface before that.
 | A10 | FILL's automated review is a post-apply hook on the uniform repair loop | Bespoke write-review-revise orchestration inside FILL | One loop owns retries, restore, and the halt ('structure is wrong, not the words'); review issues re-enter the prompt exactly like validation errors, so ≤2 revision rounds is `max_repairs`, not new machinery |
 | A11 | Id contract stated once in the adapter's JSON instruction; engine canonicalizes only provably unambiguous forms | Per-pass engine tolerances; fuzzy name matching | Fuzzy acceptance is a treadmill against a model distribution and can turn loud repair failures into quiet wrong answers; slug-prefix restoration is parsing, not prediction |
 | A12 | Codewords are suggested at DRESS, not POLISH; enrichment lives on the Project (like Voice), not in the graph | Codeword pass inside POLISH (04's original wording); codex/briefs as graph nodes | "Drawn from the story's diction" needs the diction to exist — there is no voice or prose until after FILL; DRESS reads the finished story. Enrichment describes the story rather than being story structure, so gates see it via an explicit `run_checks(enrichment=…)` parameter — one validation path, no graph pollution |
+| A13 | Craft-corpus retrieval is engine-side (a research pass emitting queries), and retrieved digests persist as checkpointed artifacts that later passes read | Mid-call tool use (the original QuestFoundry's approach); live MCP access from the adapter; re-searching on every rerun/resume | Preserves A3's one-shot adapter, the content-addressed cache, positional fixture replay, and crash-resume byte-stability; the persisted artifact is author-reviewable ("review = edit + revalidate" covers what the pipeline read); the model still decides *what it needs* — it just cannot fetch mid-thought (§10) |
+
+## 10. Craft-corpus research (M6)
+
+The runtime counterpart of `docs/heritage/` (which grounds *development*
+sessions): a markdown craft corpus grounds the *pipeline's* LLM calls.
+Roadmap milestone M6 owns it; contract details in
+[02 §1 Craft context](02-pipeline.md). Architecture specifics:
+
+- **Retrieval library.** Hybrid (FTS + local embeddings) search over a
+  directory of frontmattered markdown, via
+  [`pvliesdonk/markdown-vault-mcp`](https://github.com/pvliesdonk/markdown-vault-mcp)
+  used *as a Python library*, not as an MCP server. QuestFoundry would
+  be that project's first non-dogfood library consumer — expect its
+  library API to need upstream hardening, and treat that as part of the
+  milestone, not a surprise. The embedding model must be local and
+  version-pinned; no network dependency at generation time.
+- **Corpus as configuration.** `project.yaml` gains a `craft:` block —
+  corpus root, eligible subtrees/clusters (a gamebook project scopes to
+  the IF corpus and ignores tabletop/workshop material), retrieval
+  budget (top-k, words per digest). The engine is corpus-agnostic; the
+  corpus fingerprint (content hash) is recorded in stage reports so a
+  run names exactly what it read.
+- **Determinism rules.** Search results feed prompt bytes, so retrieval
+  runs once per stage (in the research pass), and the persisted
+  `research/<stage>.md` is the only thing later passes read. Fixture
+  replay is positional and unaffected; the content-addressed cache sees
+  stable bytes; a rerun that should re-retrieve does so by re-running
+  the research pass, an ordinary `--keep`-able pass.
+- **No corpus, no change.** The research pass `skip_if`s when no corpus
+  is configured; CI and the golden story never require one.

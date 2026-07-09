@@ -60,6 +60,38 @@ regeneration; `short`/`medium` scope hardening.
 **Exit:** a printable PDF gamebook with working codeword play, plus a
 `medium`-scope story generated end-to-end within its budget estimate.
 
+## M6 — Craft-corpus research
+
+Ground every stage in real craft knowledge without breaking the
+one-shot adapter (mini-ADR A3): a **research pass** at each stage
+head emits *queries* as a typed proposal; the engine runs them —
+together with deterministic standing queries built from the vision
+(genre, subgenre, tone, themes are open vocabulary, so retrieval is
+always search-ranked over several related notes, never an exact-key
+lookup) — through hybrid search over a project-configured markdown
+corpus, and persists the top-k digests as a checkpointed,
+author-editable artifact (`research/<stage>.md`) that the stage's
+later passes read. The likely retrieval library is
+[`pvliesdonk/markdown-vault-mcp`](https://github.com/pvliesdonk/markdown-vault-mcp)
+used *as a Python library*, not as an MCP server — QuestFoundry would
+be its first non-dogfood library consumer, so budget for upstream API
+work. No corpus configured → the pass skips and the pipeline runs
+unchanged (the golden story never depends on a corpus).
+
+Governing principle: **corpus material may widen or ground, never
+bind.** The Voice record and the invariants bind; retrieved notes are
+advisory reference, style exemplars calibrate the voice pass as a
+contrasting spread (never a nearest-match target) and fade from write
+contexts once neighboring prose exists, and corpus text never enters
+review prompts (a third taste-laundering channel we decline to open).
+Details: design docs [02 §1](02-pipeline.md) and [03 §10](03-architecture.md).
+
+**Exit:** the same premise generated with and without a configured
+corpus produces two gate-clean stories with visibly different craft
+grounding; research artifacts exist at every stage, are checkpointed,
+and reruns/resumes replay them byte-stable; corpus-less projects (and
+CI) run exactly as before.
+
 ## Later / explicitly deferred
 
 - Local review web UI (graph explorer + prose reader with approve/edit).

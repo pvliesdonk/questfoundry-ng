@@ -226,6 +226,10 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [ ] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
   `qf export pdf`, and `qf rerun --keep` are built (PR #20); multi-hard
   weaving and the `medium`-scope live run remain
+- [ ] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
+  design docs 02 §1 and 03 §10) — ground the pipeline's LLM calls in a
+  markdown craft corpus via an engine-side research pass; specced, not
+  started; M5 finishes first
 
 ## Next up — finishing M5
 
@@ -334,6 +338,13 @@ Remaining, in order:
 - **Derived fallback codewords may contain digits** (slugs allow them;
   `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
   worst — a print warning already tells authors to run DRESS.
+- **M6's retrieval library is an external bet**:
+  `pvliesdonk/markdown-vault-mcp` used *as a Python library* (not as an
+  MCP server) — QuestFoundry would be its first non-dogfood library
+  consumer, so its library-facing API may need upstream work before or
+  during M6. Validate the library seam (hybrid search over a corpus
+  directory, pinned local embeddings, deterministic ranking) early in
+  the milestone, before building the research pass on top.
 - **Twee prose mapping is bounded and unlinted** — the lint step that
   flags constructs that don't survive SugarCube conversion arrives with
   SHIP (design doc 04 §3).
@@ -365,6 +376,29 @@ Remaining, in order:
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-09 (M6 added: craft-corpus research):** The author's IF
+  craft corpus (once `if-craft-corpus`, now living and much extended in
+  his Obsidian vault; its indexing engine evolved into
+  `markdown-vault-mcp`) should ground the pipeline's LLM calls. The
+  original QuestFoundry exposed the corpus as a *tool* the model called
+  mid-generation, because what a stage needs is content-shaped and hard
+  to predict programmatically. That mechanism is incompatible with NG's
+  one-shot adapter, content-addressed cache, and fixture replay (A3) —
+  so NG splits the judgment from the fetch: a **research pass** at each
+  stage head emits queries (an ordinary typed proposal), the engine
+  retrieves via hybrid search and **persists the digests as a
+  checkpointed artifact** later passes read (mini-ADR A13). Two design
+  corrections from the discussion, both author pushback: (1) no
+  exact-key retrieval anywhere — vision genre/tone are open vocabulary
+  ("maritime folk horror" keys to no note), so even the engine's
+  standing queries are search-ranked over several related notes;
+  (2) **corpus material may widen or ground, never bind** — style
+  exemplars appear at the voice pass as a contrasting spread, never a
+  nearest-match target (clone risk compounds through the prose window),
+  fade from write contexts once neighboring prose exists, and never
+  enter review prompts (a third taste-laundering channel, declined).
+  Milestone M6 in the roadmap; M5 finishes first.
 
 - **2026-07-09 (M5 slice: DRESS, print, rerun — PR #20):** Codeword
   *suggestion* moved from POLISH (design doc 04's original wording) to

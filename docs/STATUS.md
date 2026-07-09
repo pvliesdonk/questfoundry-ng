@@ -314,7 +314,11 @@ and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
   nesting is represented). Fine at micro/short unit counts; check the
   spread heuristic when `medium` stories arrive — the lexicographic
   DFS varies the tail of the order first, so the spread may
-  under-sample early-position variety at real unit counts.
+  under-sample early-position variety at real unit counts. Same
+  profiling pass (PR #22 review): `queries.world_of` recomputes
+  `hard_commit_beats` + an ancestor closure per call and is now called
+  per clone target and inside I3/I7/frontier checks — fine at ~10³
+  nodes, but measure it on the first real `medium` graph.
 - **Every retained dilemma explores both answers in M1.** Locked-dilemma
   shadows (exploring one side only) need an I3 refinement — the current
   check demands dual-membership pre-commit beats, which single-explored

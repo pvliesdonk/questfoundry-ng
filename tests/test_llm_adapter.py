@@ -118,6 +118,20 @@ def test_fenced_prose_wrapped_json_is_parsed() -> None:
     assert result == Answer(value="z", count=3)
 
 
+def test_literal_newlines_inside_strings_are_parsed() -> None:
+    """Prose-writing models emit real newlines inside JSON strings (first
+    thinking-off Sonnet 5 FILL call, 2026-07-09); strict JSON rejects the
+    control character but the intent is unambiguous."""
+    text = '{"value": "line one\nline two", "count": 3}'
+    provider = FakeProvider([LLMResult(text=text, model="model-u", usage=Usage(1, 1))])
+    adapter = LLMAdapter(provider, MODEL_MAP)
+
+    result = adapter.complete(system="sys", prompt="do it", schema=Answer, role="utility")
+
+    assert result == Answer(value="line one\nline two", count=3)
+    assert len(provider.calls) == 1  # parsed first try, no retry burned
+
+
 def test_cache_hit_skips_provider_and_is_free(tmp_path: Path) -> None:
     provider = FakeProvider(
         [

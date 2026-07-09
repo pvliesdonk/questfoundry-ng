@@ -492,7 +492,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
   violating-construction tests (`tests/test_seed.py`) and the SEED
   contract paragraph in design doc 02 extended. Opus never tripped
   this; a model that does now costs one repair round instead of a dead
-  stage.
+  stage. The rerun then repaired SEED on the first live round, passed
+  GROW's gate, and cleared POLISH — before FILL died on the next
+  finding: thinking-off Sonnet writes *literal newlines* inside JSON
+  strings (prose payloads), which strict JSON rejects as control
+  characters, and it repeated the mistake on retry. The adapter now
+  parses with `strict=False` — that relaxes only control-chars-in-
+  strings (unambiguous intent in a prose payload); structural errors
+  still raise and retry.
 
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them

@@ -60,7 +60,7 @@ up):
   (direction + 4 profiles, 3 briefs, 4 spoiler-safe codex entries,
   `CONFESSED` on the one gate-tested flag) and exports a complete
   14-page PDF; e2e now runs `--to dress` offline (36 ledger calls, one
-  staged codex-review-fail/revise round). 201 tests total.
+  staged codex-review-fail/revise round). 203 tests total.
 
 **M4 is complete.** FILL writes the prose and the story ships to its
 first playable formats — `qf run --to fill` then `qf export html` puts

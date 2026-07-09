@@ -83,6 +83,9 @@ class PassReport:
     name: str
     attempts: int = 1
     applied: list[str] = field(default_factory=list)
+    # The accepted proposal (JSON mode), persisted at checkpoint so
+    # `qf rerun --keep` can re-apply it without an LLM call.
+    proposal: dict | None = None
 
 
 @dataclass

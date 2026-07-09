@@ -208,11 +208,23 @@ structure (Principle 4).
 
 | | |
 |---|---|
-| In | Finished prose, entities, vision |
-| Out | Art direction; entity visual profiles; illustration briefs (prioritized) per key passage; illustrations (via pluggable image backend, optional); codex entries |
-| Gate G6 | Every brief references only established visual facts; codex is spoiler-safe (entries reveal nothing the earliest-reaching arc hasn't) |
+| In | Finished prose, entities, vision, voice |
+| Out | Art direction; entity visual profiles; illustration briefs (prioritized) per key passage; illustrations (via pluggable image backend, optional); codex entries; print codewords on projected flags |
+| Gate G6 | Every brief references only established visual facts; codex is spoiler-safe (entries reveal nothing the earliest-reaching arc hasn't); every gate-tested flag carries a well-formed, unique codeword |
 
-DRESS reads the story; it never changes it.
+DRESS reads the story; it never changes it — its outputs live beside the
+graph (the enrichment bundle, like the Voice), except codewords, which
+are presentation metadata stored on their flags. Four passes: *direction*
+(art direction + a visual profile per retained entity), *briefs*
+(prioritized illustration briefs; the engine checks every referenced
+entity is in the passage and has a profile — the mechanical half of G6's
+"established facts"; the judgment half is prompt contract), *codex* (one
+diegetic entry per dilemma-anchoring entity, spoiler-safety enforced by a
+paired review pass whose contract separates REQUIRED register from BANNED
+reveals, per the review-legibility lessons), and *codewords* (memorable
+single words for every flag some choice gate tests — suggested here, not
+at POLISH, because "drawn from the story's diction" needs the diction to
+exist: there is no voice and no prose until after FILL; see mini-ADR A12).
 
 ### SHIP — export
 

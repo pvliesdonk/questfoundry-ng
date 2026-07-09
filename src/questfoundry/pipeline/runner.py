@@ -9,11 +9,13 @@ identically to the engine and to tests.
 from __future__ import annotations
 
 import copy
+import json
 import shutil
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from questfoundry.graph.mutations import MutationError
@@ -55,6 +57,26 @@ def _require_predecessor(project: Project, impl: StageImpl) -> None:
             f"project is at {project.stage.value!r}; stage {impl.stage.value!r} "
             f"requires {predecessor.value!r}"
         )
+
+
+def _run_kept_pass(project: Project, spec, proposal_data: dict) -> PassReport | str:
+    """Re-apply a recorded accepted proposal without an LLM call
+    (`qf rerun --keep`). A kept proposal that no longer validates or
+    applies is stale — that is an author-facing error, not a repair."""
+    try:
+        proposal = spec.schema.model_validate(proposal_data)
+    except Exception as exc:  # pydantic.ValidationError, kept generic on purpose
+        return f"kept proposal for pass {spec.name!r} no longer matches its schema: {exc}"
+    try:
+        applied = spec.apply(proposal, project)
+    except (ApplyError, MutationError) as exc:
+        return f"kept proposal for pass {spec.name!r} no longer applies: {exc}"
+    return PassReport(
+        name=spec.name,
+        attempts=0,
+        applied=[f"kept: {line}" for line in applied],
+        proposal=proposal.model_dump(mode="json"),
+    )
 
 
 def _run_pass(
@@ -103,7 +125,12 @@ def _run_pass(
                         f"{'; '.join(issues)}"
                     )
                 continue
-        return PassReport(name=spec.name, attempts=1 + repairs_used, applied=applied)
+        return PassReport(
+            name=spec.name,
+            attempts=1 + repairs_used,
+            applied=applied,
+            proposal=proposal.model_dump(mode="json"),
+        )
 
 
 def _checkpoint(project: Project, report: StageReport) -> None:
@@ -123,6 +150,15 @@ def _checkpoint(project: Project, report: StageReport) -> None:
         if (root / sub).exists():
             shutil.copytree(root / sub, snap_dir / sub, dirs_exist_ok=True)
 
+    proposals_dir = snap_dir / "proposals"
+    for p in report.passes:
+        if p.proposal is None:
+            continue
+        proposals_dir.mkdir(parents=True, exist_ok=True)
+        payload = {"pass": p.name, "proposal": p.proposal}
+        path = proposals_dir / f"{p.name.replace(':', '__')}.json"
+        path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
     lines = [f"# Stage: {project.stage.value}", ""]
     for p in report.passes:
         lines.append(f"## Pass: {p.name} (attempts={p.attempts})")
@@ -140,7 +176,13 @@ def _checkpoint(project: Project, report: StageReport) -> None:
 
 
 def run_stage(
-    project: Project, impl: StageImpl, adapter: Any, *, notes: str = "", max_repairs: int = 2
+    project: Project,
+    impl: StageImpl,
+    adapter: Any,
+    *,
+    notes: str = "",
+    max_repairs: int = 2,
+    keep: dict[str, dict] | None = None,
 ) -> StageReport:
     _require_predecessor(project, impl)
     env = _environment()
@@ -153,7 +195,10 @@ def run_stage(
                 PassReport(name=spec.name, attempts=0, applied=[f"skipped: {reason}"])
             )
             continue
-        result = _run_pass(project, spec, env, adapter, notes, max_repairs)
+        if keep and spec.name in keep:
+            result = _run_kept_pass(project, spec, keep[spec.name])
+        else:
+            result = _run_pass(project, spec, env, adapter, notes, max_repairs)
         if isinstance(result, str):
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)
         pass_reports.append(result)
@@ -167,6 +212,49 @@ def run_stage(
     save_project(project)
     _checkpoint(project, report)
     return report
+
+
+def recorded_proposals(root: Path, stage: Stage) -> dict[str, dict]:
+    """Accepted proposals persisted at `stage`'s last checkpoint, keyed by
+    pass name — the artifacts `qf rerun --keep` can re-apply."""
+    proposals_dir = root / "snapshots" / stage.value / "proposals"
+    result: dict[str, dict] = {}
+    if proposals_dir.is_dir():
+        for path in sorted(proposals_dir.glob("*.json")):
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            result[payload["pass"]] = payload["proposal"]
+    return result
+
+
+def prepare_rerun(root: Path, target: Stage) -> None:
+    """Restore the on-disk project to `target`'s predecessor checkpoint so
+    the stage can run again: stage artifacts (graph, prose, art, codex,
+    voice) come back from the snapshot; author knobs stay current —
+    project.yaml keeps its llm/steering/seeds (only `stage` is rewound)
+    and vision.yaml is never restored, because editing it is a main
+    reason to rerun. Reload the project after calling this."""
+    predecessor = list(Stage)[target.order - 1]
+    snap_dir = root / "snapshots" / predecessor.value
+    if predecessor != Stage.NEW and not snap_dir.is_dir():
+        raise RunnerError(
+            f"cannot rerun {target.value!r}: no checkpoint for its "
+            f"predecessor {predecessor.value!r} under {snap_dir}"
+        )
+    for sub in ("graph", "prose", "art", "codex"):
+        if (root / sub).exists():
+            shutil.rmtree(root / sub)
+        if (snap_dir / sub).exists():
+            shutil.copytree(snap_dir / sub, root / sub)
+    (root / "voice.yaml").unlink(missing_ok=True)
+    if (snap_dir / "voice.yaml").exists():
+        shutil.copy2(snap_dir / "voice.yaml", root / "voice.yaml")
+
+    meta_path = root / "project.yaml"
+    meta = yaml.safe_load(meta_path.read_text(encoding="utf-8"))
+    meta["stage"] = predecessor.value
+    meta_path.write_text(
+        yaml.safe_dump(meta, sort_keys=False, allow_unicode=True), encoding="utf-8"
+    )
 
 
 def run_pipeline(

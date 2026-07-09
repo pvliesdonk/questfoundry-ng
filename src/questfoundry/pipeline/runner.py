@@ -67,9 +67,15 @@ def _run_kept_pass(project: Project, spec, proposal_data: dict) -> PassReport | 
         proposal = spec.schema.model_validate(proposal_data)
     except Exception as exc:  # pydantic.ValidationError, kept generic on purpose
         return f"kept proposal for pass {spec.name!r} no longer matches its schema: {exc}"
+    graph_backup = copy.deepcopy(project.graph)
+    vision_backup = copy.deepcopy(project.vision)
+    voice_backup = copy.deepcopy(project.voice)
     try:
         applied = spec.apply(proposal, project)
     except (ApplyError, MutationError) as exc:
+        project.graph = graph_backup
+        project.vision = vision_backup
+        project.voice = voice_backup
         return f"kept proposal for pass {spec.name!r} no longer applies: {exc}"
     return PassReport(
         name=spec.name,

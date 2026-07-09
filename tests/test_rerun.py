@@ -110,6 +110,45 @@ def test_stale_kept_proposal_apply_failure_fails_loud(tmp_path, monkeypatch):
     assert "no longer applies" in (report.error or "")
 
 
+def test_stale_kept_proposal_restores_partial_mutation(tmp_path, monkeypatch):
+    """Real apply functions mutate incrementally and may raise midway
+    (e.g. GROW's intersections); a failing kept proposal must restore
+    the project like the ordinary repair path does (PassSpec.apply
+    contract)."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+
+    def apply(proposal, project):
+        from questfoundry.graph import mutations
+        from questfoundry.models.world import Entity
+        from questfoundry.pipeline import ApplyError
+
+        mutations.add_entity(
+            project.graph,
+            Entity(id="character:half", created_by=Stage.BRAINSTORM, name="Half", concept="c"),
+        )
+        project.vision.audience = "clobbered"
+        raise ApplyError("stale after the partial write")
+
+    spec = PassSpec(
+        name="vision",
+        role="writer",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=apply,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda p: [])
+
+    report = runner.run_stage(
+        project, impl, FakeAdapter([]), keep={"vision": {"audience": "x"}}
+    )
+
+    assert not report.success
+    assert "character:half" not in project.graph
+    assert project.vision.audience != "clobbered"
+
+
 def test_prepare_rerun_restores_predecessor_and_keeps_author_knobs(tmp_path, monkeypatch):
     _use_test_templates(monkeypatch)
     project = _scaffold(tmp_path)

@@ -481,7 +481,18 @@ PR #5) and this agent/doc infrastructure (PR #6).
   default map is untouched), and the same premise is rerunning
   thinking-off through FILL — enough to judge structure + prose
   quality at the config where Sonnet actually is cheap (~$1–1.5 per
-  medium story at intro pricing).
+  medium story at intro pricing). First thinking-off finding, and the
+  first engine improvement a cheaper model has bought us: it violated
+  the scaffold prompt's explicit ending contract (endings on one hard
+  dilemma's tails but not the other's) and under-built one soft arm —
+  neither caught until GROW's unrepairable gate, ~10 wasted calls
+  later (I6 ×16, I7 ×1). `_scaffold_apply` now rejects both shapes as
+  repairable `ApplyError`s at SEED (hard tails must be endings, ending
+  nowhere else, soft arms carry the scope's `min_payoff_beats`), with
+  violating-construction tests (`tests/test_seed.py`) and the SEED
+  contract paragraph in design doc 02 extended. Opus never tripped
+  this; a model that does now costs one repair round instead of a dead
+  stage.
 
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them

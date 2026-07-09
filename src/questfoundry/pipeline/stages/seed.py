@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.drama import Consequence, Dilemma, Path
+from questfoundry.models.drama import Consequence, Dilemma, DilemmaRole, Path
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
@@ -239,6 +239,44 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
         for hint in spec.hints:
             if hint.dilemma not in expected:
                 raise ApplyError(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
+
+    # Ending placement is decided here but otherwise only caught at GROW's
+    # gate, unrepairably: a hard path's chain tail must be an ending (the
+    # weave keeps the climax fork's and demotes the rest — I6), an ending
+    # anywhere else contradicts continuation, and a soft path needs its
+    # payoff beats (I7) before rejoining.
+    preset = project.vision.preset
+    for scaffold in proposal.scaffolds:
+        dilemma = g.node(scaffold.dilemma)
+        assert isinstance(dilemma, Dilemma)
+        hard = dilemma.role == DilemmaRole.HARD
+        tails = {p.post_commit[-1].id for p in scaffold.paths} if hard else set()
+        for path_scaffold in scaffold.paths:
+            if hard and not path_scaffold.post_commit[-1].is_ending:
+                raise ApplyError(
+                    f"hard dilemma {scaffold.dilemma}: {path_scaffold.path}'s final "
+                    f"post-commit beat {path_scaffold.post_commit[-1].id} must set "
+                    f"is_ending: true — hard paths never rejoin; their chains resolve "
+                    f"the story (I6)"
+                )
+            if not hard and len(path_scaffold.post_commit) < preset.min_payoff_beats:
+                raise ApplyError(
+                    f"soft dilemma {scaffold.dilemma}: {path_scaffold.path} has "
+                    f"{len(path_scaffold.post_commit)} post-commit payoff beat(s); "
+                    f"scope {preset.name!r} requires >= {preset.min_payoff_beats} (I7)"
+                )
+        for spec in (
+            *scaffold.pre_commit,
+            *(b for p in scaffold.paths for b in (p.commit, *p.post_commit)),
+        ):
+            if spec.is_ending and spec.id not in tails:
+                raise ApplyError(
+                    f"beat {spec.id} sets is_ending but is not a hard path's final "
+                    f"post-commit beat — the story continues after it (I6)"
+                )
+    for spec in proposal.setup:
+        if spec.is_ending:
+            raise ApplyError(f"setup beat {spec.id} must not be an ending")
 
     for spec in proposal.setup:
         beat = _make_beat(g, spec, beat_class=BeatClass.STRUCTURAL, purpose=StructuralPurpose.SETUP)

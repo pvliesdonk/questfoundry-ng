@@ -236,6 +236,9 @@ def _load_enrichment(root: FSPath) -> Enrichment:
     if codex_dir.is_dir():
         for f in sorted(codex_dir.glob("*.md")):
             codex.append(_parse_codex_entry(f))
+    # Canonical order, not filename order, so round-trips are list-stable.
+    briefs.sort(key=lambda b: b.priority)
+    codex.sort(key=lambda c: c.entity)
     return Enrichment(direction=direction, profiles=profiles, briefs=briefs, codex=codex)
 
 

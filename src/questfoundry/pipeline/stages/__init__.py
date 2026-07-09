@@ -1,6 +1,7 @@
 from questfoundry.models.base import Stage
 from questfoundry.pipeline.stages.brainstorm import BRAINSTORM_STAGE
 from questfoundry.pipeline.stages.dream import DREAM_STAGE
+from questfoundry.pipeline.stages.dress import DRESS_STAGE
 from questfoundry.pipeline.stages.fill import FILL_STAGE
 from questfoundry.pipeline.stages.grow import GROW_STAGE
 from questfoundry.pipeline.stages.polish import POLISH_STAGE
@@ -14,6 +15,7 @@ IMPLS: dict[Stage, StageImpl] = {
     Stage.GROW: GROW_STAGE,
     Stage.POLISH: POLISH_STAGE,
     Stage.FILL: FILL_STAGE,
+    Stage.DRESS: DRESS_STAGE,
 }
 
 __all__ = ["IMPLS"]

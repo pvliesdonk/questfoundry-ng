@@ -291,7 +291,7 @@ def test_b5_word_budget_is_advisory(golden):
 
 
 def test_golden_story_passes_all_gates(golden):
-    issues = run_checks(golden.graph, golden.vision, golden.stage)
+    issues = run_checks(golden.graph, golden.vision, golden.stage, enrichment=golden.enrichment)
     errors = [i for i in issues if i.severity == Severity.ERROR]
     assert errors == []
     # the fixture is deliberately smaller than the micro passage target

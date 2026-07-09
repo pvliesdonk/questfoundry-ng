@@ -67,15 +67,11 @@ def _run_kept_pass(project: Project, spec, proposal_data: dict) -> PassReport | 
         proposal = spec.schema.model_validate(proposal_data)
     except Exception as exc:  # pydantic.ValidationError, kept generic on purpose
         return f"kept proposal for pass {spec.name!r} no longer matches its schema: {exc}"
-    graph_backup = copy.deepcopy(project.graph)
-    vision_backup = copy.deepcopy(project.vision)
-    voice_backup = copy.deepcopy(project.voice)
+    backup = _backup(project)
     try:
         applied = spec.apply(proposal, project)
     except (ApplyError, MutationError) as exc:
-        project.graph = graph_backup
-        project.vision = vision_backup
-        project.voice = voice_backup
+        _restore(project, backup)
         return f"kept proposal for pass {spec.name!r} no longer applies: {exc}"
     return PassReport(
         name=spec.name,
@@ -83,6 +79,20 @@ def _run_kept_pass(project: Project, spec, proposal_data: dict) -> PassReport | 
         applied=[f"kept: {line}" for line in applied],
         proposal=proposal.model_dump(mode="json"),
     )
+
+
+def _backup(project: Project) -> tuple:
+    """Everything an apply function may mutate (PassSpec.apply contract)."""
+    return (
+        copy.deepcopy(project.graph),
+        copy.deepcopy(project.vision),
+        copy.deepcopy(project.voice),
+        copy.deepcopy(project.enrichment),
+    )
+
+
+def _restore(project: Project, backup: tuple) -> None:
+    project.graph, project.vision, project.voice, project.enrichment = backup
 
 
 def _run_pass(
@@ -102,15 +112,11 @@ def _run_pass(
             schema=spec.schema,
             role=spec.role,
         )
-        graph_backup = copy.deepcopy(project.graph)
-        vision_backup = copy.deepcopy(project.vision)
-        voice_backup = copy.deepcopy(project.voice)
+        backup = _backup(project)
         try:
             applied = spec.apply(proposal, project)
         except (ApplyError, MutationError) as exc:
-            project.graph = graph_backup
-            project.vision = vision_backup
-            project.voice = voice_backup
+            _restore(project, backup)
             repair_errors.append(str(exc))
             repairs_used += 1
             if repairs_used > max_repairs:
@@ -119,9 +125,7 @@ def _run_pass(
         if spec.review is not None:
             issues = spec.review(proposal, project, adapter)
             if issues:
-                project.graph = graph_backup
-                project.vision = vision_backup
-                project.voice = voice_backup
+                _restore(project, backup)
                 repair_errors.extend(issues)
                 repairs_used += 1
                 if repairs_used > max_repairs:

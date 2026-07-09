@@ -329,3 +329,64 @@ def test_filled_project_roundtrips(filled):
     assert reloaded.voice == project.voice
     issues = run_checks(reloaded.graph, reloaded.vision, reloaded.stage)
     assert [i for i in issues if i.severity == Severity.ERROR] == []
+
+
+# -- M5: DRESS ------------------------------------------------------------------
+
+
+@pytest.fixture()
+def dressed(tmp_path):
+    return _run_to(tmp_path, Stage.DRESS)
+
+
+def test_pipeline_reaches_dress_through_one_review_round(dressed):
+    reports, project = dressed
+    dress = reports[-1]
+    assert dress.stage == Stage.DRESS and dress.success, dress.error or dress.issues
+    assert project.stage == Stage.DRESS
+    by_name = {p.name: p for p in dress.passes}
+    assert by_name["direction"].attempts == 1
+    assert by_name["briefs"].attempts == 1
+    # the first codex proposal leaked a conditional fact and was rewritten
+    assert by_name["codex"].attempts == 2
+    assert by_name["codewords"].attempts == 1
+    ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
+    # 29 through FILL + direction + briefs + 2x(codex propose + review) + codewords
+    assert len(ledger) == 36
+
+
+def test_dress_populates_enrichment(dressed):
+    _, project = dressed
+    g = project.graph
+    from questfoundry.models.world import Entity
+
+    retained = [e for e in g.nodes_of(Entity) if e.retained]
+    assert project.enrichment.direction is not None
+    assert {p.entity for p in project.enrichment.profiles} == {e.id for e in retained}
+    assert len(project.enrichment.briefs) == 3  # 8 passages -> max(3, min(20, 8 // 5))
+    assert [b.priority for b in project.enrichment.briefs] == [1, 2, 3]
+
+    anchored = {e.dst for e in g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    required = {e.id for e in retained if e.id in anchored}
+    assert {c.entity for c in project.enrichment.codex} == required
+
+
+def test_dress_assigns_codewords_to_every_projected_flag(dressed):
+    _, project = dressed
+    g = project.graph
+    projected = queries.projected_flags(g)
+    assert projected  # this fixture story gates a choice on two flags
+    codewords = [g.node(f).codeword for f in projected]
+    assert all(cw is not None for cw in codewords)
+    assert len(set(codewords)) == len(codewords)  # pairwise distinct
+
+
+def test_dressed_project_roundtrips(dressed):
+    _, project = dressed
+    reloaded = load_project(project.root)
+    assert reloaded.stage == Stage.DRESS
+    assert reloaded.enrichment.direction == project.enrichment.direction
+    issues = run_checks(
+        reloaded.graph, reloaded.vision, reloaded.stage, enrichment=reloaded.enrichment
+    )
+    assert [i for i in issues if i.severity == Severity.ERROR] == []

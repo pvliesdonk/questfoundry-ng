@@ -1,0 +1,16 @@
+Suggest one memorable print codeword per flag below: a single word a reader can write
+in a page margin to remember a fact carried across pages. Uppercase A-Z only, 3-12
+letters, drawn from the story's own diction — never the flag's mechanical name spelled
+out (a flag about a secret shared is CONFIDED or CONFESSED, not SECRETSHARED). Every
+codeword distinct from every other codeword, old or new.
+
+VOICE: {{ voice.diction }}. Tone: {{ vision.tone }}.
+
+FLAGS NEEDING A CODEWORD:
+{% for f in flags %}
+- {{ f.id }}: {{ f.description }}
+{% endfor %}
+
+{"codewords": [{"flag": "<id>", "codeword": "SINGLEWORD"}, ...]}, exactly one entry
+per flag above, no more, no fewer.
+{% include "_shared.j2" %}

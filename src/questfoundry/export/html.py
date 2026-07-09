@@ -37,6 +37,8 @@ _TEMPLATE = """<!DOCTYPE html>
   footer { margin-top: 3rem; font-size: .8rem; color: #607d8b; }
   footer a { color: #90a4ae; cursor: pointer; margin-right: 1rem; }
   details { margin-top: 1rem; font-size: .85rem; color: #78909c; }
+  #codex article { margin-top: .8rem; }
+  #codex h3 { margin: 0 0 .3rem; font-size: 1rem; color: #9db4c0; font-weight: normal; }
 </style>
 </head>
 <body>
@@ -45,6 +47,7 @@ _TEMPLATE = """<!DOCTYPE html>
   <div id="prose"></div>
   <ul id="choices"></ul>
   <div id="ending" hidden></div>
+  __CODEX__
   <details id="recap"><summary>The journey so far</summary><ol id="trail"></ol></details>
   <footer>
     <a id="restart">restart</a><a id="save">save</a><a id="load">load</a>
@@ -100,9 +103,37 @@ render();
 """
 
 
+def _escape(text: str) -> str:
+    return text.replace("&", "&amp;").replace("<", "&lt;")
+
+
+def _codex_panel(codex: list[dict]) -> str:
+    """A <details> panel of codex entries (design doc 04 §2), rendered
+    server-side like the rest of this dependency-free player. Omitted
+    entirely — not just hidden — when there is no codex to show."""
+    if not codex:
+        return ""
+    articles = []
+    for entry in codex:
+        paragraphs = "".join(
+            f"<p>{_escape(par)}</p>"
+            for par in entry["body"].strip().split("\n\n")
+            if par.strip()
+        )
+        articles.append(f"<article><h3>{_escape(entry['title'])}</h3>{paragraphs}</article>")
+    return (
+        '<details id="codex"><summary>The Codex</summary>' + "".join(articles) + "</details>"
+    )
+
+
 def build_html(project: Project) -> str:
-    story = json.dumps(build_runtime(project), ensure_ascii=False)
+    data = build_runtime(project)
+    story = json.dumps(data, ensure_ascii=False)
     # a literal "</script>" inside the JSON would end the script element
     story = story.replace("</", "<\\/")
     title = project.name.replace("<", "&lt;")
-    return _TEMPLATE.replace("__TITLE__", title).replace("__STORY__", story)
+    return (
+        _TEMPLATE.replace("__TITLE__", title)
+        .replace("__STORY__", story)
+        .replace("__CODEX__", _codex_panel(data["codex"]))
+    )

@@ -1,0 +1,10 @@
+passage: passage:p-lamp-room
+priority: 2
+caption: In the lamp room, Maren tells Elias what the light holds.
+prompt: >-
+  Interior of a brass lamp room, glass gone soft with salt-bloom, the lamp
+  turning steady gold in its gimbal; two figures close together in the
+  lamplight, her hands roped with old calluses, his cuffs ink-stained, both
+  turned toward the dark glass. Scratchboard linework, warm gold against
+  cold iron-grey.
+entities: [character:keeper, character:cartographer, location:lighthouse]

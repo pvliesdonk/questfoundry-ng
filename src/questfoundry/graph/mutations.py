@@ -8,6 +8,8 @@ privileged writer.
 
 from __future__ import annotations
 
+import re
+
 from questfoundry.graph import queries
 from questfoundry.graph.store import FreezeRecord, StoryGraph
 from questfoundry.models.base import Edge, EdgeKind
@@ -15,6 +17,8 @@ from questfoundry.models.drama import Answer, Consequence, Dilemma, DilemmaRole,
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
 from questfoundry.models.world import Entity
+
+CODEWORD_RE = re.compile(r"^[A-Z]{3,12}$")
 
 
 class MutationError(Exception):
@@ -232,6 +236,32 @@ def add_choice(g: StoryGraph, src: str, dst: str, choice: Choice) -> None:
         if not isinstance(g.get(flag_id), StateFlag):
             raise MutationError(f"choice {src}->{dst} references unknown flag {flag_id!r}")
     g._add_edge(Edge(kind=EdgeKind.CHOICE, src=src, dst=dst, payload=choice.model_dump()))
+
+
+def set_flag_codeword(g: StoryGraph, flag_id: str, codeword: str) -> None:
+    """DRESS pass 4: assign a flag's print codeword. Codewords are stable
+    once set — a print run may already reference the old word, so changing
+    one is an error, not an overwrite; re-proposing the same word is a
+    harmless no-op (idempotent reruns)."""
+    flag = g.get(flag_id)
+    if not isinstance(flag, StateFlag):
+        raise MutationError(f"{flag_id!r} is not a flag")
+    if not CODEWORD_RE.match(codeword):
+        raise MutationError(
+            f"codeword {codeword!r} for {flag_id} must match {CODEWORD_RE.pattern} "
+            "(3-12 uppercase letters A-Z)"
+        )
+    if flag.codeword == codeword:
+        return
+    if flag.codeword is not None:
+        raise MutationError(
+            f"flag {flag_id} already has codeword {flag.codeword!r}; codewords are "
+            "stable once set and cannot be changed (print stability)"
+        )
+    taken = {f.codeword for f in g.nodes_of(StateFlag) if f.codeword and f.id != flag_id}
+    if codeword in taken:
+        raise MutationError(f"codeword {codeword!r} is already used by another flag")
+    flag.codeword = codeword
 
 
 def add_variant(g: StoryGraph, variant: str, base: str) -> None:

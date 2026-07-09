@@ -1,0 +1,9 @@
+passage: passage:p-arrival
+priority: 1
+caption: Elias Wren lands at the Stilt Light as storm season closes in.
+prompt: >-
+  A lighthouse on rust-streaked iron stilts against a slate-grey storm sky;
+  a small boat with a chart case nosing up to the ladder; a woman in an
+  oilskin coat waiting at the rail, a lit lamp room above her. Wide shot,
+  scratchboard linework, iron-grey and lamp-gold palette.
+entities: [character:keeper, character:cartographer, location:lighthouse]

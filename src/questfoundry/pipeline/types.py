@@ -39,7 +39,8 @@ class PassSpec:
       `graph/mutations.py` (or set `project.vision`); return
       human-readable summary lines of what was applied. Raise
       `ApplyError` (or let `MutationError` escape) to trigger repair —
-      the runner snapshots and restores the graph around failed applies.
+      the runner snapshots and restores the mutable project state
+      (graph, vision, voice, enrichment) around failed applies.
     - `skip_if(project)`: optional; return a reason string to skip the
       pass (no LLM call, recorded on the report with attempts=0), or
       None to run it. For passes whose engine-determined work list can

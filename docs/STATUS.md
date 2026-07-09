@@ -469,9 +469,19 @@ PR #5) and this agent/doc infrastructure (PR #6).
   unused budget costs nothing. (2) The Anthropic SDK rejects
   non-streaming requests whose `max_tokens` implies a >10-minute worst
   case — the provider now streams and collects the final message, same
-  contract otherwise. Verdict pending the run; note that Sonnet's
-  billed thinking erodes its sticker-price advantage, so the ledger
-  comparison is the decider.
+  contract otherwise. **Default-config verdict: not faster, not
+  cheaper.** Aborted mid-run (author's call) at the GROW/POLISH
+  boundary with $0.98 intro / $1.47 list already spent — 11 Sonnet
+  calls had emitted 88k output tokens (single GROW calls at 18–22k,
+  ~90% billed thinking) versus 74k for the *entire* 63-call Opus run;
+  pace projected $5–8 intro for the full story versus Opus's $3.24,
+  and slower wall-clock. Second experiment in flight: the provider now
+  takes an optional `llm.thinking` config ("disabled" opts out of
+  Sonnet 5's thinking-on default; unset sends nothing, so the Opus
+  default map is untouched), and the same premise is rerunning
+  thinking-off through FILL — enough to judge structure + prose
+  quality at the config where Sonnet actually is cheap (~$1–1.5 per
+  medium story at intro pricing).
 
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them

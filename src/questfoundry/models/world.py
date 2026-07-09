@@ -35,6 +35,7 @@ class Entity(Node):
 
     name: str
     concept: str
+    pronouns: str = ""  # characters: "she/her", "they/them", … — prose is held to it
     base: dict[str, str] = {}
     overlays: list[Overlay] = []
     retained: bool = True  # SEED triage disposition

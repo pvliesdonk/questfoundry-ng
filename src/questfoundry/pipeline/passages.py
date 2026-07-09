@@ -180,22 +180,31 @@ def insert_residue_beat(
 # -- false branches -------------------------------------------------------------
 
 
-def long_linear_runs(groups: list[list[str]], min_beats: int = 4) -> list[int]:
+def long_linear_runs(groups: list[list[str]], min_beats: int = 3) -> list[int]:
     """Groups long enough that the player goes a while without a choice —
-    candidates for a false-branch diamond."""
+    candidate sites for cadence diamonds (the feel target is a genuine
+    choice roughly every 300-800 traversed words, B6)."""
     return [i for i, grp in enumerate(groups) if len(grp) >= min_beats]
 
 
-def insert_false_branch(g: StoryGraph, arm_a: Beat, arm_b: Beat, before: str, after: str) -> None:
-    """Splice a cosmetic diamond into a linear edge: before -> {a, b} -> after."""
+def insert_false_branch(
+    g: StoryGraph, arm_a: Sequence[Beat], arm_b: Sequence[Beat], before: str, after: str
+) -> None:
+    """Splice a cosmetic diamond into a linear edge: before -> chain a /
+    chain b -> after. Arms are short chains (1-2 beats), two flavors of
+    the same forward motion."""
     if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
         raise mutations.MutationError(f"no linear edge {before} -> {after} to fork")
-    for arm in (arm_a, arm_b):
-        mutations.add_beat(g, arm, [])
+    for chain in (arm_a, arm_b):
+        for beat in chain:
+            mutations.add_beat(g, beat, [])
     mutations.remove_ordering(g, before, after)
-    for arm in (arm_a, arm_b):
-        mutations.add_ordering(g, before, arm.id)
-        mutations.add_ordering(g, arm.id, after)
+    for chain in (arm_a, arm_b):
+        prev = before
+        for beat in chain:
+            mutations.add_ordering(g, prev, beat.id)
+            prev = beat.id
+        mutations.add_ordering(g, prev, after)
 
 
 # -- feasibility ---------------------------------------------------------------

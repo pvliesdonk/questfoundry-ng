@@ -204,8 +204,12 @@ Two phases:
 
 1. **Finalize the DAG** (additions only): reorder within linear runs for
    flow; insert bridge beats for pacing; insert residue beats per the
-   convergence sketch; add false branches where long linear stretches
-   need choice-feel.
+   convergence sketch; add false branches at cadence — a cosmetic
+   diamond (arms of 1–2 beats, different textures of the same forward
+   motion) roughly every 3–5 beats of a choice-less run, so a
+   playthrough keeps a genuine-feeling decision every ~300–800 words
+   (B6). The real choices are the dilemmas; cadence diamonds are safe
+   dressing precisely because the structure guarantees the real ones.
 2. **Build the passage layer:** collapse maximal linear runs into
    passages (boundaries at forks/joins); merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility

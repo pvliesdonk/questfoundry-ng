@@ -17,7 +17,7 @@ Realize these beats, in order, as one continuous scene:
 
 CAST IN SCENE:
 {% for e in entities %}
-- {{ e.name }} ({{ e.id }}): {{ e.concept }}{% if e.base %} | facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}{% endif %}
+- {{ e.name }} ({{ e.id }}){% if e.pronouns %} — PRONOUNS: {{ e.pronouns }}, exactly{% endif %}: {{ e.concept }}{% if e.base %} | facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}{% endif %}
 {% if e.overlays %}
 {% for o in e.overlays %}
   - when {{ o.when | join(" & ") }}: {% for k, v in o.details.items() %}{{ k }}: {{ v }}; {% endfor %}

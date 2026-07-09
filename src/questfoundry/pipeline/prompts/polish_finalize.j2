@@ -22,15 +22,21 @@ sides carry a distinct mood). Each entry: {"dilemma", "path", "id": "beat:slug",
 own beats, colored by that world's truth).
 {% endif %}
 {% if long_runs %}
-FALSE BRANCHES (optional). These stretches run long without a choice; a cosmetic
-fork keeps the feel of agency without structural cost. You may propose a diamond:
-two 1-sentence beats that are different flavors of the same forward motion, forking
-one existing edge and rejoining immediately.
+FALSE BRANCHES (cadence). The story's real choices — its dilemmas — are
+guaranteed elsewhere; these stretches run several scenes without ANY choice,
+which reads as a book, not a game. Keep the reader's hands on the wheel: fork
+an edge roughly every 3-5 beats of a run with a cosmetic diamond — two arms
+that are different flavors of the same forward motion, rejoining immediately.
+An arm is one 1-sentence beat, plus an optional "followup" beat when its
+flavor genuinely needs a breath more room. Arms must differ in texture
+(where you look, who you pass, what you overhear), never in consequence.
 {% for run in long_runs %}
 - linear run: {{ run | join(" -> ") }}
 {% endfor %}
 Each entry: {"before": beat id, "after": its successor in the same run,
-"arms": [{"id", "summary", "entities"}, {"id", "summary", "entities"}]}.
-Propose none if the runs read fine as scenes.
+"arms": [{"id", "summary", "entities", "followup": {"id", "summary",
+"entities"} or omit}, x2]}. A long run may take several diamonds on
+different edges. Leave a stretch unforked only when it must stay unbroken —
+the approach to an ending, the immediate aftermath of a point of no return.
 {% endif %}
 {% include "_shared.j2" %}

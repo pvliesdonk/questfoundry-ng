@@ -639,6 +639,55 @@ def check_b5_word_budget(ctx: Context) -> None:
             )
 
 
+# B6: how big the story FEELS is words traversed per genuine choice, not
+# passage inventory (craft-corpus guidance: 300-600 words/choice reads as
+# balanced agency, 600-1000 narrative-heavy, 1000+ as reading not playing)
+B6_WORDS_PER_CHOICE = (250, 800)
+
+
+def check_b6_choice_cadence(ctx: Context) -> None:
+    passages = ctx.g.nodes_of(Passage)
+    if not passages or not any(p.prose.strip() for p in passages):
+        return
+    lo, hi = B6_WORDS_PER_CHOICE
+    averages = []
+    for selection in queries.arc_selections(ctx.g):
+        view = queries.arc_view(ctx.g, selection)
+        held = {
+            f.id
+            for f in ctx.g.nodes_of(StateFlag)
+            if any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
+        }
+        words = decisions = 0
+        for p in passages:
+            beats = queries.beats_of_passage(ctx.g, p.id)
+            if not beats or not all(b in view for b in beats):
+                continue
+            words += len(p.prose.split())
+            # a choice is offered when its gate is satisfiable on this
+            # arc — the target needn't be in view (choosing it is what
+            # makes a different arc)
+            live = [
+                e
+                for e in ctx.g.out_edges(p.id, EdgeKind.CHOICE)
+                if all(req in held for req in e.payload.get("requires", []))
+            ]
+            if len(live) >= 2:
+                decisions += 1
+        if words:
+            averages.append(words / max(decisions, 1))
+    if not averages:
+        return
+    mean = sum(averages) / len(averages)
+    if not lo <= mean <= hi:
+        ctx.warn(
+            "B6",
+            f"a playthrough averages {mean:.0f} words per genuine choice "
+            f"(arc range {min(averages):.0f}-{max(averages):.0f}); the feel "
+            f"target is {lo}-{hi} (advisory)",
+        )
+
+
 # --------------------------------------------------------------------------
 # Gate G6 (DRESS)
 # --------------------------------------------------------------------------
@@ -796,6 +845,7 @@ GATES: dict[Stage, list] = {
     Stage.FILL: [
         check_g5_prose_presence,
         check_b5_word_budget,
+        check_b6_choice_cadence,
     ],
     Stage.DRESS: [
         check_g6_art_direction,

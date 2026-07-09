@@ -29,6 +29,14 @@ flag the same way:
    In-world objects and events that flags merely describe are story, not
    leakage — and ordinary English uses of those words ("her heart beats",
    "the garden path") are just words.
+{% if entities | selectattr("pronouns") | list %}
+6. Pronoun contradiction — a character is referred to with pronouns other
+   than their stated ones (fail only on an actual wrong pronoun in the text,
+   quoted; a name used instead of a pronoun is fine):
+{% for e in entities if e.pronouns %}
+   - {{ e.name }}: {{ e.pronouns }}
+{% endfor %}
+{% endif %}
 
 MATTERS OF DEGREE ARE NOT FAILURES. Register, rhythm, metaphor quality,
 cliché, sentimentality, and "too literary / too spare" judgments are taste; a

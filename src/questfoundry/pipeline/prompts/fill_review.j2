@@ -7,6 +7,11 @@ flag the same way:
    prose written in them is correct; fail only if the prose departs from them:
    - required POV: {{ voice.pov }}
    - required tense: {{ voice.tense }}
+   A POV departure means the narrating character is rendered in the wrong
+   person, or the narration leaves what they can perceive. Other characters
+   are naturally he/she/they in ANY pov, and sentences that don't mention
+   the narrator (a scene opening on someone else's action) are not
+   departures.
    These patterns are BANNED — fail if any of them appears:
    - {{ voice.banned | join("
    - ") }}

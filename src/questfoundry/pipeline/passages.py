@@ -202,12 +202,7 @@ def insert_false_branch(g: StoryGraph, arm_a: Beat, arm_b: Beat, before: str, af
 
 
 def active_flags(g: StoryGraph, group: list[str]) -> list[str]:
-    """Flags possibly active at this passage (the I12 computation).
-    Grants are per world; one in the group's history suffices."""
-    active = set()
-    for flag in g.nodes_of(StateFlag):
-        for grant in queries.grant_beats(g, flag.id):
-            if grant in group or any(grant in queries.ancestors(g, b) for b in group):
-                active.add(flag.id)
-                break
-    return sorted(active)
+    """Flags the passage's prose must honor both values of (the I12
+    computation — see queries.ambiguous_flags). Certain flags are world
+    facts, not states; the audit only weighs the ambiguous ones."""
+    return queries.ambiguous_flags(g, group)

@@ -268,6 +268,47 @@ def arc_view(g: StoryGraph, selection: dict[str, str]) -> set[str]:
     return view
 
 
+def ambiguous_flags(g: StoryGraph, group: list[str]) -> list[str]:
+    """Flags whose value varies among readers arriving at a passage
+    holding ``group`` — the I12 computation. A flag is ambiguous when
+    its grant is upstream on some route while the opposing path's
+    commit is also upstream (a reconverged soft dilemma): prose must
+    then honor both values. A flag granted on every route (only its
+    own side upstream — a world fact) is certain, costs the writer
+    nothing, and does not count; nor do flags of a dilemma the group
+    is gated on (arrivals are conditioned: one side certain, the
+    other foreclosed)."""
+    ancestry = set(group)
+    for b in group:
+        ancestry |= ancestors(g, b)
+    gated_dilemmas = set()
+    for b in group:
+        beat = g.node(b)
+        assert isinstance(beat, Beat)
+        for flag_id in beat.requires_flags:
+            flag = g.node(flag_id)
+            if isinstance(flag, StateFlag) and flag.path is not None:
+                gated_dilemmas.add(dilemma_of_path(g, flag.path))
+    result = []
+    for flag in g.nodes_of(StateFlag):
+        if flag.path is None:
+            continue  # cosmetic flags have no structural grant
+        dilemma = dilemma_of_path(g, flag.path)
+        if dilemma in gated_dilemmas:
+            continue
+        if not any(c in ancestry for c in grant_beats(g, flag.id)):
+            continue
+        others = [
+            c
+            for p in explored_paths(g, dilemma)
+            if p != flag.path
+            for c in commit_beats(g, p)
+        ]
+        if any(c in ancestry for c in others):
+            result.append(flag.id)
+    return sorted(result)
+
+
 def projected_flags(g: StoryGraph) -> list[str]:
     """Flags the print reader must track: every flag some choice gate
     tests (design doc 04 §4). Hard-dilemma flags never appear in gates —

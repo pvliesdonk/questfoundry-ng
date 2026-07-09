@@ -1,0 +1,16 @@
+id: beat:name-truth-commit--keep-ledger
+created_by: grow
+summary: Having kept and opened the ledger, Juno faces the dawn with every motive proven on
+  the table and the killer's name provable beyond bending. She braces to speak into that certainty
+  — the choice of whether she names Sailor or bends the evidence toward another still hanging
+  before her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: commits
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:name-the-truth

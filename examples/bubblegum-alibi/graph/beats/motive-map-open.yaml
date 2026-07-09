@@ -1,6 +1,8 @@
 id: beat:motive-map-open
-summary: With the ledger intact, the full map of every motive lies open on the table, and
-  the killer's name can be proven beyond bending.
+summary: Juno keeps the ledger and lays it open, the full map of every classmate's motive
+  spread across the table where the killer's name can be proven beyond bending. The evidence
+  settles what happened, leaving open whether Juno will use it to name the true killer or
+  twist it to shield the girl she loves.
 beat_class: narrative
 dilemma_impacts:
 - dilemma: dilemma:the-ledger

@@ -1,0 +1,8 @@
+id: intersection:dawn-at-the-doors
+location: location:gym
+rationale: The principal's keys rattling at the chained doors is the ticking clock that forces
+  Priya's demand for the ledger — both beats collapse Juno's choices into the same final minutes
+  at the gym doors.
+members:
+- beat:ledger-tempts
+- beat:principal-at-chains

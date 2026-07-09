@@ -1,0 +1,15 @@
+id: beat:sailor-led-away--burn-ledger
+created_by: grow
+summary: With no ledger to back her, Juno's word alone convicts Sailor, and the principal
+  leads her away on the strength of a truth Juno can never prove again. The scholarship voids,
+  the crush is answered with handcuffs, and Sailor's look back carries the doubt of a room
+  that had only Juno's testimony.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:sailor-quinn
+- character:juno-park
+belongs_to:
+- path:name-the-truth

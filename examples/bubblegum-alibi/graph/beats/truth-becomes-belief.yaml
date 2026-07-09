@@ -1,6 +1,8 @@
 id: beat:truth-becomes-belief
-summary: Without the ledger, the reconstruction rests on memory and accusation alone, and
-  the truth curdles into a question of who the frightened crowd will believe.
+summary: The ledger burns to ash in the utility sink, and with it every provable motive; the
+  night's reconstruction now rests on memory and accusation alone. The room's belief hangs
+  on who speaks with conviction, leaving open whether Juno will name the true killer or bend
+  that fragile testimony toward someone else.
 beat_class: narrative
 dilemma_impacts:
 - dilemma: dilemma:the-ledger

@@ -1,0 +1,16 @@
+id: beat:shield-loved-commit--keep-ledger
+created_by: grow
+summary: Having kept and opened the ledger, Juno faces the dawn knowing any frame of an innocent
+  must be built against her own proven evidence to shield Sailor. She braces to twist what
+  the pages plainly show — whether she goes through with the lie or names the real killer
+  still hanging before her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: commits
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:shield-the-loved

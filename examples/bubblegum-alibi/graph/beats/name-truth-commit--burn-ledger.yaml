@@ -1,0 +1,16 @@
+id: beat:name-truth-commit--burn-ledger
+created_by: grow
+summary: Having burned the ledger, Juno faces the dawn with no proof but her own account,
+  knowing the doors will open onto memory and accusation alone. She braces to speak a name
+  she can no longer document — the choice of whether that name is Sailor's or another's still
+  hanging before her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: commits
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:name-the-truth

@@ -1,0 +1,16 @@
+id: beat:innocent-taken--keep-ledger
+created_by: grow
+summary: With the ledger intact and its motives laid bare, Juno must twist the very evidence
+  that proves Sailor guilty to steer blame onto an innocent classmate instead. The innocent
+  is escorted out at dawn while Sailor walks free beside her, the open ledger now a document
+  Juno has knowingly betrayed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:shield-the-loved

@@ -283,7 +283,7 @@ def _review_for(passage_id: str):
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         rendered = env.get_template("fill_review.j2").render(
-            **context, prose=proposal.prose, prior_issues=list(prior)
+            **context, prose=proposal.prose, prior_issues=list(prior), arbitration=None
         )
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
@@ -291,11 +291,31 @@ def _review_for(passage_id: str):
             schema=ReviewVerdict,
             role="utility",
         )
-        if verdict.verdict == "fail":
-            issues = verdict.issues or ["review failed without stating an issue"]
-            prior.extend(issues)
-            return issues
-        return []
+        if verdict.verdict != "fail":
+            return []
+        issues = verdict.issues or ["review failed without stating an issue"]
+        if prior:
+            # second strike halts the stage — but every halt so far has
+            # been the cheap reviewer sampling taste, not structure. One
+            # architect-tier arbitration breaks the tie (tiering policy:
+            # escalate rather than improvise); its verdict is final.
+            arb = env.get_template("fill_review.j2").render(
+                **context,
+                prose=proposal.prose,
+                prior_issues=list(prior),
+                arbitration=issues,
+            )
+            final = adapter.complete(
+                system=REVIEW_SYSTEM,
+                prompt=arb,
+                schema=ReviewVerdict,
+                role="architect",
+            )
+            if final.verdict != "fail":
+                return []
+            issues = final.issues or issues
+        prior.extend(issues)
+        return issues
 
     return review
 

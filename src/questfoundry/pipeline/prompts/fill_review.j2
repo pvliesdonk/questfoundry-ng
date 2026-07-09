@@ -1,3 +1,15 @@
+{% if arbitration %}
+ARBITRATION. A first-line reviewer failed this passage twice; its earlier
+rounds are under PREVIOUSLY FLAGGED (the writer revised for those) and its
+newest objections are:
+{% for i in arbitration %}
+- {{ i }}
+{% endfor %}
+You are the senior arbiter and your verdict is final. First-line reviewers
+here have repeatedly laundered taste through the rules; uphold an objection
+ONLY if the quoted text outright violates a numbered rule as written. If you
+fail this passage the stage halts as structurally broken — be certain.
+{% endif %}
 Review one passage of prose against its contract. Verdict "pass" or "fail"; on
 fail, list concrete, actionable issues (each one sentence).
 

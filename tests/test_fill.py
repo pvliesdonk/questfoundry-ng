@@ -141,6 +141,61 @@ def test_review_hook_translates_verdicts(golden_fill, monkeypatch):
     assert "prior[voice drift]" in adapter.seen
 
 
+def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch):
+    """Every stage halt so far has been the utility reviewer sampling
+    taste, never real structural wrongness (validation run, 2026-07-09).
+    A second failure escalates once to an architect-tier arbitration
+    whose verdict is final — pass accepts the prose, fail halts for real."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class ScriptedAdapter:
+        def __init__(self, script):
+            self.script = list(script)
+            self.prompts: list[tuple[str, str]] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            expected_role, verdict = self.script.pop(0)
+            assert role == expected_role
+            self.prompts.append((role, prompt))
+            return verdict
+
+    env = Environment(
+        loader=DictLoader(
+            {"fill_review.j2": "{% if arbitration %}ARB[{{ arbitration | join(';') }}]{% endif %}r"}
+        )
+    )
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    proposal = WriteProposal(prose="x " * 200)
+
+    # arbitration overturns the second strike: prose accepted
+    review = _review_for("passage:p-arrival")
+    adapter = ScriptedAdapter(
+        [
+            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
+            ("utility", ReviewVerdict(verdict="fail", issues=["fresh taste"])),
+            ("architect", ReviewVerdict(verdict="pass")),
+        ]
+    )
+    assert review(proposal, golden_fill, adapter) == ["real defect"]
+    assert review(proposal, golden_fill, adapter) == []
+    assert adapter.prompts[-1][0] == "architect"
+    assert "ARB[fresh taste]" in adapter.prompts[-1][1]
+
+    # arbitration upholds: the halt is real and carries the arbiter's issues
+    review = _review_for("passage:p-arrival")
+    adapter = ScriptedAdapter(
+        [
+            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
+            ("utility", ReviewVerdict(verdict="fail", issues=["still broken"])),
+            ("architect", ReviewVerdict(verdict="fail", issues=["confirmed: still broken"])),
+        ]
+    )
+    assert review(proposal, golden_fill, adapter) == ["real defect"]
+    assert review(proposal, golden_fill, adapter) == ["confirmed: still broken"]
+
+
 def test_fill_pass_list_is_voice_plus_one_write_per_passage(golden_fill):
     passes = _passes(golden_fill)
     assert passes[0].name == "voice"

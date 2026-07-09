@@ -314,22 +314,47 @@ def _codex_apply(proposal: CodexProposal, project: Project) -> list[str]:
     return [f"codex: {c.entity} — {c.title}" for c in project.enrichment.codex]
 
 
-def _codex_review(proposal: CodexProposal, project: Project, adapter: Any) -> list[str]:
-    from questfoundry.pipeline import runner
+def _codex_review_for():
+    # anchored + arbitrated like FILL's review (see the 2026-07-09
+    # validation-run decision log): persistence is signal, and a second
+    # failure is architect-arbitrated before it may halt the stage
+    prior: list[str] = []
 
-    env = runner._environment()
-    context = _codex_context(project)
-    rendered = env.get_template("dress_codex_review.j2").render(
-        **context,
-        entries=proposal.entries,
-        ending_titles=_ending_titles(project.graph),
-    )
-    verdict = adapter.complete(
-        system=REVIEW_SYSTEM, prompt=rendered, schema=ReviewVerdict, role="utility"
-    )
-    if verdict.verdict == "fail":
-        return verdict.issues or ["review failed without stating an issue"]
-    return []
+    def review(proposal: CodexProposal, project: Project, adapter: Any) -> list[str]:
+        from questfoundry.pipeline import runner
+
+        env = runner._environment()
+        context = _codex_context(project)
+
+        def rendered(arbitration: list[str] | None) -> str:
+            return env.get_template("dress_codex_review.j2").render(
+                **context,
+                entries=proposal.entries,
+                ending_titles=_ending_titles(project.graph),
+                prior_issues=list(prior),
+                arbitration=arbitration,
+            )
+
+        verdict = adapter.complete(
+            system=REVIEW_SYSTEM, prompt=rendered(None), schema=ReviewVerdict, role="utility"
+        )
+        if verdict.verdict != "fail":
+            return []
+        issues = verdict.issues or ["review failed without stating an issue"]
+        if prior:
+            final = adapter.complete(
+                system=REVIEW_SYSTEM,
+                prompt=rendered(issues),
+                schema=ReviewVerdict,
+                role="architect",
+            )
+            if final.verdict != "fail":
+                return []
+            issues = final.issues or issues
+        prior.extend(issues)
+        return issues
+
+    return review
 
 
 # -- pass 4: codewords ------------------------------------------------------------
@@ -391,9 +416,8 @@ def _codewords_apply(proposal: CodewordsProposal, project: Project) -> list[str]
     return lines or ["no projected flags need a codeword"]
 
 
-DRESS_STAGE = StageImpl(
-    stage=Stage.DRESS,
-    passes=(
+def _passes(project: Project) -> tuple[PassSpec, ...]:
+    return (
         PassSpec(
             name="direction",
             role="architect",
@@ -418,7 +442,7 @@ DRESS_STAGE = StageImpl(
             schema=CodexProposal,
             build_context=_codex_context,
             apply=_codex_apply,
-            review=_codex_review,
+            review=_codex_review_for(),
         ),
         PassSpec(
             name="codewords",
@@ -429,6 +453,11 @@ DRESS_STAGE = StageImpl(
             apply=_codewords_apply,
             skip_if=_codewords_skip,
         ),
-    ),
+    )
+
+
+DRESS_STAGE = StageImpl(
+    stage=Stage.DRESS,
+    passes=_passes,
     gate=lambda p: run_checks(p.graph, p.vision, Stage.DRESS, enrichment=p.enrichment),
 )

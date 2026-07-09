@@ -454,7 +454,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
-- **2026-07-09 (Sonnet 5 evaluation, in flight):** Question under test:
+- **2026-07-09 (Sonnet 5 evaluation — closed, keep Opus):** Question under test:
   can `claude-sonnet-5` ($3/$15 per MTok, $2/$10 intro through
   2026-08-31) replace `claude-opus-4-8` ($5/$25) as architect/writer in
   the default model map? Method: the same Bubblegum Alibi premise +
@@ -471,10 +471,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
   case — the provider now streams and collects the final message, same
   contract otherwise. **Default-config verdict: not faster, not
   cheaper.** Aborted mid-run (author's call) at the GROW/POLISH
-  boundary with $0.98 intro / $1.47 list already spent — 11 Sonnet
-  calls had emitted 88k output tokens (single GROW calls at 18–22k,
-  ~90% billed thinking) versus 74k for the *entire* 63-call Opus run;
-  pace projected $5–8 intro for the full story versus Opus's $3.24,
+  boundary — at the abort decision, 11 Sonnet calls had emitted 88k
+  output tokens (single GROW calls at 18–22k, ~90% billed thinking)
+  versus 74k for the *entire* 63-call Opus run; one more in-flight
+  call completed before the kill, putting the run's final ledger at
+  12 calls / 107k output / $1.18 intro. Pace projected $5–8 intro
+  for the full story versus Opus's $3.24,
   and slower wall-clock. Second experiment in flight: the provider now
   takes an optional `llm.thinking` config ("disabled" opts out of
   Sonnet 5's thinking-on default; unset sends nothing, so the Opus
@@ -516,8 +518,10 @@ PR #5) and this agent/doc infrastructure (PR #6).
   three hardening fixes (SEED apply-time scaffold rules, max_tokens
   headroom + streaming, lenient string parse) are the evaluation's
   lasting value and stay regardless of model choice. Total tuition:
-  ~$1.83. Evaluation projects left at `/home/user/stories/
-  bubblegum-sonnet{,-nothink}` (session-local, not committed).
+  ~$1.83 intro ($1.18 thinking-on final ledger + $0.65 thinking-off
+  through its FILL abort). Evaluation projects left at
+  `/home/user/stories/bubblegum-sonnet{,-nothink}` (session-local,
+  not committed).
 
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them

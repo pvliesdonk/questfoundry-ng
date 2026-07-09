@@ -152,25 +152,26 @@ def insert_residue_beat(
     g: StoryGraph, beat: Beat, path_id: str, rejoin: Sequence[str]
 ) -> None:
     """Splice a flag-gated residue beat between a path's exclusive tail and
-    the rejoin frontier: tail -> residue -> each frontier beat the tail fed.
-    The frontier is one world's (a per-world need finds that world's tail —
-    only it has edges into the frontier); when the frontier is itself a
-    deeper hard fork, the residue beat inherits the tail's edge into every
-    sub-world, so no arc dead-ends at it (I6)."""
-    targets = set(rejoin)
+    the rejoin frontier: tail -> residue -> each beat that carried the tail
+    into the frontier (a frontier beat, or a GROW bridge leading there —
+    the residue stays on the tail's side of the bridge). The frontier is
+    one world's (a per-world need finds that world's tail — only it feeds
+    the frontier); when the frontier is itself a deeper hard fork, the
+    residue beat inherits the tail's fan-out into every sub-world, so no
+    arc dead-ends at it (I6)."""
     tails = [
         b
         for b in queries.exclusive_beats(g, path_id)
-        if targets & set(queries.successors(g, b))
+        if queries.frontier_feeds(g, b, list(rejoin))
     ]
     if len(tails) != 1:
         raise mutations.MutationError(
-            f"path {path_id} has {len(tails)} beat(s) with edges into the rejoin "
-            f"frontier {sorted(targets)}; residue insertion needs exactly one"
+            f"path {path_id} has {len(tails)} beat(s) feeding the rejoin "
+            f"frontier {sorted(rejoin)}; residue insertion needs exactly one"
         )
     (tail,) = tails
     mutations.add_beat(g, beat, [])
-    for target in sorted(targets & set(queries.successors(g, tail))):
+    for target in sorted(queries.frontier_feeds(g, tail, list(rejoin))):
         mutations.remove_ordering(g, tail, target)
         mutations.add_ordering(g, beat.id, target)
     mutations.add_ordering(g, tail, beat.id)

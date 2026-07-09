@@ -14,7 +14,7 @@ from itertools import product
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind
 from questfoundry.models.drama import Dilemma, DilemmaRole, Path
-from questfoundry.models.structure import Beat, StateFlag
+from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
 
 # -- beat DAG basics -------------------------------------------------------
 
@@ -164,6 +164,40 @@ def soft_rejoin_frontiers(g: StoryGraph, dilemma_id: str) -> list[tuple[frozense
             interior |= descendants(g, b)
         result.append((world, sorted(shared - interior)))
     return result
+
+
+def frontier_feeds(g: StoryGraph, beat_id: str, frontier: list[str]) -> list[str]:
+    """Direct successors of ``beat_id`` that carry it into ``frontier``:
+    frontier beats themselves, or bridge beats whose bridge-only chains
+    reach one. GROW may splice a bridge between a tail and the frontier
+    it feeds (before the whole fork when the frontier is one); for
+    arrival questions the bridge is transparent — the drama is the
+    tail's, the bridge belongs to no path."""
+    targets = set(frontier)
+
+    def is_bridge(b: str) -> bool:
+        node = g.node(b)
+        return (
+            isinstance(node, Beat)
+            and node.beat_class == BeatClass.STRUCTURAL
+            and node.purpose == StructuralPurpose.BRIDGE
+        )
+
+    feeds = []
+    for s in successors(g, beat_id):
+        hit = s in targets
+        if not hit and is_bridge(s):
+            seen, stack = {s}, [s]
+            while stack and not hit:
+                for nxt in successors(g, stack.pop()):
+                    if nxt in targets:
+                        hit = True
+                    elif is_bridge(nxt) and nxt not in seen:
+                        seen.add(nxt)
+                        stack.append(nxt)
+        if hit:
+            feeds.append(s)
+    return feeds
 
 
 def world_label(g: StoryGraph, world: frozenset[str]) -> str:

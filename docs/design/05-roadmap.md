@@ -63,7 +63,7 @@ regeneration; `short`/`medium` scope hardening.
 ## M6 — Craft-corpus research
 
 Ground every stage in real craft knowledge without breaking the
-single-shot adapter (mini-ADR A3): a **research pass** at each stage
+one-shot adapter (mini-ADR A3): a **research pass** at each stage
 head emits *queries* as a typed proposal; the engine runs them —
 together with deterministic standing queries built from the vision
 (genre, subgenre, tone, themes are open vocabulary, so retrieval is

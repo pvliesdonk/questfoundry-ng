@@ -47,10 +47,12 @@ Stages can be grounded in a craft corpus (design doc [05 §M6](05-roadmap.md))
 without changing the loop above: a **research pass** runs at the stage
 head, in the uniform loop like any other pass (`skip_if` no corpus is
 configured). It emits *queries* — a typed proposal, judged like any
-other — and the engine retrieves: deterministic standing queries (built
-from the vision's open-vocabulary genre/tone/themes) plus the pass's
-story-specific ones go through hybrid search over the configured
-corpus, and the top-k digests are persisted as a checkpointed,
+other — and the engine retrieves. Two query kinds feed one search:
+**standing queries** the engine builds deterministically (from the
+vision's open-vocabulary genre/tone/themes) and **librarian queries**
+the research pass emits for this story's specific needs. Both go
+through hybrid search over the configured corpus, and the top-k
+digests are persisted as a checkpointed,
 author-editable artifact (`research/<stage>.md`). The stage's later
 passes read the artifact, never the search index — so reruns and
 resumes replay retrieval byte-for-byte, and "review = edit +

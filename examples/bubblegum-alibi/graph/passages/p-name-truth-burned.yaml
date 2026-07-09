@@ -1,0 +1,22 @@
+id: passage:p-name-truth-burned
+summary: With the ledger burned, Juno faces the dawn on her word alone. If she names Sailor,
+  the principal leads the girl away on a truth Juno can never prove again — the scholarship
+  voided, the crush answered with handcuffs — and the school honors the truth-teller while
+  she stands admired and utterly alone.
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+ending:
+  id: e-name-truth-burned
+  title: Ash and Testimony
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-fixed
+beats:
+- beat:admired-and-alone--burn-ledger
+- beat:name-truth-commit--burn-ledger
+- beat:sailor-led-away--burn-ledger

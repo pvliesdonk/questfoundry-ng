@@ -1,0 +1,30 @@
+id: passage:p-burn-ledger
+summary: Juno holds the ledger to the flame in the utility sink and lets every classmate's
+  secret curl into ash, her sharpest tool dying with them. Belonging is preserved and the
+  curated selves stay intact, but the room's motives are now unprovable — the night's reconstruction
+  rests on memory and accusation alone.
+entities:
+- object:yearbook-ledger
+- character:juno-park
+- location:gym
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-fixed
+beats:
+- beat:burn-ledger-commit
+- beat:secrets-preserved
+- beat:truth-becomes-belief
+choices:
+- label: Speak the true name into the dawn
+  grants:
+  - flag:juno-trusted-broken
+  - flag:sailor-taken-at-dawn
+  to: passage:p-name-truth-burned
+- label: Shape a lie against an innocent to save Sailor
+  grants:
+  - flag:innocent-framed
+  - flag:juno-complicit-forever
+  to: passage:p-shield-loved-burned

@@ -22,9 +22,7 @@ ordering:
 - - beat:keep-ledger-commit
   - beat:secrets-spill
 - - beat:knot-witness-lost
-  - beat:cover-tavi-commit
-- - beat:knot-witness-lost
-  - beat:expose-tavi-commit
+  - beat:residue-sash-witness-lost
 - - beat:ledger-damns-sailor
   - beat:trail-to-sailor
 - - beat:ledger-tempts
@@ -42,13 +40,13 @@ ordering:
 - - beat:mona-testimony
   - beat:mona-thrown-to-crowd
 - - beat:mona-thrown-to-crowd
-  - beat:bridge-crowd-to-circle
+  - beat:residue-mona-testimony
 - - beat:motive-map-open
   - beat:name-truth-commit--keep-ledger
 - - beat:motive-map-open
   - beat:shield-loved-commit--keep-ledger
 - - beat:murky-minutes
-  - beat:ledger-tempts
+  - beat:residue-timeline-hole
 - - beat:name-truth-commit--burn-ledger
   - beat:sailor-led-away--burn-ledger
 - - beat:name-truth-commit--keep-ledger
@@ -59,6 +57,16 @@ ordering:
   - beat:burn-ledger-commit
 - - beat:principal-at-chains
   - beat:keep-ledger-commit
+- - beat:residue-mona-testimony
+  - beat:bridge-crowd-to-circle
+- - beat:residue-sash-witness-lost
+  - beat:cover-tavi-commit
+- - beat:residue-sash-witness-lost
+  - beat:expose-tavi-commit
+- - beat:residue-timeline-fixed
+  - beat:ledger-tempts
+- - beat:residue-timeline-hole
+  - beat:ledger-tempts
 - - beat:sailor-led-away--burn-ledger
   - beat:admired-and-alone--burn-ledger
 - - beat:sailor-led-away--keep-ledger
@@ -80,15 +88,21 @@ ordering:
 - - beat:tavi-confesses-early
   - beat:bridge-confession-to-knot
 - - beat:tavi-goes-cold
-  - beat:ledger-tempts
+  - beat:residue-timeline-fixed
 - - beat:tavi-lies
   - beat:tavi-confesses-early
 - - beat:tavi-loyal
   - beat:murky-minutes
 - - beat:timeline-gap
   - beat:mona-grieving
-- - beat:trail-to-sailor
+- - beat:trail-dropped-lanyard
   - beat:timeline-gap
+- - beat:trail-scuffed-heels
+  - beat:timeline-gap
+- - beat:trail-to-sailor
+  - beat:trail-dropped-lanyard
+- - beat:trail-to-sailor
+  - beat:trail-scuffed-heels
 - - beat:truth-becomes-belief
   - beat:name-truth-commit--burn-ledger
 - - beat:truth-becomes-belief

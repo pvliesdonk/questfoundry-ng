@@ -1,0 +1,33 @@
+id: passage:p-blackout-suspects
+summary: The blackout timeline won't add up — the lights died before Tavi's cue, and Tavi's
+  shaking hands confess she killed them early to bury a stunt gone wrong. Between Mona sobbing
+  over a fresh demotion, the signature knot only a rehearsed hand could tie, and Sailor pleading
+  through tears, Juno holds every buried motive in the room and must decide whether to press
+  the grieving girl or protect her.
+entities:
+- character:juno-park
+- location:gym
+- character:mona-vale
+- character:tavi-okonkwo
+- object:victory-sash
+- character:sailor-quinn
+beats:
+- beat:bridge-confession-to-knot
+- beat:mona-begs
+- beat:mona-grieving
+- beat:mona-knows-knot
+- beat:sailor-pleads
+- beat:tavi-confesses-early
+- beat:tavi-lies
+- beat:timeline-gap
+choices:
+- label: Press Mona on the demotion until she talks
+  grants:
+  - flag:mona-fed-to-mob
+  - flag:mona-testimony-extracted
+  to: passage:p-press-mona
+- label: Bury the demotion and let Mona breathe
+  grants:
+  - flag:mona-protected
+  - flag:sash-witness-lost
+  to: passage:p-spare-mona

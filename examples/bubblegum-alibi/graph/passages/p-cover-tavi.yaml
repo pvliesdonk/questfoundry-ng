@@ -1,0 +1,19 @@
+id: passage:p-cover-tavi
+summary: When the room demands the blackout timeline, Juno backs Tavi's false cue, sealing
+  the lie with a steady voice. Their conspiracy holds and their trust welds tighter, but the
+  true minutes stay fogged and every suspect eyes the dark to shove blame into it.
+entities:
+- character:juno-park
+- character:tavi-okonkwo
+- location:gym
+irrelevant_flags:
+- flag:mona-testimony-extracted
+beats:
+- beat:cover-tavi-commit
+- beat:murky-minutes
+- beat:tavi-loyal
+choices:
+- label: Let the murky minutes hang over the circle
+  requires:
+  - flag:timeline-hole
+  to: passage:p-residue-timeline-hole

@@ -1,0 +1,11 @@
+id: beat:residue-timeline-fixed
+created_by: polish
+summary: Tavi's back is a wall of turned glitter, silence sharp as cut foil; the minutes are
+  nailed down now, and the cold of it settles between Juno's shoulders.
+beat_class: structural
+purpose: residue
+entities:
+- character:juno
+- character:tavi
+requires_flags:
+- flag:timeline-fixed

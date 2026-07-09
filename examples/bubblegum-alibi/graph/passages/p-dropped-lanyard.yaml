@@ -1,0 +1,10 @@
+id: passage:p-dropped-lanyard
+summary: Juno lifts a punch-sticky lanyard from the floor near the sailor's table, its clip
+  snapped where a panicked hand gripped too tight.
+entities:
+- character:juno
+beats:
+- beat:trail-dropped-lanyard
+choices:
+- label: Turn the sticky lanyard over and reconstruct the dark
+  to: passage:p-blackout-suspects

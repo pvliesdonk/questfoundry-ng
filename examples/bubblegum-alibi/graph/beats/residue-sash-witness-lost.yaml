@@ -1,0 +1,11 @@
+id: beat:residue-sash-witness-lost
+created_by: polish
+summary: Mona keeps her arms folded and her mouth shut, and the sash's knot stays a secret;
+  the quiet she bought hums under the glitter like a missing note.
+beat_class: structural
+purpose: residue
+entities:
+- character:mona
+- character:juno
+requires_flags:
+- flag:sash-witness-lost

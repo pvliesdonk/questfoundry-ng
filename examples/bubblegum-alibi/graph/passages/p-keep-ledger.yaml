@@ -1,0 +1,31 @@
+id: passage:p-keep-ledger
+summary: Juno pockets the lighter and opens the ledger to the room, becoming the exposer she
+  swore never to be as affairs, thefts, and betrayals pour into the gym. The full map of motives
+  lies spread across the table where the killer's name can be proven beyond bending — leaving
+  open whether she names the true killer or shields the girl she loves.
+entities:
+- object:yearbook-ledger
+- character:juno-park
+- location:gym
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-fixed
+- flag:timeline-hole
+beats:
+- beat:keep-ledger-commit
+- beat:motive-map-open
+- beat:secrets-spill
+choices:
+- label: Point to the proven name on the open page
+  grants:
+  - flag:juno-trusted-broken
+  - flag:sailor-taken-at-dawn
+  to: passage:p-name-truth-kept
+- label: Twist the evidence to shield the girl you love
+  grants:
+  - flag:innocent-framed
+  - flag:juno-complicit-forever
+  to: passage:p-shield-loved-kept

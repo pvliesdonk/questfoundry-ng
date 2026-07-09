@@ -1,0 +1,10 @@
+id: passage:p-scuffed-heels
+summary: Juno tracks a smear of glittering heel-marks across the gym floor, each scuff dragging
+  her toward the sailor's costume corner.
+entities:
+- character:juno
+beats:
+- beat:trail-scuffed-heels
+choices:
+- label: Trace the scuffs into the tangle of the blackout
+  to: passage:p-blackout-suspects

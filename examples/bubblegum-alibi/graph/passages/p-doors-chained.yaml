@@ -1,0 +1,24 @@
+id: passage:p-doors-chained
+summary: The senior lock-in chains its doors at midnight, and when the blackout finale lights
+  come back up Marilee Sweet hangs dead beneath the disco ball, strangled with her own victory
+  sash. Alone in the equipment closet, Juno opens the hidden ledger of everyone's secrets
+  and finds Sailor's page — the girl she loves — laced with debt, motive, and a trail of evidence
+  that all points her way.
+entities:
+- location:gym
+- character:juno-park
+- character:marilee-sweet
+- object:victory-sash
+- object:yearbook-ledger
+- character:sailor-quinn
+beats:
+- beat:body-under-glitter
+- beat:doors-chained
+- beat:ledger-damns-sailor
+- beat:ledger-weight
+- beat:trail-to-sailor
+choices:
+- label: Follow the glittering heel-marks toward the costume corner
+  to: passage:p-scuffed-heels
+- label: Pick up the snapped lanyard near the sailor's table
+  to: passage:p-dropped-lanyard

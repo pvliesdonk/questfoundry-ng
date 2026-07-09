@@ -223,7 +223,9 @@ def add_entity_detail(g: StoryGraph, entity_id: str, key: str, value: str) -> No
     if key in entity.base and entity.base[key] != value:
         raise MutationError(
             f"{entity_id} already has {key!r} = {entity.base[key]!r}; "
-            "micro-details never overwrite established facts"
+            "micro-details never overwrite established facts — keep the "
+            "existing fact and record the new observation under an unused "
+            "key, or drop it"
         )
     entity.base[key] = value
 

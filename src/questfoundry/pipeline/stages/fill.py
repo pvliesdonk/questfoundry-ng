@@ -9,7 +9,8 @@ has a first author; every remaining passage is then written toward the
 already-written text (window + lookahead context). Nothing about the
 reference arc is stored or visible to any other stage.
 
-Each write pass enforces the word budget deterministically (repairable)
+Each write pass enforces the word budget deterministically (repairable,
+with 10% slack — models cannot hit exact word windows)
 and then faces the automated review — an LLM judgment on voice, beat
 fidelity, and continuity, run through `PassSpec.review`, so the ≤2
 revision rounds and the "structure is wrong, not the words" halt are
@@ -249,7 +250,10 @@ def _write_apply_for(passage_id: str):
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         lo, hi = project.vision.preset.words_per_passage
         count = len(proposal.prose.split())
-        if not lo <= count <= hi:
+        # models cannot hit exact word windows: repair only beyond 10%
+        # slack; the exact preset range stays the prompt's target and
+        # B5's advisory line
+        if not lo * 0.9 <= count <= hi * 1.1:
             raise ApplyError(
                 f"prose for {passage_id} is {count} words; the budget is {lo}-{hi}"
             )

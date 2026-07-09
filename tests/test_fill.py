@@ -70,6 +70,21 @@ def test_word_budget_is_enforced_at_apply(golden_fill):
         apply(WriteProposal(prose="far too short"), golden_fill)
 
 
+def test_word_budget_has_slack_at_the_bounds(golden_fill):
+    """Live medium run (2026-07-09): the writer repeatedly landed a few
+    words over the cap and exhausted repairs — models cannot hit exact
+    word windows. Apply repairs only beyond 10% slack; the exact range
+    stays the prompt's target and B5's advisory line."""
+    lo, hi = golden_fill.vision.preset.words_per_passage
+    apply = _write_apply_for("passage:p-arrival")
+    apply(WriteProposal(prose="w " * (hi + hi // 20)), golden_fill)  # 5% over: accepted
+    with pytest.raises(ApplyError, match="budget"):
+        apply(WriteProposal(prose="w " * (hi + hi // 5)), golden_fill)  # 20% over: repaired
+    apply(WriteProposal(prose="w " * (lo - lo // 20)), golden_fill)  # 5% short: accepted
+    with pytest.raises(ApplyError, match="budget"):
+        apply(WriteProposal(prose="w " * (lo - lo // 5)), golden_fill)  # 20% short: repaired
+
+
 def test_write_context_carries_the_contract(golden_fill):
     golden_fill.voice = golden_fill.voice or Voice(
         pov="third", tense="present", diction="spare"

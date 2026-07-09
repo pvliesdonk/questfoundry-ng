@@ -13,7 +13,7 @@ from itertools import product
 
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind
-from questfoundry.models.drama import Dilemma, Path
+from questfoundry.models.drama import Dilemma, DilemmaRole, Path
 from questfoundry.models.structure import Beat, StateFlag
 
 # -- beat DAG basics -------------------------------------------------------
@@ -99,48 +99,77 @@ def exclusive_beats(g: StoryGraph, path_id: str) -> list[str]:
     return [b for b in g.in_ids(path_id, EdgeKind.BELONGS_TO) if paths_of_beat(g, b) == [path_id]]
 
 
-def commit_beat(g: StoryGraph, path_id: str) -> str | None:
+def commit_beats(g: StoryGraph, path_id: str) -> list[str]:
+    """A path's commit beats, sorted. Exactly one absent multi-hard
+    expansion; one per world once the path's dilemma resolves inside a
+    hard fork (the tensor model, design doc 01 §5 — invariant I3)."""
     dilemma = dilemma_of_path(g, path_id)
+    result = []
     for b in exclusive_beats(g, path_id):
         beat = g.node(b)
         assert isinstance(beat, Beat)
         if dilemma in beat.commits_dilemmas:
-            return b
-    return None
+            result.append(b)
+    return sorted(result)
 
 
-def grant_beat(g: StoryGraph, flag_id: str) -> str | None:
-    """The beat at which a dilemma flag becomes active (the path's commit)."""
+def grant_beats(g: StoryGraph, flag_id: str) -> list[str]:
+    """The beats at which a dilemma flag becomes active (the path's
+    commits — one per world). A flag is active once ANY of them is in a
+    walk's history; an arc only ever reaches one."""
     flag = g.node(flag_id)
     assert isinstance(flag, StateFlag)
     if flag.path is None:
-        return None
-    return commit_beat(g, flag.path)
+        return []
+    return commit_beats(g, flag.path)
 
 
-def soft_rejoin_frontier(g: StoryGraph, dilemma_id: str) -> list[str]:
-    """The beat(s) where a soft dilemma's paths rejoin: the minimal shared
-    descendants of its two commits. Usually a single convergence beat; one
-    beat per world when the diamond feeds a hard fork directly (the soft
-    coordinate collapses into each world separately — design doc 01 §5)."""
+def hard_commit_beats(g: StoryGraph) -> set[str]:
+    """Commit beats of every explored hard-dilemma path — the beats that
+    create worlds."""
+    commits: set[str] = set()
+    for d in g.nodes_of(Dilemma):
+        if d.role == DilemmaRole.HARD:
+            for p in explored_paths(g, d.id):
+                commits.update(commit_beats(g, p))
+    return commits
+
+
+def world_of(g: StoryGraph, beat_id: str) -> frozenset[str]:
+    """A beat's hard-fork coordinate: the hard commit beats among its
+    ancestors. Empty in the shared region before any hard fork."""
+    return frozenset(hard_commit_beats(g) & ancestors(g, beat_id))
+
+
+def soft_rejoin_frontiers(g: StoryGraph, dilemma_id: str) -> list[tuple[frozenset[str], list[str]]]:
+    """Per-world rejoin frontiers of a soft dilemma, as (world, frontier)
+    pairs sorted by world.
+
+    The two paths' commits are paired by world (equal hard-commit
+    ancestry); each pair's frontier is the minimal shared descendants of
+    the two commits. A frontier is usually a single convergence beat; it
+    is one beat per (deeper) world when the diamond feeds a hard fork
+    directly (the soft coordinate collapses into each world separately —
+    design doc 01 §5)."""
     paths = explored_paths(g, dilemma_id)
     if len(paths) != 2:
         return []
-    commits = [commit_beat(g, p) for p in paths]
-    if None in commits:
-        return []
-    shared = descendants(g, commits[0]) & descendants(g, commits[1])  # type: ignore[arg-type]
-    interior: set[str] = set()
-    for b in shared:
-        interior |= descendants(g, b)
-    return sorted(shared - interior)
+    a_commits = {world_of(g, c): c for c in commit_beats(g, paths[0])}
+    b_commits = {world_of(g, c): c for c in commit_beats(g, paths[1])}
+    result = []
+    for world in sorted(set(a_commits) & set(b_commits), key=sorted):
+        shared = descendants(g, a_commits[world]) & descendants(g, b_commits[world])
+        interior: set[str] = set()
+        for b in shared:
+            interior |= descendants(g, b)
+        result.append((world, sorted(shared - interior)))
+    return result
 
 
-def soft_convergence(g: StoryGraph, dilemma_id: str) -> str | None:
-    """The single beat where a soft dilemma's paths rejoin, or None when
-    the rejoin frontier is a hard fork (no one beat is on every arc)."""
-    frontier = soft_rejoin_frontier(g, dilemma_id)
-    return frontier[0] if len(frontier) == 1 else None
+def world_label(g: StoryGraph, world: frozenset[str]) -> str:
+    """Human-readable world name: the path(s) whose hard commits define
+    it, e.g. 'path:bargain-keep'. Empty for the shared region."""
+    return "+".join(sorted(paths_of_beat(g, c)[0] for c in world))
 
 
 def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, str]:
@@ -189,8 +218,7 @@ def arc_view(g: StoryGraph, selection: dict[str, str]) -> set[str]:
             if beat_paths and any(dilemma_of_path(g, p) in branched for p in beat_paths):
                 return False
         for flag_id in beat.requires_flags:
-            grant = grant_beat(g, flag_id)
-            if grant is None or grant not in in_view:
+            if not any(grant in in_view for grant in grant_beats(g, flag_id)):
                 return False
         return True
 

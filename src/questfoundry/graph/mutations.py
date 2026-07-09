@@ -271,21 +271,48 @@ def add_variant(g: StoryGraph, variant: str, base: str) -> None:
     g._add_edge(Edge(kind=EdgeKind.VARIANT_OF, src=variant, dst=base))
 
 
+def set_beat_summary(g: StoryGraph, beat_id: str, summary: str) -> None:
+    """GROW's contextualize write path: rewrite a beat's summary for its
+    world (per-world clones, de-ended first-fork tails). Frozen beats'
+    content is settled — POLISH and later never rewrite what happens."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if not summary.strip():
+        raise MutationError(f"summary for {beat_id} is empty")
+    if g.frozen and beat_id in g.frozen.beats:
+        raise MutationError(f"beat {beat_id} is frozen; summaries are settled at the freeze")
+    beat.summary = summary
+
+
+def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:
+    """GROW's realization: a nested hard fork de-ends the first-forking
+    dilemma's tails (the story continues into the climax fork)."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if g.frozen and beat_id in g.frozen.beats:
+        raise MutationError(f"beat {beat_id} is frozen; endings cannot move after the freeze")
+    beat.is_ending = is_ending
+
+
 def freeze_topology(g: StoryGraph) -> FreezeRecord:
     """Record the dilemma topology at the end of GROW (I9)."""
     forks: dict[str, list[str]] = {}
-    convergences: dict[str, str] = {}
+    convergences: dict[str, list[str]] = {}
     for dilemma in g.nodes_of(Dilemma):
         paths = queries.explored_paths(g, dilemma.id)
-        commits = sorted(c for p in paths if (c := queries.commit_beat(g, p)))
+        commits = sorted(c for p in paths for c in queries.commit_beats(g, p))
         if commits:
             forks[dilemma.id] = commits
-        if dilemma.role == DilemmaRole.SOFT and len(commits) == 2:
-            # A fork-rejoin frontier (>1 beat) is the hard dilemma's commits,
-            # already frozen under forks — record only single-beat convergences.
-            convergence = queries.soft_convergence(g, dilemma.id)
-            if convergence:
-                convergences[dilemma.id] = convergence
+        if dilemma.role == DilemmaRole.SOFT and commits:
+            # A multi-beat frontier is a deeper hard fork's commits, already
+            # frozen under forks — record only single-beat convergences.
+            beats = sorted(
+                f[0] for _, f in queries.soft_rejoin_frontiers(g, dilemma.id) if len(f) == 1
+            )
+            if beats:
+                convergences[dilemma.id] = beats
     record = FreezeRecord(
         beats=sorted(b.id for b in g.nodes_of(Beat)),
         forks=forks,

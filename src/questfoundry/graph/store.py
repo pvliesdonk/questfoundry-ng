@@ -15,7 +15,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import TypeVar
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from questfoundry.models.base import Edge, EdgeKind, Node
 
@@ -32,12 +32,19 @@ class FreezeRecord(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     beats: list[str]
-    # dilemma id -> its commit beat ids (the fork structure)
+    # dilemma id -> its commit beat ids (the fork structure; one commit
+    # per path per world once a dilemma resolves inside a hard fork)
     forks: dict[str, list[str]]
-    # soft dilemma id -> the single beat where its paths rejoin; omitted
-    # when the rejoin frontier is a hard fork (those beats are the hard
-    # dilemma's commits, already frozen under forks)
-    convergences: dict[str, str]
+    # soft dilemma id -> the single beat per world where its paths
+    # rejoin; a world whose rejoin frontier is a deeper hard fork is
+    # omitted (those beats are that dilemma's commits, frozen under forks)
+    convergences: dict[str, list[str]]
+
+    @field_validator("convergences", mode="before")
+    @classmethod
+    def _coerce_single_beat(cls, value: dict) -> dict:
+        # pre-multi-hard freeze files recorded one beat per dilemma
+        return {k: [v] if isinstance(v, str) else v for k, v in value.items()}
 
 
 class StoryGraph:

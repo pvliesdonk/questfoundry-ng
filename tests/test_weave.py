@@ -171,12 +171,10 @@ def test_intersection_group_members_stay_adjacent():
     assert g.has_edge(EdgeKind.PREDECESSOR, members[0], members[1])
 
 
-def test_two_hard_dilemmas_are_rejected():
+def test_zero_hard_dilemmas_are_rejected():
     g = StoryGraph()
-    d1, p1a, p1b = make_dilemma(g, "one", role=DilemmaRole.HARD)
-    d2, p2a, p2b = make_dilemma(g, "two", role=DilemmaRole.HARD)
-    scaffold(g, "one", d1, p1a, p1b)
-    scaffold(g, "two", d2, p2a, p2b)
+    d1, p1a, p1b = make_dilemma(g, "one", role=DilemmaRole.SOFT)
+    scaffold(g, "one", d1, p1a, p1b, endings=False)
     with pytest.raises(weave.WeaveError, match="hard dilemma"):
         weave.plan(g)
 

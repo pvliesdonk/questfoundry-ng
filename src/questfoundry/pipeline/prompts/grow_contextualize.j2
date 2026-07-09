@@ -1,0 +1,36 @@
+Contextualize per-world beats. The story has more than one hard dilemma, so its
+forks nest: after the first point of no return the world splits, and every later
+story moment was instantiated once per world — same dramatic function, genuinely
+different context. The engine copied the structure; you write what each copy's
+moment actually looks like in its world. Some beats below are instead de-ended
+tails: they used to end the story, but a final fork now follows them — rewrite
+them to settle their own question while leaving the remaining one open.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+BEATS TO REWRITE:
+{% for t in targets %}
+{% if t.kind == "clone" %}
+- {{ t.beat.id }} (in the world of {{ t.world }}): {{ t.beat.summary }}
+{% for f in t.facts %}
+  true here: {{ f.dilemma.question }} -> "{{ f.answer }}" ({{ f.consequences | join("; ") }});
+  committed when: {{ f.committed_at }}
+{% endfor %}
+{% else %}
+- {{ t.beat.id }} (no longer the ending): {{ t.beat.summary }}
+{% for q in t.open_questions %}
+  still unresolved after this beat: {{ q }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+REQUIREMENTS:
+- Rewrite every beat listed, exactly once, keyed by its full beat id.
+- Keep each beat's dramatic function: the same moment, the same stakes, the same
+  entities — recolored by what is true in its world. Do not add or remove events.
+- Per-world copies of the same moment must genuinely differ: what the characters
+  know, fear, and have lost differs between worlds, and the summary must show it.
+- De-ended tails: resolve their own arc's immediate action, but end open — the
+  unresolved question above is the story's climax and must still be live.
+- 1-3 sentence summaries of what HAPPENS (events, not prose), present tense.
+{% include "_shared.j2" %}

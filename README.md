@@ -45,8 +45,10 @@ page, the codex as an appendix, and an ending index. `qf rerun <stage>
 --keep <pass>` regenerates a stage from its predecessor's checkpoint
 while re-applying kept passes for free. Under it sit M4 (FILL, HTML/
 Twee/JSON exports), M3 (passage compilation, `qf play`), M2 (the weave),
-M1 (stage runner, LLM adapter), and the M0 foundation. Remaining for M5:
-multi-hard weaving (`medium` scope) and a live medium-scope generation.
+M1 (stage runner, LLM adapter), and the M0 foundation. Multi-hard
+weaving landed: hard forks nest, every beat after the first fork is
+instantiated per world, and endings multiply (2 hard → 4 endings).
+Remaining for M5: a live `medium`-scope generation within budget.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
 carries hand-authored enrichment and prints end-to-end:
 

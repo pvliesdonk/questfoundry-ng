@@ -3,22 +3,25 @@
 The weave turns SEED's disconnected Y scaffolds into one beat DAG. Each
 dilemma contributes its shared pre-commit beats as movable *units* and
 its fork as one atomic unit — commit beats plus post-commit chains: a
-diamond that reconverges for a soft dilemma, the terminal split for the
+diamond that reconverges for a soft dilemma, the terminal split for a
 hard one. Constraints come from dilemma relations (wraps/serial),
 temporal hints, and intersection adjacency; candidate interleavings are
 topological orders of the units. The LLM only *chooses among* candidates
 (it never invents an order); realization then recomputes the full
 PREDECESSOR edge set through the mutation layer.
 
-M2 scope: exactly one hard dilemma and both answers of every dilemma
-explored. The general model is the weave as a tensor of Y graphs (one
-dimension per dilemma): soft dimensions collapse at convergence into
-flags/residue; hard dimensions stay expanded, so with several hard
-dilemmas the inner Y materializes once per world (same dilemma-relative
-meaning, different context, distinct beats) and endings multiply
-(design doc 01 §5). The spine here is the flattened one-hard special
-case — at most one dimension expanded at a time; true expansion is M5
-work, see docs/STATUS.md.
+The weave is a tensor of Y graphs (one dimension per dilemma): soft
+dimensions collapse at convergence into flags/residue; hard dimensions
+stay expanded (design doc 01 §5). Realization walks the chosen order
+tracking *worlds*: units before the first hard fork are placed once and
+shared; every unit after it is instantiated once per world — structure
+copied mechanically, world-suffixed ids, the template replaced
+symmetrically so no world owns the "original" beats — and each further
+hard resolve multiplies the worlds, so endings multiply (2 hard → 4).
+The last unit is always the climax hard resolve; the earlier hard
+forks' chain tails stop being endings (the story continues into the
+climax question). Clone *content* is contextualized per world by GROW's
+contextualize pass — structure is copied here, words are not.
 """
 
 from __future__ import annotations
@@ -27,7 +30,7 @@ from dataclasses import dataclass, field
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
-from questfoundry.models.base import EdgeKind
+from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma, DilemmaRole
 from questfoundry.models.structure import (
     Beat,
@@ -82,7 +85,16 @@ class WeavePlan:
     constraints: set[tuple[str, str]]  # (before key, after key)
     shapes: list[DilemmaShape]
     unit_of_beat: dict[str, str]  # shared beat -> unit key (group-aware)
+    hard_resolves: list[str] = field(default_factory=list)  # sorted resolve keys
     dropped_hints: list[str] = field(default_factory=list)
+
+
+@dataclass
+class RealizeReport:
+    added: int
+    removed: int
+    clones: dict[str, list[str]]  # template beat id -> per-world clone ids
+    de_ended: list[str]  # earlier hard forks' tails that stopped being endings
 
 
 def _chain_order(g: StoryGraph, beats: set[str], what: str) -> list[str]:
@@ -134,9 +146,13 @@ def shapes(g: StoryGraph) -> tuple[list[DilemmaShape], list[str]]:
             raise WeaveError(f"dilemma {d.id} has no shared pre-commit beats")
         chains: dict[str, list[str]] = {}
         for p in paths:
-            commit = queries.commit_beat(g, p)
-            if commit is None:
-                raise WeaveError(f"path {p} has no commit beat")
+            commits = queries.commit_beats(g, p)
+            if len(commits) != 1:
+                raise WeaveError(
+                    f"path {p} has {len(commits)} commit beats; the weave starts "
+                    "from SEED's single Y per dilemma"
+                )
+            (commit,) = commits
             exclusive = set(queries.exclusive_beats(g, p))
             post = _chain_order(g, exclusive - {commit}, f"post-commit chain of {p}")
             chains[p] = [commit, *post]
@@ -153,10 +169,9 @@ def shapes(g: StoryGraph) -> tuple[list[DilemmaShape], list[str]]:
         claimed.update(pre)
         for chain in chains.values():
             claimed.update(chain)
-    if len(hard) != 1:
+    if not hard:
         raise WeaveError(
-            f"the weave needs exactly one hard dilemma, found {len(hard)} "
-            "(multi-hard topology is a later milestone)"
+            "the weave needs at least one hard dilemma (the backbone whose fork ends the story)"
         )
     setup = {
         b.id
@@ -271,23 +286,32 @@ def plan(g: StoryGraph) -> WeavePlan:
         elif e.kind == EdgeKind.SERIAL and e.src in first_pre and e.dst in first_pre:
             constrain(resolve_key[e.src], first_pre[e.dst])
 
-    # Nothing shared may follow the hard fork (its branches never rejoin,
-    # so a later single-node beat would reconverge them — I7).
-    (hard_rkey,) = [resolve_key[s.dilemma] for s in shape_list if s.role == DilemmaRole.HARD]
-    for key in units:
-        constrain(key, hard_rkey)
+    hard_rkeys = sorted(
+        resolve_key[s.dilemma] for s in shape_list if s.role == DilemmaRole.HARD
+    )
+    # Units after a hard fork are realized per world (cloned), so shared
+    # units MAY follow it — except intersection groups, whose whole point
+    # is one scene every player shares (design doc 01 §5): they stay in
+    # the truly shared region, before every hard fork.
+    for key in group_members:
+        for rkey in hard_rkeys:
+            constrain(key, rkey)
     if "setup" in units:
         for key in units:
             constrain("setup", key)
 
     keys = sorted(units)
-    if _toposort(keys, constraints) is None:
+    if not _climax_feasible(keys, constraints, hard_rkeys):
         raise WeaveError("ordering constraints are cyclic; the scaffolds cannot be interleaved")
 
     # Temporal hints are advisory: adopt each (in deterministic order)
-    # unless it makes the constraints cyclic, in which case report it.
+    # unless no climax choice stays satisfiable, in which case report it.
     planned = WeavePlan(
-        units=units, constraints=constraints, shapes=shape_list, unit_of_beat=unit_of_beat
+        units=units,
+        constraints=constraints,
+        shapes=shape_list,
+        unit_of_beat=unit_of_beat,
+        hard_resolves=hard_rkeys,
     )
     for shape in shape_list:
         for b in shape.pre:
@@ -301,20 +325,38 @@ def plan(g: StoryGraph) -> WeavePlan:
                     continue
                 ukey = unit_of_beat[b]
                 pair = (ukey, rkey) if hint.position == HintPosition.BEFORE_COMMIT else (rkey, ukey)
-                if pair[0] == pair[1] or _toposort(keys, constraints | {pair}) is None:
+                if pair[0] == pair[1] or not _climax_feasible(
+                    keys, constraints | {pair}, hard_rkeys
+                ):
                     planned.dropped_hints.append(desc + " (unsatisfiable)")
                 else:
                     constraints.add(pair)
     return planned
 
 
-def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
-    """Topological orders of the units under the constraints, in
-    deterministic (lexicographic-choice DFS) order, up to `cap`."""
-    keys = sorted(planned.units)
+def _climax_constraints(
+    keys: list[str], constraints: set[tuple[str, str]], climax: str
+) -> set[tuple[str, str]]:
+    """The climax hard resolve is the story's final unit: every other
+    unit precedes it (nothing may follow the endings)."""
+    return constraints | {(k, climax) for k in keys if k != climax}
+
+
+def _climax_feasible(
+    keys: list[str], constraints: set[tuple[str, str]], hard_rkeys: list[str]
+) -> bool:
+    return any(
+        _toposort(keys, _climax_constraints(keys, constraints, h)) is not None
+        for h in hard_rkeys
+    )
+
+
+def _orders(keys: list[str], constraints: set[tuple[str, str]], cap: int) -> list[list[str]]:
+    """Topological orders of `keys` under `constraints`, in deterministic
+    (lexicographic-choice DFS) order, up to `cap`."""
     succ: dict[str, set[str]] = {k: set() for k in keys}
     indeg = dict.fromkeys(keys, 0)
-    for a, b in planned.constraints:
+    for a, b in constraints:
         if b not in succ[a]:
             succ[a].add(b)
             indeg[b] += 1
@@ -344,27 +386,125 @@ def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
                 return
 
     dfs()
-    if not results:
-        raise WeaveError("no valid interleaving exists")  # plan() guarantees otherwise
     return results
 
 
-def realize(g: StoryGraph, planned: WeavePlan, order: list[str]) -> tuple[int, int]:
-    """Rewire the beat graph to the chosen interleaving: the target edge
-    set is each unit's internal edges plus tails->heads between spine
-    neighbors; everything else goes. Returns (added, removed)."""
+def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
+    """Candidate interleavings, up to `cap`. One enumeration per feasible
+    climax choice (which hard dilemma resolves last — the nesting order),
+    each with an even share of the cap, so multi-hard candidate lists
+    always show every viable nesting."""
+    keys = sorted(planned.units)
+    feasible = []
+    for climax in planned.hard_resolves:
+        cons = _climax_constraints(keys, planned.constraints, climax)
+        if _toposort(keys, cons) is not None:
+            feasible.append(cons)
+    if not feasible:
+        raise WeaveError("no valid interleaving exists")  # plan() guarantees otherwise
+    results: list[list[str]] = []
+    share = max(1, cap // len(feasible))
+    for cons in feasible:
+        results.extend(_orders(keys, cons, share))
+    return results[:cap]
+
+
+@dataclass
+class _World:
+    suffix: str  # "" for the shared region; hard path slugs after forks
+    tails: list[str]  # current attach points for the next unit
+
+
+def realize(g: StoryGraph, planned: WeavePlan, order: list[str]) -> RealizeReport:
+    """Rewire the beat graph to the chosen interleaving.
+
+    The order is walked left to right tracking worlds. In the shared
+    region (before the first hard resolve) a unit's beats are placed
+    as-is; after it, every unit is instantiated once per world — fresh
+    world-suffixed beats through the mutation layer, the template
+    removed so no world owns the "original" (symmetric by design, like
+    the no-canonical-answer rule) — and each hard resolve splits every
+    world it is placed in. The target PREDECESSOR edge set is each
+    realized unit's internal edges plus tails->heads between spine
+    neighbors per world; everything else goes. Tails of every hard fork
+    except the climax stop being endings — their worlds continue.
+    """
     if sorted(order) != sorted(planned.units):
         raise WeaveError("order must place every unit exactly once")
+    if planned.hard_resolves and order[-1] not in planned.hard_resolves:
+        raise WeaveError("the last unit must be a hard resolve (the climax fork)")
+    shape_of = {f"resolve:{s.dilemma}": s for s in planned.shapes}
+
+    worlds = [_World(suffix="", tails=[])]
     target: set[tuple[str, str]] = set()
+    clone_plan: list[tuple[str, str]] = []  # (template, clone id), creation order
+    cloned_templates: set[str] = set()
+    de_ended: list[str] = []
+
     for key in order:
-        target.update(planned.units[key].internal)
-    for a, b in zip(order, order[1:], strict=False):
-        for t in planned.units[a].tails:
-            for h in planned.units[b].heads:
-                target.add((t, h))
+        unit = planned.units[key]
+        shape = shape_of.get(key)
+        is_hard = shape is not None and shape.role == DilemmaRole.HARD
+        next_worlds: list[_World] = []
+        for w in worlds:
+            if w.suffix:
+                mapping = {b: f"{b}--{w.suffix}" for b in unit.beats}
+                for b in unit.beats:
+                    clone_plan.append((b, mapping[b]))
+                cloned_templates.update(unit.beats)
+            else:
+                mapping = {b: b for b in unit.beats}
+            for a, b in unit.internal:
+                target.add((mapping[a], mapping[b]))
+            for t in w.tails:
+                for h in unit.heads:
+                    target.add((t, mapping[h]))
+            if is_hard:
+                assert shape is not None
+                for p in sorted(shape.chains):
+                    tail = mapping[shape.chains[p][-1]]
+                    if key != order[-1]:
+                        de_ended.append(tail)
+                    slug = p.split(":", 1)[1]
+                    child = f"{w.suffix}--{slug}" if w.suffix else slug
+                    next_worlds.append(_World(suffix=child, tails=[tail]))
+            else:
+                next_worlds.append(
+                    _World(suffix=w.suffix, tails=[mapping[t] for t in unit.tails])
+                )
+        worlds = next_worlds
+
+    clones: dict[str, list[str]] = {}
+    for template_id, clone_id in clone_plan:
+        template = g.node(template_id)
+        assert isinstance(template, Beat)
+        clone = template.model_copy(
+            update={
+                "id": clone_id,
+                "created_by": Stage.GROW,
+                # SEED's interleaving annotations are consumed by this weave
+                "temporal_hints": [],
+                "flexibility": "",
+            }
+        )
+        mutations.add_beat(g, clone, queries.paths_of_beat(g, template_id))
+        clones.setdefault(template_id, []).append(clone_id)
+    for template_id in sorted(cloned_templates):
+        mutations.remove_beat(g, template_id)
+
     current = {(e.src, e.dst) for e in g.edges if e.kind == EdgeKind.PREDECESSOR}
     for src, dst in sorted(current - target):
         mutations.remove_ordering(g, src, dst)
     for src, dst in sorted(target - current):
         mutations.add_ordering(g, src, dst)
-    return len(target - current), len(current - target)
+    for tail in de_ended:
+        beat = g.node(tail)
+        assert isinstance(beat, Beat)
+        if beat.is_ending:
+            mutations.set_beat_ending(g, tail, is_ending=False)
+    return RealizeReport(
+        added=len(target - current),
+        removed=len(current - target),
+        clones=clones,
+        de_ended=de_ended,
+    )

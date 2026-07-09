@@ -70,7 +70,7 @@ def test_seeded_structure_shape(reports_and_project):
     assert len(g.nodes_of(Beat)) == 16
     # each explored path has exactly one commit beat, wired by the engine
     for path in g.nodes_of(StoryPath):
-        assert queries.commit_beat(g, path.id) is not None
+        assert len(queries.commit_beats(g, path.id)) == 1
     # SEED wired intra-dilemma Y edges only: setup chain + two Y scaffolds
     # -> 3 disconnected components -> 3 roots (GROW interleaves in M2)
     assert len(queries.roots(g)) == 3
@@ -141,7 +141,7 @@ def test_grow_derives_a_flag_per_consequence(grown):
     for flag in flags:
         (cid,) = g.out_ids(flag.id, EdgeKind.DERIVED_FROM)
         assert cid.startswith("consequence:")
-        assert queries.grant_beat(g, flag.id) is not None
+        assert queries.grant_beats(g, flag.id)
 
 
 def test_grow_records_the_intersection(grown):
@@ -159,7 +159,7 @@ def test_grow_freezes_topology(grown):
     g = project.graph
     assert g.frozen is not None
     # the soft dilemma converges on a shared beat, not a branch beat
-    assert g.frozen.convergences == {"dilemma:truth": "beat:the-offer"}
+    assert g.frozen.convergences == {"dilemma:truth": ["beat:the-offer"]}
     assert (project.root / "graph" / "freeze.yaml").exists()
 
 

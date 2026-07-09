@@ -148,21 +148,25 @@ between:
 | | |
 |---|---|
 | In | All SEED output |
-| Out | The **beat DAG** (ordering edges); intersection groups (consumed here); bridge beats; state flags derived from consequences; entity overlays activated; convergence points fixed |
+| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from consequences; entity overlays activated; convergence points fixed |
 | Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); budgets (beat count per arc within scope) |
 
 The hardest stage, split deliberately:
 
 - **Deterministic core:** candidate interleaving from temporal hints +
   ordering relations (topological constraints), divergence wiring at each
-  commit, convergence-point computation for soft dilemmas, flag
-  derivation, arc enumeration and validation. This is graph algorithm
-  territory; a model adds nothing but risk.
+  commit, convergence-point computation for soft dilemmas (per world),
+  multi-hard realization (below), flag derivation, arc enumeration and
+  validation. This is graph algorithm territory; a model adds nothing
+  but risk.
 - **LLM judgment calls:** choosing among valid interleavings for dramatic
-  pacing (commits distributed, not clustered); proposing intersections
-  from shared entities + flexibility annotations (each accepted
-  intersection resolves the scene's location/entities); writing bridge
-  beats where adjacent scenes share no entities or place.
+  pacing (commits distributed, not clustered — and, with several hard
+  dilemmas, which fork is the climax: candidates cover every viable
+  nesting, wraps/serial between hards constrain it); proposing
+  intersections from shared entities + flexibility annotations (each
+  accepted intersection resolves the scene's location/entities);
+  contextualizing per-world beat instances (below); writing bridge beats
+  where adjacent scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a
@@ -171,6 +175,19 @@ ordering — it returns an index into the engine's candidate list.
 Temporal hints are advisory: a hint that would make the constraints
 unsatisfiable is dropped and reported, never allowed to wedge the weave
 (SEED wrote it without seeing the whole).
+
+**Multi-hard realization** (design doc 01 §5, mini-ADR A14): with more
+than one hard dilemma the chosen order is walked tracking worlds — the
+climax hard resolve is always the final unit; every unit placed after
+the first hard fork is instantiated once per world (world-suffixed beat
+ids, `belongs_to` copied, the template Y removed symmetrically so no
+world owns the "original"), each further hard resolve multiplies the
+worlds, and the earlier forks' chain tails stop being endings. A
+*contextualize* pass then has the LLM rewrite each per-world instance's
+summary for what is true in its world, and each de-ended tail to leave
+the climax question open — structure is copied by the engine, words
+never are. Intersection groups stay in the truly shared region (before
+every hard fork): their point is one scene every player shares.
 
 After G3 passes, **the topology freezes** (I9). This is the pipeline's
 central commitment point.
@@ -181,7 +198,7 @@ central commitment point.
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
 | Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue beats, false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); every heavy-residue convergence has variants, every light one a residue beat |
+| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue beat |
 
 Two phases:
 

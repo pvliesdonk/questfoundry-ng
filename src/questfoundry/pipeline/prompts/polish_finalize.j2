@@ -10,14 +10,16 @@ beat that establishes how the world feels for a player who took that path, place
 just before the storylines rejoin. 1-2 sentences, present tense, mood not plot — it
 must not advance, reveal, or decide anything.
 {% for n in needs %}
-- {{ n.dilemma.id }} (residue: light) rejoins at {% for c in n.rejoin %}{{ c.id }} — "{{ c.summary }}"{% if not loop.last %} / {% endif %}{% endfor %}
+- {{ n.dilemma.id }} (residue: light{% if n.need.world %}; in the world of {{ n.need.world }}{% endif %}) rejoins at {% for c in n.rejoin %}{{ c.id }} — "{{ c.summary }}"{% if not loop.last %} / {% endif %}{% endfor %}
 {% for path, flag in n.need.path_flags.items() %}
   - path {{ path }} (its truth: {{ flag }}) arrives from: {{ n.tails[path].summary }}
 {% endfor %}
 {% endfor %}
-Emit >=1 residue entry per dilemma above (one per path is better when both sides
-carry a distinct mood). Each entry: {"dilemma", "path", "id": "beat:slug",
-"summary", "entities": [...]}.
+Emit >=1 residue entry per convergence above (one per path is better when both
+sides carry a distinct mood). Each entry: {"dilemma", "path", "id": "beat:slug",
+"summary", "entities": [...]}; when a convergence names a world, echo it as
+"world" exactly (a nested story rejoins once per world — each world needs its
+own beats, colored by that world's truth).
 {% endif %}
 {% if long_runs %}
 FALSE BRANCHES (optional). These stretches run long without a choice; a cosmetic

@@ -17,7 +17,8 @@ def test_every_arc_is_complete(golden):
         endings = [b for b in view if g.node(b).is_ending]
         assert len(endings) == 1, selection
         for path in selection.values():
-            assert queries.commit_beat(g, path) in view
+            in_view = [c for c in queries.commit_beats(g, path) if c in view]
+            assert len(in_view) == 1
 
 
 def test_residue_beat_only_on_telling_arcs(golden):

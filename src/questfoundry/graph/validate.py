@@ -158,7 +158,17 @@ def check_budget_cast(ctx: Context) -> None:
 
 
 def check_i3_scaffolds(ctx: Context) -> None:
+    """I3: complete Y per explored path. A path's commit beats must occupy
+    pairwise distinct worlds — exactly one before any multi-hard expansion
+    (every world is then the empty shared region), one per world once the
+    dilemma resolves inside a hard fork (design doc 01 §5, §8)."""
     for d in ctx.g.nodes_of(Dilemma):
+        own_commits = {
+            b
+            for p in queries.explored_paths(ctx.g, d.id)
+            for b in queries.exclusive_beats(ctx.g, p)
+            if d.id in ctx.g.node(b).commits_dilemmas  # type: ignore[union-attr]
+        }
         for path_id in queries.explored_paths(ctx.g, d.id):
             member_beats = ctx.g.in_ids(path_id, EdgeKind.BELONGS_TO)
             pre = [b for b in member_beats if len(queries.paths_of_beat(ctx.g, b)) == 2]
@@ -169,8 +179,20 @@ def check_i3_scaffolds(ctx: Context) -> None:
                 if d.id in ctx.g.node(b).commits_dilemmas  # type: ignore[union-attr]
             ]
             post = [b for b in exclusive if b not in commits]
-            if len(commits) != 1:
-                ctx.error("I3", f"path {path_id} has {len(commits)} commit beats; need exactly 1")
+            if not commits:
+                ctx.error("I3", f"path {path_id} has no commit beat")
+            # worlds are made by OTHER dilemmas' hard forks — a dilemma's
+            # own commits are its fork, never its coordinate
+            worlds: dict[frozenset[str], str] = {}
+            for c in sorted(commits):
+                world = queries.world_of(ctx.g, c) - own_commits
+                if world in worlds:
+                    ctx.error(
+                        "I3",
+                        f"path {path_id} has two commit beats in the same world "
+                        f"({worlds[world]}, {c}); need exactly one per world",
+                    )
+                worlds[world] = c
             if not pre:
                 ctx.error("I3", f"path {path_id} has no shared pre-commit beats")
             if not post:
@@ -247,12 +269,12 @@ def check_i5_membership(ctx: Context) -> None:
                     f"dual-membership beat {beat.id} must impact only its dilemma {d1}",
                 )
             for p in paths:
-                commit = queries.commit_beat(ctx.g, p)
-                if commit and beat.id in queries.descendants(ctx.g, commit):
-                    ctx.error(
-                        "I5",
-                        f"pre-commit beat {beat.id} lies after commit {commit} in the DAG",
-                    )
+                for commit in queries.commit_beats(ctx.g, p):
+                    if beat.id in queries.descendants(ctx.g, commit):
+                        ctx.error(
+                            "I5",
+                            f"pre-commit beat {beat.id} lies after commit {commit} in the DAG",
+                        )
 
 
 def check_i6_arcs_complete(ctx: Context) -> None:
@@ -265,9 +287,14 @@ def check_i6_arcs_complete(ctx: Context) -> None:
         if not endings:
             ctx.error("I6", f"arc {label} reaches no ending beat")
         for path_id in selection.values():
-            commit = queries.commit_beat(ctx.g, path_id)
-            if commit is None or commit not in view:
+            in_view = [c for c in queries.commit_beats(ctx.g, path_id) if c in view]
+            if not in_view:
                 ctx.error("I6", f"arc {label} never commits path {path_id}")
+            elif len(in_view) > 1:
+                ctx.error(
+                    "I6",
+                    f"arc {label} commits path {path_id} more than once ({in_view})",
+                )
         for b in sorted(view):
             is_terminal = not any(s in view for s in queries.successors(ctx.g, b))
             if is_terminal and not ctx.g.node(b).is_ending:  # type: ignore[union-attr]
@@ -280,26 +307,42 @@ def check_i7_convergence_by_role(ctx: Context) -> None:
         paths = queries.explored_paths(ctx.g, d.id)
         if len(paths) != 2:
             continue
-        commits = [queries.commit_beat(ctx.g, p) for p in paths]
-        if None in commits:
+        commits = {p: queries.commit_beats(ctx.g, p) for p in paths}
+        if not all(commits.values()):
             continue  # I3's problem
-        shared = queries.descendants(ctx.g, commits[0]) & queries.descendants(ctx.g, commits[1])
-        if d.role == DilemmaRole.HARD and shared:
-            ctx.error(
-                "I7",
-                f"hard dilemma {d.id} paths reconverge at {sorted(shared)[:3]}",
-            )
+        if d.role == DilemmaRole.HARD:
+            # never reconverge, in any world: no cross-path commit pair
+            # may share a descendant
+            for ca in commits[paths[0]]:
+                for cb in commits[paths[1]]:
+                    shared = queries.descendants(ctx.g, ca) & queries.descendants(ctx.g, cb)
+                    if shared:
+                        ctx.error(
+                            "I7",
+                            f"hard dilemma {d.id} paths reconverge at {sorted(shared)[:3]}",
+                        )
         if d.role == DilemmaRole.SOFT:
-            if not shared:
+            frontiers = queries.soft_rejoin_frontiers(ctx.g, d.id)
+            if not frontiers:
                 ctx.error("I7", f"soft dilemma {d.id} paths never reconverge")
-            for p in paths:
-                payoff = len(queries.exclusive_beats(ctx.g, p)) - 1  # minus the commit
-                if payoff < preset.min_payoff_beats:
+            for world, frontier in frontiers:
+                if not frontier:
+                    where = queries.world_label(ctx.g, world) or "the shared region"
                     ctx.error(
                         "I7",
-                        f"path {p} has {payoff} payoff beat(s); "
-                        f"scope '{preset.name}' requires >={preset.min_payoff_beats}",
+                        f"soft dilemma {d.id} paths never reconverge in world {where}",
                     )
+            for p in paths:
+                exclusive = set(queries.exclusive_beats(ctx.g, p))
+                for c in commits[p]:
+                    # this world's payoff: the commit's own exclusive chain
+                    payoff = len(exclusive & queries.descendants(ctx.g, c))
+                    if payoff < preset.min_payoff_beats:
+                        ctx.error(
+                            "I7",
+                            f"path {p} has {payoff} payoff beat(s) after {c}; "
+                            f"scope '{preset.name}' requires >={preset.min_payoff_beats}",
+                        )
 
 
 def check_g3_flag_derivation(ctx: Context) -> None:
@@ -357,24 +400,22 @@ def check_i9_freeze(ctx: Context) -> None:
         current = sorted(
             c
             for p in queries.explored_paths(ctx.g, dilemma_id)
-            if (c := queries.commit_beat(ctx.g, p))
+            for c in queries.commit_beats(ctx.g, p)
         )
         if current != sorted(commits):
             ctx.error(
                 "I9",
                 f"dilemma {dilemma_id} fork changed after freeze: {commits} -> {current}",
             )
-    for dilemma_id, beat_id in record.convergences.items():
-        commits = record.forks.get(dilemma_id, [])
-        if len(commits) == 2:
-            shared = queries.descendants(ctx.g, commits[0]) & queries.descendants(
-                ctx.g, commits[1]
+    for dilemma_id, beats in record.convergences.items():
+        current = sorted(
+            f[0] for _, f in queries.soft_rejoin_frontiers(ctx.g, dilemma_id) if len(f) == 1
+        )
+        if current != sorted(beats):
+            ctx.error(
+                "I9",
+                f"dilemma {dilemma_id} convergence moved after freeze: {beats} -> {current}",
             )
-            if beat_id not in shared:
-                ctx.error(
-                    "I9",
-                    f"dilemma {dilemma_id} convergence at {beat_id} broken after freeze",
-                )
 
 
 # --------------------------------------------------------------------------
@@ -383,13 +424,14 @@ def check_i9_freeze(ctx: Context) -> None:
 
 
 def _grant_position_ok(ctx: Context, flag_id: str, at_beats: list[str], view: set[str]) -> bool:
-    """Is `flag_id` active by the time the player stands at `at_beats`?"""
-    grant = queries.grant_beat(ctx.g, flag_id)
-    if grant is None or grant not in view:
-        return False
-    if grant in at_beats:
-        return True
-    return any(grant in queries.ancestors(ctx.g, b) for b in at_beats)
+    """Is `flag_id` active by the time the player stands at `at_beats`?
+    Grant beats are per world; one in this view's history suffices."""
+    for grant in queries.grant_beats(ctx.g, flag_id):
+        if grant not in view:
+            continue
+        if grant in at_beats or any(grant in queries.ancestors(ctx.g, b) for b in at_beats):
+            return True
+    return False
 
 
 def check_i10_gates_satisfiable(ctx: Context) -> None:
@@ -446,10 +488,10 @@ def check_i12_feasibility(ctx: Context) -> None:
         beats = queries.beats_of_passage(ctx.g, passage.id)
         active = set()
         for flag in ctx.g.nodes_of(StateFlag):
-            grant = queries.grant_beat(ctx.g, flag.id)
-            if grant is None:
-                continue
-            if grant in beats or any(grant in queries.ancestors(ctx.g, b) for b in beats):
+            if any(
+                grant in beats or any(grant in queries.ancestors(ctx.g, b) for b in beats)
+                for grant in queries.grant_beats(ctx.g, flag.id)
+            ):
                 active.add(flag.id)
         relevant = active - set(passage.irrelevant_flags)
         if len(relevant) > cap:
@@ -531,43 +573,41 @@ def check_g4_choice_labels(ctx: Context) -> None:
 
 
 def check_g4_residue_coverage(ctx: Context) -> None:
-    """G4: every light-residue soft convergence has a residue beat gated
-    on one of the dilemma's flags; every heavy one has variant passages
-    at the convergence (design doc 02, gate G4)."""
+    """G4: per world, every light-residue soft convergence has a residue
+    beat in that world gated on one of the dilemma's flags; every heavy
+    one has variant passages at every beat of that world's rejoin
+    frontier (one beat when a convergence passage exists, one per deeper
+    world when the diamond feeds a hard fork — design doc 02, gate G4)."""
     if not ctx.g.nodes_of(Passage):
         return
     for d in ctx.g.nodes_of(Dilemma):
         if d.role != DilemmaRole.SOFT:
             continue
-        frontier = queries.soft_rejoin_frontier(ctx.g, d.id)
-        if not frontier:
-            continue
         flags = set(queries.dilemma_flags(ctx.g, d.id).values())
-        if d.residue_weight == ResidueWeight.LIGHT:
-            covered = any(
-                b.purpose == StructuralPurpose.RESIDUE and set(b.requires_flags) & flags
-                for b in ctx.g.nodes_of(Beat)
-            )
-            if not covered:
-                ctx.error(
-                    "G4",
-                    f"light-residue dilemma {d.id} rejoins at {', '.join(frontier)} "
-                    "with no residue beat gated on its flags",
+        for world, frontier in queries.soft_rejoin_frontiers(ctx.g, d.id):
+            where = queries.world_label(ctx.g, world)
+            suffix = f" (world {where})" if where else ""
+            if d.residue_weight == ResidueWeight.LIGHT:
+                covered = any(
+                    b.purpose == StructuralPurpose.RESIDUE
+                    and set(b.requires_flags) & flags
+                    and queries.world_of(ctx.g, b.id) == world
+                    for b in ctx.g.nodes_of(Beat)
                 )
-        elif d.residue_weight == ResidueWeight.HEAVY:
-            if len(frontier) > 1:
-                ctx.error(
-                    "G4",
-                    f"heavy-residue dilemma {d.id} rejoins inside a hard fork "
-                    f"({', '.join(frontier)}); per-world variant passages are "
-                    "not built yet (M5 multi-hard work)",
-                )
-            elif len(queries.passages_of_beat(ctx.g, frontier[0])) < 2:
-                ctx.error(
-                    "G4",
-                    f"heavy-residue dilemma {d.id} converges at {frontier[0]} "
-                    "without variant passages",
-                )
+                if not covered:
+                    ctx.error(
+                        "G4",
+                        f"light-residue dilemma {d.id} rejoins at {', '.join(frontier)}"
+                        f"{suffix} with no residue beat gated on its flags there",
+                    )
+            elif d.residue_weight == ResidueWeight.HEAVY:
+                for beat_id in frontier:
+                    if len(queries.passages_of_beat(ctx.g, beat_id)) < 2:
+                        ctx.error(
+                            "G4",
+                            f"heavy-residue dilemma {d.id} converges at {beat_id}"
+                            f"{suffix} without variant passages",
+                        )
 
 
 def check_budget_passages(ctx: Context) -> None:

@@ -190,9 +190,15 @@ means "comes before." The DAG *is* the story's structure:
   nodes of the outer Y (a genuinely different context — that
   difference is what "hard" means). Structure is copied per world;
   content follows the full coordinate, so the realized beats are
-  distinct, few by design under late-committing backbones. Realizing
-  the expanded case is M5 work; it refines I3's "exactly one commit
-  beat per path" to one per world (tracked in `docs/STATUS.md`).
+  distinct, few by design under late-committing backbones. GROW
+  realizes the expansion (M5): every unit placed after the first hard
+  fork is instantiated once per world — world-suffixed beat ids, the
+  template replaced symmetrically so no world owns the "original"
+  (mini-ADR A14) — the earlier fork's chain tails stop being endings,
+  and a contextualize pass rewrites each instance's summary for its
+  world. This refines I3: a path's commit beats occupy pairwise
+  distinct worlds — exactly one commit absent expansion, one per world
+  once its dilemma resolves inside a hard fork.
 - An **intersection** is a co-occurrence declaration: beats from
   *different* dilemmas grouped into one scene (the keeper studies the
   charts — D2 — while deciding about the light — D1). The beats stay
@@ -287,7 +293,11 @@ design.
   default/primary/canonical marker exists in the model.
 - **I2** Every dilemma is anchored to ≥1 surviving entity.
 - **I3** Every explored path has a complete Y-scaffold: ≥1 pre-commit
-  beat, exactly one commit beat, ≥1 post-commit beat.
+  beat, ≥1 post-commit beat, and commit beats occupying pairwise
+  distinct worlds — exactly one commit absent multi-hard expansion, one
+  per world once the dilemma resolves inside a hard fork. Worlds are
+  made by *other* dilemmas' hard forks; a dilemma's own commits are its
+  fork, never its coordinate (§5).
 
 **Beat DAG**
 - **I4** The beat graph is acyclic, single-rooted, and every beat is
@@ -298,9 +308,10 @@ design.
 - **I6** Every arc (computed) is complete: root → terminal, contains
   exactly one commit per explored dilemma, and no beat whose flag
   requirements are unsatisfiable on that arc.
-- **I7** Hard dilemma paths never reconverge; soft dilemma paths always
-  do, after a minimum payoff (≥ N exclusive post-commit beats per path,
-  N from scope preset).
+- **I7** Hard dilemma paths never reconverge (no cross-path commit pair
+  shares a descendant, in any world); soft dilemma paths always do, in
+  every world they are expanded into, after a minimum payoff (≥ N
+  exclusive post-commit beats per path per world, N from scope preset).
 - **I8** Intersection groups never contain two beats of the same dilemma.
 - **I9** Post-freeze (after GROW), no beat is deleted and no
   dilemma-driven fork or convergence moves.

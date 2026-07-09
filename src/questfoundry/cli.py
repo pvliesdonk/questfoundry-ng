@@ -132,7 +132,9 @@ def run(
 def validate(directory: FSPath = typer.Argument(FSPath("."))) -> None:
     """Load a project and run every gate at or below its current stage."""
     project = load_project(directory)
-    issues = run_checks(project.graph, project.vision, project.stage)
+    issues = run_checks(
+        project.graph, project.vision, project.stage, enrichment=project.enrichment
+    )
     errors = [i for i in issues if i.severity == Severity.ERROR]
     warnings = [i for i in issues if i.severity == Severity.WARNING]
     for issue in issues:

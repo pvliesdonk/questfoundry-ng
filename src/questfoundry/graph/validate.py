@@ -17,6 +17,7 @@ from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
+from questfoundry.models.enrichment import Enrichment
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import (
     Beat,
@@ -47,6 +48,9 @@ class Issue:
 class Context:
     g: StoryGraph
     vision: Vision
+    # DRESS artifacts live on the Project, not the graph; callers at or
+    # past DRESS pass them in so gate G6 sees them (one validation path).
+    enrichment: Enrichment = field(default_factory=Enrichment)
     issues: list[Issue] = field(default_factory=list)
 
     def error(self, check: str, message: str) -> None:
@@ -641,9 +645,15 @@ GATES: dict[Stage, list] = {
 }
 
 
-def run_checks(g: StoryGraph, vision: Vision, stage: Stage) -> list[Issue]:
+def run_checks(
+    g: StoryGraph,
+    vision: Vision,
+    stage: Stage,
+    *,
+    enrichment: Enrichment | None = None,
+) -> list[Issue]:
     """Run every gate at or below `stage` and return all issues found."""
-    ctx = Context(g=g, vision=vision)
+    ctx = Context(g=g, vision=vision, enrichment=enrichment or Enrichment())
     for gate_stage, checks in GATES.items():
         if gate_stage.order <= stage.order:
             for check in checks:

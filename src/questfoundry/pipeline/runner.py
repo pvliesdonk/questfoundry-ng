@@ -119,7 +119,7 @@ def _checkpoint(project: Project, report: StageReport) -> None:
     shutil.copy2(root / "vision.yaml", snap_dir / "vision.yaml")
     if (root / "voice.yaml").exists():
         shutil.copy2(root / "voice.yaml", snap_dir / "voice.yaml")
-    for sub in ("graph", "prose"):
+    for sub in ("graph", "prose", "art", "codex"):
         if (root / sub).exists():
             shutil.copytree(root / sub, snap_dir / sub, dirs_exist_ok=True)
 

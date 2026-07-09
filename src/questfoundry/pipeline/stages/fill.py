@@ -10,7 +10,8 @@ already-written text (window + lookahead context). Nothing about the
 reference arc is stored or visible to any other stage.
 
 Each write pass enforces the word budget deterministically (repairable,
-with 10% slack — models cannot hit exact word windows)
+with 20% slack — models cannot hit exact word windows; the band catches
+runaway or skimpy prose, the review pass owns quality)
 and then faces the automated review — an LLM judgment on voice, beat
 fidelity, and continuity, run through `PassSpec.review`, so the ≤2
 revision rounds and the "structure is wrong, not the words" halt are
@@ -250,10 +251,11 @@ def _write_apply_for(passage_id: str):
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         lo, hi = project.vision.preset.words_per_passage
         count = len(proposal.prose.split())
-        # models cannot hit exact word windows: repair only beyond 10%
-        # slack; the exact preset range stays the prompt's target and
-        # B5's advisory line
-        if not lo * 0.9 <= count <= hi * 1.1:
+        # models cannot hit exact word windows: the band catches runaway
+        # or skimpy prose, the review pass owns quality — repair only
+        # beyond 20% slack; the exact preset range stays the prompt's
+        # target and B5's advisory line
+        if not lo * 0.8 <= count <= hi * 1.2:
             raise ApplyError(
                 f"prose for {passage_id} is {count} words; the budget is {lo}-{hi}"
             )

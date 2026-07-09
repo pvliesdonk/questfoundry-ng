@@ -1,0 +1,10 @@
+id: passage:p-cloth-aisle
+summary: Wren cuts through the cloth aisle, past bolts of grey silk hanging heavier for the
+  wet they drink from the air.
+entities:
+- character:wren
+beats:
+- beat:arm-cloth-aisle
+choices:
+- label: Cross to where the parcels wait
+  to: passage:p-parcel-with-a-name

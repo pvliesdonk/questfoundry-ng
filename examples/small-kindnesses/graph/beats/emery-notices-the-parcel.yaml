@@ -1,0 +1,17 @@
+id: beat:emery-notices-the-parcel
+summary: Emery sees the parcel in Wren's hands and goes quiet, saying softly that she always
+  wondered what Wren was carrying for themselves. Her leaving hangs unspoken between them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:open-the-parcel
+  effect: complicates
+entities:
+- character:emery
+- character:wren
+- object:wrens-parcel
+temporal_hints:
+- dilemma: dilemma:pay-emerys-debt
+  position: before_commit
+belongs_to:
+- path:leave-it-sealed
+- path:open-it

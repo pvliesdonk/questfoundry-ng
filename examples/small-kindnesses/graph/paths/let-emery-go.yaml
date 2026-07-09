@@ -1,0 +1,10 @@
+id: path:let-emery-go
+name: The Loss Bravely Claimed
+explores: answer:let-emery-go
+consequences:
+- id: consequence:emery-collected
+  text: The market collects Emery in indifferent, contractual erasure while Wren holds her
+    one last moment, keeping intact everything they loved about her.
+- id: consequence:friendship-named-in-grief
+  text: The friendship Wren never dared name is defined at last by the grief of letting go,
+    a loss claimed rather than hoarded.

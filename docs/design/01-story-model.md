@@ -47,10 +47,19 @@ every LLM stage concrete targets.
 
 | Preset | Dilemmas (hard+soft) | Cast | Passages (approx.) |
 |---|---|---|---|
-| `micro` | 1 + 1 | 3–5 | 15–25 |
-| `short` | 1 + 2 | 5–8 | 30–50 |
-| `medium` | 2 + 2 | 7–10 | 60–90 |
-| `long` | 2 + 3 | 9–14 | 100–150 |
+| `micro` | 1 + 1 | 3–5 | 10–20 |
+| `short` | 1 + 2 | 5–8 | 18–30 |
+| `medium` | 2 + 2 | 7–10 | 25–40 |
+| `long` | 2 + 3 | 9–14 | 35–60 |
+
+Passage bands were recalibrated against the first live runs (2026-07-09):
+the original numbers were *beat* counts from the one-beat-one-passage
+era, and the passage collapse redefined the unit under them. A band now
+states what the scaffold structurally yields; the *feel* of size — how
+often the reader genuinely chooses — is checked separately (B6, words
+between choices per playthrough, target ≈250–800). Scale by adding
+structure (locked dilemmas, deeper Ys — see STATUS), never by padding
+prose.
 
 **Voice** — a singleton record created by FILL before any prose: POV,
 tense, register, rhythm rules, banned patterns. The operational descendant

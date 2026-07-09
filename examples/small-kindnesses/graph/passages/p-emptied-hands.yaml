@@ -1,0 +1,10 @@
+id: passage:p-emptied-hands
+summary: Wren flexes hands that feel loaned from someone else, lighter and less certain of
+  what they once held.
+entities:
+- character:wren
+beats:
+- beat:arm-emptied-hands
+choices:
+- label: Turn back to the stall and the stranger's smile
+  to: passage:p-stranger-at-the-stall

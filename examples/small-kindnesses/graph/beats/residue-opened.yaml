@@ -1,0 +1,11 @@
+id: beat:residue-opened
+created_by: polish
+summary: The rain sounds different now, closer, as though it falls on skin instead of canvas,
+  and Wren carries a warmth against their chest that is theirs and only theirs. The night
+  ahead feels wider, and stranger, and awake.
+beat_class: structural
+purpose: residue
+entities:
+- character:wren
+requires_flags:
+- flag:wren-learns-their-want

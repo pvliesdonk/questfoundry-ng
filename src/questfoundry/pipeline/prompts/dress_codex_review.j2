@@ -1,6 +1,19 @@
+{% if arbitration %}
+ARBITRATION. A first-line reviewer failed these entries twice; its earlier rounds
+are under PREVIOUSLY FLAGGED (the writer revised for those) and its newest
+objections are:
+{% for i in arbitration %}
+- {{ i }}
+{% endfor %}
+You are the senior arbiter and your verdict is final. First-line reviewers here
+have repeatedly upheld objections by quoting the conditional-material list
+instead of the entry; uphold an objection ONLY if a sentence of the ENTRY'S OWN
+TEXT asserts a conditional as fact. If you fail, the stage halts — be certain.
+{% endif %}
 Review the codex entries below for spoiler safety. Verdict "pass" or "fail"; on fail,
 list concrete, actionable issues, each one sentence, each naming the rule number it
-violates and quoting the offending text.
+violates and quoting the offending text — the ENTRY's text, never the conditional
+list's.
 
 REQUIRED (this is correct, in-world register — never fail an entry for having it):
 - a diegetic, encyclopedia voice (these are meant to read like almanac entries, not
@@ -8,6 +21,11 @@ REQUIRED (this is correct, in-world register — never fail an entry for having 
 
 FAIL ONLY for one of these three objective defects:
 1. States, as fact, something listed below as CONDITIONAL for that entity.
+   Assertion means the entry's own sentence claims it happened or is true.
+   Touching the same theme, describing the entity's relation to an open
+   question, or explicitly posing the question ("whether X or Y, the paper
+   does not answer") is NOT assertion — leaving fates open is exactly what
+   a spoiler-safe entry does.
 2. Names story machinery: a node id (e.g. "flag:x", "beat:x"), or the words "flag",
    "beat", "path", or "arc" used mechanically. Ordinary English uses of those words
    (a "footpath", "her heart beats") are not leakage.
@@ -29,6 +47,15 @@ CONDITIONAL MATERIAL BY ENTITY (rule 1):
 {% endfor %}
 {% endfor %}
 
+{% if prior_issues %}
+PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
+{% for i in prior_issues %}
+- {{ i }}
+{% endfor %}
+Judge persistence first: does any previously named defect remain in the revised
+entries? A round that finds only brand-new complaints is judging taste — if
+nothing above persists and no entry sentence outright violates a rule, pass.
+{% endif %}
 THE ENTRIES:
 {% for entry in entries %}
 --- {{ entry.entity }}: {{ entry.title }}

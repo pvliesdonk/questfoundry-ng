@@ -1,0 +1,8 @@
+id: beat:arm-emptied-hands
+created_by: polish
+summary: Wren flexes hands that feel loaned from someone else, lighter and less certain of
+  what they once held.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

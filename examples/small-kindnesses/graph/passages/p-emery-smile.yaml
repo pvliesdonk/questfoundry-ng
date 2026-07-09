@@ -1,0 +1,10 @@
+id: passage:p-emery-smile
+summary: Emery offers Wren the crooked half-smile she saves for endings she won't name aloud.
+entities:
+- character:wren
+- character:emery
+beats:
+- beat:arm-emery-smile
+choices:
+- label: Stay with her through the last of the packing
+  to: passage:p-last-hour-together

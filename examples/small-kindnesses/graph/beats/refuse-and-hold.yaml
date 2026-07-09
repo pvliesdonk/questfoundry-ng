@@ -1,0 +1,14 @@
+id: beat:refuse-and-hold
+summary: Wren refuses the trade and instead takes Emery's hands as the rain slows to its last
+  drops, choosing to keep everything they loved of her rather than unmake it. The market moves
+  to collect.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: commits
+entities:
+- character:wren
+- character:emery
+- faction:the-market
+belongs_to:
+- path:let-emery-go

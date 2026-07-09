@@ -1,0 +1,18 @@
+id: passage:p-parcel-with-a-name
+summary: 'On the claiming-table waits a parcel addressed in Wren''s own name, holding a loss
+  of their own. The clerk lays out Emery''s contract: her debt is paid only in memories of
+  being known, and when the rain stops she will be collected and erased. The rain is already
+  thinning.'
+entities:
+- object:wrens-parcel
+- character:wren
+- faction:the-market
+- character:emery
+beats:
+- beat:parcel-with-a-name
+- beat:the-debt-explained
+choices:
+- label: Lean over the clerk's ledger
+  to: passage:p-clerk-ledger
+- label: Listen to the stallkeepers murmuring behind you
+  to: passage:p-overheard-debt

@@ -2,6 +2,11 @@ Populate the world for this story. You are creating the CAST and the DILEMMAS �
 the raw dramatic material every later stage builds from. The cast is effectively
 locked after this stage: anyone who matters must exist now.
 
+You are supplying ingredients, not finishing a story: a later triage keeps the
+cohesive ensemble and cuts what doesn't connect. Don't pad toward completeness —
+every entity you invent must earn its place by anchoring a dilemma (an entity no
+dilemma needs is a triage cut waiting to happen, however vivid its concept).
+
 VISION:
 - Premise: {{ vision.premise }}
 - Genre: {{ vision.genre }}{% if vision.subgenre %} ({{ vision.subgenre }}){% endif %}
@@ -14,7 +19,10 @@ REQUIREMENTS:
 - Between {{ scope.cast_min }} and {{ scope.cast_max }} entities. Ids are category-prefixed
   slugs: character:..., location:..., object:..., faction:... (lowercase, hyphens).
   Each entity gets a name, a one-sentence concept, and optionally a few base details
-  (appearance, manner) as key-value pairs.
+  (appearance, manner) as key-value pairs. Characters also get pronouns
+  ("she/her", "they/them", …) — prose will be held to them exactly.
+- Every entity must be in some dilemma's anchored_to. Fewer entities that all
+  matter beat a full roster with passengers.
 - Exactly {{ scope.hard_dilemmas }} HARD dilemma(s) and {{ scope.soft_dilemmas }} SOFT dilemma(s).
   A dilemma is a binary dramatic question where BOTH answers are compelling and
   choosing costs something. Hard dilemmas are the backbone: they commit near the

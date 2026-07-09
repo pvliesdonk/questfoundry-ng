@@ -17,6 +17,7 @@ from questfoundry.models.structure import (
     StateFlag,
     StructuralPurpose,
 )
+from questfoundry.models.world import Entity
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import (
@@ -95,11 +96,19 @@ def test_weave_apply_rewires_and_derives_flags(project):
     assert any("interleaving #0" in line for line in lines)
 
 
+def _cast(g: StoryGraph, *slugs: str) -> None:
+    for slug in slugs:
+        mutations.add_entity(
+            g, Entity(id=f"character:{slug}", created_by=Stage.BRAINSTORM, name=slug, concept="c")
+        )
+
+
 def test_gap_detection_and_bridge_splice(project):
     g = project.graph
     planned = weave.plan(g)
     weave.realize(g, planned, weave.candidates(planned)[0])
     # disjoint entity sets across one adjacency -> exactly that gap
+    _cast(g, "one", "two")
     a, b = "beat:main-pre0", "beat:main-pre1"
     g.node(a).entities = ["character:one"]
     g.node(b).entities = ["character:two"]
@@ -142,6 +151,7 @@ def _bridged_fork_rejoin(tmp_path, vision) -> Project:
     hard commit, bridged through the real bridge apply."""
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    _cast(g, "tail", "other")
     g.node("beat:sub-post-a").entities = ["character:tail"]
     g.node("beat:main-commit-a").entities = ["character:other"]  # disjoint: the gap edge
     g.node("beat:main-commit-b").entities = ["character:tail"]  # shared: not a gap itself
@@ -169,6 +179,7 @@ def test_bridge_into_fork_commit_spans_the_frontier(tmp_path, vision):
     before the whole frontier."""
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    _cast(g, "tail", "other")
     tail = "beat:sub-post-a"
     g.node(tail).entities = ["character:tail"]
     g.node("beat:main-commit-a").entities = ["character:other"]

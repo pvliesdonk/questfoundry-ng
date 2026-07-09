@@ -1,0 +1,14 @@
+id: beat:the-offered-substitution
+summary: The clerk notes, without cruelty, that another's memories of being known could settle
+  the same debt. Wren understands the exchange is theirs to make.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: complicates
+entities:
+- faction:the-market
+- character:wren
+- character:emery
+belongs_to:
+- path:let-emery-go
+- path:pay-the-debt

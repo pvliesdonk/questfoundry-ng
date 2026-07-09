@@ -1,0 +1,14 @@
+id: passage:p-collect-hush
+summary: The market's murmur drops to nothing, a silence so full it presses against Wren's
+  ears.
+entities:
+- character:wren
+- faction:the-market
+irrelevant_flags:
+- flag:parcel-remains-sealed
+- flag:wren-learns-their-want
+beats:
+- beat:arm-collect-hush
+choices:
+- label: Stand alone in the pressing quiet
+  to: passage:p-grief-claimed

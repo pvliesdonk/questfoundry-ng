@@ -1,0 +1,8 @@
+id: beat:arm-cloth-aisle
+created_by: polish
+summary: Wren cuts through the cloth aisle, past bolts of grey silk that drink the wet air
+  and hang heavier for it.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

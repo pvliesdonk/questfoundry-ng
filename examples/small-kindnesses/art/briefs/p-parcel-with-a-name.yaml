@@ -1,0 +1,16 @@
+passage: passage:p-parcel-with-a-name
+priority: 1
+caption: On the claiming-table, a parcel waits addressed in your own hand while the rain begins
+  to thin.
+prompt: Rain-soaked painterly illustration, soft edges and intimate framing, wet ink and watercolor
+  washes bleeding at the borders. A low lantern-amber lamp lights a bare claiming-table where
+  a single parcel of brown paper gone soft with damp sits at center, string tied in the market's
+  exact knot, a name written on it in almost-recognizable handwriting. Beside it a brass scale
+  gleams cool, and a clerk sits close by with a ledger. Emery stands near, a lantern-warm
+  face going translucent at the edges, thinning into the surrounding air, wrapped in a worn
+  shawl. Wet-street darks and rain-grey blues warmed by lantern amber and ink-black; muted
+  browns of damp paper; the cool sheen of brass. Something about to end.
+entities:
+- object:wrens-parcel
+- faction:the-market
+- character:emery

@@ -1,0 +1,10 @@
+id: passage:p-emptied-mirror
+summary: Wren passes a rain-dark pane and finds a reflection that seems to belong to a stranger
+  wearing their coat.
+entities:
+- character:wren
+beats:
+- beat:arm-emptied-mirror
+choices:
+- label: Turn back to the stall and the stranger's smile
+  to: passage:p-stranger-at-the-stall

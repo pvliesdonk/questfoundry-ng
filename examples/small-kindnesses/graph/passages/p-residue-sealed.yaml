@@ -1,0 +1,19 @@
+id: passage:p-residue-sealed
+summary: The aisles close over Wren like water over a stone, the rain keeping its old rhythm
+  against the tarps, asking nothing, remembering nothing — the quiet of a room no one enters.
+entities:
+- character:wren
+- faction:the-market
+beats:
+- beat:residue-sealed
+choices:
+- label: Refuse the trade and reach for Emery's hands
+  grants:
+  - flag:emery-collected
+  - flag:friendship-named-in-grief
+  to: passage:p-refuse-and-hold
+- label: Offer the market your memories of being known
+  grants:
+  - flag:emery-stays-but-forgets
+  - flag:wren-unseen-again
+  to: passage:p-trade-being-known

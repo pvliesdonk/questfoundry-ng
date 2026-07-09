@@ -1,0 +1,8 @@
+id: intersection:the-clerks-table
+location: faction:the-market
+rationale: At the market's claiming-table the clerk who lays out Wren's own parcel is the
+  same authority who lays out Emery's contract, so the parcel-with-a-name and the debt explained
+  naturally belong to one scene of quiet bureaucratic dread.
+members:
+- beat:parcel-with-a-name
+- beat:the-debt-explained

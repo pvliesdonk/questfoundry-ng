@@ -25,6 +25,7 @@ class EntitySpec(BaseModel):
     id: str  # category-prefixed: character:slug, location:slug, ...
     name: str
     concept: str
+    pronouns: str = ""
     details: dict[str, str] = {}
 
 
@@ -70,6 +71,7 @@ def _apply(proposal: BrainstormProposal, project: Project) -> list[str]:
                     created_by=Stage.BRAINSTORM,
                     name=spec.name,
                     concept=spec.concept,
+                    pronouns=spec.pronouns,
                     base=spec.details,
                 ),
             )

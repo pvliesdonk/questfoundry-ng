@@ -43,7 +43,7 @@ from questfoundry.models.structure import (
     StructuralPurpose,
 )
 from questfoundry.pipeline import weave
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 MAX_CANDIDATES_SHOWN = 8
@@ -456,7 +456,7 @@ def _bridge_apply(proposal: BridgeProposal, project: Project) -> list[str]:
                 summary=spec.summary,
                 beat_class=BeatClass.STRUCTURAL,
                 purpose=StructuralPurpose.BRIDGE,
-                entities=spec.entities,
+                entities=[resolve_entity_ref(g, e) for e in spec.entities],
             )
         except ValidationError as e:
             raise ApplyError(f"invalid bridge beat {spec.id}: {e}") from e

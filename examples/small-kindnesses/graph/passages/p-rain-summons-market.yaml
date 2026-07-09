@@ -1,0 +1,18 @@
+id: passage:p-rain-summons-market
+summary: Rain unfurls the Night Market of Vellamere, where the stalls trade in unclaimed losses.
+  Wren carries parcels of others' grief to Emery's stall, where she waves them in from the
+  wet — but tonight her hands are packing crates, and she says the market has called in a
+  debt.
+entities:
+- faction:the-market
+- character:wren
+- object:wrens-parcel
+- character:emery
+beats:
+- beat:emery-waves-wren-through
+- beat:rain-summons-the-market
+choices:
+- label: Follow the lantern row deeper in
+  to: passage:p-lantern-row
+- label: Slip through the aisle of grey silk
+  to: passage:p-cloth-aisle

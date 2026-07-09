@@ -1,0 +1,13 @@
+passage: passage:p-clerk-ledger
+priority: 4
+caption: You watch the clerk's finger trail down a ledger of names owed, and the page holds
+  its breath before turning.
+prompt: Rain-soaked painterly illustration, soft edges, intimate close framing, watercolor
+  washes bleeding at the borders. At the market's claiming-table under low lantern light,
+  a single pale clerk's finger traces down a ledger inked in something that isn't quite ink,
+  each line a name owed, a brass scale beside it catching cool light. A courier in a rain-darkened
+  canvas coat watches, satchel strap worn soft, hands quiet. Wet-street darks and rain-grey
+  blues warmed by lantern amber and ink-black; muted browns of damp paper; the cool sheen
+  of brass; a hush of a book reaching its ending.
+entities:
+- character:wren

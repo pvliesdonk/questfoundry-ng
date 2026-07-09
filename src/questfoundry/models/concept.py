@@ -27,6 +27,13 @@ class ScopePreset(BaseModel):
     words_per_passage: tuple[int, int]
 
 
+# Passage bands recalibrated 2026-07-09 against the first live runs: the
+# original numbers were beat counts from the one-beat-one-passage era.
+# A band now reflects what the fixed 3+3+3 scaffold structurally yields
+# plus POLISH's cadence diamonds; medium is measured (live run 5), the
+# others are extrapolated pending runs. Choice-density feel is B6's job,
+# not passage inventory. Deeper scaffolds (locked dilemmas, longer Ys)
+# will raise these deliberately — see STATUS open items.
 SCOPE_PRESETS: dict[str, ScopePreset] = {
     p.name: p
     for p in (
@@ -36,8 +43,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             soft_dilemmas=1,
             cast_min=3,
             cast_max=5,
-            passages_min=15,
-            passages_max=25,
+            passages_min=10,
+            passages_max=20,
             min_payoff_beats=1,
             arc_beats_min=8,
             arc_beats_max=24,
@@ -49,8 +56,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             soft_dilemmas=2,
             cast_min=5,
             cast_max=8,
-            passages_min=30,
-            passages_max=50,
+            passages_min=18,
+            passages_max=30,
             min_payoff_beats=2,
             arc_beats_min=14,
             arc_beats_max=40,
@@ -62,12 +69,12 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             soft_dilemmas=2,
             cast_min=7,
             cast_max=10,
-            passages_min=60,
-            passages_max=90,
+            passages_min=25,
+            passages_max=40,
             min_payoff_beats=2,
             arc_beats_min=24,
             arc_beats_max=60,
-            words_per_passage=(200, 550),
+            words_per_passage=(200, 650),
         ),
         ScopePreset(
             name="long",
@@ -75,8 +82,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             soft_dilemmas=3,
             cast_min=9,
             cast_max=14,
-            passages_min=100,
-            passages_max=150,
+            passages_min=35,
+            passages_max=60,
             min_payoff_beats=3,
             arc_beats_min=40,
             arc_beats_max=100,

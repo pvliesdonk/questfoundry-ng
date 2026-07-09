@@ -278,19 +278,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
   markdown craft corpus via an engine-side research pass; specced, not
   started
 
-## Next up — M6
+## Next up
 
-1. **Validate the library seam first** (per the M6 open item):
-   `pvliesdonk/markdown-vault-mcp` used as a Python library — hybrid
-   search over a corpus directory, pinned local embeddings,
-   deterministic ranking — before building the research pass on top.
-2. Then the research pass itself (mini-ADR A13): a typed query proposal
-   at each stage head; the engine retrieves and persists digests as a
-   checkpointed artifact later passes read.
-3. Ongoing calibration from the medium run (see open items): the
-   prompt-framing item (vision/BRAINSTORM overpromise) and the medium
-   preset ranges are prompt/preset work that can ride along with M6's
-   prompt changes.
+1. **Locked dilemmas + richer residue** (the structural volume/depth
+   effort, author-blessed — see the open item): heritage's unexplored
+   dilemmas as woven linear storylines, diamond-on-residue with
+   multi-beat arms. Frontier-tier, sized like a small milestone slice;
+   closes most of the remaining B3/B6 gap with genuine plot.
+2. **M6 — craft-corpus research**: validate the
+   `pvliesdonk/markdown-vault-mcp` library seam first (hybrid search
+   over a corpus directory, pinned local embeddings, deterministic
+   ranking), then the research pass itself (mini-ADR A13): a typed
+   query proposal at each stage head; the engine retrieves and
+   persists digests as a checkpointed artifact later passes read.
+3. **Scaffold deepening after M6** (corpus-medium word totals, 20–60k):
+   deeper/tensored Ys once the research pass can feed them real
+   material; scale table becomes words-primary at that point.
 4. Optional polish: an image backend behind the briefs (design doc 02
    lists illustrations as optional; briefs + the PDF/HTML plumbing are
    in place — `art/images/<passage-slug>.png` is picked up when
@@ -319,38 +322,33 @@ PR #5) and this agent/doc infrastructure (PR #6).
   frontier-tier design decision first. The medium run's crash-resumes
   validated the cache half hard: 88 of 187 calls replayed free.
 
-- **Prompt framing: early stages claim certainty they don't have**
-  (medium run, author-confirmed framing). The vision promised "every
-  suspect carries a genuine motive" — an outcome only SEED/GROW can
-  deliver — and BRAINSTORM pads the cast to the preset's exact count,
-  trying to finish the story in one shot: 3 of 10 entities anchored no
-  dilemma (one appeared in zero beats). The fix is framing, not count
-  tuning: DREAM should state texture/intent at the level a vision can
-  keep; BRAINSTORM should generate ingredients knowing triage whittles
-  them. Ride along with M6's prompt work.
+- ~~Prompt framing: early stages claim certainty they don't have~~
+  **Addressed** (calibration batch, see decision log): DREAM's prompt
+  now states that a vision is texture and intent, never countable
+  coverage; BRAINSTORM's states it supplies ingredients for triage and
+  that every entity must anchor a dilemma. Validated on the next live
+  run.
 
-- **Established entity attributes don't reliably survive FILL**
-  (medium run, review-caught): Tavi Okonkwo's base fields use
-  they/them, but most passages (and even FILL's own new micro-detail
-  on the same entity) drifted to she/her — internally inconsistent
-  prose that no gate can catch, since it's words, not structure. The
-  base facts *are* in the write context; they lose to the model's
-  prior. Fix path, with M6's prompt work: make load-bearing attributes
-  explicit (e.g. a `pronouns` entity field rendered prominently, not
-  buried in flowing `base` text) and add pronoun/attribute consistency
-  to the FILL review's numbered objective rules — it is exactly the
-  kind of checkable, taste-free defect that contract confines failure
-  to.
+- ~~Established entity attributes don't reliably survive FILL~~
+  **Addressed** (calibration batch): `Entity.pronouns` is an explicit
+  field, BRAINSTORM fills it, FILL's write context renders it
+  prominently ("PRONOUNS: they/them, exactly"), and the FILL review
+  gained numbered rule 6 — pronoun contradiction, quote the offending
+  text — the checkable, taste-free shape the review contract demands.
+  Validated on the next live run.
 
-- **Medium preset ranges don't match what the pipeline builds.** The
-  run produced 20 passages against B3's 60–90 target: SEED's 3+3+3
-  beats per Y × 4 dilemmas yields ~46 beats ≈ 20 passages, so hitting
-  60–90 needs more beats per dilemma or more dilemmas at `medium` —
-  a frontier design question (scaffold depth is a SEED contract).
-  Likewise `words_per_passage` (200, 550): opus consistently writes
-  ~500–640, with climax endings near 600 — either raise the cap or
-  accept the B5 advisories (FILL now enforces with 20% slack, see
-  decision log).
+- ~~Medium preset ranges don't match what the pipeline builds~~
+  **Recalibrated** (calibration batch, author-confirmed: the original
+  numbers were *beat* counts from the one-beat-one-passage era — see
+  decision log). Passage bands now state structural yield (medium
+  25–40; others extrapolated pending runs), medium's word cap is 650,
+  and the *feel* of size has its own advisory: **B6, words traversed
+  per genuine choice per arc** (target 250–800, from the craft
+  corpus's 300–600 "balanced agency" band). The Bubblegum Alibi reads
+  at ~1206 — the cadence gap is real and now measured. POLISH's
+  false-branch pass is cadence-targeted to close it (diamond every
+  3–5 beats of a choice-less run, arms of 1–2 beats). Deeper scaffolds
+  are the structural fix — next item.
 
 - ~~Multi-hard weaving is not implemented~~ **Built** (PR #22) **and
   exercised live** (PR #23, the Bubblegum Alibi): hard forks nest,
@@ -374,14 +372,26 @@ PR #5) and this agent/doc infrastructure (PR #6).
   stories grow (the lexicographic DFS varies the tail of the order
   first, so early-position variety may still under-sample at larger
   unit counts).
-- **Every retained dilemma explores both answers in M1.** Locked-dilemma
-  shadows (exploring one side only) need an I3 refinement — the current
-  check demands dual-membership pre-commit beats, which single-explored
-  dilemmas can't have. Frontier-tier work.
-- **Triage cannot cut dilemmas** (only entities). Tied to the above and
-  to the generous-brainstorm question: B1 checks *equality* with the
-  scope preset, so BRAINSTORM is prompted to produce exact counts rather
-  than overgenerating for triage. Revisit both together in M3+.
+- **Locked dilemmas (heritage's "unexplored dilemmas") are the designed
+  next structural effort** — author-blessed 2026-07-09, upgrading the
+  old "every retained dilemma explores both answers" item. Heritage
+  (`docs/heritage/story-graph-ontology.md` §Shadows, and Triage in the
+  narrative doc) and design doc 02's own SEED contract both allow a
+  triaged dilemma to explore ONE answer: a complete linear
+  sub-storyline woven into the DAG — flavor and plot depth with no
+  fork, no arc multiplication, no I12 pressure. At `medium`, 2–3
+  locked dilemmas ≈ +8–12 passages of genuine story, and in a whodunit
+  they are the red herrings — which also structurally solves the
+  unanchored-suspects gap (extra cast anchors locked motives). Needs:
+  BRAINSTORM overgenerating dilemmas (B1 becomes branched-count
+  equality + locked allowance), triage emitting locked dispositions,
+  linear (fork-less) weave units, the I3 refinement for
+  single-explored paths, and I6/G3-FLAGS exemptions (a locked path's
+  consequence needs no gateable flag). Same effort: **richer residue**
+  — heritage's diamond-on-residue with multi-beat arms (a gated
+  residue chain IS state-based personalization: the story visibly
+  remembering) — and, later still, tensoring a shape inside a diamond
+  arm. Frontier-tier; sized like a small milestone slice.
 - **The G4 pacing report is deferred** (design doc 02 lists it: "no >N
   consecutive same-intensity passages"). It needs the `scene_type`
   annotation, which per design doc 01 §10 arrives only when a FILL
@@ -443,6 +453,82 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-09 (live run 6, validation micro — "The Cartography of
+  Small Kindnesses", PR #24):** Fresh micro premise (they/them
+  protagonist by design) validating the calibration batch. Results:
+  framing prompts held (4 entities, all anchored, zero G1 warnings —
+  the medium run had three), pronouns held (Wren consistently
+  they/them through every passage and micro-detail; the field renders
+  as "PRONOUNS: they/them, exactly"), cadence diamonds engaged hard
+  (22 passages at micro vs 7–17 in every earlier run), and B6 measured
+  ~1072 words/choice even so — the diamonds each add prose along with
+  their choice, so the marginal rate improves slowly; closing the feel
+  gap needs the locked-dilemmas effort, exactly as planned. Five
+  findings, all fixed in-flight: (1) *review rule 1 misread POV* — a
+  scene opening on another character's actions was failed as "third
+  person"; rule 1 now defines a departure (narrator in the wrong
+  person, or narration beyond their perception) and names the
+  non-cases. (2) *the amnesiac reviewer never converges* — after the
+  writer fixed round 1's genuine defect, round 2 failed on brand-new
+  taste; review rounds now carry prior rounds' issues into the prompt
+  (persistence is signal, novelty is usually taste). (3) *the halt
+  verdict needed an arbiter* — prompt fences hit the cheap reviewer's
+  ceiling (somatic rendering flagged as "naming emotion"; a rule-4
+  complaint about a state that is no listed flag), and every stage
+  halt across every run has been reviewer noise: a second failure now
+  escalates once to an architect-tier arbitration whose strict verdict
+  is final (design doc 02 FILL; tiering policy: escalate rather than
+  improvise). (4) *the id contract had a hole at beat applies* — a
+  diamond arm carrying entity display names ('Wren') sailed through
+  every gate until DRESS's brief check collided with it; a shared
+  `resolve_entity_ref` (types.py) now guards every apply that stores
+  entity refs on a beat (SEED scaffold, GROW bridge, POLISH residue
+  and arms) — FILL's micro-detail resolver generalized, per mini-ADR
+  A11. (5) *the codex review had the same disease as FILL's* — it
+  double-failed spoiler-safe entries by quoting the conditional-
+  material list from its own context as "the entry's assertion" (the
+  entry explicitly left the question open, which is what spoiler-safe
+  means); the anchored+arbitrated contract generalized to DRESS
+  (passes become per-run computed so review state can't leak), and
+  rule 1 now defines assertion. Final: **complete at ~$2.75** over all
+  attempts (174 calls, 41 cached; opus 231k in / 58k out) — 22
+  passages, 8,810 words, 4 arcs, 2 endings, full enrichment (codewords
+  KNOTTED / UNFOLDS), all exports round-trip clean; preserved as
+  `examples/small-kindnesses/`. Meta-lesson for the record: the
+  reviewer-contract failure class (live runs 1, 3, and now 6) kept
+  yielding to wording fixes one instance at a time; the arbitration
+  mechanism ends the class by making the expensive judgment structural
+  instead of textual.
+
+- **2026-07-09 (scope recalibration: the passage numbers were beats):**
+  The author identified why B3 missed by 3x: the original scale numbers
+  (medium 60–90) were *beat* counts from the era when one beat was one
+  passage; the passage collapse silently redefined the unit under them,
+  and heritage's surplus passages came from window-dressing choices.
+  The author's second insight: how big a story *feels* is how many
+  choices you make and how many passages you traverse — not inventory.
+  The craft corpus agrees and supplies the band (scope-and-length note:
+  ~300–600 words per choice reads as balanced agency; 1000+ reads as
+  a book). Decisions: (1) passage bands recalibrated to structural
+  yield (medium 25–40, measured; others extrapolated), documented as
+  such in design doc 01 §2; (2) **B6** added — average words traversed
+  per *genuine* choice per arc, target 250–800; a choice is offered
+  when its gate is satisfiable, not when its target is on the same arc
+  (the first draft under-counted exactly the real forks); (3) POLISH's
+  false-branch pass is cadence-targeted (a diamond per ~3–5 beats of
+  choice-less run, arms of 1–2 beats via an optional followup beat) —
+  safe as dressing precisely because the dilemma structure guarantees
+  the real choices, which inverts the corpus's false-choice-tax
+  warning; (4) medium word cap 650 (opus climax endings run ~600);
+  (5) DREAM/BRAINSTORM prompts reframed to their epistemic position
+  (vision = texture not inventory; brainstorm = ingredients, anchor
+  what you invent); (6) `Entity.pronouns` explicit end-to-end with a
+  numbered FILL-review rule. The structural volume fix — locked
+  dilemmas (heritage lookup confirmed: a triaged dilemma may explore
+  one answer as a woven linear storyline) plus richer residue diamonds
+  — is the designed next effort (open items); corpus-medium word
+  totals (20–60k) wait for scaffold deepening after M6.
 
 - **2026-07-09 (M5 exit: live run 5, the first medium — "The Bubblegum
   Alibi", PR #23):** Closed-circle murder mystery in a bubblegum

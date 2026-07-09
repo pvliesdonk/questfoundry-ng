@@ -1,0 +1,15 @@
+id: passage:p-untie-the-string
+summary: Wren unties the string and folds back the paper, claiming the loss inside for the
+  first time. Whatever they were too afraid to want takes shape in their hands, and they enter
+  the rest of the night changed — no longer only a vessel for others' grief.
+entities:
+- object:wrens-parcel
+- character:wren
+beats:
+- beat:someone-who-can-hold
+- beat:untie-the-string
+choices:
+- label: Hold the warm thing close and go on
+  requires:
+  - flag:wren-learns-their-want
+  to: passage:p-residue-opened

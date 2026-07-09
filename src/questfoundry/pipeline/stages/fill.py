@@ -32,7 +32,7 @@ from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 REVIEW_SYSTEM = (
@@ -236,15 +236,7 @@ def _resolve_entity(g, ref: str) -> str:
     """The id contract lives in the adapter's JSON instruction; engine-side
     only the provably unambiguous slug form is restored (parsing, not
     prediction — display names are rejected, see the STATUS decision log)."""
-    if isinstance(g.get(ref), Entity):
-        return ref
-    entities = [e for e in g.nodes_of(Entity) if e.retained]
-    matches = {e.id for e in entities if e.id.split(":", 1)[1] == ref}
-    if len(matches) == 1:
-        return matches.pop()
-    raise ApplyError(
-        f"{ref!r} is not an entity id; use one of: {sorted(e.id for e in entities)}"
-    )
+    return resolve_entity_ref(g, ref)
 
 
 def _write_apply_for(passage_id: str):
@@ -271,13 +263,19 @@ def _write_apply_for(passage_id: str):
 
 
 def _review_for(passage_id: str):
+    # each round is anchored on what earlier rounds flagged: an amnesiac
+    # reviewer samples fresh objections every round and never converges
+    # (validation run, 2026-07-09) — persistence is signal, novelty is
+    # usually taste
+    prior: list[str] = []
+
     def review(proposal: WriteProposal, project: Project, adapter: Any) -> list[str]:
         from questfoundry.pipeline import runner
 
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         rendered = env.get_template("fill_review.j2").render(
-            **context, prose=proposal.prose
+            **context, prose=proposal.prose, prior_issues=list(prior), arbitration=None
         )
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
@@ -285,9 +283,31 @@ def _review_for(passage_id: str):
             schema=ReviewVerdict,
             role="utility",
         )
-        if verdict.verdict == "fail":
-            return verdict.issues or ["review failed without stating an issue"]
-        return []
+        if verdict.verdict != "fail":
+            return []
+        issues = verdict.issues or ["review failed without stating an issue"]
+        if prior:
+            # second strike halts the stage — but every halt so far has
+            # been the cheap reviewer sampling taste, not structure. One
+            # architect-tier arbitration breaks the tie (tiering policy:
+            # escalate rather than improvise); its verdict is final.
+            arb = env.get_template("fill_review.j2").render(
+                **context,
+                prose=proposal.prose,
+                prior_issues=list(prior),
+                arbitration=issues,
+            )
+            final = adapter.complete(
+                system=REVIEW_SYSTEM,
+                prompt=arb,
+                schema=ReviewVerdict,
+                role="architect",
+            )
+            if final.verdict != "fail":
+                return []
+            issues = final.issues or issues
+        prior.extend(issues)
+        return issues
 
     return review
 

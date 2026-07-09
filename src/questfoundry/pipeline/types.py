@@ -27,6 +27,28 @@ class ApplyError(Exception):
     and is fed back to the model verbatim for a repair attempt."""
 
 
+def resolve_entity_ref(g: Any, ref: str) -> str:
+    """The id contract (mini-ADR A11) at the apply layer: every entity
+    reference in a proposal is the exact `kind:slug` id, or the provably
+    unambiguous bare slug (prefix restoration is parsing, not
+    prediction). Display names are rejected with the expected set —
+    every apply that stores entity refs on a beat must resolve through
+    here, or junk sails through the gates until something collides with
+    it (validation run, 2026-07-09: a diamond arm carrying 'Wren').
+    """
+    from questfoundry.models.world import Entity
+
+    if isinstance(g.get(ref), Entity):
+        return ref
+    entities = [e for e in g.nodes_of(Entity) if e.retained]
+    matches = {e.id for e in entities if e.id.split(":", 1)[1] == ref}
+    if len(matches) == 1:
+        return matches.pop()
+    raise ApplyError(
+        f"{ref!r} is not an entity id; use one of: {sorted(e.id for e in entities)}"
+    )
+
+
 @dataclass(frozen=True)
 class PassSpec:
     """One LLM call within a stage.

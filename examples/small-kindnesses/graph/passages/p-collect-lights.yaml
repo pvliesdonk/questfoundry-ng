@@ -1,0 +1,15 @@
+id: passage:p-collect-lights
+summary: One by one the stall-lights fold shut around the space where Emery stood, and the
+  dark comes gently, like a blanket drawn up.
+entities:
+- character:wren
+- character:emery
+- faction:the-market
+irrelevant_flags:
+- flag:parcel-remains-sealed
+- flag:wren-learns-their-want
+beats:
+- beat:arm-collect-lights
+choices:
+- label: Stand alone in the emptied dark
+  to: passage:p-grief-claimed

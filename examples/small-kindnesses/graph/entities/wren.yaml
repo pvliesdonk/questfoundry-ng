@@ -1,0 +1,14 @@
+id: character:wren
+name: Wren
+concept: A courier who has spent years delivering the market's parcels of lost memory without
+  ever once claiming anything for themselves.
+pronouns: they/them
+base:
+  appearance: Rain-darkened canvas coat, a satchel worn soft at the strap, hands that know
+    every alley by feel
+  manner: Quiet, watchful, habitually deflecting; more comfortable carrying others' longings
+    than owning their own
+  instinct: Can locate anything set down in the market and could undo its exact knot in the
+    dark, from years of carrying.
+  gesture: When unsure, Wren doesn't know what to do with their hands and keeps moving forward
+    rather than standing still.

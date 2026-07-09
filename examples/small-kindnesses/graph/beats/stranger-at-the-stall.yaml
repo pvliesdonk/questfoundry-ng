@@ -1,0 +1,14 @@
+id: beat:stranger-at-the-stall
+summary: Wren stands at Emery's stall as a stranger to the one person who ever saw them, invisible
+  once more even in the act of saving her. The rain stops on a friendship neither can now
+  name.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: advances
+entities:
+- character:wren
+- character:emery
+is_ending: true
+belongs_to:
+- path:pay-the-debt

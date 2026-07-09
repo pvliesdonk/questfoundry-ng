@@ -1,0 +1,9 @@
+id: beat:arm-emery-hands
+created_by: polish
+summary: Wren notices how Emery's hands have gone still on the counter, the way hands go still
+  when they already know.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren
+- character:emery

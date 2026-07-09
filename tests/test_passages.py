@@ -20,12 +20,15 @@ from questfoundry.pipeline.stages.grow import _derive_flags
 from questfoundry.pipeline.stages.polish import (
     AuditEntry,
     AuditProposal,
+    FinalizeProposal,
     LabelSpec,
     PassageSpec,
     PassagesProposal,
+    ResidueSpec,
     VariantSpec,
     _audit_apply,
-    _finalize_skip,
+    _finalize_apply,
+    _light_needs,
     _passages_apply,
     _variant_needs,
 )
@@ -135,7 +138,9 @@ def test_heavy_residue_creates_gated_variants(vision, tmp_path):
     g = StoryGraph()
     _woven_story(g, ResidueWeight.HEAVY)
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    assert _finalize_skip(project)  # heavy needs no residue beats; runs are short
+    # heavy needs no residue beats (variants carry it); cadence sites may
+    # still engage finalize, so assert the residue claim directly
+    assert not _light_needs(project)
 
     _passages_apply(_proposal_for(g), project)
     (convergence,) = [n.rejoin[0] for n in pc.convergence_needs(g)]
@@ -318,13 +323,56 @@ def test_false_branch_splice_and_long_run_detection():
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.FALSE_BRANCH,
     )
-    pc.insert_false_branch(g, arm_a, arm_b, before, after)
+    arm_b2 = Beat(
+        id="beat:shore-tidepools",
+        created_by=Stage.POLISH,
+        summary="b2",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+    )
+    pc.insert_false_branch(g, [arm_a], [arm_b, arm_b2], before, after)
     assert not g.has_edge(EdgeKind.PREDECESSOR, before, after)
     new_groups = pc.collapse_groups(g)
     assert ["beat:via-the-cliffs"] in new_groups
-    assert ["beat:via-the-shore"] in new_groups
+    # a 2-beat arm collapses into one passage of its own
+    assert ["beat:via-the-shore", "beat:shore-tidepools"] in new_groups
     # the diamond rejoins: both arms feed `after`
-    assert set(queries.predecessors(g, after)) == {"beat:via-the-cliffs", "beat:via-the-shore"}
+    assert set(queries.predecessors(g, after)) == {"beat:via-the-cliffs", "beat:shore-tidepools"}
+
+
+def test_llm_beat_entities_must_be_ids(vision, tmp_path):
+    """Validation run (2026-07-09): a diamond arm carrying display names
+    ('Wren') sailed through every gate until DRESS's brief check collided
+    with it. Every apply that stores entity refs on a beat now resolves
+    them through the id contract (exact id or unambiguous bare slug)."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    spec = ResidueSpec(
+        dilemma=need.dilemma,
+        path=sorted(need.path_flags)[0],
+        world=need.world,
+        id="beat:afterglow",
+        summary="s",
+        entities=["Wren"],
+    )
+    with pytest.raises(ApplyError, match="not an entity id"):
+        _finalize_apply(FinalizeProposal(residue=[spec]), project)
+
+
+def test_b6_choice_cadence_measures_feel(golden):
+    """B6 (advisory): story size FEELS like words traversed per genuine
+    choice (calibration decision, 2026-07-09 — the medium live run read
+    at ~1200 words/choice, double the balanced band). The golden micro
+    sits inside the band; inflating its prose 4x pushes it out."""
+    issues = run_checks(golden.graph, golden.vision, Stage.FILL)
+    assert not [i for i in issues if i.check == "B6"]
+    for p in golden.graph.nodes_of(Passage):
+        p.prose = " ".join([p.prose] * 4)
+    issues = run_checks(golden.graph, golden.vision, Stage.FILL)
+    warns = [i for i in issues if i.check == "B6"]
+    assert len(warns) == 1 and "words per genuine choice" in warns[0].message
 
 
 def test_active_flags_mirrors_i12(golden):

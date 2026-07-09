@@ -1,0 +1,15 @@
+id: beat:the-debt-explained
+summary: 'The market''s clerk lays out Emery''s contract: her debt is paid only in memories
+  of being known, and when the rain stops she will be collected, erased into indifference.
+  The rain is already thinning.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: reveals
+entities:
+- faction:the-market
+- character:emery
+- character:wren
+belongs_to:
+- path:let-emery-go
+- path:pay-the-debt

@@ -1,0 +1,7 @@
+id: path:leave-it-sealed
+name: The Safety of Invisibility
+explores: answer:leave-it-sealed
+consequences:
+- id: consequence:parcel-remains-sealed
+  text: The parcel bearing Wren's name stays tied shut, its loss unclaimed, and Wren remains
+    a carrier for others who never buys, never wants for themselves.

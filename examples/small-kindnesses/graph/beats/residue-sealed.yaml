@@ -1,0 +1,12 @@
+id: beat:residue-sealed
+created_by: polish
+summary: The aisles close over Wren like water over a stone, and the rain keeps its old rhythm
+  against the tarps, asking nothing, remembering nothing. There is a quiet here, the quiet
+  of a room no one enters.
+beat_class: structural
+purpose: residue
+entities:
+- character:wren
+- faction:the-market
+requires_flags:
+- flag:parcel-remains-sealed

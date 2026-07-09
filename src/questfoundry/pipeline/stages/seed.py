@@ -31,7 +31,7 @@ from questfoundry.models.structure import (
     TemporalHint,
 )
 from questfoundry.models.world import Entity
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 # -- pass 1: triage ---------------------------------------------------------
@@ -186,6 +186,7 @@ def _scaffold_context(project: Project) -> dict:
 
 
 def _make_beat(
+    g,
     spec: BeatSpec,
     *,
     beat_class: BeatClass,
@@ -200,7 +201,7 @@ def _make_beat(
             beat_class=beat_class,
             purpose=purpose,
             dilemma_impacts=impacts or [],
-            entities=spec.entities,
+            entities=[resolve_entity_ref(g, e) for e in spec.entities],
             is_ending=spec.is_ending,
             temporal_hints=[
                 TemporalHint(dilemma=h.dilemma, position=h.position) for h in spec.hints
@@ -240,7 +241,7 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
                 raise ApplyError(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
 
     for spec in proposal.setup:
-        beat = _make_beat(spec, beat_class=BeatClass.STRUCTURAL, purpose=StructuralPurpose.SETUP)
+        beat = _make_beat(g, spec, beat_class=BeatClass.STRUCTURAL, purpose=StructuralPurpose.SETUP)
         mutations.add_beat(g, beat, [])
     _chain(g, [s.id for s in proposal.setup])
 
@@ -255,6 +256,7 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
             )
         for spec in scaffold.pre_commit:
             beat = _make_beat(
+                g,
                 spec,
                 beat_class=BeatClass.NARRATIVE,
                 impacts=[DilemmaImpact(dilemma=dilemma_id, effect=ImpactEffect(spec.effect))],
@@ -265,6 +267,7 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
 
         for path_scaffold in scaffold.paths:
             commit = _make_beat(
+                g,
                 path_scaffold.commit,
                 beat_class=BeatClass.NARRATIVE,
                 impacts=[DilemmaImpact(dilemma=dilemma_id, effect=ImpactEffect.COMMITS)],
@@ -273,6 +276,7 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
             mutations.add_ordering(g, last_shared, commit.id)
             for spec in path_scaffold.post_commit:
                 beat = _make_beat(
+                    g,
                     spec,
                     beat_class=BeatClass.NARRATIVE,
                     impacts=[

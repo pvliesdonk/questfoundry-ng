@@ -1,0 +1,19 @@
+id: passage:p-always-the-carrier
+summary: Wren realizes they have carried a thousand parcels and opened none, wanted nothing,
+  kept nothing. The clerk notes, without cruelty, that another's memories of being known could
+  settle the same debt — the exchange is Wren's to make. Emery sees the parcel in their hands
+  and goes quiet, saying she always wondered what Wren carried for themselves.
+entities:
+- character:wren
+- object:wrens-parcel
+- faction:the-market
+- character:emery
+beats:
+- beat:always-the-carrier
+- beat:emery-notices-the-parcel
+- beat:the-offered-substitution
+choices:
+- label: Watch Emery's stilled hands
+  to: passage:p-emery-hands
+- label: Meet Emery's half-smile
+  to: passage:p-emery-smile

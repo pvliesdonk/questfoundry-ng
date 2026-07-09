@@ -1,0 +1,20 @@
+id: dilemma:open-the-parcel
+question: Before the night is over, does Wren finally open the parcel addressed to them and
+  claim the loss inside?
+why_it_matters: It breaks — or confirms — Wren's lifelong habit of never buying, never claiming,
+  changing whether they enter the final choice as someone who can hold something for themselves
+  or as someone who only carries for others.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:open-it
+  text: Wren unties the string and claims the loss, learning what they've been too afraid
+    to want.
+- id: answer:leave-it-sealed
+  text: Wren leaves the parcel sealed, choosing the safety of invisibility over the risk of
+    wanting.
+anchored_to:
+- character:wren
+- object:wrens-parcel
+- faction:the-market

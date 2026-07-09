@@ -1,0 +1,11 @@
+You pull the string tight. It answers the way it always answers, the knot drawing back into itself under your thumb, the market's exact turn that your hands could find blind. The paper gives its soft damp sigh. Your name sits on it in the handwriting you almost know, and you do not touch the letters. You set the parcel down on the table, square to the edge the way you would set any other, and you take your fingers off it slowly, as though slowness were a kind of care you could still offer.
+
+Some things are worth more kept than saved. The words move in you and do not settle. Your hand hovers over the paper, then draws back. You keep it drawn back.
+
+So this is the choosing, then, and it is smaller than you thought. No scale swings. No clerk lifts his head. There is only the string gone tight again, and the table, and the space just above the parcel where your palm still remembers the warmth of nearly.
+
+You turn from the table. The aisle takes you the way it has always taken you, canvas and lamplight and the long wet run of stalls closing one by one. Your satchel rides soft at your shoulder, empty of anything owed to you. Your hands do not know what to do, so you keep walking, because walking is the thing your hands have always agreed to.
+
+Behind you the parcel stays. You do not look. Looking would be a kind of wanting, and you have set wanting down on the table with your name still on it. The rain is fewer beads now, thinning toward the hour when the market will fold shut and take whatever no one claimed back into wherever it keeps such things.
+
+You carry nothing. You have carried nothing for years, and the nothing has always been lighter than this. It presses at the strap and at your thumb where the cold line of the string has already faded to memory. You go on into the aisles, past faces that do not turn, past the small worn losses of people who will never know your name, and you let the dark do to you what you have always let it do. You become the one who moves things and is not seen moving. You leave your own loss tied shut on a table, and you walk, and the rain lets down its last quiet handful onto the awnings behind you.

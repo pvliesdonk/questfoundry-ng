@@ -204,8 +204,12 @@ Two phases:
 
 1. **Finalize the DAG** (additions only): reorder within linear runs for
    flow; insert bridge beats for pacing; insert residue beats per the
-   convergence sketch; add false branches where long linear stretches
-   need choice-feel.
+   convergence sketch; add false branches at cadence — a cosmetic
+   diamond (arms of 1–2 beats, different textures of the same forward
+   motion) roughly every 3–5 beats of a choice-less run, so a
+   playthrough keeps a genuine-feeling decision every ~250–800 words
+   (B6). The real choices are the dilemmas; cadence diamonds are safe
+   dressing precisely because the structure guarantees the real ones.
 2. **Build the passage layer:** collapse maximal linear runs into
    passages (boundaries at forks/joins); merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
@@ -245,7 +249,15 @@ so prose can carry the weight of it), and convergence lookahead.
 
 A passage failing review twice is a structural bug: it goes back to
 POLISH (or GROW), never to a third rewrite. Prose cannot rescue a broken
-structure (Principle 4).
+structure (Principle 4). Because that halt is expensive and the utility
+reviewer has repeatedly laundered taste through the objective rules
+(review-legibility lessons), the verdict that triggers it is not the
+utility reviewer's alone: review rounds are anchored on the previous
+rounds' issues (persistence is signal; all-new complaints each round
+are usually taste), and a second failure escalates once to an
+architect-tier arbitration whose strict verdict — uphold only outright
+rule violations — is final. One extra frontier call on the rare
+contested passage buys the halt its meaning.
 
 ### DRESS — art and codex
 

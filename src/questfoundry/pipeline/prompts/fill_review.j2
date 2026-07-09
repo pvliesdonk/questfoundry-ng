@@ -1,3 +1,15 @@
+{% if arbitration %}
+ARBITRATION. A first-line reviewer failed this passage twice; its earlier
+rounds are under PREVIOUSLY FLAGGED (the writer revised for those) and its
+newest objections are:
+{% for i in arbitration %}
+- {{ i }}
+{% endfor %}
+You are the senior arbiter and your verdict is final. First-line reviewers
+here have repeatedly laundered taste through the rules; uphold an objection
+ONLY if the quoted text outright violates a numbered rule as written. If you
+fail this passage the stage halts as structurally broken — be certain.
+{% endif %}
 Review one passage of prose against its contract. Verdict "pass" or "fail"; on
 fail, list concrete, actionable issues (each one sentence).
 
@@ -7,13 +19,25 @@ flag the same way:
    prose written in them is correct; fail only if the prose departs from them:
    - required POV: {{ voice.pov }}
    - required tense: {{ voice.tense }}
+   A POV departure means the narrating character is rendered in the wrong
+   person, or the narration leaves what they can perceive. Other characters
+   are naturally he/she/they in ANY pov, and sentences that don't mention
+   the narrator (a scene opening on someone else's action) are not
+   departures.
    These patterns are BANNED — fail if any of them appears:
    - {{ voice.banned | join("
    - ") }}
+   Banned patterns match LITERALLY: a banned rhetorical question must be a
+   question in the text; a ban aimed at the reader is not violated by words
+   one character speaks to another — dialogue is never reader-address.
 2. Beat infidelity — a required beat is missing, out of order, or contradicted:
 {% for b in beats %}
    - {{ b.summary }}
 {% endfor %}
+   Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
+   what stays ambiguous, whose eyes we feel it through — is the writer's
+   craft, not fidelity; fail only when a listed thing doesn't happen,
+   happens out of order, or is contradicted.
 3. Continuity — a factual contradiction with the adjacent prose{% if not window and not lookahead %} (none written yet — skip){% endif %}.
 {% if window %}
 {% for w in window %}
@@ -29,6 +53,14 @@ flag the same way:
    In-world objects and events that flags merely describe are story, not
    leakage — and ordinary English uses of those words ("her heart beats",
    "the garden path") are just words.
+{% if entities | selectattr("pronouns") | list %}
+6. Pronoun contradiction — a character is referred to with pronouns other
+   than their stated ones (fail only on an actual wrong pronoun in the text,
+   quoted; a name used instead of a pronoun is fine):
+{% for e in entities if e.pronouns %}
+   - {{ e.name }}: {{ e.pronouns }}
+{% endfor %}
+{% endif %}
 
 MATTERS OF DEGREE ARE NOT FAILURES. Register, rhythm, metaphor quality,
 cliché, sentimentality, and "too literary / too spare" judgments are taste; a
@@ -43,6 +75,16 @@ Each issue must name the rule number it violates and quote the offending text.
 If your sentence needs "risks", "potential", "could be", or "attempts to", it
 is not an objective defect — do not list it.
 
+{% if prior_issues %}
+PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
+{% for i in prior_issues %}
+- {{ i }}
+{% endfor %}
+Judge persistence first: does any previously named defect remain? A round
+that finds only brand-new complaints is judging taste, not defects — if
+nothing above persists and no new text outright violates a numbered rule,
+pass the revision.
+{% endif %}
 THE PROSE:
 ---
 {{ prose }}

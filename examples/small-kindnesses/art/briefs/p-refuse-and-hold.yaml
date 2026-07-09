@@ -1,0 +1,15 @@
+passage: passage:p-refuse-and-hold
+priority: 2
+caption: You take her hands in the last of the rain, choosing to keep her whole even as the
+  market gathers her in.
+prompt: Rain-soaked painterly illustration, soft edges, intimate close framing, watercolor
+  washes bleeding at the borders. A courier in a rain-darkened canvas coat, satchel strap
+  worn soft, holds the hands of Emery, whose lantern-warm face and edges have gone translucent,
+  dissolving into the surrounding air where being-known is collected. Around them the Night
+  Market's stall-lights soften and the rain thins to its last drops. Wet-street darks and
+  rain-grey blues warmed by lantern amber and ink-black, translucent dissolving pale edges,
+  muted browns of worn cloth. Tender, hushed, an ending held close.
+entities:
+- character:wren
+- character:emery
+- faction:the-market

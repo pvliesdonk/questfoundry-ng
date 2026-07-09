@@ -1,0 +1,11 @@
+You take the parcel up. It settles into your hands the way a thousand others have, and that is when the count arrives, unbidden, the whole long tally of them. A thousand parcels through a thousand rains. A thousand knots undone in the dark and never once your own. You have carried faces and kitchens and the sound of names, and you have set every one of them down at the right door and turned away empty, wanting nothing, keeping nothing. The string under your thumb is cold and thin and it feels heavier than any name in that ledger, heavier than any debt the finger touched.
+
+The clerk watches you without unkindness. There is another coin, the clerk says, that settles the same account. Not the loss in your hands. Someone else's memory of being known. The weight of being seen by a mouth that loved to say your name. Given up, it balances the scale as well as any other, and the market does not mind which you set down. The brass sits ready at your elbow. The choice, the clerk means, is yours to make. It has always been yours to make.
+
+You understand it then, fully, the shape of the exchange. What can be spent. What you have that someone would take.
+
+Emery has stopped packing. Her hands rest on the cracked cup half-wrapped in cloth, and the lantern goes translucent along the edges of her, thinning like the rain. She is looking at the parcel in your hands, at your name gone soft on the paper, and something in her face quiets the way a room quiets when the last guest lifts their coat. She does not reach for you. She only looks, a long look, and her voice when it comes is low and worn smooth.
+
+I always wondered, she says, what you carried for yourself.
+
+The rain has gone to a bead and a fall. The market is folding its night away around you both. She does not say the rest, that she is going, that the ledger has her name under a finger somewhere, that she gives easily and has never once let anyone give back. It hangs between you unspoken, the way it always has. Her half-smile begins and does not quite finish. Your fingers do not know where to be. You keep hold of the parcel, and the string bites cold across your thumb, and you wait for the small distance to close or to widen.

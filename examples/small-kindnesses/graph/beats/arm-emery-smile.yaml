@@ -1,0 +1,8 @@
+id: beat:arm-emery-smile
+created_by: polish
+summary: Emery offers Wren the crooked half-smile she saves for endings she won't name aloud.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren
+- character:emery

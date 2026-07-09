@@ -1,0 +1,8 @@
+id: beat:arm-lantern-row
+created_by: polish
+summary: Wren threads the lantern row, where the vendors' faces glow amber and gutter as the
+  rain thins the flames.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:wren

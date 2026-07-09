@@ -1,0 +1,11 @@
+id: passage:p-stranger-at-the-stall
+summary: Wren stands at Emery's stall as a stranger to the one person who ever saw them, invisible
+  once more even in saving her. The rain stops on a friendship neither can now name.
+entities:
+- character:wren
+- character:emery
+ending:
+  id: e-stranger-at-the-stall
+  title: Unseen, and Kept Safe
+beats:
+- beat:stranger-at-the-stall

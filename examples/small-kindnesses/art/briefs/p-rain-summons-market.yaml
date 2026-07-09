@@ -1,0 +1,17 @@
+passage: passage:p-rain-summons-market
+priority: 3
+caption: The rain unfolds the Night Market of Vellamere, and tonight Emery's hands are packing
+  crates instead of waving you in.
+prompt: Rain-soaked painterly illustration, soft edges and intimate framing, wet ink and watercolor
+  washes bleeding at the borders. The Night Market of Vellamere unfolds between puddles on
+  dark cobbles, stalls rising like breath on glass, lantern light bleeding gold into wet stone,
+  aisles mirrored in rain. At one stall Emery, a lantern-warm face thinning translucent at
+  the edges, wrapped in a worn shawl, packs crates with ink-stained fingers. A courier in
+  a rain-darkened canvas coat carries a soft brown-paper parcel tied in the market's knot.
+  Wet-street darks and rain-grey blues warmed by lantern amber and ink-black; muted browns
+  of damp paper and worn cloth.
+entities:
+- faction:the-market
+- character:wren
+- object:wrens-parcel
+- character:emery

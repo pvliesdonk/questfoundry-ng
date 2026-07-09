@@ -30,7 +30,7 @@ from questfoundry.models.base import Stage
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
 from questfoundry.pipeline import passages as pc
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 # -- pass 1: finalize ---------------------------------------------------------
@@ -47,12 +47,21 @@ class ResidueSpec(BaseModel):
     entities: list[str] = []
 
 
+class FollowupSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    summary: str
+    entities: list[str] = []
+
+
 class ArmSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str
     summary: str
     entities: list[str] = []
+    followup: FollowupSpec | None = None  # optional second beat when the flavor needs room
 
 
 class FalseBranchSpec(BaseModel):
@@ -141,7 +150,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 summary=spec.summary,
                 beat_class=BeatClass.STRUCTURAL,
                 purpose=StructuralPurpose.RESIDUE,
-                entities=spec.entities,
+                entities=[resolve_entity_ref(g, e) for e in spec.entities],
                 requires_flags=[flag],
             )
         except ValidationError as e:
@@ -166,21 +175,27 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 f"false branch at {spec.before} -> {spec.after} is not inside a long linear run"
             )
         try:
-            arms = [
-                Beat(
-                    id=arm.id,
-                    created_by=Stage.POLISH,
-                    summary=arm.summary,
-                    beat_class=BeatClass.STRUCTURAL,
-                    purpose=StructuralPurpose.FALSE_BRANCH,
-                    entities=arm.entities,
-                )
+            chains = [
+                [
+                    Beat(
+                        id=b.id,
+                        created_by=Stage.POLISH,
+                        summary=b.summary,
+                        beat_class=BeatClass.STRUCTURAL,
+                        purpose=StructuralPurpose.FALSE_BRANCH,
+                        entities=[resolve_entity_ref(g, e) for e in b.entities],
+                    )
+                    for b in ([arm] if arm.followup is None else [arm, arm.followup])
+                ]
                 for arm in spec.arms
             ]
         except ValidationError as e:
             raise ApplyError(f"invalid false-branch arm: {e}") from e
-        pc.insert_false_branch(g, arms[0], arms[1], spec.before, spec.after)
-        lines.append(f"diamond {arms[0].id} / {arms[1].id} between {spec.before} -> {spec.after}")
+        pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
+        lines.append(
+            f"diamond {chains[0][0].id} / {chains[1][0].id} "
+            f"between {spec.before} -> {spec.after}"
+        )
     return lines or ["nothing inserted"]
 
 

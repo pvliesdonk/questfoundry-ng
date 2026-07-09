@@ -1,0 +1,13 @@
+id: beat:trade-being-known
+summary: Wren offers the market their own memories of being known, settling Emery's debt in
+  the last of the rain. The clerk accepts, and the exchange takes hold.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pay-emerys-debt
+  effect: commits
+entities:
+- character:wren
+- faction:the-market
+- character:emery
+belongs_to:
+- path:pay-the-debt

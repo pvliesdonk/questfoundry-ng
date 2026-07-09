@@ -1,0 +1,17 @@
+id: passage:p-refuse-and-hold
+summary: Wren refuses the trade and takes Emery's hands as the rain slows to its last drops,
+  choosing to keep everything they loved of her rather than unmake it. The market gathers
+  her in quiet, contractual erasure while Wren holds her through the final rain, every memory
+  kept whole and aching, until she dissolves into the thinning wet.
+entities:
+- character:wren
+- character:emery
+- faction:the-market
+beats:
+- beat:market-collects-emery
+- beat:refuse-and-hold
+choices:
+- label: Watch the stall-lights fold shut around her
+  to: passage:p-collect-lights
+- label: Let the silence close over the two of you
+  to: passage:p-collect-hush

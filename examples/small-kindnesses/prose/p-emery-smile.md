@@ -1,0 +1,11 @@
+The smile arrives the way it always does, one corner first, hooking up toward her cheek and stopping there, the other side left slack. Crooked. Unfinished on purpose. You have seen it before, over spilled tea and broken cups and the last light of stalls closing down, and you have never once heard her say what it means. It is the face she makes at things she will not name. It is the face she is making now.
+
+You hold the parcel. The string keeps its cold line across your thumb. Around you the market draws itself in, canvas coming down, lanterns pinched to smoke, and Emery grows thinner at her edges, the lantern showing through her the way water shows through a held leaf. She has not moved to finish wrapping the cup. Her hands rest on the cloth as if the cloth were the last warm thing in reach.
+
+You want to give the smile back to her. You find your own mouth will not lift.
+
+She knows you are choosing. She must. The brass sits ready at your elbow, patient as the clerk, and she has seen your eyes go to it and come away. Still she does not reach. She only tilts her head a small degree, the way she does when she is about to say something kind and light to cover a thing that is neither, and then she keeps the words. She lets the half-smile carry them instead. It says, I understand. It says, you owe me nothing. It says the part she has never said in all the rains you have stood in her small warmth, and it says it without moving past the one corner of her mouth.
+
+The rain goes to a bead and a fall, a bead and a fall. You could set the parcel down. You could set something else down, the weight of your name in her mouth, the whole record of her seeing you, and keep her here and lose the reason she stayed. She watches you weigh it and gives you nothing to lean on. Only the smile, crooked, held out across the thinning space like a coin she is not asking you to take.
+
+You stay. You keep hold of the string. You watch her finish nothing, and you wait with her through the last of it, because leaving now is a thing your hands refuse to learn.

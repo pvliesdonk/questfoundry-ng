@@ -1,0 +1,13 @@
+id: faction:the-market
+name: The Night Market of Vellamere
+concept: The rain-summoned market that sells everyone's unclaimed losses and collects its
+  debts in indifferent, contractual erasure rather than cruelty.
+pronouns: it/its
+base:
+  manner: Systemic, patient, courteous; it does not hate, it only balances ledgers
+  rule: It appears only when it rains and closes when the rain stops
+  instrument: Keeps a brass scale at the claiming-table beside the clerk, used to weigh debts
+    and settle accounts.
+  closing: When it settles a debt, its ledger closes somewhere unseen with the softness of
+    a book reaching its known ending; the transaction takes hold as a loosening in the one
+    who pays, not a taking.

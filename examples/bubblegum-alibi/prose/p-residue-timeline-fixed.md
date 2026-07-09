@@ -1,0 +1,13 @@
+Her back is a wall of turned glitter. She used to sparkle at me on purpose, a whole vocabulary of it, glow tape and rhinestone barrettes and that jacket she stitched sequins onto during a study hall we were supposed to spend on the Krebs cycle. Now the sparkle points away. Every little scale of light on her shoulders is angled at the streamers and not at me, and I read the message the way I read everything tonight, fluent and sick with it: you did this, and I am done being read by you.
+
+The silence between us is sharp as cut foil. I want to fill it. My whole life is filling it, the caption under the blurry photo, the joke to make the sad kid laugh, the bright noise that keeps a room from tipping over. My mouth is loaded with a dozen fixes. Tavi, I could say. Tavi, I had to. Tavi, look at me and let me make it small again. But there's nothing small left. I nailed the minutes down myself. I stood up and hammered them into the floor in front of everyone, eight seconds early, maybe nine, and now they'll never slide loose to shelter her. The window is shut. The shape is fixed. I asked for that. I got it in the throat.
+
+That's the part the counting doesn't warn you about. You spend all night wanting the timeline to sit still, to stop breathing, to just *behave*, and then it does, and it turns out a fixed thing is a heavy thing, and it lands exactly where the softest person was standing. The cold of it settles between my shoulders like a hand laid flat, the spot where she used to bump me with her elbow when a slow song came on and neither of us had a date and we agreed, silently, to find that hilarious.
+
+So I count. One, two. It's the only thing my body still trusts to do when the noise runs out. I count the beats of her not turning around. I count the streamers gone tired and pink above her. I count the seconds I have left before the room needs my mouth again, because it will, it always does, keeper of everyone, and the clock on the far wall reads a number I'm no longer sure I believe, a number I might have to say out loud whether or not it's true.
+
+The cold spreads down my spine and pools where the notebook rides against my ribs, warm from me, warm on one side and freezing on the other, and I understand that I am about to be asked to trade her twice.
+
+Priya steps into the middle of the circle with her clipboard tucked under one arm like a shield, and she doesn't look at Tavi, and she doesn't look at the wall. She looks at me. She looks at the shape my cardigan makes over the thing I've kept all night. She already knows. Of course she knows. Terrible competence is her whole religion.
+
+"Show us," Priya says, and holds out her hand.

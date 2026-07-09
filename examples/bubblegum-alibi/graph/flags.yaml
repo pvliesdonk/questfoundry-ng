@@ -60,6 +60,7 @@ flags:
     filling a gap no one else could.
   source: dilemma
   path: path:press-mona
+  codeword: CRACKED
   derived_from:
   - consequence:mona-testimony-extracted
 - id: flag:sailor-taken-at-dawn
@@ -74,6 +75,7 @@ flags:
     testimony near the body is lost.
   source: dilemma
   path: path:spare-mona
+  codeword: SILENT
   derived_from:
   - consequence:sash-witness-lost
 - id: flag:secrets-sealed
@@ -95,6 +97,7 @@ flags:
     clearing the muddled window in the reconstruction.
   source: dilemma
   path: path:expose-tavi
+  codeword: SNAPPED
   derived_from:
   - consequence:timeline-fixed
 - id: flag:timeline-hole
@@ -102,6 +105,7 @@ flags:
     open to shift the blame.
   source: dilemma
   path: path:cover-tavi
+  codeword: MURKY
   derived_from:
   - consequence:timeline-hole
 - id: flag:truth-provable

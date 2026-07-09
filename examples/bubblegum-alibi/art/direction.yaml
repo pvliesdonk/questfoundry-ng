@@ -1,0 +1,89 @@
+style: Glossy, candy-bright graphic illustration with clean linework and posterized shading,
+  where the peppy party palette is undercut by hard chiaroscuro and long shadows that tighten
+  as dawn approaches; sardonic warmth curdling visibly into dread.
+palette: Cotton-candy pink as the signature accent (the sash), against pastel streamer hues
+  — mint, lilac, buttercream — all dusted with glitter, souring toward cold pre-dawn blue-grey
+  through the high windows and inky blackout blacks.
+notes: Every entity's look is restated strictly from committed facts. The single unifying
+  visual motif is the cotton-candy pink of the sash bleeding into otherwise sweet decor.
+profiles:
+- entity: character:beau-castellano
+  appearance: A boy in a letterman jacket, knuckles scraped raw; his grin is charming but
+    caught mid-slip, confidence performed rather than felt.
+  iconography:
+  - letterman jacket
+  - scraped knuckles
+  - a slipping grin
+  - brittle, evasive posture when pressed
+- entity: character:juno-park
+  appearance: A cardigan whose pockets bulge with press-pass lanyards and a dead phone; ink-smudged
+    fingers reaching reflexively for that phone. Wry, watchful eyes cataloguing the room.
+  iconography:
+  - stuffed cardigan pockets
+  - tangle of press-pass lanyards
+  - dead phone
+  - ink-smudged fingertips
+  - the ledger tucked against her ribs beneath the cardigan
+- entity: character:marilee-sweet
+  appearance: Pageant-perfect even in death, still immaculate, wearing the winner's sash the
+    color of cotton candy — the same sash knotted at her throat.
+  iconography:
+  - cotton-candy-pink victory sash
+  - flawless pageant styling
+  - stillness of the body
+- entity: character:mona-vale
+  appearance: Immaculate but overdressed, her mascara freshly redone in the dark and smeared
+    worse for it; hands crooking unconsciously into the shape of a knot.
+  iconography:
+  - overdressed formalwear
+  - smeared, re-fixed mascara
+  - hands crooked into the sash-knot shape
+  - wet, trailing-off expression when frightened
+- entity: character:priya-desai
+  appearance: A clipboard in hand, a headset slung around her neck, a blazer crowded with
+    too many pins; brisk and managing.
+  iconography:
+  - clipboard
+  - headset around the neck
+  - pin-crowded blazer
+  - flat, patient, palm-up open hand
+- entity: character:sailor-quinn
+  appearance: A sequined dance-off costume with one sleeve torn, glitter caught in her hair;
+    warm and steady on the surface but with hands that shake tonight.
+  iconography:
+  - sequined costume
+  - torn sleeve
+  - glitter in hair
+  - shaking hands
+- entity: character:tavi-okonkwo
+  appearance: Oversized headphones, glow tape striping their sneakers, a laptop bag clamped
+    to their side and never set down.
+  iconography:
+  - oversized headphones
+  - glow-taped sneakers
+  - laptop bag clamped like a life vest
+  - flinch at mention of the blackout
+- entity: location:gym
+  appearance: A pastel-draped gymnasium hung with streamers, its floor dusted in glitter,
+    a stage at one end and a supply closet that locks from inside; chained doors and a disco
+    ball overhead, high windows paling toward dawn.
+  iconography:
+  - pastel streamers
+  - glitter-dusted floor
+  - disco ball
+  - chained doors
+  - stage
+  - inside-locking supply closet
+  - lightening high windows
+- entity: object:victory-sash
+  appearance: A cotton-candy-pink winner's sash, cinched in a distinctive knot of the kind
+    used in dance-lift rigging.
+  iconography:
+  - cotton-candy-pink sash
+  - rigging-style knot
+- entity: object:yearbook-ledger
+  appearance: A hidden notebook, kept tucked against Juno's ribs beneath her cardigan — the
+    one document mapping every motive in the room.
+  iconography:
+  - concealed notebook
+  - carried against the ribs under a cardigan

@@ -1,0 +1,15 @@
+So I watch her from across the room, because that's what I do now. Mona Vale, keeper of the thing I'll never ask for, standing under the disco ball with her arms folded like she's holding herself shut against a draft. Nobody else would clock it. To everyone else she's just a girl at a dance that curdled into something with a body in it, and everyone's arms are folded, everyone's holding themselves shut, the whole room a chorus line of people bracing.
+
+But I know the difference. I bought her folded arms. I paid for that mouth staying closed.
+
+She doesn't look at me. That's the deal we didn't say out loud. She catches somebody's eye near the punch table and gives them the small polite nod that means *I'm fine, are you fine, aren't we all so brave,* and it's flawless, it's the exact right amount of shaken, and I hate how good she is at it because I taught myself the same trick years ago and I know what it costs to keep the surface that smooth. Her fingers are tucked away where nobody can watch them fold that loop-and-pull shape. She learned fast. I gave her one gift tonight and it was the gift of hiding, and look how quick she took to it.
+
+The knot stays a secret. The pink cotton knot that somebody's hands made in the dark, that Mona could describe with her eyes shut, and I've sewn her lips over it as neat as a hem. Whatever she saw in the twenty-two seconds nobody counts right anymore, it's gone. Buried standing up, breathing, sipping flat soda, blending in.
+
+Here's the part I don't have a bright caption for. The quiet I bought her is loud to me. It hums. It's the missing note in the middle of a song you've heard a thousand times, the one your ear keeps reaching for and never lands, and every time I look at Mona folded up small and safe I hear the gap where her voice was supposed to go. I could've had it. One question. One thread. I chose the silence instead, chose to keep her whole, and now the silence follows me around the room like a second shadow with better manners than the first.
+
+Someone laughs too high near the DJ table. The sky in the windows keeps grinning gray. My reconstruction has a Mona-shaped hole in it and the hole is my own doing, my mercy, my one clean thing tonight that made everything else murkier.
+
+Tavi is at my elbow. Warm and here and waiting, laptop strap over her shoulder, the fog we made together still settling over the ring of frightened faces. I bought Mona's quiet. Now there's a whole other silence I have to decide whether to keep, and this one's got a body under it, and it's Tavi's hand I'll be holding while I choose. The number I'm counting isn't people anymore. It's seconds. Mine, running out, glitter falling through them like it's got somewhere to be.
+
+I turn to Tavi. Time to say what happened. Whatever I decide *what happened* means.

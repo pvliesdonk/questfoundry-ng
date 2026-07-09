@@ -5,17 +5,35 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-09 · M5 (DRESS, print, finish) — in progress
+> Last updated: 2026-07-09 · M5 complete — M6 (craft-corpus research) is next
 
 ## Where we are
 
-**M5 is in progress — multi-hard weaving is built** (this PR), on top
-of the DRESS/print/rerun slice (PR #20). All eight stages run, the
-story prints as a real gamebook, stages can be partially regenerated,
-and the weave now nests hard forks. What remains for the M5 exit
-criterion is the live `medium`-scope run (see Next up):
+**M5 is complete.** Both halves of the exit criterion are met: the
+golden story prints as a real gamebook (PR #20), and the pipeline
+generated its first live `medium`-scope story end-to-end within budget
+(PR #23) — "The Bubblegum Alibi", a closed-circle murder mystery in a
+bubblegum high-school setting, on the default model map
+(claude-opus-4-8 architect/writer + claude-haiku-4-5 utility):
 
-- **Multi-hard weave expansion** (the tensor model, design doc 01 §5,
+- **The medium run** (preserved as `examples/bubblegum-alibi/`):
+  4 dilemmas (2 hard nested by the live multi-hard weave, 2 soft — one
+  rejoining at the other's fork), 10 entities, 46 frozen beats across
+  two worlds, 20 passages (~10.4k words), 16 arcs all simulating
+  complete, 4 titled endings, full DRESS enrichment (direction, 10
+  profiles, 4 briefs, 7 codex entries, 4 on-diction codewords:
+  CRACKED, SILENT, SNAPPED, MURKY), 0 gate errors, all four exports
+  round-trip clean including the print PDF. Budget: **~$3.25** — 187
+  calls (99 live: opus 259k in / 74k out; haiku 82k in / 3k out; 88
+  free cache replays across crash-resumes), ~24 min wall-clock summed
+  over eight attempts. The run surfaced **six engine/contract bugs**,
+  each fixed in-flight with a violating-construction test (decision
+  log); the crash-resume machinery (content-addressed cache + per-stage
+  checkpoints) is what made eight attempts cost ~one clean run. 221
+  tests. Stage output was committed per checkpoint on PR #23 — a useful
+  pattern for future live runs.
+
+- **Multi-hard weave expansion** (PR #22) (the tensor model, design doc 01 §5,
   mini-ADR A14): `weave.realize` walks the chosen order tracking
   *worlds* — the climax hard resolve is always the final unit; every
   unit placed after the first hard fork is instantiated once per world
@@ -252,26 +270,28 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M2 — GROW** (the risk milestone: interleaving, intersections, freeze) (PR #9)
 - [x] **M3 — POLISH & structural play** (`qf play` on beat summaries) (PR #10)
 - [x] **M4 — FILL & first exports** (JSON, HTML player, Twee)
-- [ ] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
-  `qf export pdf`, and `qf rerun --keep` are built (PR #20); multi-hard
-  weaving is built (this PR); the `medium`-scope live run remains
+- [x] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
+  `qf export pdf`, `qf rerun --keep` (PR #20); multi-hard weaving
+  (PR #22); the live `medium`-scope run within budget (PR #23)
 - [ ] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
   design docs 02 §1 and 03 §10) — ground the pipeline's LLM calls in a
   markdown craft corpus via an engine-side research pass; specced, not
-  started; M5 finishes first
+  started
 
-## Next up — finishing M5
+## Next up — M6
 
-The first half of the exit criterion — **a printable PDF gamebook with
-working codeword play** — is met (the golden story prints end-to-end),
-and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
-
-1. **A live `medium`-scope generation within budget** — the second half
-   of the exit criterion; also calibrates the B3/B4 preset ranges, the
-   weave's per-nesting candidate spread at real unit counts, and the
-   contextualize prompt against a real model (it has fixture-level
-   tests but no live exercise yet).
-2. Optional polish: an image backend behind the briefs (design doc 02
+1. **Validate the library seam first** (per the M6 open item):
+   `pvliesdonk/markdown-vault-mcp` used as a Python library — hybrid
+   search over a corpus directory, pinned local embeddings,
+   deterministic ranking — before building the research pass on top.
+2. Then the research pass itself (mini-ADR A13): a typed query proposal
+   at each stage head; the engine retrieves and persists digests as a
+   checkpointed artifact later passes read.
+3. Ongoing calibration from the medium run (see open items): the
+   prompt-framing item (vision/BRAINSTORM overpromise) and the medium
+   preset ranges are prompt/preset work that can ride along with M6's
+   prompt changes.
+4. Optional polish: an image backend behind the briefs (design doc 02
    lists illustrations as optional; briefs + the PDF/HTML plumbing are
    in place — `art/images/<passage-slug>.png` is picked up when
    present).
@@ -286,22 +306,45 @@ and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
   (Anthropic, OpenAI, Gemini) have now produced a complete story.
 
 - **Crash-resume replay of FILL was leaky — the cache half is fixed**
-  (found and fixed 2026-07-08; see the decision log). What remains
-  open is the artifact half: prose still reaches disk only at the
-  gate-passing checkpoint, so a mid-FILL crash loses the *files*
-  (recoverable via the now-exact cache replay, but wall-clock, and
-  only while the cache and code are unchanged). Flushing prose per
-  write pass instead of per stage would protect the artifact directly,
-  but changes design doc 02's checkpoint semantics (partial FILL state
-  on disk is not a gated checkpoint) — needs a frontier-tier design
-  decision first.
+  (found and fixed 2026-07-08; see the decision log), and the medium
+  run fixed a third leak: `save_project` now prunes files of removed
+  nodes (stale template-beat files used to resurrect on reload —
+  PR #23). What remains open is the artifact half: prose still reaches
+  disk only at the gate-passing checkpoint, so a mid-FILL crash loses
+  the *files* (recoverable via the now-exact cache replay, but
+  wall-clock, and only while the cache and code are unchanged).
+  Flushing prose per write pass instead of per stage would protect the
+  artifact directly, but changes design doc 02's checkpoint semantics
+  (partial FILL state on disk is not a gated checkpoint) — needs a
+  frontier-tier design decision first. The medium run's crash-resumes
+  validated the cache half hard: 88 of 187 calls replayed free.
 
-- ~~Multi-hard weaving is not implemented~~ **Built** (this PR, see
-  Where we are and the decision log): hard forks nest, every unit
-  after the first fork is instantiated per world, endings multiply,
-  and the tensor model (design doc 01 §5) is realized in
-  `weave.realize` + GROW's contextualize pass. Not yet exercised
-  against a live model — that is the `medium`-scope run.
+- **Prompt framing: early stages claim certainty they don't have**
+  (medium run, author-confirmed framing). The vision promised "every
+  suspect carries a genuine motive" — an outcome only SEED/GROW can
+  deliver — and BRAINSTORM pads the cast to the preset's exact count,
+  trying to finish the story in one shot: 3 of 10 entities anchored no
+  dilemma (one appeared in zero beats). The fix is framing, not count
+  tuning: DREAM should state texture/intent at the level a vision can
+  keep; BRAINSTORM should generate ingredients knowing triage whittles
+  them. Ride along with M6's prompt work.
+
+- **Medium preset ranges don't match what the pipeline builds.** The
+  run produced 20 passages against B3's 60–90 target: SEED's 3+3+3
+  beats per Y × 4 dilemmas yields ~46 beats ≈ 20 passages, so hitting
+  60–90 needs more beats per dilemma or more dilemmas at `medium` —
+  a frontier design question (scaffold depth is a SEED contract).
+  Likewise `words_per_passage` (200, 550): opus consistently writes
+  ~500–640, with climax endings near 600 — either raise the cap or
+  accept the B5 advisories (FILL now enforces with 20% slack, see
+  decision log).
+
+- ~~Multi-hard weaving is not implemented~~ **Built** (PR #22) **and
+  exercised live** (PR #23, the Bubblegum Alibi): hard forks nest,
+  every unit after the first fork is instantiated per world, endings
+  multiply, and the tensor model (design doc 01 §5) is realized in
+  `weave.realize` + GROW's contextualize pass — all of it ran against
+  a real model with the contextualize prompt performing first-shot.
 - **M2 intersections group shared pre-commit beats only.** Intersections
   involving exclusive (post-commit) beats are structurally meaningful
   but interact with arc membership in ways the spine model doesn't
@@ -311,14 +354,13 @@ and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
 - **The weave enumerates at most 64 candidates** (deterministic DFS,
   up to 8 shown to the model, evenly spread; with several hard
   dilemmas the cap is split evenly across viable nestings so every
-  nesting is represented). Fine at micro/short unit counts; check the
-  spread heuristic when `medium` stories arrive — the lexicographic
-  DFS varies the tail of the order first, so the spread may
-  under-sample early-position variety at real unit counts. Same
-  profiling pass (PR #22 review): `queries.world_of` recomputes
-  `hard_commit_beats` + an ancestor closure per call and is now called
-  per clone target and inside I3/I7/frontier checks — fine at ~10³
-  nodes, but measure it on the first real `medium` graph.
+  nesting is represented). First `medium` data point (13 units, 2
+  nestings): the model chose #3 of 8 shown, weave realized first-shot,
+  and `world_of` cost nothing measurable on the 66-beat graph — but
+  one story is not a profile; keep watching the spread heuristic as
+  stories grow (the lexicographic DFS varies the tail of the order
+  first, so early-position variety may still under-sample at larger
+  unit counts).
 - **Every retained dilemma explores both answers in M1.** Locked-dilemma
   shadows (exploring one side only) need an I3 refinement — the current
   check demands dual-membership pre-commit beats, which single-explored
@@ -388,6 +430,48 @@ and multi-hard weaving now unblocks `medium` scope. Remaining, in order:
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-09 (M5 exit: live run 5, the first medium — "The Bubblegum
+  Alibi", PR #23):** Closed-circle murder mystery in a bubblegum
+  high-school setting; claude-opus-4-8 architect/writer +
+  claude-haiku-4-5 utility; premise → complete DRESSed story with all
+  exports (incl. print PDF) for **~$3.25 / ~24 min** across eight
+  attempts — the first live exercise of multi-hard weaving, fork-rejoin
+  under bridges, and crash-resume at scale. Six findings, all fixed
+  in-flight with violating-construction tests, all in territory only a
+  multi-hard live run could reach: (1) *bridge into a fork commit* —
+  the bridge pass spliced a shared bridge into one commit of a fork,
+  dead-ending sibling arcs (I6 ×4); a gap into a fork commit is a gap
+  into the fork — the bridge now spans the whole frontier and `_gaps`
+  verifies coverage against real arc views. (2) *POLISH couldn't see
+  through bridges* — new `queries.frontier_feeds` makes bridges
+  transparent for arrival questions; the residue splices on the tail's
+  side. (3) *`save_project` never deleted files of removed nodes* —
+  the weave's removed template beats resurrected on reload as orphan
+  roots with commit impacts; every per-node directory now prunes to
+  the live node set on save (the single-process e2e could never see
+  this; only a real crash-resume could). (4) *I12 counted upstream
+  grants, not ambiguity* — at a 2-hard climax ending every upstream
+  flag is a world fact; I12 now caps only ambiguous flags (grant and
+  opposing commit both upstream), one computation
+  (`queries.ambiguous_flags`) shared by gate and audit; design doc 01
+  §8 refined. (5) *micro-detail keys are single-assignment* — the
+  writer kept proposing a second `tell` for the character the scene
+  was about; the prompt now states the rule and the refusal names the
+  corrective action (the review-contract lesson again: write for the
+  cheapest reader — including repair errors). (6) *exact word windows
+  are unhittable* — 553 then 613 words against a 200–550 cap exhausted
+  repairs; apply now enforces with 20% slack (band catches runaway/
+  skimpy, review owns quality; G5 row updated), and whether medium's
+  cap should rise is preset calibration (open items). Calibration
+  data recorded in open items: prompt framing (vision/BRAINSTORM
+  overpromise — the author's sharper diagnosis: early stages speak
+  with certainty their pipeline position doesn't grant), medium preset
+  ranges (20 passages vs B3's 60–90 comes from SEED's scaffold depth,
+  not a prompt miss), and the weave/`world_of` first data point.
+  Tooling note: committing each stage checkpoint to the PR as it
+  landed made the run reviewable in-flight — the automated reviewer
+  independently confirmed finding 3 from the committed artifact.
 
 - **2026-07-09 (M5: multi-hard weave):** The tensor model (design doc
   01 §5) is realized with four decisions confirmed with the author.

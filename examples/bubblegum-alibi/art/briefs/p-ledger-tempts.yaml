@@ -1,0 +1,16 @@
+passage: passage:p-ledger-tempts
+priority: 2
+caption: Priya demands the notebook as evidence while your thumb hovers over the lighter and
+  keys rattle at the chained doors.
+prompt: Glossy candy-bright graphic illustration, clean linework and posterized shading, cotton-candy
+  pink accents against mint and lilac streamers dusted with glitter, souring toward cold pre-dawn
+  blue-grey through high windows. Priya Desai, brisk and managing, clipboard tucked under
+  one arm, dead headset slung around her neck, a blazer crowded with too many pins, palm extended
+  demanding. Juno Park in her cardigan, ink-smudged fingers, watchful eyes, holding a hidden
+  notebook and a lighter, thumb hovering. Pastel gymnasium with chained doors. Hard chiaroscuro,
+  long tightening shadows, dread curdling under party palette.
+entities:
+- object:yearbook-ledger
+- character:priya-desai
+- character:juno-park
+- location:gym

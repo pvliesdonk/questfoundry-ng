@@ -1,0 +1,12 @@
+id: beat:body-under-glitter
+summary: The lights snap back on after the blackout finale to reveal Marilee Sweet slumped
+  beneath the disco ball, strangled with her own cotton-candy-pink victory sash. The candy-bright
+  party curdles into a closed circle of suspects, and Juno realizes she alone holds the ledger
+  that maps every motive in the room.
+beat_class: structural
+purpose: setup
+entities:
+- character:marilee-sweet
+- object:victory-sash
+- location:gym
+- object:yearbook-ledger

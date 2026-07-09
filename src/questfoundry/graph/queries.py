@@ -14,7 +14,7 @@ from itertools import product
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind
 from questfoundry.models.drama import Dilemma, DilemmaRole, Path
-from questfoundry.models.structure import Beat, StateFlag
+from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
 
 # -- beat DAG basics -------------------------------------------------------
 
@@ -166,6 +166,40 @@ def soft_rejoin_frontiers(g: StoryGraph, dilemma_id: str) -> list[tuple[frozense
     return result
 
 
+def frontier_feeds(g: StoryGraph, beat_id: str, frontier: list[str]) -> list[str]:
+    """Direct successors of ``beat_id`` that carry it into ``frontier``:
+    frontier beats themselves, or bridge beats whose bridge-only chains
+    reach one. GROW may splice a bridge between a tail and the frontier
+    it feeds (before the whole fork when the frontier is one); for
+    arrival questions the bridge is transparent — the drama is the
+    tail's, the bridge belongs to no path."""
+    targets = set(frontier)
+
+    def is_bridge(b: str) -> bool:
+        node = g.node(b)
+        return (
+            isinstance(node, Beat)
+            and node.beat_class == BeatClass.STRUCTURAL
+            and node.purpose == StructuralPurpose.BRIDGE
+        )
+
+    feeds = []
+    for s in successors(g, beat_id):
+        hit = s in targets
+        if not hit and is_bridge(s):
+            seen, stack = {s}, [s]
+            while stack and not hit:
+                for nxt in successors(g, stack.pop()):
+                    if nxt in targets:
+                        hit = True
+                    elif is_bridge(nxt) and nxt not in seen:
+                        seen.add(nxt)
+                        stack.append(nxt)
+        if hit:
+            feeds.append(s)
+    return feeds
+
+
 def world_label(g: StoryGraph, world: frozenset[str]) -> str:
     """Human-readable world name: the path(s) whose hard commits define
     it, e.g. 'path:bargain-keep'. Empty for the shared region."""
@@ -232,6 +266,47 @@ def arc_view(g: StoryGraph, selection: dict[str, str]) -> set[str]:
         if admitted(b, view):
             view.add(b)
     return view
+
+
+def ambiguous_flags(g: StoryGraph, group: list[str]) -> list[str]:
+    """Flags whose value varies among readers arriving at a passage
+    holding ``group`` — the I12 computation. A flag is ambiguous when
+    its grant is upstream on some route while the opposing path's
+    commit is also upstream (a reconverged soft dilemma): prose must
+    then honor both values. A flag granted on every route (only its
+    own side upstream — a world fact) is certain, costs the writer
+    nothing, and does not count; nor do flags of a dilemma the group
+    is gated on (arrivals are conditioned: one side certain, the
+    other foreclosed)."""
+    ancestry = set(group)
+    for b in group:
+        ancestry |= ancestors(g, b)
+    gated_dilemmas = set()
+    for b in group:
+        beat = g.node(b)
+        assert isinstance(beat, Beat)
+        for flag_id in beat.requires_flags:
+            flag = g.node(flag_id)
+            if isinstance(flag, StateFlag) and flag.path is not None:
+                gated_dilemmas.add(dilemma_of_path(g, flag.path))
+    result = []
+    for flag in g.nodes_of(StateFlag):
+        if flag.path is None:
+            continue  # cosmetic flags have no structural grant
+        dilemma = dilemma_of_path(g, flag.path)
+        if dilemma in gated_dilemmas:
+            continue
+        if not any(c in ancestry for c in grant_beats(g, flag.id)):
+            continue
+        others = [
+            c
+            for p in explored_paths(g, dilemma)
+            if p != flag.path
+            for c in commit_beats(g, p)
+        ]
+        if any(c in ancestry for c in others):
+            result.append(flag.id)
+    return sorted(result)
 
 
 def projected_flags(g: StoryGraph) -> list[str]:

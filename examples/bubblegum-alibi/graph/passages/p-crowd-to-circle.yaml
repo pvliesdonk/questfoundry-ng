@@ -1,0 +1,19 @@
+id: passage:p-crowd-to-circle
+summary: The gym's chatter tightens into a hush as the crowd draws itself into a ragged circle,
+  streamers drooping overhead while every glittering eye swings toward Juno for an answer.
+entities:
+- location:gym
+- character:juno-park
+beats:
+- beat:bridge-crowd-to-circle
+choices:
+- label: Vouch for Tavi's timeline and seal the gap
+  grants:
+  - flag:alliance-holds
+  - flag:timeline-hole
+  to: passage:p-cover-tavi
+- label: Break the timeline open and expose the early cut
+  grants:
+  - flag:tavi-turns-cold
+  - flag:timeline-fixed
+  to: passage:p-expose-tavi

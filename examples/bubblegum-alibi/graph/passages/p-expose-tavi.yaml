@@ -1,0 +1,19 @@
+id: passage:p-expose-tavi
+summary: Before the whole room Juno names the truth — Tavi cut the lights early — and the
+  crucial minutes snap into a fixed timeline. The reconstruction finally holds, but Tavi turns
+  her back and goes cold, her only ally in the gym now an enemy.
+entities:
+- character:juno-park
+- character:tavi-okonkwo
+- location:gym
+irrelevant_flags:
+- flag:mona-testimony-extracted
+beats:
+- beat:expose-tavi-commit
+- beat:tavi-goes-cold
+- beat:window-cleared
+choices:
+- label: Stand in the cold Tavi leaves behind
+  requires:
+  - flag:timeline-fixed
+  to: passage:p-residue-timeline-fixed

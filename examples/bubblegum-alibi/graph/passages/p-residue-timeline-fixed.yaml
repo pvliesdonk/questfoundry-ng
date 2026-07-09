@@ -1,0 +1,14 @@
+id: passage:p-residue-timeline-fixed
+summary: Tavi's back is a wall of turned glitter, silence sharp as cut foil; the minutes are
+  nailed down now, and the cold of it settles between Juno's shoulders.
+entities:
+- character:juno
+- character:tavi
+irrelevant_flags:
+- flag:mona-protected
+- flag:mona-testimony-extracted
+beats:
+- beat:residue-timeline-fixed
+choices:
+- label: Reach for the ledger as Priya demands it
+  to: passage:p-ledger-tempts

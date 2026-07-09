@@ -1,0 +1,13 @@
+passage: passage:p-burn-ledger
+priority: 4
+caption: You hold the ledger to the flame and let every secret in the room curl into ash.
+prompt: Glossy candy-bright graphic illustration, clean linework and posterized shading, cotton-candy
+  pink and pastel streamer hues souring toward cold pre-dawn blue-grey. Juno Park in her cardigan,
+  ink-smudged fingers, watchful eyes, holds a hidden notebook over a utility sink, a small
+  blue-rooted flame licking the pages into curling ash. Pastel-draped gymnasium background
+  with glitter floor and disco ball. Hard chiaroscuro, long tightening shadows, party palette
+  curdling into dread, the flame the brightest thing in the dark.
+entities:
+- object:yearbook-ledger
+- character:juno-park
+- location:gym

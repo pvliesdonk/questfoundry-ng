@@ -1,0 +1,13 @@
+id: beat:press-mona-commit
+summary: Juno leans on the demotion like a blade, trading silence for testimony until Mona
+  breaks and tells what she saw near the sash in the dark.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: commits
+entities:
+- character:juno-park
+- character:mona-vale
+- object:victory-sash
+belongs_to:
+- path:press-mona

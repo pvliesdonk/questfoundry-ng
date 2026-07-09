@@ -1,0 +1,12 @@
+id: beat:mona-testimony
+summary: Mona's account fills a gap no one else could — a figure at the sash mid-blackout
+  — handing Juno a hard fact for the reconstruction.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: reveals
+entities:
+- character:mona-vale
+- object:victory-sash
+belongs_to:
+- path:press-mona

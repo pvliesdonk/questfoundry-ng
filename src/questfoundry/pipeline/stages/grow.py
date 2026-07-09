@@ -17,7 +17,10 @@ Four passes sharing gate G3:
    earlier hard forks' de-ended tails to leave the climax question open.
    Skipped when nothing was cloned (single hard dilemma).
 4. *bridge* — for adjacent beats sharing no entities, the LLM writes
-   structural bridge beats the engine splices in.
+   structural bridge beats the engine splices in — before the whole fork
+   frontier when the gap runs into a commit beat (a bridge is shared, so
+   feeding it into one branch dead-ends the others, I6); seams no bridge
+   can span safely are left for FILL's prose to smooth.
 
 After a clean gate the topology freezes (I9). Scope notes (tracked in
 docs/STATUS.md): intersections over shared pre-commit beats only.
@@ -380,15 +383,48 @@ class BridgeProposal(BaseModel):
     bridges: list[BridgeSpec]
 
 
-def _gaps(g) -> list[tuple[str, str]]:
-    """Adjacent beats that share no entities — each needs a bridge."""
-    gaps = []
+def _splice_targets(g, src: str, dst: str) -> tuple[str, ...]:
+    """Beats the bridge is spliced before. A gap into a fork commit is a
+    gap into the fork: the bridge must precede the whole frontier slice
+    src feeds (cf. the residue splice at a fork rejoin), else every arc
+    taking a sibling commit reaches the bridge and dead-ends (I6)."""
+    dst_beat = g.node(dst)
+    assert isinstance(dst_beat, Beat)
+    committed = set(dst_beat.commits_dilemmas)
+    if not committed:
+        return (dst,)
+    group = []
+    for s in queries.successors(g, src):
+        beat = g.node(s)
+        assert isinstance(beat, Beat)
+        if set(beat.commits_dilemmas) & committed:
+            group.append(s)
+    return tuple(sorted(group))
+
+
+def _gaps(g) -> list[tuple[str, tuple[str, ...]]]:
+    """Adjacent beats that share no entities — each needs a bridge.
+
+    A gap is (src, targets): the bridge replaces src's edges into the
+    targets (one beat, or a whole fork frontier — `_splice_targets`).
+    A gap is bridgeable only if every arc reaching src reaches a target:
+    a bridge is a shared structural beat, on every arc that reaches it,
+    so an uncovered arc would dead-end at it (I6). Unbridgeable seams
+    are not gaps — FILL smooths them in prose."""
+    views = [queries.arc_view(g, sel) for sel in queries.arc_selections(g)]
+    gaps: list[tuple[str, tuple[str, ...]]] = []
     for e in sorted(g.edges, key=lambda e: (e.src, e.dst)):
         if e.kind != EdgeKind.PREDECESSOR:
             continue
         a, b = g.node(e.src), g.node(e.dst)
-        if a.entities and b.entities and not set(a.entities) & set(b.entities):
-            gaps.append((e.src, e.dst))
+        if not a.entities or not b.entities or set(a.entities) & set(b.entities):
+            continue
+        gap = (e.src, _splice_targets(g, e.src, e.dst))
+        if gap in gaps:
+            continue
+        if any(e.src in v and not any(t in v for t in gap[1]) for v in views):
+            continue
+        gaps.append(gap)
     return gaps
 
 
@@ -399,8 +435,8 @@ def _bridge_skip(project: Project) -> str | None:
 def _bridge_context(project: Project) -> dict:
     g = project.graph
     rendered = []
-    for i, (src, dst) in enumerate(_gaps(g)):
-        rendered.append({"index": i, "src": g.node(src), "dst": g.node(dst)})
+    for i, (src, targets) in enumerate(_gaps(g)):
+        rendered.append({"index": i, "src": g.node(src), "dsts": [g.node(t) for t in targets]})
     return {"vision": project.vision, "gaps": rendered}
 
 
@@ -412,7 +448,7 @@ def _bridge_apply(proposal: BridgeProposal, project: Project) -> list[str]:
         raise ApplyError(f"bridges must cover each gap 0..{len(gaps) - 1} exactly once")
     lines = []
     for spec in proposal.bridges:
-        src, dst = gaps[spec.gap]
+        src, targets = gaps[spec.gap]
         try:
             bridge = Beat(
                 id=spec.id,
@@ -425,10 +461,12 @@ def _bridge_apply(proposal: BridgeProposal, project: Project) -> list[str]:
         except ValidationError as e:
             raise ApplyError(f"invalid bridge beat {spec.id}: {e}") from e
         mutations.add_beat(g, bridge, [])
-        mutations.remove_ordering(g, src, dst)
+        for dst in targets:
+            mutations.remove_ordering(g, src, dst)
         mutations.add_ordering(g, src, bridge.id)
-        mutations.add_ordering(g, bridge.id, dst)
-        lines.append(f"{spec.id} bridges {src} -> {dst}")
+        for dst in targets:
+            mutations.add_ordering(g, bridge.id, dst)
+        lines.append(f"{spec.id} bridges {src} -> {' + '.join(targets)}")
     return lines
 
 

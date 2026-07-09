@@ -1,0 +1,23 @@
+id: passage:p-shield-loved-burned
+summary: With the ledger burned, no page can contradict Juno as she builds a false case against
+  an innocent classmate to shield Sailor. The innocent is escorted out at dawn while Sailor
+  walks free beside her, and Juno carries a second secret heavier than the ashes — a lie no
+  surviving page can ever expose.
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+- object:yearbook-ledger
+ending:
+  id: e-shield-loved-burned
+  title: The Weight of Ash
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-fixed
+beats:
+- beat:innocent-taken--burn-ledger
+- beat:second-secret--burn-ledger
+- beat:shield-loved-commit--burn-ledger

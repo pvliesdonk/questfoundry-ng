@@ -1,0 +1,16 @@
+id: beat:shield-loved-commit--burn-ledger
+created_by: grow
+summary: Having burned the ledger, Juno faces the dawn free to reshape a night no document
+  can dispute, ready to build a false case against an innocent classmate to shield Sailor.
+  She braces to speak the frame — whether she truly goes through with it or names the real
+  killer still hanging before her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: commits
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:shield-the-loved

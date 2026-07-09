@@ -1,0 +1,65 @@
+beats:
+- beat:admired-and-alone--burn-ledger
+- beat:admired-and-alone--keep-ledger
+- beat:body-under-glitter
+- beat:bridge-confession-to-knot
+- beat:bridge-crowd-to-circle
+- beat:burn-ledger-commit
+- beat:cover-tavi-commit
+- beat:doors-chained
+- beat:expose-tavi-commit
+- beat:innocent-taken--burn-ledger
+- beat:innocent-taken--keep-ledger
+- beat:keep-ledger-commit
+- beat:knot-witness-lost
+- beat:ledger-damns-sailor
+- beat:ledger-tempts
+- beat:ledger-weight
+- beat:mona-begs
+- beat:mona-grieving
+- beat:mona-knows-knot
+- beat:mona-safe
+- beat:mona-testimony
+- beat:mona-thrown-to-crowd
+- beat:motive-map-open
+- beat:murky-minutes
+- beat:name-truth-commit--burn-ledger
+- beat:name-truth-commit--keep-ledger
+- beat:press-mona-commit
+- beat:principal-at-chains
+- beat:sailor-led-away--burn-ledger
+- beat:sailor-led-away--keep-ledger
+- beat:sailor-pleads
+- beat:second-secret--burn-ledger
+- beat:second-secret--keep-ledger
+- beat:secrets-preserved
+- beat:secrets-spill
+- beat:shield-loved-commit--burn-ledger
+- beat:shield-loved-commit--keep-ledger
+- beat:spare-mona-commit
+- beat:tavi-confesses-early
+- beat:tavi-goes-cold
+- beat:tavi-lies
+- beat:tavi-loyal
+- beat:timeline-gap
+- beat:trail-to-sailor
+- beat:truth-becomes-belief
+- beat:window-cleared
+forks:
+  dilemma:cover-the-blackout:
+  - beat:cover-tavi-commit
+  - beat:expose-tavi-commit
+  dilemma:mona-mercy:
+  - beat:press-mona-commit
+  - beat:spare-mona-commit
+  dilemma:name-the-killer:
+  - beat:name-truth-commit--burn-ledger
+  - beat:name-truth-commit--keep-ledger
+  - beat:shield-loved-commit--burn-ledger
+  - beat:shield-loved-commit--keep-ledger
+  dilemma:the-ledger:
+  - beat:burn-ledger-commit
+  - beat:keep-ledger-commit
+convergences:
+  dilemma:cover-the-blackout:
+  - beat:ledger-tempts

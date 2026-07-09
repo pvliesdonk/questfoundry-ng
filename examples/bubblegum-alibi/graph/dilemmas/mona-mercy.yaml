@@ -1,0 +1,17 @@
+id: dilemma:mona-mercy
+question: When Mona begs Juno to hide that she was demoted from Marilee's circle that morning,
+  does Juno grant her mercy or use the fresh motive to pressure her for what she saw?
+why_it_matters: Sparing Mona keeps a fragile, grieving girl from becoming the mob's target
+  but loses a witness who was closest to the sash; pressing her yields crucial testimony at
+  the cost of feeding Mona to a room hungry for someone to blame.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:spare-mona
+  text: Juno hides Mona's demotion, protecting her but losing her testimony.
+- id: answer:press-mona
+  text: Juno leverages Mona's motive to extract what she witnessed near the sash.
+anchored_to:
+- character:mona-vale
+- object:victory-sash

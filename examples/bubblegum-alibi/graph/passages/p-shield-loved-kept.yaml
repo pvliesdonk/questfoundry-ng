@@ -1,0 +1,23 @@
+id: passage:p-shield-loved-kept
+summary: With the ledger intact and its motives laid bare, Juno twists the very evidence that
+  proves Sailor guilty to steer blame onto an innocent classmate. The innocent is escorted
+  out at dawn while Sailor walks free beside her, and the preserved pages become a standing
+  accusation of the lie only Juno knows she told.
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+- object:yearbook-ledger
+ending:
+  id: e-shield-loved-kept
+  title: A Document Betrayed
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-hole
+beats:
+- beat:innocent-taken--keep-ledger
+- beat:second-secret--keep-ledger
+- beat:shield-loved-commit--keep-ledger

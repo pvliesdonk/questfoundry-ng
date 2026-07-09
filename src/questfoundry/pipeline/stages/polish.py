@@ -108,7 +108,7 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
     tails = {}
     for path in need.path_flags:
         for b in queries.exclusive_beats(g, path):
-            if set(need.rejoin) & set(queries.successors(g, b)):
+            if queries.frontier_feeds(g, b, list(need.rejoin)):
                 tails[path] = b
     return tails
 

@@ -1,0 +1,13 @@
+id: beat:timeline-gap
+summary: Juno tries to reconstruct the blackout minutes and finds the numbers don't add up
+  — the lights died before Tavi's cue, opening a window wide enough for a murder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: advances
+entities:
+- character:juno-park
+- location:gym
+belongs_to:
+- path:cover-tavi
+- path:expose-tavi

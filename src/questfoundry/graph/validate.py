@@ -486,19 +486,13 @@ def check_i12_feasibility(ctx: Context) -> None:
     cap = 3
     for passage in ctx.g.nodes_of(Passage):
         beats = queries.beats_of_passage(ctx.g, passage.id)
-        active = set()
-        for flag in ctx.g.nodes_of(StateFlag):
-            if any(
-                grant in beats or any(grant in queries.ancestors(ctx.g, b) for b in beats)
-                for grant in queries.grant_beats(ctx.g, flag.id)
-            ):
-                active.add(flag.id)
-        relevant = active - set(passage.irrelevant_flags)
+        relevant = set(queries.ambiguous_flags(ctx.g, beats)) - set(passage.irrelevant_flags)
         if len(relevant) > cap:
             ctx.error(
                 "I12",
-                f"passage {passage.id} must honor {len(relevant)} states {sorted(relevant)}; "
-                f"cap is {cap} (mark irrelevant flags or split into variants)",
+                f"passage {passage.id} must honor {len(relevant)} ambiguous states "
+                f"{sorted(relevant)}; cap is {cap} "
+                f"(mark irrelevant flags or split into variants)",
             )
 
 

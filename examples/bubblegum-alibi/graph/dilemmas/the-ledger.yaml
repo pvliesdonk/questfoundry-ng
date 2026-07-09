@@ -1,0 +1,20 @@
+id: dilemma:the-ledger
+question: Does Juno destroy her secret ledger before dawn so no one's private ruin becomes
+  public, or preserve it as the only fair-play evidence that can prove the truth?
+why_it_matters: The ledger is Juno's curated power over everyone's real self; burning it protects
+  her classmates' belonging but blinds the investigation, while keeping it makes her the instrument
+  of mass exposure she swore she'd never be.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:burn-ledger
+  text: Juno burns the ledger, sealing everyone's secrets and losing her sharpest tool.
+- id: answer:keep-ledger
+  text: Juno keeps the ledger and lets it damn whomever it damns.
+anchored_to:
+- character:juno-park
+- object:yearbook-ledger
+wraps:
+- dilemma:cover-the-blackout
+- dilemma:mona-mercy

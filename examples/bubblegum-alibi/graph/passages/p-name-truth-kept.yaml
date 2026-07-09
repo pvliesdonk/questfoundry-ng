@@ -1,0 +1,23 @@
+id: passage:p-name-truth-kept
+summary: With the open ledger confirming every motive line by line, Juno names Sailor and
+  the girl is led away on evidence no one can dispute — the scholarship voided, the crush
+  answered with handcuffs, her look back heavy with betrayal. The school honors the girl who
+  proved the truth but never forgives the exposer she became, and she stands admired and utterly
+  alone.
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+ending:
+  id: e-name-truth-kept
+  title: Every Line Confirmed
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-hole
+beats:
+- beat:admired-and-alone--keep-ledger
+- beat:name-truth-commit--keep-ledger
+- beat:sailor-led-away--keep-ledger

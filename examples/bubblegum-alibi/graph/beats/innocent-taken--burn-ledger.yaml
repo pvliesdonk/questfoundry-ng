@@ -1,0 +1,16 @@
+id: beat:innocent-taken--burn-ledger
+created_by: grow
+summary: With the ledger burned, no page contradicts Juno's bent case, and the frame she builds
+  against an innocent classmate rests on memory she alone can shape. The innocent is escorted
+  out at dawn while Sailor walks free beside her, the missing evidence the only reason the
+  lie survives.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:shield-the-loved

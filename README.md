@@ -35,8 +35,8 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M5 — DRESS, print, and finish (in progress).** All eight stages now
-run: `qf run --to dress` takes a one-paragraph premise through prose to
+✅ **M5 — DRESS, print, and finish (complete).** All eight stages run:
+`qf run --to dress` takes a one-paragraph premise through prose to
 art direction, illustration briefs, a spoiler-safe in-world codex, and
 print codewords — and `qf export pdf` compiles a real gamebook: numbered
 sections in seeded anti-spoiler order, "*Write down the codeword
@@ -46,9 +46,13 @@ page, the codex as an appendix, and an ending index. `qf rerun <stage>
 while re-applying kept passes for free. Under it sit M4 (FILL, HTML/
 Twee/JSON exports), M3 (passage compilation, `qf play`), M2 (the weave),
 M1 (stage runner, LLM adapter), and the M0 foundation. Multi-hard
-weaving landed: hard forks nest, every beat after the first fork is
-instantiated per world, and endings multiply (2 hard → 4 endings).
-Remaining for M5: a live `medium`-scope generation within budget.
+weaving landed and ran live: hard forks nest, every beat after the first
+fork is instantiated per world, and endings multiply (2 hard → 4
+endings). The first `medium`-scope story — ["The Bubblegum
+Alibi"](examples/bubblegum-alibi/), a closed-circle murder mystery in a
+bubblegum high school — generated end-to-end for ~$3.25: 46 beats in
+two worlds, 20 passages, 16 arcs, 4 endings, full enrichment, every
+export round-trip clean. Next: M6, craft-corpus research.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
 carries hand-authored enrichment and prints end-to-end:
 

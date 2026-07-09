@@ -1,0 +1,16 @@
+id: beat:admired-and-alone--burn-ledger
+created_by: grow
+summary: In the ashless world where the ledger is gone, Juno wins the room only through her
+  own word and the classmates' reluctant memory; her accusation of Sailor holds on trust alone.
+  The school honors the girl who told the truth without proof, but she stands admired and
+  utterly alone, her sharpest tool burned and her heart the last casualty of the lock-in.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:juno-park
+- location:gym
+is_ending: true
+belongs_to:
+- path:name-the-truth

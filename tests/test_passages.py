@@ -332,11 +332,71 @@ def test_active_flags_mirrors_i12(golden):
     group = next(
         grp for grp in pc.collapse_groups(g) if "beat:keep-ending" in grp
     )
+    # flag:bound-to-light is granted on every route here (its commit is
+    # the only side upstream) — a fact, not a state to honor (I12);
+    # the reconverged soft dilemma's pair stays ambiguous
     assert pc.active_flags(g, group) == [
-        "flag:bound-to-light",
         "flag:elias-knows",
         "flag:lie-between",
     ]
+
+
+def test_i12_counts_only_ambiguous_flags(vision):
+    """Refined by the medium live run (2026-07-09): the climax endings
+    of a multi-hard story carry 4+ upstream flags that are all facts
+    there (only their own side upstream), while a trunk passage after
+    two soft convergences carries genuinely ambiguous ones. I12 caps
+    ambiguity, not upstream grants."""
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    d2, p2a, p2b = make_dilemma(g, "sub1", role=DilemmaRole.SOFT)
+    d3, p3a, p3b = make_dilemma(g, "sub2", role=DilemmaRole.SOFT)
+    scaffold(g, "main", d1, p1a, p1b)
+    scaffold(g, "sub1", d2, p2a, p2b, endings=False)
+    scaffold(g, "sub2", d3, p3a, p3b, endings=False)
+    planned = weave.plan(g)
+    order = next(
+        o
+        for o in weave.candidates(planned)
+        if o.index("resolve:dilemma:sub1") < o.index("pre:beat:main-pre1")
+        and o.index("resolve:dilemma:sub2") < o.index("pre:beat:main-pre1")
+    )
+    weave.realize(g, planned, order)
+    _derive_flags(g)
+
+    # the trunk after both soft convergences: two ambiguous pairs
+    trunk = queries.ambiguous_flags(g, ["beat:main-pre1"])
+    assert trunk == ["flag:sub1-a", "flag:sub1-b", "flag:sub2-a", "flag:sub2-b"]
+    # past main's commit its flag is granted on every route — never counted
+    beyond = [b for b in queries.beat_ids(g) if "main-post-a" in b]
+    assert beyond
+    for flag in queries.ambiguous_flags(g, beyond):
+        assert "main" not in flag
+    # a beat gated on one sub1 flag determines that dilemma for arrivals
+    gated = Beat(
+        id="beat:afterglow",
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=["flag:sub1-a"],
+    )
+    mutations.add_beat(g, gated, [])
+    mutations.add_ordering(g, "beat:main-pre1", "beat:afterglow")
+    assert queries.ambiguous_flags(g, ["beat:afterglow"]) == ["flag:sub2-a", "flag:sub2-b"]
+
+    # I12 fires on the 4 ambiguous states and clears when one is audited away
+    mutations.add_passage(
+        g,
+        Passage(id="passage:p-trunk", created_by=Stage.POLISH, summary="s"),
+        ["beat:main-pre1"],
+    )
+    issues = run_checks(g, vision, Stage.POLISH)
+    i12 = [i for i in issues if i.check == "I12"]
+    assert len(i12) == 1 and "4 ambiguous states" in i12[0].message
+    g.node("passage:p-trunk").irrelevant_flags = ["flag:sub1-a"]
+    issues = run_checks(g, vision, Stage.POLISH)
+    assert [i for i in issues if i.check == "I12"] == []
 
 
 def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):

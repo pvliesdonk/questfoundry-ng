@@ -1,0 +1,10 @@
+id: beat:bridge-confession-to-knot
+created_by: grow
+summary: Tavi's whispered plea fades and she slips back into the crowd, leaving Juno alone
+  with the punch-stained floor and a memory that keeps snagging — the sash, and the small
+  looped knot no stranger could tie.
+beat_class: structural
+purpose: bridge
+entities:
+- character:juno-park
+- object:victory-sash

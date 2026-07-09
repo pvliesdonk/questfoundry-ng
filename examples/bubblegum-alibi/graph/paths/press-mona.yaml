@@ -1,0 +1,10 @@
+id: path:press-mona
+name: The Motive as Leverage
+explores: answer:press-mona
+consequences:
+- id: consequence:mona-testimony-extracted
+  text: Pressured with her fresh motive, Mona gives up what she saw near the sash, filling
+    a gap no one else could.
+- id: consequence:mona-fed-to-mob
+  text: With her demotion exposed, Mona becomes the room's favored suspect, a fragile girl
+    thrown to a crowd desperate to blame.

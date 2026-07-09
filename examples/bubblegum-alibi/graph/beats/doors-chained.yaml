@@ -1,0 +1,10 @@
+id: beat:doors-chained
+summary: The senior lock-in seals shut at midnight, doors chained until dawn, pastel streamers
+  and a disco ball spinning over the gym as the dance-off finale kicks off. Juno works the
+  yearbook camera, cataloguing the glittering, peppy crowd she has spent years quietly keeping
+  secrets for.
+beat_class: structural
+purpose: setup
+entities:
+- location:gym
+- character:juno-park

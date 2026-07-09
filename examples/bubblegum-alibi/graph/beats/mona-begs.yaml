@@ -1,0 +1,13 @@
+id: beat:mona-begs
+summary: Mona clutches Juno's sleeve and begs her to keep the demotion secret, swearing the
+  crowd will crucify her the moment they learn she had reason to hate Marilee.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: advances
+entities:
+- character:mona-vale
+- character:juno-park
+belongs_to:
+- path:press-mona
+- path:spare-mona

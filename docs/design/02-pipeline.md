@@ -225,7 +225,7 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details |
-| Gate G5 | Every passage has prose within its word budget; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
+| Gate G5 | Every passage has prose within its word budget (enforced at apply with 20% slack — models cannot hit exact windows; the exact range stays B5's advisory line); automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
 Order matters: FILL locks the Voice first, then picks a **reference
 arc** — one arbitrary complete playthrough, chosen by seeded selection

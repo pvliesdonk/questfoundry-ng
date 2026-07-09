@@ -1,0 +1,13 @@
+id: beat:principal-at-chains
+summary: Keys rattle at the chained doors; the principal is coming, and Juno has minutes to
+  decide whose name she hands over when the gym cracks open to the morning.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- location:gym
+- character:juno-park
+belongs_to:
+- path:name-the-truth
+- path:shield-the-loved

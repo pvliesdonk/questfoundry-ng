@@ -1,0 +1,12 @@
+id: beat:mona-safe
+summary: Mona's morning demotion stays hidden, and she fades gratefully back into the crowd,
+  spared from the room's hunger for a target.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: advances
+entities:
+- character:mona-vale
+- location:gym
+belongs_to:
+- path:spare-mona

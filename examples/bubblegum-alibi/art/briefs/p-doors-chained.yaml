@@ -1,0 +1,18 @@
+passage: passage:p-doors-chained
+priority: 1
+caption: The lock-in doors chain shut, and when the finale lights return, the pageant winner
+  hangs dead beneath the disco ball.
+prompt: Glossy candy-bright graphic illustration, clean linework and posterized shading. A
+  pastel-draped gymnasium hung with mint, lilac, and buttercream streamers, glitter-dusted
+  floor, chained doors, a disco ball ticking soft light overhead, high windows paling toward
+  cold pre-dawn blue-grey. Beneath the disco ball hangs Marilee Sweet, pageant-perfect even
+  in death, immaculate, the cotton-candy-pink victory sash knotted at her throat. In shadow,
+  Juno Park in a cardigan bulging with press-pass lanyards, ink-smudged fingers, watchful
+  eyes, a hidden notebook tucked beneath her cardigan. Hard chiaroscuro, long shadows, sardonic
+  warmth curdling into dread.
+entities:
+- location:gym
+- character:marilee-sweet
+- object:victory-sash
+- character:juno-park
+- object:yearbook-ledger

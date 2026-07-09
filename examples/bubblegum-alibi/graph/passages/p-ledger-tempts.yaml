@@ -1,0 +1,30 @@
+id: passage:p-ledger-tempts
+summary: Priya spots the notebook and demands it as evidence while Juno's thumb hovers over
+  a lighter, torn between the truth it can prove and the dozens of lives it will detonate.
+  Keys rattle at the chained doors — the principal is minutes away, and Juno must decide whose
+  name the morning gets.
+entities:
+- object:yearbook-ledger
+- character:priya-desai
+- character:juno-park
+- location:gym
+irrelevant_flags:
+- flag:mona-fed-to-mob
+- flag:mona-protected
+- flag:mona-testimony-extracted
+- flag:sash-witness-lost
+- flag:timeline-fixed
+beats:
+- beat:ledger-tempts
+- beat:principal-at-chains
+choices:
+- label: Hold the ledger to the flame in the utility sink
+  grants:
+  - flag:investigation-blinded
+  - flag:secrets-sealed
+  to: passage:p-burn-ledger
+- label: Pocket the lighter and open the ledger to the room
+  grants:
+  - flag:mass-exposure
+  - flag:truth-provable
+  to: passage:p-keep-ledger

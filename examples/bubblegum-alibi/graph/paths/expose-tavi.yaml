@@ -1,0 +1,10 @@
+id: path:expose-tavi
+name: The Broken Alliance
+explores: answer:expose-tavi
+consequences:
+- id: consequence:timeline-fixed
+  text: Tavi's early blackout is nailed down and the crucial minutes snap into place, clearing
+    the muddled window in the reconstruction.
+- id: consequence:tavi-turns-cold
+  text: Juno's only ally in the room, painted as complicit before the group, goes silent and
+    hostile for the rest of the night.

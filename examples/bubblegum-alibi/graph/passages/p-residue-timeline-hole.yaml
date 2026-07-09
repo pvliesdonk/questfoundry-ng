@@ -1,0 +1,12 @@
+id: passage:p-residue-timeline-hole
+summary: The neon buzzes over a gap nobody can pin down; Juno watches every suspect lean toward
+  that soft dark spot, and the not-knowing feels like a held breath.
+entities:
+- character:juno
+irrelevant_flags:
+- flag:mona-protected
+beats:
+- beat:residue-timeline-hole
+choices:
+- label: Reach for the ledger as Priya demands it
+  to: passage:p-ledger-tempts

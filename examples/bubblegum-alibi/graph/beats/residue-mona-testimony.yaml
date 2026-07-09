@@ -1,0 +1,11 @@
+id: beat:residue-mona-testimony
+created_by: polish
+summary: The crowd's peppy chatter has gone thin and hungry, all eyes drifting to the trembling
+  girl; Mona's testimony hangs in the streamers like a stain that won't lift.
+beat_class: structural
+purpose: residue
+entities:
+- character:mona
+- character:juno
+requires_flags:
+- flag:mona-testimony-extracted

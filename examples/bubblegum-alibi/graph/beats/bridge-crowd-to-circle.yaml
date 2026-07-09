@@ -1,0 +1,9 @@
+id: beat:bridge-crowd-to-circle
+created_by: grow
+summary: The gym's chatter tightens into a hush as the crowd pulls itself into a ragged circle,
+  streamers drooping overhead while every glittering eye swings toward Juno for an answer.
+beat_class: structural
+purpose: bridge
+entities:
+- location:gym
+- character:juno-park

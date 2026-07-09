@@ -1,0 +1,15 @@
+At midnight the chains go on the doors like party favors, and Principal Okafor jangles the padlock so we all cheer, because nothing says senior tradition like being sealed inside until dawn. I have the yearbook camera slung around my neck and a smile bolted on to match. Click. There's Beau flexing under the streamers. Click. There's Mona laughing too hard at something Marilee said, the way you laugh when you're still bleeding from it. I've spent three years being everyone's soft place to hide a secret, and tonight the whole class is glittering in my viewfinder, unaware I could ruin any one of them with a flip of a page.
+
+The dance-off finale kills the lights. Blackout, the crowd screaming happy, the disco ball throwing its last confetti of light before the dark swallows it. I count the seconds. I always count. And when the lights snap back the room keeps cheering for one more heartbeat, then two, before somebody sees what's turning slow beneath the ball.
+
+Marilee Sweet. Pageant-straight even now, her cotton-candy sash cinched high and wrong around her throat, her crown catching the light like it's still her night. It is, I guess. She always did want the room to look up.
+
+The screaming changes flavor. The doors don't open. The doors won't open. And somewhere in the arithmetic of who's-still-here, I understand that the circle just closed with all of us inside it, and that I am the only one carrying the map of why anyone would.
+
+I slip into the supply closet and lock it from the inside, because that's a thing I know how to do, and I pull the ledger from where it lives against my ribs. My notebook. My little glossy record of everybody's buried ruin, kept in ink my fingers still wear. Every page a favor. Every page a reason. I tell myself I'm helping. I've been telling myself that for years.
+
+I don't want to open Sailor's page. My thumb finds it anyway, the way it always finds her across a crowded room. And there it is in my own careful handwriting, the debt she never said out loud, the scholarship that lived or died on tonight, the fact that Marilee held all of it and liked holding things. Motive, laid out neat as caption copy. The sash tied in a lift-rig knot only a dance captain and two others in this building could tie in the dark. Sailor, who came off that stage with a torn sleeve and glitter in her hair and answers that arrive a half-beat too late.
+
+The windows are graying already. Dawn does not care what it lights up. I press my palm flat over her name like I could hide it from myself, and I can't, because the whole night is pointing one glittery finger and it points at the girl I love.
+
+There are heel-marks scuffed toward the costume corner, bright and deliberate. And near the sailor's table, a lanyard snapped clean, still swinging. I have to move before someone else does.

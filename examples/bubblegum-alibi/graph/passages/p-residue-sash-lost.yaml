@@ -1,0 +1,19 @@
+id: passage:p-residue-sash-lost
+summary: Mona keeps her arms folded and her mouth shut, and the sash's knot stays a secret;
+  the quiet Juno bought for her hums under the glitter like a missing note.
+entities:
+- character:mona
+- character:juno
+beats:
+- beat:residue-sash-witness-lost
+choices:
+- label: Back Tavi's cue and hold the lie together
+  grants:
+  - flag:alliance-holds
+  - flag:timeline-hole
+  to: passage:p-cover-tavi
+- label: Name the early blackout to the room
+  grants:
+  - flag:tavi-turns-cold
+  - flag:timeline-fixed
+  to: passage:p-expose-tavi

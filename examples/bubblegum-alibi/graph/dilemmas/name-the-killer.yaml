@@ -1,0 +1,24 @@
+id: dilemma:name-the-killer
+question: When the doors open at dawn, does Juno hand the principal the true killer — even
+  if it is Sailor — or does she surrender the name of someone else the evidence can be bent
+  to fit?
+why_it_matters: 'This is the choice between loyalty and truth made literal: either an innocent
+  takes the fall to shield the person Juno loves, or Juno breaks her own heart to keep faith
+  with justice, and neither wound ever closes.'
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:name-the-truth
+  text: Juno names the real killer to the principal, whatever it costs her heart.
+- id: answer:shield-the-loved
+  text: Juno steers the evidence toward another suspect to protect the person she loves.
+anchored_to:
+- character:juno-park
+- character:sailor-quinn
+- object:victory-sash
+wraps:
+- dilemma:cover-the-blackout
+- dilemma:mona-mercy
+concurrent:
+- dilemma:the-ledger

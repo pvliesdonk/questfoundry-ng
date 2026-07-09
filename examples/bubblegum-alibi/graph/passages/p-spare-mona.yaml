@@ -1,0 +1,18 @@
+id: passage:p-spare-mona
+summary: Juno swallows the leverage and buries the demotion, sparing the grieving girl from
+  the room's appetite. Mona fades gratefully into the crowd, and whatever she saw near the
+  body slips away with her silence.
+entities:
+- character:juno-park
+- character:mona-vale
+- location:gym
+- object:victory-sash
+beats:
+- beat:knot-witness-lost
+- beat:mona-safe
+- beat:spare-mona-commit
+choices:
+- label: Step back into the hush the silence bought
+  requires:
+  - flag:sash-witness-lost
+  to: passage:p-residue-sash-lost

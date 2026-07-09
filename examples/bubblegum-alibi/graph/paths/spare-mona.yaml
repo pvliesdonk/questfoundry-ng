@@ -1,0 +1,10 @@
+id: path:spare-mona
+name: Mercy for the Discarded
+explores: answer:spare-mona
+consequences:
+- id: consequence:mona-protected
+  text: Mona's morning demotion stays hidden, sparing the grieving girl from the room's hunger
+    for a target.
+- id: consequence:sash-witness-lost
+  text: The one person who knew the sash's knot intimately keeps her silence, and her testimony
+    near the body is lost.

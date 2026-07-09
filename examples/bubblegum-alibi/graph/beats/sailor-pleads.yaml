@@ -1,0 +1,15 @@
+id: beat:sailor-pleads
+summary: Sailor finds Juno in the streamers and swears through tears it isn't what it looks
+  like, that she'd never — and Juno cannot tell whether she believes the girl or just wants
+  to.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: complicates
+entities:
+- character:sailor-quinn
+- character:juno-park
+- location:gym
+belongs_to:
+- path:name-the-truth
+- path:shield-the-loved

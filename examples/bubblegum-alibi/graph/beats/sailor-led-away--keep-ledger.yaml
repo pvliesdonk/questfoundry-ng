@@ -1,0 +1,15 @@
+id: beat:sailor-led-away--keep-ledger
+created_by: grow
+summary: With the open ledger confirming every motive, Sailor is led away on evidence no one
+  can dispute, the pages Juno preserved sealing her fate. The scholarship voids, the crush
+  is answered with handcuffs, and Sailor's look back carries the betrayal of a truth Juno
+  chose to prove rather than bury.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:sailor-quinn
+- character:juno-park
+belongs_to:
+- path:name-the-truth

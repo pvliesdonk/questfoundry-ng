@@ -1,0 +1,117 @@
+flags:
+- id: flag:alliance-holds
+  description: Tavi stays at Juno's side, their yearbook conspiracy intact and their trust
+    deepened by the covered lie.
+  source: dilemma
+  path: path:cover-tavi
+  derived_from:
+  - consequence:alliance-holds
+- id: flag:innocent-framed
+  description: The bent evidence lands on an innocent classmate, who is escorted out at dawn
+    while the real killer walks free beside Juno.
+  source: dilemma
+  path: path:shield-the-loved
+  derived_from:
+  - consequence:innocent-framed
+- id: flag:investigation-blinded
+  description: Without the ledger, the reconstruction of the night rests on memory and accusation,
+    and the truth becomes a matter of who is believed.
+  source: dilemma
+  path: path:burn-ledger
+  derived_from:
+  - consequence:investigation-blinded
+- id: flag:juno-complicit-forever
+  description: Sailor stays free but Juno now carries a second secret heavier than the ledger,
+    bound to a lie she can never take back.
+  source: dilemma
+  path: path:shield-the-loved
+  derived_from:
+  - consequence:juno-complicit-forever
+- id: flag:juno-trusted-broken
+  description: The school remembers Juno as the girl who told the truth, admired and utterly
+    alone, her own heart the last casualty of the night.
+  source: dilemma
+  path: path:name-the-truth
+  derived_from:
+  - consequence:juno-trusted-broken
+- id: flag:mass-exposure
+  description: The ledger becomes public evidence, every secret it holds spilling into the
+    room and turning Juno into the exposer she swore never to be.
+  source: dilemma
+  path: path:keep-ledger
+  derived_from:
+  - consequence:mass-exposure
+- id: flag:mona-fed-to-mob
+  description: With her demotion exposed, Mona becomes the room's favored suspect, a fragile
+    girl thrown to a crowd desperate to blame.
+  source: dilemma
+  path: path:press-mona
+  derived_from:
+  - consequence:mona-fed-to-mob
+- id: flag:mona-protected
+  description: Mona's morning demotion stays hidden, sparing the grieving girl from the room's
+    hunger for a target.
+  source: dilemma
+  path: path:spare-mona
+  derived_from:
+  - consequence:mona-protected
+- id: flag:mona-testimony-extracted
+  description: Pressured with her fresh motive, Mona gives up what she saw near the sash,
+    filling a gap no one else could.
+  source: dilemma
+  path: path:press-mona
+  codeword: CRACKED
+  derived_from:
+  - consequence:mona-testimony-extracted
+- id: flag:sailor-taken-at-dawn
+  description: When the doors open, the principal leads Sailor away in front of everyone,
+    the scholarship void and the crush answered only with handcuffs.
+  source: dilemma
+  path: path:name-the-truth
+  derived_from:
+  - consequence:sailor-taken-at-dawn
+- id: flag:sash-witness-lost
+  description: The one person who knew the sash's knot intimately keeps her silence, and her
+    testimony near the body is lost.
+  source: dilemma
+  path: path:spare-mona
+  codeword: SILENT
+  derived_from:
+  - consequence:sash-witness-lost
+- id: flag:secrets-sealed
+  description: Every classmate's buried ruin dies in the flames, their belonging preserved
+    but the room's motives now unprovable.
+  source: dilemma
+  path: path:burn-ledger
+  derived_from:
+  - consequence:secrets-sealed
+- id: flag:tavi-turns-cold
+  description: Juno's only ally in the room, painted as complicit before the group, goes silent
+    and hostile for the rest of the night.
+  source: dilemma
+  path: path:expose-tavi
+  derived_from:
+  - consequence:tavi-turns-cold
+- id: flag:timeline-fixed
+  description: Tavi's early blackout is nailed down and the crucial minutes snap into place,
+    clearing the muddled window in the reconstruction.
+  source: dilemma
+  path: path:expose-tavi
+  codeword: SNAPPED
+  derived_from:
+  - consequence:timeline-fixed
+- id: flag:timeline-hole
+  description: The blackout's true timing remains murky, leaving a gap any suspect can pry
+    open to shift the blame.
+  source: dilemma
+  path: path:cover-tavi
+  codeword: MURKY
+  derived_from:
+  - consequence:timeline-hole
+- id: flag:truth-provable
+  description: With the ledger intact, the map of every motive lies open, and the killer's
+    name can be proven beyond bending.
+  source: dilemma
+  path: path:keep-ledger
+  derived_from:
+  - consequence:truth-provable

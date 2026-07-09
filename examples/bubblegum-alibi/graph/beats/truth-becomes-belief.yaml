@@ -1,0 +1,17 @@
+id: beat:truth-becomes-belief
+summary: The ledger burns to ash in the utility sink, and with it every provable motive; the
+  night's reconstruction now rests on memory and accusation alone. The room's belief hangs
+  on who speaks with conviction, leaving open whether Juno will name the true killer or bend
+  that fragile testimony toward someone else.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: complicates
+entities:
+- location:gym
+- character:juno-park
+temporal_hints:
+- dilemma: dilemma:name-the-killer
+  position: before_commit
+belongs_to:
+- path:burn-ledger

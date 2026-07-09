@@ -1,0 +1,10 @@
+id: beat:residue-timeline-hole
+created_by: polish
+summary: The gym's neon buzzes over a gap nobody can pin down; Juno watches every suspect
+  lean toward that soft dark spot, and the not-knowing feels like a held breath.
+beat_class: structural
+purpose: residue
+entities:
+- character:juno
+requires_flags:
+- flag:timeline-hole

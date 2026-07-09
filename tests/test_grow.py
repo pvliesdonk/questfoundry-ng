@@ -7,8 +7,17 @@ import pytest
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
+from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.structure import FlagSource, StateFlag
+from questfoundry.models.drama import ResidueWeight
+from questfoundry.models.structure import (
+    Beat,
+    BeatClass,
+    FlagSource,
+    StateFlag,
+    StructuralPurpose,
+)
+from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import (
     BridgeProposal,
@@ -24,8 +33,10 @@ from questfoundry.pipeline.stages.grow import (
     _spread,
     _weave_apply,
 )
+from questfoundry.pipeline.stages.polish import _finalize_context
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
+from tests.test_passages import _fork_rejoin_story
 from tests.test_weave import seeded_story
 
 
@@ -92,7 +103,7 @@ def test_gap_detection_and_bridge_splice(project):
     a, b = "beat:main-pre0", "beat:main-pre1"
     g.node(a).entities = ["character:one"]
     g.node(b).entities = ["character:two"]
-    assert _gaps(g) == [(a, b)]
+    assert _gaps(g) == [(a, (b,))]
     assert _bridge_skip(project) is None
 
     proposal = BridgeProposal(
@@ -123,6 +134,98 @@ def test_bridge_must_cover_each_gap_exactly_once(project):
 
 
 def test_bridge_skips_when_no_gaps(project):
+    assert _bridge_skip(project) == "no entity-disjoint adjacencies"
+
+
+def _bridged_fork_rejoin(tmp_path, vision) -> Project:
+    """Fork-rejoin story with the sub-a tail entity-disjoint from one
+    hard commit, bridged through the real bridge apply."""
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    g.node("beat:sub-post-a").entities = ["character:tail"]
+    g.node("beat:main-commit-a").entities = ["character:other"]  # disjoint: the gap edge
+    g.node("beat:main-commit-b").entities = ["character:tail"]  # shared: not a gap itself
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    proposal = BridgeProposal(
+        bridges=[
+            BridgeSpec(
+                gap=0,
+                id="beat:crossing",
+                summary="s",
+                entities=["character:tail", "character:other"],
+            )
+        ]
+    )
+    _bridge_apply(proposal, project)
+    return project
+
+
+def test_bridge_into_fork_commit_spans_the_frontier(tmp_path, vision):
+    """Violating construction (first medium live run, 2026-07-09): the
+    weave legally rejoins a soft diamond at the next fork, and the bridge
+    pass spliced a bridge into ONE commit of that fork — every arc taking
+    the sibling commit reached the shared bridge and dead-ended (I6 x4).
+    A gap into a fork commit is a gap into the fork: one bridge, spliced
+    before the whole frontier."""
+    g = StoryGraph()
+    _fork_rejoin_story(g, ResidueWeight.LIGHT)
+    tail = "beat:sub-post-a"
+    g.node(tail).entities = ["character:tail"]
+    g.node("beat:main-commit-a").entities = ["character:other"]
+    g.node("beat:main-commit-b").entities = ["character:tail"]
+    assert _gaps(g) == [(tail, ("beat:main-commit-a", "beat:main-commit-b"))]
+
+    project = _bridged_fork_rejoin(tmp_path, vision)
+    g = project.graph
+    for commit in ("beat:main-commit-a", "beat:main-commit-b"):
+        assert not g.has_edge(EdgeKind.PREDECESSOR, tail, commit)
+        assert g.has_edge(EdgeKind.PREDECESSOR, "beat:crossing", commit)
+    assert g.has_edge(EdgeKind.PREDECESSOR, tail, "beat:crossing")
+    issues = run_checks(g, vision, Stage.GROW)
+    assert [i for i in issues if i.check == "I6" and i.severity == Severity.ERROR] == []
+
+
+def test_residue_and_tails_see_through_the_bridge(tmp_path, vision):
+    """Second finding of the same live run (2026-07-09): with a bridge
+    between a path's tail and the rejoin frontier, POLISH's finalize
+    context lost the tail (KeyError in the prompt) and the residue splice
+    would find no beat 'with edges into' the frontier. Arrival questions
+    look through bridges; the residue splices on the tail's side."""
+    project = _bridged_fork_rejoin(tmp_path, vision)
+    g = project.graph
+    (need,) = pc.convergence_needs(g)
+    ctx = _finalize_context(project)
+    tails = ctx["needs"][0]["tails"]
+    assert set(tails) == {"path:sub-a", "path:sub-b"}
+    assert tails["path:sub-a"].id == "beat:sub-post-a"
+
+    mutations.freeze_topology(g)
+    residue = Beat(
+        id="beat:afterglow",
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"]],
+    )
+    pc.insert_residue_beat(g, residue, "path:sub-a", need.rejoin)
+    assert queries.successors(g, "beat:sub-post-a") == ["beat:afterglow"]
+    assert queries.successors(g, "beat:afterglow") == ["beat:crossing"]
+    issues = run_checks(g, vision, Stage.GROW)
+    assert [i for i in issues if i.check == "I6" and i.severity == Severity.ERROR] == []
+
+
+def test_unbridgeable_seam_is_not_a_gap(project):
+    """A seam whose bridge would dead-end an arc is skipped: a shared
+    beat wired straight into one path's post-commit beat can't take a
+    shared bridge (arcs on the other path reach it with no exit)."""
+    g = project.graph
+    planned = weave.plan(g)
+    weave.realize(g, planned, weave.candidates(planned)[0])
+    mutations.add_ordering(g, "beat:main-pre1", "beat:main-post-a")
+    g.node("beat:main-pre1").entities = ["character:one"]
+    g.node("beat:main-post-a").entities = ["character:two"]
+    assert _gaps(g) == []
     assert _bridge_skip(project) == "no entity-disjoint adjacencies"
 
 

@@ -1,0 +1,16 @@
+id: beat:admired-and-alone--keep-ledger
+created_by: grow
+summary: In the world where the open ledger already spilled every secret, Juno's naming of
+  Sailor is confirmed line by line against the map of motives she exposed. The school honors
+  the girl who proved the truth but never forgives the exposer she became, and she stands
+  admired and utterly alone, her heart the last casualty of the lock-in.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:juno-park
+- location:gym
+is_ending: true
+belongs_to:
+- path:name-the-truth

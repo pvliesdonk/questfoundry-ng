@@ -1,0 +1,11 @@
+id: passage:p-residue-mona-fed
+summary: The peppy chatter has gone thin and hungry, every eye drifting to the trembling girl;
+  Mona's testimony hangs in the streamers like a stain that won't lift.
+entities:
+- character:mona
+- character:juno
+beats:
+- beat:residue-mona-testimony
+choices:
+- label: Face the circle drawing tight around you
+  to: passage:p-crowd-to-circle

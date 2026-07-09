@@ -1,0 +1,19 @@
+passage: passage:p-blackout-suspects
+priority: 3
+caption: The blackout timeline won't add up, and every buried motive in the room now rests
+  in your hands.
+prompt: Glossy candy-bright graphic illustration, clean linework and posterized shading. Pastel
+  gymnasium with mint and buttercream streamers, glitter floor, disco ball overhead, high
+  windows going cold blue-grey. Tavi Okonkwo with oversized headphones, glow-tape-striped
+  sneakers, laptop bag clamped to their side, hands shaking. Mona Vale, overdressed, mascara
+  freshly redone and smeared, hands crooking into the shape of a knot. Sailor Quinn in a sequined
+  dance-off costume with one torn sleeve, glitter in her hair, hands shaking. The cotton-candy-pink
+  sash tied in a distinctive rigging knot. Juno Park watching, cardigan, ink-smudged fingers.
+  Hard chiaroscuro, long shadows, sardonic warmth curdling into dread.
+entities:
+- character:juno-park
+- location:gym
+- character:mona-vale
+- character:tavi-okonkwo
+- object:victory-sash
+- character:sailor-quinn

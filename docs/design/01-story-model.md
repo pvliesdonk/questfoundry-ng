@@ -322,8 +322,15 @@ design.
 - **I11** Every beat is grouped into exactly one passage (variants may
   re-present the same beat behind disjoint gates).
 - **I12** Prose feasibility: no passage requires FILL to honor more than
-  3 active states simultaneously; incompatible heavy states force
-  variants, not hedged prose.
+  3 *ambiguous* flag states simultaneously; incompatible heavy states
+  force variants, not hedged prose. A flag is ambiguous at a passage
+  when readers arrive holding either value — its grant is upstream on
+  some route and the opposing path's commit is upstream on another (a
+  reconverged soft dilemma). A flag granted on every route there (only
+  its own side upstream — e.g. this world's hard commits at an ending)
+  is a fact the prose may simply assume: one state, not two, no load.
+  Flags of a dilemma the passage is gated on are likewise determined
+  for everyone who arrives.
 - **I13** The passage graph has no dead ends: every non-ending passage
   has ≥1 always-satisfiable choice; every ending is reachable.
 

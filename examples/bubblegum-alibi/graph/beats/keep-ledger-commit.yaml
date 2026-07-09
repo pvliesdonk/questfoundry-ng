@@ -1,0 +1,13 @@
+id: beat:keep-ledger-commit
+summary: Juno pockets the lighter and opens the ledger to the room, letting it damn whomever
+  it damns as secrets spill and she becomes the exposer she swore never to be.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: commits
+entities:
+- object:yearbook-ledger
+- character:juno-park
+- location:gym
+belongs_to:
+- path:keep-ledger

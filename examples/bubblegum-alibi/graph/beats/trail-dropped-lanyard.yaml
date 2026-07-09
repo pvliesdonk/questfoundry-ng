@@ -1,0 +1,8 @@
+id: beat:trail-dropped-lanyard
+created_by: polish
+summary: Juno picks up a dropped lanyard tacky with punch, its plastic clip snapped where
+  someone gripped it too hard near the sailor's table.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:juno

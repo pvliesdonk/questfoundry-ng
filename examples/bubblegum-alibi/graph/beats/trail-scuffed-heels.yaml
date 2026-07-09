@@ -1,0 +1,8 @@
+id: beat:trail-scuffed-heels
+created_by: polish
+summary: Juno follows a trail of scuffed heel-marks glittering across the gym floor, each
+  smear pointing back toward the sailor's costume corner.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:juno

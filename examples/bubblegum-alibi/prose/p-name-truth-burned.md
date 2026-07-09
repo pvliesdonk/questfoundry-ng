@@ -1,0 +1,15 @@
+The chain rattles and then it doesn't, because the key finally wins, and the doors fold open on a morning that smells like wet grass and the whole rest of my life. The principal stands in the gap, her cardigan more sensible than mine, a phone that actually works pressed to her ear. She says, tell me what happened. She says it to the room. But the room turns to me, because the room always turns to me, because I'm the girl with the pens who knows everybody's middle name and worst grade and which locker floods.
+
+And I open my mouth.
+
+Here's what I learned tonight, filed under things I'd have unlearned if I could. You can carry a person's whole ruin in your pocket for a year and still not know, until the very last second, whether you'll be the kind of girl who protects the ones she loves or the kind who protects the truth, and I want to tell you they're the same thing, I want that so badly, but Sailor's fingerprints were where they shouldn't be and her answers came a beat too late all night and the glitter in her hair was the same glitter that was on the wrong thing in the wrong place, and I saw it, and I can't un-see it, and I could lie so easily. The name behind my teeth could be anyone. I could hand them a borrowed cardigan of a story and go home holding her hand.
+
+I say Sailor's name.
+
+I say it clear. I say it once. There's no page to back it, no cheerful letters in my own hand, nothing but my voice sounding surest in a room that has learned to trust the girl with the pens. So they believe me. Of course they believe me. That's the terrible gift I spent a year building and one match un-building.
+
+Sailor looks at me. Her torn sleeve, her steady warm face gone unsteady. She doesn't argue, which is the worst part, because arguing would mean she thought there was something left to argue against. There's only me. There's only ever been me. The principal walks toward her the way you walk toward something breakable, and Sailor lets herself be led, and at the door she looks back, and the look isn't hate. It's the doubt of a room that had only my word and took it. It's *did you have to.* I did. I didn't. Both. Neither. The doors take her.
+
+After, they're so kind to me. The girl who told the truth. Somebody's mother brings me juice in a paper cup. Priya doesn't meet my eye but she nods, once, fair morning and all. Tavi stands near, close as ever, and I honestly can't tell if her arm against mine is loyalty or just gravity.
+
+The disco ball keeps turning over an empty floor. I did the loud brave thing. I named the truth I can never prove again, and the school will remember me shining, and I will remember the one caption I couldn't rewrite. My hands don't even shake. That's how I know something in me went out with the ledger. I count the seconds anyway. Old habit. There's nobody left to catalogue but me.

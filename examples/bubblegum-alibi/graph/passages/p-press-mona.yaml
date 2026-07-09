@@ -1,0 +1,18 @@
+id: passage:p-press-mona
+summary: Juno leans on the demotion like a blade until Mona breaks and describes a figure
+  at the sash in the dark — a hard fact for the reconstruction. But the secret is out now,
+  and the hungry room swings toward the fragile girl as its favored suspect.
+entities:
+- character:juno-park
+- character:mona-vale
+- object:victory-sash
+- location:gym
+beats:
+- beat:mona-testimony
+- beat:mona-thrown-to-crowd
+- beat:press-mona-commit
+choices:
+- label: Watch the room close in on the trembling girl
+  requires:
+  - flag:mona-testimony-extracted
+  to: passage:p-residue-mona-fed

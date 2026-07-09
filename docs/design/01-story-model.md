@@ -57,7 +57,7 @@ the original numbers were *beat* counts from the one-beat-one-passage
 era, and the passage collapse redefined the unit under them. A band now
 states what the scaffold structurally yields; the *feel* of size — how
 often the reader genuinely chooses — is checked separately (B6, words
-between choices per playthrough, target ≈300–800). Scale by adding
+between choices per playthrough, target ≈250–800). Scale by adding
 structure (locked dilemmas, deeper Ys — see STATUS), never by padding
 prose.
 

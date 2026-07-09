@@ -183,7 +183,7 @@ def insert_residue_beat(
 def long_linear_runs(groups: list[list[str]], min_beats: int = 3) -> list[int]:
     """Groups long enough that the player goes a while without a choice —
     candidate sites for cadence diamonds (the feel target is a genuine
-    choice roughly every 300-800 traversed words, B6)."""
+    choice roughly every 250-800 traversed words, B6)."""
     return [i for i, grp in enumerate(groups) if len(grp) >= min_beats]
 
 

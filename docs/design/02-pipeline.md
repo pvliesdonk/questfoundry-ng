@@ -207,7 +207,7 @@ Two phases:
    convergence sketch; add false branches at cadence — a cosmetic
    diamond (arms of 1–2 beats, different textures of the same forward
    motion) roughly every 3–5 beats of a choice-less run, so a
-   playthrough keeps a genuine-feeling decision every ~300–800 words
+   playthrough keeps a genuine-feeling decision every ~250–800 words
    (B6). The real choices are the dilemmas; cadence diamonds are safe
    dressing precisely because the structure guarantees the real ones.
 2. **Build the passage layer:** collapse maximal linear runs into

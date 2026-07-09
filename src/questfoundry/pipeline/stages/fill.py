@@ -271,13 +271,19 @@ def _write_apply_for(passage_id: str):
 
 
 def _review_for(passage_id: str):
+    # each round is anchored on what earlier rounds flagged: an amnesiac
+    # reviewer samples fresh objections every round and never converges
+    # (validation run, 2026-07-09) — persistence is signal, novelty is
+    # usually taste
+    prior: list[str] = []
+
     def review(proposal: WriteProposal, project: Project, adapter: Any) -> list[str]:
         from questfoundry.pipeline import runner
 
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         rendered = env.get_template("fill_review.j2").render(
-            **context, prose=proposal.prose
+            **context, prose=proposal.prose, prior_issues=list(prior)
         )
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
@@ -286,7 +292,9 @@ def _review_for(passage_id: str):
             role="utility",
         )
         if verdict.verdict == "fail":
-            return verdict.issues or ["review failed without stating an issue"]
+            issues = verdict.issues or ["review failed without stating an issue"]
+            prior.extend(issues)
+            return issues
         return []
 
     return review

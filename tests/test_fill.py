@@ -105,16 +105,22 @@ def test_review_hook_translates_verdicts(golden_fill, monkeypatch):
     class FakeAdapter:
         def __init__(self, verdict):
             self.verdict = verdict
+            self.seen = ""
 
         def complete(self, *, system, prompt, schema, role):
             assert role == "utility"
+            self.seen = prompt
             return self.verdict
 
     from jinja2 import DictLoader, Environment
 
     from questfoundry.pipeline import runner
 
-    env = Environment(loader=DictLoader({"fill_review.j2": "review {{ passage.id }}"}))
+    env = Environment(
+        loader=DictLoader(
+            {"fill_review.j2": "review {{ passage.id }} prior[{{ prior_issues | join(';') }}]"}
+        )
+    )
     monkeypatch.setattr(runner, "_environment", lambda: env)
     review = _review_for("passage:p-arrival")
     proposal = WriteProposal(prose="x " * 200)
@@ -126,6 +132,13 @@ def test_review_hook_translates_verdicts(golden_fill, monkeypatch):
         FakeAdapter(ReviewVerdict(verdict="fail", issues=["voice drift"])),
     )
     assert bad == ["voice drift"]
+    # round two is anchored: the earlier round's issues reach the prompt,
+    # so persistence — not fresh taste — is what the reviewer judges
+    # (validation run, 2026-07-09: an amnesiac reviewer found brand-new
+    # complaints every round and never converged)
+    adapter = FakeAdapter(ReviewVerdict(verdict="pass"))
+    review(proposal, golden_fill, adapter)
+    assert "prior[voice drift]" in adapter.seen
 
 
 def test_fill_pass_list_is_voice_plus_one_write_per_passage(golden_fill):

@@ -15,10 +15,17 @@ flag the same way:
    These patterns are BANNED — fail if any of them appears:
    - {{ voice.banned | join("
    - ") }}
+   Banned patterns match LITERALLY: a banned rhetorical question must be a
+   question in the text; a ban aimed at the reader is not violated by words
+   one character speaks to another — dialogue is never reader-address.
 2. Beat infidelity — a required beat is missing, out of order, or contradicted:
 {% for b in beats %}
    - {{ b.summary }}
 {% endfor %}
+   Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
+   what stays ambiguous, whose eyes we feel it through — is the writer's
+   craft, not fidelity; fail only when a listed thing doesn't happen,
+   happens out of order, or is contradicted.
 3. Continuity — a factual contradiction with the adjacent prose{% if not window and not lookahead %} (none written yet — skip){% endif %}.
 {% if window %}
 {% for w in window %}
@@ -56,6 +63,16 @@ Each issue must name the rule number it violates and quote the offending text.
 If your sentence needs "risks", "potential", "could be", or "attempts to", it
 is not an objective defect — do not list it.
 
+{% if prior_issues %}
+PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
+{% for i in prior_issues %}
+- {{ i }}
+{% endfor %}
+Judge persistence first: does any previously named defect remain? A round
+that finds only brand-new complaints is judging taste, not defects — if
+nothing above persists and no new text outright violates a numbered rule,
+pass the revision.
+{% endif %}
 THE PROSE:
 ---
 {{ prose }}

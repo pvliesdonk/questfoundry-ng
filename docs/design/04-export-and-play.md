@@ -78,16 +78,21 @@ in Twine take this and leave QuestFoundry behind, by design.
 
 The most format-specific pipeline, in five deterministic steps:
 
-1. **Codeword projection.** Decide which flags the *reader* must track.
-   Soft-dilemma routing flags → codewords (readers cross a convergence
-   where pages rejoin, so state must survive on paper). Hard-dilemma
-   flags → none (the page structure keeps those readers on disjoint
-   pages). Cosmetic flags → codeword only if a later residue passage
-   tests them. Grants become "**Write down CONFESSED**" lines appended to
-   the passage; gated choices become "*If you have CONFESSED, turn to
-   83.*" Every projected codeword is a single memorable word drawn from
-   the story's diction (LLM-suggested at POLISH time, stored on the flag,
-   deterministic here).
+1. **Codeword projection.** Decide which flags the *reader* must track:
+   exactly the flags some choice gate tests. Soft-dilemma routing flags
+   qualify (readers cross a convergence where pages rejoin, so state must
+   survive on paper); hard-dilemma flags never do (the page structure
+   keeps those readers on disjoint pages); cosmetic flags qualify only if
+   a later passage actually tests them. A "**Write down the codeword
+   CONFESSED**" line is hoisted into a section when *every* choice
+   arriving there grants the flag (commit passages — the common case);
+   a grant not shared by all arrivals stays inline on its choice line.
+   Grants of unprojected flags render nowhere. Every projected codeword
+   is a single memorable word drawn from the story's diction —
+   LLM-suggested at DRESS time (mini-ADR A12; POLISH predates voice and
+   prose, so the diction doesn't exist there), stored on the flag,
+   deterministic here. A flag reaching print without a stored codeword
+   gets one derived from its slug, with a warning to run DRESS.
 2. **Residue-variant lowering.** Digital runtimes hide unavailable
    choices; paper cannot. Where variant passages exist, the *incoming*
    reference becomes a codeword test ("If you have CONFESSED turn to 83,
@@ -98,8 +103,11 @@ The most format-specific pipeline, in five deterministic steps:
    seeded pseudo-random order with craft constraints: the start is
    section 1; structurally adjacent passages get non-adjacent numbers
    (prevents accidental spoiling by peripheral vision); variants of one
-   moment are separated; endings are scattered. The seed is stored, so
-   re-export is stable unless the graph changed.
+   moment are separated; endings are scattered. The seed is stored in
+   `project.yaml` on first export (`print_seed`, overridable with
+   `--seed`), so re-export is stable unless the graph changed. At tiny
+   passage counts the constraints may be unsatisfiable; the best
+   assignment is kept and the compromises reported as warnings.
 4. **Layout.** Typst template: front matter (title, how-to-play, codeword
    log page), numbered sections with illustrations, choice lines in a
    consistent typographic form, codex as an appendix ("The Keeper's

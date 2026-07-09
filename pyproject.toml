@@ -14,6 +14,7 @@ dependencies = [
     "anthropic>=0.40",
     "openai>=1.60",
     "google-genai>=1.0",
+    "typst>=0.13",
 ]
 
 [project.scripts]

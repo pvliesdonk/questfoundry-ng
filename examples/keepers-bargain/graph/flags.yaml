@@ -3,6 +3,7 @@ flags:
   description: Elias knows what the light holds.
   source: dilemma
   path: path:tell
+  codeword: CONFESSED
   derived_from: [consequence:elias-knows]
 - id: flag:lie-between
   description: A lie stands between Maren and Elias.

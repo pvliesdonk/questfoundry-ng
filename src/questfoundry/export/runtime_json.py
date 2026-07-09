@@ -71,9 +71,31 @@ def build_runtime(project: Project) -> dict:
         "passages": passages,
         "flags": flags,
         "entities": entities,
-        "codex": [],  # DRESS (M5)
-        "art": [],  # DRESS (M5)
+        "codex": _codex(project),
+        "art": _art(project),
     }
+
+
+def _codex(project: Project) -> list[dict]:
+    return [
+        {"entity": c.entity, "title": c.title, "body": c.body}
+        for c in sorted(project.enrichment.codex, key=lambda c: c.entity)
+    ]
+
+
+def _art(project: Project) -> list[dict]:
+    """One entry per illustration brief whose image has actually been
+    generated/commissioned (`art/images/<passage-slug>.png`); briefs
+    without an image file yet simply don't ship (design doc 04 §1)."""
+    entries = []
+    for brief in sorted(project.enrichment.briefs, key=lambda b: b.priority):
+        slug = _slug(brief.passage)
+        if not (project.root / "art" / "images" / f"{slug}.png").exists():
+            continue
+        entries.append(
+            {"passage": slug, "image": f"art/images/{slug}.png", "caption": brief.caption}
+        )
+    return entries
 
 
 def validate_runtime(data: dict) -> list[str]:
@@ -103,6 +125,14 @@ def validate_runtime(data: dict) -> list[str]:
             for flag in [*c["requires"], *c["grants"]]:
                 if flag not in known_flags:
                     problems.append(f"choice in {pid} references unknown flag {flag!r}")
+
+    known_entities = set(data.get("entities", {}))
+    for entry in data.get("codex", []):
+        if entry["entity"] not in known_entities:
+            problems.append(f"codex entry references unknown entity {entry['entity']!r}")
+    for entry in data.get("art", []):
+        if entry["passage"] not in passages:
+            problems.append(f"art entry references unknown passage {entry['passage']!r}")
 
     # walk with flag state, as every player will
     visited: set[str] = set()

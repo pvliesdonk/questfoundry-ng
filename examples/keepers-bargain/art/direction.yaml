@@ -1,0 +1,50 @@
+style: >-
+  Moody scratchboard linework over salt-bleached ink washes — the look of a
+  woodcut left out in weather. Figures rendered in a few exact lines; the
+  sea and sky carry the texture and the dread.
+palette: >-
+  Iron grey and lamp-oil gold against a deep tidal green-black; warmth only
+  ever comes from the lamp itself.
+influences:
+- maritime folk-horror illustration
+- scrimshaw linework
+- storm-light marine painting
+notes: >-
+  The lamp is the only reliable light source in every plate; let it do the
+  work the sun would do elsewhere.
+profiles:
+- entity: character:cartographer
+  appearance: >-
+    A trim, watchful man with a tidy beard going salt-and-pepper and cuffs
+    permanently ink-stained from chart work; carries himself with a curious,
+    kindly attention, as if always a question away from asking one more.
+  iconography:
+  - ink-stained cuffs
+  - a chart case slung at the hip
+  - a sounding line coiled in one hand
+- entity: character:keeper
+  appearance: >-
+    A weathered woman in an oilskin coat, hands roped with old rope-work
+    calluses, eyes the grey of harbor water; economical in her movements,
+    exact with rope and wick.
+  iconography:
+  - the oilskin coat
+  - the ledger with its blank line
+  - the lamp gimbal, always near her hand
+- entity: character:sleeper
+  appearance: >-
+    Never rendered whole — a shadow the size of weather, suggested at the
+    edge of a plate by displaced water and a darkness with no clean
+    outline; patient, unhurried, larger than the frame can hold.
+  iconography:
+  - a shape the size of weather
+  - water that moves wrong around it
+- entity: location:lighthouse
+  appearance: >-
+    A lighthouse raised on rust-streaked iron stilts above the shoals, its
+    lamp room a small warm box of brass and salt-bloomed glass against the
+    dark.
+  iconography:
+  - rust-streaked iron stilts
+  - the brass-and-salt-bloom lamp room
+  - the ledger kept below

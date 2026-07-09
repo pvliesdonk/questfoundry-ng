@@ -1,0 +1,24 @@
+Propose exactly {{ target }} illustration briefs: the {{ target }} passages most worth
+illustrating, prioritized 1 (illustrate first) through {{ target }} (last). Every brief
+must depict only visual facts already established — the art direction and profiles
+below, and the candidate passage's own summary/entities. Nothing new.
+
+ART DIRECTION: {{ direction.style }} | palette: {{ direction.palette }}
+VISUAL PROFILES:
+{% for p in profiles %}
+- {{ p.entity }}: {{ p.appearance }}
+{% endfor %}
+
+CANDIDATE PASSAGES:
+{% for p in passages %}
+- {{ p.passage.id }}{% if p.is_ending %} (ending){% endif %}: {{ p.passage.summary }}
+  entities: {{ p.passage.entities | join(", ") }}
+  opening prose: {{ p.excerpt }}...
+{% endfor %}
+
+For each of the {{ target }} briefs, return {"passage": "<id>", "priority": an integer
+1..{{ target }} (dense, unique, one per brief), "caption": "one spoiler-safe sentence
+for a reader arriving at that passage", "prompt": "an image prompt using only the
+established visual facts above", "entities": [entity ids depicted, a subset of that
+passage's own entities]}. At most one brief per passage.
+{% include "_shared.j2" %}

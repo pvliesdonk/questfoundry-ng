@@ -1,0 +1,9 @@
+passage: passage:p-tremor
+priority: 3
+caption: The sea pulls back before dawn, and the lamp gutters blue.
+prompt: >-
+  The shoals bared at low tide, black rock and old wreck-ribs exposed under
+  a bruised dawn sky; the lighthouse lamp flickering blue at its peak; a
+  woman at the gallery rail as the water pulls back around the stilts,
+  a shape the size of weather suggested beneath the surface, never whole.
+entities: [character:keeper, character:sleeper]

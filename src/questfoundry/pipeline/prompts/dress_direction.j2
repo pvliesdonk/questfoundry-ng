@@ -1,0 +1,23 @@
+Establish the art direction for this story's illustrations, then give every entity
+below a canonical visual profile: how it looks, drawn ONLY from what the story has
+already established. Visualize established facts; do not invent new ones (no new
+scars, no new colors, nothing the text hasn't already committed to).
+
+VISION: {{ vision.genre }}{% if vision.subgenre %} ({{ vision.subgenre }}){% endif %},
+{{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+The finished story runs {{ passage_count }} passages.
+
+CAST — exactly one profile per entity, no more, no fewer:
+{% for e in entities %}
+- {{ e.id }} — {{ e.name }} ({{ e.category.value }}): {{ e.concept }}
+{% if e.base %}  established facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}
+{% endif %}
+{% endfor %}
+
+Return: style (the overall illustration approach, one or two sentences), palette (the
+recurring color language), influences (a short list of reference points, may be
+empty), notes (optional), and profiles: one entry per entity above, each
+{"entity": "<id>", "appearance": "...", "iconography": ["...", ...]} — appearance and
+iconography restate established facts in visual terms, they do not add new ones.
+{% include "_shared.j2" %}

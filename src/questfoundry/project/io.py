@@ -18,6 +18,13 @@ from questfoundry.graph.store import FreezeRecord, StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import Vision, Voice
 from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
+from questfoundry.models.enrichment import (
+    ArtDirection,
+    CodexEntry,
+    Enrichment,
+    IllustrationBrief,
+    VisualProfile,
+)
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, IntersectionGroup, StateFlag
 from questfoundry.models.world import Entity
@@ -65,6 +72,10 @@ class Project:
     fill_seed: int = 0
     # Twine IFID, generated on first Twee export and stable thereafter
     ifid: str = ""
+    # Section-shuffle seed, persisted on first print export (qf export pdf)
+    print_seed: int | None = None
+    # DRESS output (art direction, profiles, briefs, codex); empty before DRESS
+    enrichment: Enrichment = field(default_factory=Enrichment)
     # LLM configuration: provider name, role -> model map, mock fixture dir
     llm: dict = field(default_factory=lambda: dict(DEFAULT_LLM_CONFIG))
     # Author steering notes per stage, injected into that stage's prompts
@@ -201,9 +212,48 @@ def load_project(root: FSPath | str) -> Project:
         voice=voice,
         fill_seed=int(meta.get("fill_seed", 0)),
         ifid=meta.get("ifid", ""),
+        print_seed=meta.get("print_seed"),
+        enrichment=_load_enrichment(root),
         llm=meta.get("llm", dict(DEFAULT_LLM_CONFIG)),
         steering=meta.get("steering", {}),
     )
+
+
+def _load_enrichment(root: FSPath) -> Enrichment:
+    """art/direction.yaml (direction + embedded profiles), one YAML per
+    brief under art/briefs/, one markdown file with YAML frontmatter per
+    codex entry under codex/."""
+    direction = None
+    profiles: list[VisualProfile] = []
+    direction_file = root / "art" / "direction.yaml"
+    if direction_file.exists():
+        raw = _read(direction_file)
+        profiles = [VisualProfile.model_validate(p) for p in raw.pop("profiles", [])]
+        direction = ArtDirection.model_validate(raw)
+    briefs = [IllustrationBrief.model_validate(_read(f)) for f in _files(root / "art" / "briefs")]
+    codex = []
+    codex_dir = root / "codex"
+    if codex_dir.is_dir():
+        for f in sorted(codex_dir.glob("*.md")):
+            codex.append(_parse_codex_entry(f))
+    # Canonical order, not filename order, so round-trips are list-stable.
+    briefs.sort(key=lambda b: b.priority)
+    codex.sort(key=lambda c: c.entity)
+    return Enrichment(direction=direction, profiles=profiles, briefs=briefs, codex=codex)
+
+
+def _parse_codex_entry(path: FSPath) -> CodexEntry:
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---\n"):
+        raise ProjectError(f"{path}: codex entries need YAML frontmatter (---)")
+    try:
+        header, body = text[4:].split("\n---\n", 1)
+    except ValueError as exc:
+        raise ProjectError(f"{path}: unterminated codex frontmatter") from exc
+    meta = yaml.safe_load(header)
+    if not isinstance(meta, dict):
+        raise ProjectError(f"{path}: codex frontmatter must be a YAML mapping")
+    return CodexEntry(entity=meta["entity"], title=meta["title"], body=body.strip())
 
 
 def _slug(node_id: str) -> str:
@@ -240,6 +290,8 @@ def save_project(project: Project) -> None:
         meta["fill_seed"] = project.fill_seed
     if project.ifid:
         meta["ifid"] = project.ifid
+    if project.print_seed is not None:
+        meta["print_seed"] = project.print_seed
     if project.llm != DEFAULT_LLM_CONFIG:
         meta["llm"] = project.llm
     if project.steering:
@@ -323,6 +375,29 @@ def save_project(project: Project) -> None:
 
     if g.frozen:
         _write(root / "graph" / "freeze.yaml", g.frozen.model_dump(mode="json"))
+
+    _save_enrichment(root, project.enrichment)
+
+
+def _save_enrichment(root: FSPath, enrichment: Enrichment) -> None:
+    if enrichment.direction is not None:
+        data = enrichment.direction.model_dump(mode="json", exclude_defaults=True)
+        if enrichment.profiles:
+            data["profiles"] = [
+                p.model_dump(mode="json", exclude_defaults=True)
+                for p in sorted(enrichment.profiles, key=lambda p: p.entity)
+            ]
+        _write(root / "art" / "direction.yaml", data)
+    for brief in enrichment.briefs:
+        data = brief.model_dump(mode="json", exclude_defaults=True)
+        _write(root / "art" / "briefs" / f"{_slug(brief.passage)}.yaml", data)
+    for entry in enrichment.codex:
+        path = root / "codex" / f"{_slug(entry.entity)}.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        header = yaml.safe_dump(
+            {"entity": entry.entity, "title": entry.title}, sort_keys=False, allow_unicode=True
+        )
+        path.write_text(f"---\n{header}---\n\n{entry.body.strip()}\n", encoding="utf-8")
 
 
 def scaffold_project(root: FSPath, name: str, scope: str) -> Project:

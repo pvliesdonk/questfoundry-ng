@@ -1,0 +1,37 @@
+Review the codex entries below for spoiler safety. Verdict "pass" or "fail"; on fail,
+list concrete, actionable issues, each one sentence, each naming the rule number it
+violates and quoting the offending text.
+
+REQUIRED (this is correct, in-world register — never fail an entry for having it):
+- a diegetic, encyclopedia voice (these are meant to read like almanac entries, not
+  like prose, and may restate the entity's established facts freely and in any order)
+
+FAIL ONLY for one of these three objective defects:
+1. States, as fact, something listed below as CONDITIONAL for that entity.
+2. Names story machinery: a node id (e.g. "flag:x", "beat:x"), or the words "flag",
+   "beat", "path", or "arc" used mechanically. Ordinary English uses of those words
+   (a "footpath", "her heart beats") are not leakage.
+3. Names an ending title{% if ending_titles %}: {{ ending_titles | join(", ") }}{% else %} (none exist yet — skip){% endif %}.
+
+MATTERS OF DEGREE ARE NOT FAILURES. Register, prose quality, and how much of the base
+facts an entry restates are taste, not a rule. If your sentence needs "risks",
+"potential", "could", or "attempts to", it is not an objective defect — do not list it.
+
+CONDITIONAL MATERIAL BY ENTITY (rule 1):
+{% for e in entities %}
+- {{ e.entity.id }}:
+{% if not e.overlays and not e.consequences %}  (none){% endif %}
+{% for o in e.overlays %}
+  - when {{ o.when | join(" & ") }}: {% for k, v in o.details.items() %}{{ k }}: {{ v }}; {% endfor %}
+{% endfor %}
+{% for c in e.consequences %}
+  - {{ c }}
+{% endfor %}
+{% endfor %}
+
+THE ENTRIES:
+{% for entry in entries %}
+--- {{ entry.entity }}: {{ entry.title }}
+{{ entry.body }}
+{% endfor %}
+Respond {"verdict": "pass"} or {"verdict": "fail", "issues": ["..."]}.

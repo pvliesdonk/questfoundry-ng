@@ -27,6 +27,7 @@ src/questfoundry/
     drama.py         #   Dilemma, Answer, Path, Consequence
     structure.py     #   Beat, StateFlag, IntersectionGroup
     presentation.py  #   Passage, Choice, Variant
+    enrichment.py    #   ArtDirection, VisualProfile, IllustrationBrief, CodexEntry
     proposals/       #   per-stage LLM output schemas
   graph/
     store.py         # StoryGraph: typed node/edge store, load/save
@@ -232,3 +233,4 @@ interface before that.
 | A9 | GROW weaves atomic fork units on a linear spine; realization recomputes the whole ordering edge set | Per-seam edge patching; LLM emits an ordering | Full recompute is idempotent and cannot leave stale SEED seams; the LLM picking an index among engine-enumerated orders keeps invalid topologies unrepresentable (Principle 2) |
 | A10 | FILL's automated review is a post-apply hook on the uniform repair loop | Bespoke write-review-revise orchestration inside FILL | One loop owns retries, restore, and the halt ('structure is wrong, not the words'); review issues re-enter the prompt exactly like validation errors, so ≤2 revision rounds is `max_repairs`, not new machinery |
 | A11 | Id contract stated once in the adapter's JSON instruction; engine canonicalizes only provably unambiguous forms | Per-pass engine tolerances; fuzzy name matching | Fuzzy acceptance is a treadmill against a model distribution and can turn loud repair failures into quiet wrong answers; slug-prefix restoration is parsing, not prediction |
+| A12 | Codewords are suggested at DRESS, not POLISH; enrichment lives on the Project (like Voice), not in the graph | Codeword pass inside POLISH (04's original wording); codex/briefs as graph nodes | "Drawn from the story's diction" needs the diction to exist — there is no voice or prose until after FILL; DRESS reads the finished story. Enrichment describes the story rather than being story structure, so gates see it via an explicit `run_checks(enrichment=…)` parameter — one validation path, no graph pollution |

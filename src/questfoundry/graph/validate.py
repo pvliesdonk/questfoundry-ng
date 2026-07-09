@@ -13,10 +13,12 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 
 from questfoundry.graph import queries
+from questfoundry.graph.mutations import CODEWORD_RE
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
+from questfoundry.models.enrichment import Enrichment
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import (
     Beat,
@@ -47,6 +49,9 @@ class Issue:
 class Context:
     g: StoryGraph
     vision: Vision
+    # DRESS artifacts live on the Project, not the graph; callers at or
+    # past DRESS pass them in so gate G6 sees them (one validation path).
+    enrichment: Enrichment = field(default_factory=Enrichment)
     issues: list[Issue] = field(default_factory=list)
 
     def error(self, check: str, message: str) -> None:
@@ -601,6 +606,126 @@ def check_b5_word_budget(ctx: Context) -> None:
 
 
 # --------------------------------------------------------------------------
+# Gate G6 (DRESS)
+# --------------------------------------------------------------------------
+
+
+def check_g6_art_direction(ctx: Context) -> None:
+    """G6.1: art direction present with non-empty style/palette; every
+    retained entity has exactly one visual profile referencing a known
+    retained entity."""
+    direction = ctx.enrichment.direction
+    if direction is None or not direction.style.strip() or not direction.palette.strip():
+        ctx.error("G6", "art direction is missing, or missing a non-empty style/palette")
+    retained = {e.id for e in ctx.g.nodes_of(Entity) if e.retained}
+    counts: dict[str, int] = {}
+    for p in ctx.enrichment.profiles:
+        if p.entity not in retained:
+            ctx.error("G6", f"visual profile references unknown/non-retained entity {p.entity!r}")
+            continue
+        counts[p.entity] = counts.get(p.entity, 0) + 1
+    for entity_id in sorted(retained):
+        count = counts.get(entity_id, 0)
+        if count == 0:
+            ctx.error("G6", f"retained entity {entity_id} has no visual profile")
+        elif count > 1:
+            ctx.error("G6", f"retained entity {entity_id} has {count} visual profiles, need 1")
+
+
+def check_g6_briefs(ctx: Context) -> None:
+    """G6.2: >=1 brief, each on a real passage, <=1 per passage, priorities
+    dense 1..N, non-empty caption/prompt, and the mechanical half of
+    'briefs reference only established visual facts': cited entities are
+    in the passage and each has a visual profile."""
+    briefs = ctx.enrichment.briefs
+    if not briefs:
+        ctx.error("G6", "no illustration briefs")
+        return
+    passages = {p.id: p for p in ctx.g.nodes_of(Passage)}
+    profiled = {p.entity for p in ctx.enrichment.profiles}
+    by_passage: dict[str, int] = {}
+    priorities = []
+    for b in briefs:
+        by_passage[b.passage] = by_passage.get(b.passage, 0) + 1
+        priorities.append(b.priority)
+        passage = passages.get(b.passage)
+        if passage is None:
+            ctx.error("G6", f"brief references unknown passage {b.passage!r}")
+            continue
+        if not b.caption.strip() or not b.prompt.strip():
+            ctx.error("G6", f"brief for {b.passage} has an empty caption or prompt")
+        stray = set(b.entities) - set(passage.entities)
+        if stray:
+            ctx.error(
+                "G6", f"brief for {b.passage} cites entities {sorted(stray)} not in that passage"
+            )
+        unprofiled = (set(b.entities) & set(passage.entities)) - profiled
+        if unprofiled:
+            ctx.error(
+                "G6",
+                f"brief for {b.passage} cites entities {sorted(unprofiled)} with no visual profile",
+            )
+    for passage_id, count in by_passage.items():
+        if count > 1:
+            ctx.error("G6", f"passage {passage_id} has {count} briefs, at most 1 allowed")
+    if sorted(priorities) != list(range(1, len(briefs) + 1)):
+        ctx.error(
+            "G6", f"brief priorities must be dense 1..{len(briefs)}, got {sorted(priorities)}"
+        )
+
+
+def check_g6_codex(ctx: Context) -> None:
+    """G6.3: >=1 entry, each on a retained entity, <=1 per entity, every
+    dilemma-anchoring retained entity has an entry, titles/bodies non-empty."""
+    codex = ctx.enrichment.codex
+    if not codex:
+        ctx.error("G6", "no codex entries")
+        return
+    retained = {e.id for e in ctx.g.nodes_of(Entity) if e.retained}
+    anchored = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    required = retained & anchored
+    counts: dict[str, int] = {}
+    for entry in codex:
+        counts[entry.entity] = counts.get(entry.entity, 0) + 1
+        if entry.entity not in retained:
+            ctx.error("G6", f"codex entry references unknown/non-retained entity {entry.entity!r}")
+        if not entry.title.strip():
+            ctx.error("G6", f"codex entry for {entry.entity} has an empty title")
+        if not entry.body.strip():
+            ctx.error("G6", f"codex entry for {entry.entity} has an empty body")
+    for entity_id, count in counts.items():
+        if count > 1:
+            ctx.error("G6", f"entity {entity_id} has {count} codex entries, at most 1 allowed")
+    for entity_id in sorted(required - set(counts)):
+        ctx.error("G6", f"dilemma-anchoring entity {entity_id} has no codex entry")
+
+
+def check_g6_codewords(ctx: Context) -> None:
+    """G6.4: every projected flag carries a codeword; codewords match
+    ^[A-Z]{3,12}$ and are pairwise distinct — the mutation enforces this
+    on write, this re-checks files so hand edits face the same wall."""
+    seen: dict[str, str] = {}
+    for flag in ctx.g.nodes_of(StateFlag):
+        if flag.codeword is None:
+            continue
+        if not CODEWORD_RE.match(flag.codeword):
+            ctx.error(
+                "G6",
+                f"flag {flag.id} codeword {flag.codeword!r} does not match {CODEWORD_RE.pattern}",
+            )
+        elif flag.codeword in seen:
+            ctx.error(
+                "G6",
+                f"codeword {flag.codeword!r} used by both {seen[flag.codeword]} and {flag.id}",
+            )
+        else:
+            seen[flag.codeword] = flag.id
+    for flag_id in queries.projected_flags(ctx.g):
+        if ctx.g.node(flag_id).codeword is None:  # type: ignore[union-attr]
+            ctx.error("G6", f"projected flag {flag_id} has no codeword")
+
+
+# --------------------------------------------------------------------------
 # Gate registry
 # --------------------------------------------------------------------------
 
@@ -638,12 +763,24 @@ GATES: dict[Stage, list] = {
         check_g5_prose_presence,
         check_b5_word_budget,
     ],
+    Stage.DRESS: [
+        check_g6_art_direction,
+        check_g6_briefs,
+        check_g6_codex,
+        check_g6_codewords,
+    ],
 }
 
 
-def run_checks(g: StoryGraph, vision: Vision, stage: Stage) -> list[Issue]:
+def run_checks(
+    g: StoryGraph,
+    vision: Vision,
+    stage: Stage,
+    *,
+    enrichment: Enrichment | None = None,
+) -> list[Issue]:
     """Run every gate at or below `stage` and return all issues found."""
-    ctx = Context(g=g, vision=vision)
+    ctx = Context(g=g, vision=vision, enrichment=enrichment or Enrichment())
     for gate_stage, checks in GATES.items():
         if gate_stage.order <= stage.order:
             for check in checks:

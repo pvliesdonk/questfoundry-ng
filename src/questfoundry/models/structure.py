@@ -96,7 +96,9 @@ class FlagSource(StrEnum):
 
 class StateFlag(Node):
     """A boolean world-state marker ("the cartographer knows"), never a
-    player action. ``codeword`` is set only if SHIP projects it to print."""
+    player action. ``codeword`` is the print projection's player-facing
+    word, suggested by DRESS for flags the print export will gate on
+    (mini-ADR A12); stable once set."""
 
     description: str
     source: FlagSource

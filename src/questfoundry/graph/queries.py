@@ -206,6 +206,18 @@ def arc_view(g: StoryGraph, selection: dict[str, str]) -> set[str]:
     return view
 
 
+def projected_flags(g: StoryGraph) -> list[str]:
+    """Flags the print reader must track: every flag some choice gate
+    tests (design doc 04 §4). Hard-dilemma flags never appear in gates —
+    their worlds are disjoint pages — so this selects soft routing flags
+    plus any cosmetic flag a later passage actually tests."""
+    tested: set[str] = set()
+    for e in g.edges:
+        if e.kind == EdgeKind.CHOICE:
+            tested.update(e.payload.get("requires", []))
+    return sorted(tested)
+
+
 # -- passage layer ---------------------------------------------------------
 
 

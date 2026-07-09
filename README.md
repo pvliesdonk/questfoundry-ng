@@ -35,29 +35,32 @@ fix, never discovered mid-prose.
 
 ## Status
 
-🏗️ **M4 — FILL & first exports.** The full creative pipeline runs
-end-to-end: `qf run --to fill` turns a one-paragraph premise into a
-finished, prose-complete branching story — voice locked first, passages
-written reference-arc-first with rich context (entities, overlays,
-shadows, adjacent prose), every draft passing an automated review with
-at most two revision rounds — and `qf export html` ships it as a
-self-contained player you can open in any browser. The runtime JSON is
-canonical and self-validating; Twee export opens the Twine escape
-hatch. Under it sit M3 (passage compilation, `qf play`), M2 (the
-weave), M1 (stage runner, LLM adapter), and the M0 foundation. The
-golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
-carries hand-authored prose and has been played in a real browser,
-start to ending:
+🏗️ **M5 — DRESS, print, and finish (in progress).** All eight stages now
+run: `qf run --to dress` takes a one-paragraph premise through prose to
+art direction, illustration briefs, a spoiler-safe in-world codex, and
+print codewords — and `qf export pdf` compiles a real gamebook: numbered
+sections in seeded anti-spoiler order, "*Write down the codeword
+CONFESSED*" / "*If you have CONFESSED, turn to 5*" play, a codeword log
+page, the codex as an appendix, and an ending index. `qf rerun <stage>
+--keep <pass>` regenerates a stage from its predecessor's checkpoint
+while re-applying kept passes for free. Under it sit M4 (FILL, HTML/
+Twee/JSON exports), M3 (passage compilation, `qf play`), M2 (the weave),
+M1 (stage runner, LLM adapter), and the M0 foundation. Remaining for M5:
+multi-hard weaving (`medium` scope) and a live medium-scope generation.
+The golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
+carries hand-authored enrichment and prints end-to-end:
 
 ```console
 $ uv sync --group dev
 $ uv run qf validate examples/keepers-bargain
 [B3] scope 'micro' targets 15-25 passages, found 7 (advisory)
 
-The Keeper's Bargain @ fill: 0 error(s), 1 warning(s)
+The Keeper's Bargain @ dress: 0 error(s), 1 warning(s)
 all gates pass
-$ uv run qf export html --dir examples/keepers-bargain
-exported examples/keepers-bargain/exports/the-keepers-bargain.html (round-trip check: 0 problems)
+$ uv run qf export pdf --dir examples/keepers-bargain
+numbering: choice edge p-tremor->p-wide-water: sections 2 and 3 are adjacent
+exported examples/keepers-bargain/exports/the-keepers-bargain.typ and …/the-keepers-bargain.pdf
+$ uv run qf export html --dir examples/keepers-bargain    # browser player + codex panel
 $ uv run qf play examples/keepers-bargain     # or play it in the terminal
 $ uv run qf export twee --dir examples/keepers-bargain   # take it to Twine
 ```

@@ -196,3 +196,72 @@ def test_prepare_rerun_of_dream_needs_no_snapshot(tmp_path, monkeypatch):
 
     reloaded = load_project(tmp_path)
     assert reloaded.stage == Stage.NEW
+
+
+def test_cli_rerun_keep_replays_without_fixtures(tmp_path):
+    """End-to-end through the CLI against the recorded keeper fixtures:
+    run DREAM once, then `qf rerun dream --keep envision` — the kept pass
+    consumes no fixture (an LLM call would exhaust the empty fixture dir
+    we swap in) and reproduces the same vision."""
+    import shutil
+    from pathlib import Path
+
+    from typer.testing import CliRunner
+
+    from questfoundry.cli import app
+    from questfoundry.project.io import save_project, scaffold_project
+
+    fixtures = Path(__file__).parent / "fixtures" / "keeper"
+    root = tmp_path / "keeper"
+    project = scaffold_project(root, name="The Keeper's Bargain", scope="micro")
+    project.vision.premise = "A lighthouse keeper discovers the light keeps something asleep."
+    project.llm = {
+        "provider": "mock",
+        "fixtures": "fixtures",
+        "models": {"architect": "m", "writer": "m", "utility": "m"},
+    }
+    save_project(project)
+    shutil.copytree(fixtures, root / "fixtures")
+
+    cli = CliRunner()
+    result = cli.invoke(app, ["run", "dream", "-C", str(root)])
+    assert result.exit_code == 0, result.output
+    vision_before = (root / "vision.yaml").read_text()
+
+    # an empty fixture dir proves the kept pass never reaches the adapter
+    shutil.rmtree(root / "fixtures" / "calls")
+    (root / "fixtures" / "calls").mkdir()
+
+    result = cli.invoke(app, ["rerun", "dream", "-C", str(root), "--keep", "envision"])
+    assert result.exit_code == 0, result.output
+    assert load_project(root).stage == Stage.DREAM
+    assert (root / "vision.yaml").read_text() == vision_before
+
+
+def test_cli_rerun_rejects_unknown_keep(tmp_path):
+    import shutil
+    from pathlib import Path
+
+    from typer.testing import CliRunner
+
+    from questfoundry.cli import app
+    from questfoundry.project.io import save_project, scaffold_project
+
+    fixtures = Path(__file__).parent / "fixtures" / "keeper"
+    root = tmp_path / "keeper"
+    project = scaffold_project(root, name="The Keeper's Bargain", scope="micro")
+    project.vision.premise = "A lighthouse keeper discovers the light keeps something asleep."
+    project.llm = {
+        "provider": "mock",
+        "fixtures": "fixtures",
+        "models": {"architect": "m", "writer": "m", "utility": "m"},
+    }
+    save_project(project)
+    shutil.copytree(fixtures, root / "fixtures")
+
+    cli = CliRunner()
+    assert cli.invoke(app, ["run", "dream", "-C", str(root)]).exit_code == 0
+
+    result = cli.invoke(app, ["rerun", "dream", "-C", str(root), "--keep", "nonesuch"])
+    assert result.exit_code == 2
+    assert "envision" in result.output  # the error names what IS available

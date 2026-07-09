@@ -52,13 +52,6 @@ def run(
     ),
 ) -> None:
     """Run pipeline stage(s) against the project's configured LLM provider."""
-    from questfoundry.llm import (
-        AnthropicProvider,
-        GeminiProvider,
-        LLMAdapter,
-        MockProvider,
-        OpenAIProvider,
-    )
     from questfoundry.models.base import Stage as StageEnum
     from questfoundry.pipeline.runner import RunnerError, run_pipeline
     from questfoundry.pipeline.stages import IMPLS
@@ -68,6 +61,30 @@ def run(
         raise typer.Exit(2)
     project = load_project(directory)
     target = StageEnum(to or stage)
+    adapter = _adapter_for(project)
+    try:
+        notes = {StageEnum(k): v for k, v in project.steering.items()}
+    except ValueError as e:
+        console.print(f"[red]bad stage name in project.yaml steering: {e}[/red]")
+        raise typer.Exit(2) from e
+    try:
+        reports = run_pipeline(project, target, IMPLS, adapter, notes_by_stage=notes)
+    except RunnerError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(1) from e
+    if not _print_reports(reports):
+        raise typer.Exit(1)
+    console.print(f"[green]project is now at stage {project.stage.value}[/green]")
+
+
+def _adapter_for(project):
+    from questfoundry.llm import (
+        AnthropicProvider,
+        GeminiProvider,
+        LLMAdapter,
+        MockProvider,
+        OpenAIProvider,
+    )
 
     provider_name = project.llm.get("provider", "anthropic")
     if provider_name == "mock":
@@ -94,23 +111,17 @@ def run(
             "use 'anthropic', 'openai', 'gemini', or 'mock'[/red]"
         )
         raise typer.Exit(2)
-    adapter = LLMAdapter(
+    return LLMAdapter(
         provider,
         project.llm.get("models", {}),
         cache_dir=cache_dir,
         ledger_path=project.root / "reports" / "ledger.jsonl",
     )
-    try:
-        notes = {StageEnum(k): v for k, v in project.steering.items()}
-    except ValueError as e:
-        console.print(f"[red]bad stage name in project.yaml steering: {e}[/red]")
-        raise typer.Exit(2) from e
-    try:
-        reports = run_pipeline(project, target, IMPLS, adapter, notes_by_stage=notes)
-    except RunnerError as e:
-        console.print(f"[red]{e}[/red]")
-        raise typer.Exit(1) from e
-    failed = False
+
+
+def _print_reports(reports) -> bool:
+    """Render stage reports; returns True when every stage succeeded."""
+    ok = True
     for report in reports:
         status = "[green]ok[/green]" if report.success else "[red]FAILED[/red]"
         console.print(f"{report.stage.value}: {status}")
@@ -122,8 +133,70 @@ def run(
             console.print(f"  [{color}]{issue}[/{color}]")
         if report.error:
             console.print(f"  [red]{report.error}[/red]")
-        failed = failed or not report.success
-    if failed:
+        ok = ok and report.success
+    return ok
+
+
+@app.command()
+def rerun(
+    stage: str = typer.Argument(..., help="Stage to run again from its predecessor's checkpoint"),
+    directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
+    keep: list[str] = typer.Option(
+        [],
+        "--keep",
+        help="Pass name whose accepted proposal is re-applied without an LLM call"
+        " (repeatable; names as shown in the stage report, e.g. 'triage', 'write:the-lamp')",
+    ),
+) -> None:
+    """Partial regeneration (design doc 02 §3): rewind to the stage's
+    predecessor checkpoint, then run the stage again — regenerating
+    everything except the passes named with --keep. Downstream stages
+    are rewound with it and need re-running."""
+    from questfoundry.models.base import Stage as StageEnum
+    from questfoundry.pipeline.runner import (
+        RunnerError,
+        prepare_rerun,
+        recorded_proposals,
+        run_stage,
+    )
+    from questfoundry.pipeline.stages import IMPLS
+
+    target = StageEnum(stage)
+    project = load_project(directory)
+    if project.stage.order < target.order:
+        console.print(
+            f"[red]stage {target.value!r} has not been run yet "
+            f"(project is at {project.stage.value!r}) — use qf run[/red]"
+        )
+        raise typer.Exit(2)
+    impl = IMPLS.get(target)
+    if impl is None:
+        console.print(f"[red]no implementation registered for stage {target.value!r}[/red]")
+        raise typer.Exit(2)
+
+    recorded = recorded_proposals(project.root, target)
+    missing = [name for name in keep if name not in recorded]
+    if missing:
+        console.print(
+            f"[red]no recorded proposal for {missing}; available: {sorted(recorded)}[/red]"
+        )
+        raise typer.Exit(2)
+
+    try:
+        prepare_rerun(project.root, target)
+    except RunnerError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(1) from e
+    project = load_project(directory)  # reload: the files just rewound
+    adapter = _adapter_for(project)
+    report = run_stage(
+        project,
+        impl,
+        adapter,
+        notes=project.steering.get(target.value, ""),
+        keep={name: recorded[name] for name in keep},
+    )
+    if not _print_reports([report]):
         raise typer.Exit(1)
     console.print(f"[green]project is now at stage {project.stage.value}[/green]")
 
@@ -151,9 +224,12 @@ def validate(directory: FSPath = typer.Argument(FSPath("."))) -> None:
 
 @app.command()
 def export(
-    fmt: str = typer.Argument(..., help="'json', 'html', or 'twee' ('pdf' arrives with M5)"),
+    fmt: str = typer.Argument(..., help="'json', 'html', 'twee', or 'pdf'"),
     directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
     out: FSPath | None = typer.Option(None, "--out", help="Output file (default: exports/)"),
+    seed: int | None = typer.Option(
+        None, "--seed", help="Section-numbering seed for 'pdf' (default: project.print_seed or 1)"
+    ),
 ) -> None:
     """Export the story (design doc 04). The runtime JSON is canonical;
     HTML and Twee are derived from it."""
@@ -191,10 +267,46 @@ def export(
         content = build_twee(project, project.ifid)
         suffix = "twee"
     elif fmt == "pdf":
-        console.print("[red]the print gamebook pipeline arrives with M5[/red]")
-        raise typer.Exit(2)
+        from questfoundry.export.gamebook import build_gamebook, compile_pdf, lint_gamebook
+
+        print_seed = seed if seed is not None else (
+            project.print_seed if project.print_seed is not None else 1
+        )
+        if project.print_seed is None:
+            # persist just the seed — an export must not rewrite the project
+            project.print_seed = print_seed
+            meta_path = project.root / "project.yaml"
+            import yaml as yamllib
+
+            meta = yamllib.safe_load(meta_path.read_text())
+            meta["print_seed"] = print_seed
+            meta_path.write_text(yamllib.safe_dump(meta, sort_keys=False, allow_unicode=True))
+
+        images_dir = project.root / "art" / "images"
+        book = build_gamebook(
+            build_runtime(project),
+            seed=print_seed,
+            images_dir=images_dir if images_dir.is_dir() else None,
+        )
+        lint_errors = lint_gamebook(book)
+        if lint_errors:
+            for problem in lint_errors:
+                console.print(f"[red]{problem}[/red]")
+            console.print("[red]export blocked: print gamebook lint failed[/red]")
+            raise typer.Exit(1)
+        for warning in book.warnings:
+            console.print(f"[yellow]{warning}[/yellow]")
+
+        slug = project.name.lower().replace(" ", "-").replace("'", "")
+        typ_target = out or (project.root / "exports" / f"{slug}.typ")
+        pdf_target = typ_target.with_suffix(".pdf")
+        typ_target.parent.mkdir(parents=True, exist_ok=True)
+        typ_target.write_text(book.typst, encoding="utf-8")
+        pdf_target.write_bytes(compile_pdf(book.typst, root=project.root))
+        console.print(f"[green]exported[/green] {typ_target} and {pdf_target}")
+        return
     else:
-        console.print(f"[red]unknown format {fmt!r}; use json, html, or twee[/red]")
+        console.print(f"[red]unknown format {fmt!r}; use json, html, twee, or pdf[/red]")
         raise typer.Exit(2)
 
     slug = project.name.lower().replace(" ", "-").replace("'", "")

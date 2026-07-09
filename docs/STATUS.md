@@ -5,9 +5,62 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-08 · M4 (FILL & first exports)
+> Last updated: 2026-07-09 · M5 (DRESS, print, finish) — in progress
 
 ## Where we are
+
+**M5 is in progress — the DRESS/print/rerun slice is built** (PR #20).
+All eight stages run, the story prints as a real gamebook, and stages
+can be partially regenerated. What remains for the M5 exit criterion is
+the multi-hard weave expansion and a live `medium`-scope run (see Next
+up):
+
+- DRESS (`pipeline/stages/dress.py`), four passes sharing gate G6:
+  *direction* (art direction + one visual profile per retained entity;
+  `skip_if` keeps an author-approved direction on reruns), *briefs*
+  (prioritized illustration briefs, `max(3, min(20, passages//5))`, the
+  engine checks every cited entity is in the passage and profiled),
+  *codex* (one diegetic entry per dilemma-anchoring entity, spoiler
+  safety enforced by a paired utility review whose contract follows the
+  review-legibility lessons: numbered FAIL rules, quote the offending
+  text, hedged findings excluded), *codewords* (one memorable word per
+  gate-tested flag — suggested at DRESS, not POLISH, because "drawn from
+  the story's diction" needs voice and prose to exist; mini-ADR A12).
+  Enrichment lives on the Project like the Voice (`art/direction.yaml`,
+  `art/briefs/`, `codex/*.md`), never in the graph; gates see it via
+  `run_checks(enrichment=…)` — one validation path. Codewords are graph
+  data on flags via `mutations.set_flag_codeword` (stable once set).
+- Print gamebook (`export/gamebook.py`, `qf export pdf`): consumes the
+  canonical runtime JSON only; codeword projection (= gate-tested
+  flags; slug-derived fallback + warning for pre-DRESS projects),
+  grant lines hoisted to a section iff every arriving choice grants the
+  flag, variant lowering ("if you have X, turn to N; otherwise …"),
+  seeded numbering under anti-spoiler constraints (start=1, linked and
+  variant and ending sections non-adjacent; best-effort + warnings when
+  unsatisfiable — the 7-passage golden provably cannot satisfy all
+  three families, verified by brute force), Typst layout (title,
+  how-to-play, codeword log, sections, codex appendix, titles-only
+  ending index) compiled to PDF in-process via typst-py (CI-hermetic),
+  and a paper-specific lint (turn-to resolution, codeword granted
+  before every test, no orphaned or dead section) that blocks export.
+  `print_seed` persists in project.yaml on first export, like the IFID.
+- `qf rerun <stage> [--keep <pass>]` (design doc 02 §3): checkpoints now
+  persist each pass's accepted proposal; rerun rewinds stage artifacts
+  (graph, prose, art, codex, voice) to the predecessor checkpoint while
+  preserving the author's knobs (steering, vision edits — editing those
+  is *why* you rerun), then re-runs the stage with kept passes
+  re-applied without an LLM call; stale keeps fail loud. The runner's
+  failed-apply restore now covers enrichment too (and the PR review
+  caught that kept passes must restore on failure like live ones).
+- HTML player gained the codex panel (design doc 04 §2); runtime JSON
+  now ships codex + art (art entries only for briefs whose
+  `art/images/<slug>.png` actually exists) and validates them in the
+  round-trip check.
+- The golden story is at stage `dress` with hand-authored enrichment
+  (direction + 4 profiles, 3 briefs, 4 spoiler-safe codex entries,
+  `CONFESSED` on the one gate-tested flag) and exports a complete
+  14-page PDF; e2e now runs `--to dress` offline (36 ledger calls, one
+  staged codex-review-fail/revise round). 201 tests total.
 
 **M4 is complete.** FILL writes the prose and the story ships to its
 first playable formats — `qf run --to fill` then `qf export html` puts
@@ -170,19 +223,28 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M2 — GROW** (the risk milestone: interleaving, intersections, freeze) (PR #9)
 - [x] **M3 — POLISH & structural play** (`qf play` on beat summaries) (PR #10)
 - [x] **M4 — FILL & first exports** (JSON, HTML player, Twee)
-- [ ] **M5 — DRESS, print gamebook, scope hardening**
+- [ ] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
+  `qf export pdf`, and `qf rerun --keep` are built (PR #20); multi-hard
+  weaving and the `medium`-scope live run remain
 
-## Next up — M5 scope (from `docs/design/05-roadmap.md`)
+## Next up — finishing M5
 
-DRESS (art direction, briefs, optional images, codex; gate G6), the
-print gamebook PDF pipeline (codeword projection, residue-variant
-lowering, seeded numbering/shuffling, Typst layout, lint), `qf rerun
---keep` partial regeneration, and `short`/`medium` scope hardening —
-which needs the multi-hard weave expansion (tensor model, see open
-items) and a live-provider recording session for real fixtures.
+The first half of the exit criterion — **a printable PDF gamebook with
+working codeword play** — is met (the golden story prints end-to-end).
+Remaining, in order:
 
-**Exit criterion:** a printable PDF gamebook with working codeword
-play, plus a `medium`-scope story generated end-to-end within budget.
+1. **Multi-hard weave expansion** (frontier-tier; the tensor model, see
+   the open item below): GROW instantiates the inner Y per world, I3
+   refines to one commit per world, `queries.commit_beat`/`grant_beat`/
+   `FreezeRecord.forks` generalize, POLISH gains per-world variant
+   support at fork-rejoin frontiers. This unblocks `medium` scope.
+2. **A live `medium`-scope generation within budget** — the second half
+   of the exit criterion; also calibrates the B3/B4 preset ranges and
+   the weave's 64-candidate spread heuristic at real unit counts.
+3. Optional polish: an image backend behind the briefs (design doc 02
+   lists illustrations as optional; briefs + the PDF/HTML plumbing are
+   in place — `art/images/<passage-slug>.png` is picked up when
+   present).
 
 ## Known deferrals / open items
 
@@ -261,9 +323,17 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   (design doc 01 §10), add it when a FILL quality gap at `short`+
   scope demonstrably calls for it, and update doc 02 if it never earns
   its keep.
-- **The HTML player has no codex panel yet** (design doc 04 §2 lists
-  one) — there is no codex before DRESS (M5). Add the panel when codex
+- ~~The HTML player has no codex panel yet~~ **Built** with DRESS
+  (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
+- **Image generation is unbuilt** (deliberately — design doc 02 lists
+  illustrations as optional). Briefs, the runtime `art` entries, the
+  HTML embedding path, and the PDF illustration slots all exist and key
+  off `art/images/<passage-slug>.png`; a pluggable backend that renders
+  briefs into those files is future work.
+- **Derived fallback codewords may contain digits** (slugs allow them;
+  `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
+  worst — a print warning already tells authors to run DRESS.
 - **Twee prose mapping is bounded and unlinted** — the lint step that
   flags constructs that don't survive SugarCube conversion arrives with
   SHIP (design doc 04 §3).
@@ -295,6 +365,35 @@ play, plus a `medium`-scope story generated end-to-end within budget.
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-09 (M5 slice: DRESS, print, rerun — PR #20):** Codeword
+  *suggestion* moved from POLISH (design doc 04's original wording) to
+  DRESS pass 4 — "drawn from the story's diction" needs the voice and
+  prose to exist, and neither does until after FILL; *projection*
+  (which flags become codewords) stays a SHIP-side deterministic rule:
+  exactly the gate-tested flags (mini-ADR A12; docs 02/04 updated).
+  Enrichment (direction, profiles, briefs, codex) lives on the Project
+  like the Voice, not in the graph — DRESS describes the story rather
+  than being story structure — and gates see it via an explicit
+  `run_checks(enrichment=…)` parameter, keeping the one-validation-path
+  property. The runner's failed-apply restore set widened to include
+  enrichment (apply functions may now mutate it), and the automated PR
+  review caught that kept-proposal replay (`rerun --keep`) needed the
+  same restore — the fix carries a partial-mutation regression test.
+  Rerun semantics: rewind restores what the stage and its successors
+  *produced* (graph, prose, art, codex, voice) and preserves what the
+  author *steers with* (steering, vision.yaml, seeds) — editing those
+  is the reason to rerun. Print facts worth remembering: typst-py
+  compiles fully offline with embedded fonts but refuses input files
+  outside its project root (the temp `.typ` is created inside the
+  project); the 7-passage golden story provably cannot satisfy all
+  three numbering-constraint families at once (brute-forced — minimum
+  one violation), so the best-effort-plus-warning path is its expected,
+  tested behavior, and the README transcript shows the warning. Built
+  per the tiering policy: two mid-tier subagents implemented DRESS and
+  the gamebook against written contracts; this session owned the
+  contracts, the spine (enrichment models/IO/gate plumbing,
+  `projected_flags`, rerun machinery), integration, and review.
 
 - **2026-07-08 (crash-resume replay made exact):** The leak recorded
   after live run 4 is fixed at its root: `fill.py::_neighbor_prose`

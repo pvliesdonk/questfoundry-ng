@@ -99,7 +99,10 @@ class LLMAdapter:
         *,
         cache_dir: Path | None = None,
         ledger_path: Path | None = None,
-        max_tokens: int = 8192,
+        # Reasoning models (Anthropic adaptive thinking, gpt-5 family) spend
+        # thinking tokens from this same budget before any text; 8192 starved
+        # claude-sonnet-5 into empty responses. Unused budget costs nothing.
+        max_tokens: int = 32768,
     ) -> None:
         self._provider = provider
         self._model_map = model_map

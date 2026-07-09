@@ -454,6 +454,25 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-09 (Sonnet 5 evaluation, in flight):** Question under test:
+  can `claude-sonnet-5` ($3/$15 per MTok, $2/$10 intro through
+  2026-08-31) replace `claude-opus-4-8` ($5/$25) as architect/writer in
+  the default model map? Method: the same Bubblegum Alibi premise +
+  dream steering, fresh project (`medium`, recalibrated presets), full
+  DREAM→DRESS run on an all-Sonnet map, judged against the preserved
+  Opus run on cost, repair rounds, gate cleanliness, and prose. Two
+  adapter findings before GROW even started, both fixed here: (1)
+  Sonnet 5 runs *adaptive thinking by default* and thinking tokens
+  bill/count against `max_tokens` — the 8192 default starved a writer
+  call into an empty response after ~7.5k-token thinks on architect
+  calls (Opus never exceeded ~3k output). Adapter default is now 32768;
+  unused budget costs nothing. (2) The Anthropic SDK rejects
+  non-streaming requests whose `max_tokens` implies a >10-minute worst
+  case — the provider now streams and collects the final message, same
+  contract otherwise. Verdict pending the run; note that Sonnet's
+  billed thinking erodes its sticker-price advantage, so the ledger
+  comparison is the decider.
+
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them
   protagonist by design) validating the calibration batch. Results:

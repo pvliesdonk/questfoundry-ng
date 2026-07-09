@@ -501,6 +501,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
   strings (unambiguous intent in a prose payload); structural errors
   still raise and retry.
 
+  **Final verdict (author's call, run aborted in FILL): keep
+  `claude-opus-4-8` as the default architect/writer.** Thinking-on
+  Sonnet is strictly worse here: 2–3× the cost (billed thinking
+  dominates: 107k output tokens in 12 calls vs 74k for Opus's whole
+  63-call run) and slower. Thinking-off Sonnet is genuinely cheap
+  ($0.65 through POLISH; a full run would land ~$1–1.5 intro vs Opus
+  $3.24) but needed three engine interventions in one partial run —
+  a scaffold-contract violation Opus never made, repeated
+  JSON-discipline failures, plus the shared adaptive-thinking/
+  streaming adapter fixes — and still never produced a passage to
+  judge. The failure profile fits the model-economics table's
+  prediction for sub-frontier tiers on narrative/DAG semantics; the
+  three hardening fixes (SEED apply-time scaffold rules, max_tokens
+  headroom + streaming, lenient string parse) are the evaluation's
+  lasting value and stay regardless of model choice. Total tuition:
+  ~$1.83. Evaluation projects left at `/home/user/stories/
+  bubblegum-sonnet{,-nothink}` (session-local, not committed).
+
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them
   protagonist by design) validating the calibration batch. Results:

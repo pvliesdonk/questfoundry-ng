@@ -1,0 +1,12 @@
+id: beat:window-cleared
+summary: With Tavi's early blackout nailed down, the muddled window closes and the reconstruction
+  of the murder finally holds firm.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: advances
+entities:
+- location:gym
+- character:juno-park
+belongs_to:
+- path:expose-tavi

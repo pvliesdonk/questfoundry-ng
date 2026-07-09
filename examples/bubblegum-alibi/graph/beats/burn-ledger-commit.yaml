@@ -1,0 +1,12 @@
+id: beat:burn-ledger-commit
+summary: Juno holds the ledger to the flame and lets it burn in the utility sink, every classmate's
+  secret curling into ash as her sharpest tool dies with them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: commits
+entities:
+- object:yearbook-ledger
+- character:juno-park
+belongs_to:
+- path:burn-ledger

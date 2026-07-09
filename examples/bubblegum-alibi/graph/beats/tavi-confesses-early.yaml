@@ -1,0 +1,14 @@
+id: beat:tavi-confesses-early
+summary: Alone, Tavi admits to Juno she killed the lights early to hide a yearbook stunt gone
+  wrong — and begs Juno not to say so, because the muddled minutes are the only thing keeping
+  the crowd off her back.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: reveals
+entities:
+- character:tavi-okonkwo
+- character:juno-park
+belongs_to:
+- path:cover-tavi
+- path:expose-tavi

@@ -1,0 +1,12 @@
+id: beat:tavi-goes-cold
+summary: Painted as complicit before the whole room, Tavi turns her back on Juno and goes
+  silent — Juno's only ally in the gym now an enemy.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: complicates
+entities:
+- character:tavi-okonkwo
+- character:juno-park
+belongs_to:
+- path:expose-tavi

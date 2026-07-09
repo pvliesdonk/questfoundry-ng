@@ -1,0 +1,12 @@
+id: beat:spare-mona-commit
+summary: Juno swallows the leverage and promises to bury the demotion, sparing the grieving
+  girl and letting her testimony slip away into silence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: commits
+entities:
+- character:juno-park
+- character:mona-vale
+belongs_to:
+- path:spare-mona

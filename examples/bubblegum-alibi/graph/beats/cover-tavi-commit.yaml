@@ -1,0 +1,12 @@
+id: beat:cover-tavi-commit
+summary: When the group demands the blackout timeline, Juno backs Tavi's false cue to the
+  room, sealing the lie with a co-conspirator's steady voice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: commits
+entities:
+- character:juno-park
+- character:tavi-okonkwo
+belongs_to:
+- path:cover-tavi

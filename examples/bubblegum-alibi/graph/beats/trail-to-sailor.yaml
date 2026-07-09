@@ -1,0 +1,15 @@
+id: beat:trail-to-sailor
+summary: 'As dawn grays the high windows, the evidence converges: Sailor''s fingerprints near
+  the body, the knot only a few could tie, a scholarship that rode on tonight — every thread
+  leads to the girl Juno loves most.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: reveals
+entities:
+- character:sailor-quinn
+- object:victory-sash
+- character:juno-park
+belongs_to:
+- path:name-the-truth
+- path:shield-the-loved

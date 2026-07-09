@@ -1,0 +1,15 @@
+id: beat:motive-map-open
+summary: With the ledger intact, the full map of every motive lies open on the table, and
+  the killer's name can be proven beyond bending.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: reveals
+entities:
+- object:yearbook-ledger
+- character:juno-park
+temporal_hints:
+- dilemma: dilemma:name-the-killer
+  position: before_commit
+belongs_to:
+- path:keep-ledger

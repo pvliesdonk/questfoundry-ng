@@ -1,0 +1,10 @@
+id: path:shield-the-loved
+name: A Sacrifice in Someone Else's Name
+explores: answer:shield-the-loved
+consequences:
+- id: consequence:innocent-framed
+  text: The bent evidence lands on an innocent classmate, who is escorted out at dawn while
+    the real killer walks free beside Juno.
+- id: consequence:juno-complicit-forever
+  text: Sailor stays free but Juno now carries a second secret heavier than the ledger, bound
+    to a lie she can never take back.

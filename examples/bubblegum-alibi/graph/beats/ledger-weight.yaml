@@ -1,0 +1,13 @@
+id: beat:ledger-weight
+summary: Alone in the equipment closet, Juno pulls out the hidden ledger — the one document
+  that maps every motive in the room, its pages heavy with everyone's buried ruin.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: advances
+entities:
+- object:yearbook-ledger
+- character:juno-park
+belongs_to:
+- path:burn-ledger
+- path:keep-ledger

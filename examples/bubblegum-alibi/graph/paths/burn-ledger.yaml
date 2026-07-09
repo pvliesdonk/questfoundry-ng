@@ -1,0 +1,10 @@
+id: path:burn-ledger
+name: Ash Before Dawn
+explores: answer:burn-ledger
+consequences:
+- id: consequence:secrets-sealed
+  text: Every classmate's buried ruin dies in the flames, their belonging preserved but the
+    room's motives now unprovable.
+- id: consequence:investigation-blinded
+  text: Without the ledger, the reconstruction of the night rests on memory and accusation,
+    and the truth becomes a matter of who is believed.

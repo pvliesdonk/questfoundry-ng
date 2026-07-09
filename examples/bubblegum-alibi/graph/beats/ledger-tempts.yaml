@@ -1,0 +1,17 @@
+id: beat:ledger-tempts
+summary: Priya spots the notebook and demands it as fair evidence; Juno's thumb hovers over
+  a lighter, torn between the truth it can prove and the dozens of lives it will detonate.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: complicates
+entities:
+- object:yearbook-ledger
+- character:priya-desai
+- character:juno-park
+temporal_hints:
+- dilemma: dilemma:name-the-killer
+  position: before_commit
+belongs_to:
+- path:burn-ledger
+- path:keep-ledger

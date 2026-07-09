@@ -1,0 +1,13 @@
+id: beat:tavi-lies
+summary: Cornered at the DJ booth, Tavi swears she cut the lights on the finale beat like
+  always, but her too-quick smile and shaking hands tell Juno the timestamp is a lie.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: complicates
+entities:
+- character:tavi-okonkwo
+- character:juno-park
+belongs_to:
+- path:cover-tavi
+- path:expose-tavi

@@ -1,0 +1,13 @@
+id: beat:knot-witness-lost
+summary: The one person who knew the sash's knot intimately keeps her silence, and whatever
+  she saw near the body is lost to Juno's reconstruction.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: complicates
+entities:
+- character:mona-vale
+- object:victory-sash
+- character:juno-park
+belongs_to:
+- path:spare-mona

@@ -1,0 +1,12 @@
+id: beat:tavi-loyal
+summary: Tavi grips Juno's hand in the dark, their yearbook conspiracy intact and their trust
+  welded tighter by the shared lie.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: advances
+entities:
+- character:tavi-okonkwo
+- character:juno-park
+belongs_to:
+- path:cover-tavi

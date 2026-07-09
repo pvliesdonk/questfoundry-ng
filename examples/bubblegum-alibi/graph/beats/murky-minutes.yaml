@@ -1,0 +1,12 @@
+id: beat:murky-minutes
+summary: The true timing of the blackout stays fogged, and Juno watches every suspect pry
+  at the gap, ready to shove blame into the dark.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: complicates
+entities:
+- location:gym
+- character:juno-park
+belongs_to:
+- path:cover-tavi

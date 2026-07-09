@@ -1,0 +1,13 @@
+id: beat:innocent-taken
+summary: The bent evidence lands; the innocent classmate is escorted out at dawn while the
+  real killer walks free beside Juno through the unchained doors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:name-the-killer
+  effect: advances
+entities:
+- character:juno-park
+- character:sailor-quinn
+- location:gym
+belongs_to:
+- path:shield-the-loved

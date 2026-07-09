@@ -1,0 +1,12 @@
+id: beat:mona-thrown-to-crowd
+summary: But the demotion is out now, and the room turns on the fragile girl, making Mona
+  the favored suspect a desperate crowd wants to blame.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: complicates
+entities:
+- character:mona-vale
+- location:gym
+belongs_to:
+- path:press-mona

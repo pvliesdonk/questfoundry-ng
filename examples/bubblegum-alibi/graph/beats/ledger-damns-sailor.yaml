@@ -1,0 +1,15 @@
+id: beat:ledger-damns-sailor
+summary: Flipping to Sailor's page, Juno finds the entry that ties the crush she loves to
+  a secret debt and a reason to want Marilee silenced — the ledger proves the truth and it
+  points at Sailor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: reveals
+entities:
+- object:yearbook-ledger
+- character:sailor-quinn
+- character:juno-park
+belongs_to:
+- path:burn-ledger
+- path:keep-ledger

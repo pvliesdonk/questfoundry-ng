@@ -1,0 +1,20 @@
+id: dilemma:cover-the-blackout
+question: When Juno learns Tavi cut the lights early and lied about it, does she expose Tavi's
+  role in the blackout to the group or cover for her co-conspirator?
+why_it_matters: Outing Tavi clears the timeline fast but shatters Juno's only ally and paints
+  a friend as complicit; covering keeps the alliance intact but leaves a hole in the reconstruction
+  that any suspect can exploit.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:expose-tavi
+  text: Juno reveals Tavi killed the lights early, breaking their trust to fix the timeline.
+- id: answer:cover-tavi
+  text: Juno covers for Tavi, keeping her ally but muddying the crucial minutes.
+anchored_to:
+- character:tavi-okonkwo
+- character:juno-park
+- location:gym
+concurrent:
+- dilemma:mona-mercy

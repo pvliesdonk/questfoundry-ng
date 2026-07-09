@@ -1,0 +1,13 @@
+id: beat:expose-tavi-commit
+summary: 'In front of the group, Juno names the truth: Tavi killed the lights early, and the
+  crucial minutes snap into a fixed timeline.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:cover-the-blackout
+  effect: commits
+entities:
+- character:juno-park
+- character:tavi-okonkwo
+- location:gym
+belongs_to:
+- path:expose-tavi

@@ -1,0 +1,10 @@
+id: path:cover-tavi
+name: Loyalty in the Dark
+explores: answer:cover-tavi
+consequences:
+- id: consequence:alliance-holds
+  text: Tavi stays at Juno's side, their yearbook conspiracy intact and their trust deepened
+    by the covered lie.
+- id: consequence:timeline-hole
+  text: The blackout's true timing remains murky, leaving a gap any suspect can pry open to
+    shift the blame.

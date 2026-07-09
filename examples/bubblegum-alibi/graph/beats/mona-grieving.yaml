@@ -1,0 +1,14 @@
+id: beat:mona-grieving
+summary: Juno finds Mona sobbing behind the drinks table, ruined mascara and a demotion from
+  Marilee's inner circle just hours old — a fresh, damning motive nobody else has clocked
+  yet.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: reveals
+entities:
+- character:mona-vale
+- character:juno-park
+belongs_to:
+- path:press-mona
+- path:spare-mona

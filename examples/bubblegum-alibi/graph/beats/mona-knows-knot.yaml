@@ -1,0 +1,13 @@
+id: beat:mona-knows-knot
+summary: Juno realizes Mona tied the sash's signature knot in a hundred rehearsals and was
+  near the body during the blackout — she saw something, and she's terrified.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:mona-mercy
+  effect: complicates
+entities:
+- character:mona-vale
+- object:victory-sash
+belongs_to:
+- path:press-mona
+- path:spare-mona

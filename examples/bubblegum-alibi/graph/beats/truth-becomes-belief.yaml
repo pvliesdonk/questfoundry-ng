@@ -1,0 +1,15 @@
+id: beat:truth-becomes-belief
+summary: Without the ledger, the reconstruction rests on memory and accusation alone, and
+  the truth curdles into a question of who the frightened crowd will believe.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-ledger
+  effect: complicates
+entities:
+- location:gym
+- character:juno-park
+temporal_hints:
+- dilemma: dilemma:name-the-killer
+  position: before_commit
+belongs_to:
+- path:burn-ledger

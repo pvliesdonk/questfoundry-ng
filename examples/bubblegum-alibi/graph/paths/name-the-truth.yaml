@@ -1,0 +1,10 @@
+id: path:name-the-truth
+name: The Unforgivable Name
+explores: answer:name-the-truth
+consequences:
+- id: consequence:sailor-taken-at-dawn
+  text: When the doors open, the principal leads Sailor away in front of everyone, the scholarship
+    void and the crush answered only with handcuffs.
+- id: consequence:juno-trusted-broken
+  text: The school remembers Juno as the girl who told the truth, admired and utterly alone,
+    her own heart the last casualty of the night.

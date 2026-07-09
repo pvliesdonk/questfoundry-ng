@@ -1,0 +1,10 @@
+id: path:keep-ledger
+name: The Book That Damns
+explores: answer:keep-ledger
+consequences:
+- id: consequence:mass-exposure
+  text: The ledger becomes public evidence, every secret it holds spilling into the room and
+    turning Juno into the exposer she swore never to be.
+- id: consequence:truth-provable
+  text: With the ledger intact, the map of every motive lies open, and the killer's name can
+    be proven beyond bending.

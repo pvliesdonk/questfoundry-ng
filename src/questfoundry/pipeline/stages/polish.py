@@ -30,7 +30,7 @@ from questfoundry.models.base import Stage
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
 from questfoundry.pipeline import passages as pc
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 # -- pass 1: finalize ---------------------------------------------------------
@@ -150,7 +150,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 summary=spec.summary,
                 beat_class=BeatClass.STRUCTURAL,
                 purpose=StructuralPurpose.RESIDUE,
-                entities=spec.entities,
+                entities=[resolve_entity_ref(g, e) for e in spec.entities],
                 requires_flags=[flag],
             )
         except ValidationError as e:
@@ -183,7 +183,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                         summary=b.summary,
                         beat_class=BeatClass.STRUCTURAL,
                         purpose=StructuralPurpose.FALSE_BRANCH,
-                        entities=b.entities,
+                        entities=[resolve_entity_ref(g, e) for e in b.entities],
                     )
                     for b in ([arm] if arm.followup is None else [arm, arm.followup])
                 ]

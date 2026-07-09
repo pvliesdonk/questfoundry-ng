@@ -454,6 +454,42 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-09 (live run 6, validation micro — "The Cartography of
+  Small Kindnesses", PR #24):** Fresh micro premise (they/them
+  protagonist by design) validating the calibration batch. Results:
+  framing prompts held (4 entities, all anchored, zero G1 warnings —
+  the medium run had three), pronouns held (Wren consistently
+  they/them through every passage and micro-detail; the field renders
+  as "PRONOUNS: they/them, exactly"), cadence diamonds engaged hard
+  (22 passages at micro vs 7–17 in every earlier run), and B6 measured
+  ~1072 words/choice even so — the diamonds each add prose along with
+  their choice, so the marginal rate improves slowly; closing the feel
+  gap needs the locked-dilemmas effort, exactly as planned. Four
+  findings, all fixed in-flight: (1) *review rule 1 misread POV* — a
+  scene opening on another character's actions was failed as "third
+  person"; rule 1 now defines a departure (narrator in the wrong
+  person, or narration beyond their perception) and names the
+  non-cases. (2) *the amnesiac reviewer never converges* — after the
+  writer fixed round 1's genuine defect, round 2 failed on brand-new
+  taste; review rounds now carry prior rounds' issues into the prompt
+  (persistence is signal, novelty is usually taste). (3) *the halt
+  verdict needed an arbiter* — prompt fences hit the cheap reviewer's
+  ceiling (somatic rendering flagged as "naming emotion"; a rule-4
+  complaint about a state that is no listed flag), and every stage
+  halt across every run has been reviewer noise: a second failure now
+  escalates once to an architect-tier arbitration whose strict verdict
+  is final (design doc 02 FILL; tiering policy: escalate rather than
+  improvise). (4) *the id contract had a hole at beat applies* — a
+  diamond arm carrying entity display names ('Wren') sailed through
+  every gate until DRESS's brief check collided with it; a shared
+  `resolve_entity_ref` (types.py) now guards every apply that stores
+  entity refs on a beat (SEED scaffold, GROW bridge, POLISH residue
+  and arms) — FILL's micro-detail resolver generalized, per mini-ADR
+  A11. Meta-lesson for the record: the reviewer-contract failure
+  class (live runs 1, 3, and now 6) kept yielding to wording fixes
+  one instance at a time; the arbitration mechanism ends the class by
+  making the expensive judgment structural instead of textual.
+
 - **2026-07-09 (scope recalibration: the passage numbers were beats):**
   The author identified why B3 missed by 3x: the original scale numbers
   (medium 60–90) were *beat* counts from the era when one beat was one

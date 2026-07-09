@@ -20,11 +20,14 @@ from questfoundry.pipeline.stages.grow import _derive_flags
 from questfoundry.pipeline.stages.polish import (
     AuditEntry,
     AuditProposal,
+    FinalizeProposal,
     LabelSpec,
     PassageSpec,
     PassagesProposal,
+    ResidueSpec,
     VariantSpec,
     _audit_apply,
+    _finalize_apply,
     _light_needs,
     _passages_apply,
     _variant_needs,
@@ -335,6 +338,27 @@ def test_false_branch_splice_and_long_run_detection():
     assert ["beat:via-the-shore", "beat:shore-tidepools"] in new_groups
     # the diamond rejoins: both arms feed `after`
     assert set(queries.predecessors(g, after)) == {"beat:via-the-cliffs", "beat:shore-tidepools"}
+
+
+def test_llm_beat_entities_must_be_ids(vision, tmp_path):
+    """Validation run (2026-07-09): a diamond arm carrying display names
+    ('Wren') sailed through every gate until DRESS's brief check collided
+    with it. Every apply that stores entity refs on a beat now resolves
+    them through the id contract (exact id or unambiguous bare slug)."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    spec = ResidueSpec(
+        dilemma=need.dilemma,
+        path=sorted(need.path_flags)[0],
+        world=need.world,
+        id="beat:afterglow",
+        summary="s",
+        entities=["Wren"],
+    )
+    with pytest.raises(ApplyError, match="not an entity id"):
+        _finalize_apply(FinalizeProposal(residue=[spec]), project)
 
 
 def test_b6_choice_cadence_measures_feel(golden):

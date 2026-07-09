@@ -32,7 +32,7 @@ from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
 REVIEW_SYSTEM = (
@@ -236,15 +236,7 @@ def _resolve_entity(g, ref: str) -> str:
     """The id contract lives in the adapter's JSON instruction; engine-side
     only the provably unambiguous slug form is restored (parsing, not
     prediction — display names are rejected, see the STATUS decision log)."""
-    if isinstance(g.get(ref), Entity):
-        return ref
-    entities = [e for e in g.nodes_of(Entity) if e.retained]
-    matches = {e.id for e in entities if e.id.split(":", 1)[1] == ref}
-    if len(matches) == 1:
-        return matches.pop()
-    raise ApplyError(
-        f"{ref!r} is not an entity id; use one of: {sorted(e.id for e in entities)}"
-    )
+    return resolve_entity_ref(g, ref)
 
 
 def _write_apply_for(passage_id: str):

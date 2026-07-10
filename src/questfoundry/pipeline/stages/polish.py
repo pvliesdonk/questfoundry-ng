@@ -46,6 +46,19 @@ class FollowupSpec(BaseModel):
     entities: list[str] = []
 
 
+class ForkSpec(BaseModel):
+    """A second same-gate branch, making the arm a tensored diamond (M8):
+    the reader who made this upstream choice gets a choice in how to
+    carry it — texture only, both branches rejoin where the arm does."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    summary: str
+    entities: list[str] = []
+    followup: FollowupSpec | None = None
+
+
 class ResidueSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -56,6 +69,7 @@ class ResidueSpec(BaseModel):
     summary: str
     entities: list[str] = []
     followup: FollowupSpec | None = None  # a second gated beat when the memory needs room
+    fork: ForkSpec | None = None  # a second branch: the tensored arm
 
 
 class ArmSpec(BaseModel):
@@ -163,27 +177,37 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 f"residue {spec.id}: {spec.path} already has a residue arm at this "
                 "convergence; one arm per path — use followup for a longer arm"
             )
+        def gated_chain(head, flag=flag, spec=spec):
+            try:
+                return [
+                    Beat(
+                        id=b.id,
+                        created_by=Stage.POLISH,
+                        summary=b.summary,
+                        beat_class=BeatClass.STRUCTURAL,
+                        purpose=StructuralPurpose.RESIDUE,
+                        entities=[resolve_entity_ref(g, e) for e in b.entities],
+                        requires_flags=[flag],
+                    )
+                    for b in ([head] if head.followup is None else [head, head.followup])
+                ]
+            except ValidationError as e:
+                raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
+
+        chain = gated_chain(spec)
         try:
-            chain = [
-                Beat(
-                    id=b.id,
-                    created_by=Stage.POLISH,
-                    summary=b.summary,
-                    beat_class=BeatClass.STRUCTURAL,
-                    purpose=StructuralPurpose.RESIDUE,
-                    entities=[resolve_entity_ref(g, e) for e in b.entities],
-                    requires_flags=[flag],
+            if spec.fork is None:
+                pc.insert_residue_chain(g, chain, spec.path, need.rejoin)
+            else:
+                pc.insert_residue_diamond(
+                    g, chain, gated_chain(spec.fork), spec.path, need.rejoin
                 )
-                for b in ([spec] if spec.followup is None else [spec, spec.followup])
-            ]
-        except ValidationError as e:
-            raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
-        try:
-            pc.insert_residue_chain(g, chain, spec.path, need.rejoin)
         except KeyError as e:  # duplicate beat id (e.g. one slug reused across worlds)
             raise ApplyError(f"residue {spec.id}: {e}") from e
         covered.add((spec.dilemma, spec.world, spec.path))
         arm = " -> ".join(b.id for b in chain)
+        if spec.fork is not None:
+            arm += f" / {spec.fork.id}"
         lines.append(f"{arm} carries {spec.path}'s memory into {'/'.join(need.rejoin)}")
     missing = [
         (d, w, p) for (d, w), need in needs.items() for p in need.path_flags

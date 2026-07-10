@@ -310,7 +310,7 @@ leaves. Mechanically it is delivered by weight:
 | Weight | Mechanism | Example (D2, after convergence) |
 |---|---|---|
 | heavy | **Variant passages** — same moment, genuinely different prose, flag-gated | — (D2 is light) |
-| light | **Residue arms** — one flag-gated arm *per path* before the shared scene (the residue diamond: the story remembers whichever side was chosen); an arm is one beat, or a 2-beat chain where the memory deserves a scene | "He meets your eyes; he knows" vs. "He chatters, oblivious" → shared storm scene |
+| light | **Residue arms** — one flag-gated arm *per path* before the shared scene (the residue diamond: the story remembers whichever side was chosen); an arm is one beat, a 2-beat chain where the memory deserves a scene, or a **tensored arm** (M8): two same-gate branches forking at the tail and rejoining at the frontier — the reader who made the matching upstream choice gets a choice in how to carry it, texture only | "He meets your eyes; he knows" vs. "He chatters, oblivious" → shared storm scene |
 | cosmetic | Handled in prose wording alone | — |
 
 **Codewords** are the *player-facing projection* of flags for print: a

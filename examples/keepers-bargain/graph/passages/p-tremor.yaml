@@ -15,6 +15,9 @@ choices:
 - to: passage:p-counsel
   label: Ask Elias what he would do
   requires: [flag:elias-knows]
+- to: passage:p-chart
+  label: Spread the finished chart between you
+  requires: [flag:elias-knows]
 - to: passage:p-unspoken
   label: Walk the gallery alone before answering
   requires: [flag:lie-between]

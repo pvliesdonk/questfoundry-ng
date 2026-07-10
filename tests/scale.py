@@ -164,26 +164,33 @@ def _slug(world_label: str) -> str:
     return world_label.replace("path:", "").replace("+", "-") or "shared"
 
 
-def add_residue_arms(g: StoryGraph, *, arm_beats: int = 1) -> None:
+def add_residue_arms(g: StoryGraph, *, arm_beats: int = 1, fork: bool = False) -> None:
     """One flag-gated arm per path per world for every light-residue soft
-    convergence, exactly as POLISH's finalize splices them."""
+    convergence, exactly as POLISH's finalize splices them; with `fork`,
+    every arm is tensored — two same-gate branches (PR-1b)."""
     for need in pc.convergence_needs(g):
         if need.weight != "light":
             continue
         for path, flags in sorted(need.path_flags.items()):
             pslug = path.removeprefix("path:")
-            chain = [
-                Beat(
-                    id=f"beat:res-{pslug}-{_slug(need.world)}-{i}",
-                    created_by=Stage.POLISH,
-                    summary="residue",
-                    beat_class=BeatClass.STRUCTURAL,
-                    purpose=StructuralPurpose.RESIDUE,
-                    requires_flags=[flags[0]],
-                )
-                for i in range(arm_beats)
-            ]
-            pc.insert_residue_chain(g, chain, path, list(need.rejoin))
+
+            def branch(tag: str, path=path, flags=flags, need=need, pslug=pslug):
+                return [
+                    Beat(
+                        id=f"beat:res-{pslug}-{_slug(need.world)}{tag}-{i}",
+                        created_by=Stage.POLISH,
+                        summary="residue",
+                        beat_class=BeatClass.STRUCTURAL,
+                        purpose=StructuralPurpose.RESIDUE,
+                        requires_flags=[flags[0]],
+                    )
+                    for i in range(arm_beats)
+                ]
+
+            if fork:
+                pc.insert_residue_diamond(g, branch(""), branch("-alt"), path, list(need.rejoin))
+            else:
+                pc.insert_residue_chain(g, branch(""), path, list(need.rejoin))
 
 
 def fill_cadence_budget(g: StoryGraph, preset: ScopePreset) -> int:
@@ -212,7 +219,12 @@ def fill_cadence_budget(g: StoryGraph, preset: ScopePreset) -> int:
 
 
 def compile_story(
-    g: StoryGraph, preset: ScopePreset, *, order_index: int = 0, arm_beats: int = 1
+    g: StoryGraph,
+    preset: ScopePreset,
+    *,
+    order_index: int = 0,
+    arm_beats: int = 1,
+    tensored_arms: bool = False,
 ) -> tuple[StoryGraph, int]:
     """GROW + the structural half of POLISH, deterministically: weave one
     candidate order, derive flags, splice residue arms, fill the cadence
@@ -222,7 +234,7 @@ def compile_story(
     orders = weave.candidates(planned)
     weave.realize(g, planned, orders[min(order_index, len(orders) - 1)])
     _derive_flags(g)
-    add_residue_arms(g, arm_beats=arm_beats)
+    add_residue_arms(g, arm_beats=arm_beats, fork=tensored_arms)
     diamonds = fill_cadence_budget(g, preset)
     return g, diamonds
 

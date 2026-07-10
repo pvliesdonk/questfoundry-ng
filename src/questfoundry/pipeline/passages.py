@@ -179,7 +179,29 @@ def insert_residue_chain(
     only it feeds the frontier); when the frontier is itself a deeper
     hard fork, the arm inherits the tail's fan-out into every sub-world,
     so no arc dead-ends at it (I6)."""
-    if not chain:
+    _splice_residue(g, [chain], path_id, rejoin)
+
+
+def insert_residue_diamond(
+    g: StoryGraph,
+    branch_a: Sequence[Beat],
+    branch_b: Sequence[Beat],
+    path_id: str,
+    rejoin: Sequence[str],
+) -> None:
+    """Splice a tensored residue arm (M8): two identically gated branches
+    forking at the path's exclusive tail and rejoining at the frontier —
+    the story remembers the choice AND hands the reader a choice that
+    exists only on this side of it. Each branch collapses into its own
+    gated passage (the fork and rejoin are boundaries); both count as the
+    path's arm for G4's coverage."""
+    _splice_residue(g, [branch_a, branch_b], path_id, rejoin)
+
+
+def _splice_residue(
+    g: StoryGraph, branches: Sequence[Sequence[Beat]], path_id: str, rejoin: Sequence[str]
+) -> None:
+    if not all(branches) or not branches:
         raise mutations.MutationError(f"residue arm for {path_id} is empty")
     tails = [
         b
@@ -192,15 +214,18 @@ def insert_residue_chain(
             f"frontier {sorted(rejoin)}; residue insertion needs exactly one"
         )
     (tail,) = tails
-    for beat in chain:
-        mutations.add_beat(g, beat, [])
+    for branch in branches:
+        for beat in branch:
+            mutations.add_beat(g, beat, [])
     for target in sorted(queries.frontier_feeds(g, tail, list(rejoin))):
         mutations.remove_ordering(g, tail, target)
-        mutations.add_ordering(g, chain[-1].id, target)
-    prev = tail
-    for beat in chain:
-        mutations.add_ordering(g, prev, beat.id)
-        prev = beat.id
+        for branch in branches:
+            mutations.add_ordering(g, branch[-1].id, target)
+    for branch in branches:
+        prev = tail
+        for beat in branch:
+            mutations.add_ordering(g, prev, beat.id)
+            prev = beat.id
 
 
 # -- false branches -------------------------------------------------------------

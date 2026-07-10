@@ -5,9 +5,35 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M6 complete; roadmap extended with M7 (illustrations, pulled up front at the author's call), M8 (depth & scale), M9 (retrieval refinement), M10 (SHIP & the author loop) — M7 is next
+> Last updated: 2026-07-10 · M7 complete (illustrations: `qf illustrate`, exercised live on both cloud providers) — M8 (depth & scale) is next, a frontier session
 
 ## Where we are
+
+**M7 is complete** (this PR; decision log below has the record).
+`qf illustrate` renders DRESS briefs to `art/images/<slug>.png` —
+a post-DRESS *command*, never a stage (mini-ADR A18: cloud providers
+expose no seeds, so rendered bytes can't join checkpoint byte-stability
+or A16 replay; idempotence is by file presence and a re-run costs zero
+API calls). The provider seam is `image-generation-mcp` as a library
+(`ImageService` + `register_provider`; placeholder / OpenAI / Gemini,
+configured via a project.yaml `images:` block or `--provider`). The
+engine owns what the library deliberately doesn't: deterministic prompt
+assembly (art direction + per-entity visual-profile fragments, an
+unprofiled citation fails loud), the sample-first gate,
+`--budget`/`--priority` caps, `kind: image` ledger entries, one LLM
+reformulation (utility role) on a typed content-policy refusal, and PNG
+normalization at the single write site. The HTML player now inlines
+rendered art as data URIs above the prose; the print PDF fills its
+illustration slots. CI drives the full command hermetically through the
+zero-network placeholder. The exit ran live on **both** cloud
+providers: all 7 briefs of `examples/lamplighters-debt-craft` rendered
+on Gemini (~$0.28, zero refusals, free rerun verified, HTML player and
+the 78-page PDF embed all seven), and a gpt-image-2 sample of the
+golden story landed dead-on its scratchboard art direction. Two latent
+engine bugs surfaced live and were fixed with tests: typst resolves
+`#image` paths from its *compilation root* (the M5 slot machinery
+emitted absolute OS paths and had never met a real file), and Gemini
+returns JPEG bytes regardless of the `.png` contract. 371 tests.
 
 **The M6 engine is built** (PR #30; plan and design record in PR #29 /
 `docs/plans/m6-craft-corpus.md`): configure a `craft:` block in
@@ -357,10 +383,11 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
   design docs 02 §1 and 03 §10) — engine (PR #30, plan: PR #29) + the
   live A/B exit run "The Lamplighter's Debt" (PR #31, live run 7)
-- [ ] **M7 — Illustrations** (added 2026-07-10, pulled up front at
+- [x] **M7 — Illustrations** (added 2026-07-10, pulled up front at
   the author's call; roadmap §M7) — `qf illustrate` renders DRESS
   briefs via `image-generation-mcp` as a library (OpenAI/Gemini +
-  hermetic placeholder)
+  hermetic placeholder); live exit run on both cloud providers
+  (this PR)
 - [ ] **M8 — Depth & scale** (added 2026-07-10; roadmap §M8) —
   deeper/tensored scaffolds, words-primary scale table, presets
   recalibrated against measured runs
@@ -372,26 +399,18 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M7 — illustrations** (roadmap §M7): `qf illustrate` — a
-   post-DRESS command (not a stage pass: cloud image generation has no
-   seeds, so its bytes can never join checkpoint/A16 replay semantics)
-   rendering briefs via `image-generation-mcp` as a library. Engine
-   owns prompt assembly (art direction + entity visual fragments),
-   sample-first gate, budget/priority, skip-if-exists, ledger; the
-   placeholder provider is CI's hermetic path. Both cloud keys are
-   already in the dev environment.
-2. **M8 — depth & scale** (roadmap §M8): deeper/tensored Ys fed by
+1. **M8 — depth & scale** (roadmap §M8): deeper/tensored Ys fed by
    the research pass, a words-primary scale table, presets
    recalibrated against measured yield. Live run 7's B4/B3 overshoots
    (48-55-beat arcs vs the 14-40 band at `short`, driven by two
    locked chains) and the ~1.1-1.25k B6 across runs 5-7 are the
    motivating data. Frontier session — this is narrative/DAG
    semantics territory.
-3. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
+2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
    boilerplate in the open item below).
-4. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage with
+3. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage with
    the Twee lint, real interactive checkpoint review behind
    `qf run --yes`, and `qf simulate --random N` (its trigger is met —
    generated stories carry false branches on every run).
@@ -494,15 +513,17 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - ~~The HTML player has no codex panel yet~~ **Built** with DRESS
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
-- ~~Image generation is unbuilt~~ **Planned as M7** (roadmap §M7,
-  pulled up front at the author's call, 2026-07-10 decision-log
-  entry): `qf illustrate` renders briefs via `image-generation-mcp`
-  as a Python library — which is itself the hardened fork of the
-  original QuestFoundry's image providers, so the heritage design
-  (ImageBrief contract, entity visual fragments for consistency,
-  sample-first cost gate) comes back with Gemini + gpt-image-2 +
-  reference-image editing on top. Briefs, runtime `art` entries, HTML
-  embedding, and PDF slots have been in place since M5.
+- ~~Image generation is unbuilt~~ **Built and exercised live as M7**
+  (this PR; decision log): `qf illustrate` renders briefs via
+  `image-generation-mcp` as a Python library, with the heritage design
+  (entity visual fragments for consistency, sample-first cost gate)
+  engine-side. Still deferred from the milestone's own scope:
+  **style-reference conditioning** (feeding a rendered image back as a
+  reference for the rest of the batch — the documented escalation if
+  samples show character drift). The live run showed *style* drift,
+  not character drift: 1 of 7 Gemini renders went photographic against
+  the painterly direction, while gpt-image-2 followed the direction
+  closely — watch it, wire the reference path when a run demands it.
 - **Derived fallback codewords may contain digits** (slugs allow them;
   `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
   worst — a print warning already tells authors to run DRESS.
@@ -554,6 +575,42 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M7 complete: `qf illustrate`, live on both cloud
+  providers — this PR):** Built to the roadmap §M7 contract; what the
+  record needs beyond it. (1) **Mini-ADR A18 landed as designed** (03
+  §9): a command beside `qf export`, presence-keyed idempotence,
+  library seam (`ImageService` + `register_provider` import with no
+  fastmcp code, verified), engine-side orchestration. The `images:`
+  project.yaml block (provider / model / aspect_ratio / quality) and
+  `--provider` select the backend; keys ride `OPENAI_API_KEY` /
+  `GEMINI_API_KEY`. (2) **The live exit run**: all 7 briefs of
+  `examples/lamplighters-debt-craft` rendered on Gemini
+  (`gemini-3.1-flash-image`, ~$0.04/image ≈ $0.28 total, zero content
+  refusals), rerun confirmed free (no ledger growth), `qf export html`
+  inlines all seven as data URIs, `qf export pdf` compiles 78 pages
+  with 7 image XObjects; a gpt-image-2 sample of the golden story
+  (budget 1, ~$0.07) landed dead-on the scratchboard art direction.
+  (3) **Two latent engine bugs found live, both fixed with tests**:
+  the M5 PDF illustration slot had never met a real image file — typst
+  resolves `#image` paths from its *compilation root*, so the absolute
+  OS paths gamebook emitted could never compile (now root-anchored
+  `/art/images/…`, and `build_gamebook` requires the root whenever
+  images are in play); and Gemini returns JPEG bytes no matter the
+  `.png` contract everything keys on (now normalized to PNG at the
+  single write site — PIL is a core dependency of the image library).
+  (4) **Style adherence is the watch item, not consistency**: the
+  protagonist stayed recognizably himself across Gemini's seven
+  renders (fragments do their job), but 1 of 7 drifted photographic
+  against the painterly direction, where gpt-image-2 followed the
+  same-shaped prompt faithfully. The escalation (style-reference
+  conditioning through the library's edit path) stays unbuilt until a
+  run demands it — recorded on the open item. (5) **Refusal handling
+  is built but unexercised live** (zero refusals in 8 paid renders):
+  one utility-role reformulation on a typed `ImageContentPolicyError`,
+  then report-and-continue, batch never dies for one brief — CI covers
+  it with a refusing stub provider. Total live spend for the
+  milestone: ~$0.35.
 
 - **2026-07-10 (illustrations pulled up front as M7):** The author's
   call: the image backend moves from "Later" to the next milestone —

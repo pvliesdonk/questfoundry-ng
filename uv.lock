@@ -800,6 +800,28 @@ wheels = [
 ]
 
 [[package]]
+name = "image-generation-mcp"
+version = "1.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastmcp-pvl-core" },
+    { name = "pillow" },
+    { name = "typer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/63/30f3b152c4f1bb1e70b2af982362b16dce9c95c943e382c1f0d683b4bb6a/image_generation_mcp-1.11.0.tar.gz", hash = "sha256:9eceb28f38216615b6f18367ba09660546f3ae470af848aa2dd6586f386501cf", size = 732283, upload-time = "2026-07-04T04:56:20.955Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1e/2b/2161af08bd76e4735c2b924316041cb5a7d0e7726f59eab3d5e17b71e60d/image_generation_mcp-1.11.0-py3-none-any.whl", hash = "sha256:7330a7dc80c9e51b48210afc7802906977e5ce250430bf9f397fdd4fa00a60e7", size = 242008, upload-time = "2026-07-04T04:56:19.545Z" },
+]
+
+[package.optional-dependencies]
+google-genai = [
+    { name = "google-genai" },
+]
+openai = [
+    { name = "openai" },
+]
+
+[[package]]
 name = "importlib-metadata"
 version = "9.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2088,10 +2110,14 @@ dependencies = [
 craft = [
     { name = "markdown-vault-mcp", extra = ["embeddings"] },
 ]
+images = [
+    { name = "image-generation-mcp", extra = ["google-genai", "openai"] },
+]
 
 [package.dev-dependencies]
 dev = [
     { name = "hypothesis" },
+    { name = "image-generation-mcp" },
     { name = "markdown-vault-mcp" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "numpy", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
@@ -2103,6 +2129,7 @@ dev = [
 requires-dist = [
     { name = "anthropic", specifier = ">=0.40" },
     { name = "google-genai", specifier = ">=1.0" },
+    { name = "image-generation-mcp", extras = ["openai", "google-genai"], marker = "extra == 'images'", specifier = ">=1.11,<2" },
     { name = "jinja2", specifier = ">=3.1" },
     { name = "markdown-vault-mcp", extras = ["embeddings"], marker = "extra == 'craft'", specifier = ">=3.1,<4" },
     { name = "openai", specifier = ">=1.60" },
@@ -2112,11 +2139,12 @@ requires-dist = [
     { name = "typer", specifier = ">=0.12" },
     { name = "typst", specifier = ">=0.13" },
 ]
-provides-extras = ["craft"]
+provides-extras = ["craft", "images"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "hypothesis", specifier = ">=6" },
+    { name = "image-generation-mcp", specifier = ">=1.11,<2" },
     { name = "markdown-vault-mcp", specifier = ">=3.1,<4" },
     { name = "numpy", specifier = ">=1.20" },
     { name = "pytest", specifier = ">=8" },

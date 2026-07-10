@@ -46,7 +46,7 @@ class Section:
     prose_typst: str
     hoisted_lines: tuple[str, ...]  # bold write-down lines, rendered
     choice_lines: tuple[str, ...]  # one rendered instruction per label group, display order
-    illustration: tuple[str, str] | None  # (absolute image path, caption)
+    illustration: tuple[str, str] | None  # (typst-root-anchored "/…" image path, caption)
 
 
 @dataclass
@@ -378,7 +378,9 @@ def _layout(
 # -- public entry points ------------------------------------------------------
 
 
-def build_gamebook(runtime: dict, *, seed: int, images_dir: Path | None = None) -> Gamebook:
+def build_gamebook(
+    runtime: dict, *, seed: int, images_dir: Path | None = None, root: Path | None = None
+) -> Gamebook:
     warnings: list[str] = []
     passages: dict = runtime["passages"]
     flags: dict = runtime.get("flags", {})
@@ -411,7 +413,13 @@ def build_gamebook(runtime: dict, *, seed: int, images_dir: Path | None = None) 
             entry = art_by_passage.get(pid)
             image_path = images_dir / f"{pid}.png"
             if entry is not None and image_path.exists():
-                illustration = (image_path.resolve().as_posix(), entry.get("caption", ""))
+                # typst resolves a leading-slash path from its compilation
+                # root, never the OS filesystem root — an absolute OS path
+                # here fails compilation (found live, M7 exit run)
+                if root is None:
+                    raise ValueError("images_dir requires root (the typst compilation root)")
+                relative = image_path.resolve().relative_to(root.resolve()).as_posix()
+                illustration = (f"/{relative}", entry.get("caption", ""))
         sections.append(
             Section(
                 number=numbers[pid],

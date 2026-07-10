@@ -292,6 +292,7 @@ def export(
             build_runtime(project),
             seed=print_seed,
             images_dir=images_dir if images_dir.is_dir() else None,
+            root=project.root,
         )
         lint_errors = lint_gamebook(book)
         if lint_errors:
@@ -319,6 +320,121 @@ def export(
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(content, encoding="utf-8")
     console.print(f"[green]exported[/green] {target} (round-trip check: 0 problems)")
+
+
+@app.command()
+def illustrate(
+    directory: FSPath = typer.Option(FSPath("."), "--dir", "-C", help="Project directory"),
+    provider: str = typer.Option(
+        "", "--provider", help="Override images.provider (placeholder, openai, gemini)"
+    ),
+    budget: int | None = typer.Option(
+        None, "--budget", help="Maximum renders this invocation (sample included)"
+    ),
+    priority: int | None = typer.Option(
+        None, "--priority", help="Only render briefs with priority <= this floor"
+    ),
+    force: bool = typer.Option(
+        False, "--force", help="Re-render briefs whose image file already exists"
+    ),
+    yes: bool = typer.Option(
+        False, "--yes", help="Skip the sample-first confirmation and render the whole batch"
+    ),
+) -> None:
+    """Render DRESS illustration briefs to art/images/<slug>.png
+    (mini-ADR A18: a post-DRESS command, not a stage — cloud providers
+    expose no seeds, so idempotence is by file presence; re-running
+    costs zero API calls)."""
+    from questfoundry.illustrate import (
+        IllustrateError,
+        RenderOutcome,
+        build_service,
+        image_path,
+        plan_renders,
+        render_briefs,
+    )
+
+    project = load_project(directory)
+    if not project.enrichment.briefs:
+        console.print("[red]no illustration briefs — run the pipeline through dress first[/red]")
+        raise typer.Exit(1)
+
+    plan = plan_renders(project, force=force, priority_floor=priority, budget=budget)
+    if plan.skipped_existing:
+        console.print(
+            f"[dim]{len(plan.skipped_existing)} image(s) already rendered "
+            "(use --force to re-render)[/dim]"
+        )
+    if plan.skipped_priority:
+        console.print(f"[dim]{len(plan.skipped_priority)} brief(s) below the priority floor[/dim]")
+    if plan.skipped_budget:
+        console.print(f"[dim]{len(plan.skipped_budget)} brief(s) beyond the render budget[/dim]")
+    if not plan.to_render:
+        console.print("[green]nothing to render[/green]")
+        return
+
+    try:
+        service, provider_name, generate_kwargs = build_service(project, provider or None)
+    except IllustrateError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(2) from e
+
+    def on_rendered(outcome: RenderOutcome) -> None:
+        console.print(f"[green]rendered[/green] {outcome.path}")
+
+    def confirm_batch(sample: RenderOutcome) -> bool:
+        remaining = len(plan.to_render) - 1
+        if remaining <= 0:
+            return True
+        console.print(f"sample rendered — inspect {sample.path}")
+        return typer.confirm(f"continue with the remaining {remaining} brief(s)?")
+
+    def reformulate(prompt: str, refusal: str) -> str:
+        # built lazily: only a live content-policy refusal pays this call
+        from pydantic import BaseModel
+
+        from questfoundry.illustrate import REFORMULATE_SYSTEM, reformulate_prompt_text
+
+        class Reformulated(BaseModel):
+            prompt: str
+
+        console.print("[yellow]content policy refusal — attempting one reformulation[/yellow]")
+        adapter = _adapter_for(project)
+        return adapter.complete(
+            system=REFORMULATE_SYSTEM,
+            prompt=reformulate_prompt_text(prompt, refusal),
+            schema=Reformulated,
+            role="utility",
+        ).prompt
+
+    try:
+        outcomes = render_briefs(
+            project,
+            service,
+            provider_name,
+            plan.to_render,
+            generate_kwargs=generate_kwargs,
+            reformulate=reformulate,
+            on_rendered=on_rendered,
+            confirm_batch=None if yes else confirm_batch,
+        )
+    except IllustrateError as e:
+        console.print(f"[red]{e}[/red]")
+        raise typer.Exit(1) from e
+
+    refused = [o for o in outcomes if o.path is None]
+    for o in refused:
+        console.print(f"[red]refused by content policy: {image_path(project.root, o.brief)}[/red]")
+        console.print(f"  [dim]{o.refusal}[/dim]")
+    rendered = sum(1 for o in outcomes if o.path is not None)
+    console.print(f"[green]{rendered} image(s) rendered[/green] ({provider_name})")
+    if len(outcomes) < len(plan.to_render):
+        remaining = len(plan.to_render) - len(outcomes)
+        console.print(
+            f"[yellow]stopped after the sample — {remaining} brief(s) not rendered[/yellow]"
+        )
+    if refused:
+        raise typer.Exit(1)
 
 
 @app.command()

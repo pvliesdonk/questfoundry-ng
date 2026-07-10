@@ -79,6 +79,9 @@ class Project:
     enrichment: Enrichment = field(default_factory=Enrichment)
     # LLM configuration: provider name, role -> model map, mock fixture dir
     llm: dict = field(default_factory=lambda: dict(DEFAULT_LLM_CONFIG))
+    # Image-provider configuration (project.yaml `images:` block); empty =
+    # unconfigured, `qf illustrate` then requires an explicit --provider
+    images: dict = field(default_factory=dict)
     # Author steering notes per stage, injected into that stage's prompts
     steering: dict[str, str] = field(default_factory=dict)
     # Craft-corpus config (project.yaml `craft:` block); None = feature off
@@ -234,6 +237,7 @@ def load_project(root: FSPath | str) -> Project:
         print_seed=meta.get("print_seed"),
         enrichment=_load_enrichment(root),
         llm=meta.get("llm", dict(DEFAULT_LLM_CONFIG)),
+        images=meta.get("images", {}),
         steering=meta.get("steering", {}),
         craft=craft,
         research=_load_research(root),
@@ -348,6 +352,8 @@ def save_project(project: Project) -> None:
         meta["print_seed"] = project.print_seed
     if project.llm != DEFAULT_LLM_CONFIG:
         meta["llm"] = project.llm
+    if project.images:
+        meta["images"] = project.images
     if project.steering:
         meta["steering"] = project.steering
     if project.craft is not None:

@@ -148,11 +148,12 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
                 f"Keep the earlier group(s) and drop or rework {spec.id}."
             ) from exc
         accepted.append(spec)
-    try:
-        weave.plan(g)
-    except weave.WeaveError as exc:
-        raise ApplyError(f"these intersections make the interleave unsatisfiable: {exc}") from exc
     if not proposal.groups:
+        # the loop never ran, so the base ordering is still unverified here
+        try:
+            weave.plan(g)
+        except weave.WeaveError as exc:
+            raise ApplyError(f"the interleave is unsatisfiable before any groups: {exc}") from exc
         return ["no intersections proposed"]
     return [f"{s.id}: {' + '.join(s.members)}" for s in proposal.groups]
 

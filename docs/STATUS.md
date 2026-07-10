@@ -595,7 +595,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   whether the narrative/DAG mapping holds at book scale (20–60k
   words, deeper/tensored Ys, words-primary presets); every live run's
   B6 sits ~1.4–1.6× over the feel band and the fix is structural.
-  **M8 retrieval refinement** packages live run 7's two retrieval
+  **M9 retrieval refinement** packages live run 7's two retrieval
   findings (reserved exemplar mechanism, standing-query shape — the
   standing half retrieves audience boilerplate from verbatim vision
   prose, recorded as a new open item). **SHIP & the author loop**

@@ -331,6 +331,65 @@ def test_filled_project_roundtrips(filled):
     assert [i for i in issues if i.severity == Severity.ERROR] == []
 
 
+def test_crashed_fill_resumes_from_the_ledger(tmp_path, monkeypatch):
+    """Mid-FILL crash (mini-ADR A16): completed passes journal to the
+    in-flight ledger and nothing else reaches disk; the resumed run
+    replays them without touching the provider and finishes a story
+    byte-identical to an uninterrupted run."""
+    from questfoundry.pipeline import runner as runner_module
+
+    _, control = _run_to(tmp_path / "control", Stage.FILL)
+
+    project = scaffold_project(tmp_path / "keeper", name="The Keeper's Bargain", scope="micro")
+    project.vision.premise = PREMISE
+    save_project(project)
+    provider = MockProvider(FIXTURES)
+    models = {"architect": "fixture-model", "writer": "fixture-model", "utility": "fixture-model"}
+    reports = run_pipeline(project, Stage.POLISH, IMPLS, LLMAdapter(provider, models))
+    assert all(r.success for r in reports)
+
+    # die right after the third FILL pass lands (voice + two writes) —
+    # ledger writes mark pass boundaries, so this is a clean pass death
+    real_record = runner_module._record_inflight
+    landed = {"n": 0}
+
+    def crashing_record(root, stage, pass_report):
+        real_record(root, stage, pass_report)
+        landed["n"] += 1
+        if landed["n"] == 3:
+            raise RuntimeError("simulated crash")
+
+    with monkeypatch.context() as m:
+        m.setattr(runner_module, "_record_inflight", crashing_record)
+        with pytest.raises(RuntimeError, match="simulated crash"):
+            run_pipeline(project, Stage.FILL, IMPLS, LLMAdapter(provider, models))
+    calls_at_crash = provider._cursor
+
+    resumed = load_project(tmp_path / "keeper")
+    assert resumed.stage == Stage.POLISH  # the stage never advanced
+    assert list((resumed.root / "prose").glob("*.md")) == []  # no ungated prose
+    ledger_dir = resumed.root / "inflight" / "fill" / "proposals"
+    assert len(list(ledger_dir.glob("*.json"))) == 3
+
+    resume_provider = MockProvider(FIXTURES)
+    resume_provider._cursor = calls_at_crash  # fixtures are positional; a real
+    # resume replays the ledger first, so live calls continue from the crash point
+    reports = run_pipeline(resumed, Stage.FILL, IMPLS, LLMAdapter(resume_provider, models))
+    fill = reports[-1]
+    assert fill.success, fill.error or fill.issues
+    by_name = {p.name: p for p in fill.passes}
+    assert by_name["voice"].attempts == 0
+    assert by_name["voice"].applied[0].startswith("resumed:")
+    # the review-repaired passage replays its accepted proposal, not its history
+    assert by_name["write:p-wrong-depths"].attempts == 0
+
+    assert not (resumed.root / "inflight" / "fill").exists()
+    control_prose = {p.name: p.read_text() for p in (control.root / "prose").glob("*.md")}
+    resumed_prose = {p.name: p.read_text() for p in (resumed.root / "prose").glob("*.md")}
+    assert resumed_prose == control_prose
+    assert (resumed.root / "voice.yaml").read_text() == (control.root / "voice.yaml").read_text()
+
+
 # -- M5: DRESS ------------------------------------------------------------------
 
 

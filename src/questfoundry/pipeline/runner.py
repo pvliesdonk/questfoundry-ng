@@ -4,12 +4,20 @@
 Stage modules stay declarative (`PassSpec`/`StageImpl` in `pipeline/types.py`);
 this module owns the only orchestration loop, so every stage behaves
 identically to the engine and to tests.
+
+Between checkpoints, each accepted pass's proposal is journaled to the
+in-flight ledger (`inflight/<stage>/`, mini-ADR A16) so an interrupted
+stage resumes without re-buying completed passes. The ledger is not a
+checkpoint — no gate has passed and no stage artifacts reach the working
+tree — and it is consumed at the stage's gate-passing checkpoint.
 """
 
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+import os
 import shutil
 from datetime import UTC, datetime
 from pathlib import Path
@@ -59,24 +67,28 @@ def _require_predecessor(project: Project, impl: StageImpl) -> None:
         )
 
 
-def _run_kept_pass(project: Project, spec, proposal_data: dict) -> PassReport | str:
+def _run_kept_pass(
+    project: Project, spec, proposal_data: dict, *, label: str = "kept"
+) -> PassReport | str:
     """Re-apply a recorded accepted proposal without an LLM call
-    (`qf rerun --keep`). A kept proposal that no longer validates or
-    applies is stale — that is an author-facing error, not a repair."""
+    (`qf rerun --keep`, and crash resume via the in-flight ledger). A
+    proposal that no longer validates or applies is stale — the caller
+    decides what that means: `--keep` fails the stage loud (the author
+    demanded that proposal), resume degrades to a live run."""
     try:
         proposal = spec.schema.model_validate(proposal_data)
     except Exception as exc:  # pydantic.ValidationError, kept generic on purpose
-        return f"kept proposal for pass {spec.name!r} no longer matches its schema: {exc}"
+        return f"{label} proposal for pass {spec.name!r} no longer matches its schema: {exc}"
     backup = _backup(project)
     try:
         applied = spec.apply(proposal, project)
     except (ApplyError, MutationError) as exc:
         _restore(project, backup)
-        return f"kept proposal for pass {spec.name!r} no longer applies: {exc}"
+        return f"{label} proposal for pass {spec.name!r} no longer applies: {exc}"
     return PassReport(
         name=spec.name,
         attempts=0,
-        applied=[f"kept: {line}" for line in applied],
+        applied=[f"{label}: {line}" for line in applied],
         proposal=proposal.model_dump(mode="json"),
     )
 
@@ -143,6 +155,82 @@ def _run_pass(
         )
 
 
+def _inflight_dir(root: Path, stage: Stage) -> Path:
+    return root / "inflight" / stage.value
+
+
+def _atomic_write(path: Path, text: str) -> None:
+    """A crash mid-write must leave either the old file or the new one,
+    never a torn ledger entry."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def _read_proposal_dir(proposals_dir: Path, *, tolerant: bool = False) -> dict[str, dict]:
+    """Read `{pass name: proposal}` from a proposals directory — the one
+    payload format shared by checkpoints and the in-flight ledger.
+    `tolerant` skips unreadable entries (a torn ledger file is stale,
+    not fatal); checkpoint proposals stay fail-loud."""
+    result: dict[str, dict] = {}
+    if proposals_dir.is_dir():
+        for path in sorted(proposals_dir.glob("*.json")):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                result[payload["pass"]] = payload["proposal"]
+            except (ValueError, KeyError, TypeError, UnicodeDecodeError):
+                if not tolerant:
+                    raise
+    return result
+
+
+def _stage_fingerprint(project: Project, notes: str) -> str:
+    """Hash of the stage's inputs: the on-disk artifacts prompts are
+    built from (current at stage start — the predecessor checkpoint
+    saved them) plus the run knobs. The in-flight ledger is valid only
+    under the fingerprint it was recorded against."""
+    h = hashlib.sha256()
+    root = project.root
+    files = [root / "vision.yaml", root / "voice.yaml"]
+    for sub in ("graph", "prose", "art", "codex"):
+        if (root / sub).is_dir():
+            files.extend(p for p in (root / sub).rglob("*") if p.is_file())
+    for path in sorted(p for p in files if p.is_file()):
+        h.update(str(path.relative_to(root)).encode())
+        h.update(b"\0")
+        h.update(path.read_bytes())
+        h.update(b"\0")
+    knobs = {"notes": notes, "fill_seed": project.fill_seed, "llm": project.llm}
+    h.update(json.dumps(knobs, sort_keys=True, ensure_ascii=False).encode())
+    return h.hexdigest()
+
+
+def _reconcile_inflight(root: Path, stage: Stage, fingerprint: str) -> dict[str, dict]:
+    """The ledger survives only while the stage's inputs are unchanged:
+    an author edit between a crash and the re-run voids it wholesale —
+    "review = edit + revalidate" wins over resume."""
+    stage_dir = _inflight_dir(root, stage)
+    fp_path = stage_dir / "fingerprint.json"
+    try:
+        recorded = json.loads(fp_path.read_text(encoding="utf-8"))["fingerprint"]
+    except (OSError, ValueError, KeyError, TypeError):
+        recorded = None
+    if recorded != fingerprint:
+        shutil.rmtree(stage_dir, ignore_errors=True)
+        stage_dir.mkdir(parents=True)
+        _atomic_write(fp_path, json.dumps({"fingerprint": fingerprint}))
+        return {}
+    return _read_proposal_dir(stage_dir / "proposals", tolerant=True)
+
+
+def _record_inflight(root: Path, stage: Stage, pass_report: PassReport) -> None:
+    proposals_dir = _inflight_dir(root, stage) / "proposals"
+    proposals_dir.mkdir(parents=True, exist_ok=True)
+    payload = {"pass": pass_report.name, "proposal": pass_report.proposal}
+    path = proposals_dir / f"{pass_report.name.replace(':', '__')}.json"
+    _atomic_write(path, json.dumps(payload, indent=2, ensure_ascii=False))
+
+
 def _checkpoint(project: Project, report: StageReport) -> None:
     """Snapshot the on-disk project and write a human-readable report.
     Called only after a successful gate, so `project.stage` is already
@@ -184,6 +272,10 @@ def _checkpoint(project: Project, report: StageReport) -> None:
     reports_dir.mkdir(parents=True, exist_ok=True)
     (reports_dir / f"{project.stage.value}.md").write_text("\n".join(lines) + "\n")
 
+    # The checkpoint consumes the in-flight ledger: the proposals now
+    # live in the snapshot, and a gated stage has nothing to resume.
+    shutil.rmtree(_inflight_dir(root, project.stage), ignore_errors=True)
+
 
 def run_stage(
     project: Project,
@@ -196,6 +288,9 @@ def run_stage(
 ) -> StageReport:
     _require_predecessor(project, impl)
     env = _environment()
+    resume = _reconcile_inflight(
+        project.root, impl.stage, _stage_fingerprint(project, notes)
+    )
 
     passes = impl.passes(project) if callable(impl.passes) else impl.passes
     pass_reports: list[PassReport] = []
@@ -207,11 +302,20 @@ def run_stage(
             continue
         if keep and spec.name in keep:
             result = _run_kept_pass(project, spec, keep[spec.name])
+        elif spec.name in resume:
+            result = _run_kept_pass(project, spec, resume[spec.name], label="resumed")
+            if isinstance(result, str):
+                stale_note = result
+                result = _run_pass(project, spec, env, adapter, notes, max_repairs)
+                if isinstance(result, PassReport):
+                    result.applied.insert(0, f"stale in-flight proposal discarded ({stale_note})")
         else:
             result = _run_pass(project, spec, env, adapter, notes, max_repairs)
         if isinstance(result, str):
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)
         pass_reports.append(result)
+        if result.proposal is not None:
+            _record_inflight(project.root, impl.stage, result)
 
     issues = impl.gate(project)
     report = StageReport(stage=impl.stage, passes=pass_reports, issues=issues)
@@ -227,13 +331,7 @@ def run_stage(
 def recorded_proposals(root: Path, stage: Stage) -> dict[str, dict]:
     """Accepted proposals persisted at `stage`'s last checkpoint, keyed by
     pass name — the artifacts `qf rerun --keep` can re-apply."""
-    proposals_dir = root / "snapshots" / stage.value / "proposals"
-    result: dict[str, dict] = {}
-    if proposals_dir.is_dir():
-        for path in sorted(proposals_dir.glob("*.json")):
-            payload = json.loads(path.read_text(encoding="utf-8"))
-            result[payload["pass"]] = payload["proposal"]
-    return result
+    return _read_proposal_dir(root / "snapshots" / stage.value / "proposals")
 
 
 def prepare_rerun(root: Path, target: Stage) -> None:
@@ -242,7 +340,9 @@ def prepare_rerun(root: Path, target: Stage) -> None:
     voice) come back from the snapshot; author knobs stay current —
     project.yaml keeps its llm/steering/seeds (only `stage` is rewound)
     and vision.yaml is never restored, because editing it is a main
-    reason to rerun. Reload the project after calling this."""
+    reason to rerun. The in-flight ledger is discarded wholesale: a
+    rewind ends every interrupted run. Reload the project after
+    calling this."""
     predecessor = list(Stage)[target.order - 1]
     snap_dir = root / "snapshots" / predecessor.value
     if predecessor != Stage.NEW and not snap_dir.is_dir():
@@ -250,6 +350,7 @@ def prepare_rerun(root: Path, target: Stage) -> None:
             f"cannot rerun {target.value!r}: no checkpoint for its "
             f"predecessor {predecessor.value!r} under {snap_dir}"
         )
+    shutil.rmtree(root / "inflight", ignore_errors=True)
     for sub in ("graph", "prose", "art", "codex"):
         if (root / sub).exists():
             shutil.rmtree(root / sub)

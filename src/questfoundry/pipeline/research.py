@@ -296,11 +296,16 @@ def corpus_root(cfg: CraftConfig, project_root: Path) -> Path:
 def _require_library() -> None:
     """Fail loud, before any LLM spend, when a corpus is configured but
     the retrieval library is missing — the corpus-less path never gets
-    here (skip_if fires first), so base installs stay dependency-free."""
+    here (skip_if fires first), so base installs stay dependency-free.
+    Craft misconfiguration is invocation error, not apply failure: it
+    raises runner.RunnerError (imported lazily — runner imports this
+    module) so the CLI reports it cleanly instead of a traceback."""
+    from questfoundry.pipeline.runner import RunnerError
+
     try:
         import markdown_vault_mcp  # noqa: F401
     except ImportError as exc:
-        raise RuntimeError(
+        raise RunnerError(
             "a craft corpus is configured but markdown-vault-mcp is not "
             "installed — install the 'craft' extra (questfoundry[craft])"
         ) from exc
@@ -347,7 +352,9 @@ def research_pass(stage: Stage) -> PassSpec:
         cfg = project.craft
         root = corpus_root(cfg, project.root)
         if not root.is_dir():
-            raise RuntimeError(f"craft corpus not found at {root} (craft.corpus in project.yaml)")
+            from questfoundry.pipeline.runner import RunnerError
+
+            raise RunnerError(f"craft corpus not found at {root} (craft.corpus in project.yaml)")
         standing = standing_queries(project.vision, stage)
         return {
             "stage": stage.value,

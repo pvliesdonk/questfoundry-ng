@@ -620,10 +620,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
   real forks — a ~5:1 cosmetic:real ratio. POLISH's diamond targeting
   becomes words-aware (site budgets computed from the B6 target, not
   "every 3–5 beats"), tensored residue arms (PR-1b) make
-  post-convergence choices state-flavored rather than cosmetic, and
-  the fallback — raising medium/long soft budgets by one — is flagged
-  to the author, never improvised. The exit run must record the
-  measured ratio either way. (5) **Weave spread is measured before it
+  post-convergence choices state-flavored rather than cosmetic, and —
+  the author's call, same day, promoted from the plan's original
+  fallback — **the dilemma budgets themselves (hard and/or soft) are a
+  first-class phase-0 lever**: the simulation compares deep chains at
+  current counts against +1-soft and +1-hard mixes per scope, with the
+  economics stated (soft raises buy real forks cheaply, arcs are
+  computed; hard raises buy volume and ending richness but multiply
+  worlds for one more real choice per arc). The exit run must record
+  the measured ratio either way. (5) **Weave spread is measured before it
   is fixed**: enumeration gains a spread metric and a synthetic
   clustering test at deep-medium unit counts (~25–40 units against
   the 64 cap); stratified enumeration (cap allocated across distinct

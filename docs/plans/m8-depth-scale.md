@@ -132,10 +132,24 @@ Numbered so PR-1 review can check each landed. D1 is a new mini-ADR
    residue arms make post-convergence choices *state-flavored* rather
    than purely cosmetic (D5); sidetrack false branches (01 §6, built
    but rarely proposed) get equal billing with diamonds in the prompt;
-   and if the exit run still misses B6 or the ratio reads as padding,
-   the fallback is raising `medium`/`long` soft-dilemma budgets by
-   one (+1 real fork per arc, arcs double) — a scale-table change
-   **flagged to the author before building, never improvised**.
+   and **the dilemma budgets themselves are a first-class phase-0
+   lever** (author call, 2026-07-10 — promoted from the fallback this
+   plan originally made it). Given a fixed `words_total`, volume can
+   come from deeper chains per dilemma (few real choices, long runs —
+   cosmetic diamonds carry the cadence; the 5:1 arithmetic above
+   assumed this, at current counts) or from *more dilemmas* — more
+   real forks consuming the same word budget. The two raises price
+   differently and phase 0's simulation must weigh both: **+1 soft**
+   buys one real fork per arc plus a convergence and residue site at
+   modest beat cost (arcs double, but arcs are computed — free);
+   **+1 hard** buys real volume and ending differentiation but
+   multiplies worlds (medium 4→8; everything after the first fork
+   instantiates per world) for only one more real choice per arc.
+   Soft raises are the efficient choice-density lever, hard raises a
+   volume/ending-richness lever. The simulation compares the
+   candidate mixes (below) on projected B6, cosmetic:real ratio,
+   beats, and cost; the winning mix lands in the scale table, and
+   cast bands and locked allowances re-derive with it.
 5. **Tensored residue arms** (PR-1b; the shape deferred from the
    locked-dilemmas effort, pulled into M8 by the roadmap). A light
    residue arm (one per path per world, G4) may carry its own cosmetic
@@ -199,6 +213,14 @@ The roadmap exit's "20–60k" is the acceptance envelope for the PR-2
 run; the preset band is the tighter target the simulation confirms.
 `min_payoff_beats` likely rises with post-commit depth (medium 2→3,
 long 3→4) — decide in phase 0 with the I7 implications in view.
+
+Candidate dilemma mixes for the D4 comparison (current: medium 2H+2S,
+long 2H+3S): medium 2H+3S (the cheap real-choice raise) and 3H+2S
+(worlds 4→8 — simulate before believing the cost); long 2H+4S and
+3H+3S. Locked allowances scale alongside (they buy volume and cast
+anchoring with no fork, so a mix that raises branched counts may keep
+or trim them). Deep chains at current counts stay in the comparison as
+the baseline — the point is to *measure* the trade, not presume it.
 
 ## Phases
 

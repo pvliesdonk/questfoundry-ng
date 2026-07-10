@@ -5,9 +5,46 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-09 · M5 complete — M6 (craft-corpus research) is next
+> Last updated: 2026-07-10 · locked dilemmas + richer residue landed — M6 (craft-corpus research) is next
 
 ## Where we are
+
+**Locked dilemmas + richer residue are built** (the structural
+volume/depth effort, author-blessed 2026-07-09; decision log below has
+the design record):
+
+- **Locked dilemmas** end-to-end: BRAINSTORM overgenerates by the
+  scope's new locked allowance (B1 checks a range pre-triage, branched
+  equality after); SEED triage gives every dilemma a disposition —
+  branched or locked-with-a-reason — and scaffolds locked storylines as
+  lead-in / resolution / aftermath chains on the single explored path;
+  the weave threads each chain through the story one movable unit per
+  beat (wraps/serial anchor at first beat and resolution; locked beats
+  may join intersection groups — they are on every arc); after a hard
+  fork the chain clones per world like any unit and contextualize
+  rewrites the clones. Invariants: I3 gained the locked-chain shape,
+  I6 requires every arc to resolve every locked dilemma exactly once,
+  and a locked outcome is a world fact — G3-FLAGS exempts its
+  consequences and rejects flags granted from a locked path (mini-ADR
+  A15: the disposition is derived from topology, no marker). A locked
+  hard-role dilemma makes no worlds and cannot be the backbone.
+- **Richer residue**: light residue now demands the full diamond — one
+  flag-gated residue arm per path per world (G4 + finalize apply,
+  repairable), and an arm may carry a `followup` beat; passage collapse
+  merges identically gated adjacent beats, so a 2-beat arm reads as one
+  gated passage, not click-through singletons.
+- **The golden story exercises both**: `dilemma:second-keeper` (what
+  ended the previous keeper's watch — locked, resolved on every arc,
+  no flags, woven pre-fork), a hide-side residue arm (`beat:unspoken`,
+  new passage, codeword UNSPOKEN now that the detour gate tests
+  `flag:lie-between`), and a 2-beat tell arm (`counsel` +
+  `honest-chart` collapsing into `p-counsel`). 8 passages, all exports
+  round-trip clean, PDF compiles with zero numbering warnings (the old
+  7-passage impossibility dissolved at 8). 256 tests.
+
+Not yet exercised live: the next generated story should confirm a real
+model locks sensible dilemmas at triage and writes residue followups
+where they earn their room (the prompts ask for exactly this).
 
 **M5 is complete.** Both halves of the exit criterion are met: the
 golden story prints as a real gamebook (PR #20), and the pipeline
@@ -280,12 +317,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **Locked dilemmas + richer residue** (the structural volume/depth
-   effort, author-blessed — see the open item): heritage's unexplored
-   dilemmas as woven linear storylines, diamond-on-residue with
-   multi-beat arms. Frontier-tier, sized like a small milestone slice;
-   closes most of the remaining B3/B6 gap with genuine plot.
-2. **M6 — craft-corpus research**: validate the
+1. **M6 — craft-corpus research**: validate the
    `pvliesdonk/markdown-vault-mcp` library seam first (hybrid search
    over a corpus directory, pinned local embeddings, deterministic
    ranking), then the research pass itself (mini-ADR A13): a typed
@@ -372,26 +404,16 @@ PR #5) and this agent/doc infrastructure (PR #6).
   stories grow (the lexicographic DFS varies the tail of the order
   first, so early-position variety may still under-sample at larger
   unit counts).
-- **Locked dilemmas (heritage's "unexplored dilemmas") are the designed
-  next structural effort** — author-blessed 2026-07-09, upgrading the
-  old "every retained dilemma explores both answers" item. Heritage
-  (`docs/heritage/story-graph-ontology.md` §Shadows, and Triage in the
-  narrative doc) and design doc 02's own SEED contract both allow a
-  triaged dilemma to explore ONE answer: a complete linear
-  sub-storyline woven into the DAG — flavor and plot depth with no
-  fork, no arc multiplication, no I12 pressure. At `medium`, 2–3
-  locked dilemmas ≈ +8–12 passages of genuine story, and in a whodunit
-  they are the red herrings — which also structurally solves the
-  unanchored-suspects gap (extra cast anchors locked motives). Needs:
-  BRAINSTORM overgenerating dilemmas (B1 becomes branched-count
-  equality + locked allowance), triage emitting locked dispositions,
-  linear (fork-less) weave units, the I3 refinement for
-  single-explored paths, and I6/G3-FLAGS exemptions (a locked path's
-  consequence needs no gateable flag). Same effort: **richer residue**
-  — heritage's diamond-on-residue with multi-beat arms (a gated
-  residue chain IS state-based personalization: the story visibly
-  remembering) — and, later still, tensoring a shape inside a diamond
-  arm. Frontier-tier; sized like a small milestone slice.
+- ~~Locked dilemmas (heritage's "unexplored dilemmas") are the designed
+  next structural effort~~ **Built** (2026-07-10, this PR — see "Where
+  we are" and the decision-log entry): overgeneration + locked
+  dispositions + fork-less weave units + I3/I6/G3-FLAGS refinements,
+  and richer residue (per-path arms, followup beats, same-gate
+  collapse). Still deferred from that item: **tensoring a shape inside
+  a diamond arm** (a residue arm containing its own diamond) — revisit
+  when a generated story wants residue that big; and **cosmetic flags
+  on locked storylines** are unbuilt like all cosmetic grants (below).
+  Not yet exercised on a live model.
 - **The G4 pacing report is deferred** (design doc 02 lists it: "no >N
   consecutive same-intensity passages"). It needs the `scene_type`
   annotation, which per design doc 01 §10 arrives only when a FILL
@@ -453,6 +475,44 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (locked dilemmas + richer residue):** The structural
+  volume/depth effort, built as designed with five decisions worth the
+  record. (1) **The disposition is topology, not a marker** (mini-ADR
+  A15): a locked dilemma is exactly "one explored path" — heritage's
+  own definition (an answer with no `explores` edge is the permanent
+  shadow) — so nothing can drift; `queries.locked_dilemmas` /
+  `branched_dilemmas` partition by explored-path count, and arc math
+  never sees locked dilemmas at all (no selection, no multiplication).
+  (2) **Locked outcomes are world facts, never flags**: every reader
+  holds them, so a flag could gate nothing and would only bloat I12's
+  universe — G3-FLAGS now rejects in both directions (a locked
+  consequence needs no flag; a flag on a locked path is an error), and
+  FILL reads the outcome from the beats. (3) **A locked chain weaves
+  one movable unit per beat** under chain constraints — the storyline
+  threads through the story instead of lumping — with wraps/serial
+  anchored at its first beat and its resolution; only *branched* hard
+  dilemmas make worlds or qualify as the climax (a locked hard-role
+  question is texture, not backbone). Locked beats are on every arc,
+  so they became intersection-eligible alongside shared pre-commit
+  beats. (4) **No dilemma cuts at triage**: BRAINSTORM's overgeneration
+  (branched budget + locked allowance, B1 as a pre-triage range) is
+  absorbed entirely by locking — every dilemma gets a disposition, all
+  arithmetic enforced repairably at triage apply so a bad disposition
+  costs a repair round, not a dead stage. (5) **Richer residue is the
+  diamond**: one gated arm per path per world (G4 strengthened from
+  "any arm" to per-path — the story must remember whichever side was
+  chosen), arms of 1–2 beats via `followup`, and the collapse rule
+  refined from "gated beats are singletons" to "identical gates merge",
+  so a multi-beat arm is one gated passage (the gate boundary is where
+  the passage breaks, not every gated beat). Deferred, recorded on the
+  open item: tensoring a shape inside a diamond arm. The golden story
+  grew to exercise everything (locked second-keeper subplot, both
+  residue arms, the 2-beat arm) and, at 8 passages, the print
+  numbering constraints became satisfiable — the documented 7-passage
+  impossibility is gone, and the README transcript no longer shows a
+  numbering warning. Not yet run against a live model; folded into the
+  next-up list.
 
 - **2026-07-09 (Sonnet 5 evaluation — closed, keep Opus):** Question under test:
   can `claude-sonnet-5` ($3/$15 per MTok, $2/$10 intro through

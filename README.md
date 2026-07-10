@@ -52,19 +52,27 @@ endings). The first `medium`-scope story — ["The Bubblegum
 Alibi"](examples/bubblegum-alibi/), a closed-circle murder mystery in a
 bubblegum high school — generated end-to-end for ~$3.25: 46 beats in
 two worlds, 20 passages, 16 arcs, 4 endings, full enrichment, every
-export round-trip clean. Next: M6, craft-corpus research.
-The golden story ["The Keeper's Bargain"](examples/keepers-bargain/) now
-carries hand-authored enrichment and prints end-to-end:
+export round-trip clean. Since then the structural-depth effort landed:
+**locked dilemmas** (a triaged dilemma may explore one answer as a
+fork-less storyline woven through every playthrough — BRAINSTORM
+overgenerates, triage locks the surplus; in a mystery, the red
+herrings) and **richer residue** (every soft convergence gets a
+flag-gated residue arm per path — the story visibly remembers — and an
+arm may be a 2-beat chain that reads as one passage). Next: M6,
+craft-corpus research.
+The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
+carries hand-authored enrichment — now including a locked dilemma (what
+ended the previous keeper's watch) and the residue diamond — and prints
+end-to-end:
 
 ```console
 $ uv sync --group dev
 $ uv run qf validate examples/keepers-bargain
-[B3] scope 'micro' targets 15-25 passages, found 7 (advisory)
+[B3] scope 'micro' targets 10-20 passages, found 8 (advisory)
 
 The Keeper's Bargain @ dress: 0 error(s), 1 warning(s)
 all gates pass
 $ uv run qf export pdf --dir examples/keepers-bargain
-numbering: choice edge p-tremor->p-wide-water: sections 2 and 3 are adjacent
 exported examples/keepers-bargain/exports/the-keepers-bargain.typ and …/the-keepers-bargain.pdf
 $ uv run qf export html --dir examples/keepers-bargain    # browser player + codex panel
 $ uv run qf play examples/keepers-bargain     # or play it in the terminal

@@ -45,12 +45,12 @@ of dilemmas (and how many hard), cast size, beats per path, passage count
 range, words per passage. Budgets make cost predictable (Goal G3) and give
 every LLM stage concrete targets.
 
-| Preset | Dilemmas (hard+soft) | Cast | Passages (approx.) |
-|---|---|---|---|
-| `micro` | 1 + 1 | 3–5 | 10–20 |
-| `short` | 1 + 2 | 5–8 | 18–30 |
-| `medium` | 2 + 2 | 7–10 | 25–40 |
-| `long` | 2 + 3 | 9–14 | 35–60 |
+| Preset | Dilemmas (hard+soft, branched) | Locked (max) | Cast | Passages (approx.) |
+|---|---|---|---|---|
+| `micro` | 1 + 1 | 1 | 3–5 | 10–20 |
+| `short` | 1 + 2 | 2 | 5–8 | 18–30 |
+| `medium` | 2 + 2 | 3 | 7–10 | 25–40 |
+| `long` | 2 + 3 | 4 | 9–14 | 35–60 |
 
 Passage bands were recalibrated against the first live runs (2026-07-09):
 the original numbers were *beat* counts from the one-beat-one-passage
@@ -58,8 +58,10 @@ era, and the passage collapse redefined the unit under them. A band now
 states what the scaffold structurally yields; the *feel* of size — how
 often the reader genuinely chooses — is checked separately (B6, words
 between choices per playthrough, target ≈250–800). Scale by adding
-structure (locked dilemmas, deeper Ys — see STATUS), never by padding
-prose.
+structure (locked dilemmas §4; deeper Ys — see STATUS), never by
+padding prose. The locked column is an allowance, not a floor:
+BRAINSTORM overgenerates by up to that many dilemmas and triage locks
+the surplus (B1).
 
 **Voice** — a singleton record created by FILL before any prose: POV,
 tense, register, rhythm rules, banned patterns. The operational descendant
@@ -123,6 +125,21 @@ path is a **shadow** — the road not taken. Shadows are not dead data: FILL
 is given them as context so the prose can make the reader feel what the
 chosen path cost.
 
+**Disposition** — decided at SEED triage and derived from topology, never
+stored as a marker: a dilemma with two explored paths is **branched**
+(the fork the player chooses); a dilemma with exactly one is **locked** —
+the story canonizes one answer as a fork-less storyline woven through
+every playthrough, and the unexplored answer is a permanent
+*locked-dilemma shadow* (the heritage term; identifiable as an answer no
+path explores). Branched counts match the scope's role budget exactly;
+at most the scope's allowance may lock (B1). A locked path still carries
+consequences, but they are facts of the world on every arc — never
+gateable flags — and its `commits` beat is the **resolution**: the
+moment the story, not the player, settles the question. Locked
+storylines buy plot volume and world texture with no fork, no arc
+multiplication, and no prose-feasibility pressure; in a mystery they are
+the red herrings, and extra cast earns its place by anchoring them.
+
 **Consequence** — a narrative outcome of a path, phrased as world state
 ("the cartographer knows the truth"), not player action. Each consequence
 becomes one or more state flags in GROW.
@@ -153,6 +170,12 @@ the Y-shape determines the edge count:
   path; exactly one `belongs_to`.
 - **Post-commit** — plays out one answer's consequences; exactly one
   `belongs_to`.
+
+For a **locked** dilemma (§4) the Y degenerates to a chain: every beat
+belongs to the single explored path, and the one `commits` beat is the
+resolution, flanked by lead-in and aftermath. Like any beats, a locked
+chain's beats materialize once per world when they land after a hard
+fork.
 
 **Structural beats** serve the story's shape, not any dilemma: zero
 `dilemma_impacts`, zero `belongs_to`. One type with a `purpose` field
@@ -247,7 +270,7 @@ leaves. Mechanically it is delivered by weight:
 | Weight | Mechanism | Example (D2, after convergence) |
 |---|---|---|
 | heavy | **Variant passages** — same moment, genuinely different prose, flag-gated | — (D2 is light) |
-| light | **Residue beat** — short flag-gated mood-setter before the shared scene | "He meets your eyes; he knows" vs. "He chatters, oblivious" → shared storm scene |
+| light | **Residue arms** — one flag-gated arm *per path* before the shared scene (the residue diamond: the story remembers whichever side was chosen); an arm is one beat, or a 2-beat chain where the memory deserves a scene | "He meets your eyes; he knows" vs. "He chatters, oblivious" → shared storm scene |
 | cosmetic | Handled in prose wording alone | — |
 
 **Codewords** are the *player-facing projection* of flags for print: a
@@ -261,8 +284,10 @@ structure already separates those readers). Flags ≠ codewords, always.
 
 **Passage** — the unit the player reads: one or more beats compiled into a
 prose container. POLISH creates passages by **collapsing** maximal linear
-runs of beats (boundaries fall at divergences and convergences) and by
-merging intersection-adjacent beats into single scenes where narratable.
+runs of beats (boundaries fall at divergences, convergences, and gate
+changes — an identically gated linear chain, like a multi-beat residue
+arm, is one gated passage) and by merging intersection-adjacent beats
+into single scenes where narratable.
 Each passage carries its beats, a derived summary, entity refs, and —
 after FILL — prose.
 
@@ -301,22 +326,28 @@ design.
 - **I1** Every dilemma has exactly two answers, strictly equal — no
   default/primary/canonical marker exists in the model.
 - **I2** Every dilemma is anchored to ≥1 surviving entity.
-- **I3** Every explored path has a complete Y-scaffold: ≥1 pre-commit
-  beat, ≥1 post-commit beat, and commit beats occupying pairwise
-  distinct worlds — exactly one commit absent multi-hard expansion, one
-  per world once the dilemma resolves inside a hard fork. Worlds are
-  made by *other* dilemmas' hard forks; a dilemma's own commits are its
-  fork, never its coordinate (§5).
+- **I3** Every explored path has a complete scaffold, with commit beats
+  occupying pairwise distinct worlds — exactly one commit absent
+  multi-hard expansion, one per world once the dilemma resolves inside
+  a hard fork. Branched: ≥1 shared pre-commit beat and ≥1 exclusive
+  post-commit beat around each commit's fork. Locked: ≥1 lead-in beat
+  before, and ≥1 aftermath beat after, each resolution. Worlds are made
+  by *other* dilemmas' hard forks; a dilemma's own commits are its
+  fork, never its coordinate (§5) — and a locked dilemma, never
+  forking, makes no worlds whatever its role.
 
 **Beat DAG**
 - **I4** The beat graph is acyclic, single-rooted, and every beat is
   reachable from the root.
-- **I5** `belongs_to` discipline: pre-commit ⇒ exactly the two paths of
-  one dilemma; commit/post-commit ⇒ exactly one path; structural ⇒ zero.
-  Cross-dilemma dual membership is always an error.
+- **I5** `belongs_to` discipline: shared pre-commit ⇒ exactly the two
+  paths of one dilemma; commit/post-commit, and every beat of a locked
+  chain ⇒ exactly one path; structural ⇒ zero. Cross-dilemma dual
+  membership is always an error.
 - **I6** Every arc (computed) is complete: root → terminal, contains
-  exactly one commit per explored dilemma, and no beat whose flag
-  requirements are unsatisfiable on that arc.
+  exactly one commit per explored dilemma — the selected path's for a
+  branched dilemma, the resolution for a locked one (every arc walks
+  every locked storyline) — and no beat whose flag requirements are
+  unsatisfiable on that arc.
 - **I7** Hard dilemma paths never reconverge (no cross-path commit pair
   shares a descendant, in any world); soft dilemma paths always do, in
   every world they are expanded into, after a minimum payoff (≥ N

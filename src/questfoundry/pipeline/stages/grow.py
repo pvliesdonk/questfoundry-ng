@@ -29,6 +29,8 @@ docs/STATUS.md): intersections over shared pre-commit beats only.
 
 from __future__ import annotations
 
+import copy
+
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from questfoundry.graph import mutations, queries
@@ -106,8 +108,10 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
             if m in used:
                 raise ApplyError(f"beat {m} appears in more than one intersection group")
             used.add(m)
+
+    def _build(spec: IntersectionSpec) -> IntersectionGroup:
         try:
-            group = IntersectionGroup(
+            return IntersectionGroup(
                 id=spec.id,
                 created_by=Stage.GROW,
                 location=spec.location or None,
@@ -115,7 +119,35 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
             )
         except ValidationError as e:
             raise ApplyError(f"invalid intersection {spec.id}: {e}") from e
-        mutations.add_intersection(g, group, spec.members)  # I8 locally
+
+    # Groups are applied one at a time with a satisfiability probe after each,
+    # so a failure names the offending group — "the interleave is unsatisfiable"
+    # without a culprit gives the repair round nothing to act on (the model
+    # re-proposes the same groups; live run 7).
+    baseline = copy.deepcopy(g)
+    accepted: list[IntersectionSpec] = []
+    for spec in proposal.groups:
+        mutations.add_intersection(g, _build(spec), spec.members)  # I8 locally
+        try:
+            weave.plan(g)
+        except weave.WeaveError as exc:
+            members = ", ".join(spec.members)
+            probe = copy.deepcopy(baseline)
+            try:
+                mutations.add_intersection(probe, _build(spec), spec.members)
+                weave.plan(probe)
+            except weave.WeaveError:
+                raise ApplyError(
+                    f"intersection {spec.id} ({members}) is unsatisfiable on its own: {exc}. "
+                    "Its members occupy incompatible positions in their storylines' required "
+                    "order — drop this group or pick members that can share a moment."
+                ) from exc
+            others = ", ".join(s.id for s in accepted)
+            raise ApplyError(
+                f"intersection {spec.id} ({members}) cannot coexist with {others}: {exc}. "
+                f"Keep the earlier group(s) and drop or rework {spec.id}."
+            ) from exc
+        accepted.append(spec)
     try:
         weave.plan(g)
     except weave.WeaveError as exc:

@@ -9,7 +9,7 @@ from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.drama import ResidueWeight
+from questfoundry.models.drama import DilemmaRole, ResidueWeight
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
@@ -38,7 +38,7 @@ from questfoundry.pipeline.stages.polish import _finalize_context
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
 from tests.test_passages import _fork_rejoin_story
-from tests.test_weave import seeded_story
+from tests.test_weave import make_dilemma, scaffold, seeded_story
 
 
 @pytest.fixture()
@@ -77,6 +77,42 @@ def test_empty_intersection_proposal_is_valid(project):
     assert _intersections_apply(IntersectionProposal(groups=[]), project) == [
         "no intersections proposed"
     ]
+
+
+def test_unsatisfiable_intersection_error_names_the_group(tmp_path, vision):
+    # serial(main, sub) puts all of main before sub; merging a main pre-commit
+    # beat with a sub pre-commit beat forces one unit both before and after
+    # main's resolve — cyclic, and intrinsically so (live run 7: an unnamed
+    # culprit makes the repair round re-propose the same groups)
+    g = StoryGraph()
+    seeded_story(g, wraps=False)
+    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:main", "dilemma:sub")
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    with pytest.raises(ApplyError, match=r"intersection:x .* unsatisfiable on its own"):
+        _intersections_apply(group(["beat:main-pre0", "beat:sub-pre0"]), project)
+
+
+def test_conflicting_intersection_error_names_both_sides(tmp_path, vision):
+    # each group is satisfiable alone; together the main chain orders one<two
+    # while the sub chain orders two<one — the error must name the newcomer
+    # and the accepted group it cannot coexist with
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    d2, p2a, p2b = make_dilemma(g, "sub", role=DilemmaRole.SOFT)
+    scaffold(g, "main", d1, p1a, p1b, pre=3)
+    scaffold(g, "sub", d2, p2a, p2b, endings=False)
+    mutations.add_dilemma_relation(g, EdgeKind.WRAPS, d1, d2)
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    proposal = IntersectionProposal(
+        groups=[
+            IntersectionSpec(id="intersection:one", members=["beat:main-pre1", "beat:sub-pre1"]),
+            IntersectionSpec(id="intersection:two", members=["beat:main-pre2", "beat:sub-pre0"]),
+        ]
+    )
+    with pytest.raises(
+        ApplyError, match=r"intersection:two .* cannot coexist with intersection:one"
+    ):
+        _intersections_apply(proposal, project)
 
 
 def test_weave_choice_out_of_range_is_repairable(project):

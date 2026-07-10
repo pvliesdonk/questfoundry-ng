@@ -36,6 +36,7 @@ from questfoundry.models.structure import (
     TemporalHint,
 )
 from questfoundry.models.world import Entity
+from questfoundry.pipeline import weave
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -556,8 +557,6 @@ def _order_apply(proposal: OrderProposal, project: Project) -> list[str]:
     # (live run 8 wedged GROW exactly this way — serial(hard A, hard B)
     # plus serial(hard B, locked chain)). Probe the weave here, where a
     # repair round can fix it; GROW's WeaveError is unrepairable.
-    from questfoundry.pipeline import weave
-
     try:
         weave.plan(project.graph)
     except weave.WeaveError as e:

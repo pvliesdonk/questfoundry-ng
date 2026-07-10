@@ -6,6 +6,8 @@ unrepairable gate."""
 
 from __future__ import annotations
 
+import copy
+
 import pytest
 
 from questfoundry.graph import queries
@@ -19,16 +21,19 @@ from questfoundry.pipeline.stages.seed import (
     DilemmaScaffold,
     LockedScaffold,
     LockSpec,
+    OrderProposal,
     PathScaffold,
     PathSpec,
+    RelationSpec,
     ScaffoldProposal,
     TriageProposal,
+    _order_apply,
     _scaffold_apply,
     _triage_apply,
 )
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
-from tests.conftest import make_dilemma
+from tests.conftest import make_dilemma, make_locked_chain, make_y_scaffold
 
 
 def _spec(slug: str, is_ending: bool = False) -> BeatSpec:
@@ -205,9 +210,6 @@ def test_order_relations_that_wedge_the_weave_are_repairable(tmp_path):
     locked storyline had to follow the only possible climax's resolution —
     and nothing may follow the endings. The order apply probes the weave
     so this dies in a repair round, not at GROW's unrepairable gate."""
-    from questfoundry.pipeline.stages.seed import OrderProposal, RelationSpec, _order_apply
-    from tests.conftest import make_locked_chain, make_y_scaffold
-
     g = StoryGraph()
     d1, p1a, p1b = make_dilemma(g, "fb", role=DilemmaRole.HARD)
     d2, p2a, p2b = make_dilemma(g, "al", role=DilemmaRole.HARD)
@@ -224,8 +226,6 @@ def test_order_relations_that_wedge_the_weave_are_repairable(tmp_path):
         ]
     )
     # probe on a copy: the runner restores the graph on failed applies
-    import copy
-
     scratch = Project(
         root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=copy.deepcopy(g)
     )

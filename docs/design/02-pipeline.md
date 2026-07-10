@@ -268,9 +268,12 @@ Two phases:
    flow; insert bridge beats for pacing; insert residue arms per the
    convergence sketch — one flag-gated arm per path per world (the
    residue diamond: the story visibly remembers whichever side was
-   chosen), an arm being one beat or a 2-beat chain where the memory
+   chosen), an arm being one beat, a 2-beat chain where the memory
    deserves a scene (an identically gated chain collapses into a single
-   passage); add false branches at the engine-computed cadence budget
+   passage), or a tensored arm — two same-gate branches, each its own
+   gated passage, giving the reader who holds the flag a texture-only
+   choice in how to carry the memory (M8; either branch satisfies G4's
+   coverage); add false branches at the engine-computed cadence budget
    (M8): the engine projects a playthrough walk from the capped groups
    and sizes the diamonds that bring words-per-choice into the B6 band,
    offering only cap-aligned seam edges (a mid-chunk split would mint a

@@ -215,8 +215,8 @@ story or a demonstrated quality gap calls for them, per the annotation
 discipline in 01 §10): the G4 pacing report + `scene_type`,
 character-arc metadata, intersections over exclusive beats, temporal
 hints inside fork units, cosmetic flags on false branches and locked
-storylines, tensored shapes inside residue arms (unless M8 pulls them
-in), and non-digit codeword fallbacks.
+storylines, and non-digit codeword fallbacks. (Tensored residue arms
+were pulled in by M8, as this list anticipated.)
 
 ## Top risks
 

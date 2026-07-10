@@ -11,7 +11,7 @@
 > M8 ships and STATUS records the outcome. Code references anchor on
 > named functions; line numbers are as of the commit adding this file.
 
-## PR-1 outcome (2026-07-10) — read before PR-1b / PR-2
+## PR-1 / PR-1b outcome (2026-07-10) — read before PR-2
 
 Phases 0–4 shipped; the calibration produced four findings the plan did
 not anticipate, all now engine behavior (STATUS decision log has the
@@ -37,8 +37,13 @@ record):
    dominated; +1 soft costs ~+23% and buys a real fork. Medium is
    2H+3S, long 2H+4S; hard counts stay at 2.
 
+PR-1b (tensored arms, D5) followed: `ResidueSpec.fork`,
+`insert_residue_diamond`, the golden story's tell-side arm as the
+hand-authored exemplar. Measured: tensoring medium's arms drops walk-B6
+780 → 690 — state-flavored choice density where seam capacity binds.
+
 Projected exits (simulation, both band corners): medium 46–52.5k words,
-124–142 passages, B6 780, cosmetic:real ≈ 4:1. Weave enumeration
+124–142 passages, B6 780 (690 tensored), cosmetic:real ≈ 4:1. Weave enumeration
 fair-splits when plain DFS is truncated inside one subtree (measured:
 63 units → all 64 candidates shared a 12-position prefix); recorded
 micro stories keep plain enumeration byte-stable.

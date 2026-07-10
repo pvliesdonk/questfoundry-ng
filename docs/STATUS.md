@@ -5,9 +5,24 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M8 PR-1 (depth & scale engine) is built — next: PR-1b (tensored residue arms) and PR-2 (the live medium exit run)
+> Last updated: 2026-07-10 · M8 PR-1 + PR-1b (depth & scale engine, tensored residue arms) are built — next: PR-2, the live medium exit run
 
 ## Where we are
+
+**Tensored residue arms are built** (M8 PR-1b, plan D5): a light
+residue arm may fork into two same-gate branches — the reader who made
+the matching upstream choice gets a texture-only choice in how to carry
+it, and both branches rejoin where the arm does. Schema: `ResidueSpec`
+gains an optional `fork`; splice: `insert_residue_diamond` (shared
+frontier logic with the chain splice); either branch satisfies G4's
+coverage and I10-I13 hold with no semantic change (asserted with
+violating constructions, per the plan). Measured on the simulation:
+tensoring medium's arms drops walk-B6 780 -> 690 with words still in
+band — cadence that compounds where diamond seam capacity binds. The
+golden story models the shape: the tell-side arm is now a real choice
+(`counsel` | `honest-chart` — spend the last hour with Elias's counsel,
+or over his finished chart), 9 passages, prose split into two texture
+passages, still 0 errors / 0 warnings. 392 tests.
 
 **The M8 engine is built** (PR-1; plan and record in
 `docs/plans/m8-depth-scale.md` — its "PR-1 outcome" section is the
@@ -436,18 +451,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M8 PR-1b — tensored residue arms** (plan D5, frontier: the
-   G4/I13 surface): a light-residue arm may carry its own cosmetic
-   diamond — a choice that exists only for players who made the
-   matching upstream choice; golden-story extension per the
-   documentation contract. Read the plan's "PR-1 outcome" section
-   first — the cadence findings change the shape's value (it adds
-   state-flavored choice density where seam capacity binds).
-2. **M8 PR-2 — the live exit run**: fresh premise, corpus-grounded
+1. **M8 PR-2 — the live exit run**: fresh premise, corpus-grounded
    `medium` on the default Opus/Haiku map, budget est. $8–14 (cap
    $20; ~124–142 passages projected vs run 7's 35–48 at $4.03).
    Acceptance: roadmap §M8 exit; record the measured cosmetic:real
-   ratio and walk-B6 against the simulation's 780 projection.
+   ratio and walk-B6 against the simulation's projections (780
+   plain-arms; 690 where the model tensors arms). This also delivers
+   the pending live validation of the whole M8 machinery: shape-band
+   repairs, the cadence budget's prompt-compliance, texture-band
+   writes, and fair-split candidate quality.
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
@@ -535,11 +547,10 @@ PR #5) and this agent/doc infrastructure (PR #6).
   we are" and the decision-log entry): overgeneration + locked
   dispositions + fork-less weave units + I3/I6/G3-FLAGS refinements,
   and richer residue (per-path arms, followup beats, same-gate
-  collapse). Still deferred from that item: **tensoring a shape inside
-  a diamond arm** (a residue arm containing its own diamond) — revisit
-  when a generated story wants residue that big; and **cosmetic flags
-  on locked storylines** are unbuilt like all cosmetic grants (below).
-  Not yet exercised on a live model.
+  collapse). ~~Still deferred from that item: tensoring a shape inside
+  a diamond arm~~ **Built as M8 PR-1b** (tensored residue arms — see
+  the decision-log entry); **cosmetic flags on locked storylines**
+  remain unbuilt like all cosmetic grants (below).
 - **The G4 pacing report is deferred** (design doc 02 lists it: "no >N
   consecutive same-intensity passages"). It needs the `scene_type`
   annotation, which per design doc 01 §10 arrives only when a FILL
@@ -617,6 +628,28 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M8 PR-1b: tensored residue arms):** The shape deferred
+  from the locked-dilemmas effort, built to plan D5 with the PR-1
+  findings sharpening its purpose: diamond seam capacity binds the
+  cadence budget at deep scopes, and a tensored arm adds choice
+  density exactly where plain diamonds cannot — behind a flag, so the
+  choice is state-flavored rather than purely cosmetic (the reader
+  who made the matching upstream choice chooses how to carry it).
+  Mechanics as predicted, asserted rather than assumed: both branches
+  gate identically and rejoin at the frontier, each collapses into
+  its own gated passage, either satisfies G4's location-free coverage
+  predicate, and I10/I13 need no semantic change. Simulation: medium
+  walk-B6 780 -> 690 with tensored arms, words still in band.
+  The finalize prompt offers the fork with the taste fence stated
+  ("one strong arm beats two thin ones"; neither branch may decide
+  anything the other doesn't). The golden story models the shape —
+  the tell-side arm split into `counsel` | `honest-chart` as sibling
+  gated branches off `beat:offer` (a texture choice only tell-side
+  readers ever see), p-counsel's prose divided into two texture-band
+  passages, p-tremor gaining the second gated choice. 9 passages,
+  gate-clean with zero warnings; the four count-expectation tests
+  updated. 392 tests.
 
 - **2026-07-10 (M8 PR-1: the depth & scale engine):** Built to the
   plan (phases 0–4); the calibration surfaced four findings that

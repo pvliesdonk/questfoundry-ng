@@ -12,7 +12,13 @@ storylines rejoin. 1-2 sentences, present tense, mood and memory, not plot — i
 must not advance, reveal, or decide anything. When a path's memory deserves a
 scene rather than a sentence, give its arm a "followup" beat (same gate; the
 pair reads as one passage) — use it where the residue carries real weight, skip
-it where a single breath is honest.
+it where a single breath is honest. When the memory could honestly sit two
+ways — two textures of carrying the same truth — give the arm a "fork": a
+second branch behind the same gate ({"id", "summary", "entities", "followup"
+or omit}). The reader who made that upstream choice then gets a choice in how
+to live with it; both branches rejoin where the arm does, and neither may
+decide anything the other doesn't. Fork only where the split is honest — one
+strong arm beats two thin ones.
 {% for n in needs %}
 - {{ n.dilemma.id }} (residue: light{% if n.need.world %}; in the world of {{ n.need.world }}{% endif %}) rejoins at {% for c in n.rejoin %}{{ c.id }} — "{{ c.summary }}"{% if not loop.last %} / {% endif %}{% endfor %}
 {% for path, flags in n.need.path_flags.items() %}

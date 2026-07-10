@@ -80,8 +80,9 @@ the print PDF fills its illustration slots, and CI drives the whole
 command through a hermetic zero-network placeholder provider.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
-ended the previous keeper's watch) and the residue diamond — and prints
-end-to-end:
+ended the previous keeper's watch), the residue diamond, and a tensored
+arm (a texture choice that exists only for players who told Elias the
+truth) — and prints end-to-end:
 
 ```console
 $ uv sync --group dev

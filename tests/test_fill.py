@@ -39,7 +39,7 @@ def test_reference_arc_is_seeded_and_local(golden_fill):
 
 def test_writing_order_is_reference_arc_first(golden_fill):
     order = writing_order(golden_fill)
-    assert len(order) == 8
+    assert len(order) == 9
     selection = reference_selection(golden_fill)
     from questfoundry.graph import queries
 
@@ -102,7 +102,7 @@ def test_write_context_carries_the_contract(golden_fill):
     # the truth flags are merely possible here — the prose must stay honest
     statuses = {f["flag"].id: f["status"] for f in ctx["flags"]}
     assert statuses["flag:elias-knows"] == "possible"
-    assert len(ctx["choices"]) == 4
+    assert len(ctx["choices"]) == 5
     assert ctx["words_min"] == 150 and ctx["words_max"] == 450
 
 
@@ -207,7 +207,7 @@ def test_fill_pass_list_is_voice_plus_one_write_per_passage(golden_fill):
     assert passes[0].skip_if is not None
     assert passes[0].skip_if(golden_fill)  # golden already carries a voice
     write_passes = [p for p in passes[1:]]
-    assert len(write_passes) == 8
+    assert len(write_passes) == 9
     assert all(p.review is not None for p in write_passes)
 
 

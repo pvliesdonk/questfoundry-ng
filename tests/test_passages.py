@@ -21,6 +21,7 @@ from questfoundry.pipeline.stages.polish import (
     AuditEntry,
     AuditProposal,
     FinalizeProposal,
+    ForkSpec,
     LabelSpec,
     PassageSpec,
     PassagesProposal,
@@ -207,6 +208,89 @@ def test_residue_insertion_preserves_convergence(vision):
     # an identically gated chain collapses into ONE gated passage
     groups = pc.collapse_groups(g)
     assert ["beat:afterglow", "beat:afterglow-2"] in groups
+
+
+def test_tensored_residue_arm_is_a_gated_choice_on_one_side(vision, tmp_path):
+    """PR-1b: a light residue arm may fork into two same-gate branches —
+    the reader who made the matching upstream choice gets a choice in
+    how to carry it. Both branches collapse into their own gated
+    passage, either satisfies G4's coverage, and the passage graph
+    stays clean (I10-I13)."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    (need,) = _light_needs(project)
+    mutations.freeze_topology(g)
+    proposal = FinalizeProposal(
+        residue=[
+            ResidueSpec(
+                dilemma="dilemma:sub",
+                path="path:sub-a",
+                id="beat:mem-a",
+                summary="s",
+                fork=ForkSpec(id="beat:mem-a-alt", summary="s2"),
+            ),
+            ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
+        ]
+    )
+    lines = _finalize_apply(proposal, project)
+    assert any("beat:mem-a" in line and "beat:mem-a-alt" in line for line in lines)
+    flag = need.path_flags["path:sub-a"][0]
+    for b in ("beat:mem-a", "beat:mem-a-alt"):
+        beat = g.node(b)
+        assert isinstance(beat, Beat)
+        assert beat.requires_flags == [flag]
+        assert g.has_edge(EdgeKind.PREDECESSOR, b, need.rejoin[0])
+    # each branch is its own gated passage; the freeze holds
+    groups = pc.collapse_groups(g)
+    assert ["beat:mem-a"] in groups and ["beat:mem-a-alt"] in groups
+    issues = run_checks(g, vision, Stage.GROW)
+    assert [i for i in issues if i.check == "I9"] == []
+
+    _passages_apply(_proposal_for(g), project)
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage=p.id, irrelevant=[])
+            for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
+            if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+        ]
+    )
+    _audit_apply(proposal, project)
+    assert _polish_errors(g, vision) == []
+    # the fork is an offered choice: the tail passage carries two choices
+    # gated on the same flag (distinct labels), one per branch passage
+    branch_passages = {
+        queries.passages_of_beat(g, b)[0] for b in ("beat:mem-a", "beat:mem-a-alt")
+    }
+    sources = {
+        e.src
+        for e in g.edges
+        if e.kind == EdgeKind.CHOICE and e.dst in branch_passages
+    }
+    assert len(sources) == 1
+    gated = [
+        e
+        for e in g.out_edges(sources.pop(), EdgeKind.CHOICE)
+        if e.dst in branch_passages
+    ]
+    assert len(gated) == 2
+    assert all(e.payload["requires"] == [flag] for e in gated)
+
+
+def test_residue_diamond_rejects_an_empty_branch(vision):
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    arm = Beat(
+        id="beat:solo",
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"][0]],
+    )
+    with pytest.raises(mutations.MutationError, match="empty"):
+        pc.insert_residue_diamond(g, [arm], [], "path:sub-a", need.rejoin)
 
 
 def test_multi_flag_path_residue_covers_via_any_flag(vision):

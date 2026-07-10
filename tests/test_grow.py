@@ -14,6 +14,7 @@ from questfoundry.models.structure import (
     Beat,
     BeatClass,
     FlagSource,
+    IntersectionGroup,
     StateFlag,
     StructuralPurpose,
 )
@@ -79,23 +80,28 @@ def test_empty_intersection_proposal_is_valid(project):
     ]
 
 
-def test_unsatisfiable_intersection_error_names_the_group(tmp_path, vision):
-    # serial(main, sub) puts all of main before sub; merging a main pre-commit
-    # beat with a sub pre-commit beat forces one unit both before and after
-    # main's resolve — cyclic, and intrinsically so (live run 7: an unnamed
-    # culprit makes the repair round re-propose the same groups)
+def test_unsatisfiable_intersection_is_dropped_with_a_note(tmp_path, vision):
+    # serial(sub, main) puts all of sub before main; merging a beat from
+    # each side forces one unit both before and after the boundary —
+    # cyclic, and intrinsically so. Intersections are advisory like
+    # temporal hints: the group is dropped and named, never allowed to
+    # wedge the weave (live run 7 burned repairs twice on webs where no
+    # cross-dilemma pairing was satisfiable)
     g = StoryGraph()
     seeded_story(g, wraps=False)
-    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:main", "dilemma:sub")
+    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:sub", "dilemma:main")
     project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
-    with pytest.raises(ApplyError, match=r"intersection:x .* unsatisfiable on its own"):
-        _intersections_apply(group(["beat:main-pre0", "beat:sub-pre0"]), project)
+    lines = _intersections_apply(group(["beat:main-pre0", "beat:sub-pre0"]), project)
+    assert len(lines) == 1 and lines[0].startswith("dropped intersection:x")
+    assert "incompatible positions" in lines[0]
+    assert not project.graph.nodes_of(IntersectionGroup)
+    weave.plan(project.graph)  # the weave is untouched and satisfiable
 
 
-def test_conflicting_intersection_error_names_both_sides(tmp_path, vision):
+def test_conflicting_intersection_dropped_keeps_the_earlier_group(tmp_path, vision):
     # each group is satisfiable alone; together the main chain orders one<two
-    # while the sub chain orders two<one — the error must name the newcomer
-    # and the accepted group it cannot coexist with
+    # while the sub chain orders two<one — the earlier group survives, the
+    # newcomer is dropped with a note naming what it conflicts with
     g = StoryGraph()
     d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
     d2, p2a, p2b = make_dilemma(g, "sub", role=DilemmaRole.SOFT)
@@ -109,10 +115,13 @@ def test_conflicting_intersection_error_names_both_sides(tmp_path, vision):
             IntersectionSpec(id="intersection:two", members=["beat:main-pre2", "beat:sub-pre0"]),
         ]
     )
-    with pytest.raises(
-        ApplyError, match=r"intersection:two .* cannot coexist with intersection:one"
-    ):
-        _intersections_apply(proposal, project)
+    lines = _intersections_apply(proposal, project)
+    assert lines[0] == "intersection:one: beat:main-pre1 + beat:sub-pre1"
+    assert lines[1].startswith("dropped intersection:two")
+    assert "cannot coexist with intersection:one" in lines[1]
+    (kept,) = project.graph.nodes_of(IntersectionGroup)
+    assert kept.id == "intersection:one"
+    weave.plan(project.graph)  # satisfiable with the kept group applied
 
 
 def test_weave_choice_out_of_range_is_repairable(project):

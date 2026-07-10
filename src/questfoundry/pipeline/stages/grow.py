@@ -120,42 +120,45 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
         except ValidationError as e:
             raise ApplyError(f"invalid intersection {spec.id}: {e}") from e
 
-    # Groups are applied one at a time with a satisfiability probe after each,
-    # so a failure names the offending group — "the interleave is unsatisfiable"
-    # without a culprit gives the repair round nothing to act on (the model
-    # re-proposes the same groups; live run 7).
+    # Intersections are advisory enrichment, like temporal hints (design
+    # doc 02 §2): the model proposes them before seeing the full ordering
+    # web, so a group that would wedge the weave is dropped and reported,
+    # never allowed to fail the stage. Each group is probed one at a time
+    # so the drop note names the offending group and why — live run 7
+    # burned its repair rounds twice on dense webs where the model could
+    # not find satisfiable pairings at all.
+    scratch = copy.deepcopy(g)
     baseline = copy.deepcopy(g)
     accepted: list[IntersectionSpec] = []
+    lines = []
     for spec in proposal.groups:
-        mutations.add_intersection(g, _build(spec), spec.members)  # I8 locally
+        trial = copy.deepcopy(scratch)
+        mutations.add_intersection(trial, _build(spec), spec.members)  # I8 locally
         try:
-            weave.plan(g)
-        except weave.WeaveError as exc:
+            weave.plan(trial)
+        except weave.WeaveError:
             members = ", ".join(spec.members)
             probe = copy.deepcopy(baseline)
             try:
                 mutations.add_intersection(probe, _build(spec), spec.members)
                 weave.plan(probe)
             except weave.WeaveError:
-                raise ApplyError(
-                    f"intersection {spec.id} ({members}) is unsatisfiable on its own: {exc}. "
-                    "Its members occupy incompatible positions in their storylines' required "
-                    "order — drop this group or pick members that can share a moment."
-                ) from exc
+                lines.append(
+                    f"dropped {spec.id} ({members}): its members occupy incompatible "
+                    "positions in their storylines' required order"
+                )
+                continue
             others = ", ".join(s.id for s in accepted)
-            raise ApplyError(
-                f"intersection {spec.id} ({members}) cannot coexist with {others}: {exc}. "
-                f"Keep the earlier group(s) and drop or rework {spec.id}."
-            ) from exc
+            lines.append(f"dropped {spec.id} ({members}): cannot coexist with {others}")
+            continue
+        scratch = trial
         accepted.append(spec)
+        lines.append(f"{spec.id}: {' + '.join(spec.members)}")
+    for spec in accepted:
+        mutations.add_intersection(g, _build(spec), spec.members)
     if not proposal.groups:
-        # the loop never ran, so the base ordering is still unverified here
-        try:
-            weave.plan(g)
-        except weave.WeaveError as exc:
-            raise ApplyError(f"the interleave is unsatisfiable before any groups: {exc}") from exc
         return ["no intersections proposed"]
-    return [f"{s.id}: {' + '.join(s.members)}" for s in proposal.groups]
+    return lines
 
 
 # -- pass 2: weave ------------------------------------------------------------

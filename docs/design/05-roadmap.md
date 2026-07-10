@@ -196,9 +196,17 @@ review/edit/continue (design doc 02 §3). `qf simulate --random N`
 false-branch diamonds now occur in every generated story, and
 `--all-arcs` never walks them.
 
+Run resilience lands here too: a transient transport failure
+(provider disconnect, 5xx — live run 8 died twice on "server
+disconnected" before the Gemini provider streamed) should auto-resume
+the interrupted stage with bounded backoff instead of exiting. The
+A16 in-flight ledger already makes the retry free; today a human
+re-invokes `qf run`.
+
 **Exit:** `qf run` pauses at a checkpoint, the author edits an
 artifact, the run resumes and revalidates; `qf export twee` lints; a
-random-walk simulation covers detours the arc walk misses.
+random-walk simulation covers detours the arc walk misses — and a
+killed provider connection costs a log line, not a dead run.
 
 ## Later / explicitly deferred
 

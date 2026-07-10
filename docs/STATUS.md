@@ -471,6 +471,13 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
+- **Transient transport failures kill the run** (author call, live
+  run 8): a provider disconnect exits `qf run` even though the A16
+  ledger makes resumption free — run 8 needed two manual re-invokes
+  (and the streaming fix removed the biggest cause). Auto-resume the
+  interrupted stage with bounded backoff; owned by M10 (roadmap §M10,
+  run resilience).
+
 - ~~A Gemini provider is unbuilt~~ **Built and validated** (PR #18):
   `llm/providers/gemini.py` over the google-genai SDK, wired into the
   CLI (`llm.provider: gemini`; the SDK reads `GEMINI_API_KEY` itself).

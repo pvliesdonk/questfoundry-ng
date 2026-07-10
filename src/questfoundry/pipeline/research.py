@@ -195,10 +195,13 @@ def retrieve(
     cache_dir: Path,
     stage: Stage,
     queries: list[tuple[str, str]],
+    premise_sha: str | None = None,
 ) -> str:
     """Run every ``(kind, query)`` pair — ``kind`` is ``"standing"`` or
     ``"librarian"`` — against the corpus and return the digest markdown
-    persisted at ``research/<stage>.md``.
+    persisted at ``research/<stage>.md``. ``premise_sha`` identifies a
+    premise-grounded retrieval (no standing queries existed, so the
+    librarian saw the premise instead) for the A17 freshness check.
 
     Lazy-imports `markdown_vault_mcp` inside the function: the
     corpus-less `skip_if` path (the common case — CI and the golden
@@ -239,6 +242,8 @@ def retrieve(
         "top_k": cfg.top_k,
         "sources": sources,
     }
+    if premise_sha is not None:
+        meta["premise_sha"] = premise_sha
     return _render_digest(meta, sections)
 
 
@@ -311,11 +316,23 @@ def _require_library() -> None:
         ) from exc
 
 
+def _premise_sha(project: Project, standing: list[str]) -> str | None:
+    """The premise identifies a premise-grounded retrieval (DREAM's head,
+    where no standing queries exist and the librarian saw the premise).
+    Without it, DREAM's freshness would reduce to the corpus fingerprint
+    alone and a premise edit + rerun would silently reuse a
+    premise-mismatched digest."""
+    if standing:
+        return None
+    return hashlib.sha256(project.vision.premise.encode("utf-8")).hexdigest()[:16]
+
+
 def digest_fresh(text: str, project: Project) -> bool:
     """A17 freshness: the digest was retrieved from the current corpus
-    with the current standing queries. Either drifting means the world
-    the digest described is gone — re-retrieve. Malformed metadata is
-    stale, never fatal (the tolerant half of the A16 staleness contract).
+    with the current story inputs — the standing queries, or the premise
+    where none existed. Any drifting means the world the digest described
+    is gone — re-retrieve. Malformed metadata is stale, never fatal (the
+    tolerant half of the A16 staleness contract).
     """
     cfg = project.craft
     if cfg is None:
@@ -325,10 +342,13 @@ def digest_fresh(text: str, project: Project) -> bool:
         stage = Stage(meta.get("stage", ""))
     except ValueError:
         return False
+    standing = standing_queries(project.vision, stage)
     root = corpus_root(cfg, project.root)
-    return meta.get("corpus_fingerprint") == corpus_fingerprint(cfg, root) and meta.get(
-        "standing_queries", []
-    ) == standing_queries(project.vision, stage)
+    return (
+        meta.get("corpus_fingerprint") == corpus_fingerprint(cfg, root)
+        and meta.get("standing_queries", []) == standing
+        and meta.get("premise_sha") == _premise_sha(project, standing)
+    )
 
 
 def research_pass(stage: Stage) -> PassSpec:
@@ -387,7 +407,14 @@ def research_pass(stage: Stage) -> PassSpec:
             librarian.append(text)
         root = corpus_root(cfg, project.root)
         queries = [("standing", q) for q in standing] + [("librarian", q) for q in librarian]
-        digest = retrieve(cfg, root, project.root / "cache" / "research", stage, queries)
+        digest = retrieve(
+            cfg,
+            root,
+            project.root / "cache" / "research",
+            stage,
+            queries,
+            premise_sha=_premise_sha(project, standing),
+        )
         project.research[stage.value] = digest
         meta = digest_meta(digest)
         lines = [

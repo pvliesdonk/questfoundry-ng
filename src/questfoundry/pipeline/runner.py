@@ -118,9 +118,10 @@ def _restore(project: Project, backup: tuple) -> None:
 def _research_body(project: Project, stage: Stage) -> str:
     """The stage's digest body for prompt injection — read at render time
     so passes after the research pass see what it just retrieved.
-    Templates opt in via `_craft.j2`; review prompts are structurally
-    immune because their functions render templates themselves and never
-    receive this variable (design doc 02 §1)."""
+    Templates opt in via `_craft.j2` (the audit and mechanical-pick
+    templates simply never include it); the FILL/DRESS *review* prompts
+    are excluded structurally — their functions render templates
+    themselves and never receive this variable (design doc 02 §1)."""
     text = project.research.get(stage.value)
     return digest_body(text) if text else ""
 

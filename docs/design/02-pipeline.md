@@ -72,12 +72,14 @@ pipeline read before writing.
 
 Author edits keep their meaning across reruns (mini-ADR A17): the
 research pass *skips itself* when the stage's digest is **fresh** —
-its recorded corpus fingerprint and standing queries match current
-values — and `rerun` preserves the target stage's own digest through
-the rewind (the predecessor snapshot never contains it; editing it is
-a reason to rerun, like vision.yaml). A corpus or vision edit makes
-the digest stale and re-retrieves; deleting `research/<stage>.md`
-forces re-retrieval by hand.
+its recorded corpus fingerprint and story inputs (the standing
+queries, or a premise hash where none existed: DREAM's research is
+premise-grounded) match current values — and `rerun` preserves the
+target stage's own digest through the rewind (the predecessor
+snapshot never contains it; editing it is a reason to rerun, like
+vision.yaml). A corpus, vision, or premise edit makes the digest
+stale and re-retrieves; deleting `research/<stage>.md` forces
+re-retrieval by hand.
 
 The rule that keeps this safe: **corpus material may widen or ground,
 never bind.** Injected digests carry an explicit advisory framing

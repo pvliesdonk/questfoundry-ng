@@ -30,15 +30,27 @@ class GeminiProvider:
         from google.genai import types
 
         client = self._client_instance()
-        response = client.models.generate_content(
+        # Stream and collect. A non-streaming call holds a silent HTTP
+        # response for the whole generation — minutes on a thinking
+        # writer call — and idle-intolerant middleboxes kill it
+        # ("Server disconnected without sending a response", live run 8,
+        # twice). Same contract as non-streaming otherwise; the last
+        # chunk carries cumulative usage metadata. Mirrors the Anthropic
+        # provider's streaming rationale (Sonnet evaluation, STATUS).
+        parts: list[str] = []
+        meta = None
+        for chunk in client.models.generate_content_stream(
             model=model,
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system,
                 max_output_tokens=max_tokens,
             ),
-        )
-        meta = response.usage_metadata
+        ):
+            if chunk.text:
+                parts.append(chunk.text)
+            if chunk.usage_metadata is not None:
+                meta = chunk.usage_metadata
         usage = Usage(
             input_tokens=(meta.prompt_token_count or 0) if meta else 0,
             output_tokens=(
@@ -47,4 +59,4 @@ class GeminiProvider:
             if meta
             else 0,
         )
-        return LLMResult(text=response.text or "", model=model, usage=usage)
+        return LLMResult(text="".join(parts), model=model, usage=usage)

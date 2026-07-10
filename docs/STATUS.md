@@ -9,7 +9,7 @@
 
 ## Where we are
 
-**M7 is complete** (this PR; decision log below has the record).
+**M7 is complete** (PR #33; decision log below has the record).
 `qf illustrate` renders DRESS briefs to `art/images/<slug>.png` —
 a post-DRESS *command*, never a stage (mini-ADR A18: cloud providers
 expose no seeds, so rendered bytes can't join checkpoint byte-stability
@@ -387,7 +387,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   the author's call; roadmap §M7) — `qf illustrate` renders DRESS
   briefs via `image-generation-mcp` as a library (OpenAI/Gemini +
   hermetic placeholder); live exit run on both cloud providers
-  (this PR)
+  (PR #33)
 - [ ] **M8 — Depth & scale** (added 2026-07-10; roadmap §M8) —
   deeper/tensored scaffolds, words-primary scale table, presets
   recalibrated against measured runs
@@ -514,7 +514,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
 - ~~Image generation is unbuilt~~ **Built and exercised live as M7**
-  (this PR; decision log): `qf illustrate` renders briefs via
+  (PR #33; decision log): `qf illustrate` renders briefs via
   `image-generation-mcp` as a Python library, with the heritage design
   (entity visual fragments for consistency, sample-first cost gate)
   engine-side. Still deferred from the milestone's own scope:
@@ -577,7 +577,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 ## Decision log
 
 - **2026-07-10 (M7 complete: `qf illustrate`, live on both cloud
-  providers — this PR):** Built to the roadmap §M7 contract; what the
+  providers — PR #33):** Built to the roadmap §M7 contract; what the
   record needs beyond it. (1) **Mini-ADR A18 landed as designed** (03
   §9): a command beside `qf export`, presence-keyed idempotence,
   library seam (`ImageService` + `register_provider` import with no

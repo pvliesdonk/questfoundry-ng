@@ -5,9 +5,29 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · crash resume hardened (in-flight proposal ledger, A16) — M6 (craft-corpus research) is next
+> Last updated: 2026-07-10 · M6 engine landed (research pass, A17, PR #30) — the live A/B validation run completes the milestone
 
 ## Where we are
+
+**The M6 engine is built** (PR #30; plan and design record in PR #29 /
+`docs/plans/m6-craft-corpus.md`): configure a `craft:` block in
+project.yaml and a **research pass** heads every stage — the librarian
+proposes at most `max_queries` search strings (standing queries derived
+from the vision are shown so it asks only for what's missing; DREAM
+runs premise-only), the engine retrieves via `markdown-vault-mcp`'s
+Python API (hybrid or keyword, per-folder, re-sorted deterministically)
+and persists an author-editable `research/<stage>.md` whose body every
+substantive pass reads as an advisory `_craft.j2` block. Review
+prompts are structurally immune (they render themselves); the
+feasibility audit and the mechanical picks are excluded deliberately.
+The digest is checkpointed, fingerprinted (A16: corpus hash + craft
+config join the knobs only when configured), and reused while fresh
+(A17: `prepare_rerun` preserves the target's digest; a corpus or
+vision edit re-retrieves; deleting the file forces it). Corpus-less
+projects are untouched to the byte — the pass skips, positional
+fixtures hold, and CI never installs the retrieval stack (tests drive
+real hybrid search through a deterministic fake embedding provider).
+Not yet done: the live A/B exit run (next up #1).
 
 **Locked dilemmas + richer residue are built** (the structural
 volume/depth effort, author-blessed 2026-07-09; decision log below has
@@ -312,21 +332,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
   (PR #22); the live `medium`-scope run within budget (PR #23)
 - [ ] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
   design docs 02 §1 and 03 §10) — ground the pipeline's LLM calls in a
-  markdown craft corpus via an engine-side research pass; specced, not
-  started
+  markdown craft corpus via an engine-side research pass; **engine
+  built** (PR #30, plan: PR #29 / `docs/plans/m6-craft-corpus.md`);
+  exit = the live A/B run (same premise with and without a corpus)
 
 ## Next up
 
-1. **M6 — craft-corpus research**: validate the
-   `pvliesdonk/markdown-vault-mcp` library seam first (hybrid search
-   over a corpus directory, pinned local embeddings, deterministic
-   ranking), then the research pass itself (mini-ADR A13): a typed
-   query proposal at each stage head; the engine retrieves and
-   persists digests as a checkpointed artifact later passes read.
-2. **A live run exercising locked dilemmas + richer residue** — cheap
-   to fold into whatever premise M6 validation wants; watch triage's
-   lock choices, the residue followup judgment, and whether the new
-   summary register holds (beat summaries as briefs, not prose).
+1. **M6 exit — the live A/B validation run** (procedure:
+   `docs/plans/m6-craft-corpus.md` §PR-2): the author exports the
+   IF-craft subtree of his vault as a local corpus directory, then the
+   same premise generates with and without a `craft:` block — verify
+   digests at every stage, fingerprints in every report, the
+   byte-stability drills (crash-resume, `--keep research`, edited
+   digest surviving a rerun), and judge the craft-grounding delta
+   side by side.
+2. **A live run exercising locked dilemmas + richer residue** — folds
+   into the M6 validation premise; watch triage's lock choices, the
+   residue followup judgment, and whether the new summary register
+   holds (beat summaries as briefs, not prose).
 3. **Scaffold deepening after M6** (corpus-medium word totals, 20–60k):
    deeper/tensored Ys once the research pass can feed them real
    material; scale table becomes words-primary at that point.
@@ -479,6 +502,31 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M6 engine: research pass, A17, spike findings —
+  PR #30):** Built to the PR #29 plan; what the record needs beyond it:
+  (1) **The library spike passed everything** — `markdown-vault-mcp`
+  3.1 hybrid ranking was deterministic across repeats *and* fresh
+  index rebuilds, warm restart is O(1), a custom `EmbeddingProvider`
+  ABC implementation drives hybrid search (needs `numpy` even with a
+  custom provider — dev group carries library core + numpy, never
+  fastembed), and fastembed loads from a warm cache in ~0.5s fully
+  offline (first use downloads the model once). No upstream issues
+  filed; `>=3.1,<4` pinned. (2) **Retrieval runs inside apply**, so
+  kept-pass replay and A16 resume re-retrieve identically; the vault's
+  tracker state routes into `cache/research/` (its default would
+  pollute a read-only corpus checkout). (3) **A17 shipped as designed**
+  (03 §9): freshness = digest frontmatter's corpus fingerprint +
+  standing queries match current values, checked in `skip_if`, which
+  the runner dispatches before keep/resume — that ordering is what
+  lets a fresh digest beat a stale ledger. (4) **Injection is one
+  runner-level render variable** (always defined, StrictUndefined-safe)
+  — review templates never receive it, making the no-taste-laundering
+  rule structural; `polish_audit` joined the exclusion list as
+  review-shaped. (5) The automated reviewer caught a dangling
+  citation (planning-doc-internal hazard numbering leaking into code
+  comments) — worth keeping in mind when code is built from a plan
+  document: cite repo artifacts, not the plan's internal labels.
 
 - **2026-07-10 (crash resume: the in-flight proposal ledger, mini-ADR
   A16):** The open artifact-half question is decided: **not** per-pass

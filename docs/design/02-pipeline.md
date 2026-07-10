@@ -47,31 +47,50 @@ Key properties:
   without re-buying completed passes, and it is consumed and cleared
   at the stage's gate-passing checkpoint.
 
-### Craft context (planned — M6)
+### Craft context (M6)
 
 Stages can be grounded in a craft corpus (design doc [05 §M6](05-roadmap.md))
 without changing the loop above: a **research pass** runs at the stage
 head, in the uniform loop like any other pass (`skip_if` no corpus is
-configured). It emits *queries* — a typed proposal, judged like any
-other — and the engine retrieves. Two query kinds feed one search:
-**standing queries** the engine builds deterministically (from the
-vision's open-vocabulary genre/tone/themes) and **librarian queries**
-the research pass emits for this story's specific needs. Both go
+configured — corpus-less projects, CI, and the golden story run
+unchanged, to the byte). It emits *queries* — a typed proposal, judged
+like any other — and the engine retrieves inside the pass's apply, so
+kept-pass replay and ledger resume re-run retrieval deterministically.
+Two query kinds feed one search: **standing queries** the engine
+builds deterministically (from the vision's open-vocabulary
+genre/subgenre/tone/themes) and **librarian queries** the research
+pass emits for this story's specific needs; the prompt shows the
+standing half so the librarian asks only for what's missing. At
+DREAM's head no vision exists yet, so DREAM's research runs on the
+premise alone and standing queries start at BRAINSTORM. Both kinds go
 through hybrid search over the configured corpus, and the top-k
-digests are persisted as a checkpointed,
-author-editable artifact (`research/<stage>.md`). The stage's later
-passes read the artifact, never the search index — so reruns and
-resumes replay retrieval byte-for-byte, and "review = edit +
-revalidate" extends to what the pipeline read before writing.
+digests are persisted as a checkpointed, author-editable artifact
+(`research/<stage>.md`). The stage's later passes read the artifact,
+never the search index — so reruns and resumes replay retrieval
+byte-for-byte, and "review = edit + revalidate" extends to what the
+pipeline read before writing.
+
+Author edits keep their meaning across reruns (mini-ADR A17): the
+research pass *skips itself* when the stage's digest is **fresh** —
+its recorded corpus fingerprint and standing queries match current
+values — and `rerun` preserves the target stage's own digest through
+the rewind (the predecessor snapshot never contains it; editing it is
+a reason to rerun, like vision.yaml). A corpus or vision edit makes
+the digest stale and re-retrieves; deleting `research/<stage>.md`
+forces re-retrieval by hand.
 
 The rule that keeps this safe: **corpus material may widen or ground,
-never bind.** Injected digests carry an explicit advisory framing and
-cannot override invariants or stage contracts. Style exemplars appear
-at the voice pass as a *contrasting spread* (a map of the possibility
-space, never a nearest-match target), fade from write contexts once
-neighboring prose exists (the window is the true style anchor), and
-never enter review prompts — review judges against the Voice record
-alone, or exemplar-conformance becomes a new taste-laundering channel.
+never bind.** Injected digests carry an explicit advisory framing
+(the shared `_craft.j2` block) and cannot override invariants or
+stage contracts. Style exemplars appear at the voice pass as a
+*contrasting spread* (a map of the possibility space, never a
+nearest-match target), fade from write contexts once neighboring
+prose exists (the window is the true style anchor), and never enter
+review prompts — review judges against the Voice record alone, or
+exemplar-conformance becomes a new taste-laundering channel. The
+feasibility audit (POLISH) is excluded for the same reason — it is
+review-shaped — as are the mechanical picks (SEED's order choice,
+DRESS's codewords), which have no judgment for craft notes to widen.
 
 ### Backtracking
 

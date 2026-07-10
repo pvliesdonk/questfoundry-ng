@@ -64,7 +64,9 @@ src/questfoundry/
   graph/      # store.py (typed graph), mutations.py (THE write path),
               # queries.py (computed arcs, DAG walks), validate.py (I1-I13 -> gates)
   pipeline/   # runner.py (uniform stage loop), weave.py (GROW's core),
-              # passages.py (POLISH's core), stages/ (schemas + apply), prompts/
+              # passages.py (POLISH's core), research.py (craft-corpus
+              # retrieval + the research head pass), stages/ (schemas +
+              # apply), prompts/
   llm/        # adapter.py (schema-validated structured output), providers/
               # (anthropic, openai, mock replay/record), cache.py, ledger.py
   play/       # engine.py + tui.py (qf play), simulate.py (arc walker for QA)

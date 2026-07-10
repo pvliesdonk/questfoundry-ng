@@ -214,8 +214,10 @@ already has.
 
 **Exit:** `qf run` pauses at a checkpoint, the author edits an
 artifact, the run resumes and revalidates; `qf export twee` lints; a
-random-walk simulation covers detours the arc walk misses — and a
-killed provider connection costs a log line, not a dead run.
+random-walk simulation covers detours the arc walk misses; a killed
+provider connection costs a log line, not a dead run — and a long
+stage shows its pulse: per-pass heartbeats in the run log, live
+stage/pass/spend in `qf status`.
 
 ## Later / explicitly deferred
 

@@ -33,7 +33,7 @@ golden story landed dead-on its scratchboard art direction. Two latent
 engine bugs surfaced live and were fixed with tests: typst resolves
 `#image` paths from its *compilation root* (the M5 slot machinery
 emitted absolute OS paths and had never met a real file), and Gemini
-returns JPEG bytes regardless of the `.png` contract. 371 tests.
+returns JPEG bytes regardless of the `.png` contract. 372 tests.
 
 **The M6 engine is built** (PR #30; plan and design record in PR #29 /
 `docs/plans/m6-craft-corpus.md`): configure a `craft:` block in

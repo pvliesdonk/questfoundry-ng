@@ -292,3 +292,42 @@ def test_unweavable_leftover_beats_are_rejected():
     )
     with pytest.raises(weave.WeaveError, match="outside any weavable unit"):
         weave.plan(g)
+
+
+# -- candidate spread at scale (M8) -------------------------------------------
+
+
+def test_deep_stories_get_prefix_diverse_candidates():
+    """At deep-scope unit counts plain lexicographic DFS returns `cap`
+    orders sharing one long prefix (first measured at 63 units: all 64
+    candidates agreed on the first 12 positions), so the model chooses
+    among near-identical stories. Fair-split enumeration activates on
+    exactly that degeneracy and restores early-position diversity."""
+    from questfoundry.models.concept import SCOPE_PRESETS
+    from tests.scale import SimShape, build_seeded
+
+    preset = SCOPE_PRESETS["medium"]
+    g = build_seeded(preset, SimShape.band_max(preset.shape))
+    planned = weave.plan(g)
+    orders = weave.candidates(planned)
+    assert orders
+    # every order is a valid, complete, distinct placement
+    assert all(sorted(o) == sorted(planned.units) for o in orders)
+    assert len({tuple(o) for o in orders}) == len(orders)
+    # position 2 is the first free slot (setup, then the wraps-anchored
+    # backbone opener, are forced); diversity must reach it
+    free = [len({o[i] for o in orders}) for i in range(2, 6)]
+    assert max(free) >= 4
+
+
+def test_small_stories_keep_plain_enumeration():
+    """Plain lexicographic enumeration is byte-stable history (recorded
+    stories replay against it); fair-split must not activate when the
+    plain sample already covers the early positions."""
+    g = StoryGraph()
+    seeded_story(g)
+    planned = weave.plan(g)
+    keys = sorted(planned.units)
+    cons = weave._climax_constraints(keys, planned.constraints, planned.hard_resolves[0])
+    plain = weave._orders(keys, cons, weave.CANDIDATE_CAP)
+    assert weave.candidates(planned) == plain[: weave.CANDIDATE_CAP]

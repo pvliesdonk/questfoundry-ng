@@ -353,6 +353,35 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
     # anywhere else contradicts continuation, and a soft path needs its
     # payoff beats (I7) before rejoining.
     preset = project.vision.preset
+    shape = preset.shape
+
+    def in_band(count: int, band: tuple[int, int], what: str) -> None:
+        lo, hi = band
+        if not lo <= count <= hi:
+            problems.append(
+                f"{what} has {count} beat(s); scope {preset.name!r} wants {lo}-{hi}"
+            )
+
+    in_band(len(proposal.setup), shape.setup, "setup")
+    for scaffold in proposal.locked_scaffolds:
+        in_band(
+            len(scaffold.lead_in), shape.locked_lead_in, f"{scaffold.dilemma}'s lead_in"
+        )
+        in_band(
+            len(scaffold.aftermath),
+            shape.locked_aftermath,
+            f"{scaffold.dilemma}'s aftermath",
+        )
+    for scaffold in proposal.scaffolds:
+        in_band(
+            len(scaffold.pre_commit), shape.pre_commit, f"{scaffold.dilemma}'s pre_commit"
+        )
+        for path_scaffold in scaffold.paths:
+            in_band(
+                len(path_scaffold.post_commit),
+                shape.post_commit,
+                f"{path_scaffold.path}'s post_commit",
+            )
     for scaffold in proposal.scaffolds:
         dilemma = g.node(scaffold.dilemma)
         assert isinstance(dilemma, Dilemma)

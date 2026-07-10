@@ -449,11 +449,93 @@ def _orders(keys: list[str], constraints: set[tuple[str, str]], cap: int) -> lis
     return results
 
 
+def _ready_sizes(keys: list[str], constraints: set[tuple[str, str]], prefix: list[str]):
+    """Ready-set size at each position along `prefix`."""
+    indeg = dict.fromkeys(keys, 0)
+    succ: dict[str, list[str]] = {k: [] for k in keys}
+    for a, b in constraints:
+        succ[a].append(b)
+        indeg[b] += 1
+    placed: set[str] = set()
+    for k in prefix:
+        yield sum(1 for u in keys if u not in placed and indeg[u] == 0)
+        placed.add(k)
+        for s in succ[k]:
+            indeg[s] -= 1
+
+
+def _prefix_degenerate(
+    orders: list[list[str]], keys: list[str], constraints: set[tuple[str, str]]
+) -> bool:
+    """True when the candidate set shares a position where more than one
+    unit was ready — the cap was exhausted inside one lexicographic
+    subtree, so an available early choice was never sampled."""
+    shared_len = 0
+    for i in range(len(orders[0])):
+        if any(o[i] != orders[0][i] for o in orders):
+            break
+        shared_len = i + 1
+    return any(
+        n > 1 for n in _ready_sizes(keys, constraints, orders[0][:shared_len])
+    )
+
+
+def _orders_fair(keys: list[str], constraints: set[tuple[str, str]], cap: int) -> list[list[str]]:
+    """Fair-split enumeration: the budget divides among the ready units at
+    every level (lexicographic order, unused budget rolling to later
+    siblings), so candidate prefixes stay diverse at any unit count. The
+    plain DFS varies the tail first — past ~20 units it returns `cap`
+    orders sharing one long prefix, and the model chooses among
+    near-identical stories (M8; first measured at 63 units: all 64
+    candidates agreed on the first 12 positions)."""
+    succ: dict[str, set[str]] = {k: set() for k in keys}
+    indeg = dict.fromkeys(keys, 0)
+    for a, b in constraints:
+        if b not in succ[a]:
+            succ[a].add(b)
+            indeg[b] += 1
+    order: list[str] = []
+    placed: set[str] = set()
+    results: list[list[str]] = []
+
+    def rec(budget: int) -> int:
+        """Emit up to `budget` orders from this state; return the number emitted."""
+        if len(order) == len(keys):
+            results.append(list(order))
+            return 1
+        ready = sorted(k for k in keys if k not in placed and indeg[k] == 0)
+        emitted = 0
+        remaining = budget
+        for i, k in enumerate(ready):
+            if remaining <= 0:
+                break
+            left = len(ready) - i
+            share = -(-remaining // left)  # ceil: early siblings may roll unused budget
+            placed.add(k)
+            order.append(k)
+            for s in succ[k]:
+                indeg[s] -= 1
+            got = rec(min(share, remaining))
+            for s in succ[k]:
+                indeg[s] += 1
+            placed.discard(k)
+            order.pop()
+            emitted += got
+            remaining -= got
+        return emitted
+
+    rec(cap)
+    return results
+
+
 def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
     """Candidate interleavings, up to `cap`. One enumeration per feasible
     climax choice (which hard dilemma resolves last — the nesting order),
     each with an even share of the cap, so multi-hard candidate lists
-    always show every viable nesting."""
+    always show every viable nesting. Plain lexicographic enumeration is
+    kept while it samples honestly (recorded stories reproduce
+    byte-stable); it switches to fair-split only when its share was
+    truncated inside one subtree and an early choice went unsampled."""
     keys = sorted(planned.units)
     feasible = []
     for climax in planned.hard_resolves:
@@ -465,7 +547,10 @@ def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
     results: list[list[str]] = []
     share = max(1, cap // len(feasible))
     for cons in feasible:
-        results.extend(_orders(keys, cons, share))
+        orders = _orders(keys, cons, share)
+        if len(orders) == share and _prefix_degenerate(orders, keys, cons):
+            orders = _orders_fair(keys, cons, share)
+        results.extend(orders)
     return results[:cap]
 
 

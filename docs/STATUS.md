@@ -5,11 +5,33 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M8 (depth & scale) is planned — implementation contract in `docs/plans/m8-depth-scale.md`; engine PR (PR-1) is next
+> Last updated: 2026-07-10 · M8 PR-1 (depth & scale engine) is built — next: PR-1b (tensored residue arms) and PR-2 (the live medium exit run)
 
 ## Where we are
 
-**M8 is planned** (frontier planning session; the plan doc
+**The M8 engine is built** (PR-1; plan and record in
+`docs/plans/m8-depth-scale.md` — its "PR-1 outcome" section is the
+short version, the decision-log entry below the full one). The scale
+table is words-primary (mini-ADR A19): every preset anchors on
+`words_total`, scaffold depth is scope data (`ScaffoldShape`, enforced
+repairably at SEED — micro pins the old literals so the golden story
+and every recorded fixture hold unedited), collapse is capped
+(`passage_beats_max`, the choice-free cutter that lets deep scaffolds
+mint pages), POLISH's cadence budget is words-aware (engine-sized by
+iterated playthrough projection, cap-aligned seams only, diamonds or
+the new sidetracks), FILL enforces per-passage word bands
+(texture/scene/ending), B6 measures a playthrough walk instead of an
+arc view, B7 checks total words, and weave enumeration fair-splits
+when lexicographic DFS would return near-identical orders (measured
+at 63 units: all 64 candidates shared a 12-position prefix). The
+dilemma mixes moved per the D4 simulation: medium 2H+3S, long 2H+4S
+(+1 hard measured dominated: +78% words for zero real choices per
+arc). Simulated exit projection at medium: 46-52.5k words, 124-142
+passages, B6 780, all inside the recalibrated bands. The golden story
+is band-clean (0 errors, 0 warnings) — one hand-authored texture
+passage was trimmed to model the new register. 390 tests.
+
+**M8 planning record** (frontier planning session; the plan doc
 [`docs/plans/m8-depth-scale.md`](plans/m8-depth-scale.md) is the
 hand-off contract, the decision-log entry below is the record). The
 milestone in one line: the SEED scaffold's depth numbers are prompt
@@ -414,12 +436,18 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M8 PR-1 — the depth & scale engine work** (contract:
-   `docs/plans/m8-depth-scale.md`, phases 0–4): phase 0 (structural
-   simulation, band calibration, 01 §2 rewrite, A19) is frontier;
-   phases 1/2/4 are mid-tier delegable against the plan's decisions
-   D2/D4/D6. Then PR-1b (tensored residue arms, D5 — frontier) and
-   PR-2 (the live corpus-grounded `medium` exit run).
+1. **M8 PR-1b — tensored residue arms** (plan D5, frontier: the
+   G4/I13 surface): a light-residue arm may carry its own cosmetic
+   diamond — a choice that exists only for players who made the
+   matching upstream choice; golden-story extension per the
+   documentation contract. Read the plan's "PR-1 outcome" section
+   first — the cadence findings change the shape's value (it adds
+   state-flavored choice density where seam capacity binds).
+2. **M8 PR-2 — the live exit run**: fresh premise, corpus-grounded
+   `medium` on the default Opus/Haiku map, budget est. $8–14 (cap
+   $20; ~124–142 passages projected vs run 7's 35–48 at $4.03).
+   Acceptance: roadmap §M8 exit; record the measured cosmetic:real
+   ratio and walk-B6 against the simulation's 780 projection.
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
@@ -589,6 +617,52 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M8 PR-1: the depth & scale engine):** Built to the
+  plan (phases 0–4); the calibration surfaced four findings that
+  reshaped the work, each now engine behavior. (1) **B6 measured the
+  wrong thing**: the arc-view sum counts both arms of every cosmetic
+  diamond — words no single reader traverses — which is why run 6 saw
+  diamonds barely move it. B6 now walks a deterministic playthrough
+  per arc (first live choice staying on the arc, decisions offered
+  counted); the preserved runs re-measure at 682–1130 vs the old
+  1072–1248 — the feel gap was real but half the metric's size.
+  (2) **Deep chains alone mint no words**: an unbroken N-beat run
+  collapses into one passage with one word budget, so pre-M8 the only
+  page-cutter was the cadence diamond and words were rigidly coupled
+  to cosmetic choices. Collapse is now capped per scope
+  (`passage_beats_max`; micro pins 5 so the golden story's largest
+  hand-authored group and every recorded fixture hold); the cadence
+  budget offers only cap-aligned seams, because a mid-chunk split
+  mints a whole extra passage per choice — the sizing loop saturates
+  at exactly that marginal cost instead of converging (observed:
+  93–149 diamonds, 87–133k words before the seam restriction).
+  (3) **Arm prose inflation is half the false-choice tax**: live runs
+  wrote residue/false-branch passages at ~0.95x narrative weight
+  (measured 392/412, 511/537, 451/472, 430/452). Texture passages now
+  take a short band (~lo + a third of the span, FILL-enforced with
+  the usual 20% slack), endings get +100 headroom, and the
+  medium/long scene caps tightened to what models measurably write
+  (~0.9x cap). (4) **The D4 mix verdict** (author's lever, measured):
+  at equal depth, medium 3H+2S costs +78% words over 2H+2S for zero
+  additional real choices per arc (worlds 4→8) — dominated; +1 soft
+  costs ~+23% and buys a real fork per arc. Medium is 2H+3S, long
+  2H+4S, hard counts stay 2. Also per the plan: weave enumeration
+  fair-splits only when plain lexicographic DFS exhausts its cap
+  inside one subtree (measured degeneracy: 63 units → all 64
+  candidates shared a 12-position prefix; recorded micro stories keep
+  plain enumeration, so the e2e fixtures replay unchanged), the
+  research prompt carries a sustaining-craft nudge at deep scopes,
+  and sidetracks (1-arm false branches keeping the direct edge) join
+  diamonds as cadence shapes. Projection at medium, both band
+  corners: 46–52.5k words, 124–142 passages, B4 99–141, B6 780,
+  cosmetic:real ≈ 4:1 — every band self-consistent
+  (`tests/test_scale.py` asserts this against the presets). The
+  cosmetic:real ratio is capacity-bound, not density-tunable: beyond
+  seam capacity the only honest feel lever is more real forks. The
+  golden story is band-clean (0 errors, 0 warnings; README transcript
+  updated); its 2-beat texture arm was trimmed 314→241 words to model
+  the texture register, anchoring micro's B7 floor. 390 tests.
 
 - **2026-07-10 (M8 planned — the depth & scale implementation
   contract):** Full milestone plan written to

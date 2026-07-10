@@ -181,9 +181,12 @@ between:
    scaffolds that would only detonate at GROW's unrepairable gate: a
    hard path's chain tail must be an ending (the weave keeps the climax
    fork's endings and demotes the rest — I6), an ending anywhere else —
-   including anywhere in a locked chain — is a contradiction, and a
+   including anywhere in a locked chain — is a contradiction, a
    soft path's post-commit chain must carry the scope's minimum payoff
-   beats (I7).
+   beats (I7), and every chain's depth must sit inside the scope's
+   `ScaffoldShape` bands (01 §2 — depth is scope data since M8, not a
+   universal prompt literal), with all violations batched into one
+   repairable error.
 3. **Order & sketch** — declare pairwise dilemma relations; sketch where
    soft paths reconverge and with what residue weight.
 
@@ -198,7 +201,10 @@ between:
 The hardest stage, split deliberately:
 
 - **Deterministic core:** candidate interleaving from temporal hints +
-  ordering relations (topological constraints) — branched dilemmas
+  ordering relations (topological constraints) — enumeration switches to
+  fair-split (prefix-diverse) when plain lexicographic order exhausts the
+  candidate cap inside one subtree, so deep stories never choose among
+  near-identical orders (M8) — branched dilemmas
   contribute movable shared units plus one atomic resolve unit; a
   locked dilemma contributes every beat of its chain as a movable unit
   under chain constraints, so the storyline threads through the story
@@ -264,14 +270,20 @@ Two phases:
    residue diamond: the story visibly remembers whichever side was
    chosen), an arm being one beat or a 2-beat chain where the memory
    deserves a scene (an identically gated chain collapses into a single
-   passage); add false branches at cadence — a cosmetic
-   diamond (arms of 1–2 beats, different textures of the same forward
-   motion) roughly every 3–5 beats of a choice-less run, so a
-   playthrough keeps a genuine-feeling decision every ~250–800 words
-   (B6). The real choices are the dilemmas; cadence diamonds are safe
-   dressing precisely because the structure guarantees the real ones.
+   passage); add false branches at the engine-computed cadence budget
+   (M8): the engine projects a playthrough walk from the capped groups
+   and sizes the diamonds that bring words-per-choice into the B6 band,
+   offering only cap-aligned seam edges (a mid-chunk split would mint a
+   whole extra passage per choice) — the model chooses diamond (two
+   arms, different textures of the same forward motion) or sidetrack
+   (one arm, an optional detour the reader may decline) per site and
+   writes the arms. The real choices are the dilemmas; cadence sites
+   are safe dressing precisely because the structure guarantees the
+   real ones.
 2. **Build the passage layer:** collapse maximal linear runs into
-   passages (boundaries at forks/joins); merge intersection-adjacent
+   passages (boundaries at forks/joins; runs split at the scope's
+   `passage_beats_max` — the choice-free cutter, 01 §6); merge
+   intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
    audit** on every passage — for each possibly-active flag decide
    *irrelevant here* (annotate "don't address"), *compatible* (poly-state
@@ -289,7 +301,7 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details |
-| Gate G5 | Every passage has prose within its word budget (enforced at apply with 20% slack — models cannot hit exact windows; the exact range stays B5's advisory line); automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
+| Gate G5 | Every passage has prose within its word budget — per-passage since M8: texture passages (residue/false-branch arms) take the short band, endings get headroom, scenes the full band (01 §2) — enforced at apply with 20% slack (models cannot hit exact windows; the exact range stays B5's advisory line); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
 Order matters: FILL locks the Voice first, then picks a **reference
 arc** — one arbitrary complete playthrough, chosen by seeded selection

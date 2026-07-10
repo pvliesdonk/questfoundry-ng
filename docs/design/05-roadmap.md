@@ -223,7 +223,7 @@ in), and non-digit codeword fallbacks.
 | Risk | Mitigation |
 |---|---|
 | Illustration cost/quality on non-reproducible providers — paid APIs, no seeds, content-policy refusals, character drift across images | M7's sample-first gate + budget/priority caps spend; skip-if-exists makes reruns free; typed refusals get one reformulation; entity visual fragments in every prompt, reference-image conditioning as the escalation |
-| Deep scaffolds break the cadence math — more beats per Y may stretch choice-less runs faster than false branches can close them | M8 recalibrates presets and B6 together against measured runs; POLISH's cadence-targeted diamonds already meter by run length, not beat count |
+| Deep scaffolds break the cadence math — more beats per Y may stretch choice-less runs faster than false branches can close them | Addressed in M8 PR-1: the collapse cap cuts deep runs into pages without choices, and POLISH's diamond budget is sized by iterated playthrough projection against the B6 band (cap-aligned seams only); the live exit run confirms |
 | Preset calibration circularity — bands tuned on stories generated under the old bands | Words-primary scale table anchors on the corpus's external 300–600 words/choice band, not on our own output |
 | Weave candidate spread thins at scale — 64-candidate cap with tail-first DFS variety may under-sample early positions on 20+ unit stories | Measured watch item (first data at 13 units); widen the cap or diversify enumeration when a run shows clustering |
 | Exemplar leakage / style anchoring ahead of the Voice | M9 makes the reserved-folder exclusion structural; until then `craft.folders` scoping is documented as required (03 §10) |

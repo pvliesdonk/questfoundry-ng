@@ -11,6 +11,38 @@
 > M8 ships and STATUS records the outcome. Code references anchor on
 > named functions; line numbers are as of the commit adding this file.
 
+## PR-1 outcome (2026-07-10) — read before PR-1b / PR-2
+
+Phases 0–4 shipped; the calibration produced four findings the plan did
+not anticipate, all now engine behavior (STATUS decision log has the
+record):
+
+1. **B6 was measuring the wrong thing**: the arc-view sum counts both
+   arms of every diamond — words no single reader traverses. Walk-based
+   B6 on the preserved runs reads 682–1130 (not 1072–1248); the feel
+   gap was real but half the metric's size. B6 is a playthrough walk
+   now.
+2. **Deep chains alone mint no words**: an unbroken N-beat run
+   collapses into ONE passage with one word budget. The collapse cap
+   (`passage_beats_max`) is the choice-free cutter that lets deep
+   scaffolds yield pages; cadence diamonds meter choices only, and the
+   budget offers only cap-aligned seams (a mid-chunk split mints a
+   whole passage per choice and the sizing saturates).
+3. **Arm prose inflation is half the false-choice tax**: live runs
+   wrote arms at ~0.95x narrative weight. Texture passages now take a
+   short band (FILL-enforced); endings get headroom; the medium/long
+   scene caps tightened to what models measurably write.
+4. **The D4 verdict**: at equal depth, medium 3H+2S costs +78% words
+   over 2H+2S for zero additional real choices per arc (worlds 4→8) —
+   dominated; +1 soft costs ~+23% and buys a real fork. Medium is
+   2H+3S, long 2H+4S; hard counts stay at 2.
+
+Projected exits (simulation, both band corners): medium 46–52.5k words,
+124–142 passages, B6 780, cosmetic:real ≈ 4:1. Weave enumeration
+fair-splits when plain DFS is truncated inside one subtree (measured:
+63 units → all 64 candidates shared a 12-position prefix); recorded
+micro stories keep plain enumeration byte-stable.
+
 ## Why this milestone is the risk milestone of the scale era
 
 Every live run to date (runs 1–7) produced a *good, small* story:

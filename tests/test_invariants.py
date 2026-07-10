@@ -404,5 +404,6 @@ def test_golden_story_passes_all_gates(golden):
     issues = run_checks(golden.graph, golden.vision, golden.stage, enrichment=golden.enrichment)
     errors = [i for i in issues if i.severity == Severity.ERROR]
     assert errors == []
-    # the fixture is deliberately smaller than the micro passage target
-    assert any(i.check == "B3" for i in issues)
+    # band-clean under the words-primary scale table (M8): the golden
+    # fixture anchors micro's floor
+    assert issues == []

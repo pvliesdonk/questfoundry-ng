@@ -19,32 +19,37 @@ DILEMMAS AND PATHS:
 {% endfor %}
 {% endfor %}
 
+{% set shape = scope.shape %}
 REQUIREMENTS:
-- setup: 1-2 structural beats of world-building that open the story before any
+- setup: {{ shape.setup[0] }}-{{ shape.setup[1] }} structural beats of world-building that open the story before any
   dilemma is introduced.
 - scaffolds: one entry per BRANCHED dilemma (two paths), naming its two paths
   exactly as listed above.
 - locked_scaffolds: one entry per LOCKED dilemma. A locked storyline is a
-  fork-less subplot every player experiences: lead_in (1-3 beats that introduce
+  fork-less subplot every player experiences: lead_in ({{ shape.locked_lead_in[0] }}-{{ shape.locked_lead_in[1] }} beats that introduce
   and develop the question, effects as below), resolution (ONE beat where the
   story settles it — the explored answer becomes fact, no player choice), and
-  aftermath (1-2 beats playing out what the resolution leaves behind). It must
+  aftermath ({{ shape.locked_aftermath[0] }}-{{ shape.locked_aftermath[1] }} beats playing out what the resolution leaves behind). It must
   read as a complete mini-story on its own, and it must never end the story:
   no is_ending anywhere in a locked chain. Entry: {"dilemma", "path",
   "lead_in": [...], "resolution": {...}, "aftermath": [...]} with ordinary
   beat objects.
-- pre_commit: 2-3 beats per dilemma that introduce and develop the question —
+- pre_commit: {{ shape.pre_commit[0] }}-{{ shape.pre_commit[1] }} beats per dilemma that introduce and develop the question —
   every player sees these regardless of their eventual choice. Use effect
   "advances", "reveals" (a truth surfaces), or "complicates" (doubt deepens).
+  A deep chain must ESCALATE, never idle: each beat raises the cost of both
+  answers or narrows the room to avoid choosing — cut any beat that only
+  restates the stakes.
 - Each path: one commit beat (the irreversible act itself — concrete and dramatic)
-  and 1-3 post_commit beats proving that answer.
+  and {{ shape.post_commit[0] }}-{{ shape.post_commit[1] }} post_commit beats proving that answer — consequences compounding,
+  not aftermath padding.
 - HARD dilemma paths never rejoin: their final post-commit beat is an ending
   (is_ending: true) that resolves the whole story for that world. With more than
   one hard dilemma, a later stage nests their forks (the story forks once, then
   forks again inside each world, and endings multiply); still author every hard
   Y complete with endings as above — the engine keeps only the climax fork's.
 - SOFT dilemma paths will reconverge later (a later stage wires it): give each
-  soft path at least 1 post-commit payoff beat; do NOT mark soft beats as endings.
+  soft path at least {{ scope.min_payoff_beats }} post-commit payoff beat(s); do NOT mark soft beats as endings.
 - Each beat's story must read coherently along its own path: if you read one
   path's beats in order they form a complete mini-story.
 - Where a beat's timing relative to ANOTHER dilemma matters, add a temporal hint:

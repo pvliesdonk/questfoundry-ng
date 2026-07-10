@@ -88,6 +88,13 @@ class Beat(Node):
     def commits_dilemmas(self) -> list[str]:
         return [i.dilemma for i in self.dilemma_impacts if i.effect == ImpactEffect.COMMITS]
 
+    @property
+    def is_texture(self) -> bool:
+        """Texture beats — residue and false-branch arms — are a breath
+        of flavor beside the story's forward motion; a passage made only
+        of them writes toward the short word band (ScopePreset.words_for)."""
+        return self.purpose in (StructuralPurpose.RESIDUE, StructuralPurpose.FALSE_BRANCH)
+
 
 class FlagSource(StrEnum):
     DILEMMA = "dilemma"  # derived from a path consequence, granted at its commit beat

@@ -385,6 +385,9 @@ def research_pass(stage: Stage) -> PassSpec:
             "premise": project.vision.premise,
             "standing": standing,
             "max_queries": cfg.max_queries,
+            # deep scopes build long chains and braided subplots; the
+            # librarian should ask for sustaining craft, not just openings
+            "deep_scaffolds": project.vision.preset.shape.pre_commit[0] >= 4,
         }
 
     def _apply(proposal: ResearchProposal, project: Project) -> list[str]:

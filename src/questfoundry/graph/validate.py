@@ -727,14 +727,18 @@ def check_g5_prose_presence(ctx: Context) -> None:
 
 def check_b5_word_budget(ctx: Context) -> None:
     preset = ctx.vision.preset
-    lo, hi = preset.words_per_passage
     for passage in ctx.g.nodes_of(Passage):
+        beats = [ctx.g.node(b) for b in queries.beats_of_passage(ctx.g, passage.id)]
+        texture = bool(beats) and all(
+            isinstance(b, Beat) and b.is_texture for b in beats
+        )
+        lo, hi = preset.words_for(texture=texture, ending=passage.ending is not None)
         count = len(passage.prose.split())
         if passage.prose.strip() and not lo <= count <= hi:
             ctx.warn(
                 "B5",
                 f"passage {passage.id} has {count} words; scope '{preset.name}' "
-                f"budgets {lo}-{hi} (advisory)",
+                f"budgets {lo}-{hi}{' (texture)' if texture else ''} (advisory)",
             )
 
 
@@ -745,10 +749,21 @@ B6_WORDS_PER_CHOICE = (250, 800)
 
 
 def check_b6_choice_cadence(ctx: Context) -> None:
+    """B6 measures a playthrough, not an arc view (M8): a deterministic
+    walk per arc — first live choice whose target stays on the arc —
+    counting the prose words the walker traverses and the decisions
+    offered (>= 2 live choices; a target off the arc is still offered —
+    taking it is what makes a different arc). The pre-M8 arc-view sum
+    counted both arms of every cosmetic diamond, words no single reader
+    sees, which is why diamonds barely moved the measured number (live
+    run 6: 'the diamonds each add prose along with their choice')."""
     passages = ctx.g.nodes_of(Passage)
     if not passages or not any(p.prose.strip() for p in passages):
         return
     lo, hi = B6_WORDS_PER_CHOICE
+    starts = queries.start_passages(ctx.g)
+    if not starts:
+        return
     averages = []
     for selection in queries.arc_selections(ctx.g):
         view = queries.arc_view(ctx.g, selection)
@@ -757,22 +772,32 @@ def check_b6_choice_cadence(ctx: Context) -> None:
             for f in ctx.g.nodes_of(StateFlag)
             if any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
         }
+
+        def on_arc(passage_id: str, view=view) -> bool:
+            beats = queries.beats_of_passage(ctx.g, passage_id)
+            return bool(beats) and all(b in view for b in beats)
+
+        cur = next((p for p in starts if on_arc(p)), None)
+        if cur is None:
+            continue
         words = decisions = 0
-        for p in passages:
-            beats = queries.beats_of_passage(ctx.g, p.id)
-            if not beats or not all(b in view for b in beats):
-                continue
-            words += len(p.prose.split())
-            # a choice is offered when its gate is satisfiable on this
-            # arc — the target needn't be in view (choosing it is what
-            # makes a different arc)
-            live = [
-                e
-                for e in ctx.g.out_edges(p.id, EdgeKind.CHOICE)
-                if all(req in held for req in e.payload.get("requires", []))
-            ]
+        seen: set[str] = set()
+        while cur and cur not in seen:
+            seen.add(cur)
+            node = ctx.g.node(cur)
+            assert isinstance(node, Passage)
+            words += len(node.prose.split())
+            live = sorted(
+                (
+                    e
+                    for e in ctx.g.out_edges(cur, EdgeKind.CHOICE)
+                    if all(req in held for req in e.payload.get("requires", []))
+                ),
+                key=lambda e: e.dst,
+            )
             if len(live) >= 2:
                 decisions += 1
+            cur = next((e.dst for e in live if on_arc(e.dst)), None)
         if words:
             averages.append(words / max(decisions, 1))
     if not averages:
@@ -782,8 +807,23 @@ def check_b6_choice_cadence(ctx: Context) -> None:
         ctx.warn(
             "B6",
             f"a playthrough averages {mean:.0f} words per genuine choice "
-            f"(arc range {min(averages):.0f}-{max(averages):.0f}); the feel "
+            f"(walk range {min(averages):.0f}-{max(averages):.0f}); the feel "
             f"target is {lo}-{hi} (advisory)",
+        )
+
+
+def check_b7_total_words(ctx: Context) -> None:
+    """B7 (advisory): total prose words within the scope's words_total —
+    the scale table's primary anchor (A19). Checked once prose exists."""
+    total = sum(len(p.prose.split()) for p in ctx.g.nodes_of(Passage))
+    if not total:
+        return
+    lo, hi = ctx.vision.preset.words_total
+    if not lo <= total <= hi:
+        ctx.warn(
+            "B7",
+            f"the story carries {total} prose words; scope "
+            f"'{ctx.vision.preset.name}' targets {lo}-{hi} (advisory)",
         )
 
 
@@ -945,6 +985,7 @@ GATES: dict[Stage, list] = {
         check_g5_prose_presence,
         check_b5_word_budget,
         check_b6_choice_cadence,
+        check_b7_total_words,
     ],
     Stage.DRESS: [
         check_g6_art_direction,

@@ -211,7 +211,10 @@ def _write_context_for(passage_id: str):
         entities = [
             g.node(e) for e in passage.entities if isinstance(g.get(e), Entity)
         ]
-        lo, hi = project.vision.preset.words_per_passage
+        lo, hi = project.vision.preset.words_for(
+            texture=all(b.is_texture for b in beats),
+            ending=passage.ending is not None,
+        )
         return {
             "vision": project.vision,
             "voice": project.voice,
@@ -241,7 +244,14 @@ def _resolve_entity(g, ref: str) -> str:
 
 def _write_apply_for(passage_id: str):
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
-        lo, hi = project.vision.preset.words_per_passage
+        g = project.graph
+        passage = g.node(passage_id)
+        assert isinstance(passage, Passage)
+        beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
+        lo, hi = project.vision.preset.words_for(
+            texture=bool(beats) and all(b.is_texture for b in beats),
+            ending=passage.ending is not None,
+        )
         count = len(proposal.prose.split())
         # models cannot hit exact word windows: the band catches runaway
         # or skimpy prose, the review pass owns quality — repair only

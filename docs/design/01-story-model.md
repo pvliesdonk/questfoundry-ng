@@ -45,23 +45,51 @@ of dilemmas (and how many hard), cast size, beats per path, passage count
 range, words per passage. Budgets make cost predictable (Goal G3) and give
 every LLM stage concrete targets.
 
-| Preset | Dilemmas (hard+soft, branched) | Locked (max) | Cast | Passages (approx.) |
-|---|---|---|---|---|
-| `micro` | 1 + 1 | 1 | 3–5 | 10–20 |
-| `short` | 1 + 2 | 2 | 5–8 | 18–30 |
-| `medium` | 2 + 2 | 3 | 7–10 | 25–40 |
-| `long` | 2 + 3 | 4 | 9–14 | 35–60 |
+**The scale table is words-primary** (mini-ADR A19, M8): each scope's
+primary anchor is the total prose words it targets — the thing the
+author holds, prints, and pays for. Every other band is *derived* from
+it and recalibrated by structural simulation (`tests/scale.py`:
+synthetic scaffolds at the shape bands, compiled through the real weave,
+collapse, and cadence machinery — never against stories generated under
+the old bands), then padded for live-run inflation (bridges; models
+exceeding minimums).
 
-Passage bands were recalibrated against the first live runs (2026-07-09):
-the original numbers were *beat* counts from the one-beat-one-passage
-era, and the passage collapse redefined the unit under them. A band now
-states what the scaffold structurally yields; the *feel* of size — how
-often the reader genuinely chooses — is checked separately (B6, words
-between choices per playthrough, target ≈250–800). Scale by adding
-structure (locked dilemmas §4; deeper Ys — see STATUS), never by
-padding prose. The locked column is an allowance, not a floor:
-BRAINSTORM overgenerates by up to that many dilemmas and triage locks
-the surplus (B1).
+| Preset | Words (total) | Dilemmas (hard+soft, branched) | Locked (max) | Cast | Passages (derived) |
+|---|---|---|---|---|---|
+| `micro` | 2.4–9k | 1 + 1 | 1 | 3–5 | 8–24 |
+| `short` | 9–22k | 1 + 2 | 2 | 5–8 | 24–64 |
+| `medium` | 20–55k | 2 + 3 | 3 | 8–12 | 90–160 |
+| `long` | 45–95k | 2 + 4 | 4 | 10–16 | 140–280 |
+
+Scaffold depth is scope data too (`ScaffoldShape` — before M8 the
+depths were universal prompt literals, so `micro` and `long` got the
+same skeleton; micro still pins those literals so the golden story and
+recorded fixtures hold):
+
+| Preset | setup | pre-commit | post-commit/path | locked lead-in | locked aftermath |
+|---|---|---|---|---|---|
+| `micro` | 1–2 | 2–3 | 1–3 | 1–3 | 1–2 |
+| `short` | 1–2 | 3–4 | 2–4 | 2–4 | 1–3 |
+| `medium` | 2–3 | 4–6 | 3–5 | 3–5 | 2–3 |
+| `long` | 2–3 | 5–8 | 4–7 | 4–6 | 2–4 |
+
+The derivation, recorded so recalibration stays arithmetic: models
+write a passage at ~0.9× its word band's cap (measured across every
+live run), so words ≈ passages × 0.9·cap; passages come from beats via
+the collapse cap (§6) plus the cadence diamonds; beats come from the
+shape bands through the weave (units after a hard fork instantiate per
+world). The *feel* of size — how often the reader genuinely chooses —
+is checked separately (B6, words per choice along a *playthrough walk*,
+target ≈250–800; a walk traverses one diamond arm, not both, which is
+what an arc-view sum over-counted). Total words are checked as B7.
+Scale by adding structure (locked dilemmas §4, deeper Ys), never by
+padding prose — and the word budgets enforce the converse: texture
+passages (residue and false-branch arms) write toward a short band,
+about a third of the scene band above the floor, because an arm written
+at scene weight is the false-choice tax in word form. Ending passages
+get headroom above the scene band (climax resolutions run long). The
+locked column is an allowance, not a floor: BRAINSTORM overgenerates by
+up to that many dilemmas and triage locks the surplus (B1).
 
 **Voice** — a singleton record created by FILL before any prose: POV,
 tense, register, rhythm rules, banned patterns. The operational descendant
@@ -299,7 +327,13 @@ prose container. POLISH creates passages by **collapsing** maximal linear
 runs of beats (boundaries fall at divergences, convergences, and gate
 changes — an identically gated linear chain, like a multi-beat residue
 arm, is one gated passage) and by merging intersection-adjacent beats
-into single scenes where narratable.
+into single scenes where narratable. Collapse is **capped** (M8,
+`passage_beats_max`): a run longer than the scope's cap splits
+front-to-back into cap-sized passages. Every beat is a story moment
+with a prose claim, but a passage's word budget is fixed — unbounded
+collapse would crush a deep run into one passage and the story would
+mint no pages from its added structure. The cap is the choice-free
+cutter; cadence diamonds meter *choices* (B6), never words.
 Each passage carries its beats, a derived summary, entity refs, and —
 after FILL — prose.
 

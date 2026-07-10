@@ -504,7 +504,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   cheap reviewer given a taste rule will launder it. The golden story's
   own summaries were swept to model the register (three similes and a
   personification removed; prose untouched). Validation rides the next
-  live run (next-up #3).
+  live run (next-up #2).
 
 - **2026-07-10 (locked dilemmas + richer residue):** The structural
   volume/depth effort, built as designed with five decisions worth the

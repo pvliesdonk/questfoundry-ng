@@ -158,17 +158,6 @@ A **beat** is a concrete story moment — the atomic unit from SEED onward.
 Every beat has a summary (what happens), entity references, and one of two
 classes:
 
-A summary is a **brief for the prose writer, never the prose**: plain
-declarative present tense stating who does what, what changes, and what it
-now costs — mood *named*, never performed. FILL writes the page from the
-brief in a Voice that does not exist until after POLISH; imagery spent in
-a summary is a style anchor smuggled past the Voice (the same bias-vector
-family as the removed canonical answer) and competes with the prose it is
-supposed to specify. Every stage that writes summaries (SEED, GROW's
-contextualize and bridge passes, POLISH's residue and passage passes)
-carries this register as a prompt contract; it is taste, so no gate checks
-it — the fence is the framing, telling the model who consumes its words.
-
 **Narrative beats** serve a dilemma. Each carries `dilemma_impacts`
 (which dilemma, and one of four effects: *advances*, *reveals*,
 *complicates*, *commits*) and `belongs_to` edges to path(s). Position in
@@ -203,6 +192,18 @@ rather than a zoo of subtypes:
 Residue and false-branch beats are *conditionally traversed* (by flag or
 by cosmetic choice); the rest are traversed by every arc that reaches
 them.
+
+Whatever its class, a beat's summary is a **brief for the prose writer,
+never the prose**: plain declarative present tense stating who does what,
+what changes, and what it now costs — mood *named*, never performed. FILL
+writes the page from the brief in a Voice that does not exist until after
+POLISH; imagery spent in a summary is a style anchor smuggled past the
+Voice (the same bias-vector family as the removed canonical answer) and
+competes with the prose it is supposed to specify. Every stage that
+writes summaries (SEED, GROW's contextualize and bridge passes, POLISH's
+residue and passage passes) carries this register as a prompt contract;
+it is taste, so no gate checks it — the fence is the framing, telling the
+model who consumes its words.
 
 ### The beat DAG
 

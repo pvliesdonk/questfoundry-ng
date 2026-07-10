@@ -1,7 +1,11 @@
 """Load -> save -> reload must be lossless (design principle 5)."""
 
+import pytest
+
+from questfoundry.models.base import Stage
+from questfoundry.models.craft import CraftConfig
 from questfoundry.project import load_project, save_project
-from questfoundry.project.io import Project
+from questfoundry.project.io import Project, ProjectError, scaffold_project
 
 
 def graph_signature(g):
@@ -143,3 +147,120 @@ def test_roundtrip_preserves_prose_as_sibling_files(golden, tmp_path):
     assert "prose" not in (tmp_path / "graph" / "passages" / "p-arrival.yaml").read_text()
     reloaded = load_project(tmp_path)
     assert reloaded.graph.node("passage:p-arrival").prose == arrival.prose
+
+
+def _digest(stage: str, note: str = "") -> str:
+    return f"---\nstage: {stage}\nfingerprint: abc123\n---\n\nDigest body {note}.\n"
+
+
+def test_craft_config_round_trips(vision, tmp_path):
+    from questfoundry.graph.store import StoryGraph
+
+    craft = CraftConfig(corpus="corpus/", folders=["voice"], top_k=6)
+    save_project(
+        Project(
+            root=tmp_path, name="t", stage=Stage.DREAM, vision=vision,
+            graph=StoryGraph(), craft=craft,
+        )
+    )
+    reloaded = load_project(tmp_path)
+    assert reloaded.craft == craft
+    assert "craft" in (tmp_path / "project.yaml").read_text()
+
+
+def test_research_digests_round_trip(vision, tmp_path):
+    from questfoundry.graph.store import StoryGraph
+
+    research = {"dream": _digest("dream"), "brainstorm": _digest("brainstorm", "two")}
+    save_project(
+        Project(
+            root=tmp_path, name="t", stage=Stage.BRAINSTORM, vision=vision,
+            graph=StoryGraph(), research=research,
+        )
+    )
+    assert (tmp_path / "research" / "dream.md").read_text() == research["dream"]
+    assert (tmp_path / "research" / "brainstorm.md").read_text() == research["brainstorm"]
+    reloaded = load_project(tmp_path)
+    assert reloaded.research == research
+
+
+def test_research_prune_removes_stale_files(vision, tmp_path):
+    from questfoundry.graph.store import StoryGraph
+
+    project = Project(
+        root=tmp_path, name="t", stage=Stage.BRAINSTORM, vision=vision,
+        graph=StoryGraph(),
+        research={"dream": _digest("dream"), "brainstorm": _digest("brainstorm")},
+    )
+    save_project(project)
+    assert (tmp_path / "research" / "brainstorm.md").exists()
+
+    project.research = {"dream": _digest("dream")}
+    save_project(project)
+    assert not (tmp_path / "research" / "brainstorm.md").exists()
+    assert (tmp_path / "research" / "dream.md").exists()
+
+
+def test_research_bad_filename_raises(tmp_path):
+    (tmp_path / "research").mkdir()
+    (tmp_path / "research" / "bogus.md").write_text(_digest("dream"), encoding="utf-8")
+    (tmp_path / "project.yaml").write_text("name: t\nstage: dream\n", encoding="utf-8")
+    (tmp_path / "vision.yaml").write_text(
+        "premise: test\ngenre: test\ntone: test\n", encoding="utf-8"
+    )
+    with pytest.raises(ProjectError):
+        load_project(tmp_path)
+
+
+def test_research_missing_frontmatter_raises(tmp_path):
+    (tmp_path / "research").mkdir()
+    (tmp_path / "research" / "dream.md").write_text("no frontmatter here\n", encoding="utf-8")
+    (tmp_path / "project.yaml").write_text("name: t\nstage: dream\n", encoding="utf-8")
+    (tmp_path / "vision.yaml").write_text(
+        "premise: test\ngenre: test\ntone: test\n", encoding="utf-8"
+    )
+    with pytest.raises(ProjectError):
+        load_project(tmp_path)
+
+
+def test_research_digest_for_later_stage_survives_save(vision, tmp_path):
+    """A digest for a stage the project hasn't reached yet (e.g. seeded
+    ahead by a hand edit, or left over from a rerun) round-trips
+    untouched -- io.py never filters research by project.stage."""
+    from questfoundry.graph.store import StoryGraph
+
+    research = {"fill": _digest("fill")}
+    project = Project(
+        root=tmp_path, name="t", stage=Stage.DREAM, vision=vision,
+        graph=StoryGraph(), research=research,
+    )
+    save_project(project)
+    reloaded = load_project(tmp_path)
+    assert reloaded.stage == Stage.DREAM
+    assert reloaded.research == research
+    save_project(reloaded)
+    assert (tmp_path / "research" / "fill.md").read_text() == research["fill"]
+
+
+def test_project_without_craft_or_research_is_byte_identical(vision, tmp_path):
+    """M6 must be invisible without a craft: block: no new directory, no
+    new project.yaml key, for a project that never sets craft/research."""
+    from questfoundry.graph.store import StoryGraph
+
+    project = Project(root=tmp_path, name="t", stage=Stage.DREAM, vision=vision, graph=StoryGraph())
+    save_project(project)
+    assert not (tmp_path / "research").exists()
+    meta_text = (tmp_path / "project.yaml").read_text()
+    assert "craft" not in meta_text
+
+    reloaded = load_project(tmp_path)
+    assert reloaded.craft is None
+    assert reloaded.research == {}
+    save_project(reloaded)
+    assert not (tmp_path / "research").exists()
+    assert (tmp_path / "project.yaml").read_text() == meta_text
+
+
+def test_scaffold_project_does_not_create_research_dir(tmp_path):
+    scaffold_project(tmp_path / "proj", "t", "micro")
+    assert not (tmp_path / "proj" / "research").exists()

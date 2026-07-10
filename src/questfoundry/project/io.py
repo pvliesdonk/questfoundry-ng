@@ -17,6 +17,7 @@ from questfoundry.graph import mutations
 from questfoundry.graph.store import FreezeRecord, StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import Vision, Voice
+from questfoundry.models.craft import CraftConfig
 from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
 from questfoundry.models.enrichment import (
     ArtDirection,
@@ -80,6 +81,10 @@ class Project:
     llm: dict = field(default_factory=lambda: dict(DEFAULT_LLM_CONFIG))
     # Author steering notes per stage, injected into that stage's prompts
     steering: dict[str, str] = field(default_factory=dict)
+    # Craft-corpus config (project.yaml `craft:` block); None = feature off
+    craft: CraftConfig | None = None
+    # Research digests, raw text incl. frontmatter, keyed by stage value
+    research: dict[str, str] = field(default_factory=dict)
 
 
 class ProjectError(Exception):
@@ -215,6 +220,8 @@ def load_project(root: FSPath | str) -> Project:
     voice_file = root / "voice.yaml"
     voice = Voice.model_validate(_read(voice_file)) if voice_file.exists() else None
 
+    craft = CraftConfig.model_validate(meta["craft"]) if "craft" in meta else None
+
     return Project(
         root=root,
         name=meta["name"],
@@ -228,7 +235,42 @@ def load_project(root: FSPath | str) -> Project:
         enrichment=_load_enrichment(root),
         llm=meta.get("llm", dict(DEFAULT_LLM_CONFIG)),
         steering=meta.get("steering", {}),
+        craft=craft,
+        research=_load_research(root),
     )
+
+
+def _load_research(root: FSPath) -> dict[str, str]:
+    """research/<stage>.md, one raw digest (frontmatter + body) per stage.
+    io.py validates only that the filename names a stage and the file
+    opens with parseable YAML frontmatter -- a silently ignored digest is
+    a debugging trap. The digest schema itself (queries, fingerprint)
+    belongs to pipeline/research.py, which this module must not import."""
+    research: dict[str, str] = {}
+    research_dir = root / "research"
+    if not research_dir.is_dir():
+        return research
+    for f in sorted(research_dir.glob("*.md")):
+        try:
+            stage = Stage(f.stem)
+        except ValueError as exc:
+            raise ProjectError(f"{f}: research digest filename must be a stage name") from exc
+        text = f.read_text(encoding="utf-8")
+        _check_research_frontmatter(text, f)
+        research[stage.value] = text
+    return research
+
+
+def _check_research_frontmatter(text: str, path: FSPath) -> None:
+    if not text.startswith("---\n"):
+        raise ProjectError(f"{path}: research digest needs YAML frontmatter (---)")
+    try:
+        header, _ = text[4:].split("\n---\n", 1)
+    except ValueError as exc:
+        raise ProjectError(f"{path}: unterminated research digest frontmatter") from exc
+    meta = yaml.safe_load(header)
+    if not isinstance(meta, dict):
+        raise ProjectError(f"{path}: research digest frontmatter must be a YAML mapping")
 
 
 def _load_enrichment(root: FSPath) -> Enrichment:
@@ -308,10 +350,13 @@ def save_project(project: Project) -> None:
         meta["llm"] = project.llm
     if project.steering:
         meta["steering"] = project.steering
+    if project.craft is not None:
+        meta["craft"] = project.craft.model_dump(mode="json", exclude_defaults=True)
     _write(root / "project.yaml", meta)
     _write(root / "vision.yaml", project.vision.model_dump(mode="json", exclude_defaults=True))
     if project.voice is not None:
         _write(root / "voice.yaml", project.voice.model_dump(mode="json", exclude_defaults=True))
+    _save_research(root, project.research)
 
     for entity in g.nodes_of(Entity):
         default = DEFAULT_STAGE["entity"]
@@ -400,6 +445,18 @@ def save_project(project: Project) -> None:
         _write(root / "graph" / "freeze.yaml", g.frozen.model_dump(mode="json"))
 
     _save_enrichment(root, project.enrichment)
+
+
+def _save_research(root: FSPath, research: dict[str, str]) -> None:
+    """research/<stage>.md, one raw digest per stage (frontmatter owned by
+    pipeline/research.py -- io.py writes back exactly what it loaded, or
+    what the research pass set in memory). Mirrors the prose/ sibling-file
+    + prune pattern; an empty mapping must not create the directory."""
+    research_dir = root / "research"
+    for stage, text in research.items():
+        research_dir.mkdir(parents=True, exist_ok=True)
+        (research_dir / f"{stage}.md").write_text(text, encoding="utf-8")
+    _prune(research_dir, {f"{stage}.md" for stage in research}, pattern="*.md")
 
 
 def _save_enrichment(root: FSPath, enrichment: Enrichment) -> None:

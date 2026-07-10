@@ -78,8 +78,8 @@ def test_convergence_needs_on_golden(golden):
     assert need.weight == ResidueWeight.LIGHT
     assert need.rejoin == ("beat:tremor",)
     assert need.path_flags == {
-        "path:tell": "flag:elias-knows",
-        "path:hide": "flag:lie-between",
+        "path:tell": ["flag:elias-knows"],
+        "path:hide": ["flag:lie-between"],
     }
 
 
@@ -189,7 +189,7 @@ def test_residue_insertion_preserves_convergence(vision):
         summary="s",
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.RESIDUE,
-        requires_flags=[need.path_flags["path:sub-a"]],
+        requires_flags=[need.path_flags["path:sub-a"][0]],
     )
     followup = Beat(
         id="beat:afterglow-2",
@@ -197,7 +197,7 @@ def test_residue_insertion_preserves_convergence(vision):
         summary="s2",
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.RESIDUE,
-        requires_flags=[need.path_flags["path:sub-a"]],
+        requires_flags=[need.path_flags["path:sub-a"][0]],
     )
     pc.insert_residue_chain(g, [beat, followup], "path:sub-a", need.rejoin)
     issues = run_checks(g, vision, Stage.GROW)
@@ -207,6 +207,45 @@ def test_residue_insertion_preserves_convergence(vision):
     # an identically gated chain collapses into ONE gated passage
     groups = pc.collapse_groups(g)
     assert ["beat:afterglow", "beat:afterglow-2"] in groups
+
+
+def test_multi_flag_path_residue_covers_via_any_flag(vision):
+    """A path with two consequences derives two flags (live run 7). The
+    residue arm gates on one; G4 must accept any of the path's flags —
+    and must not depend on flag insertion order, which differs between a
+    live graph and a reloaded one (the old path->flag dict kept an
+    order-dependent winner, so the stage gate and qf validate diverged)."""
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    # a second consequence's flag on the same path, inserted after the first
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:sub-a-second",
+            created_by=Stage.GROW,
+            description="d",
+            source=FlagSource.DILEMMA,
+            path="path:sub-a",
+        ),
+    )
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    assert need.path_flags["path:sub-a"] == ["flag:sub-a", "flag:sub-a-second"]
+    mutations.freeze_topology(g)
+    for path in ("path:sub-a", "path:sub-b"):
+        arm = Beat(
+            id=f"beat:memory-{path.removeprefix('path:')}",
+            created_by=Stage.POLISH,
+            summary="s",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.RESIDUE,
+            # gate on the FIRST flag only; the second must still count as covered
+            requires_flags=[need.path_flags[path][0]],
+        )
+        pc.insert_residue_chain(g, [arm], path, need.rejoin)
+    issues = run_checks(g, vision, Stage.POLISH)
+    assert [i for i in issues if i.check == "G4" and "residue" in i.message] == []
 
 
 def _fork_rejoin_story(g: StoryGraph, sub_residue: ResidueWeight) -> None:
@@ -255,7 +294,7 @@ def test_residue_at_fork_rejoin_reaches_every_world(vision):
         summary="s",
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.RESIDUE,
-        requires_flags=[need.path_flags["path:sub-a"]],
+        requires_flags=[need.path_flags["path:sub-a"][0]],
     )
     pc.insert_residue_chain(g, [beat], "path:sub-a", need.rejoin)
     assert set(queries.successors(g, "beat:afterglow")) == set(need.rejoin)
@@ -297,7 +336,7 @@ def test_heavy_residue_at_fork_rejoin_needs_per_world_variants(vision, tmp_path)
     passages at every frontier beat — one set per world (M5)."""
     g = StoryGraph()
     _fork_rejoin_story(g, ResidueWeight.HEAVY)
-    flags = sorted(queries.dilemma_flags(g, "dilemma:sub").values())
+    flags = sorted(fl[0] for fl in queries.dilemma_flags(g, "dilemma:sub").values())
     assert _variant_needs(g) == {
         "beat:main-commit-a": flags,
         "beat:main-commit-b": flags,

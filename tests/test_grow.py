@@ -253,7 +253,7 @@ def test_residue_and_tails_see_through_the_bridge(tmp_path, vision):
         summary="s",
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.RESIDUE,
-        requires_flags=[need.path_flags["path:sub-a"]],
+        requires_flags=[need.path_flags["path:sub-a"][0]],
     )
     pc.insert_residue_chain(g, [residue], "path:sub-a", need.rejoin)
     assert queries.successors(g, "beat:sub-post-a") == ["beat:afterglow"]

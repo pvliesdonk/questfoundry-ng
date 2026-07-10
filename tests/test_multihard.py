@@ -226,7 +226,9 @@ def test_between_fork_soft_dilemma_lives_per_world(vision):
         "beat:sub-commit-a--main-a",
         "beat:sub-commit-a--main-b",
     ]
-    (flag_a,) = [f for f in queries.dilemma_flags(g, "dilemma:sub").values() if "sub-a" in f]
+    (flag_a,) = [
+        f for fl in queries.dilemma_flags(g, "dilemma:sub").values() for f in fl if "sub-a" in f
+    ]
     assert queries.grant_beats(g, flag_a) == [
         "beat:sub-commit-a--main-a",
         "beat:sub-commit-a--main-b",
@@ -264,7 +266,7 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
             summary="s",
             beat_class=BeatClass.STRUCTURAL,
             purpose=StructuralPurpose.RESIDUE,
-            requires_flags=[needs[0].path_flags[f"path:sub-{side}"]],
+            requires_flags=[needs[0].path_flags[f"path:sub-{side}"][0]],
         )
 
     mutations.freeze_topology(g)
@@ -292,7 +294,8 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
     one_armed = [
         i
         for i in issues
-        if i.check == "G4" and "flag:sub-b (path:sub-b)" in i.message and "main-b" in i.message
+        if i.check == "G4" and "flag:sub-b" in i.message and "(path:sub-b)" in i.message
+        and "main-b" in i.message
     ]
     assert one_armed
     # covering both paths in both worlds clears it; no arc dead-ends

@@ -209,10 +209,20 @@ def world_label(g: StoryGraph, world: frozenset[str]) -> str:
     return "+".join(sorted(paths_of_beat(g, c)[0] for c in world))
 
 
-def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, str]:
-    """path id -> the dilemma flag granted at that path's commit."""
+def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, list[str]]:
+    """path id -> the dilemma flags granted at that path's commit, sorted.
+    List-valued like grant semantics generally (A14): a path derives one
+    flag per consequence, so two consequences mean two flags — any of
+    them identifies the path. Sorted so no caller inherits node-iteration
+    order, which differs between a live graph and a reloaded one (live
+    run 7: the old dict comprehension kept an order-dependent winner and
+    G4 diverged between the stage gate and qf validate)."""
     paths = set(explored_paths(g, dilemma_id))
-    return {f.path: f.id for f in g.nodes_of(StateFlag) if f.path in paths}
+    out: dict[str, list[str]] = {}
+    for f in g.nodes_of(StateFlag):
+        if f.path in paths:
+            out.setdefault(f.path, []).append(f.id)
+    return {p: sorted(flags) for p, flags in out.items()}
 
 
 # -- arc views -------------------------------------------------------------

@@ -97,7 +97,10 @@ def _adapter_for(project):
         # Hosted Claude Code environments strip the reserved name
         # ANTHROPIC_API_KEY from sessions; QF_ANTHROPIC_API_KEY passes
         # through and wins when set.
-        provider = AnthropicProvider(api_key=os.environ.get("QF_ANTHROPIC_API_KEY"))
+        provider = AnthropicProvider(
+            api_key=os.environ.get("QF_ANTHROPIC_API_KEY"),
+            thinking=project.llm.get("thinking"),
+        )
         cache_dir = project.root / "cache" / "llm"
     elif provider_name == "openai":
         provider = OpenAIProvider()

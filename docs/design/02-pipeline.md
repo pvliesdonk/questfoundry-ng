@@ -139,7 +139,12 @@ between:
    **flexibility annotations** ("the docks could be the market"; "the
    spy could be the informant") — invitations GROW uses to create
    intersections — and **temporal hints** ("before D1's commit") guiding
-   interleave order.
+   interleave order. The apply step rejects (repairably, inside the
+   pass) scaffolds that would only detonate at GROW's unrepairable
+   gate: a hard path's chain tail must be an ending (the weave keeps
+   the climax fork's endings and demotes the rest — I6), an ending
+   anywhere else is a contradiction, and a soft path's post-commit
+   chain must carry the scope's minimum payoff beats (I7).
 3. **Order & sketch** — declare pairwise dilemma relations; sketch where
    soft paths reconverge and with what residue weight.
 

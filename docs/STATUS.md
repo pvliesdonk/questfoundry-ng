@@ -454,6 +454,75 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-09 (Sonnet 5 evaluation — closed, keep Opus):** Question under test:
+  can `claude-sonnet-5` ($3/$15 per MTok, $2/$10 intro through
+  2026-08-31) replace `claude-opus-4-8` ($5/$25) as architect/writer in
+  the default model map? Method: the same Bubblegum Alibi premise +
+  dream steering, fresh project (`medium`, recalibrated presets), full
+  DREAM→DRESS run on an all-Sonnet map, judged against the preserved
+  Opus run on cost, repair rounds, gate cleanliness, and prose. Two
+  adapter findings before GROW even started, both fixed here: (1)
+  Sonnet 5 runs *adaptive thinking by default* and thinking tokens
+  bill/count against `max_tokens` — the 8192 default starved a writer
+  call into an empty response after ~7.5k-token thinks on architect
+  calls (Opus never exceeded ~3k output). Adapter default is now 32768;
+  unused budget costs nothing. (2) The Anthropic SDK rejects
+  non-streaming requests whose `max_tokens` implies a >10-minute worst
+  case — the provider now streams and collects the final message, same
+  contract otherwise. **Default-config verdict: not faster, not
+  cheaper.** Aborted mid-run (author's call) at the GROW/POLISH
+  boundary — at the abort decision, 11 Sonnet calls had emitted 88k
+  output tokens (single GROW calls at 18–22k, ~90% billed thinking)
+  versus 74k for the *entire* 63-call Opus run; one more in-flight
+  call completed before the kill, putting the run's final ledger at
+  12 calls / 107k output / $1.18 intro. Pace projected $5–8 intro
+  for the full story versus Opus's $3.24,
+  and slower wall-clock. Second experiment in flight: the provider now
+  takes an optional `llm.thinking` config ("disabled" opts out of
+  Sonnet 5's thinking-on default; unset sends nothing, so the Opus
+  default map is untouched), and the same premise is rerunning
+  thinking-off through FILL — enough to judge structure + prose
+  quality at the config where Sonnet actually is cheap (~$1–1.5 per
+  medium story at intro pricing). First thinking-off finding, and the
+  first engine improvement a cheaper model has bought us: it violated
+  the scaffold prompt's explicit ending contract (endings on one hard
+  dilemma's tails but not the other's) and under-built one soft arm —
+  neither caught until GROW's unrepairable gate, ~10 wasted calls
+  later (I6 ×16, I7 ×1). `_scaffold_apply` now rejects both shapes as
+  repairable `ApplyError`s at SEED (hard tails must be endings, ending
+  nowhere else, soft arms carry the scope's `min_payoff_beats`), with
+  violating-construction tests (`tests/test_seed.py`) and the SEED
+  contract paragraph in design doc 02 extended. Opus never tripped
+  this; a model that does now costs one repair round instead of a dead
+  stage. The rerun then repaired SEED on the first live round, passed
+  GROW's gate, and cleared POLISH — before FILL died on the next
+  finding: thinking-off Sonnet writes *literal newlines* inside JSON
+  strings (prose payloads), which strict JSON rejects as control
+  characters, and it repeated the mistake on retry. The adapter now
+  parses with `strict=False` — that relaxes only control-chars-in-
+  strings (unambiguous intent in a prose payload); structural errors
+  still raise and retry.
+
+  **Final verdict (author's call, run aborted in FILL): keep
+  `claude-opus-4-8` as the default architect/writer.** Thinking-on
+  Sonnet is strictly worse here: 2–3× the cost (billed thinking
+  dominates: 107k output tokens in 12 calls vs 74k for Opus's whole
+  63-call run) and slower. Thinking-off Sonnet is genuinely cheap
+  ($0.65 through POLISH; a full run would land ~$1–1.5 intro vs Opus
+  $3.24) but needed three engine interventions in one partial run —
+  a scaffold-contract violation Opus never made, repeated
+  JSON-discipline failures, plus the shared adaptive-thinking/
+  streaming adapter fixes — and still never produced a passage to
+  judge. The failure profile fits the model-economics table's
+  prediction for sub-frontier tiers on narrative/DAG semantics; the
+  three hardening fixes (SEED apply-time scaffold rules, max_tokens
+  headroom + streaming, lenient string parse) are the evaluation's
+  lasting value and stay regardless of model choice. Total tuition:
+  ~$1.83 intro ($1.18 thinking-on final ledger + $0.65 thinking-off
+  through its FILL abort). Evaluation projects left at
+  `/home/user/stories/bubblegum-sonnet{,-nothink}` (session-local,
+  not committed).
+
 - **2026-07-09 (live run 6, validation micro — "The Cartography of
   Small Kindnesses", PR #24):** Fresh micro premise (they/them
   protagonist by design) validating the calibration batch. Results:

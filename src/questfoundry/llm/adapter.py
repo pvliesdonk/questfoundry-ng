@@ -49,6 +49,13 @@ class AdapterError(Exception):
     """Raised when the model cannot produce schema-valid output after retries."""
 
 
+def _loads(text: str):
+    # strict=False accepts literal control characters (real newlines) inside
+    # strings — models writing prose payloads emit these; the intent is
+    # unambiguous and structural errors still raise.
+    return json.loads(text, strict=False)
+
+
 def _extract_json(text: str) -> str:
     """Parse `text` as JSON, tolerating a fenced block or surrounding prose.
 
@@ -58,7 +65,7 @@ def _extract_json(text: str) -> str:
     """
     stripped = text.strip()
     try:
-        json.loads(stripped)
+        _loads(stripped)
         return stripped
     except json.JSONDecodeError:
         pass
@@ -99,7 +106,10 @@ class LLMAdapter:
         *,
         cache_dir: Path | None = None,
         ledger_path: Path | None = None,
-        max_tokens: int = 8192,
+        # Reasoning models (Anthropic adaptive thinking, gpt-5 family) spend
+        # thinking tokens from this same budget before any text; 8192 starved
+        # claude-sonnet-5 into empty responses. Unused budget costs nothing.
+        max_tokens: int = 32768,
     ) -> None:
         self._provider = provider
         self._model_map = model_map
@@ -130,7 +140,7 @@ class LLMAdapter:
             key = cache.compute_key(model, system, full_prompt, schema)
             cached_text = cache.get(self._cache_dir, key)
             if cached_text is not None:
-                result = schema.model_validate(json.loads(_extract_json(cached_text)))
+                result = schema.model_validate(_loads(_extract_json(cached_text)))
                 self._log(role, model, Usage(0, 0), cached=True, retries=0)
                 return result
 
@@ -143,7 +153,7 @@ class LLMAdapter:
             )
             last_text = response.text
             try:
-                parsed = json.loads(_extract_json(response.text))
+                parsed = _loads(_extract_json(response.text))
                 result = schema.model_validate(parsed)
             except (json.JSONDecodeError, ValidationError) as exc:
                 last_error = exc

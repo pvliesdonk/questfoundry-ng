@@ -38,7 +38,12 @@ class GeminiProvider:
 
     def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
         import httpx
+        from google.genai import errors
 
+        # ServerError is the SDK's 5xx class (503 UNAVAILABLE killed live
+        # run 8 after the transport retry landed) — as transient as a
+        # dropped connection. ClientError (4xx) stays fatal: retrying a
+        # bad request only re-bills it.
         last: Exception | None = None
         for attempt in range(_TRANSPORT_RETRIES + 1):
             if attempt:
@@ -47,7 +52,7 @@ class GeminiProvider:
                 return self._generate_once(
                     system=system, prompt=prompt, model=model, max_tokens=max_tokens
                 )
-            except httpx.TransportError as e:
+            except (httpx.TransportError, errors.ServerError) as e:
                 last = e
         assert last is not None
         raise last

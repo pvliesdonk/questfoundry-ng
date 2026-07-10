@@ -21,9 +21,22 @@ YOUR TASKS:
 1. cut_entities: cut any entity that doesn't serve a dilemma or the ensemble
    (id + one-line reason). Keep at least {{ scope.cast_min }} entities, and never cut an
    entity that would leave a dilemma with no retained anchor. Cutting nothing is fine.
-2. paths: create exactly one path per answer, for BOTH answers of EVERY dilemma.
+2. Give every dilemma a disposition. Exactly {{ scope.hard_dilemmas }} hard and
+   {{ scope.soft_dilemmas }} soft dilemma(s) are BRANCHED: both answers get paths and the
+   player chooses between them. Every other dilemma is LOCKED: exactly one answer
+   gets a path — the story explores that answer as a subplot woven through every
+   playthrough, the player never chooses, and the unexplored answer stays a
+   permanent shadow the prose can invoke (in a mystery, the red herrings; the
+   suspicion that resolves without a fork). Branch the questions whose BOTH sides
+   deserve to be lived; lock the ones whose drama enriches the world either way.
+   List each locked dilemma in "locked": {"dilemma", "reason"} (one line).
+   At most {{ scope.locked_dilemmas }} may be locked; locking none is allowed only if the
+   dilemma counts already match the branched budget exactly.
+3. paths: create exactly one path per EXPLORED answer — both answers of every
+   branched dilemma, the one canonized answer of every locked dilemma.
    Each path: id (path:slug), an optional short name, explores (the answer id), and
    1-2 consequences. A consequence is the narrative outcome of the choice, phrased
    as WORLD STATE ("the mentor is hostile"), never as player action ("player chose
-   to distrust"). Consequence ids: consequence:slug.
+   to distrust"). Consequence ids: consequence:slug. A locked path's consequences
+   become facts of the world on every playthrough, so phrase them as settled state.
 {% include "_shared.j2" %}

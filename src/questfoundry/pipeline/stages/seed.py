@@ -7,9 +7,14 @@ Y ordering (pre-commit chain → per-path commit → post-commit chain).
 Cross-dilemma interleaving is GROW's job (M2) — after SEED the beat
 graph is a set of disconnected Y scaffolds plus a setup chain.
 
-M1 scope notes (tracked in docs/STATUS.md): every retained dilemma
-explores both answers (locked-dilemma shadows deferred); no dilemma
-cuts at triage; no temporal hints or flexibility edges yet.
+Triage gives every dilemma a disposition: *branched* (both answers get
+paths — the fork the player will choose) or *locked* (one answer gets a
+path — a fork-less storyline woven through every playthrough; the other
+answer stays a permanent shadow). Branched counts must match the scope's
+role budget exactly; up to `locked_dilemmas` may lock (B1).
+
+Scope notes (tracked in docs/STATUS.md): no dilemma cuts at triage —
+BRAINSTORM's overgeneration is absorbed entirely by locked dispositions.
 """
 
 from __future__ import annotations
@@ -60,10 +65,22 @@ class PathSpec(BaseModel):
     consequences: list[ConsequenceSpec] = Field(min_length=1)
 
 
+class LockSpec(BaseModel):
+    """A locked disposition: the dilemma keeps exactly one path — the
+    answer the story canonizes — and the other answer stays a permanent
+    shadow (design doc 01 §4)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str
+    reason: str
+
+
 class TriageProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     cut_entities: list[CutSpec] = []
+    locked: list[LockSpec] = []
     paths: list[PathSpec] = Field(min_length=2)
 
 
@@ -88,13 +105,61 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
     g = project.graph
     for cut in proposal.cut_entities:
         mutations.set_entity_disposition(g, cut.id, retained=False)
-    explored = {p.explores for p in proposal.paths}
+
+    answer_dilemma = {
+        a: d.id for d in g.nodes_of(Dilemma) for a in queries.answers_of(g, d.id)
+    }
+    explored_by_dilemma: dict[str, set[str]] = {}
+    for spec in proposal.paths:
+        did = answer_dilemma.get(spec.explores)
+        if did is None:
+            raise ApplyError(f"path {spec.id} explores unknown answer {spec.explores!r}")
+        explored_by_dilemma.setdefault(did, set()).add(spec.explores)
+
+    locked_reasons = {s.dilemma: s.reason for s in proposal.locked}
+    unknown = sorted(set(locked_reasons) - set(answer_dilemma.values()))
+    if unknown:
+        raise ApplyError(f"locked names unknown dilemma(s) {unknown}")
+
+    # Every dilemma gets a disposition: branched (both answers explored)
+    # or locked (one answer explored, declared with a reason). Branched
+    # counts must match the scope's role budget exactly (B1).
+    preset = project.vision.preset
+    branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
     for d in g.nodes_of(Dilemma):
-        missing = set(queries.answers_of(g, d.id)) - explored
-        if missing:
+        n = len(explored_by_dilemma.get(d.id, set()))
+        if n == 2:
+            if d.id in locked_reasons:
+                raise ApplyError(
+                    f"dilemma {d.id} is listed in locked but both its answers "
+                    "have paths; a locked dilemma explores exactly one"
+                )
+            branched[d.role] += 1
+        elif n == 1:
+            if d.id not in locked_reasons:
+                raise ApplyError(
+                    f"dilemma {d.id} has a path for only one answer; either add "
+                    "the other answer's path (branched) or declare it in locked "
+                    "with a reason"
+                )
+        else:
             raise ApplyError(
-                f"dilemma {d.id}: every answer needs a path in M1; missing {sorted(missing)}"
+                f"dilemma {d.id} has no path; branch it (two paths) or lock it "
+                "(one path + a locked entry)"
             )
+    want = {DilemmaRole.HARD: preset.hard_dilemmas, DilemmaRole.SOFT: preset.soft_dilemmas}
+    for role, count in branched.items():
+        if count != want[role]:
+            raise ApplyError(
+                f"exactly {want[role]} {role.value} dilemma(s) must be branched "
+                f"(both answers explored); got {count}"
+            )
+    if len(locked_reasons) > preset.locked_dilemmas:
+        raise ApplyError(
+            f"scope {preset.name!r} allows at most {preset.locked_dilemmas} locked "
+            f"dilemma(s); got {len(locked_reasons)}"
+        )
+
     try:
         for spec in proposal.paths:
             mutations.add_path(
@@ -111,6 +176,7 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
     return [
         f"cut: {[c.id for c in proposal.cut_entities] or 'nothing'}",
         f"paths: {', '.join(p.id for p in proposal.paths)}",
+        f"locked: {', '.join(sorted(locked_reasons)) or 'nothing'}",
     ]
 
 
@@ -152,11 +218,26 @@ class DilemmaScaffold(BaseModel):
     paths: list[PathScaffold] = Field(min_length=2, max_length=2)
 
 
+class LockedScaffold(BaseModel):
+    """A locked dilemma's storyline: a fork-less chain every player
+    experiences — lead-in, one resolution beat (the canonized answer
+    settles), aftermath (design doc 01 §4)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str
+    path: str
+    lead_in: list[BeatSpec] = Field(min_length=1)
+    resolution: BeatSpec
+    aftermath: list[BeatSpec] = Field(min_length=1)
+
+
 class ScaffoldProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     setup: list[BeatSpec] = []
     scaffolds: list[DilemmaScaffold]
+    locked_scaffolds: list[LockedScaffold] = []
 
 
 def _scaffold_context(project: Project) -> dict:
@@ -176,7 +257,7 @@ def _scaffold_context(project: Project) -> dict:
                     ],
                 }
             )
-        dilemmas.append({"dilemma": d, "paths": paths})
+        dilemmas.append({"dilemma": d, "paths": paths, "locked": len(paths) == 1})
     return {
         "vision": project.vision,
         "scope": project.vision.preset,
@@ -219,14 +300,24 @@ def _chain(g, beat_ids: list[str]) -> None:
 
 def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
     g = project.graph
+    branched_ids = set(queries.branched_dilemmas(g))
+    locked_ids = set(queries.locked_dilemmas(g))
     covered = {s.dilemma for s in proposal.scaffolds}
-    expected = {d.id for d in g.nodes_of(Dilemma)}
-    if covered != expected:
+    if covered != branched_ids:
         raise ApplyError(
-            f"scaffolds must cover every dilemma exactly once; "
-            f"missing {sorted(expected - covered)}, unknown {sorted(covered - expected)}"
+            f"scaffolds must cover every branched dilemma exactly once; "
+            f"missing {sorted(branched_ids - covered)}, "
+            f"unknown or locked {sorted(covered - branched_ids)}"
+        )
+    covered_locked = {s.dilemma for s in proposal.locked_scaffolds}
+    if covered_locked != locked_ids:
+        raise ApplyError(
+            f"locked_scaffolds must cover every locked dilemma exactly once; "
+            f"missing {sorted(locked_ids - covered_locked)}, "
+            f"unknown or branched {sorted(covered_locked - locked_ids)}"
         )
 
+    expected = branched_ids | locked_ids
     all_specs = list(proposal.setup) + [
         s
         for scaffold in proposal.scaffolds
@@ -235,10 +326,21 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
             *(b for p in scaffold.paths for b in (p.commit, *p.post_commit)),
         )
     ]
-    for spec in all_specs:
+    locked_specs = [
+        s
+        for scaffold in proposal.locked_scaffolds
+        for s in (*scaffold.lead_in, scaffold.resolution, *scaffold.aftermath)
+    ]
+    for spec in all_specs + locked_specs:
         for hint in spec.hints:
             if hint.dilemma not in expected:
                 raise ApplyError(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
+    for spec in locked_specs:
+        if spec.is_ending:
+            raise ApplyError(
+                f"beat {spec.id} sets is_ending but belongs to a locked storyline — "
+                "a locked dilemma never ends the story; it weaves through it (I6)"
+            )
 
     # Ending placement is decided here but otherwise only caught at GROW's
     # gate, unrepairably: a hard path's chain tail must be an ending (the
@@ -326,6 +428,53 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
         applied.append(
             f"{dilemma_id}: Y with {len(scaffold.pre_commit)} shared beat(s), "
             f"{' + '.join(str(1 + len(p.post_commit)) for p in scaffold.paths)} exclusive"
+        )
+
+    for scaffold in proposal.locked_scaffolds:
+        explored = queries.explored_paths(g, scaffold.dilemma)
+        if [scaffold.path] != explored:
+            raise ApplyError(
+                f"locked scaffold for {scaffold.dilemma} must name its explored "
+                f"path {explored}, got {scaffold.path!r}"
+            )
+        for spec in scaffold.lead_in:
+            beat = _make_beat(
+                g,
+                spec,
+                beat_class=BeatClass.NARRATIVE,
+                impacts=[
+                    DilemmaImpact(dilemma=scaffold.dilemma, effect=ImpactEffect(spec.effect))
+                ],
+            )
+            mutations.add_beat(g, beat, [scaffold.path])
+        resolution = _make_beat(
+            g,
+            scaffold.resolution,
+            beat_class=BeatClass.NARRATIVE,
+            impacts=[DilemmaImpact(dilemma=scaffold.dilemma, effect=ImpactEffect.COMMITS)],
+        )
+        mutations.add_beat(g, resolution, [scaffold.path])
+        for spec in scaffold.aftermath:
+            beat = _make_beat(
+                g,
+                spec,
+                beat_class=BeatClass.NARRATIVE,
+                impacts=[
+                    DilemmaImpact(dilemma=scaffold.dilemma, effect=ImpactEffect(spec.effect))
+                ],
+            )
+            mutations.add_beat(g, beat, [scaffold.path])
+        _chain(
+            g,
+            [
+                *(s.id for s in scaffold.lead_in),
+                resolution.id,
+                *(s.id for s in scaffold.aftermath),
+            ],
+        )
+        applied.append(
+            f"{scaffold.dilemma} (locked): chain of "
+            f"{len(scaffold.lead_in) + 1 + len(scaffold.aftermath)} beat(s)"
         )
     return applied
 

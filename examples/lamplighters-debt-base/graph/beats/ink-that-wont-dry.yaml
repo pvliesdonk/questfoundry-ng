@@ -1,0 +1,13 @@
+id: beat:ink-that-wont-dry
+summary: Nights pass and the final ink stays wet; Tamsin understands the map is not finished
+  dying but waiting, and that her mother meant for someone to take up the pen.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: complicates
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+belongs_to:
+- path:complete-it
+- path:leave-it-unfinished

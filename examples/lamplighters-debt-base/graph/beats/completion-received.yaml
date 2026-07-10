@@ -1,0 +1,12 @@
+id: beat:completion-received
+summary: At Lamp Forty-Two the knocking changes pitch the instant the map closes, as if the
+  two-hundred-year wait has finally received the answer it was listening for.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: complicates
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:complete-it

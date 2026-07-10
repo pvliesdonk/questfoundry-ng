@@ -1,0 +1,10 @@
+id: beat:the-lamps-begin-to-go
+created_by: grow
+summary: The council's decision carries out into the night, and one by one the green flames
+  along the ring are put out, until only the forty-second still burns.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:the-council
+- location:lamp-forty-two
+- character:tamsin-veil

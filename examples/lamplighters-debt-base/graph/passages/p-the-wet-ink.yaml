@@ -1,0 +1,19 @@
+id: passage:p-the-wet-ink
+summary: Tamsin opens Junia's sealed logbook and finds a half-drawn map of something vast
+  circling beneath the canals, its final ink still impossibly wet. Beneath the black water
+  a rhythmic knocking grows insistent on Junia's old hours, and Oren Quist arrives from the
+  mainland to wire the ring, cheerful and unafraid.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+- character:oren-quist
+beats:
+- beat:knock-grows
+- beat:oren-arrives
+- beat:the-wet-ink
+choices:
+- label: Watch Oren unpack his crated instruments
+  to: passage:p-fb-oren-crate
+- label: Listen to what the townsfolk say of him
+  to: passage:p-fb-oren-talk

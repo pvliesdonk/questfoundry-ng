@@ -1,0 +1,25 @@
+id: passage:p-keep-their-name-arm
+summary: Sable stands beside Tamsin at the deepest bend, allied by her own choice, but neither
+  looks at the withheld page between them. Her hand rests near the tools but does not reach;
+  the thing they agreed never to say fills the silence like water rising slow, and Tamsin
+  feels the mercy and the weight of it both, and lets it stay buried.
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+- object:marren-logbook
+irrelevant_flags:
+- flag:map-dies-with-her
+beats:
+- beat:keep-their-name-arm
+- beat:keep-their-name-arm-followup
+choices:
+- label: Break the seal and kindle the forty-second
+  grants:
+  - flag:tamsin-becomes-keeper
+  - flag:town-keeps-its-chains
+  to: passage:p-break-the-seal-and-light
+- label: Set down the tools and let the flames die
+  grants:
+  - flag:flames-die-forever
+  - flag:the-thing-unbound
+  to: passage:p-let-the-flames-die

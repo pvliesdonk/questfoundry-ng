@@ -1,0 +1,11 @@
+There is a way of giving that leaves nothing back for the giver, and she finds it now, cheek to the iron, without a word for it.
+
+She does not speak. Speech would be a thing asked in return, and nothing here asks. So she gives it the only currency the creed acknowledges. She stays. She lets the cold of the stone drink the last warmth from her jaw and does not flinch from the drinking. She lets the hum climb her spine one vertebra at a time and does not brace against it. Her hands, brine-chapped and idle now, lie open on the salt-crusted lip of the ring, palms up, the way a person lays down a thing they will not take up again.
+
+The knock comes. She receives it. It comes again and she receives it again, and there is no counting in it, no ring to number, only the one slow beat that has waited two hundred years for someone to lower her face to the floor of the world and say nothing and mean it kindly.
+
+She thinks of her mother's coat heavy on her shoulders. She thinks the drowned are not gone. They are only somewhere the light does not reach and the listening does. Whatever this is beneath the iron and the black water, unnamed and not to be named, she gives it the tenderness it was owed across all those unanswered years, gives it without the flinch of wanting to understand what she loves. That was the cruelty her mother spared it. That is the cruelty she spares it now. To love the thing and leave it its dark.
+
+Her breath goes shallow and even, matched to the beat below until she cannot tell whose beat began it. Above, the green flames hold steady, unafraid, fed. The salt dries white on her lips. The iron warms, faintly, to the shape of her cheek, or she has stopped feeling how cold it is. Either way she does not move.
+
+Somewhere far up the tower the wind finds a gap and lets it go. Down here there is only the knock, and the giving, and the girl who will not lift her head. She has become the answer to a question no one living remembers asking. She lets that be enough. She lets it be everything. She keeps the beat, and keeps it, and the dark keeps her.

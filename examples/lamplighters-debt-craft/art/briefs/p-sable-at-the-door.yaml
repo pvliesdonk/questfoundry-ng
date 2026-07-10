@@ -1,0 +1,11 @@
+passage: passage:p-sable-at-the-door
+priority: 5
+caption: Sable arrives at Tamsin's door on a night edged with the canal's cold.
+prompt: Painterly gothic realism, candlelit doorway at night. A well-dressed woman in conspicuously
+  whole, unmended clothes, a locked house key on a chain worn thin at her collar, standing
+  on a step in shoes that have never walked the canal edge; a young woman in a too-large oilskin
+  coat opening the door to the dark. Green-tinged night behind, pale lamp-warmth on their
+  faces, thrift-worn grays around them, quiet intimate framing.
+entities:
+- character:sable-ondrey
+- character:tamsin-veil

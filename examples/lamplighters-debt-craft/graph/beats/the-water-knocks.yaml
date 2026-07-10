@@ -1,0 +1,9 @@
+id: beat:the-water-knocks
+summary: Below the dark lamp, the black water begins very softly to knock against the stone.
+  The council meets tonight to vote on electrifying the ring and snuffing every green flame
+  by morning.
+beat_class: structural
+purpose: setup
+entities:
+- location:lamp-forty-two
+- faction:the-council

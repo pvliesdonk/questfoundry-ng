@@ -1,0 +1,20 @@
+id: passage:p-alone-at-the-dark-lamp
+summary: 'Tamsin stands at lamp forty-two with her mother''s tools as the other lamps go dark
+  and the water below knocks louder. Elder Corran finds her and offers what he offered her
+  mother: silence and a lifelong stipend if she stops asking why lamp forty-two stays dark.
+  Tamsin recognizes this as the exact bargain that killed her mother''s questions, framed
+  by Corran as mercy.'
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:marren-veil
+- character:elder-corran
+beats:
+- beat:alone-at-the-dark-lamp
+- beat:corran-offers-the-coin
+- beat:the-same-bargain
+choices:
+- label: Turn the coin in your fingers
+  to: passage:p-bargain-arm-coin
+- label: Watch Corran's steady hands
+  to: passage:p-bargain-arm-corran

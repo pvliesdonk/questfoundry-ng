@@ -677,10 +677,12 @@ def check_g4_residue_coverage(ctx: Context) -> None:
             where = queries.world_label(ctx.g, world)
             suffix = f" (world {where})" if where else ""
             if d.residue_weight == ResidueWeight.LIGHT:
-                for path, flag in sorted(path_flags.items()):
+                for path, flags in sorted(path_flags.items()):
+                    # any of the path's flags marks the same commitment, so
+                    # an arm gated on any of them remembers the choice
                     covered = any(
                         b.purpose == StructuralPurpose.RESIDUE
-                        and flag in b.requires_flags
+                        and any(f in b.requires_flags for f in flags)
                         and queries.world_of(ctx.g, b.id) == world
                         for b in ctx.g.nodes_of(Beat)
                     )
@@ -689,7 +691,7 @@ def check_g4_residue_coverage(ctx: Context) -> None:
                             "G4",
                             f"light-residue dilemma {d.id} rejoins at "
                             f"{', '.join(frontier)}{suffix} with no residue beat "
-                            f"gated on {flag} ({path}) there",
+                            f"gated on any of {flags} ({path}) there",
                         )
             elif d.residue_weight == ResidueWeight.HEAVY:
                 for beat_id in frontier:

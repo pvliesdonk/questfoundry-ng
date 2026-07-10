@@ -1,0 +1,12 @@
+id: beat:sable-chooses
+summary: Spared public ruin, Sable sits with the answer she was forbidden and chooses, of
+  her own will, to stand with Tamsin. Her family's name survives intact.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: advances
+entities:
+- character:sable-ondrey
+- character:tamsin-veil
+belongs_to:
+- path:keep-their-name

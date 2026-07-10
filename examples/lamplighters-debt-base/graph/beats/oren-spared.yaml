@@ -1,0 +1,12 @@
+id: beat:oren-spared
+summary: Oren is gone, spared the knocking, and Tamsin faces the dark ring utterly alone with
+  no one who has heard what she has heard.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: advances
+entities:
+- character:oren-quist
+- character:tamsin-veil
+belongs_to:
+- path:send-him-away

@@ -1,0 +1,13 @@
+id: beat:oren-arrives
+summary: Oren Quist arrives from the mainland to wire the canal ring, cheerful and unafraid
+  of the dark, treating the old lamps as quaint obstacles to progress.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: advances
+entities:
+- character:oren-quist
+- location:lamp-forty-two
+belongs_to:
+- path:confide-in-oren
+- path:send-him-away

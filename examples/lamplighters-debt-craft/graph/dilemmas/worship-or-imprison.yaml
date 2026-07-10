@@ -1,0 +1,22 @@
+id: dilemma:worship-or-imprison
+question: Reading the map, does Tamsin come to believe the flames worship the thing below
+  as something to be honored, or imprison it as something to be feared?
+why_it_matters: How she names the vigil reshapes every act of tending into either devotion
+  or jailkeeping, coloring whether continuing or ending it is love or cruelty.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:it-is-worship
+  text: Decide the lamps are reverence, and that the thing below is owed light, attention,
+    and grief.
+- id: answer:it-is-a-cage
+  text: Decide the lamps are bars, and that two centuries of flame have been holding something
+    starving in the dark.
+anchored_to:
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:marren-veil
+- object:marren-logbook
+wraps:
+- dilemma:read-or-burn

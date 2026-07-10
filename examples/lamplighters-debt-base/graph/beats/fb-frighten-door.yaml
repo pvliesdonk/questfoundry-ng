@@ -1,0 +1,10 @@
+id: beat:fb-frighten-door
+created_by: polish
+summary: Tamsin holds the door as Oren gathers his coat, the wind off the ring pouring cold
+  between them.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two

@@ -1,0 +1,11 @@
+id: passage:p-map-arm-bend
+summary: Tamsin traces the map's deepest bend, where the ink is smudged from her mother's
+  thumb.
+entities:
+- character:tamsin-veil
+- character:marren-veil
+beats:
+- beat:map-arm-bend
+choices:
+- label: Open your mother's belongings
+  to: passage:p-the-ledger-surfaces

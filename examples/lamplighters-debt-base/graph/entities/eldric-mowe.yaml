@@ -1,0 +1,10 @@
+id: character:eldric-mowe
+name: Councilman Eldric Mowe
+concept: The council elder who has quietly paid the Veils for silence his whole life and now
+  champions electrifying the ring to end the debt forever.
+pronouns: he/him
+base:
+  appearance: tall, stooped, a silver watch-chain he worries between two fingers
+  manner: gentle-voiced, evasive, mistakes his cowardice for mercy
+  tell: Worries the silver watch-chain between two fingers, and it announces him before his
+    voice does.

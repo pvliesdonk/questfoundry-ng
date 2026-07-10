@@ -1,0 +1,14 @@
+id: passage:p-seal-hand-arm-thumb
+summary: Tamsin presses the loosened seal between finger and thumb, feeling how little it
+  would take.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:seal-hand-arm-thumb
+choices:
+- label: Keep the truth in your own hands
+  to: passage:p-the-truth-stays-in-reach

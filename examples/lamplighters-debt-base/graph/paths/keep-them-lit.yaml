@@ -1,0 +1,9 @@
+id: path:keep-them-lit
+name: The Green Flames Endure
+explores: answer:keep-them-lit
+consequences:
+- id: consequence:ring-stays-lit
+  text: The canal ring burns greenish and afraid each night, its ritual unbroken and passed
+    unended to Tamsin.
+- id: consequence:electrification-abandoned
+  text: Eldric Mowe's plan to end the debt collapses, and the town lives on in vigilant dread.

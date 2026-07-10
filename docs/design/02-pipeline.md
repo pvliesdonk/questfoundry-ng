@@ -223,9 +223,14 @@ Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a
 constraint rather than being retrofitted. The LLM never emits an
 ordering — it returns an index into the engine's candidate list.
-Temporal hints are advisory: a hint that would make the constraints
-unsatisfiable is dropped and reported, never allowed to wedge the weave
-(SEED wrote it without seeing the whole).
+Temporal hints and intersection groups are advisory: a hint or group
+that would make the constraints unsatisfiable is dropped and reported
+(the report names the group and whether it is impossible on its own or
+conflicts with an earlier accepted group), never allowed to wedge the
+weave — SEED wrote the hints, and the intersections LLM proposed the
+groups, without seeing the whole ordering web. Dense relation webs
+(several wraps/serial dilemmas, locked chains) can make most
+cross-dilemma pairings cyclic; a stage must not be lost to enrichment.
 
 **Multi-hard realization** (design doc 01 §5, mini-ADR A14): with more
 than one hard dilemma the chosen order is walked tracking worlds — the

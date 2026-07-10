@@ -1,0 +1,11 @@
+You turn from the dark lamp because you have to, because the sound is easier to bear with your back to it, and you go down the stone stair to the oil stores where the town keeps its light in casks.
+
+It is cooler here, below the waterline. The walls sweat. The casks stand in their rows the way they have always stood, and the smell of the oil is green and old, a smell you would know now in your sleep. You kneel. Your knees find the worn place in the flags where other knees have knelt, hers among them, so many mornings that the stone remembers the shape of the kneeling better than it remembers any face.
+
+The ledger hangs from its nail. You lift it down. This is the other book, the working one, not the logbook you carry against your chest but the fat some do it in, thumbed soft at the corners. In it the levels are set down for each cask, month by month, in her small even hand. You find the last full line she wrote. The date sits close under your thumb. After it the page goes on blank, ruled and waiting, more mornings than she was given to fill.
+
+You check the levels the way she logged them. You uncork the first cask and lower the dipstick and read where the oil darkens the wood, and you write the number below hers in a hand that tries to be as small and does not manage it. The figures do not match what the ledger led you to expect. Someone has drawn less than the winter should have burned. Or someone has drawn more, and covered it, and the covering is here in the columns if you knew how to see it.
+
+You sit back on your heels. Forty-one lamps take a measure of oil a night, and she knew the measure to the drop, and the numbers before you say the stores have been kept for forty-two. Somebody has been laying by for a lamp that does not burn. Laying by for years. Her hand did it. You can see where she rounded a figure up so the extra would not show, the correction faint but hers, the way she only ever spoke plainly in the things she chose not to say aloud.
+
+The dark cask waits at the end of the row, fuller than any of them, brimming for a flame she wrote *don't* beside. You cork the one you opened. You take up the ledger and hold it a moment against the coat that is not yours, and then you set it down, and you gather the oil you will need, and you look toward the stair that goes back up to the deepest bend.

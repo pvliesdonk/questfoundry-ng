@@ -1,0 +1,14 @@
+id: beat:the-same-bargain
+summary: Tamsin recognizes this is the exact bargain that killed her mother's questions, the
+  coin that bought two centuries of not-knowing. Corran believes he is sparing her the same
+  grief.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corran-confession
+  effect: reveals
+entities:
+- character:tamsin-veil
+- character:marren-veil
+- character:elder-corran
+belongs_to:
+- path:refuse-the-coin

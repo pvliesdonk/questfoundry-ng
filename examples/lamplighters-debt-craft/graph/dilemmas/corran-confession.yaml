@@ -1,0 +1,24 @@
+id: dilemma:corran-confession
+question: When Elder Corran offers Tamsin his silence and his stipend to stop asking, does
+  she take the bargain that killed her mother's questions, or refuse it?
+why_it_matters: It tests whether comfort can buy her the way it bought a family for two centuries,
+  and marks Corran as either a man redeemed by being refused or one whose bribe rots the whole
+  ring's future.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:take-the-bargain
+  text: Accept Corran's stipend and silence, choosing survival and comfort over the answer
+    beneath the water.
+- id: answer:refuse-the-coin
+  text: Refuse the money and force Corran to face what his forty years of signatures protected.
+anchored_to:
+- character:tamsin-veil
+- character:elder-corran
+- faction:the-council
+serial:
+- dilemma:expose-or-shield
+- dilemma:worship-or-imprison
+concurrent:
+- dilemma:read-or-burn

@@ -1,0 +1,8 @@
+id: beat:bars-arm-shadows
+created_by: polish
+summary: Tamsin watches the lamp-cages throw their barred shadows across the wet stone walls.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

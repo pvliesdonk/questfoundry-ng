@@ -1,0 +1,89 @@
+flags:
+- id: flag:family-exposed
+  description: The hush-money ledger is laid before the town and Sable's family must answer
+    for two centuries of paid silence.
+  source: dilemma
+  path: path:name-them
+  codeword: RECKONING
+  derived_from:
+  - consequence:family-exposed
+- id: flag:flames-die-forever
+  description: Every green flame gutters out by morning and the two-hundred-year vigil ends
+    in Tamsin's hands, freeing the town of its ledger.
+  source: dilemma
+  path: path:let-them-snuff-it
+  derived_from:
+  - consequence:flames-die-forever
+- id: flag:knowledge-carried
+  description: Tamsin reads her mother's map to its end and carries its unbearable meaning
+    into every choice, unable to unknow why lamp forty-two stays dark.
+  source: dilemma
+  path: path:read-it-all
+  codeword: UNBEARABLE
+  derived_from:
+  - consequence:knowledge-carried
+- id: flag:ledger-withheld
+  description: The ledger stays hidden and Sable's family keeps its name, the complicity spared
+    public ruin.
+  source: dilemma
+  path: path:keep-their-name
+  codeword: SILENCE
+  derived_from:
+  - consequence:ledger-withheld
+- id: flag:map-dies-with-her
+  description: The logbook and its wet-inked map burn, and the knowing dies with Marren so
+    no one else inherits the truth.
+  source: dilemma
+  path: path:burn-the-book
+  codeword: ASHES
+  derived_from:
+  - consequence:map-dies-with-her
+- id: flag:marren-a-warning
+  description: Marren's drowning becomes legible as warning rather than accident, her voice
+    from under the water finally answered.
+  source: dilemma
+  path: path:read-it-all
+  derived_from:
+  - consequence:marren-a-warning
+- id: flag:mercy-of-ignorance
+  description: The town is spared the answer, and Tamsin alone must decide the ring's fate
+    blind to what she destroyed.
+  source: dilemma
+  path: path:burn-the-book
+  derived_from:
+  - consequence:mercy-of-ignorance
+- id: flag:sable-allied-or-ruined
+  description: Dragged into the light, Sable is forced to reckon publicly with the comfort
+    that bought her whole life.
+  source: dilemma
+  path: path:name-them
+  derived_from:
+  - consequence:sable-allied-or-ruined
+- id: flag:sable-own-reckoning
+  description: Sable is left to choose her own reckoning with the answer she was forbidden,
+    ally by consent rather than exposure.
+  source: dilemma
+  path: path:keep-their-name
+  derived_from:
+  - consequence:sable-own-reckoning
+- id: flag:tamsin-becomes-keeper
+  description: Lamp forty-two burns green again and Tamsin is bound to a route she now knows
+    is a cage, the knock beneath the water quieted for another generation.
+  source: dilemma
+  path: path:kindle-the-forty-second
+  derived_from:
+  - consequence:tamsin-becomes-keeper
+- id: flag:the-thing-unbound
+  description: Below the deepest bend the black water no longer knocks softly but moves, whatever
+    the lamps restrained now loose in the dark.
+  source: dilemma
+  path: path:let-them-snuff-it
+  derived_from:
+  - consequence:the-thing-unbound
+- id: flag:town-keeps-its-chains
+  description: The ring endures and Veilsmeer remains tended, its innocence gone but its duty
+    unbroken.
+  source: dilemma
+  path: path:kindle-the-forty-second
+  derived_from:
+  - consequence:town-keeps-its-chains

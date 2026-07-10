@@ -1,0 +1,14 @@
+id: passage:p-residue-wiring-halted
+summary: The mainland wiring sits half-finished and dead, the council's anger reaching Tamsin
+  only as distant rumor. No voice in town will vouch for the knocking she still hears alone.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:residue-wiring-halted
+choices:
+- label: Take up the wicks against the dark
+  to: passage:p-fight-to-keep-lit

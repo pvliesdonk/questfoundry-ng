@@ -1,0 +1,9 @@
+id: beat:seal-hand-arm-hush
+created_by: polish
+summary: Tamsin listens to the hush around her, the reverent silence that has kept this page
+  shut for so long.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

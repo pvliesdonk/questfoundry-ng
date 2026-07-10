@@ -1,0 +1,11 @@
+Lamp forty-two stands where it has always stood, cold iron blistered with paint no one has painted over in two hundred years, its glass empty and stained the green of old water. You set the oil down at its foot. You take her tools from the deep pocket, the wick-hook first, worn to the shape of a grip that was not yours, and then the striker. Behind you the last of the green goes one lamp at a time, and the towpath falls quieter and quieter, until the only sounds left are the crews winding their copper far back and the water below, knocking, unhurried, once and then again.
+
+You could light it. You have what she carried and the striker no one else was allowed to touch. You could leave it dark, as she left it, as the book says in the one word she wrote beside its number. You are the only hand out here now that can do either.
+
+The stone gives back a step you did not make. Elder Corran comes along the narrowed path with his cuffs inked and one hand kept in his coat, and he stops a little way off, the way a man stops who does not want to crowd a flame. He looks at the dark column. He looks at the tools in your hands and knows them, and something in his face settles that you do not like the look of.
+
+"She stood just there," he says. "I offered her a kindness. I will offer you the same, and mean it the same." He tells you the sum. He tells you it comes every year for as long as you live and asks nothing but that you stop. Not the lighting. Not the route. Only the asking. Why forty-two stays dark, why the water knocks, what the char at the seam was. Leave those, and he will keep his silence over yours, and you will be warm and fed and let alone.
+
+He says it gently. He believes it is gentle. You watch his hand move in his pocket, the tremor he thinks he hides, and you understand you are hearing the exact price your mother took, the coin that bought two centuries of not-knowing and bought her the quiet she carried to the fold and under it. He thinks he is sparing you her grief. He does not see that the grief and the coin are the same thing, that one paid for the other, that she wrote a warning in a book because the money had already closed her mouth.
+
+The knock comes up through your boots. You turn the coin of it over in your mind, the offer, the sum, the years. His hands stay very still.

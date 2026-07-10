@@ -1,0 +1,9 @@
+id: beat:the-wet-ink
+summary: Tamsin opens Junia's sealed logbook and finds the route-ledger ending in a half-drawn
+  map of something vast circling beneath the canals, its final ink still impossibly wet to
+  the touch.
+beat_class: structural
+purpose: setup
+entities:
+- character:tamsin-veil
+- object:junia-logbook

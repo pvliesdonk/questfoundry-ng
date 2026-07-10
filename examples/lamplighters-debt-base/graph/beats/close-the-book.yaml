@@ -1,0 +1,12 @@
+id: beat:close-the-book
+summary: Tamsin shuts the logbook on its half-drawn map, deciding the silence her family was
+  paid to keep is a mercy, and sets the pen down unused.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: commits
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+belongs_to:
+- path:leave-it-unfinished

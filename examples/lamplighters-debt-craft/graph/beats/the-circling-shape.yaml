@@ -1,0 +1,13 @@
+id: beat:the-circling-shape
+summary: The map shows the vast shape circling always beneath the flames, never rising, never
+  fed. Tamsin cannot decide if two centuries of tending was reverence or restraint.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:worship-or-imprison
+  effect: complicates
+entities:
+- object:marren-logbook
+- character:marren-veil
+- location:lamp-forty-two
+belongs_to:
+- path:it-is-a-cage

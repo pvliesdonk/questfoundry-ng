@@ -29,6 +29,8 @@ docs/STATUS.md): intersections over shared pre-commit beats only.
 
 from __future__ import annotations
 
+import copy
+
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from questfoundry.graph import mutations, queries
@@ -106,8 +108,10 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
             if m in used:
                 raise ApplyError(f"beat {m} appears in more than one intersection group")
             used.add(m)
+
+    def _build(spec: IntersectionSpec) -> IntersectionGroup:
         try:
-            group = IntersectionGroup(
+            return IntersectionGroup(
                 id=spec.id,
                 created_by=Stage.GROW,
                 location=spec.location or None,
@@ -115,14 +119,46 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
             )
         except ValidationError as e:
             raise ApplyError(f"invalid intersection {spec.id}: {e}") from e
-        mutations.add_intersection(g, group, spec.members)  # I8 locally
-    try:
-        weave.plan(g)
-    except weave.WeaveError as exc:
-        raise ApplyError(f"these intersections make the interleave unsatisfiable: {exc}") from exc
+
+    # Intersections are advisory enrichment, like temporal hints (design
+    # doc 02 §2): the model proposes them before seeing the full ordering
+    # web, so a group that would wedge the weave is dropped and reported,
+    # never allowed to fail the stage. Each group is probed one at a time
+    # so the drop note names the offending group and why — live run 7
+    # burned its repair rounds twice on dense webs where the model could
+    # not find satisfiable pairings at all.
+    scratch = copy.deepcopy(g)
+    baseline = copy.deepcopy(g)
+    accepted: list[IntersectionSpec] = []
+    lines = []
+    for spec in proposal.groups:
+        trial = copy.deepcopy(scratch)
+        mutations.add_intersection(trial, _build(spec), spec.members)  # I8 locally
+        try:
+            weave.plan(trial)
+        except weave.WeaveError:
+            members = ", ".join(spec.members)
+            probe = copy.deepcopy(baseline)
+            try:
+                mutations.add_intersection(probe, _build(spec), spec.members)
+                weave.plan(probe)
+            except weave.WeaveError:
+                lines.append(
+                    f"dropped {spec.id} ({members}): its members occupy incompatible "
+                    "positions in their storylines' required order"
+                )
+                continue
+            others = ", ".join(s.id for s in accepted)
+            lines.append(f"dropped {spec.id} ({members}): cannot coexist with {others}")
+            continue
+        scratch = trial
+        accepted.append(spec)
+        lines.append(f"{spec.id}: {' + '.join(spec.members)}")
+    for spec in accepted:
+        mutations.add_intersection(g, _build(spec), spec.members)
     if not proposal.groups:
         return ["no intersections proposed"]
-    return [f"{s.id}: {' + '.join(s.members)}" for s in proposal.groups]
+    return lines
 
 
 # -- pass 2: weave ------------------------------------------------------------

@@ -15,8 +15,8 @@ pair reads as one passage) — use it where the residue carries real weight, ski
 it where a single breath is honest.
 {% for n in needs %}
 - {{ n.dilemma.id }} (residue: light{% if n.need.world %}; in the world of {{ n.need.world }}{% endif %}) rejoins at {% for c in n.rejoin %}{{ c.id }} — "{{ c.summary }}"{% if not loop.last %} / {% endif %}{% endfor %}
-{% for path, flag in n.need.path_flags.items() %}
-  - path {{ path }} (its truth: {{ flag }}) arrives from: {{ n.tails[path].summary }}
+{% for path, flags in n.need.path_flags.items() %}
+  - path {{ path }} (its truth: {{ flags | join(", ") }}) arrives from: {{ n.tails[path].summary }}
 {% endfor %}
 {% endfor %}
 Emit exactly one residue entry per path per convergence above. Each entry:

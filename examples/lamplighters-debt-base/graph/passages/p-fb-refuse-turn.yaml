@@ -1,0 +1,18 @@
+id: passage:p-fb-refuse-turn
+summary: Tamsin turns her back on the knocking and fixes her eyes on the door she means to
+  leave by. She refuses to look back.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:fb-refuse-turn
+choices:
+- label: Leave the knock unanswered
+  to: passage:p-halvard-repudiated

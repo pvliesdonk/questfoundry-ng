@@ -1,0 +1,9 @@
+id: beat:fb-kneel-floor
+created_by: polish
+summary: Tamsin lowers herself to the cold stone above the knocking and lays her cheek to
+  it.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

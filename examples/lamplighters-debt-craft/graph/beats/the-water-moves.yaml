@@ -1,0 +1,13 @@
+id: beat:the-water-moves
+summary: Below the deepest bend the black water no longer knocks softly but moves. Whatever
+  the lamps restrained is now loose in the dark. This ends the story.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: complicates
+entities:
+- location:lamp-forty-two
+- character:marren-veil
+is_ending: true
+belongs_to:
+- path:let-them-snuff-it

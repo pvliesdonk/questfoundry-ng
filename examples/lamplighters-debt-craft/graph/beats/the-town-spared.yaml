@@ -1,0 +1,12 @@
+id: beat:the-town-spared
+summary: The map's answer dies with Marren; the town is spared the truth of what circles beneath
+  the canals. No one will ever inherit what Tamsin destroyed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:read-or-burn
+  effect: advances
+entities:
+- character:tamsin-veil
+- character:marren-veil
+belongs_to:
+- path:burn-the-book

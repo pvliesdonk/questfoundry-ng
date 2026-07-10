@@ -1,0 +1,21 @@
+id: passage:p-pocket-the-ledger
+summary: Tamsin folds the ledger away and says nothing to the town, taking Sable aside to
+  tell her privately what her family was paid to protect. Spared public ruin, Sable sits with
+  the forbidden answer and chooses of her own will to stand with Tamsin, her family's name
+  intact, though the buried complicity remains a private, unsettled wound between them.
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+- object:marren-logbook
+irrelevant_flags:
+- flag:knowledge-carried
+- flag:map-dies-with-her
+beats:
+- beat:ally-by-consent
+- beat:pocket-the-ledger
+- beat:sable-chooses
+choices:
+- label: Walk with Sable to the deepest bend
+  requires:
+  - flag:ledger-withheld
+  to: passage:p-keep-their-name-arm

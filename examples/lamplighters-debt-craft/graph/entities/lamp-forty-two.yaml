@@ -1,0 +1,15 @@
+id: location:lamp-forty-two
+name: The Dark Lamp
+concept: The forty-second lamp, unlit for two hundred years above the deepest bend of the
+  canal, where the black water has begun very softly to knock.
+pronouns: it/its
+base:
+  appearance: a cold iron column blistered with old paint, its glass housing empty and stained
+    green
+  manner: the only silent thing on a route of hissing flames
+  logbook-marking: 'Beside lamp forty-two''s number in Marren''s logbook is written a single
+    word: don''t.'
+  knock-quality: The knock from below is a single patient sound, never doubled, always followed
+    by stillness, as of a thing keeping count.
+  stair: The stair down from lamp forty-two is worn hollow in the middle by generations of
+    lamplighters' boots.

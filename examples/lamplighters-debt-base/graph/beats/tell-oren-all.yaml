@@ -1,0 +1,14 @@
+id: beat:tell-oren-all
+summary: At the dark lamp Tamsin tells Oren everything — the logbook, the hush-money, the
+  thing beneath — binding him into the danger with the truth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- object:junia-logbook
+- location:lamp-forty-two
+belongs_to:
+- path:confide-in-oren

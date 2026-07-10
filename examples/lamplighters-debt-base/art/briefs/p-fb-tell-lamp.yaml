@@ -1,0 +1,12 @@
+passage: passage:p-fb-tell-lamp
+priority: 7
+caption: She leads the electrician to the ring and lets the knocking speak for her.
+prompt: 'Painterly gothic scene in low salt-heavy fog: a young woman in an oversized oilskin
+  coat leading a young electrician with copper burns on his forearms and a thinning grin along
+  a black canal ringed by greenish lamp-flames on iron columns corroded green and salt-crusted.
+  Vast hushed architecture, black water. Deep chiaroscuro, lamp-oil ambers, algae greens,
+  drowned brine-blues, silver highlights.'
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two

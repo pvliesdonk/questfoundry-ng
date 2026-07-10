@@ -1,0 +1,8 @@
+id: beat:lamps-go-arm-north
+created_by: polish
+summary: Tamsin passes the northern lamps as their green light thins and dies, one after another.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

@@ -1,0 +1,9 @@
+id: beat:fb-mercy-silence
+created_by: polish
+summary: Tamsin listens to the long silence between them, broken only by the distant knock
+  beneath the floor.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:eldric-mowe

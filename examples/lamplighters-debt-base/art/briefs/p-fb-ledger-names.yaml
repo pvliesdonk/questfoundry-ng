@@ -1,0 +1,11 @@
+passage: passage:p-fb-ledger-names
+priority: 9
+caption: She lingers on the familiar names written small in the ledger's margins.
+prompt: 'Painterly gothic tender close-up by lamplight through fog: a brine-chapped finger
+  tracing small cramped names written in a shrinking hand in the margin beside brown sums,
+  on the swollen waterlogged leather pages of an algae-smelling ledger held in the lap of
+  an oversized oilskin coat. Deep chiaroscuro, lamp-oil ambers, salt-white crusting, silver
+  ink highlights, corroded iron-green shadows.'
+entities:
+- character:tamsin-veil
+- object:junia-logbook

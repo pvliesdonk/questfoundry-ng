@@ -1,0 +1,9 @@
+id: beat:fb-mercy-eyes
+created_by: polish
+summary: Tamsin meets Mowe's rheumy eyes and sees an old man waiting to learn whether he is
+  forgiven.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:eldric-mowe

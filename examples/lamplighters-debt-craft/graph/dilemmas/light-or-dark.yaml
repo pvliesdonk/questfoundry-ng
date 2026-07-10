@@ -1,0 +1,26 @@
+id: dilemma:light-or-dark
+question: When the vote passes and the flames are to be snuffed, does Tamsin light lamp forty-two
+  or let the ring go dark forever?
+why_it_matters: This is the fate of the thing beneath the canals and of two hundred years
+  of tending — whether the vigil continues in her hands or ends with her, and neither ending
+  gives the town back its innocence.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:kindle-the-forty-second
+  text: Break the seal and light lamp forty-two, choosing to become the next keeper of a vigil
+    she now understands is a cage.
+- id: answer:let-them-snuff-it
+  text: Let the electrification proceed and every green flame die, freeing the town of its
+    duty and whatever the flames restrained.
+anchored_to:
+- character:tamsin-veil
+- location:lamp-forty-two
+- faction:the-council
+- object:marren-logbook
+wraps:
+- dilemma:corran-confession
+- dilemma:expose-or-shield
+- dilemma:read-or-burn
+- dilemma:worship-or-imprison

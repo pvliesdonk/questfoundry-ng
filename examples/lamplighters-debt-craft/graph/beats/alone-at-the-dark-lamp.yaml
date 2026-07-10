@@ -1,0 +1,15 @@
+id: beat:alone-at-the-dark-lamp
+summary: Tamsin stands at lamp forty-two with her mother's tools as the other lamps go dark
+  one by one. The water below knocks louder now, and only she can still light or leave the
+  forty-second.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: complicates
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:marren-veil
+belongs_to:
+- path:kindle-the-forty-second
+- path:let-them-snuff-it

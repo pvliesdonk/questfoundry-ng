@@ -1,0 +1,12 @@
+id: beat:temptation-to-tell
+summary: Tamsin is tempted to expose the payments to the town, to finally name what her family
+  was paid to swallow across two centuries.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+belongs_to:
+- path:keep-the-silence

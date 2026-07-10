@@ -1,0 +1,12 @@
+id: beat:tending-as-jailing
+summary: Tamsin can no longer see her mother's route as devotion; every lamp she once thought
+  of as care she now understands as a lock, and she carries that knowledge into what comes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:worship-or-imprison
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:marren-veil
+belongs_to:
+- path:it-is-a-cage

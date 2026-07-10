@@ -1,0 +1,11 @@
+Her hand you know. It is the hand that taught yours to hold the striker, cramped now to fit the margin, running its warnings along the deepest bend. *Fill the wick before you strike, not after.* *Count the marks from the north lock down.* *If the water goes still, do not stay to watch it.* She writes the way she spoke to you at the door each dusk, the instruction and the caution folded into one breath, so that you cannot follow the one without carrying the other. You read them the way you would have listened. You nod at the page as if she could see it.
+
+Then the hand changes.
+
+Half the notes are not hers. They crowd in from the other margin, older, the ink browner, the letters leaned the wrong way like reeds against a different wind. You do not know this hand. It answers hers. Where she has written *do not stay to watch it*, the stranger has set beneath it a single word you have to tilt to the light to read, and it is not a warning. It reads like an amen. Where she counts the marks from the north lock down, the stranger has counted them again, and got the same number, and underlined it, twice, as though the number were a thing to be grateful for.
+
+The two hands run together down the page toward the smudge at the bottom, where her ink pressed too long and never dried. Near the end they stop arguing. They begin to agree. You do not want to see where they agree. You lean closer anyway, because you carried the book out here and there is no putting it back into the coat unread.
+
+The last of her writing sits just above the wet dark of the bend. It is small, smaller than the rest, made to fit a corner she had almost run out of. *They are all it has,* she wrote. And under that, in the hand you do not know, older than her, older than Corran's forty springs, the answer waits, and the water knocks up through your boots once while you read it, and does not knock again.
+
+Corran has stopped saying your name. You close the book on your finger to keep the place. Your mother left more than a map. She left a coat, a hook, a striker no one else was let to touch, and somewhere in what she carried there will be the rest of this. There always is. She never wrote a warning she did not mean you to be able to answer.

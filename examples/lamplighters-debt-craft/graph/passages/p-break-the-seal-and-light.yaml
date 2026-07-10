@@ -1,0 +1,23 @@
+id: passage:p-break-the-seal-and-light
+summary: Tamsin breaks the two-century seal and kindles lamp forty-two, its green flame roaring
+  up above the deepest bend as she binds herself to the route as its next keeper. The knock
+  beneath the water falls silent for another generation; the ring endures and Veilsmeer remains
+  tended, carried into another lifetime by a keeper who knows exactly what she imprisons and
+  why.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- faction:the-council
+ending:
+  id: e-break-the-seal-and-light
+  title: The Forty-Second Flame
+irrelevant_flags:
+- flag:family-exposed
+- flag:ledger-withheld
+- flag:map-dies-with-her
+- flag:sable-allied-or-ruined
+- flag:sable-own-reckoning
+beats:
+- beat:break-the-seal-and-light
+- beat:the-knock-quieted
+- beat:the-ring-endures

@@ -1,0 +1,61 @@
+beats:
+- beat:bribe-stays-buried
+- beat:brine-inheritance
+- beat:close-the-book
+- beat:completion-received
+- beat:draw-to-the-end
+- beat:fates-bound
+- beat:fight-to-keep-lit
+- beat:frighten-him-off
+- beat:fully-known
+- beat:greenish-fear
+- beat:halvard-creed
+- beat:halvard-repudiated
+- beat:ignorance-as-honor
+- beat:ink-that-wont-dry
+- beat:keeper-of-listening
+- beat:kneel-to-knock
+- beat:knock-grows
+- beat:lamps-speak
+- beat:ledger-of-bribes
+- beat:map-half-drawn
+- beat:mercy-or-cage
+- beat:mowe-collapses
+- beat:mowe-old-and-afraid
+- beat:mowe-pleads
+- beat:next-keeper-of-quiet
+- beat:oren-arrives
+- beat:oren-spared
+- beat:oren-stays
+- beat:owed-tenderness
+- beat:refuse-to-listen
+- beat:ring-burns-afraid
+- beat:silence-kept
+- beat:swallow-the-truth
+- beat:tell-oren-all
+- beat:temptation-to-tell
+- beat:the-pen-in-hand
+- beat:the-wet-ink
+- beat:thing-decides
+- beat:vote-called
+- beat:weigh-the-outsider
+- beat:work-stalls
+forks:
+  dilemma:answer-the-knock:
+  - beat:kneel-to-knock
+  - beat:refuse-to-listen
+  dilemma:expose-the-payments:
+  - beat:swallow-the-truth
+  dilemma:finish-the-map:
+  - beat:close-the-book
+  - beat:draw-to-the-end
+  dilemma:snuff-or-keep:
+  - beat:fight-to-keep-lit
+  dilemma:trust-the-outsider:
+  - beat:frighten-him-off
+  - beat:tell-oren-all
+convergences:
+  dilemma:finish-the-map:
+  - beat:ledger-of-bribes
+  dilemma:trust-the-outsider:
+  - beat:fight-to-keep-lit

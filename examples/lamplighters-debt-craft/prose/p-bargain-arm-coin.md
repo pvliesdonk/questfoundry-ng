@@ -1,0 +1,11 @@
+He does not hand it across the space between you. He lets it lie in his open palm, on the flat of the glove, and waits for you to take it as if the taking were already decided. So you take it. The metal is warmer than the air, warmed by the pocket where his hand has kept it, and that warmth is the first thing you dislike about it.
+
+You turn it in your fingers. It is old the way her wick-hook is old, worn past its own face, the head on it rubbed to a suggestion of a head, the year beneath it softened to nothing. Someone has carried this coin a long time before it came to you. Maybe many someones. Maybe it is the same one every year, passed hand to hand down the years and never spent, kept only for this, for standing at this lamp in the last of the green and being pressed on the one who might ask.
+
+The green catches its edge and pools there. Lamp forty-two behind you gives no light, so the color comes from farther off, the last two or three flames not yet snuffed down the line, and it lies along the coin's rim like water standing in a groove. You tilt it. The green slides. It runs the worn face the way it runs the stained glass, the way it runs everything out here, and for a moment the coin is not metal at all but a small round window onto the same water that knocks below.
+
+You think of her hand closing on one of these. You think of the fold of the oilskin, the deep pocket, the striker no one else could touch, and you wonder if she kept a coin in there too, spent or unspent, and whether it was in the coat when they brought the coat up. You do not remember. There are things you were not shown.
+
+Corran watches your fingers move. He mistakes the turning for weighing, for a mind doing sums, and his own hand goes still in his pocket, the tremor held. He believes the quiet is agreement gathering. The knock comes up through your boots, once, then again, unhurried, patient as the coin, and you feel how neatly the two of them keep time. One below, one in your palm. Both waiting to be answered by your silence.
+
+The metal has taken your warmth now. It is only warm, only a coin, only the weight of a year of being let alone. You close your hand around it and open it again, and the green is gone from the rim, and it is a dull thing in a dull light, and you know exactly what it is worth.

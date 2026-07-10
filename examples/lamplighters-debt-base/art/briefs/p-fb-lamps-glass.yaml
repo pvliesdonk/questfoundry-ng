@@ -1,0 +1,11 @@
+passage: passage:p-fb-lamps-glass
+priority: 5
+caption: Palm to warm glass, she feels the knocking answer in the shape of a name.
+prompt: 'Painterly gothic tender close-up by lamplight in fog: a brine-chapped hand laid flat
+  against the warm glass of a black iron lamp-column corroded green and salt-crusted, a young
+  woman in an oversized oilskin coat with wet-rope hair leaning close, listening. Deep chiaroscuro,
+  lamp-oil ambers glowing through glass, drowned brine-blues, salt-white crusting, silver
+  highlights.'
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

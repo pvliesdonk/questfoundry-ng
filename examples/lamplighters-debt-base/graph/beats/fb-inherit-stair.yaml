@@ -1,0 +1,9 @@
+id: beat:fb-inherit-stair
+created_by: polish
+summary: Tamsin climbs the salt-scoured stair inside the tower, passing the worn grooves where
+  generations of keepers set their feet.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

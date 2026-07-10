@@ -1,0 +1,12 @@
+id: beat:owed-tenderness
+summary: The drowned thing receives its owed tenderness and quiets; the knocking softens into
+  something almost grateful beneath the water.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:answer-with-mercy

@@ -1,0 +1,8 @@
+id: character:sister-halvard
+name: Sister Halvard
+concept: The keeper of the old lamplighter creed who believes the flames are a mercy owed
+  to the thing below, not a defense against it.
+pronouns: she/her
+base:
+  appearance: ash-grey habit smelling of lamp-oil, milky left eye
+  manner: serene, absolute, speaks of the knocking as an old friend

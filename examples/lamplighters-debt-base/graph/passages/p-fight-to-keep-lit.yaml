@@ -1,0 +1,21 @@
+id: passage:p-fight-to-keep-lit
+summary: Tamsin fights to keep the old flames burning, accepting fear as the price of whatever
+  the fire holds back — or holds close. By morning the ring is not snuffed.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-gone
+- flag:oren-knows
+- flag:question-unanswered
+- flag:wiring-halted
+beats:
+- beat:fight-to-keep-lit
+choices:
+- label: Trim each wick down the ring in turn
+  to: passage:p-fb-fight-flame
+- label: Pass Halvard praying at the tower's foot
+  to: passage:p-fb-fight-halvard

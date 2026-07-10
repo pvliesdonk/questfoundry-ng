@@ -1,0 +1,14 @@
+id: passage:p-fb-frighten-lie
+summary: Tamsin builds her warning slowly, watching the color drain from Oren's face. She
+  chooses each word to break him.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-frighten-lie
+choices:
+- label: Watch him take the road to the mainland
+  to: passage:p-oren-spared

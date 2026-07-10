@@ -1,0 +1,18 @@
+id: passage:p-sable-at-the-door
+summary: Sable comes to Tamsin, torn between the comfort that raised her and the answer she
+  was forbidden, not yet knowing her family are the paid silencers while Tamsin holds the
+  proof. Tamsin understands that finishing the map means carrying its meaning forever, while
+  burning it lets the knowing die with her mother; either way she cannot un-choose.
+entities:
+- character:sable-ondrey
+- character:tamsin-veil
+- object:marren-logbook
+- character:marren-veil
+beats:
+- beat:sable-at-the-door
+- beat:the-weight-of-knowing
+choices:
+- label: Look down into the water where it starts
+  to: passage:p-weight-arm-water
+- label: Whisper your mother's name into the dark
+  to: passage:p-weight-arm-name

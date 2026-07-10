@@ -140,12 +140,13 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 f"residue {spec.id}: (dilemma, world) must match exactly one "
                 f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}"
             )
-        flag = need.path_flags.get(spec.path)
-        if flag is None:
+        flags = need.path_flags.get(spec.path)
+        if flags is None:
             raise ApplyError(
                 f"residue {spec.id}: path must be exactly one of "
                 f"{sorted(need.path_flags)}; got {spec.path!r}"
             )
+        flag = flags[0]  # any of the path's flags marks the choice; first is deterministic
         if (spec.dilemma, spec.world, spec.path) in covered:
             raise ApplyError(
                 f"residue {spec.id}: {spec.path} already has a residue arm at this "
@@ -261,7 +262,8 @@ def _variant_needs(g) -> dict[str, list[str]]:
         if n.weight != "heavy":
             continue
         for beat_id in n.rejoin:
-            merged = set(needs.get(beat_id, [])) | set(n.path_flags.values())
+            # one variant gate per path: its first flag, deterministically
+            merged = set(needs.get(beat_id, [])) | {fl[0] for fl in n.path_flags.values()}
             needs[beat_id] = sorted(merged)
     return needs
 

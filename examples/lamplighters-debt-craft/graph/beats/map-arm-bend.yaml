@@ -1,0 +1,9 @@
+id: beat:map-arm-bend
+created_by: polish
+summary: Tamsin traces the map's deepest bend, where the ink is smudged from her mother's
+  thumb.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:marren-veil

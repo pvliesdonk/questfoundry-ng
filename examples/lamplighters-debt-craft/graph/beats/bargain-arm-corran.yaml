@@ -1,0 +1,9 @@
+id: beat:bargain-arm-corran
+created_by: polish
+summary: Tamsin studies Corran's steady hands, the same hands that once shook another keeper's
+  the same way.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:elder-corran

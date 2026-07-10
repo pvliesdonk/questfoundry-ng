@@ -1,0 +1,22 @@
+id: passage:p-halvard-repudiated
+summary: Sister Halvard's faith is repudiated to her face, the old keeper weeping for what
+  Tamsin has loosed by leaving the knock unanswered. The unanswered thing is left to decide
+  what comes; the wrongness the creed held in check stirs toward its own will, and the story
+  closes on a ring no ritual guards anymore.
+entities:
+- character:sister-halvard
+- character:tamsin-veil
+- location:lamp-forty-two
+ending:
+  id: e-halvard-repudiated
+  title: The Unguarded Ring
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:halvard-repudiated
+- beat:thing-decides

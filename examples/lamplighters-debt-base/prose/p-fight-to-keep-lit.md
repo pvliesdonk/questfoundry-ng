@@ -1,0 +1,11 @@
+She goes down the ring by hand, the way her mother went, the way the count demands. Oren keeps to her left with the coil, but the wicks are hers. She will not give them over. The council has voted the flames dead by morning, and morning is coming the way the tide comes, without asking. So she trims. She feeds each greenish tongue what tallow it wants and no less, and she does not hurry, and she does not let a single one gutter into the smoke that means a lamp gone out of the count.
+
+The fear does not leave. She had thought, half thought, that the doing would burn it off. It does not. It sits in her chest where it has sat all season, a cold weight that keeps its own slow time against the knock. She lets it stay. That is the bargain, she understands now, kneeling at the fourth column with the salt drying white on her knuckles. The fire is not free. It was never free. Two hundred years of women have paid it in nights spent listening, and she pays it now in this, the accepting: that whatever the flame holds back, or holds close, she will keep it lit and be afraid.
+
+Lamp forty-one takes its trimming and burns higher. She moves on.
+
+She does not look at the black column when she passes it. She does not need to. It hums up through her boots, patient, keeping time, owed a thing she will not name and will not answer, and the not-answering is its own kind of tending. Let it wait. She has learned that the waiting is not always a threat. Sometimes it is only grief that has forgotten how to stop.
+
+By the time the sky goes grey over the water she is at the last of them, her hands cramped stiff around the trimming iron, Oren silent at her shoulder with the coil still uncut. The flames stand green the whole ring round. Not one dark. Not one missing from the count. She has kept them all.
+
+The council will come with their wire and their quiet mercy and find the old fire still burning, and she will have to say the word to them, the refusal, and she does not yet know how. But that is for the daylight. For now there is only the ring intact, the salt, the knock keeping its slow measure under everything, and the fact of it holding her upright when nothing else would. The night has finished its measure. The lamps are lit. She counts them once more, to be sure, and the count comes out whole.

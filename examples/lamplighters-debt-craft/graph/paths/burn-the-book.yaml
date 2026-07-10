@@ -1,0 +1,10 @@
+id: path:burn-the-book
+name: Burn the Logbook
+explores: answer:burn-the-book
+consequences:
+- id: consequence:map-dies-with-her
+  text: The logbook and its wet-inked map burn, and the knowing dies with Marren so no one
+    else inherits the truth.
+- id: consequence:mercy-of-ignorance
+  text: The town is spared the answer, and Tamsin alone must decide the ring's fate blind
+    to what she destroyed.

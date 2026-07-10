@@ -1,0 +1,14 @@
+id: beat:the-ring-endures
+summary: The ring endures and Veilsmeer remains tended, its duty carried into another lifetime
+  by a keeper who understands exactly what she is imprisoning and why. This ends the story.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: advances
+entities:
+- character:tamsin-veil
+- faction:the-council
+- location:lamp-forty-two
+is_ending: true
+belongs_to:
+- path:kindle-the-forty-second

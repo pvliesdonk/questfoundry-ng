@@ -1,0 +1,16 @@
+id: beat:refuse-to-listen
+summary: Tamsin turns from the water and refuses the knock, declaring aloud that the ritual
+  is a cage and that she will not spend her life listening for the drowned.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two
+temporal_hints:
+- dilemma: dilemma:snuff-or-keep
+  position: after_commit
+belongs_to:
+- path:refuse-the-creed

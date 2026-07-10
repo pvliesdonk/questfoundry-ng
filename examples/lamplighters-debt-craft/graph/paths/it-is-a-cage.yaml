@@ -1,0 +1,10 @@
+id: path:it-is-a-cage
+name: The Lamps Are Bars
+explores: answer:it-is-a-cage
+consequences:
+- id: consequence:vigil-as-jailkeeping
+  text: The map reads as evidence that two centuries of flame have starved something in the
+    dark, recasting every act of tending as imprisonment.
+- id: consequence:dread-of-hunger-below
+  text: The soft knock beneath lamp forty-two carries the weight of a caged, hungering thing,
+    coloring the whole ring with fear rather than reverence.

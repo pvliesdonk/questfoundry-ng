@@ -1,0 +1,9 @@
+id: beat:fb-refuse-turn
+created_by: polish
+summary: Tamsin turns her back on the knocking and fixes her eyes on the door she means to
+  leave by.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

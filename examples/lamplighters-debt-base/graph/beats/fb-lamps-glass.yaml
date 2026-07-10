@@ -1,0 +1,9 @@
+id: beat:fb-lamps-glass
+created_by: polish
+summary: Tamsin presses her palm to the lamp's warm glass and feels the knocking answer through
+  it.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

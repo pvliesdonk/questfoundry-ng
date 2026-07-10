@@ -1,0 +1,10 @@
+id: passage:p-sealed-arm-wax
+summary: Tamsin runs her thumb over the two-century wax, brittle and green-tinged in the lamplight.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+beats:
+- beat:sealed-arm-wax
+choices:
+- label: Answer the knock at your door
+  to: passage:p-sable-at-the-door

@@ -1,0 +1,23 @@
+id: passage:p-owed-tenderness
+summary: The drowned thing receives its owed tenderness and quiets, the knocking softening
+  into something almost grateful beneath the water. Tamsin becomes the next keeper of the
+  creed, bound to two hundred years of listening, Junia's route revealed as an inherited act
+  of mercy — the story closes on the tender cage she has chosen.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:sister-halvard
+- character:junia-veil
+ending:
+  id: e-owed-tenderness
+  title: The Tender Cage
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:keeper-of-listening
+- beat:owed-tenderness

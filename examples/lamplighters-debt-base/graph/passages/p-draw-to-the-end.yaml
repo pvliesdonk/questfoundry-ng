@@ -1,0 +1,18 @@
+id: passage:p-draw-to-the-end
+summary: Tamsin sets the pen to the wet ink and follows Junia's line to its close, drawing
+  the circling thing beneath the canals fully into shape. The completed map lays it bare —
+  its size, its slow orbit, its patience — and at Lamp Forty-Two the knocking changes pitch,
+  as if a two-hundred-year wait has finally received its answer.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+beats:
+- beat:completion-received
+- beat:draw-to-the-end
+- beat:fully-known
+choices:
+- label: Search the sealed pages for what else she hid
+  requires:
+  - flag:summoning-risked
+  to: passage:p-ledger-of-bribes-summoned

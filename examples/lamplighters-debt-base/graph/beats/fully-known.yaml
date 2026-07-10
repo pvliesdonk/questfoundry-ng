@@ -1,0 +1,12 @@
+id: beat:fully-known
+summary: The completed map lays the drowned thing bare — its size, its slow orbit, its patience
+  — and Tamsin cannot un-know what she has drawn.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: reveals
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+belongs_to:
+- path:complete-it

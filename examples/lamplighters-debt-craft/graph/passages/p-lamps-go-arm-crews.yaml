@@ -1,0 +1,11 @@
+id: passage:p-lamps-go-arm-crews
+summary: Tamsin edges past the electrician crews coiling cables where the old flames used
+  to burn.
+entities:
+- character:tamsin-veil
+- faction:the-council
+beats:
+- beat:lamps-go-arm-crews
+choices:
+- label: Take your mother's tools to lamp forty-two
+  to: passage:p-alone-at-the-dark-lamp

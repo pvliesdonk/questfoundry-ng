@@ -1,0 +1,11 @@
+id: passage:p-weight-arm-name
+summary: Tamsin whispers her mother's name into the dark, listening for an answer she knows
+  won't come.
+entities:
+- character:tamsin-veil
+- character:marren-veil
+beats:
+- beat:weight-arm-name
+choices:
+- label: Close the logbook and go down to the town
+  to: passage:p-the-circling-shape

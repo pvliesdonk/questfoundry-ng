@@ -1,0 +1,8 @@
+id: beat:sealed-arm-wax
+created_by: polish
+summary: Tamsin runs her thumb over the two-century wax, brittle and green-tinged in the lamplight.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- object:marren-logbook

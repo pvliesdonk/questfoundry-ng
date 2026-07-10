@@ -1,0 +1,10 @@
+id: path:send-him-away
+name: Alone With the Dark
+explores: answer:send-him-away
+consequences:
+- id: consequence:oren-gone
+  text: Oren Quist is frightened off the job, spared the knocking but leaving Tamsin utterly
+    alone.
+- id: consequence:wiring-halted
+  text: The mainland electrification stalls without its electrician, and no one else believes
+    Tamsin.

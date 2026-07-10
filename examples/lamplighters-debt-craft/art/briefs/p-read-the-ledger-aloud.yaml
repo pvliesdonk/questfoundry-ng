@@ -1,0 +1,16 @@
+passage: passage:p-read-the-ledger-aloud
+priority: 6
+caption: Before the gathered town Tamsin reads the hush-money ledger aloud, naming the price
+  of silence.
+prompt: Painterly gothic realism, dim square lit by failing green lamps. A young woman in
+  an oversized oilskin coat carrying a council-grey ledger up into the light with both hands
+  as if it were a lamp too full of oil; a tired governing body at a table, an older man with
+  ink-stained cuffs among them, a well-dressed woman with a key on a chain at her collar standing
+  apart. Green light guttering along far walls against wet iron black; thrift-worn town tones,
+  restrained composition.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:elder-corran
+- character:sable-ondrey
+- faction:the-council

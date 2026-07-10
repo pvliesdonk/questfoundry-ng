@@ -1,0 +1,10 @@
+id: path:answer-with-mercy
+name: The Mercy Owed
+explores: answer:answer-with-mercy
+consequences:
+- id: consequence:tamsin-becomes-keeper
+  text: Tamsin kneels to the knock and inherits Sister Halvard's devotion, the drowned thing
+    offered its owed tenderness.
+- id: consequence:creed-continues
+  text: The lamplighter creed is affirmed as mercy rather than defense, binding Tamsin to
+    two hundred years of listening.

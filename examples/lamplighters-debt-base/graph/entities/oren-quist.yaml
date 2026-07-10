@@ -1,0 +1,10 @@
+id: character:oren-quist
+name: Oren Quist
+concept: A young electrician brought in from the mainland to wire the canal ring, cheerful
+  and unafraid of the dark until the lamps start speaking to him.
+pronouns: he/him
+base:
+  appearance: copper burns on his forearms, an easy grin that thins as nights pass
+  manner: practical, kind, an outsider who asks the questions locals never dare
+  gesture: When handed something he does not understand, he touches it first with a single
+    finger before letting his whole hand commit.

@@ -1,0 +1,15 @@
+id: passage:p-the-forty-two-lamps
+summary: Tamsin walks her drowned mother's route for the first time as sworn lamplighter,
+  kindling forty-one green flames along the canals of Veilsmeer. The forty-second lamp above
+  the deepest bend stays unlit, as it has for two hundred years.
+entities:
+- character:tamsin-veil
+- character:marren-veil
+- location:lamp-forty-two
+beats:
+- beat:the-forty-two-lamps
+choices:
+- label: Climb to the high catwalk and count the flames
+  to: passage:p-lamps-arm-catwalk
+- label: Kneel at the oil stores and check the levels
+  to: passage:p-lamps-arm-oil

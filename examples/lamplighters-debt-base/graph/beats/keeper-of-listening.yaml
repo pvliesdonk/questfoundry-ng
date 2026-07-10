@@ -1,0 +1,16 @@
+id: beat:keeper-of-listening
+summary: Tamsin becomes the next keeper of the creed, bound to two hundred years of listening,
+  her mother's route revealed as an act of mercy she now inherits — the story closes on the
+  tender cage she has chosen.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: advances
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- character:junia-veil
+- location:lamp-forty-two
+is_ending: true
+belongs_to:
+- path:answer-with-mercy

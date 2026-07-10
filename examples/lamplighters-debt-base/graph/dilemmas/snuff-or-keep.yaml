@@ -1,0 +1,23 @@
+id: dilemma:snuff-or-keep
+question: When the council vote comes and the flames are to be snuffed by morning, does Tamsin
+  let the ring be electrified — or fight to keep the old greenish flames lit?
+why_it_matters: 'This is the town''s fate and the story''s central bargain: safety through
+  forgetting versus the terror of continued vigilance, and whichever she chooses becomes an
+  irreversible inheritance passed to whoever comes after.'
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:let-them-snuff
+  text: She lets the lamps be snuffed, trusting electric light and the mercy of an ended ritual.
+- id: answer:keep-them-lit
+  text: She fights to keep the old flames burning, accepting fear as the price of whatever
+    the fire holds back — or holds close.
+anchored_to:
+- character:tamsin-veil
+- character:eldric-mowe
+- location:lamp-forty-two
+- character:sister-halvard
+wraps:
+- dilemma:expose-the-payments
+- dilemma:trust-the-outsider

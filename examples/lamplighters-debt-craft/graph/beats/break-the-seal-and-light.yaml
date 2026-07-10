@@ -1,0 +1,15 @@
+id: beat:break-the-seal-and-light
+summary: Tamsin breaks the two-century seal and kindles lamp forty-two, its green flame roaring
+  up above the deepest bend as she binds herself to the route as its next keeper.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: commits
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+temporal_hints:
+- dilemma: dilemma:read-or-burn
+  position: after_commit
+belongs_to:
+- path:kindle-the-forty-second

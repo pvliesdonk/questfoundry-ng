@@ -1,0 +1,11 @@
+id: passage:p-lamps-arm-catwalk
+summary: Tamsin walks the high catwalk, counting the green flames strung over the black water
+  below.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:lamps-arm-catwalk
+choices:
+- label: Follow the flames down toward the deepest bend
+  to: passage:p-the-water-knocks

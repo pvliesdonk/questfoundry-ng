@@ -1,0 +1,12 @@
+id: beat:the-warning-legible
+summary: Marren's drowning becomes legible as warning rather than accident; her voice from
+  under the water is finally answered, and Tamsin can never unknow what she read.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:read-or-burn
+  effect: reveals
+entities:
+- character:marren-veil
+- character:tamsin-veil
+belongs_to:
+- path:read-it-all

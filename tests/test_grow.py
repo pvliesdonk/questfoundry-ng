@@ -9,11 +9,12 @@ from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.drama import ResidueWeight
+from questfoundry.models.drama import DilemmaRole, ResidueWeight
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
     FlagSource,
+    IntersectionGroup,
     StateFlag,
     StructuralPurpose,
 )
@@ -38,7 +39,7 @@ from questfoundry.pipeline.stages.polish import _finalize_context
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
 from tests.test_passages import _fork_rejoin_story
-from tests.test_weave import seeded_story
+from tests.test_weave import make_dilemma, scaffold, seeded_story
 
 
 @pytest.fixture()
@@ -77,6 +78,50 @@ def test_empty_intersection_proposal_is_valid(project):
     assert _intersections_apply(IntersectionProposal(groups=[]), project) == [
         "no intersections proposed"
     ]
+
+
+def test_unsatisfiable_intersection_is_dropped_with_a_note(tmp_path, vision):
+    # serial(sub, main) puts all of sub before main; merging a beat from
+    # each side forces one unit both before and after the boundary —
+    # cyclic, and intrinsically so. Intersections are advisory like
+    # temporal hints: the group is dropped and named, never allowed to
+    # wedge the weave (live run 7 burned repairs twice on webs where no
+    # cross-dilemma pairing was satisfiable)
+    g = StoryGraph()
+    seeded_story(g, wraps=False)
+    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:sub", "dilemma:main")
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    lines = _intersections_apply(group(["beat:main-pre0", "beat:sub-pre0"]), project)
+    assert len(lines) == 1 and lines[0].startswith("dropped intersection:x")
+    assert "incompatible positions" in lines[0]
+    assert not project.graph.nodes_of(IntersectionGroup)
+    weave.plan(project.graph)  # the weave is untouched and satisfiable
+
+
+def test_conflicting_intersection_dropped_keeps_the_earlier_group(tmp_path, vision):
+    # each group is satisfiable alone; together the main chain orders one<two
+    # while the sub chain orders two<one — the earlier group survives, the
+    # newcomer is dropped with a note naming what it conflicts with
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    d2, p2a, p2b = make_dilemma(g, "sub", role=DilemmaRole.SOFT)
+    scaffold(g, "main", d1, p1a, p1b, pre=3)
+    scaffold(g, "sub", d2, p2a, p2b, endings=False)
+    mutations.add_dilemma_relation(g, EdgeKind.WRAPS, d1, d2)
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    proposal = IntersectionProposal(
+        groups=[
+            IntersectionSpec(id="intersection:one", members=["beat:main-pre1", "beat:sub-pre1"]),
+            IntersectionSpec(id="intersection:two", members=["beat:main-pre2", "beat:sub-pre0"]),
+        ]
+    )
+    lines = _intersections_apply(proposal, project)
+    assert lines[0] == "intersection:one: beat:main-pre1 + beat:sub-pre1"
+    assert lines[1].startswith("dropped intersection:two")
+    assert "cannot coexist with intersection:one" in lines[1]
+    (kept,) = project.graph.nodes_of(IntersectionGroup)
+    assert kept.id == "intersection:one"
+    weave.plan(project.graph)  # satisfiable with the kept group applied
 
 
 def test_weave_choice_out_of_range_is_repairable(project):
@@ -217,7 +262,7 @@ def test_residue_and_tails_see_through_the_bridge(tmp_path, vision):
         summary="s",
         beat_class=BeatClass.STRUCTURAL,
         purpose=StructuralPurpose.RESIDUE,
-        requires_flags=[need.path_flags["path:sub-a"]],
+        requires_flags=[need.path_flags["path:sub-a"][0]],
     )
     pc.insert_residue_chain(g, [residue], "path:sub-a", need.rejoin)
     assert queries.successors(g, "beat:sub-post-a") == ["beat:afterglow"]

@@ -331,13 +331,18 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
         for scaffold in proposal.locked_scaffolds
         for s in (*scaffold.lead_in, scaffold.resolution, *scaffold.aftermath)
     ]
+    # Shape rules are collected and raised together: one violation per
+    # repair round is whack-a-mole — the model fixes the named arm while
+    # a sibling arm has the same defect, and burns its rounds one arm at
+    # a time (live run 7 lost SEED to exactly this).
+    problems: list[str] = []
     for spec in all_specs + locked_specs:
         for hint in spec.hints:
             if hint.dilemma not in expected:
-                raise ApplyError(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
+                problems.append(f"beat {spec.id} hint names unknown dilemma {hint.dilemma!r}")
     for spec in locked_specs:
         if spec.is_ending:
-            raise ApplyError(
+            problems.append(
                 f"beat {spec.id} sets is_ending but belongs to a locked storyline — "
                 "a locked dilemma never ends the story; it weaves through it (I6)"
             )
@@ -355,14 +360,14 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
         tails = {p.post_commit[-1].id for p in scaffold.paths} if hard else set()
         for path_scaffold in scaffold.paths:
             if hard and not path_scaffold.post_commit[-1].is_ending:
-                raise ApplyError(
+                problems.append(
                     f"hard dilemma {scaffold.dilemma}: {path_scaffold.path}'s final "
                     f"post-commit beat {path_scaffold.post_commit[-1].id} must set "
                     f"is_ending: true — hard paths never rejoin; their chains resolve "
                     f"the story (I6)"
                 )
             if not hard and len(path_scaffold.post_commit) < preset.min_payoff_beats:
-                raise ApplyError(
+                problems.append(
                     f"soft dilemma {scaffold.dilemma}: {path_scaffold.path} has "
                     f"{len(path_scaffold.post_commit)} post-commit payoff beat(s); "
                     f"scope {preset.name!r} requires >= {preset.min_payoff_beats} (I7)"
@@ -372,13 +377,18 @@ def _scaffold_apply(proposal: ScaffoldProposal, project: Project) -> list[str]:
             *(b for p in scaffold.paths for b in (p.commit, *p.post_commit)),
         ):
             if spec.is_ending and spec.id not in tails:
-                raise ApplyError(
+                problems.append(
                     f"beat {spec.id} sets is_ending but is not a hard path's final "
                     f"post-commit beat — the story continues after it (I6)"
                 )
     for spec in proposal.setup:
         if spec.is_ending:
-            raise ApplyError(f"setup beat {spec.id} must not be an ending")
+            problems.append(f"setup beat {spec.id} must not be an ending")
+    if problems:
+        raise ApplyError(
+            "fix all of the following in one pass, changing nothing else:\n- "
+            + "\n- ".join(problems)
+        )
 
     for spec in proposal.setup:
         beat = _make_beat(g, spec, beat_class=BeatClass.STRUCTURAL, purpose=StructuralPurpose.SETUP)

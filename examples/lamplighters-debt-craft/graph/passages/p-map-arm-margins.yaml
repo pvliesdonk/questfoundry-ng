@@ -1,0 +1,11 @@
+id: passage:p-map-arm-margins
+summary: Tamsin reads the cramped notes crowding the map's margins, half in a hand she doesn't
+  know.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+beats:
+- beat:map-arm-margins
+choices:
+- label: Open your mother's belongings
+  to: passage:p-the-ledger-surfaces

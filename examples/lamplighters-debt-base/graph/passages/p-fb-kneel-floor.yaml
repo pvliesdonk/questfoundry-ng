@@ -1,0 +1,18 @@
+id: passage:p-fb-kneel-floor
+summary: Tamsin lowers herself to the cold stone above the knocking and lays her cheek to
+  it. She meets the thing below as close as the stone allows.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-knows
+- flag:question-unanswered
+- flag:wiring-halted
+beats:
+- beat:fb-kneel-floor
+choices:
+- label: Give it the tenderness it was owed
+  to: passage:p-owed-tenderness

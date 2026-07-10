@@ -1,0 +1,20 @@
+id: passage:p-the-lamps-are-bars-ashes
+summary: 'Working only from the shape of the ring and the ashes of the map she burned, Tamsin
+  decides the lamps are bars: something starving has been caged in the dark, and every act
+  of tending was imprisonment. She cannot confirm it now, and the not-knowing makes the conviction
+  heavier.'
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:marren-logbook
+irrelevant_flags:
+- flag:knowledge-carried
+- flag:marren-a-warning
+beats:
+- beat:the-lamps-are-bars
+choices:
+- label: Watch the barred shadows on the wet stone
+  to: passage:p-bars-arm-shadows
+- label: Trail a hand along the cold iron struts
+  to: passage:p-bars-arm-iron
+variant_of: passage:p-the-lamps-are-bars-knowledge

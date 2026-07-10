@@ -1,0 +1,10 @@
+id: path:complete-it
+name: Following the Wet Ink
+explores: answer:complete-it
+consequences:
+- id: consequence:map-finished
+  text: The map is drawn to its end, and what circles beneath the canals is fully known and
+    cannot be un-known.
+- id: consequence:summoning-risked
+  text: The dark lamp's two-hundred-year wait may have received the completion it was listening
+    for.

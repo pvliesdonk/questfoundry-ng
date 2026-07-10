@@ -1,0 +1,20 @@
+id: passage:p-refuse-the-stipend
+summary: Tamsin refuses the money and the silence, forcing Corran to face forty years of his
+  own signatures and the questions his money buried; stripped of the transaction he hid behind,
+  he can no longer call his signing mercy. Poring over her mother's map, Tamsin studies how
+  the forty-two flames encircle the thing below and asks whether the ring honors it or holds
+  it.
+entities:
+- character:tamsin-veil
+- character:elder-corran
+- object:marren-logbook
+- location:lamp-forty-two
+beats:
+- beat:corran-unmasked-to-himself
+- beat:refuse-the-stipend
+- beat:studying-the-map
+choices:
+- label: Trace the smudged ink at the deepest bend
+  to: passage:p-map-arm-bend
+- label: Read the cramped notes in the margins
+  to: passage:p-map-arm-margins

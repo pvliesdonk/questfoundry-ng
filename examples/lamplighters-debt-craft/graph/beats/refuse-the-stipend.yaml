@@ -1,0 +1,13 @@
+id: beat:refuse-the-stipend
+summary: Tamsin refuses the money and the silence, forcing Corran to face forty years of his
+  own signatures and the questions his money buried. The bargain that killed her mother's
+  questions dies with her refusal.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corran-confession
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:elder-corran
+belongs_to:
+- path:refuse-the-coin

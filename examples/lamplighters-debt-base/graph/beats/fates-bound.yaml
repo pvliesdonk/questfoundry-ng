@@ -1,0 +1,13 @@
+id: beat:fates-bound
+summary: Oren's wiring and his fate become knotted to Tamsin's; whatever comes at the ring,
+  salvation or ruin, they now face it together.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: complicates
+entities:
+- character:oren-quist
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:confide-in-oren

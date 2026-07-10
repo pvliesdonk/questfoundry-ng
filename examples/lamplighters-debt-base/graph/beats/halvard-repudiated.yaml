@@ -1,0 +1,13 @@
+id: beat:halvard-repudiated
+summary: Sister Halvard's faith is repudiated to her face; the old keeper weeps for what Tamsin
+  has loosed by leaving the knock unanswered.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: complicates
+entities:
+- character:sister-halvard
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:refuse-the-creed

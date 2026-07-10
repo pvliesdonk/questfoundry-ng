@@ -1,0 +1,13 @@
+id: passage:p-seal-hand-arm-hush
+summary: Tamsin listens to the reverent hush that has kept this page shut for so long.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:seal-hand-arm-hush
+choices:
+- label: Keep the truth in your own hands
+  to: passage:p-the-truth-stays-in-reach

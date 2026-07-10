@@ -1,0 +1,9 @@
+id: beat:fb-lamps-logbook
+created_by: polish
+summary: Tamsin turns Junia's logbook to the pages where the old ink shivers into marks that
+  are not quite words.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- object:junia-logbook

@@ -1,0 +1,17 @@
+id: passage:p-fb-fight-flame
+summary: Tamsin trims each wick in turn, feeding the ring's flames against the pressing dark.
+  The labor is endless and deliberate.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-knows
+- flag:question-unanswered
+- flag:wiring-halted
+beats:
+- beat:fb-fight-flame
+choices:
+- label: Accept the keeping as your own
+  to: passage:p-next-keeper-of-quiet

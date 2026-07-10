@@ -1,0 +1,14 @@
+id: passage:p-fb-mercy-silence
+summary: Tamsin listens to the long silence between them, broken only by the distant knock
+  beneath the floor. The thing below is a third presence in the room.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-mercy-silence
+choices:
+- label: Swallow it and keep the quiet
+  to: passage:p-swallow-the-truth

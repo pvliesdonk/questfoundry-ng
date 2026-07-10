@@ -1,0 +1,15 @@
+id: beat:mercy-or-cage
+summary: Tamsin stands over the water torn between Halvard's devotion and her own suspicion
+  that the ritual is a cage dressed as kindness — and that answering might be surrender, not
+  mercy.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two
+belongs_to:
+- path:answer-with-mercy
+- path:refuse-the-creed

@@ -1,0 +1,23 @@
+id: dilemma:expose-or-shield
+question: Does Tamsin expose Sable's family as the paid silencers before the vote, or shield
+  them and let the secret's keepers keep their name?
+why_it_matters: It decides whether a generational complicity is dragged into the light for
+  judgment or spared for mercy, and whether Sable becomes an ally or is destroyed by the truth
+  she never asked for.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:name-them
+  text: Reveal the hush-money ledger to the town and let the family answer for the silence
+    they were paid to keep.
+- id: answer:keep-their-name
+  text: Withhold the ledger and let Sable choose her own reckoning, sparing the family public
+    ruin.
+anchored_to:
+- character:tamsin-veil
+- character:sable-ondrey
+- faction:the-council
+concurrent:
+- dilemma:read-or-burn
+- dilemma:worship-or-imprison

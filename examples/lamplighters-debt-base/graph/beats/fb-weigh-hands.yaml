@@ -1,0 +1,8 @@
+id: beat:fb-weigh-hands
+created_by: polish
+summary: Tamsin notices how Mowe's hands shake around the ledger before she reaches him.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:eldric-mowe

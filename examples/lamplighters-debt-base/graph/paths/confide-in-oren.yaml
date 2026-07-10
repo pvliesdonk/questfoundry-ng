@@ -1,0 +1,9 @@
+id: path:confide-in-oren
+name: A Weight Shared
+explores: answer:confide-in-oren
+consequences:
+- id: consequence:oren-knows
+  text: Oren Quist carries the truth of the knocking, an outsider who chose to stay in the
+    danger.
+- id: consequence:oren-fate-tied
+  text: Oren's wiring and his fate become bound to Tamsin's, for salvation or ruin.

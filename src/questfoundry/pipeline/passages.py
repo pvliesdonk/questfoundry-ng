@@ -124,7 +124,7 @@ class ConvergenceNeed:
     weight: ResidueWeight
     world: str
     rejoin: tuple[str, ...]  # beat(s) where the paths rejoin; >1 at a hard fork
-    path_flags: dict[str, str]  # path id -> dilemma flag id
+    path_flags: dict[str, list[str]]  # path id -> that path's dilemma flags, sorted
 
 
 def convergence_needs(g: StoryGraph) -> list[ConvergenceNeed]:

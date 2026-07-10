@@ -1,0 +1,12 @@
+id: beat:oren-stays
+summary: Oren chooses to stay despite the weight, an outsider now carrying the truth of the
+  knocking alongside Tamsin instead of fleeing it.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: advances
+entities:
+- character:oren-quist
+- character:tamsin-veil
+belongs_to:
+- path:confide-in-oren

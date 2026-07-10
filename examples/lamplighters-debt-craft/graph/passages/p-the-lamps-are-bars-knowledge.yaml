@@ -1,0 +1,18 @@
+id: passage:p-the-lamps-are-bars-knowledge
+summary: 'Knowing exactly what the map showed, Tamsin decides the lamps are bars: two centuries
+  of flame have caged a starving thing she has now seen, and every act of tending was imprisonment.
+  The certainty of what waits below sharpens the horror of the ring.'
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:marren-logbook
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:the-lamps-are-bars
+choices:
+- label: Watch the barred shadows on the wet stone
+  to: passage:p-bars-arm-shadows
+- label: Trail a hand along the cold iron struts
+  to: passage:p-bars-arm-iron

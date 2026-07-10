@@ -1,0 +1,13 @@
+id: beat:weigh-the-outsider
+summary: Tamsin weighs telling Oren the truth against driving him off; he is the only one
+  who has heard the knocking too, and the only one who chose to be here.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:oren-quist
+belongs_to:
+- path:confide-in-oren
+- path:send-him-away

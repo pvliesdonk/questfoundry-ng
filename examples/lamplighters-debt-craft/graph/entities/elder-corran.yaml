@@ -1,0 +1,10 @@
+id: character:elder-corran
+name: Elder Corran Mow
+concept: The council's longest-serving member who has quietly signed the family's hush-money
+  for forty years and now champions electrifying the ring to end the ledger forever.
+pronouns: he/him
+base:
+  appearance: a soft-spoken man with ink-stained cuffs and a tremor he hides in his coat pocket
+  manner: gentle, apologetic, ruthless only in what he refuses to say aloud
+  gesture: When offering a bargain he turns both palms open and slightly forward, laying the
+    offer flat where a frightened person can take it without seeming to reach.

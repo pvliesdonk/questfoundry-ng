@@ -1,0 +1,10 @@
+id: path:read-it-all
+name: Read the Wet Page
+explores: answer:read-it-all
+consequences:
+- id: consequence:knowledge-carried
+  text: Tamsin reads her mother's map to its end and carries its unbearable meaning into every
+    choice, unable to unknow why lamp forty-two stays dark.
+- id: consequence:marren-a-warning
+  text: Marren's drowning becomes legible as warning rather than accident, her voice from
+    under the water finally answered.

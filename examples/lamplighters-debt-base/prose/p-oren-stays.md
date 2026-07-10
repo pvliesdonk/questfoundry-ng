@@ -1,0 +1,13 @@
+The coil is still on his shoulder when he turns from the water. She watches him settle it, shift the weight, the way a man does when he means to work and not to run. There is a junction box waiting a little way down the wall, half-opened, its copper mouth bright against the green iron. He goes to it. He does not look back at Lamp Forty-Two to see if it will follow. He has felt what it is now, and a man does not need to look twice at a thing that has already reached the deep part of him.
+
+Tamsin follows a pace behind, the count still running under her breath where the flames pick up again past the dark column. He kneels to the box. He touches the first wire with his single finger, testing, then lets his whole hand take it, and she understands that this is the same gesture he gave the ledger and the cold iron and the last word her mother wrote, only now he gives it to the work itself, to the wiring that will bind the ring to the mainland light. His hands are steady. She thinks of how they were warm when hers were cold.
+
+Something in her has stopped waiting for him to leave. She has spent the season holding one weight and holding it alone, and now the holding is halved, and the halving does not feel like mercy. It feels like a knot pulled tight. Whatever the wire carries down into that iron, whatever answers, it will answer to the two of them now. His fate is strung along the copper the way hers is strung along the count, and there is no cutting one free of the other. He knows it. She can see he knows it in the way he works without haste, giving himself over to the ring by degrees.
+
+The knock comes up through the stone into her boots. Slow. Patient. It has changed its measure not at all, and yet it feels different to her, hearing it beside him. Two hundred years it has kept its rhythm against a single set of listening feet at a time, one lamplighter and then her daughter and then hers, each carrying the hearing down into the dark alone.
+
+Now there are two.
+
+She crouches beside him at the box. She does not tell him where to put his hands. He was hired for this and she was born to it, and between them the work will find its shape. The greenish flames burn on down the curve of the wall. The wet ink will not dry in the ledger behind them. She reaches out and steadies the coil against her knee so it will not roll into the water, and he glances at her, and neither of them says the thing that would be a comfort-word.
+
+They turn to the wiring together.

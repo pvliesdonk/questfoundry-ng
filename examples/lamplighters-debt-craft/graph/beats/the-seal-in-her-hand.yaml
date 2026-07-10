@@ -1,0 +1,13 @@
+id: beat:the-seal-in-her-hand
+summary: 'Tamsin holds the sealed lamp''s mechanism, understanding this is the last choice:
+  continue the vigil her mother died for, or let two hundred years end in her hands.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: complicates
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:kindle-the-forty-second
+- path:let-them-snuff-it

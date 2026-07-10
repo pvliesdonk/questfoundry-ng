@@ -1,0 +1,9 @@
+id: beat:lamps-go-arm-crews
+created_by: polish
+summary: Tamsin edges past the electrician crews coiling their cables where the old flames
+  used to burn.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- faction:the-council

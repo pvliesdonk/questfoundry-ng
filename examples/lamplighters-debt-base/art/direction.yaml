@@ -1,0 +1,60 @@
+style: Painterly gothic illustration with soft, brine-damp edges and deep chiaroscuro, rendered
+  as if seen by lamplight through fog; tender close-ups of hands and faces set against vast,
+  hushed canal architecture.
+palette: Corroded iron blacks and greens, salt-white crusting, lamp-oil ambers, drowned brine-blues
+  and algae greens, silver highlights and the pale gleam of never-setting wet ink.
+notes: Every entity restated only from established facts; no invented scars, colors, or details.
+  Light sources should always feel earned by the story's lamps and flames.
+profiles:
+- entity: character:eldric-mowe
+  appearance: A tall, stooped elder, gentle-faced, with a silver watch-chain looped at his
+    side that he worries between two fingers.
+  iconography:
+  - silver watch-chain worked between two fingers
+  - stooped tall silhouette
+  - evasive downcast gaze
+- entity: character:junia-veil
+  appearance: 'Present only as her handwriting: meticulous early script giving way to increasingly
+    frantic strokes in the final pages, never shown as a figure.'
+  iconography:
+  - meticulous handwriting turning frantic
+  - absence rendered through ink and margins
+- entity: character:oren-quist
+  appearance: A young electrician with copper burns marking his forearms and an easy grin
+    that thins as the nights pass.
+  iconography:
+  - copper burns along the forearms
+  - grin narrowing over time
+  - a single fingertip touching the unfamiliar before the whole hand commits
+- entity: character:sister-halvard
+  appearance: A serene keeper in an ash-grey habit that smells of lamp-oil, one left eye clouded
+    milky.
+  iconography:
+  - ash-grey lamp-oil habit
+  - milky left eye
+  - serene, absolute expression
+- entity: character:tamsin-veil
+  appearance: Nineteen, with brine-chapped hands and hair the color of wet rope, swallowed
+    by her mother's oversized oilskin coat; quiet and watchful.
+  iconography:
+  - mother's oversized oilskin coat
+  - brine-chapped hands
+  - wet-rope hair
+  - counting lamps along the ring
+- entity: location:lamp-forty-two
+  appearance: An unlit lamp-column of black iron corroded green and salt-crusted, hollow within,
+    faintly humming against the palm.
+  iconography:
+  - black iron corroded green
+  - salt crust
+  - hollow unlit column
+  - faint hum felt through stone and iron
+  - slow patient knocking rhythm
+- entity: object:junia-logbook
+  appearance: A swollen, waterlogged leather ledger smelling of algae, ending in a half-finished
+    map whose strokes trail off mid-line, its last ink impossibly and perpetually wet.
+  iconography:
+  - swollen waterlogged leather
+  - algae-scented pages
+  - map strokes trailing off mid-line
+  - a final line of ink that never sets

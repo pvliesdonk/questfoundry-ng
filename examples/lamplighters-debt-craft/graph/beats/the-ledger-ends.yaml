@@ -1,0 +1,12 @@
+id: beat:the-ledger-ends
+summary: The two-hundred-year vigil ends in Tamsin's hands and the town is freed of its ledger,
+  its duty, its inherited silence. Corran's dream is complete.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: advances
+entities:
+- character:tamsin-veil
+- character:elder-corran
+belongs_to:
+- path:let-them-snuff-it

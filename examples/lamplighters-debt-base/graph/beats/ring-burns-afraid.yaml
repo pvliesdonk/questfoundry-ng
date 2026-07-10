@@ -1,0 +1,12 @@
+id: beat:ring-burns-afraid
+summary: The canal ring burns greenish and afraid each night, its ritual unbroken and passed
+  unended to Tamsin, who now tends flames she chose not to let die.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:snuff-or-keep
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:keep-them-lit

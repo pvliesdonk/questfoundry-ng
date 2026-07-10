@@ -1,0 +1,26 @@
+id: passage:p-the-truth-stays-in-reach
+summary: With the coin refused, the truth beneath the water stays within Tamsin's reach; nothing
+  has been sold or sealed away, and the questions remain hers. She can no longer see her mother's
+  route as devotion, understanding every lamp she thought was care as a lock, and carries
+  that knowledge into what comes.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:marren-veil
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:tending-as-jailing
+- beat:the-truth-stays-in-reach
+choices:
+- label: Take Sable aside and tell her alone
+  grants:
+  - flag:ledger-withheld
+  - flag:sable-own-reckoning
+  to: passage:p-pocket-the-ledger
+- label: Read the ledger aloud to the whole town
+  grants:
+  - flag:family-exposed
+  - flag:sable-allied-or-ruined
+  to: passage:p-read-the-ledger-aloud

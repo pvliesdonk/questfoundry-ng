@@ -1,0 +1,9 @@
+id: path:keep-the-silence
+name: One More Generation of Quiet
+explores: answer:keep-the-silence
+consequences:
+- id: consequence:mowe-secret-safe
+  text: Eldric Mowe's hereditary bribe stays buried, and the town never learns what it was
+    never asked.
+- id: consequence:tamsin-next-link
+  text: Tamsin becomes the next keeper of a paid quiet she never chose, the chain unbroken.

@@ -1,0 +1,13 @@
+id: beat:vote-called
+summary: The council calls a vote to electrify the ring by morning, with Eldric Mowe championing
+  the change as the way to end the Veils' long-paid debt forever.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:snuff-or-keep
+  effect: advances
+entities:
+- character:eldric-mowe
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:keep-them-lit

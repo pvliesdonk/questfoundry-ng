@@ -1,0 +1,13 @@
+passage: passage:p-the-wet-ink
+priority: 1
+caption: The sealed ledger opens to a half-drawn map whose last stroke will not dry.
+prompt: 'Painterly gothic close-up by lamplight through fog: a young woman with brine-chapped
+  hands and hair the color of wet rope, swallowed by an oversized oilskin coat, opening a
+  swollen waterlogged leather ledger to its final page — a half-finished map trailing off
+  mid-line, its last ink impossibly wet and silver-gleaming. Behind her a black iron lamp-column
+  corroded green and salt-crusted looms in drowned brine-blue fog. Deep chiaroscuro, lamp-oil
+  ambers, algae greens, salt-white crusting.'
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two

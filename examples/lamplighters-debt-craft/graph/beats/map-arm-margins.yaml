@@ -1,0 +1,9 @@
+id: beat:map-arm-margins
+created_by: polish
+summary: Tamsin reads the cramped notes crowding the map's margins, half in a hand she doesn't
+  know.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- object:marren-logbook

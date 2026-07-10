@@ -1,0 +1,19 @@
+id: passage:p-temptation-to-tell
+summary: Tamsin is tempted to expose the payments and finally name what her family was paid
+  to swallow for two centuries. She weighs telling the town against telling Oren — the only
+  one who has heard the knocking too, and the only one who chose to be here.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- character:oren-quist
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:temptation-to-tell
+- beat:weigh-the-outsider
+choices:
+- label: Cross the empty hall toward Mowe
+  to: passage:p-fb-weigh-hall
+- label: Watch how Mowe's hands hold the ledger
+  to: passage:p-fb-weigh-hands

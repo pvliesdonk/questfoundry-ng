@@ -1,0 +1,14 @@
+id: beat:lamps-speak
+summary: As Oren strings cable near Lamp Forty-Two, the lamps begin to speak to him — a knocking,
+  then almost words — and his cheer curdles into unease he brings to Tamsin.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: reveals
+entities:
+- character:oren-quist
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:confide-in-oren
+- path:send-him-away

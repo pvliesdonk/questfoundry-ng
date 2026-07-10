@@ -1,0 +1,12 @@
+id: beat:the-knock-quieted
+summary: The knock beneath the water falls silent, quieted for another generation. Tamsin
+  is bound to a route she now knows is a cage, her innocence gone but the vigil unbroken.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:kindle-the-forty-second

@@ -1,0 +1,13 @@
+id: beat:carrying-the-meaning
+summary: Tamsin carries the map's unbearable meaning into every choice that follows, the knowledge
+  coloring how she hears the soft knock beneath the deepest bend.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:read-or-burn
+  effect: complicates
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:marren-logbook
+belongs_to:
+- path:read-it-all

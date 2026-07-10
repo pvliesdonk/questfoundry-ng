@@ -1,0 +1,18 @@
+id: passage:p-the-caged-knock
+summary: 'The soft knock beneath lamp forty-two now carries the weight of a caged, hungering
+  thing, recoloring the whole ring with fear rather than reverence. Tamsin holds the sealed
+  lamp''s mechanism and understands this is the last choice: continue the vigil her mother
+  died for, or let two hundred years end in her hands.'
+entities:
+- location:lamp-forty-two
+- character:tamsin-veil
+irrelevant_flags:
+- flag:map-dies-with-her
+beats:
+- beat:the-caged-knock
+- beat:the-seal-in-her-hand
+choices:
+- label: Press the loosened seal between your fingers
+  to: passage:p-seal-hand-arm-thumb
+- label: Listen to the hush around you
+  to: passage:p-seal-hand-arm-hush

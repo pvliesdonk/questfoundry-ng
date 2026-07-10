@@ -80,6 +80,29 @@ def test_soft_path_needs_scope_payoff_beats(tmp_path):
         )
 
 
+def test_scaffold_shape_errors_arrive_batched(tmp_path):
+    """Every shape violation in one ApplyError: reporting one arm per
+    repair round is whack-a-mole — the model fixes the named arm while a
+    sibling has the same defect (live run 7 lost SEED to this)."""
+    g = StoryGraph()
+    d1, _, _ = make_dilemma(g, "x", role=DilemmaRole.SOFT)
+    d2, _, _ = make_dilemma(g, "y", role=DilemmaRole.SOFT)
+    vision = Vision(premise="t", genre="t", tone="t", scope="medium")
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    with pytest.raises(ApplyError) as exc:
+        _scaffold_apply(
+            ScaffoldProposal(
+                scaffolds=[
+                    _y(d1, "x", tail_endings=False, payoff=1),
+                    _y(d2, "y", tail_endings=False, payoff=1),
+                ]
+            ),
+            project,
+        )
+    # both under-built arms named in the same repair round
+    assert "dilemma:x" in str(exc.value) and "dilemma:y" in str(exc.value)
+
+
 # -- triage dispositions (branched vs locked; design doc 01 §4) --------------
 
 

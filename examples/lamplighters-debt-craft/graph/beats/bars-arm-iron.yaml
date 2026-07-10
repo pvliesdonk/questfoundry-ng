@@ -1,0 +1,9 @@
+id: beat:bars-arm-iron
+created_by: polish
+summary: Tamsin trails a hand along the cold iron struts that hold each green flame in its
+  place.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

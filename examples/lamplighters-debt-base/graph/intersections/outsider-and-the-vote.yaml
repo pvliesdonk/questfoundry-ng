@@ -1,0 +1,7 @@
+id: intersection:outsider-and-the-vote
+location: location:lamp-forty-two
+rationale: 'Both center on the ring''s electrification: Oren''s arrival to wire the lamps
+  and the council vote to snuff them share the same threshold of change.'
+members:
+- beat:oren-arrives
+- beat:vote-called

@@ -1,0 +1,11 @@
+The vote goes on without you for a moment, and you let it, because your hands need somewhere to be. You take the logbook out again, here in the low light of the room, and you open it to the page that will not dry. You have read it before. You read it once more, all the way down, and this time you do not stop at the shape or the circling or the small brown answers leaning the wrong way in the margin. You read it to the end, to the last line your mother's steady hand set down before the ink stopped being hers.
+
+The stair down from lamp forty-two is worn hollow in the middle. Generations of boots. She wrote that. She measured it. She knew how many had gone down before her and she wrote the number as if she were adding herself to it, the way you add a wick to a row of wicks and watch each one settle. She never left a flame she had not watched settle. That was the rule. That was the whole of her care. And the map tells you what the care was for, and now you cannot give it back.
+
+Lamp forty-two stays dark. You had thought it broken, or forgotten, or too far above the deepest bend for anyone to bother. You had been a child who called her mother's name half up the stairs and waited for the green light to bend under the door. You did not wonder then why one lamp on the whole route was allowed to be cold. You wonder now, and the page answers, and the answer is not an accident.
+
+She drowned near the deepest bend. You have known that number all along and kept it in a drawer in yourself, unopened. The page opens it. She did not slip. She went down to the water because the water had been knocking, patient, never doubled, always the stillness after, and she wanted to know what she was answering. She answered it. This is the thing you can never unknow, that her drowning was not a thing the canal did to her but a thing she read to its end, the way you are reading it now, the way you will carry down into every word you speak in that room and every stair you take after.
+
+Below the town, under the deepest bend, the water knocks once. You feel it in the boards more than hear it. Then it keeps its count, the way it has kept count for two hundred years, the way it kept count while she went under.
+
+You close the cover. You cannot look at the lamps the way she did. Not now. Not ever again.

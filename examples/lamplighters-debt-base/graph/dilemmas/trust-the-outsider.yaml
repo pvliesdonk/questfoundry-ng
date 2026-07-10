@@ -1,0 +1,19 @@
+id: dilemma:trust-the-outsider
+question: Does Tamsin bring Oren Quist into the truth of the knocking, or drive him away before
+  the electrification work goes deeper?
+why_it_matters: Oren is the only person who might believe her and the only one whose wiring
+  could doom them all; trusting him risks a stranger's fate, while shutting him out leaves
+  her utterly alone with what her mother knew.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:confide-in-oren
+  text: She tells Oren everything, sharing the weight and the danger with an outsider who
+    chose to stay.
+- id: answer:send-him-away
+  text: She frightens him off the job to spare him, and faces the dark ring alone.
+anchored_to:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two

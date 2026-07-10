@@ -8,16 +8,23 @@ from __future__ import annotations
 
 import pytest
 
+from questfoundry.graph import queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import Stage
 from questfoundry.models.concept import Vision
 from questfoundry.models.drama import DilemmaRole
 from questfoundry.pipeline.stages.seed import (
     BeatSpec,
+    ConsequenceSpec,
     DilemmaScaffold,
+    LockedScaffold,
+    LockSpec,
     PathScaffold,
+    PathSpec,
     ScaffoldProposal,
+    TriageProposal,
     _scaffold_apply,
+    _triage_apply,
 )
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
@@ -70,6 +77,155 @@ def test_soft_path_needs_scope_payoff_beats(tmp_path):
     with pytest.raises(ApplyError, match="requires >= 2"):
         _scaffold_apply(
             ScaffoldProposal(scaffolds=[_y(did, "x", tail_endings=False, payoff=1)]), project
+        )
+
+
+# -- triage dispositions (branched vs locked; design doc 01 §4) --------------
+
+
+def _path(slug: str, answer: str) -> PathSpec:
+    return PathSpec(
+        id=f"path:{slug}",
+        explores=answer,
+        consequences=[ConsequenceSpec(id=f"consequence:{slug}", text="t")],
+    )
+
+
+def _triage_project(tmp_path, *, extra_soft: int = 1) -> Project:
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD, explore=0)
+    make_dilemma(g, "sub", explore=0)
+    for i in range(extra_soft):
+        make_dilemma(g, f"herring{i}", explore=0)
+    vision = Vision(premise="t", genre="t", tone="t", scope="micro")
+    return Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+
+
+def _branch_both(slug: str) -> list[PathSpec]:
+    return [_path(f"{slug}-{s}", f"answer:{slug}-{s}") for s in ("a", "b")]
+
+
+def test_triage_locked_disposition_applies(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(
+        locked=[LockSpec(dilemma="dilemma:herring0", reason="red herring")],
+        paths=[*_branch_both("main"), *_branch_both("sub"), _path("h", "answer:herring0-a")],
+    )
+    lines = _triage_apply(proposal, project)
+    assert queries.locked_dilemmas(project.graph) == ["dilemma:herring0"]
+    assert queries.branched_dilemmas(project.graph) == ["dilemma:main", "dilemma:sub"]
+    assert any("locked: dilemma:herring0" in line for line in lines)
+
+
+def test_triage_single_path_needs_a_lock_entry(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(
+        paths=[*_branch_both("main"), *_branch_both("sub"), _path("h", "answer:herring0-a")],
+    )
+    with pytest.raises(ApplyError, match="declare it in locked"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_locked_with_both_answers_rejected(tmp_path):
+    project = _triage_project(tmp_path, extra_soft=0)
+    proposal = TriageProposal(
+        locked=[LockSpec(dilemma="dilemma:sub", reason="r")],
+        paths=[*_branch_both("main"), *_branch_both("sub")],
+    )
+    with pytest.raises(ApplyError, match="explores exactly one"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_undisposed_dilemma_rejected(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(paths=[*_branch_both("main"), *_branch_both("sub")])
+    with pytest.raises(ApplyError, match="has no path"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_locking_a_budgeted_role_leaves_a_shortfall(tmp_path):
+    project = _triage_project(tmp_path, extra_soft=0)
+    proposal = TriageProposal(
+        locked=[LockSpec(dilemma="dilemma:main", reason="r")],
+        paths=[_path("main-a", "answer:main-a"), *_branch_both("sub")],
+    )
+    with pytest.raises(ApplyError, match="exactly 1 hard dilemma"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_locked_allowance_enforced(tmp_path):
+    project = _triage_project(tmp_path, extra_soft=2)  # micro allows 1 locked
+    proposal = TriageProposal(
+        locked=[
+            LockSpec(dilemma="dilemma:herring0", reason="r"),
+            LockSpec(dilemma="dilemma:herring1", reason="r"),
+        ],
+        paths=[
+            *_branch_both("main"),
+            *_branch_both("sub"),
+            _path("h0", "answer:herring0-a"),
+            _path("h1", "answer:herring1-b"),
+        ],
+    )
+    with pytest.raises(ApplyError, match="at most 1 locked"):
+        _triage_apply(proposal, project)
+
+
+# -- locked scaffolds ---------------------------------------------------------
+
+
+def _locked_project(tmp_path) -> tuple[Project, str, str]:
+    g = StoryGraph()
+    did, path, _ = make_dilemma(g, "lock", explore=1)
+    vision = Vision(premise="t", genre="t", tone="t", scope="micro")
+    return Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g), did, path
+
+
+def _locked(dilemma: str, path: str, *, ending: bool = False) -> LockedScaffold:
+    return LockedScaffold(
+        dilemma=dilemma,
+        path=path,
+        lead_in=[_spec("lock-lead")],
+        resolution=_spec("lock-resolve"),
+        aftermath=[_spec("lock-after", is_ending=ending)],
+    )
+
+
+def test_locked_scaffold_applies_as_a_chain(tmp_path):
+    project, did, path = _locked_project(tmp_path)
+    lines = _scaffold_apply(
+        ScaffoldProposal(scaffolds=[], locked_scaffolds=[_locked(did, path)]), project
+    )
+    assert any("(locked): chain of 3 beat(s)" in line for line in lines)
+    g = project.graph
+    assert queries.commit_beats(g, path) == ["beat:lock-resolve"]
+    assert queries.successors(g, "beat:lock-lead") == ["beat:lock-resolve"]
+    assert queries.successors(g, "beat:lock-resolve") == ["beat:lock-after"]
+
+
+def test_locked_scaffold_must_cover_every_locked_dilemma(tmp_path):
+    project, _, _ = _locked_project(tmp_path)
+    with pytest.raises(ApplyError, match="locked_scaffolds must cover"):
+        _scaffold_apply(ScaffoldProposal(scaffolds=[]), project)
+
+
+def test_locked_chain_must_not_end_the_story(tmp_path):
+    project, did, path = _locked_project(tmp_path)
+    with pytest.raises(ApplyError, match="locked storyline"):
+        _scaffold_apply(
+            ScaffoldProposal(scaffolds=[], locked_scaffolds=[_locked(did, path, ending=True)]),
+            project,
+        )
+
+
+def test_locked_scaffold_must_name_the_explored_path(tmp_path):
+    project, did, _ = _locked_project(tmp_path)
+    with pytest.raises(ApplyError, match="must name its explored path"):
+        _scaffold_apply(
+            ScaffoldProposal(
+                scaffolds=[], locked_scaffolds=[_locked(did, "path:lock-b")]
+            ),
+            project,
         )
 
 

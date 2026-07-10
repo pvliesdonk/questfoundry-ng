@@ -127,18 +127,61 @@ def check_g1_shared_entity(ctx: Context) -> None:
 
 
 def check_budget_dilemmas(ctx: Context) -> None:
+    """B1: branched dilemmas match the scope's role counts exactly; up to
+    `locked_dilemmas` extra may be locked at triage (single explored path
+    — design doc 01 §4). Before triage no path exists, so the same totals
+    are checked as a range: BRAINSTORM overgenerates, triage disposes."""
     preset = ctx.vision.preset
-    by_role = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
-    for d in ctx.g.nodes_of(Dilemma):
-        by_role[d.role] += 1
     want = {DilemmaRole.HARD: preset.hard_dilemmas, DilemmaRole.SOFT: preset.soft_dilemmas}
-    for role, count in by_role.items():
+    dilemmas = ctx.g.nodes_of(Dilemma)
+    explored = {d.id: len(queries.explored_paths(ctx.g, d.id)) for d in dilemmas}
+    if not any(explored.values()):
+        by_role = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
+        for d in dilemmas:
+            by_role[d.role] += 1
+        surplus = 0
+        for role, count in by_role.items():
+            if count < want[role]:
+                ctx.error(
+                    "B1",
+                    f"scope '{preset.name}' expects >={want[role]} {role.value} "
+                    f"dilemma(s), found {count}",
+                )
+            else:
+                surplus += count - want[role]
+        if surplus > preset.locked_dilemmas:
+            ctx.error(
+                "B1",
+                f"{surplus} dilemma(s) beyond the branched budget; scope "
+                f"'{preset.name}' allows at most {preset.locked_dilemmas} to lock",
+            )
+        return
+    branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
+    locked = 0
+    for d in dilemmas:
+        if explored[d.id] == 2:
+            branched[d.role] += 1
+        elif explored[d.id] == 1:
+            locked += 1
+        else:
+            ctx.error(
+                "B1",
+                f"dilemma {d.id} has no explored path; triage must branch or lock "
+                "every dilemma",
+            )
+    for role, count in branched.items():
         if count != want[role]:
             ctx.error(
                 "B1",
-                f"scope '{preset.name}' expects {want[role]} {role.value} "
+                f"scope '{preset.name}' expects {want[role]} branched {role.value} "
                 f"dilemma(s), found {count}",
             )
+    if locked > preset.locked_dilemmas:
+        ctx.error(
+            "B1",
+            f"{locked} locked dilemma(s); scope '{preset.name}' allows at most "
+            f"{preset.locked_dilemmas}",
+        )
 
 
 def check_budget_cast(ctx: Context) -> None:
@@ -158,29 +201,25 @@ def check_budget_cast(ctx: Context) -> None:
 
 
 def check_i3_scaffolds(ctx: Context) -> None:
-    """I3: complete Y per explored path. A path's commit beats must occupy
-    pairwise distinct worlds — exactly one before any multi-hard expansion
-    (every world is then the empty shared region), one per world once the
-    dilemma resolves inside a hard fork (design doc 01 §5, §8)."""
+    """I3: complete scaffold per explored path. Branched paths carry the
+    Y — shared pre-commit beats, commits, exclusive post-commit beats. A
+    locked path (its dilemma's only explored path, design doc 01 §4) is a
+    fork-less chain: a resolution (commit) beat with >=1 lead-in beat
+    before it and >=1 aftermath beat after it. Either way commit beats
+    occupy pairwise distinct worlds — exactly one before any multi-hard
+    expansion (every world is then the empty shared region), one per
+    world once the dilemma resolves inside a hard fork (01 §5, §8)."""
     for d in ctx.g.nodes_of(Dilemma):
+        paths = queries.explored_paths(ctx.g, d.id)
+        locked = len(paths) == 1
         own_commits = {
             b
-            for p in queries.explored_paths(ctx.g, d.id)
+            for p in paths
             for b in queries.exclusive_beats(ctx.g, p)
             if d.id in ctx.g.node(b).commits_dilemmas  # type: ignore[union-attr]
         }
-        for path_id in queries.explored_paths(ctx.g, d.id):
-            member_beats = ctx.g.in_ids(path_id, EdgeKind.BELONGS_TO)
-            pre = [b for b in member_beats if len(queries.paths_of_beat(ctx.g, b)) == 2]
-            exclusive = queries.exclusive_beats(ctx.g, path_id)
-            commits = [
-                b
-                for b in exclusive
-                if d.id in ctx.g.node(b).commits_dilemmas  # type: ignore[union-attr]
-            ]
-            post = [b for b in exclusive if b not in commits]
-            if not commits:
-                ctx.error("I3", f"path {path_id} has no commit beat")
+
+        def distinct_worlds(path_id: str, commits: list[str], own_commits=own_commits) -> None:
             # worlds are made by OTHER dilemmas' hard forks — a dilemma's
             # own commits are its fork, never its coordinate
             worlds: dict[frozenset[str], str] = {}
@@ -193,6 +232,39 @@ def check_i3_scaffolds(ctx: Context) -> None:
                         f"({worlds[world]}, {c}); need exactly one per world",
                     )
                 worlds[world] = c
+
+        for path_id in paths:
+            member_beats = ctx.g.in_ids(path_id, EdgeKind.BELONGS_TO)
+            exclusive = queries.exclusive_beats(ctx.g, path_id)
+            commits = [
+                b
+                for b in exclusive
+                if d.id in ctx.g.node(b).commits_dilemmas  # type: ignore[union-attr]
+            ]
+            if locked:
+                members = set(member_beats)
+                if not commits:
+                    ctx.error("I3", f"locked path {path_id} has no resolution (commit) beat")
+                distinct_worlds(path_id, commits)
+                for c in sorted(commits):
+                    if not members & queries.ancestors(ctx.g, c):
+                        ctx.error(
+                            "I3",
+                            f"locked path {path_id} has no lead-in beat before "
+                            f"its resolution {c}",
+                        )
+                    if not members & queries.descendants(ctx.g, c):
+                        ctx.error(
+                            "I3",
+                            f"locked path {path_id} has no aftermath beat after "
+                            f"its resolution {c}",
+                        )
+                continue
+            pre = [b for b in member_beats if len(queries.paths_of_beat(ctx.g, b)) == 2]
+            post = [b for b in exclusive if b not in commits]
+            if not commits:
+                ctx.error("I3", f"path {path_id} has no commit beat")
+            distinct_worlds(path_id, commits)
             if not pre:
                 ctx.error("I3", f"path {path_id} has no shared pre-commit beats")
             if not post:
@@ -286,7 +358,12 @@ def check_i6_arcs_complete(ctx: Context) -> None:
         endings = [b for b in view if ctx.g.node(b).is_ending]  # type: ignore[union-attr]
         if not endings:
             ctx.error("I6", f"arc {label} reaches no ending beat")
-        for path_id in selection.values():
+        locked_paths = [
+            p
+            for d_id in queries.locked_dilemmas(ctx.g)
+            for p in queries.explored_paths(ctx.g, d_id)
+        ]
+        for path_id in [*selection.values(), *locked_paths]:
             in_view = [c for c in queries.commit_beats(ctx.g, path_id) if c in view]
             if not in_view:
                 ctx.error("I6", f"arc {label} never commits path {path_id}")
@@ -346,11 +423,28 @@ def check_i7_convergence_by_role(ctx: Context) -> None:
 
 
 def check_g3_flag_derivation(ctx: Context) -> None:
-    """G3: flag derivation is total — every consequence of an explored
-    path yields at least one state flag (design doc 02, gate G3)."""
+    """G3: flag derivation is total over branched paths — every
+    consequence of a branched explored path yields at least one state
+    flag. Locked paths are exempt in both directions: their outcome is
+    a world fact on every arc, so it needs no gateable flag and must
+    not carry one (design doc 02, gate G3)."""
     derived = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.DERIVED_FROM}
+    locked_paths = {
+        p
+        for d_id in queries.locked_dilemmas(ctx.g)
+        for p in queries.explored_paths(ctx.g, d_id)
+    }
+    for flag in ctx.g.nodes_of(StateFlag):
+        if flag.path in locked_paths:
+            ctx.error(
+                "G3-FLAGS",
+                f"flag {flag.id} is granted by locked path {flag.path}; a locked "
+                "outcome is a world fact, never a gateable flag",
+            )
     for d in ctx.g.nodes_of(Dilemma):
         for path_id in queries.explored_paths(ctx.g, d.id):
+            if path_id in locked_paths:
+                continue
             for cid in ctx.g.out_ids(path_id, EdgeKind.HAS_CONSEQUENCE):
                 if cid not in derived:
                     ctx.error(
@@ -568,7 +662,8 @@ def check_g4_choice_labels(ctx: Context) -> None:
 
 def check_g4_residue_coverage(ctx: Context) -> None:
     """G4: per world, every light-residue soft convergence has a residue
-    beat in that world gated on one of the dilemma's flags; every heavy
+    arm per path in that world, gated on that path's flag (the residue
+    diamond: the story remembers whichever side was chosen); every heavy
     one has variant passages at every beat of that world's rejoin
     frontier (one beat when a convergence passage exists, one per deeper
     world when the diamond feeds a hard fork — design doc 02, gate G4)."""
@@ -577,23 +672,25 @@ def check_g4_residue_coverage(ctx: Context) -> None:
     for d in ctx.g.nodes_of(Dilemma):
         if d.role != DilemmaRole.SOFT:
             continue
-        flags = set(queries.dilemma_flags(ctx.g, d.id).values())
+        path_flags = queries.dilemma_flags(ctx.g, d.id)
         for world, frontier in queries.soft_rejoin_frontiers(ctx.g, d.id):
             where = queries.world_label(ctx.g, world)
             suffix = f" (world {where})" if where else ""
             if d.residue_weight == ResidueWeight.LIGHT:
-                covered = any(
-                    b.purpose == StructuralPurpose.RESIDUE
-                    and set(b.requires_flags) & flags
-                    and queries.world_of(ctx.g, b.id) == world
-                    for b in ctx.g.nodes_of(Beat)
-                )
-                if not covered:
-                    ctx.error(
-                        "G4",
-                        f"light-residue dilemma {d.id} rejoins at {', '.join(frontier)}"
-                        f"{suffix} with no residue beat gated on its flags there",
+                for path, flag in sorted(path_flags.items()):
+                    covered = any(
+                        b.purpose == StructuralPurpose.RESIDUE
+                        and flag in b.requires_flags
+                        and queries.world_of(ctx.g, b.id) == world
+                        for b in ctx.g.nodes_of(Beat)
                     )
+                    if not covered:
+                        ctx.error(
+                            "G4",
+                            f"light-residue dilemma {d.id} rejoins at "
+                            f"{', '.join(frontier)}{suffix} with no residue beat "
+                            f"gated on {flag} ({path}) there",
+                        )
             elif d.residue_weight == ResidueWeight.HEAVY:
                 for beat_id in frontier:
                     if len(queries.passages_of_beat(ctx.g, beat_id)) < 2:

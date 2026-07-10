@@ -1,0 +1,10 @@
+id: beat:unspoken
+summary: >-
+  Elias packs his cases and leaves her a fair copy of the false chart —
+  a parting gift made of her own lie. Whatever she decides, she will
+  decide it alone; the lie stands at her shoulder and keeps its counsel.
+beat_class: structural
+purpose: residue
+created_by: polish
+entities: [character:keeper, character:cartographer]
+requires_flags: [flag:lie-between]

@@ -21,12 +21,16 @@ def test_every_arc_is_complete(golden):
             assert len(in_view) == 1
 
 
-def test_residue_beat_only_on_telling_arcs(golden):
+def test_residue_arms_mirror_the_truth_paths(golden):
+    """The residue diamond: each path's gated arm appears exactly on the
+    arcs that hold its flag — the tell arm is a 2-beat chain."""
     g = golden.graph
     for selection in queries.arc_selections(g):
         view = queries.arc_view(g, selection)
-        expected = selection["dilemma:truth"] == "path:tell"
-        assert ("beat:counsel" in view) == expected, selection
+        telling = selection["dilemma:truth"] == "path:tell"
+        assert ("beat:counsel" in view) == telling, selection
+        assert ("beat:honest-chart" in view) == telling, selection
+        assert ("beat:unspoken" in view) == (not telling), selection
 
 
 def test_soft_dilemma_converges_hard_never(golden):
@@ -37,10 +41,26 @@ def test_soft_dilemma_converges_hard_never(golden):
     assert not (queries.descendants(g, keep) & queries.descendants(g, break_))
 
 
-def test_counsel_is_a_post_freeze_addition(golden):
+def test_residue_beats_are_post_freeze_additions(golden):
     frozen = set(golden.graph.frozen.beats)
     all_beats = {b.id for b in golden.graph.nodes_of(Beat)}
-    assert all_beats - frozen == {"beat:counsel"}
+    assert all_beats - frozen == {"beat:counsel", "beat:honest-chart", "beat:unspoken"}
+
+
+def test_locked_dilemma_resolves_on_every_arc(golden):
+    """The second-keeper question is locked at triage: one explored path,
+    no fork, no flags — a storyline every arc walks and resolves (I6)."""
+    from questfoundry.models.structure import StateFlag
+
+    g = golden.graph
+    assert queries.locked_dilemmas(g) == ["dilemma:second-keeper"]
+    (path,) = queries.explored_paths(g, "dilemma:second-keeper")
+    assert queries.commit_beats(g, path) == ["beat:returned-boat"]
+    for selection in queries.arc_selections(g):
+        view = queries.arc_view(g, selection)
+        assert {"beat:mothers-line", "beat:returned-boat", "beat:inherited-watch"} <= view
+    # a locked outcome is a world fact: no flag is granted by its path
+    assert all(f.path != path for f in g.nodes_of(StateFlag))
 
 
 def test_all_arc_walks_are_complete(golden):

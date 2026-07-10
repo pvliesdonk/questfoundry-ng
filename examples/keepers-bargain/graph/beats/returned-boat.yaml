@@ -1,0 +1,12 @@
+id: beat:returned-boat
+summary: >-
+  The falling tide bares the wreck on the bar: her mother's boat, kept
+  where the sea left it. The old question settles into fact — she
+  capped the lamp, she ran, and the water took its toll and gave back
+  the hull.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:second-keeper
+  effect: commits
+entities: [character:keeper, character:sleeper]
+belongs_to: [path:mother-left]

@@ -102,13 +102,16 @@ is where taste is captured.
 |---|---|
 | In | Vision |
 | Out | Entities (cast), Dilemmas with two Answers each, `anchored_to` edges |
-| Gate G1 | Budgets met; I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
+| Gate G1 | Budgets met — per-role dilemma counts at least the branched budget, surplus within the locked allowance (B1); I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
 
-The LLM generates generously — more dilemmas and cast than will survive —
-because SEED triages down and it is far cheaper to cut than to weave in a
-missing character later (the cast is effectively locked here). The
-shared-entity check exists because dilemmas that share no entities produce
-parallel novels, not a woven story.
+The LLM generates generously — more dilemmas and cast than will survive
+as player choices — because SEED triages down and it is far cheaper to
+cut than to weave in a missing character later (the cast is effectively
+locked here). The overgeneration is structural: the prompt asks for the
+branched budget *plus* the scope's locked allowance, and triage locks
+the surplus into single-answer storylines (01 §4) rather than cutting
+it. The shared-entity check exists because dilemmas that share no
+entities produce parallel novels, not a woven story.
 
 Deterministic: ID assignment, namespace enforcement, anchoring-graph
 analysis (which entities are load-bearing).
@@ -118,33 +121,42 @@ analysis (which entities are load-bearing).
 | | |
 |---|---|
 | In | Vision + full BRAINSTORM output |
-| Out | Triage dispositions; Paths (+ Consequences) per explored answer; per-path beat scaffolds with temporal hints and flexibility annotations; dilemma ordering (`wraps`/`serial`/`concurrent`); convergence sketch |
-| Gate G2 | I3 per explored path; role budget met (e.g. `micro` = 1 hard + 1 soft); ordering relations acyclic and consistent; every surviving entity anchored; every cut justified |
+| Out | Triage dispositions (branched / locked, 01 §4); Paths (+ Consequences) per explored answer; per-path beat scaffolds with temporal hints and flexibility annotations; dilemma ordering (`wraps`/`serial`/`concurrent`); convergence sketch |
+| Gate G2 | I3 per explored path; branched role budget met exactly (e.g. `micro` = 1 hard + 1 soft) with locked dispositions within the allowance (B1); ordering relations acyclic and consistent; every surviving entity anchored; every cut justified |
 
 The heaviest creative stage, run as three LLM passes with engine checks
 between:
 
 1. **Triage** — select the cohesive ensemble; cut brilliant-but-
-   disconnected material. Decide which answers get explored paths and
-   which stay locked shadows.
-2. **Scaffold** — per explored path, the Y-shape: pre-commit chain
-   (shared, dual `belongs_to`), one commit beat, post-commit chain. Each
-   path's beats must read as a complete story alone — GROW interleaves,
-   it must never have to invent missing spine. SEED wires the
-   *intra-dilemma* ordering edges itself (pre-commit chain → per-path
-   commit → post-commit chain), since the Y's internal order is a fact
-   of the scaffold, not an interleaving decision; after SEED the beat
-   graph is a set of disconnected Y components (plus a setup chain), and
-   GROW's job is exclusively the *cross-dilemma* weave. Beats also get
-   **flexibility annotations** ("the docks could be the market"; "the
-   spy could be the informant") — invitations GROW uses to create
-   intersections — and **temporal hints** ("before D1's commit") guiding
-   interleave order. The apply step rejects (repairably, inside the
-   pass) scaffolds that would only detonate at GROW's unrepairable
-   gate: a hard path's chain tail must be an ending (the weave keeps
-   the climax fork's endings and demotes the rest — I6), an ending
-   anywhere else is a contradiction, and a soft path's post-commit
-   chain must carry the scope's minimum payoff beats (I7).
+   disconnected material. Give every dilemma a disposition: exactly the
+   scope's role budget is **branched** (both answers get paths); the
+   rest are **locked** — one answer gets a path, declared with a
+   reason, and the other stays a permanent shadow (01 §4). The apply
+   step enforces the disposition arithmetic repairably: branched counts
+   per role equal the budget, every dilemma gets 1 or 2 paths, a
+   single-path dilemma must be declared locked, and locked stays within
+   the allowance.
+2. **Scaffold** — per branched dilemma, the Y-shape: pre-commit chain
+   (shared, dual `belongs_to`), one commit beat per path, post-commit
+   chains; per locked dilemma, the chain: lead-in beats, one resolution
+   beat (the `commits` impact — the story settles the question), and
+   aftermath beats, all on the single path. Each path's beats must read
+   as a complete story alone — GROW interleaves, it must never have to
+   invent missing spine. SEED wires the *intra-dilemma* ordering edges
+   itself (chain order is a fact of the scaffold, not an interleaving
+   decision); after SEED the beat graph is a set of disconnected Y
+   components and locked chains (plus a setup chain), and GROW's job is
+   exclusively the *cross-dilemma* weave. Beats also get **flexibility
+   annotations** ("the docks could be the market"; "the spy could be
+   the informant") — invitations GROW uses to create intersections —
+   and **temporal hints** ("before D1's commit") guiding interleave
+   order. The apply step rejects (repairably, inside the pass)
+   scaffolds that would only detonate at GROW's unrepairable gate: a
+   hard path's chain tail must be an ending (the weave keeps the climax
+   fork's endings and demotes the rest — I6), an ending anywhere else —
+   including anywhere in a locked chain — is a contradiction, and a
+   soft path's post-commit chain must carry the scope's minimum payoff
+   beats (I7).
 3. **Order & sketch** — declare pairwise dilemma relations; sketch where
    soft paths reconverge and with what residue weight.
 
@@ -153,25 +165,32 @@ between:
 | | |
 |---|---|
 | In | All SEED output |
-| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from consequences; entity overlays activated; convergence points fixed |
+| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed |
 | Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); budgets (beat count per arc within scope) |
 
 The hardest stage, split deliberately:
 
 - **Deterministic core:** candidate interleaving from temporal hints +
-  ordering relations (topological constraints), divergence wiring at each
-  commit, convergence-point computation for soft dilemmas (per world),
-  multi-hard realization (below), flag derivation, arc enumeration and
-  validation. This is graph algorithm territory; a model adds nothing
-  but risk.
+  ordering relations (topological constraints) — branched dilemmas
+  contribute movable shared units plus one atomic resolve unit; a
+  locked dilemma contributes every beat of its chain as a movable unit
+  under chain constraints, so the storyline threads through the story
+  (wraps/serial anchor it at its first beat and its resolution) —
+  divergence wiring at each commit, convergence-point computation for
+  soft dilemmas (per world), multi-hard realization (below), flag
+  derivation (branched paths only: a locked outcome is a world fact on
+  every arc, never a gateable flag — G3 rejects flags on locked paths),
+  arc enumeration and validation. This is graph algorithm territory; a
+  model adds nothing but risk.
 - **LLM judgment calls:** choosing among valid interleavings for dramatic
   pacing (commits distributed, not clustered — and, with several hard
   dilemmas, which fork is the climax: candidates cover every viable
   nesting, wraps/serial between hards constrain it); proposing
-  intersections from shared entities + flexibility annotations (each
-  accepted intersection resolves the scene's location/entities);
-  contextualizing per-world beat instances (below); writing bridge beats
-  where adjacent scenes share no entities or place.
+  intersections from shared entities + flexibility annotations over
+  beats every player sees — shared pre-commit beats and locked-chain
+  beats alike (each accepted intersection resolves the scene's
+  location/entities); contextualizing per-world beat instances (below);
+  writing bridge beats where adjacent scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a
@@ -202,14 +221,18 @@ central commitment point.
 | | |
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
-| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue beats, false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue beat |
+| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, false branches, pacing bridges; character-arc metadata per entity |
+| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path |
 
 Two phases:
 
 1. **Finalize the DAG** (additions only): reorder within linear runs for
-   flow; insert bridge beats for pacing; insert residue beats per the
-   convergence sketch; add false branches at cadence — a cosmetic
+   flow; insert bridge beats for pacing; insert residue arms per the
+   convergence sketch — one flag-gated arm per path per world (the
+   residue diamond: the story visibly remembers whichever side was
+   chosen), an arm being one beat or a 2-beat chain where the memory
+   deserves a scene (an identically gated chain collapses into a single
+   passage); add false branches at cadence — a cosmetic
    diamond (arms of 1–2 beats, different textures of the same forward
    motion) roughly every 3–5 beats of a choice-less run, so a
    playthrough keeps a genuine-feeling decision every ~250–800 words

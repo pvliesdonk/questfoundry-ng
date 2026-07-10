@@ -1,0 +1,11 @@
+id: beat:honest-chart
+summary: >-
+  Before they go down, Elias spreads his finished chart on the table —
+  the first honest map of the shoals, the sleeper's hollow drawn plain.
+  Whichever way she chooses, the truth of the water is on paper now,
+  and it is hers.
+beat_class: structural
+purpose: residue
+created_by: polish
+entities: [character:keeper, character:cartographer, location:lighthouse]
+requires_flags: [flag:elias-knows]

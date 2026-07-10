@@ -15,6 +15,9 @@ class ScopePreset(BaseModel):
     name: str
     hard_dilemmas: int
     soft_dilemmas: int
+    # B1: how many extra dilemmas triage may lock (single explored path —
+    # fork-less woven storylines; design doc 01 §4). An allowance, not a floor.
+    locked_dilemmas: int
     cast_min: int
     cast_max: int
     passages_min: int
@@ -41,6 +44,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             name="micro",
             hard_dilemmas=1,
             soft_dilemmas=1,
+            locked_dilemmas=1,
             cast_min=3,
             cast_max=5,
             passages_min=10,
@@ -54,6 +58,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             name="short",
             hard_dilemmas=1,
             soft_dilemmas=2,
+            locked_dilemmas=2,
             cast_min=5,
             cast_max=8,
             passages_min=18,
@@ -67,6 +72,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             name="medium",
             hard_dilemmas=2,
             soft_dilemmas=2,
+            locked_dilemmas=3,
             cast_min=7,
             cast_max=10,
             passages_min=25,
@@ -80,6 +86,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             name="long",
             hard_dilemmas=2,
             soft_dilemmas=3,
+            locked_dilemmas=4,
             cast_min=9,
             cast_max=14,
             passages_min=35,

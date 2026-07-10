@@ -40,8 +40,11 @@ def make_dilemma(
     role: DilemmaRole = DilemmaRole.SOFT,
     entity: str | None = None,
     residue: ResidueWeight = ResidueWeight.LIGHT,
+    explore: int = 2,
 ) -> tuple[str, str, str]:
-    """Add a dilemma with two explored paths. Returns (dilemma, path_a, path_b)."""
+    """Add a dilemma with `explore` explored paths (2 = branched, 1 =
+    locked, 0 = pre-triage). Returns (dilemma, path_a, path_b); unexplored
+    slots are empty strings."""
     if entity is None:
         entity = f"character:{slug}-anchor"
         mutations.add_entity(
@@ -66,7 +69,7 @@ def make_dilemma(
         [entity],
     )
     paths = []
-    for side in ("a", "b"):
+    for side in ("a", "b")[:explore]:
         pid = f"path:{slug}-{side}"
         mutations.add_path(
             g,
@@ -75,6 +78,7 @@ def make_dilemma(
             [Consequence(id=f"consequence:{slug}-{side}", created_by=Stage.SEED, text="t")],
         )
         paths.append(pid)
+    paths += [""] * (2 - len(paths))
     return did, paths[0], paths[1]
 
 
@@ -92,6 +96,15 @@ def narrative_beat(
         dilemma_impacts=[DilemmaImpact(dilemma=dilemma, effect=effect)],
         is_ending=is_ending,
     )
+
+
+def make_locked_chain(g: StoryGraph, slug: str, dilemma: str, path: str) -> None:
+    """Wire a minimal valid locked storyline: lead -> resolve (commit) -> after."""
+    mutations.add_beat(g, narrative_beat(f"{slug}-lead", dilemma), [path])
+    mutations.add_beat(g, narrative_beat(f"{slug}-resolve", dilemma, ImpactEffect.COMMITS), [path])
+    mutations.add_beat(g, narrative_beat(f"{slug}-after", dilemma), [path])
+    mutations.add_ordering(g, f"beat:{slug}-lead", f"beat:{slug}-resolve")
+    mutations.add_ordering(g, f"beat:{slug}-resolve", f"beat:{slug}-after")
 
 
 def make_y_scaffold(g: StoryGraph, slug: str, dilemma: str, path_a: str, path_b: str) -> None:

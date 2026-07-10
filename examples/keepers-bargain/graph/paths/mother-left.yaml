@@ -1,0 +1,8 @@
+id: path:mother-left
+name: The keeper who fled
+explores: answer:mother-left
+consequences:
+- id: consequence:early-watch
+  text: >-
+    Maren's watch began early: her mother capped the lamp and ran for
+    the coast, and the sea returned the boat without her.

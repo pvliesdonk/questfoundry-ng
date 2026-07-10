@@ -13,7 +13,7 @@ RETAINED CAST:
 
 DILEMMAS AND PATHS:
 {% for d in dilemmas %}
-- {{ d.dilemma.id }} ({{ d.dilemma.role }}): {{ d.dilemma.question }}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}{% if d.locked %}, LOCKED — single path, scaffold under locked_scaffolds{% endif %}): {{ d.dilemma.question }}
 {% for p in d.paths %}
   - {{ p.id }}: answer "{{ p.answer }}" — consequences: {{ p.consequences | join("; ") }}
 {% endfor %}
@@ -22,8 +22,17 @@ DILEMMAS AND PATHS:
 REQUIREMENTS:
 - setup: 1-2 structural beats of world-building that open the story before any
   dilemma is introduced.
-- scaffolds: one entry per dilemma (cover every dilemma exactly once), naming its
-  two paths exactly as listed above.
+- scaffolds: one entry per BRANCHED dilemma (two paths), naming its two paths
+  exactly as listed above.
+- locked_scaffolds: one entry per LOCKED dilemma. A locked storyline is a
+  fork-less subplot every player experiences: lead_in (1-3 beats that introduce
+  and develop the question, effects as below), resolution (ONE beat where the
+  story settles it — the explored answer becomes fact, no player choice), and
+  aftermath (1-2 beats playing out what the resolution leaves behind). It must
+  read as a complete mini-story on its own, and it must never end the story:
+  no is_ending anywhere in a locked chain. Entry: {"dilemma", "path",
+  "lead_in": [...], "resolution": {...}, "aftermath": [...]} with ordinary
+  beat objects.
 - pre_commit: 2-3 beats per dilemma that introduce and develop the question —
   every player sees these regardless of their eventual choice. Use effect
   "advances", "reveals" (a truth surfaces), or "complicates" (doubt deepens).

@@ -34,8 +34,10 @@ def collapse_groups(g: StoryGraph) -> list[list[str]]:
     """Maximal linear runs of beats, in topological order of their heads.
 
     A run extends across a -> b iff a has exactly one successor, b has
-    exactly one predecessor, and neither is flag-gated (gated beats are
-    singleton passages — they enter the passage layer behind a gate).
+    exactly one predecessor, and both carry the same gate — usually none.
+    An identically-gated linear chain (a multi-beat residue arm) is one
+    passage: the gate boundary is where the passage breaks, not every
+    gated beat.
     """
     order = queries.topological_order(g)
     if order is None:
@@ -44,7 +46,7 @@ def collapse_groups(g: StoryGraph) -> list[list[str]]:
     def merges(a: str, b: str) -> bool:
         if len(queries.successors(g, a)) != 1 or len(queries.predecessors(g, b)) != 1:
             return False
-        return not _beat(g, a).requires_flags and not _beat(g, b).requires_flags
+        return sorted(_beat(g, a).requires_flags) == sorted(_beat(g, b).requires_flags)
 
     groups: list[list[str]] = []
     group_of: dict[str, int] = {}
@@ -148,17 +150,21 @@ def convergence_needs(g: StoryGraph) -> list[ConvergenceNeed]:
     return needs
 
 
-def insert_residue_beat(
-    g: StoryGraph, beat: Beat, path_id: str, rejoin: Sequence[str]
+def insert_residue_chain(
+    g: StoryGraph, chain: Sequence[Beat], path_id: str, rejoin: Sequence[str]
 ) -> None:
-    """Splice a flag-gated residue beat between a path's exclusive tail and
-    the rejoin frontier: tail -> residue -> each beat that carried the tail
+    """Splice a flag-gated residue arm between a path's exclusive tail and
+    the rejoin frontier: tail -> chain -> each beat that carried the tail
     into the frontier (a frontier beat, or a GROW bridge leading there —
-    the residue stays on the tail's side of the bridge). The frontier is
-    one world's (a per-world need finds that world's tail — only it feeds
-    the frontier); when the frontier is itself a deeper hard fork, the
-    residue beat inherits the tail's fan-out into every sub-world, so no
-    arc dead-ends at it (I6)."""
+    the residue stays on the tail's side of the bridge). The arm is one
+    or more identically gated beats — a multi-beat arm is the story
+    visibly remembering, and collapses into a single gated passage. The
+    frontier is one world's (a per-world need finds that world's tail —
+    only it feeds the frontier); when the frontier is itself a deeper
+    hard fork, the arm inherits the tail's fan-out into every sub-world,
+    so no arc dead-ends at it (I6)."""
+    if not chain:
+        raise mutations.MutationError(f"residue arm for {path_id} is empty")
     tails = [
         b
         for b in queries.exclusive_beats(g, path_id)
@@ -170,11 +176,15 @@ def insert_residue_beat(
             f"frontier {sorted(rejoin)}; residue insertion needs exactly one"
         )
     (tail,) = tails
-    mutations.add_beat(g, beat, [])
+    for beat in chain:
+        mutations.add_beat(g, beat, [])
     for target in sorted(queries.frontier_feeds(g, tail, list(rejoin))):
         mutations.remove_ordering(g, tail, target)
-        mutations.add_ordering(g, beat.id, target)
-    mutations.add_ordering(g, tail, beat.id)
+        mutations.add_ordering(g, chain[-1].id, target)
+    prev = tail
+    for beat in chain:
+        mutations.add_ordering(g, prev, beat.id)
+        prev = beat.id
 
 
 # -- false branches -------------------------------------------------------------

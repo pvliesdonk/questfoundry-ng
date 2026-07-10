@@ -1,0 +1,14 @@
+id: passage:p-unspoken
+summary: >-
+  Elias packs to sail none the wiser; the lie keeps its counsel, and
+  Maren weighs the dawn sailing alone.
+created_by: polish
+entities: [character:keeper, character:cartographer]
+beats: [beat:unspoken]
+choices:
+- to: passage:p-long-watch
+  label: Send the ship away and tend the light
+  grants: [flag:bound-to-light]
+- to: passage:p-wide-water
+  label: Cap the lamp and go aboard
+  grants: [flag:sleeper-waking]

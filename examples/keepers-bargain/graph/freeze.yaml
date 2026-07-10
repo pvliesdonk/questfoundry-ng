@@ -6,10 +6,13 @@ beats:
 - beat:false-soundings
 - beat:hide-commit
 - beat:hide-payoff
+- beat:inherited-watch
 - beat:keep-commit
 - beat:keep-ending
 - beat:keep-price
+- beat:mothers-line
 - beat:offer
+- beat:returned-boat
 - beat:storm-glass
 - beat:tell-commit
 - beat:tell-payoff
@@ -17,6 +20,7 @@ beats:
 - beat:tremor
 forks:
   dilemma:bargain: [beat:break-commit, beat:keep-commit]
+  dilemma:second-keeper: [beat:returned-boat]
   dilemma:truth: [beat:hide-commit, beat:tell-commit]
 convergences:
   dilemma:truth: beat:tremor

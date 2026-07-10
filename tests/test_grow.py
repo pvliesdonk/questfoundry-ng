@@ -53,7 +53,7 @@ def group(members: list[str], id: str = "intersection:x") -> IntersectionProposa
 
 
 def test_intersections_reject_non_shared_members(project):
-    with pytest.raises(ApplyError, match="not a shared pre-commit beat"):
+    with pytest.raises(ApplyError, match="not a shared pre-commit"):
         _intersections_apply(group(["beat:main-commit-a", "beat:sub-pre0"]), project)
 
 
@@ -219,7 +219,7 @@ def test_residue_and_tails_see_through_the_bridge(tmp_path, vision):
         purpose=StructuralPurpose.RESIDUE,
         requires_flags=[need.path_flags["path:sub-a"]],
     )
-    pc.insert_residue_beat(g, residue, "path:sub-a", need.rejoin)
+    pc.insert_residue_chain(g, [residue], "path:sub-a", need.rejoin)
     assert queries.successors(g, "beat:sub-post-a") == ["beat:afterglow"]
     assert queries.successors(g, "beat:afterglow") == ["beat:crossing"]
     issues = run_checks(g, vision, Stage.GROW)

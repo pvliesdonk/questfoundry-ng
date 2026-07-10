@@ -3,9 +3,11 @@
 Three passes sharing gate G4:
 
 1. *finalize* — DAG additions only (I9 holds throughout): the LLM
-   writes flag-gated residue beats for every light-residue soft
-   convergence and may propose false-branch diamonds on long linear
-   runs; the engine splices them in. Skipped when nothing is needed.
+   writes a flag-gated residue arm per path for every light-residue
+   soft convergence (the residue diamond — an arm may carry a followup
+   beat, and an identically gated chain collapses into one passage)
+   and may propose false-branch diamonds on long linear runs; the
+   engine splices them in. Skipped when nothing is needed.
 2. *passages* — the engine computes collapse groups and the complete
    choice topology (endpoints, requires, grants); the LLM contributes
    only words: passage summaries, choice labels, ending titles, and —
@@ -36,23 +38,24 @@ from questfoundry.project.io import Project
 # -- pass 1: finalize ---------------------------------------------------------
 
 
-class ResidueSpec(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    dilemma: str
-    path: str  # whose mood this beat sets; gated on that path's flag
-    world: str = ""  # which world's convergence (multi-hard); "" when shared
-    id: str
-    summary: str
-    entities: list[str] = []
-
-
 class FollowupSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str
     summary: str
     entities: list[str] = []
+
+
+class ResidueSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str
+    path: str  # whose memory this arm carries; gated on that path's flag
+    world: str = ""  # which world's convergence (multi-hard); "" when shared
+    id: str
+    summary: str
+    entities: list[str] = []
+    followup: FollowupSpec | None = None  # a second gated beat when the memory needs room
 
 
 class ArmSpec(BaseModel):
@@ -125,7 +128,7 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
 def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     g = project.graph
     needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
-    covered: set[tuple[str, str]] = set()
+    covered: set[tuple[str, str, str]] = set()
     lines = []
     for spec in proposal.residue:
         need = needs.get((spec.dilemma, spec.world))
@@ -143,29 +146,42 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 f"residue {spec.id}: path must be exactly one of "
                 f"{sorted(need.path_flags)}; got {spec.path!r}"
             )
-        try:
-            beat = Beat(
-                id=spec.id,
-                created_by=Stage.POLISH,
-                summary=spec.summary,
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.RESIDUE,
-                entities=[resolve_entity_ref(g, e) for e in spec.entities],
-                requires_flags=[flag],
+        if (spec.dilemma, spec.world, spec.path) in covered:
+            raise ApplyError(
+                f"residue {spec.id}: {spec.path} already has a residue arm at this "
+                "convergence; one arm per path — use followup for a longer arm"
             )
+        try:
+            chain = [
+                Beat(
+                    id=b.id,
+                    created_by=Stage.POLISH,
+                    summary=b.summary,
+                    beat_class=BeatClass.STRUCTURAL,
+                    purpose=StructuralPurpose.RESIDUE,
+                    entities=[resolve_entity_ref(g, e) for e in b.entities],
+                    requires_flags=[flag],
+                )
+                for b in ([spec] if spec.followup is None else [spec, spec.followup])
+            ]
         except ValidationError as e:
             raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
         try:
-            pc.insert_residue_beat(g, beat, spec.path, need.rejoin)
+            pc.insert_residue_chain(g, chain, spec.path, need.rejoin)
         except KeyError as e:  # duplicate beat id (e.g. one slug reused across worlds)
             raise ApplyError(f"residue {spec.id}: {e}") from e
-        covered.add((spec.dilemma, spec.world))
-        lines.append(f"{spec.id} sets {spec.path}'s mood before {'/'.join(need.rejoin)}")
-    missing = set(needs) - covered
+        covered.add((spec.dilemma, spec.world, spec.path))
+        arm = " -> ".join(b.id for b in chain)
+        lines.append(f"{arm} carries {spec.path}'s memory into {'/'.join(need.rejoin)}")
+    missing = [
+        (d, w, p) for (d, w), need in needs.items() for p in need.path_flags
+        if (d, w, p) not in covered
+    ]
     if missing:
-        labels = sorted(f"{d}" + (f" (world {w})" if w else "") for d, w in missing)
+        labels = sorted(f"{p} at {d}" + (f" (world {w})" if w else "") for d, w, p in missing)
         raise ApplyError(
-            f"every light-residue convergence needs >=1 residue beat; missing {labels}"
+            "every light-residue convergence needs one residue arm per path — the "
+            f"story must remember whichever side was chosen; missing {labels}"
         )
 
     long_run_beats = {b for run in _long_runs(project) for b in run}

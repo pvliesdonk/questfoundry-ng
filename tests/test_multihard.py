@@ -153,6 +153,45 @@ def test_freeze_records_per_world_forks(vision):
     assert _errors(g, vision, checks={"I9"}) == []
 
 
+# -- a locked storyline inside the worlds -----------------------------------------
+
+
+def test_between_fork_locked_chain_lives_per_world(vision):
+    from questfoundry.pipeline.stages.grow import _clone_targets
+    from tests.conftest import make_locked_chain
+
+    g = StoryGraph()
+    two_hard_story(g)
+    dl, path, _ = make_dilemma(g, "lock", explore=1)
+    make_locked_chain(g, "lock", dl, path)
+    # serial(main, lock): the chain enters after main's fork, so every
+    # beat of it is instantiated once per world like any other unit
+    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:main", dl)
+    report = realize_first(g, lambda o: o[-1] == "resolve:dilemma:twist")
+    _derive_flags(g)
+
+    for slug in ("lock-lead", "lock-resolve", "lock-after"):
+        assert f"beat:{slug}" not in g
+        assert report.clones[f"beat:{slug}"] == [
+            f"beat:{slug}--main-a",
+            f"beat:{slug}--main-b",
+        ]
+    commits = queries.commit_beats(g, path)
+    assert commits == ["beat:lock-resolve--main-a", "beat:lock-resolve--main-b"]
+    assert {queries.world_of(g, c) for c in commits} == {
+        frozenset({"beat:main-commit-a"}),
+        frozenset({"beat:main-commit-b"}),
+    }
+    # I3 (one resolution per world), I6 (every arc resolves it once) hold
+    assert _errors(g, vision) == []
+    for selection in queries.arc_selections(g):
+        view = queries.arc_view(g, selection)
+        assert len([c for c in commits if c in view]) == 1
+    # the clones are contextualize targets like any per-world instance
+    clone_ids = {b.id for b in _clone_targets(g)}
+    assert {f"beat:lock-resolve--main-{w}" for w in ("a", "b")} <= clone_ids
+
+
 # -- a soft dilemma inside the worlds ---------------------------------------------
 
 
@@ -218,14 +257,14 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
     needs = [n for n in pc.convergence_needs(g) if n.dilemma == "dilemma:sub"]
     assert [n.world for n in needs] == ["path:main-a", "path:main-b"]
 
-    def residue(world_slug: str) -> Beat:
+    def residue(world_slug: str, side: str = "a") -> Beat:
         return Beat(
-            id=f"beat:afterglow-{world_slug}",
+            id=f"beat:afterglow-{side}-{world_slug}",
             created_by=Stage.POLISH,
             summary="s",
             beat_class=BeatClass.STRUCTURAL,
             purpose=StructuralPurpose.RESIDUE,
-            requires_flags=[needs[0].path_flags["path:sub-a"]],
+            requires_flags=[needs[0].path_flags[f"path:sub-{side}"]],
         )
 
     mutations.freeze_topology(g)
@@ -238,7 +277,8 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
         ["beat:opening"],
     )
     # covering one world only is a violating construction: G4 names the other
-    pc.insert_residue_beat(g, residue("main-a"), "path:sub-a", needs[0].rejoin)
+    for side in ("a", "b"):
+        pc.insert_residue_chain(g, [residue("main-a", side)], f"path:sub-{side}", needs[0].rejoin)
     issues = run_checks(g, vision, Stage.POLISH)
     uncovered = [
         i
@@ -246,8 +286,17 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
         if i.check == "G4" and "residue" in i.message and "path:main-b" in i.message
     ]
     assert uncovered
-    # covering both worlds clears it, and no arc dead-ends at the splices
-    pc.insert_residue_beat(g, residue("main-b"), "path:sub-a", needs[1].rejoin)
+    # so is covering one path only: the residue diamond needs both arms
+    pc.insert_residue_chain(g, [residue("main-b")], "path:sub-a", needs[1].rejoin)
+    issues = run_checks(g, vision, Stage.POLISH)
+    one_armed = [
+        i
+        for i in issues
+        if i.check == "G4" and "flag:sub-b (path:sub-b)" in i.message and "main-b" in i.message
+    ]
+    assert one_armed
+    # covering both paths in both worlds clears it; no arc dead-ends
+    pc.insert_residue_chain(g, [residue("main-b", "b")], "path:sub-b", needs[1].rejoin)
     issues = run_checks(g, vision, Stage.POLISH)
     assert not [i for i in issues if i.check == "G4" and "residue" in i.message]
     assert _errors(g, vision, checks={"I6"}) == []

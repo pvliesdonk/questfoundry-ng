@@ -14,7 +14,7 @@ def test_runtime_round_trip_on_golden(golden):
     data = build_runtime(golden)
     assert data["format"] == "questfoundry-runtime"
     assert data["start"] == "p-arrival"
-    assert len(data["passages"]) == 7
+    assert len(data["passages"]) == 8
     assert validate_runtime(data) == []
     # gated choice survives export
     tremor = data["passages"]["p-tremor"]

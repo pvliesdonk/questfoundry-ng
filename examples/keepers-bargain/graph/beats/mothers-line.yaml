@@ -1,0 +1,11 @@
+id: beat:mothers-line
+summary: >-
+  In the ledger's back pages Maren finds her mother's hand: courses
+  charted for leaving, dated the winter the light went dark three
+  nights running. The entries stop mid-line.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:second-keeper
+  effect: reveals
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:mother-left]

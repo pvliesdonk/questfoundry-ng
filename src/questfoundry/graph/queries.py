@@ -125,13 +125,16 @@ def grant_beats(g: StoryGraph, flag_id: str) -> list[str]:
 
 
 def hard_commit_beats(g: StoryGraph) -> set[str]:
-    """Commit beats of every explored hard-dilemma path — the beats that
-    create worlds."""
+    """Commit beats of every *branched* hard-dilemma path — the beats
+    that create worlds. A locked dilemma never forks, whatever its role,
+    so its resolution makes no world."""
     commits: set[str] = set()
     for d in g.nodes_of(Dilemma):
         if d.role == DilemmaRole.HARD:
-            for p in explored_paths(g, d.id):
-                commits.update(commit_beats(g, p))
+            paths = explored_paths(g, d.id)
+            if len(paths) == 2:
+                for p in paths:
+                    commits.update(commit_beats(g, p))
     return commits
 
 
@@ -218,6 +221,13 @@ def dilemma_flags(g: StoryGraph, dilemma_id: str) -> dict[str, str]:
 def branched_dilemmas(g: StoryGraph) -> list[str]:
     """Dilemmas with two explored paths — the ones that fork the DAG."""
     return sorted(d.id for d in g.nodes_of(Dilemma) if len(explored_paths(g, d.id)) == 2)
+
+
+def locked_dilemmas(g: StoryGraph) -> list[str]:
+    """Dilemmas locked at triage — exactly one explored path: the story
+    canonizes one answer as a fork-less storyline woven into the DAG and
+    the other answer stays a permanent shadow (design doc 01 §4)."""
+    return sorted(d.id for d in g.nodes_of(Dilemma) if len(explored_paths(g, d.id)) == 1)
 
 
 def arc_selections(g: StoryGraph) -> list[dict[str, str]]:

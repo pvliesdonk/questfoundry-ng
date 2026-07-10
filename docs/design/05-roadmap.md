@@ -93,21 +93,100 @@ grounding; research artifacts exist at every stage, are checkpointed,
 and reruns/resumes replay them byte-stable; corpus-less projects (and
 CI) run exactly as before.
 
+## M7 — Depth & scale (scaffold deepening)
+
+The structural effort that makes stories *book-sized*. Every live run
+to date (5–7) lands at 8–22k words with B6 (words per genuine choice)
+reading ~1.1–1.25k against the 250–800 feel target — the stories are
+good but small, and the gap is scaffold depth, not prose. Deeper and
+tensored Ys (SEED scaffolds with more pre-commit development and
+longer payoff chains; a residue arm may carry its own diamond — the
+shape deferred from the locked-dilemmas effort), fed real material by
+the M6 research pass. The scale table becomes **words-primary**
+(passage/beat bands derive from it), and the presets recalibrate
+against measured live-run yield — `short` currently overshoots its
+own B3/B4 bands (35–48 passages, 48–55-beat arcs vs 14–40; two locked
+chains add real volume), so bands and scaffold depth move together.
+Watch the weave's 64-candidate spread heuristic as unit counts grow
+(the lexicographic DFS varies the tail first; early-position variety
+may under-sample — STATUS open item, first measured data at 13 units).
+
+**Exit:** a corpus-grounded `medium` story generates end-to-end at
+20–60k words within budget, B3/B4 land inside the recalibrated bands,
+B6 reads ≤ ~800, and all arcs simulate complete with exports clean.
+
+## M8 — Retrieval refinement (exemplars & standing queries)
+
+The two retrieval-quality findings from M6's exit run, made
+first-class. (1) **A reserved exemplar mechanism**: style exemplars
+belong at the voice pass as a contrasting spread (02 §1) and nowhere
+else — today the only guard is manually scoping `craft.folders` away
+from the exemplar cluster, and an unscoped corpus floods early-stage
+digests with atmospheric prose (the 02 §1 bias vector, live run 7).
+Config names the exemplar folders; the voice pass retrieves a
+*diverse* spread from them (a map of the possibility space, never
+nearest-match); every other stage's retrieval excludes them
+structurally. (2) **Standing-query shape**: verbatim vision fields
+make poor search strings — a 30-word tone sentence retrieves the same
+audience-targeting boilerplate at every stage (live run 7's digests).
+Condense standing queries to keyword form, or rebalance toward the
+librarian, whose queries carried the value in the A/B run.
+
+**Exit:** on the same corpus *without* manual folder scoping, no
+exemplar material appears in any non-voice digest; the voice pass
+shows a spread of stylistically distinct exemplars; per-stage digest
+sources visibly differ (the standing half stops repeating).
+
+## M9 — SHIP & the author loop
+
+The last pipeline stage and the review experience around it. SHIP:
+final assembly plus the Twee lint that flags constructs which don't
+survive SugarCube conversion (design doc 04 §3). Interactive
+checkpoint review: `qf run --yes` stops being a stub — batch mode
+stays, but without `--yes` the run pauses at each checkpoint for
+review/edit/continue (design doc 02 §3). `qf simulate --random N`
+(design doc 04 §5) lands here too: its trigger condition is met —
+false-branch diamonds now occur in every generated story, and
+`--all-arcs` never walks them.
+
+**Exit:** `qf run` pauses at a checkpoint, the author edits an
+artifact, the run resumes and revalidates; `qf export twee` lints; a
+random-walk simulation covers detours the arc walk misses.
+
 ## Later / explicitly deferred
 
-- Local review web UI (graph explorer + prose reader with approve/edit).
+- Local review web UI (graph explorer + prose reader with approve/edit)
+  — M9's CLI review loop first; the web UI builds on its semantics.
+- An image backend behind the illustration briefs (optional by design;
+  briefs, runtime `art` entries, HTML embedding, and PDF slots all
+  exist and key off `art/images/<passage-slug>.png`).
 - LLM playtester with subjective reports.
 - Distributed commits ("Witcher principle") — needs a threshold-flag
   primitive; revisit after real stories expose the demand.
 - Cosmetic codeword curation, translation/localization support,
   EPUB export.
 
+Demand-triggered (tracked as STATUS open items, built when a real
+story or a demonstrated quality gap calls for them, per the annotation
+discipline in 01 §10): the G4 pacing report + `scene_type`,
+character-arc metadata, intersections over exclusive beats, temporal
+hints inside fork units, cosmetic flags on false branches and locked
+storylines, tensored shapes inside residue arms (unless M7 pulls them
+in), and non-digit codeword fallbacks.
+
 ## Top risks
 
 | Risk | Mitigation |
 |---|---|
-| GROW interleaving quality — valid but dramatically flat orderings | M2 first; LLM chooses among engine-valid orders (never invents them); pacing checks in G3 |
-| Prose coherence across convergences | Canonical-arc-first order + lookahead context; residue beats absorb tone shifts; ≤2-revision rule pushes failures back to structure |
+| Deep scaffolds break the cadence math — more beats per Y may stretch choice-less runs faster than false branches can close them | M7 recalibrates presets and B6 together against measured runs; POLISH's cadence-targeted diamonds already meter by run length, not beat count |
+| Preset calibration circularity — bands tuned on stories generated under the old bands | Words-primary scale table anchors on the corpus's external 300–600 words/choice band, not on our own output |
+| Weave candidate spread thins at scale — 64-candidate cap with tail-first DFS variety may under-sample early positions on 20+ unit stories | Measured watch item (first data at 13 units); widen the cap or diversify enumeration when a run shows clustering |
+| Exemplar leakage / style anchoring ahead of the Voice | M8 makes the reserved-folder exclusion structural; until then `craft.folders` scoping is documented as required (03 §10) |
 | Token cost blowups at `long` scope | Budgets are gate-checked from DREAM; ledger + cache; `utility` model role for cheap calls |
-| Feasibility audit mis-calls (hedged prose) | I12 hard cap at 3 states; heavy residue *must* produce variants — the gate rejects "poly-state" claims over incompatible flags |
 | Author edits breaking invariants silently | Single validation path: `qf validate` runs the same gates on files as the pipeline runs on proposals |
+
+Retired risks, for the record: GROW interleaving quality and prose
+coherence across convergences — seven live runs across three provider
+families produced gate-clean, seam-free stories; the mitigations
+(engine-enumerated orders, canonical-arc-first windows, residue beats)
+are now standing architecture rather than open bets.

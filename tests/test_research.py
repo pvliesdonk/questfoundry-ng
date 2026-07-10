@@ -15,6 +15,9 @@ from questfoundry.models.base import Stage
 from questfoundry.models.concept import Vision
 from questfoundry.models.craft import CraftConfig
 from questfoundry.pipeline import research
+from questfoundry.pipeline.research import ResearchProposal, ResearchQuery
+from questfoundry.pipeline.types import ApplyError
+from questfoundry.project.io import scaffold_project
 from tests.conftest import CORPUS, FakeEmbeddingProvider
 
 
@@ -313,3 +316,251 @@ def test_digest_meta_ignores_body():
     text = "---\nstage: seed\ntop_k: 3\n---\n\n## a query\n\nsome body text\n"
     assert research.digest_meta(text) == {"stage": "seed", "top_k": 3}
     assert research.digest_body(text) == "## a query\n\nsome body text\n"
+
+
+# ---------------------------------------------------------------------------
+# research_pass: skip_if matrix (mini-ADR A17)
+# ---------------------------------------------------------------------------
+
+
+def _rp_project(tmp_path, craft: CraftConfig | None = None, vision: Vision | None = None):
+    project = scaffold_project(tmp_path, "t", "micro")
+    if vision is not None:
+        project.vision = vision
+    project.craft = craft
+    return project
+
+
+def test_skip_when_no_craft_corpus_configured(tmp_path):
+    project = _rp_project(tmp_path)
+    spec = research.research_pass(Stage.BRAINSTORM)
+    reason = spec.skip_if(project)
+    assert reason is not None
+    assert "no craft corpus" in reason
+
+
+def test_runs_when_corpus_configured_and_no_digest_yet(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    assert spec.skip_if(project) is None
+
+
+def test_skips_when_the_digest_is_fresh(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    spec.apply(ResearchProposal(queries=[]), project)
+
+    reason = spec.skip_if(project)
+    assert reason is not None
+    assert "fresh" in reason
+    assert "research/brainstorm.md" in reason
+
+
+def test_runs_again_when_the_corpus_content_changes(tmp_path):
+    corpus = tmp_path / "corpus"
+    shutil.copytree(CORPUS, corpus)
+    project = _rp_project(tmp_path / "project", craft=_cfg(corpus=str(corpus)), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    spec.apply(ResearchProposal(queries=[]), project)
+    assert spec.skip_if(project) is not None  # fresh right after apply
+
+    (corpus / "craft" / "pacing.md").write_text("changed entirely\n")
+
+    assert spec.skip_if(project) is None  # corpus fingerprint drifted -> stale
+
+
+def test_runs_again_when_a_vision_edit_changes_standing_queries(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    spec.apply(ResearchProposal(queries=[]), project)
+    assert spec.skip_if(project) is not None  # fresh right after apply
+
+    project.vision.themes = ["an entirely different theme"]
+
+    assert spec.skip_if(project) is None  # standing queries drifted -> stale
+
+
+def test_dream_head_never_skips_for_freshness_reasons_it_still_runs_once(tmp_path):
+    """DREAM's context has no vision yet (design doc 02 §1's DREAM
+    amendment): standing_queries() is always [] there, so DREAM's
+    freshness keys on the premise hash instead — an unchanged premise
+    reuses the digest, and the pass runs exactly once per DREAM attempt,
+    same as any other stage."""
+    project = _rp_project(tmp_path, craft=_cfg())
+    spec = research.research_pass(Stage.DREAM)
+    assert spec.skip_if(project) is None
+    spec.apply(ResearchProposal(queries=[]), project)
+    assert spec.skip_if(project) is not None
+
+
+def test_dream_runs_again_when_the_premise_changes(tmp_path):
+    """A premise-grounded digest records a premise hash (A17): editing
+    the premise and rerunning DREAM must re-retrieve, not silently reuse
+    research about a story that no longer exists."""
+    project = _rp_project(tmp_path, craft=_cfg())
+    spec = research.research_pass(Stage.DREAM)
+    spec.apply(ResearchProposal(queries=[]), project)
+    assert spec.skip_if(project) is not None  # fresh right after apply
+
+    project.vision.premise = "An entirely different story about a clockwork whale."
+    assert spec.skip_if(project) is None
+
+
+def test_missing_library_fails_loud_naming_the_extra(tmp_path, monkeypatch):
+    """A configured corpus with the retrieval library missing is
+    invocation misconfiguration: RunnerError (the CLI's clean-error
+    path), raised before any LLM spend."""
+    import sys
+
+    from questfoundry.pipeline.runner import RunnerError
+
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    monkeypatch.setitem(sys.modules, "markdown_vault_mcp", None)
+    with pytest.raises(RunnerError, match="craft"):
+        research.research_pass(Stage.BRAINSTORM).build_context(project)
+
+
+def test_missing_corpus_dir_fails_loud(tmp_path):
+    from questfoundry.pipeline.runner import RunnerError
+
+    project = _rp_project(
+        tmp_path, craft=CraftConfig(corpus=str(tmp_path / "nope")), vision=_vision()
+    )
+    with pytest.raises(RunnerError, match="not found"):
+        research.research_pass(Stage.BRAINSTORM).build_context(project)
+
+
+# ---------------------------------------------------------------------------
+# research_pass: apply behavior
+# ---------------------------------------------------------------------------
+
+
+def test_apply_rejects_too_many_queries(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(max_queries=2), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    proposal = ResearchProposal(
+        queries=[ResearchQuery(query=q) for q in ("one", "two", "three")]
+    )
+    with pytest.raises(ApplyError, match="exceed the cap"):
+        spec.apply(proposal, project)
+
+
+def test_apply_drops_duplicate_of_standing_query_with_a_note(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    standing = research.standing_queries(project.vision, Stage.BRAINSTORM)
+    proposal = ResearchProposal(
+        queries=[
+            ResearchQuery(query=standing[0].upper()),  # case-insensitive duplicate
+            ResearchQuery(query="a genuinely new librarian query"),
+        ]
+    )
+    lines = spec.apply(proposal, project)
+    assert any("1 duplicate/empty librarian" in line for line in lines)
+    meta = research.digest_meta(project.research[Stage.BRAINSTORM.value])
+    assert meta["librarian_queries"] == ["a genuinely new librarian query"]
+
+
+def test_apply_drops_empty_librarian_queries_with_a_note(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    proposal = ResearchProposal(queries=[ResearchQuery(query="   "), ResearchQuery(query="")])
+    lines = spec.apply(proposal, project)
+    assert any("2 duplicate/empty librarian" in line for line in lines)
+    meta = research.digest_meta(project.research[Stage.BRAINSTORM.value])
+    assert meta["librarian_queries"] == []
+
+
+def test_apply_no_note_line_when_nothing_is_dropped(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    proposal = ResearchProposal(queries=[ResearchQuery(query="a fresh librarian query")])
+    lines = spec.apply(proposal, project)
+    assert not any("dropped" in line for line in lines)
+
+
+def test_apply_lines_carry_the_corpus_fingerprint_prefix(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.BRAINSTORM)
+    lines = spec.apply(ResearchProposal(queries=[]), project)
+    meta = research.digest_meta(project.research[Stage.BRAINSTORM.value])
+    assert lines[0].startswith(f"corpus {meta['corpus_fingerprint'][:12]}: ")
+
+
+def test_apply_sets_project_research_for_the_stage(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.SEED)
+    assert Stage.SEED.value not in project.research
+    spec.apply(ResearchProposal(queries=[]), project)
+    assert Stage.SEED.value in project.research
+    assert project.research[Stage.SEED.value].startswith("---\n")
+
+
+def test_reapplying_the_same_proposal_is_byte_identical(tmp_path):
+    project = _rp_project(tmp_path, craft=_cfg(), vision=_vision())
+    spec = research.research_pass(Stage.SEED)
+    proposal = ResearchProposal(queries=[ResearchQuery(query="pacing and dilemma stakes")])
+    spec.apply(proposal, project)
+    first = project.research[Stage.SEED.value]
+    spec.apply(proposal, project)
+    second = project.research[Stage.SEED.value]
+    assert first == second
+
+
+# ---------------------------------------------------------------------------
+# with_research
+# ---------------------------------------------------------------------------
+
+
+def test_every_impl_has_research_first_static_and_callable(golden):
+    from questfoundry.pipeline.stages import IMPLS
+
+    for stage, impl in IMPLS.items():
+        passes = impl.passes(golden) if callable(impl.passes) else impl.passes
+        assert passes[0].name == "research", stage
+
+
+def test_dress_review_closures_are_fresh_per_passes_resolution(golden):
+    from questfoundry.pipeline.stages import IMPLS
+    from questfoundry.pipeline.stages.dress import CodexItem, CodexProposal, ReviewVerdict
+
+    class ScriptedAdapter:
+        def __init__(self, script):
+            self.script = list(script)
+
+        def complete(self, *, system, prompt, schema, role):
+            return self.script.pop(0)
+
+    dress_impl = IMPLS[Stage.DRESS]
+    first = dress_impl.passes(golden)
+    second = dress_impl.passes(golden)
+    codex_first = next(p for p in first if p.name == "codex")
+    codex_second = next(p for p in second if p.name == "codex")
+    assert codex_first.review is not codex_second.review
+
+    proposal = CodexProposal(entries=[CodexItem(entity="entity:x", title="t", body="b")])
+
+    # codex_first's closure remembers this failure ...
+    adapter1 = ScriptedAdapter([ReviewVerdict(verdict="fail", issues=["real defect"])])
+    assert codex_first.review(proposal, golden, adapter1) == ["real defect"]
+
+    # ... but codex_second is a brand-new closure (fresh `prior`): a single
+    # failure resolves without arbitration, proving it did not inherit
+    # codex_first's state. If the closures shared state this would try to
+    # pop a second (architect) response from adapter2's one-item script
+    # and raise IndexError instead.
+    adapter2 = ScriptedAdapter([ReviewVerdict(verdict="fail", issues=["a different issue"])])
+    assert codex_second.review(proposal, golden, adapter2) == ["a different issue"]
+
+
+def test_with_research_preserves_fill_work_queue_after_the_head(golden):
+    from questfoundry.pipeline.stages import IMPLS
+    from questfoundry.pipeline.stages.fill import FILL_STAGE
+
+    wrapped = IMPLS[Stage.FILL].passes(golden)
+    original = FILL_STAGE.passes(golden)
+
+    assert wrapped[0].name == "research"
+    assert [p.name for p in wrapped[1:]] == [p.name for p in original]
+    assert wrapped[1].name == "voice"
+    assert any(p.name.startswith("write:") for p in wrapped)

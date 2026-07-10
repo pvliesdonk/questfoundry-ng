@@ -93,7 +93,54 @@ grounding; research artifacts exist at every stage, are checkpointed,
 and reruns/resumes replay them byte-stable; corpus-less projects (and
 CI) run exactly as before.
 
-## M7 — Depth & scale (scaffold deepening)
+## M7 — Illustrations (`qf illustrate`)
+
+Render the DRESS-produced illustration briefs into real images — pulled
+up front at the author's call: the consuming plumbing has existed since
+M5 (briefs, art direction, per-entity visual profiles, the runtime
+`art` entries, HTML embedding, PDF slots, all keyed off
+`art/images/<passage-slug>.png`), and both cloud image APIs are a
+config block away.
+
+**Not a pipeline stage.** Cloud image generation is non-deterministic —
+OpenAI's gpt-image and Gemini expose no seed — so rendered bytes can
+never join checkpoint byte-stability or A16 fingerprint replay. `qf
+illustrate` is a post-DRESS command beside `qf export`: idempotent by
+file presence (skip when `art/images/<slug>.png` exists; `--force`
+re-renders), never entering stage semantics. Mini-ADR on arrival.
+
+**Provider seam:** [`pvliesdonk/image-generation-mcp`](https://github.com/pvliesdonk/image-generation-mcp)
+*as a Python library* (the markdown-vault-mcp precedent — and this
+library is itself the hardened fork of the original QuestFoundry's
+image providers, so it is a re-adoption, not a new bet). `ImageService`
++ `register_provider` import cleanly without fastmcp code; providers:
+OpenAI (`gpt-image-2` lineup), Gemini (`gemini-3.1-flash-image`,
+SynthID-watermarked), and the deterministic zero-network **placeholder
+that is CI's hermetic path**. Optional extra
+`images = ["image-generation-mcp[openai,google-genai]"]`; typed
+`ImageContentPolicyError` on safety refusals.
+
+**Engine-side orchestration** (absent from the library by design, and
+where the heritage lessons apply): prompt assembly from art direction +
+per-entity `visual` fragments (the heritage consistency device — every
+prompt naming an entity carries its profile fragment); sample-first
+gate (render one, confirm, then batch); `--budget N` and priority
+filtering; ledger entries for cost accounting; no automatic retry on
+generation (expensive) but one reformulation attempt on a typed
+content-policy refusal — the failure mode the original swallowed.
+Style-reference conditioning (feeding a first rendered image back as a
+reference for the rest) is the coherence upgrade text fragments can't
+give; the library's edit path supports it on both providers — in scope
+if the sample images show drift.
+
+**Exit:** a generated story illustrates end-to-end on a real provider
+within a stated budget — every brief above the priority floor renders
+to `art/images/`, the HTML player embeds them, the PDF fills its
+illustration slots; re-running `qf illustrate` costs zero API calls;
+CI exercises the full command hermetically via the placeholder
+provider.
+
+## M8 — Depth & scale (scaffold deepening)
 
 The structural effort that makes stories *book-sized*. Every live run
 to date (5–7) lands at 8–22k words with B6 (words per genuine choice)
@@ -115,7 +162,7 @@ may under-sample — STATUS open item, first measured data at 13 units).
 20–60k words within budget, B3/B4 land inside the recalibrated bands,
 B6 reads ≤ ~800, and all arcs simulate complete with exports clean.
 
-## M8 — Retrieval refinement (exemplars & standing queries)
+## M9 — Retrieval refinement (exemplars & standing queries)
 
 The two retrieval-quality findings from M6's exit run, made
 first-class. (1) **A reserved exemplar mechanism**: style exemplars
@@ -137,7 +184,7 @@ exemplar material appears in any non-voice digest; the voice pass
 shows a spread of stylistically distinct exemplars; per-stage digest
 sources visibly differ (the standing half stops repeating).
 
-## M9 — SHIP & the author loop
+## M10 — SHIP & the author loop
 
 The last pipeline stage and the review experience around it. SHIP:
 final assembly plus the Twee lint that flags constructs which don't
@@ -156,10 +203,7 @@ random-walk simulation covers detours the arc walk misses.
 ## Later / explicitly deferred
 
 - Local review web UI (graph explorer + prose reader with approve/edit)
-  — M9's CLI review loop first; the web UI builds on its semantics.
-- An image backend behind the illustration briefs (optional by design;
-  briefs, runtime `art` entries, HTML embedding, and PDF slots all
-  exist and key off `art/images/<passage-slug>.png`).
+  — M10's CLI review loop first; the web UI builds on its semantics.
 - LLM playtester with subjective reports.
 - Distributed commits ("Witcher principle") — needs a threshold-flag
   primitive; revisit after real stories expose the demand.
@@ -171,17 +215,17 @@ story or a demonstrated quality gap calls for them, per the annotation
 discipline in 01 §10): the G4 pacing report + `scene_type`,
 character-arc metadata, intersections over exclusive beats, temporal
 hints inside fork units, cosmetic flags on false branches and locked
-storylines, tensored shapes inside residue arms (unless M7 pulls them
+storylines, tensored shapes inside residue arms (unless M8 pulls them
 in), and non-digit codeword fallbacks.
 
 ## Top risks
 
 | Risk | Mitigation |
 |---|---|
-| Deep scaffolds break the cadence math — more beats per Y may stretch choice-less runs faster than false branches can close them | M7 recalibrates presets and B6 together against measured runs; POLISH's cadence-targeted diamonds already meter by run length, not beat count |
+| Deep scaffolds break the cadence math — more beats per Y may stretch choice-less runs faster than false branches can close them | M8 recalibrates presets and B6 together against measured runs; POLISH's cadence-targeted diamonds already meter by run length, not beat count |
 | Preset calibration circularity — bands tuned on stories generated under the old bands | Words-primary scale table anchors on the corpus's external 300–600 words/choice band, not on our own output |
 | Weave candidate spread thins at scale — 64-candidate cap with tail-first DFS variety may under-sample early positions on 20+ unit stories | Measured watch item (first data at 13 units); widen the cap or diversify enumeration when a run shows clustering |
-| Exemplar leakage / style anchoring ahead of the Voice | M8 makes the reserved-folder exclusion structural; until then `craft.folders` scoping is documented as required (03 §10) |
+| Exemplar leakage / style anchoring ahead of the Voice | M9 makes the reserved-folder exclusion structural; until then `craft.folders` scoping is documented as required (03 §10) |
 | Feasibility audit mis-calls (hedged prose) | I12 hard cap at 3 states; heavy residue *must* produce variants — the gate rejects "poly-state" claims over incompatible flags. Still open: no live run has stress-tested the audit against genuinely hedged prose |
 | Token cost blowups at `long` scope | Budgets are gate-checked from DREAM; ledger + cache; `utility` model role for cheap calls |
 | Author edits breaking invariants silently | Single validation path: `qf validate` runs the same gates on files as the pipeline runs on proposals |

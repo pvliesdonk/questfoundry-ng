@@ -182,6 +182,7 @@ in), and non-digit codeword fallbacks.
 | Preset calibration circularity — bands tuned on stories generated under the old bands | Words-primary scale table anchors on the corpus's external 300–600 words/choice band, not on our own output |
 | Weave candidate spread thins at scale — 64-candidate cap with tail-first DFS variety may under-sample early positions on 20+ unit stories | Measured watch item (first data at 13 units); widen the cap or diversify enumeration when a run shows clustering |
 | Exemplar leakage / style anchoring ahead of the Voice | M8 makes the reserved-folder exclusion structural; until then `craft.folders` scoping is documented as required (03 §10) |
+| Feasibility audit mis-calls (hedged prose) | I12 hard cap at 3 states; heavy residue *must* produce variants — the gate rejects "poly-state" claims over incompatible flags. Still open: no live run has stress-tested the audit against genuinely hedged prose |
 | Token cost blowups at `long` scope | Budgets are gate-checked from DREAM; ledger + cache; `utility` model role for cheap calls |
 | Author edits breaking invariants silently | Single validation path: `qf validate` runs the same gates on files as the pipeline runs on proposals |
 

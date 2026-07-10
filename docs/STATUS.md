@@ -371,7 +371,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 1. **M7 — depth & scale** (roadmap §M7): deeper/tensored Ys fed by
    the research pass, a words-primary scale table, presets
    recalibrated against measured yield. Live run 7's B4/B3 overshoots
-   (49-55-beat arcs vs the 14-40 band at `short`, driven by two
+   (48-55-beat arcs vs the 14-40 band at `short`, driven by two
    locked chains) and the ~1.1-1.25k B6 across runs 5-7 are the
    motivating data. Frontier session — this is narrative/DAG
    semantics territory.

@@ -70,7 +70,14 @@ exit run — the same folk-horror premise generated
 [corpus-grounded](examples/lamplighters-debt-craft/) — shows the
 grounding exactly where the corpus speaks: the grounded story opens in
 second person present, the corpus's stated gamebook default, where the
-bare run chose third limited.
+bare run chose third limited. **M7 — illustrations — is complete**:
+`qf illustrate` renders the DRESS briefs to real images via OpenAI
+(gpt-image-2) or Gemini, assembling the art direction and each depicted
+entity's visual profile into every prompt, behind a sample-first cost
+gate with `--budget`/`--priority` caps. Re-running costs zero API calls
+(idempotent by file presence), the HTML player inlines the rendered art,
+the print PDF fills its illustration slots, and CI drives the whole
+command through a hermetic zero-network placeholder provider.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch) and the residue diamond — and prints

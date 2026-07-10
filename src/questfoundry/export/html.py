@@ -7,6 +7,7 @@ slot, restart.
 
 from __future__ import annotations
 
+import base64
 import json
 
 from questfoundry.export.runtime_json import build_runtime
@@ -25,6 +26,10 @@ _TEMPLATE = """<!DOCTYPE html>
   main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.2rem 6rem; }
   h1 { font-size: 1.4rem; letter-spacing: .12em; text-transform: uppercase;
        color: #9db4c0; font-weight: normal; }
+  #art { margin: 1.5rem 0; }
+  #art img { max-width: 100%; border-radius: 4px; display: block; margin: 0 auto; }
+  #art figcaption { text-align: center; font-size: .85rem; color: #78909c;
+       font-style: italic; margin-top: .4rem; }
   #prose p { margin: 1em 0; }
   #choices { margin-top: 2.2rem; padding: 0; list-style: none; }
   #choices li { margin: .7rem 0; }
@@ -44,6 +49,7 @@ _TEMPLATE = """<!DOCTYPE html>
 <body>
 <main>
   <h1 id="title"></h1>
+  <figure id="art" hidden><img alt=""><figcaption></figcaption></figure>
   <div id="prose"></div>
   <ul id="choices"></ul>
   <div id="ending" hidden></div>
@@ -56,6 +62,7 @@ _TEMPLATE = """<!DOCTYPE html>
 <script>
 const STORY = __STORY__;
 const KEY = "questfoundry:" + STORY.meta.title;
+const ART = Object.fromEntries((STORY.art || []).map(a => [a.passage, a]));
 let state = { at: STORY.start, flags: [], trail: [] };
 
 function el(id) { return document.getElementById(id); }
@@ -64,6 +71,12 @@ function has(req) { return req.every(f => state.flags.includes(f)); }
 function render() {
   const p = STORY.passages[state.at];
   el("title").textContent = STORY.meta.title;
+  const art = ART[state.at], fig = el("art");
+  fig.hidden = !art;
+  if (art) {
+    fig.querySelector("img").src = art.image;
+    fig.querySelector("figcaption").textContent = art.caption || "";
+  }
   el("prose").innerHTML = p.prose.trim().split(/\\n\\s*\\n/)
     .map(par => "<p>" + par.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</p>").join("");
   const ul = el("choices"); ul.innerHTML = "";
@@ -128,6 +141,11 @@ def _codex_panel(codex: list[dict]) -> str:
 
 def build_html(project: Project) -> str:
     data = build_runtime(project)
+    # the player is one self-contained file, so rendered images inline as
+    # data URIs here; the canonical runtime JSON keeps project-root paths
+    for entry in data["art"]:
+        image_bytes = (project.root / entry["image"]).read_bytes()
+        entry["image"] = "data:image/png;base64," + base64.b64encode(image_bytes).decode("ascii")
     story = json.dumps(data, ensure_ascii=False)
     # a literal "</script>" inside the JSON would end the script element
     story = story.replace("</", "<\\/")

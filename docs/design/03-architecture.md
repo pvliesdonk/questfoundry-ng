@@ -59,6 +59,7 @@ src/questfoundry/
     engine.py        # flag-tracking traversal of the passage graph
     tui.py           # `qf play` terminal player
     simulate.py      # exhaustive/random arc walker for QA
+  illustrate.py      # `qf illustrate`: DRESS briefs -> art/images/ (A18)
   cli.py             # Typer app: qf ...
 ```
 
@@ -162,7 +163,7 @@ no opaque state):
 
 ```
 keepers-bargain/
-  project.yaml           # name, scope, model-role mapping, stage configs & steering notes
+  project.yaml           # name, scope, model-role mapping, images provider, stage configs & steering notes
   vision.yaml            # DREAM output (author-editable)
   voice.yaml             # FILL's voice contract
   graph/
@@ -180,7 +181,7 @@ keepers-bargain/
   reports/<run>/<stage>.md   # stage reports (human-readable audit trail)
   snapshots/<run>/<stage>/   # full-graph checkpoint per gate
   inflight/<stage>/          # in-flight pass ledger (transient, gitignored; consumed at checkpoint)
-  cache/llm/                 # call cache (gitignored)
+  cache/llm/                 # call cache (gitignored); cache/images/ is the image service's scratch
   exports/                   # twee/html/json/pdf (gitignored)
 ```
 
@@ -201,6 +202,7 @@ qf graph --format mermaid                     # beat DAG / passage graph visuali
 qf play                                       # terminal playthrough (flag-tracking)
 qf simulate --all-arcs                        # walk every arc; report completeness
 qf export twee|html|json|pdf
+qf illustrate --budget 8 --priority 2         # render DRESS briefs to art/images/ (04 §6)
 ```
 
 A local review web UI (read-only graph explorer + prose reader) is a
@@ -250,6 +252,7 @@ interface before that.
 | A15 | A locked dilemma is derived from topology — exactly one explored path (heritage: an answer no `explores` edge points at is the shadow) — and its outcome derives no state flag | A stored disposition marker on the dilemma; deriving flags from locked consequences like any other | The graph already says it, so a marker could only drift out of sync; a flag every reader holds can gate nothing and would only bloat the flag universe — a locked outcome is a world fact FILL reads from the beats themselves (G3 rejects flags granted from locked paths, both directions) |
 | A16 | Crash resume is a per-pass in-flight proposal ledger replayed through the kept-pass machinery, voided by a stage-input fingerprint | Flushing prose files per write pass; relying on the LLM cache alone | A pass's effects exceed prose (micro-details, voice) and must reproduce through the mutation layer; the working tree never carries ungated partial state (02 §1's checkpoint definition holds); uniform across stages (A4) and independent of cache eviction or prompt-code changes. Auto-resume degrades to live on staleness while `--keep` stays fail-loud, and any input edit voids the ledger — "review = edit + revalidate" is never bypassed. Replay assumes apply functions are deterministic, the same assumption `rerun --keep` and cache replay already make |
 | A17 | A research digest is reused while *fresh* (its recorded corpus fingerprint + story inputs match current values — the standing queries, or a premise hash where none existed, since DREAM's research is premise-grounded); `prepare_rerun` preserves the target stage's own digest through the rewind; forcing re-retrieval = deleting the file | Always re-retrieving on rerun; `--keep research` replaying the digest file itself | Always-re-retrieve makes "author-editable artifact" vacuous — the digest is consumed by the *same* stage's later passes, so an edit only matters on rerun, and re-retrieval would clobber it (the predecessor snapshot never contains the target's digest). Replaying the file would break "ordinary `--keep`-able pass" — keeps replay *proposals* through apply. Freshness is checked in `skip_if`, which the runner dispatches before keep/resume replay; a corpus or vision edit re-retrieves, an unchanged world reuses for free — the vision.yaml never-restored precedent, extended |
+| A18 | `qf illustrate` is a post-DRESS *command*, idempotent by file presence (`art/images/<slug>.png` exists → skip; `--force` re-renders), with `image-generation-mcp` consumed as a library (`ImageService` + `register_provider`, no fastmcp code) and all orchestration engine-side: prompt assembly from art direction + entity visual fragments, sample-first gate, `--budget`/`--priority` filtering, ledger entries, one LLM reformulation on a typed content-policy refusal, and PNG normalization at the single write site (providers return what they like — Gemini hands back JPEG) | A DRESS pipeline pass; wrapping the library's MCP server; a content-addressed image store | Cloud providers expose no seeds, so rendered bytes can never join checkpoint byte-stability or A16 fingerprint replay — generation must sit beside `qf export`, outside stage semantics. The library deliberately owns no cache/budget/ledger, so the heritage lessons (consistency fragments, sample-first cost gate, the refusal the original swallowed) live in the engine. Slug-named files keep the presence-keyed skip and the export plumbing that has keyed on slugs since M5; content addressing's free dedup wasn't worth breaking that |
 
 ## 10. Craft-corpus research (M6)
 

@@ -133,3 +133,47 @@ The most format-specific pipeline, in five deterministic steps:
 - **LLM playtester (later milestone)** — an automated reader that plays
   arcs and files subjective reports (pacing, choice ambiguity, residue
   visibility) as advisory review input.
+
+## 6. Illustrations (`qf illustrate`)
+
+Renders the DRESS illustration briefs into `art/images/<passage-slug>.png`
+(M7; mini-ADR A18 in [03 §9](03-architecture.md)). A **command beside
+`qf export`, never a pipeline stage**: cloud image generation exposes no
+seeds, so its bytes cannot join checkpoint byte-stability or A16 replay.
+Idempotence is by file presence — an existing image skips its brief,
+re-running the command costs zero API calls, and `--force` re-renders.
+
+- **Provider seam**: `image-generation-mcp` as a Python library
+  (`ImageService` + `register_provider`; the markdown-vault-mcp
+  precedent). Providers: `openai` (gpt-image-2 lineup), `gemini`
+  (`gemini-3.1-flash-image`), and the deterministic zero-network
+  `placeholder` — CI's hermetic path. Configured by a project.yaml
+  `images:` block (`provider`, optional `model` / `aspect_ratio` /
+  `quality`) or `--provider`; keys come from `OPENAI_API_KEY` /
+  `GEMINI_API_KEY`.
+- **Prompt assembly is engine-side and deterministic**: art direction
+  (style, palette, influences, notes) first, then the visual-profile
+  fragment of every entity the brief depicts (the heritage consistency
+  device), then the brief's scene. A brief citing an unprofiled entity
+  fails loud.
+- **Cost controls**: sample-first gate (first render pauses for
+  confirmation; `--yes` for batch), `--budget N` render cap,
+  `--priority N` floor, one ledger entry per paid call (`kind: image`
+  in `reports/ledger.jsonl`). Generation errors are never retried
+  automatically; a typed content-policy refusal gets exactly one
+  LLM-reformulated attempt (utility role), then is reported and the
+  batch continues.
+- **Bytes are normalized to PNG at the single write site** — providers
+  return what they like (Gemini hands back JPEG) while everything
+  downstream keys on the `.png` contract.
+- **Consumers**: the runtime JSON `art` entries key on file presence
+  (§1); the HTML player inlines rendered images as data URIs (the
+  player stays one self-contained file) above the passage prose; the
+  print gamebook fills its illustration slots via typst-root-anchored
+  paths (`/art/images/…` — typst resolves leading-slash paths from its
+  compilation root, not the OS root).
+
+Style-reference conditioning (feeding a rendered image back as a
+reference for the rest of the batch — the library's edit path supports
+it on both cloud providers) is the documented escalation if sample
+images show character drift; not built until a live run demands it.

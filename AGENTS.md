@@ -73,7 +73,8 @@ src/questfoundry/
   export/     # runtime_json.py (canonical, self-validating round-trip),
               # html.py (standalone player), twee.py (SugarCube)
   project/    # io.py: YAML-per-node project directory, load/save
-  cli.py      # qf new / run / validate / status / graph / simulate / play / export
+  illustrate.py  # qf illustrate: DRESS briefs -> art/images/ (A18; not a stage)
+  cli.py      # qf new / run / validate / status / graph / simulate / play / export / illustrate
 tests/        # invariant negative cases, mutation guards, golden, round-trip
 examples/keepers-bargain/   # hand-authored golden story (must always pass)
 ```

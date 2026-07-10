@@ -55,6 +55,9 @@ WHAT AWAITS (already written — land so it follows naturally):
 {% endfor %}
 {% endif %}
 
+{% if not window and not lookahead %}
+{% include "_craft.j2" %}
+{% endif %}
 {% if choices %}
 The passage ends where these choices can naturally follow: {{ choices | join(" / ") }}.
 {% else %}

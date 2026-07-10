@@ -62,7 +62,10 @@ class PassSpec:
       human-readable summary lines of what was applied. Raise
       `ApplyError` (or let `MutationError` escape) to trigger repair —
       the runner snapshots and restores the mutable project state
-      (graph, vision, voice, enrichment) around failed applies.
+      (graph, vision, voice, enrichment, research) around failed
+      applies. Apply must be deterministic: kept-pass replay, ledger
+      resume, and the research pass's engine-side retrieval all rely
+      on re-applying a recorded proposal reproducing the same bytes.
     - `skip_if(project)`: optional; return a reason string to skip the
       pass (no LLM call, recorded on the report with attempts=0), or
       None to run it. For passes whose engine-determined work list can

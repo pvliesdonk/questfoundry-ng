@@ -71,12 +71,13 @@ always search-ranked over several related notes, never an exact-key
 lookup) — through hybrid search over a project-configured markdown
 corpus, and persists the top-k digests as a checkpointed,
 author-editable artifact (`research/<stage>.md`) that the stage's
-later passes read. The likely retrieval library is
+later passes read. The retrieval library is
 [`pvliesdonk/markdown-vault-mcp`](https://github.com/pvliesdonk/markdown-vault-mcp)
-used *as a Python library*, not as an MCP server — QuestFoundry would
-be its first non-dogfood library consumer, so budget for upstream API
-work. No corpus configured → the pass skips and the pipeline runs
-unchanged (the golden story never depends on a corpus).
+used *as a Python library*, not as an MCP server — its documented
+`Vault` API passed the seam validation (hybrid determinism, offline
+warm-cache embeddings, custom provider; ≥3.1, pinned <4). No corpus
+configured → the pass skips and the pipeline runs unchanged (the
+golden story never depends on a corpus).
 
 Governing principle: **corpus material may widen or ground, never
 bind.** The Voice record and the invariants bind; retrieved notes are

@@ -1,6 +1,10 @@
+import hashlib
+import math
+import re
 from pathlib import Path
 
 import pytest
+from markdown_vault_mcp.providers import EmbeddingProvider
 
 from questfoundry.graph import mutations
 from questfoundry.graph.store import StoryGraph
@@ -22,6 +26,48 @@ from questfoundry.models.world import Entity
 from questfoundry.project import load_project
 
 GOLDEN = Path(__file__).parent.parent / "examples" / "keepers-bargain"
+CORPUS = Path(__file__).parent / "fixtures" / "corpus"
+
+
+class FakeEmbeddingProvider(EmbeddingProvider):
+    """Deterministic hashed bag-of-words embedding provider, so
+    research-pass tests drive true `markdown-vault-mcp` hybrid search
+    without a model download or a network call. Each word hashes to one
+    of 64 dimensions; the vector is L2-normalized so cosine similarity
+    behaves like a real embedding's."""
+
+    _DIM = 64
+
+    def __init__(self, model_name: str = "fake-hashing-embedder") -> None:
+        self._model_name = model_name
+
+    def embed(self, texts: list[str]) -> list[list[float]]:
+        return [self._embed_one(text) for text in texts]
+
+    @classmethod
+    def _embed_one(cls, text: str) -> list[float]:
+        vector = [0.0] * cls._DIM
+        for word in re.findall(r"[a-z0-9]+", text.lower()):
+            bucket = int(hashlib.sha256(word.encode("utf-8")).hexdigest(), 16) % cls._DIM
+            vector[bucket] += 1.0
+        norm = math.sqrt(sum(v * v for v in vector)) or 1.0
+        return [v / norm for v in vector]
+
+    @property
+    def dimension(self) -> int:
+        return self._DIM
+
+    @property
+    def context_length(self) -> int | None:
+        return 512
+
+    @property
+    def model_name(self) -> str:
+        return self._model_name
+
+    @property
+    def provider_name(self) -> str:
+        return "fake-hashing"
 
 
 @pytest.fixture()

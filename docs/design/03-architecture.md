@@ -249,6 +249,7 @@ interface before that.
 | A14 | Multi-hard realization is part of the weave: every unit after the first hard fork is instantiated once per world with the template Y removed symmetrically; the nesting order is an ordinary interleaving choice (wraps/serial-constrained), and a contextualize pass rewrites per-world content | A duplication layer bolted onto POLISH; SEED declaring the nesting; keeping the SEED-authored beats as the first world's instance | Structure is copied, content follows the full coordinate (01 §5): the copy is mechanical and belongs to the weave, the words belong to an LLM pass; a template kept as "world one" would be a canonical-world bias vector — the same trap as the removed canonical answer |
 | A15 | A locked dilemma is derived from topology — exactly one explored path (heritage: an answer no `explores` edge points at is the shadow) — and its outcome derives no state flag | A stored disposition marker on the dilemma; deriving flags from locked consequences like any other | The graph already says it, so a marker could only drift out of sync; a flag every reader holds can gate nothing and would only bloat the flag universe — a locked outcome is a world fact FILL reads from the beats themselves (G3 rejects flags granted from locked paths, both directions) |
 | A16 | Crash resume is a per-pass in-flight proposal ledger replayed through the kept-pass machinery, voided by a stage-input fingerprint | Flushing prose files per write pass; relying on the LLM cache alone | A pass's effects exceed prose (micro-details, voice) and must reproduce through the mutation layer; the working tree never carries ungated partial state (02 §1's checkpoint definition holds); uniform across stages (A4) and independent of cache eviction or prompt-code changes. Auto-resume degrades to live on staleness while `--keep` stays fail-loud, and any input edit voids the ledger — "review = edit + revalidate" is never bypassed. Replay assumes apply functions are deterministic, the same assumption `rerun --keep` and cache replay already make |
+| A17 | A research digest is reused while *fresh* (its recorded corpus fingerprint + story inputs match current values — the standing queries, or a premise hash where none existed, since DREAM's research is premise-grounded); `prepare_rerun` preserves the target stage's own digest through the rewind; forcing re-retrieval = deleting the file | Always re-retrieving on rerun; `--keep research` replaying the digest file itself | Always-re-retrieve makes "author-editable artifact" vacuous — the digest is consumed by the *same* stage's later passes, so an edit only matters on rerun, and re-retrieval would clobber it (the predecessor snapshot never contains the target's digest). Replaying the file would break "ordinary `--keep`-able pass" — keeps replay *proposals* through apply. Freshness is checked in `skip_if`, which the runner dispatches before keep/resume replay; a corpus or vision edit re-retrieves, an unchanged world reuses for free — the vision.yaml never-restored precedent, extended |
 
 ## 10. Craft-corpus research (M6)
 
@@ -260,22 +261,37 @@ Roadmap milestone M6 owns it; contract details in
 - **Retrieval library.** Hybrid (FTS + local embeddings) search over a
   directory of frontmattered markdown, via
   [`pvliesdonk/markdown-vault-mcp`](https://github.com/pvliesdonk/markdown-vault-mcp)
-  used *as a Python library*, not as an MCP server. QuestFoundry would
-  be that project's first non-dogfood library consumer — expect its
-  library API to need upstream hardening, and treat that as part of the
-  milestone, not a surprise. The embedding model must be local and
-  version-pinned; no network dependency at generation time.
-- **Corpus as configuration.** `project.yaml` gains a `craft:` block —
-  corpus root, eligible subtrees/clusters (a gamebook project scopes to
-  the IF corpus and ignores tabletop/workshop material), retrieval
-  budget (top-k, words per digest). The engine is corpus-agnostic; the
-  corpus fingerprint (content hash) is recorded in stage reports so a
-  run names exactly what it read.
+  used *as a Python library* (`Vault` facade, `reader.search(query,
+  mode, folder)`), not as an MCP server — validated ≥3.1, pinned `<4`,
+  installed by the `craft` packaging extra. The embedding model is
+  local and version-pinned (`FastEmbedProvider`, default
+  `BAAI/bge-small-en-v1.5`); after a one-time model download, warm-cache
+  retrieval runs fully offline, and `search_mode: keyword` is the
+  embeddings-free degradation. The vault index, embeddings, and tracker
+  state live under `<project>/cache/research/` (gitignored, like the
+  LLM cache). The engine never trusts library tie-breaking: results
+  re-sort under `(-score, path, heading)` before truncation.
+- **Corpus as configuration.** `project.yaml`'s `craft:` block
+  (`models/craft.py`) — corpus root (absolute or project-relative),
+  eligible `folders` (a gamebook project scopes to the IF corpus and
+  ignores tabletop/workshop material), retrieval budget (`top_k`,
+  `words_per_query`, `max_queries`). The engine is corpus-agnostic; the
+  corpus fingerprint (content hash over the eligible files) is recorded
+  in the digest's frontmatter and each stage report, so a run names
+  exactly what it read.
 - **Determinism rules.** Search results feed prompt bytes, so retrieval
-  runs once per stage (in the research pass), and the persisted
-  `research/<stage>.md` is the only thing later passes read. Fixture
-  replay is positional and unaffected; the content-addressed cache sees
-  stable bytes; a rerun that should re-retrieve does so by re-running
-  the research pass, an ordinary `--keep`-able pass.
+  runs once per stage (inside the research pass's apply — replay
+  re-retrieves identically), and the persisted `research/<stage>.md` is
+  the only thing later passes read, injected as an always-defined
+  render variable so review prompts are structurally immune. Digests
+  carry no timestamps: their bytes join the next stage's A16
+  fingerprint, and the craft config + corpus hash join the fingerprint
+  knobs only when configured (corpus-less fingerprints are byte-stable
+  across the M6 upgrade). Fixture replay is positional and unaffected;
+  the content-addressed cache sees stable bytes; a rerun that should
+  re-retrieve does so by re-running the research pass, an ordinary
+  `--keep`-able pass (freshness/edit semantics: mini-ADR A17).
 - **No corpus, no change.** The research pass `skip_if`s when no corpus
-  is configured; CI and the golden story never require one.
+  is configured; CI and the golden story never require one, and the
+  retrieval library is imported only past that guard (missing install
+  fails loud naming the `craft` extra before any LLM spend).

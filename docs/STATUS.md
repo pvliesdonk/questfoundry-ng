@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · crash resume hardened (in-flight proposal ledger, A16) — M6 (craft-corpus research) is next
+> Last updated: 2026-07-10 · M6 planned (`docs/plans/m6-craft-corpus.md`) — the engine PR is next
 
 ## Where we are
 
@@ -317,12 +317,16 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M6 — craft-corpus research**: validate the
-   `pvliesdonk/markdown-vault-mcp` library seam first (hybrid search
-   over a corpus directory, pinned local embeddings, deterministic
-   ranking), then the research pass itself (mini-ADR A13): a typed
-   query proposal at each stage head; the engine retrieves and
-   persists digests as a checkpointed artifact later passes read.
+1. **M6 — craft-corpus research**: planned —
+   **[`docs/plans/m6-craft-corpus.md`](plans/m6-craft-corpus.md)** is
+   the implementation contract (module contracts, runner seams, test
+   list, the A17 rerun-semantics decision, exit procedure). Build
+   order: phase-0 library spike (the remaining seam questions are
+   hybrid tie-break determinism and offline behavior on a warm
+   embedding cache), then one engine PR (config → retrieval core →
+   pass/runner integration → prompts → tests → docs), then the live
+   A/B validation PR once the author exports the IF-craft subtree of
+   his vault as a local corpus directory.
 2. **A live run exercising locked dilemmas + richer residue** — cheap
    to fold into whatever premise M6 validation wants; watch triage's
    lock choices, the residue followup judgment, and whether the new
@@ -441,13 +445,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - **Derived fallback codewords may contain digits** (slugs allow them;
   `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
   worst — a print warning already tells authors to run DRESS.
-- **M6's retrieval library is an external bet**:
-  `pvliesdonk/markdown-vault-mcp` used *as a Python library* (not as an
-  MCP server) — QuestFoundry would be its first non-dogfood library
-  consumer, so its library-facing API may need upstream work before or
-  during M6. Validate the library seam (hybrid search over a corpus
-  directory, pinned local embeddings, deterministic ranking) early in
-  the milestone, before building the research pass on top.
+- ~~M6's retrieval library is an external bet~~ **Largely retired at
+  planning time** (2026-07-10 decision-log entry): as of 3.1.0 the
+  library ships a documented Python API (`Vault` facade with
+  reader/index facets, hybrid `search(query, mode, folder)`, a public
+  `EmbeddingProvider` ABC with a local pinned `FastEmbedProvider`, an
+  `[embeddings]` extra). Still open for the phase-0 spike: hybrid
+  tie-break determinism (the plan re-sorts results itself and never
+  trusts library tie-breaking regardless) and offline behavior with a
+  warm fastembed model cache.
 - **Twee prose mapping is bounded and unlinted** — the lint step that
   flags constructs that don't survive SugarCube conversion arrives with
   SHIP (design doc 04 §3).
@@ -479,6 +485,41 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M6 planned — the craft-corpus implementation
+  contract):** Full milestone plan written to
+  `docs/plans/m6-craft-corpus.md` (frontier planning session; the
+  plan is the hand-off contract, this entry is the record). Four
+  decisions worth logging. (1) **The library bet is largely retired
+  on paper**: `markdown-vault-mcp` 3.1.0 publishes a documented
+  Python API — `Vault` facade, hybrid `search(query, mode, folder)`,
+  a public `EmbeddingProvider` ABC with a pinned local
+  `FastEmbedProvider`, an `[embeddings]` extra — so the feared
+  upstream API work shrinks to a phase-0 spike on two questions:
+  hybrid tie-break determinism (the plan re-sorts `(-score, path,
+  heading)` itself either way) and offline behavior on a warm
+  embedding cache. (2) **A17, the plan's one real design find — rerun
+  semantics for author-edited digests**: as specced, "author-editable
+  artifact" would be vacuous (a rerun rewinds to the *predecessor*
+  snapshot, which never contains the target stage's digest, and
+  re-retrieval would clobber the edit). Resolution: `prepare_rerun`
+  preserves the working tree's `research/<target>.md`; the research
+  pass skips when the digest is *fresh* (frontmatter-recorded corpus
+  fingerprint + standing queries match current values — corpus or
+  vision edits re-retrieve, unchanged worlds reuse for free); forcing
+  re-retrieval = deleting the file. Mirrors the vision.yaml
+  precedent; the mini-ADR row lands in 03 §9 with the engine PR.
+  (3) **DREAM's research runs premise-only** — no vision exists at
+  the stage head, so standing queries start at BRAINSTORM (02 §1
+  amendment with the PR). (4) **Digest injection is one runner-level
+  render variable**, so review templates are structurally immune
+  (they render themselves) rather than immune by convention; the
+  exclusion list gains `polish_audit` (review-shaped — the same
+  taste-laundering channel 02 §1 already closes). Sequencing per the
+  tiering policy: contracts and prompt framing at frontier tier,
+  mechanical phases delegable; engine PR first, live A/B exit run as
+  a second PR once the author exports the IF-craft corpus from his
+  vault (the locked-dilemmas live validation rides that premise).
 
 - **2026-07-10 (crash resume: the in-flight proposal ledger, mini-ADR
   A16):** The open artifact-half question is decided: **not** per-pass

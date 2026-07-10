@@ -10,7 +10,9 @@ VOICE (binding):
 
 PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
 summary: {{ passage.summary }}
-Realize these beats, in order, as one continuous scene:
+Realize these beats, in order, as one continuous scene. The summaries are your
+brief, not your style: take the events, stakes, and mood they name; leave their
+wording behind — the VOICE above, not the summary, owns how anything sounds:
 {% for b in beats %}
 - {{ b.summary }}
 {% endfor %}

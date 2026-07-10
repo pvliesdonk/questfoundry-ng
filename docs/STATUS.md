@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · locked dilemmas + richer residue landed — M6 (craft-corpus research) is next
+> Last updated: 2026-07-10 · summary register hardened (briefs, not prose) — M6 (craft-corpus research) is next
 
 ## Where we are
 
@@ -323,6 +323,10 @@ PR #5) and this agent/doc infrastructure (PR #6).
    ranking), then the research pass itself (mini-ADR A13): a typed
    query proposal at each stage head; the engine retrieves and
    persists digests as a checkpointed artifact later passes read.
+2. **A live run exercising locked dilemmas + richer residue** — cheap
+   to fold into whatever premise M6 validation wants; watch triage's
+   lock choices, the residue followup judgment, and whether the new
+   summary register holds (beat summaries as briefs, not prose).
 3. **Scaffold deepening after M6** (corpus-medium word totals, 20–60k):
    deeper/tensored Ys once the research pass can feed them real
    material; scale table becomes words-primary at that point.
@@ -475,6 +479,32 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (summary register: briefs, not prose):** The author
+  flagged that generated beat summaries arrive as finished prose ("her
+  heart the last casualty of the lock-in" — a GROW contextualize
+  rewrite in the Bubblegum Alibi), though FILL owns the words. The
+  diagnosis: every summary-writing prompt injects the vision's tone two
+  lines above a "events, not prose" instruction, and a prohibition
+  loses to that pull every time. The fix follows the author's insight —
+  tell the model what its output is *for* instead of what it must not
+  be: a shared prompt block (`_summary_brief.j2`, included by SEED
+  scaffold, GROW contextualize/bridge, POLISH finalize/passages) frames
+  every summary as a brief for the prose writer who comes later, with
+  one stated-vs-performed contrast pair ("the mentor is dead and the
+  group blames Rell" is a brief; "grief hangs over the camp like early
+  winter" is prose) and the incentive spelled out (imagery spent in a
+  summary is stolen from the page). FILL's write prompt gets the
+  mirror-image line: summaries are the brief, not the style — the
+  Voice owns how anything sounds. Design doc 01 §5 now names the
+  register authoritatively and files pre-voiced summaries in the
+  bias-vector family (a style anchor smuggled past the Voice — the
+  canonical-answer trap again). Deliberately NOT a gate or review
+  rule: "flowery" is taste, and the review-legibility lessons say a
+  cheap reviewer given a taste rule will launder it. The golden story's
+  own summaries were swept to model the register (three similes and a
+  personification removed; prose untouched). Validation rides the next
+  live run (next-up #2).
 
 - **2026-07-10 (locked dilemmas + richer residue):** The structural
   volume/depth effort, built as designed with five decisions worth the

@@ -186,12 +186,13 @@ def render_briefs(
     generate_kwargs: dict | None = None,
     reformulate: Callable[[str, str], str] | None = None,
     on_rendered: Callable[[RenderOutcome], None] | None = None,
-    confirm_batch: Callable[[RenderOutcome], bool] | None = None,
+    confirm_batch: Callable[[RenderOutcome, int], bool] | None = None,
 ) -> list[RenderOutcome]:
     """Render each brief to art/images/<slug>.png, ledger every paid
     call. `confirm_batch` is the sample-first gate: called once after the
-    first render lands; returning False stops the batch (the sample stays
-    on disk). A content-policy refusal gets one reformulation attempt
+    first render *lands* (refusals before it don't count) with the number
+    of briefs still unprocessed; returning False stops the batch (the
+    sample stays on disk). A content-policy refusal gets one reformulation attempt
     (when a reformulator is wired) and otherwise records the refusal and
     moves on — refusals are content-specific, not systemic. Any other
     provider error propagates: no automatic retry on paid generation, and
@@ -234,7 +235,7 @@ def render_briefs(
             if on_rendered is not None:
                 on_rendered(outcome)
             if not confirmed:
-                if not confirm_batch(outcome):
+                if not confirm_batch(outcome, len(briefs) - len(outcomes)):
                     break
                 confirmed = True
         return outcomes

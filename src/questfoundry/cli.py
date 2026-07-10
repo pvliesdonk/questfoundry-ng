@@ -382,8 +382,7 @@ def illustrate(
     def on_rendered(outcome: RenderOutcome) -> None:
         console.print(f"[green]rendered[/green] {outcome.path}")
 
-    def confirm_batch(sample: RenderOutcome) -> bool:
-        remaining = len(plan.to_render) - 1
+    def confirm_batch(sample: RenderOutcome, remaining: int) -> bool:
         if remaining <= 0:
             return True
         console.print(f"sample rendered — inspect {sample.path}")

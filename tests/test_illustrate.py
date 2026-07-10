@@ -17,6 +17,7 @@ from questfoundry.illustrate import (
     assemble_prompt,
     build_service,
     image_path,
+    passage_slug,
     plan_renders,
     render_briefs,
 )
@@ -228,6 +229,30 @@ def test_refusal_gets_exactly_one_reformulation(golden_copy):
     assert outcomes[0].path is not None
     assert outcomes[0].reformulated
     assert image_path(golden_copy, project.enrichment.briefs[0]).exists()
+
+
+def test_confirm_batch_remaining_count_survives_a_prior_refusal(golden_copy):
+    """The sample-first gate fires after the first *successful* render;
+    a refusal processed before it must not inflate the remaining count
+    (review finding, PR #33)."""
+    project = _forbidden_project(golden_copy)  # brief 0 refused, brief 1 is the sample
+    provider = _RefusingProvider()
+    seen = []
+
+    def confirm_batch(sample, remaining):
+        seen.append((passage_slug(sample.brief), remaining))
+        return False  # decline the batch
+
+    outcomes = render_briefs(
+        project,
+        _stub_service(project, provider),
+        "stub",
+        project.enrichment.briefs,
+        confirm_batch=confirm_batch,
+    )
+    # 3 briefs: 0 refused, 1 rendered as the sample -> exactly 1 unprocessed
+    assert seen == [("p-lamp-room", 1)]
+    assert len(outcomes) == 2  # the decline stopped the batch
 
 
 def test_non_png_provider_bytes_are_normalized(golden_copy):

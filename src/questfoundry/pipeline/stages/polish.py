@@ -72,7 +72,9 @@ class FalseBranchSpec(BaseModel):
 
     before: str  # linear beat edge to fork
     after: str
-    arms: list[ArmSpec] = Field(min_length=2, max_length=2)
+    # 2 arms = a diamond (fork, rejoin immediately); 1 arm = a sidetrack
+    # (the direct edge stays — an optional detour the reader may decline)
+    arms: list[ArmSpec] = Field(min_length=1, max_length=2)
 
 
 class FinalizeProposal(BaseModel):
@@ -91,10 +93,19 @@ def _long_runs(project: Project) -> list[list[str]]:
     return [groups[i] for i in pc.long_linear_runs(groups)]
 
 
+def _cadence(project: Project) -> list[dict]:
+    """The words-aware diamond budget per long run (M8): the engine sizes
+    the cadence and suggests the seam edges; the model writes the arms
+    (and may move a site along its run — the budget is advisory)."""
+    runs = pc.collapse_groups(project.graph)
+    plan = pc.cadence_plan(project.graph, project.vision.preset)
+    return [{"beats": runs[i], "edges": edges} for i, edges in sorted(plan.items())]
+
+
 def _finalize_skip(project: Project) -> str | None:
-    if _light_needs(project) or _long_runs(project):
+    if _light_needs(project) or _cadence(project):
         return None
-    return "no light-residue convergences and no long linear runs"
+    return "no light-residue convergences and no cadence budget"
 
 
 def _finalize_context(project: Project) -> dict:
@@ -112,7 +123,7 @@ def _finalize_context(project: Project) -> dict:
                 },
             }
         )
-    return {"vision": project.vision, "needs": needs, "long_runs": _long_runs(project)}
+    return {"vision": project.vision, "needs": needs, "cadence": _cadence(project)}
 
 
 def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, str]:
@@ -208,11 +219,15 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             ]
         except ValidationError as e:
             raise ApplyError(f"invalid false-branch arm: {e}") from e
-        pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
-        lines.append(
-            f"diamond {chains[0][0].id} / {chains[1][0].id} "
-            f"between {spec.before} -> {spec.after}"
-        )
+        if len(chains) == 1:
+            pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
+            lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
+        else:
+            pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
+            lines.append(
+                f"diamond {chains[0][0].id} / {chains[1][0].id} "
+                f"between {spec.before} -> {spec.after}"
+            )
     return lines or ["nothing inserted"]
 
 
@@ -270,7 +285,7 @@ def _variant_needs(g) -> dict[str, list[str]]:
 
 def _passages_context(project: Project) -> dict:
     g = project.graph
-    groups = pc.collapse_groups(g)
+    groups = pc.collapse_groups(g, max_beats=project.vision.preset.passage_beats_max)
     variant_needs = _variant_needs(g)
     rendered = []
     for i, group in enumerate(groups):
@@ -304,7 +319,7 @@ def _ending_id(passage_id: str) -> str:
 
 def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
     g = project.graph
-    groups = pc.collapse_groups(g)
+    groups = pc.collapse_groups(g, max_beats=project.vision.preset.passage_beats_max)
     edges = pc.group_edges(groups, g)
     variant_needs = _variant_needs(g)
 

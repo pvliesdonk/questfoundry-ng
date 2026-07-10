@@ -86,9 +86,7 @@ end-to-end:
 ```console
 $ uv sync --group dev
 $ uv run qf validate examples/keepers-bargain
-[B3] scope 'micro' targets 10-20 passages, found 8 (advisory)
-
-The Keeper's Bargain @ dress: 0 error(s), 1 warning(s)
+The Keeper's Bargain @ dress: 0 error(s), 0 warning(s)
 all gates pass
 $ uv run qf export pdf --dir examples/keepers-bargain
 exported examples/keepers-bargain/exports/the-keepers-bargain.typ and …/the-keepers-bargain.pdf

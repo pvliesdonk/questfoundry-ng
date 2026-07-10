@@ -35,10 +35,12 @@ def _spec(slug: str, is_ending: bool = False) -> BeatSpec:
     return BeatSpec(id=f"beat:{slug}", summary=slug, is_ending=is_ending)
 
 
-def _y(dilemma: str, slug: str, *, tail_endings: bool, payoff: int = 1) -> DilemmaScaffold:
+def _y(
+    dilemma: str, slug: str, *, tail_endings: bool, payoff: int = 1, pre: int = 2
+) -> DilemmaScaffold:
     return DilemmaScaffold(
         dilemma=dilemma,
-        pre_commit=[_spec(f"{slug}-pre")],
+        pre_commit=[_spec(f"{slug}-pre{i}") for i in range(pre)],
         paths=[
             PathScaffold(
                 path=f"path:{slug}-{side}",
@@ -74,7 +76,7 @@ def test_ending_off_a_hard_tail_is_rejected(tmp_path):
 
 def test_soft_path_needs_scope_payoff_beats(tmp_path):
     project, did = _project(tmp_path, DilemmaRole.SOFT, scope="medium")
-    with pytest.raises(ApplyError, match="requires >= 2"):
+    with pytest.raises(ApplyError, match="requires >= 3"):
         _scaffold_apply(
             ScaffoldProposal(scaffolds=[_y(did, "x", tail_endings=False, payoff=1)]), project
         )
@@ -217,7 +219,10 @@ def _locked(dilemma: str, path: str, *, ending: bool = False) -> LockedScaffold:
 def test_locked_scaffold_applies_as_a_chain(tmp_path):
     project, did, path = _locked_project(tmp_path)
     lines = _scaffold_apply(
-        ScaffoldProposal(scaffolds=[], locked_scaffolds=[_locked(did, path)]), project
+        ScaffoldProposal(
+            setup=[_spec("setup-0")], scaffolds=[], locked_scaffolds=[_locked(did, path)]
+        ),
+        project,
     )
     assert any("(locked): chain of 3 beat(s)" in line for line in lines)
     g = project.graph
@@ -246,7 +251,9 @@ def test_locked_scaffold_must_name_the_explored_path(tmp_path):
     with pytest.raises(ApplyError, match="must name its explored path"):
         _scaffold_apply(
             ScaffoldProposal(
-                scaffolds=[], locked_scaffolds=[_locked(did, "path:lock-b")]
+                setup=[_spec("setup-0")],
+                scaffolds=[],
+                locked_scaffolds=[_locked(did, "path:lock-b")],
             ),
             project,
         )
@@ -254,11 +261,55 @@ def test_locked_scaffold_must_name_the_explored_path(tmp_path):
 
 def test_conforming_scaffolds_apply(tmp_path):
     project, did = _project(tmp_path, DilemmaRole.HARD)
-    lines = _scaffold_apply(ScaffoldProposal(scaffolds=[_y(did, "x", tail_endings=True)]), project)
-    assert any("Y with 1 shared beat(s)" in line for line in lines)
+    lines = _scaffold_apply(
+        ScaffoldProposal(setup=[_spec("setup-0")], scaffolds=[_y(did, "x", tail_endings=True)]),
+        project,
+    )
+    assert any("Y with 2 shared beat(s)" in line for line in lines)
     soft_project, soft_did = _project(tmp_path / "soft", DilemmaRole.SOFT, scope="medium")
     lines = _scaffold_apply(
-        ScaffoldProposal(scaffolds=[_y(soft_did, "x", tail_endings=False, payoff=2)]),
+        ScaffoldProposal(
+            setup=[_spec("setup-0"), _spec("setup-1")],
+            scaffolds=[_y(soft_did, "x", tail_endings=False, payoff=3, pre=4)],
+        ),
         soft_project,
     )
-    assert any("3 + 3 exclusive" in line for line in lines)
+    assert any("4 + 4 exclusive" in line for line in lines)
+
+
+def test_scaffold_depth_bands_are_enforced(tmp_path):
+    """M8: chain depths come from the scope's ScaffoldShape and violations
+    batch repairably — a medium scaffold at micro depths dies at SEED,
+    not at GROW's unrepairable gate."""
+    project, did = _project(tmp_path, DilemmaRole.HARD, scope="medium")
+    with pytest.raises(ApplyError) as exc:
+        _scaffold_apply(
+            ScaffoldProposal(
+                setup=[_spec("setup-0")],
+                scaffolds=[_y(did, "x", tail_endings=True, payoff=1, pre=2)],
+            ),
+            project,
+        )
+    message = str(exc.value)
+    assert "setup has 1 beat(s); scope 'medium' wants 2-3" in message
+    assert "pre_commit has 2 beat(s); scope 'medium' wants 4-6" in message
+    assert "post_commit has 1 beat(s); scope 'medium' wants 3-5" in message
+
+
+def test_locked_chain_depth_bands_are_enforced(tmp_path):
+    g = StoryGraph()
+    did, path, _ = make_dilemma(g, "lock", explore=1)
+    vision = Vision(premise="t", genre="t", tone="t", scope="medium")
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    with pytest.raises(ApplyError) as exc:
+        _scaffold_apply(
+            ScaffoldProposal(
+                setup=[_spec("setup-0"), _spec("setup-1")],
+                scaffolds=[],
+                locked_scaffolds=[_locked(did, path)],
+            ),
+            project,
+        )
+    message = str(exc.value)
+    assert "lead_in has 1 beat(s); scope 'medium' wants 3-5" in message
+    assert "aftermath has 1 beat(s); scope 'medium' wants 2-3" in message

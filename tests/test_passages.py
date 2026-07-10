@@ -451,12 +451,21 @@ def test_i12_counts_only_ambiguous_flags(vision):
     scaffold(g, "sub1", d2, p2a, p2b, endings=False)
     scaffold(g, "sub2", d3, p3a, p3b, endings=False)
     planned = weave.plan(g)
-    order = next(
-        o
-        for o in weave.candidates(planned)
-        if o.index("resolve:dilemma:sub1") < o.index("pre:beat:main-pre1")
-        and o.index("resolve:dilemma:sub2") < o.index("pre:beat:main-pre1")
-    )
+    # both softs resolve before main's last shared beat — constructed
+    # directly (a valid topological order; realize checks it), not fished
+    # out of the candidate sample, whose composition is an enumeration
+    # policy detail
+    order = [
+        "pre:beat:main-pre0",
+        "pre:beat:sub1-pre0",
+        "pre:beat:sub1-pre1",
+        "resolve:dilemma:sub1",
+        "pre:beat:sub2-pre0",
+        "pre:beat:sub2-pre1",
+        "resolve:dilemma:sub2",
+        "pre:beat:main-pre1",
+        "resolve:dilemma:main",
+    ]
     weave.realize(g, planned, order)
     _derive_flags(g)
 

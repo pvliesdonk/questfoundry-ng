@@ -10,7 +10,17 @@ output, so the ledger counts them there.
 
 from __future__ import annotations
 
+import time
+
 from questfoundry.llm.adapter import LLMResult, Usage
+
+# Transport-level drops survive even streaming: a thinking model can go
+# seconds-to-minutes between chunks and an idle-intolerant middlebox
+# kills the quiet connection (live run 8, repeatedly). generate() is
+# idempotent from the caller's side — nothing was applied — so a short
+# bounded retry belongs here; whole-run resilience is M10's.
+_TRANSPORT_RETRIES = 3
+_BACKOFF_SECONDS = 2.0
 
 
 class GeminiProvider:
@@ -27,6 +37,24 @@ class GeminiProvider:
         return self._client
 
     def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+        import httpx
+
+        last: Exception | None = None
+        for attempt in range(_TRANSPORT_RETRIES + 1):
+            if attempt:
+                time.sleep(_BACKOFF_SECONDS * attempt)
+            try:
+                return self._generate_once(
+                    system=system, prompt=prompt, model=model, max_tokens=max_tokens
+                )
+            except httpx.TransportError as e:
+                last = e
+        assert last is not None
+        raise last
+
+    def _generate_once(
+        self, *, system: str, prompt: str, model: str, max_tokens: int
+    ) -> LLMResult:
         from google.genai import types
 
         client = self._client_instance()

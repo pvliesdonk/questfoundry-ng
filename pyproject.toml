@@ -17,6 +17,13 @@ dependencies = [
     "typst>=0.13",
 ]
 
+[project.optional-dependencies]
+# Craft-corpus research (design doc 03 §10): hybrid retrieval with pinned
+# local embeddings. CI and corpus-less projects never need this extra.
+craft = [
+    "markdown-vault-mcp[embeddings]>=3.1,<4",
+]
+
 [project.scripts]
 qf = "questfoundry.cli:app"
 
@@ -25,6 +32,10 @@ dev = [
     "pytest>=8",
     "hypothesis>=6",
     "ruff>=0.5",
+    # research-pass tests drive true hybrid search with a fake embedding
+    # provider — the library core + numpy, never fastembed's model download
+    "markdown-vault-mcp>=3.1,<4",
+    "numpy>=1.20",
 ]
 
 [build-system]

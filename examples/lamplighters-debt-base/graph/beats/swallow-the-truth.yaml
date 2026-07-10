@@ -1,0 +1,12 @@
+id: beat:swallow-the-truth
+summary: Tamsin swallows it, preserving Mowe and the old arrangement for one more generation,
+  keeping the paid silence her family always kept.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+belongs_to:
+- path:keep-the-silence

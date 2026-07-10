@@ -1,0 +1,17 @@
+id: passage:p-fb-fight-halvard
+summary: Tamsin passes Sister Halvard at the tower's foot, the nun's lips moving in a prayer
+  neither of them will name. They are allied in the keeping now.
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:question-unanswered
+- flag:summoning-risked
+- flag:wiring-halted
+beats:
+- beat:fb-fight-halvard
+choices:
+- label: Accept the keeping as your own
+  to: passage:p-next-keeper-of-quiet

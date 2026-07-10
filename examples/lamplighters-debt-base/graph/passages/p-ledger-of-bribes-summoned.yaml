@@ -1,0 +1,18 @@
+id: passage:p-ledger-of-bribes-summoned
+summary: With the map completed and the thing below now stirring in answer, Tamsin finds in
+  Junia's logbook the record of Eldric Mowe's hereditary hush-money. Now she knows exactly
+  what the payments bought silence about, and the knowledge makes the ledger monstrous.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- object:junia-logbook
+irrelevant_flags:
+- flag:map-unfinished
+beats:
+- beat:ledger-of-bribes
+choices:
+- label: Trace the columns of coin, year on year
+  to: passage:p-fb-ledger-columns
+- label: Read the names written in the margins
+  to: passage:p-fb-ledger-names
+variant_of: passage:p-ledger-of-bribes-unanswered

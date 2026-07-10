@@ -1,0 +1,12 @@
+passage: passage:p-brine-inheritance
+priority: 2
+caption: She walks her mother's route in her mother's coat, lighting the greenish flames for
+  the first time.
+prompt: 'Painterly gothic scene through lamplight fog: a nineteen-year-old with brine-chapped
+  hands and wet-rope hair, swallowed by an oversized oilskin coat with sleeves rolled twice
+  and hem dragging, lighting the greenish flame of a black iron lamp-column corroded green
+  and salt-crusted at dusk. Vast hushed canal architecture behind in drowned brine-blues.
+  Deep chiaroscuro, lamp-oil ambers, algae greens, silver highlights.'
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

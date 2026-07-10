@@ -1,0 +1,8 @@
+id: beat:lamps-arm-oil
+created_by: polish
+summary: Tamsin kneels at the oil stores, checking the levels her mother once logged by hand.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:marren-veil

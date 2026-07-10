@@ -1,0 +1,9 @@
+id: beat:fb-lamps-glass-followup
+created_by: polish
+summary: The rhythm has a shape she almost knows, like a name spoken just too softly to catch,
+  and she stays with her hand there long past sense.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

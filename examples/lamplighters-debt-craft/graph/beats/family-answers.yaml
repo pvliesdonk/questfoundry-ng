@@ -1,0 +1,12 @@
+id: beat:family-answers
+summary: Dragged into the light, Sable's family must answer publicly for the silence they
+  were paid to keep, the comfort that bought Sable's whole life laid bare before everyone.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: advances
+entities:
+- character:sable-ondrey
+- faction:the-council
+belongs_to:
+- path:name-them

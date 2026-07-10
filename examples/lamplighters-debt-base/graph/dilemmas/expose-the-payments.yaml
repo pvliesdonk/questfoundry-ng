@@ -1,0 +1,18 @@
+id: dilemma:expose-the-payments
+question: Does Tamsin expose the council's generations of hush-money to the town, or protect
+  Eldric Mowe's secret as her mother did?
+why_it_matters: Speaking breaks the mercy-and-cowardice of things left unspoken and shatters
+  the town's fragile trust on the eve of the vote; keeping silent makes Tamsin the next link
+  in a chain of paid quiet she never chose.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:expose-payments
+  text: She reveals the hereditary bribe, letting the town judge what it never asked.
+- id: answer:keep-the-silence
+  text: She swallows it, preserving Mowe and the old arrangement for one more generation.
+anchored_to:
+- character:tamsin-veil
+- character:eldric-mowe
+- character:junia-veil

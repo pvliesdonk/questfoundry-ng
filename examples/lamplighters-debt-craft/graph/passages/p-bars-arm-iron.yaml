@@ -1,0 +1,13 @@
+id: passage:p-bars-arm-iron
+summary: Tamsin trails a hand along the cold iron struts that hold each green flame in place.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:bars-arm-iron
+choices:
+- label: Return to lamp forty-two
+  to: passage:p-the-caged-knock

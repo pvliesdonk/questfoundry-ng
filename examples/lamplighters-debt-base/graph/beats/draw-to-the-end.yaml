@@ -1,0 +1,13 @@
+id: beat:draw-to-the-end
+summary: Tamsin sets the pen to the wet ink and follows her mother's line to its close, drawing
+  the circling thing beneath the canals fully into shape at last.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: commits
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+belongs_to:
+- path:complete-it

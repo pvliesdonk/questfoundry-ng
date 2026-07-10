@@ -1,0 +1,9 @@
+id: path:kindle-the-forty-second
+name: Keep the Vigil
+explores: answer:kindle-the-forty-second
+consequences:
+- id: consequence:tamsin-becomes-keeper
+  text: Lamp forty-two burns green again and Tamsin is bound to a route she now knows is a
+    cage, the knock beneath the water quieted for another generation.
+- id: consequence:town-keeps-its-chains
+  text: The ring endures and Veilsmeer remains tended, its innocence gone but its duty unbroken.

@@ -1,0 +1,70 @@
+style: Hushed, painterly gothic realism rendered in low-key candlelight and canal-damp shadow;
+  compositions favor quiet intimacy and restraint, letting darkness and empty space imply
+  dread rather than depicting it, faces and hands lit as if by a single tended flame.
+palette: Green-lit dominance — the sickly luminous green of the flames and stained glass housings
+  — set against wet iron black, waterlogged brown, and the pale warmth of skin and lamplight;
+  mended-cloth grays and thrift-worn tones for the town, with the ink-blacks and browner second-hand
+  inks of the logbook recurring as accents.
+notes: 'Green light is the mood signal: brightest and most reverent near the flames and Marren''s
+  memory, curdling into cold and stillness at lamp forty-two. Keep reveals restrained — the
+  knock, the water, the circling thing stay unseen.'
+profiles:
+- entity: character:elder-corran
+  appearance: A soft-spoken older man, gentle-featured, with ink-stained cuffs and one hand
+    kept in his coat pocket to hide a tremor.
+  iconography:
+  - ink-stained cuffs
+  - hand hidden in coat pocket concealing a tremor
+  - both palms turned open and slightly forward, laying an offer flat
+- entity: character:marren-veil
+  appearance: 'Present only as memory in green light: a woman crouched over a lamp, always
+    writing, her face given more to the page than the viewer.'
+  iconography:
+  - crouched over a lamp in green light
+  - hand always writing
+  - corrections and deliberately blank spaces on the page
+- entity: character:sable-ondrey
+  appearance: Well-dressed and unmended in a town of thrift, her clothes conspicuously whole,
+    a locked house key worn on a chain at her collar.
+  iconography:
+  - unmended, well-made clothes standing out among mended coats
+  - house key on a chain
+  - fingers worrying the key against her collar, the chain worn thin
+- entity: character:tamsin-veil
+  appearance: Nineteen, salt-chapped hands, hair cut short so it won't catch the flame, wearing
+    her mother's too-large oilskin coat.
+  iconography:
+  - oversized oilskin coat
+  - short hair
+  - salt-chapped hands
+  - worn wick-hook shaped to another's grip
+  - striker held close, permitted to no one else
+  - pinching a wick out between wet fingers
+- entity: faction:the-council
+  appearance: A cordial, tired governing body, unanimous in manner, wishing the past could
+    simply be switched off.
+  iconography:
+  - cordial, weary faces in unanimous agreement
+  - the impulse to end the green flames by morning
+- entity: location:lamp-forty-two
+  appearance: A cold iron column blistered with old paint, its glass housing empty and stained
+    green, standing silent above the deepest bend of the canal; a stair beside it worn hollow
+    in the middle by generations of boots.
+  iconography:
+  - cold iron column with blistered old paint
+  - empty green-stained glass housing
+  - the only unlit, silent lamp on a route of hissing flames
+  - black water below
+  - stair worn hollow in its middle
+  - a single closed ring crossed by one line scored into its base
+  - the word 'don't' beside its number in the logbook
+- entity: object:marren-logbook
+  appearance: A sealed book of waterlogged leather with greenish stains, its final page a
+    wet-inked map whose ink never dries, margins carrying a second older hand in browner ink
+    that leans the wrong way.
+  iconography:
+  - waterlogged, green-stained leather
+  - final page of never-drying wet ink
+  - map of something vast circling beneath the canals
+  - browner second hand written backward-leaning in the margins
+  - seal of a closed ring crossed by a single line

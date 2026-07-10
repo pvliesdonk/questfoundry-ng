@@ -1,0 +1,11 @@
+The smudge is not ink. Or it is ink, but it is also her thumb, the shape of it, the way she must have held the page down with her left hand while the right kept writing. You know that hold. You have watched it in memory a hundred times, a woman crouched over a lamp in the green, always writing, the wick-hook set aside on the stone so both hands were free for the paper.
+
+You put your own thumb where hers pressed. It fits. It is a smaller hand than hers was, but the coat is hers and the striker is hers and the shape her thumb left in the wet is a place your thumb was made to go. The bend of the canal runs black beneath your skin. She followed it too long here. The ink ran because she stayed.
+
+Around the smudge her writing crowds in close, the letters leaning on each other for warmth. Watch it settle, she has written, more than once, the same words in different years, never leave a flame you have not watched settle. And below that, smaller, in the margin where a hand goes when it is saying the thing it should not: it does not want the dark. Then a line struck through. Then nothing. Then the deepest bend, where she pressed and did not lift.
+
+You lift your thumb. The mark of hers is still there under it, patient, waiting to be read by a hand that would come after. She left it for you. Not the map only. The pressure of staying too long over the worst part of it, so that whoever came would put their thumb down and feel how long she lingered before she chose what to write.
+
+Corran's voice has gone. The water knocks once beneath the iron. You close the logbook over your finger to keep the page, and the cold of it comes up through your hand and into the sleeve of her coat.
+
+There is more of her than this. There is the whole of what she carried down here every night and carried home and set on a shelf you have not yet opened. If the map ran wet at the bend, the rest of her ran wet somewhere too, in a drawer, in a tin, in the pockets of the second coat she never wore. You have read the page as far as the page will let you. Now you want the things her hands touched when they were not writing.

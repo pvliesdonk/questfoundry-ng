@@ -1,0 +1,15 @@
+id: beat:the-pen-in-hand
+summary: 'At Lamp Forty-Two the knocking aligns with the map''s rhythm, and Tamsin feels her
+  mother''s abandoned question press against her: to draw is to know, to know is to never
+  unknow.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: complicates
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+belongs_to:
+- path:complete-it
+- path:leave-it-unfinished

@@ -1,0 +1,10 @@
+id: path:keep-their-name
+name: Spare the Name
+explores: answer:keep-their-name
+consequences:
+- id: consequence:ledger-withheld
+  text: The ledger stays hidden and Sable's family keeps its name, the complicity spared public
+    ruin.
+- id: consequence:sable-own-reckoning
+  text: Sable is left to choose her own reckoning with the answer she was forbidden, ally
+    by consent rather than exposure.

@@ -1,0 +1,10 @@
+id: path:let-them-snuff-it
+name: Let the Ring Go Dark
+explores: answer:let-them-snuff-it
+consequences:
+- id: consequence:flames-die-forever
+  text: Every green flame gutters out by morning and the two-hundred-year vigil ends in Tamsin's
+    hands, freeing the town of its ledger.
+- id: consequence:the-thing-unbound
+  text: Below the deepest bend the black water no longer knocks softly but moves, whatever
+    the lamps restrained now loose in the dark.

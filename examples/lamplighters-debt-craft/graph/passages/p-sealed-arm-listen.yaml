@@ -1,0 +1,11 @@
+id: passage:p-sealed-arm-listen
+summary: Tamsin holds still with the sealed page heavy in her lap while the water mutters
+  somewhere below.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:sealed-arm-listen
+choices:
+- label: Answer the knock at your door
+  to: passage:p-sable-at-the-door

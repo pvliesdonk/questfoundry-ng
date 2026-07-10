@@ -1,0 +1,10 @@
+id: passage:p-lamps-arm-oil
+summary: Tamsin kneels at the oil stores, checking the levels her mother once logged by hand.
+entities:
+- character:tamsin-veil
+- character:marren-veil
+beats:
+- beat:lamps-arm-oil
+choices:
+- label: Carry the oil down toward the deepest bend
+  to: passage:p-the-water-knocks

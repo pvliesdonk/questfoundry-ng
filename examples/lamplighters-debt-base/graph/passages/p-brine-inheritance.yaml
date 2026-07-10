@@ -1,0 +1,15 @@
+id: passage:p-brine-inheritance
+summary: Tamsin lights the greenish canal-ring flames along her drowned mother Junia's route
+  for the first time as the town watches her take up the lamplighting oath. The inheritance
+  is now hers, and she does not yet know its cost.
+entities:
+- character:tamsin-veil
+- character:junia-veil
+- location:lamp-forty-two
+beats:
+- beat:brine-inheritance
+choices:
+- label: Walk down to the tide-line below the lamp
+  to: passage:p-fb-inherit-shore
+- label: Climb the salt-worn stair inside the tower
+  to: passage:p-fb-inherit-stair

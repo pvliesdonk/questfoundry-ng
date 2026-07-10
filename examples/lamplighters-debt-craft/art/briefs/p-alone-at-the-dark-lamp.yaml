@@ -1,0 +1,14 @@
+passage: passage:p-alone-at-the-dark-lamp
+priority: 2
+caption: At the silent forty-second lamp, Elder Corran offers Tamsin the same bargain he once
+  offered her mother.
+prompt: Painterly gothic realism, single-flame lighting. A gentle-featured older man with
+  ink-stained cuffs, one hand kept in his coat pocket, standing before a young woman in an
+  oversized oilskin coat at the foot of a cold iron lamp column blistered with old paint,
+  its glass housing empty and stained green. A stone stair beside them worn hollow in the
+  middle. Green-lit dominance against wet iron black and canal-damp shadow; restrained, tense
+  intimacy, faces lit warm against dark.
+entities:
+- character:tamsin-veil
+- character:elder-corran
+- location:lamp-forty-two

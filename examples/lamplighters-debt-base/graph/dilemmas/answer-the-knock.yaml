@@ -1,0 +1,26 @@
+id: dilemma:answer-the-knock
+question: When the knocking beneath the black water grows insistent, does Tamsin answer it
+  as Sister Halvard urges — treating the thing below as owed a mercy — or refuse the creed
+  entirely?
+why_it_matters: Halvard's belief reframes two hundred years of ritual as tenderness toward
+  the drowned thing rather than defense against a monster; to accept it is to inherit a devotion,
+  to refuse it is to name the flames a cage and risk the wrongness the creed has held in check.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:answer-with-mercy
+  text: She kneels to the knock and offers the mercy the creed demands, becoming its keeper.
+- id: answer:refuse-the-creed
+  text: She refuses to listen, declaring the ritual a cage and letting the unanswered thing
+    decide what comes.
+anchored_to:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two
+wraps:
+- dilemma:trust-the-outsider
+- dilemma:finish-the-map
+- dilemma:expose-the-payments
+concurrent:
+- dilemma:snuff-or-keep

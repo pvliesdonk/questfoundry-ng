@@ -1,0 +1,8 @@
+id: beat:fb-frighten-lie
+created_by: polish
+summary: Tamsin builds the warning slowly, watching the color drain from Oren's face.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist

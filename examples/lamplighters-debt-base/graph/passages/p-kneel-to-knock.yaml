@@ -1,0 +1,21 @@
+id: passage:p-kneel-to-knock
+summary: Tamsin kneels at the water's edge and offers the mercy the creed demands, answering
+  the knock and taking Halvard's devotion into herself. She accepts the listening as her life.
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:kneel-to-knock
+choices:
+- label: Lay your cheek to the cold stone
+  to: passage:p-fb-kneel-floor
+- label: Breathe in time with the rhythm below
+  to: passage:p-fb-kneel-breath

@@ -1,0 +1,23 @@
+id: passage:p-mowe-old-and-afraid
+summary: Tamsin sees Eldric Mowe old and afraid, and understands exposure would unravel not
+  just his name but the fragile quiet holding the town together. Mowe pleads privately for
+  her to let the lamps die as mercy and freedom from inherited dread, leaving her torn over
+  the water between Halvard's devotion and her suspicion that the ritual is a cage dressed
+  as kindness.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- character:sister-halvard
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:mercy-or-cage
+- beat:mowe-old-and-afraid
+- beat:mowe-pleads
+choices:
+- label: Meet his rheumy eyes
+  to: passage:p-fb-mercy-eyes
+- label: Let the silence between you stretch
+  to: passage:p-fb-mercy-silence

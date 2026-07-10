@@ -1,0 +1,12 @@
+id: beat:the-truth-stays-in-reach
+summary: With the coin refused, the truth beneath the water stays within Tamsin's reach; nothing
+  has been sold, nothing sealed away, and the questions remain hers to ask.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corran-confession
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:refuse-the-coin

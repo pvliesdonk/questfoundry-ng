@@ -1,0 +1,24 @@
+id: passage:p-read-the-ledger-aloud
+summary: Before the assembled town Tamsin reads the hush-money ledger aloud, naming the Ondrey
+  family and Corran's forty years of signatures as the price of silence. Dragged into the
+  light, Sable's family must answer publicly, the comfort that bought Sable's whole life laid
+  bare, and Sable's reckoning is forced and raw before neighbors who now know what her family
+  took to look away.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:elder-corran
+- character:sable-ondrey
+- faction:the-council
+irrelevant_flags:
+- flag:knowledge-carried
+- flag:map-dies-with-her
+beats:
+- beat:family-answers
+- beat:read-the-ledger-aloud
+- beat:sable-reckons-publicly
+choices:
+- label: Stand with Sable where the neighbors can see
+  requires:
+  - flag:family-exposed
+  to: passage:p-name-them-arm

@@ -1,0 +1,9 @@
+id: beat:fb-oren-crate
+created_by: polish
+summary: Tamsin watches Oren unpack his crated instruments, copper and glass laid out like
+  relics on the cold floor.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist

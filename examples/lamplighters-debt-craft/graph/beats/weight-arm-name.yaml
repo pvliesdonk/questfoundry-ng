@@ -1,0 +1,9 @@
+id: beat:weight-arm-name
+created_by: polish
+summary: Tamsin whispers her mother's name into the dark, listening for an answer she knows
+  won't come.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:marren-veil

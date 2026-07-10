@@ -1,0 +1,13 @@
+id: beat:the-vote-approaches
+summary: The town gathers for the vote. Tamsin realizes the ledger, spoken aloud now, could
+  turn the room, or could ruin the one person who might stand with her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: advances
+entities:
+- character:tamsin-veil
+- faction:the-council
+belongs_to:
+- path:keep-their-name
+- path:name-them

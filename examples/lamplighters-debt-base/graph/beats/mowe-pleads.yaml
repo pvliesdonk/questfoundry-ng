@@ -1,0 +1,12 @@
+id: beat:mowe-pleads
+summary: Mowe pleads with Tamsin privately to let the lamps die, framing electrification as
+  mercy for her and freedom for them both from an inherited dread.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:snuff-or-keep
+  effect: complicates
+entities:
+- character:eldric-mowe
+- character:tamsin-veil
+belongs_to:
+- path:keep-them-lit

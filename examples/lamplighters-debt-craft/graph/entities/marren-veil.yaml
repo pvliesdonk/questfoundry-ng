@@ -1,0 +1,10 @@
+id: character:marren-veil
+name: Marren Veil
+concept: Tamsin's drowned mother, present only through her logbook, tools, and the half-finished
+  map — a voice from under the water that Tamsin must learn to read.
+pronouns: she/her
+base:
+  appearance: 'remembered in green light: a woman crouched over a lamp, always writing'
+  manner: reveals herself only in handwriting, corrections, and things left deliberately unsaid
+  logbook-rule: Her logbook instructs the lamplighter never to leave a flame they have not
+    watched settle.

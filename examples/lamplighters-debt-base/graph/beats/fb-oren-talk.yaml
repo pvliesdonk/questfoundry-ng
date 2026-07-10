@@ -1,0 +1,9 @@
+id: beat:fb-oren-talk
+created_by: polish
+summary: Tamsin overhears the townsfolk mutter about the outsider's coat and his mainland
+  vowels as he passes.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist

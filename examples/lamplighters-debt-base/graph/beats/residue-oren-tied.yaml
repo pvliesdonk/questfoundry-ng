@@ -1,0 +1,12 @@
+id: beat:residue-oren-tied
+created_by: polish
+summary: Oren works at Tamsin's side, his hands and hers moving over the same wiring; whatever
+  waits at the ring, they will meet it as one, and neither can now leave the other to it.
+beat_class: structural
+purpose: residue
+entities:
+- character:oren-quist
+- character:tamsin-veil
+- location:lamp-forty-two
+requires_flags:
+- flag:oren-fate-tied

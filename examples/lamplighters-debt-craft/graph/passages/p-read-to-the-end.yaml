@@ -1,0 +1,19 @@
+id: passage:p-read-to-the-end
+summary: Tamsin reads the wet page to its terrible conclusion and lets herself understand
+  at last why lamp forty-two stays dark. Her mother's drowning becomes legible as a warning
+  rather than an accident, a voice from under the water finally answered, and Tamsin carries
+  this unbearable knowledge into every choice that follows.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:marren-veil
+- location:lamp-forty-two
+beats:
+- beat:carrying-the-meaning
+- beat:read-to-the-end
+- beat:the-warning-legible
+choices:
+- label: Look again at the ring of lamps
+  requires:
+  - flag:knowledge-carried
+  to: passage:p-the-lamps-are-bars-knowledge

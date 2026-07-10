@@ -1,0 +1,88 @@
+flags:
+- id: flag:creed-broken
+  description: Tamsin names the ritual a cage and refuses to listen, letting the unanswered
+    thing beneath decide what comes.
+  source: dilemma
+  path: path:refuse-the-creed
+  derived_from:
+  - consequence:creed-broken
+- id: flag:creed-continues
+  description: The lamplighter creed is affirmed as mercy rather than defense, binding Tamsin
+    to two hundred years of listening.
+  source: dilemma
+  path: path:answer-with-mercy
+  derived_from:
+  - consequence:creed-continues
+- id: flag:halvard-estranged
+  description: Sister Halvard's faith is repudiated, and the wrongness the creed held in check
+    is loosed to its own will.
+  source: dilemma
+  path: path:refuse-the-creed
+  derived_from:
+  - consequence:halvard-estranged
+- id: flag:map-finished
+  description: The map is drawn to its end, and what circles beneath the canals is fully known
+    and cannot be un-known.
+  source: dilemma
+  path: path:complete-it
+  derived_from:
+  - consequence:map-finished
+- id: flag:map-unfinished
+  description: Junia's map stays half-drawn, its wet ink never followed, the family's silence
+    kept.
+  source: dilemma
+  path: path:leave-it-unfinished
+  derived_from:
+  - consequence:map-unfinished
+- id: flag:oren-fate-tied
+  description: Oren's wiring and his fate become bound to Tamsin's, for salvation or ruin.
+  source: dilemma
+  path: path:confide-in-oren
+  codeword: TETHERED
+  derived_from:
+  - consequence:oren-fate-tied
+- id: flag:oren-gone
+  description: Oren Quist is frightened off the job, spared the knocking but leaving Tamsin
+    utterly alone.
+  source: dilemma
+  path: path:send-him-away
+  derived_from:
+  - consequence:oren-gone
+- id: flag:oren-knows
+  description: Oren Quist carries the truth of the knocking, an outsider who chose to stay
+    in the danger.
+  source: dilemma
+  path: path:confide-in-oren
+  derived_from:
+  - consequence:oren-knows
+- id: flag:question-unanswered
+  description: What Junia died reaching for remains a mercy of ignorance, honored by refusal
+    to ask.
+  source: dilemma
+  path: path:leave-it-unfinished
+  codeword: UNHEARING
+  derived_from:
+  - consequence:question-unanswered
+- id: flag:summoning-risked
+  description: The dark lamp's two-hundred-year wait may have received the completion it was
+    listening for.
+  source: dilemma
+  path: path:complete-it
+  codeword: ANSWERED
+  derived_from:
+  - consequence:summoning-risked
+- id: flag:tamsin-becomes-keeper
+  description: Tamsin kneels to the knock and inherits Sister Halvard's devotion, the drowned
+    thing offered its owed tenderness.
+  source: dilemma
+  path: path:answer-with-mercy
+  derived_from:
+  - consequence:tamsin-becomes-keeper
+- id: flag:wiring-halted
+  description: The mainland electrification stalls without its electrician, and no one else
+    believes Tamsin.
+  source: dilemma
+  path: path:send-him-away
+  codeword: SEVERED
+  derived_from:
+  - consequence:wiring-halted

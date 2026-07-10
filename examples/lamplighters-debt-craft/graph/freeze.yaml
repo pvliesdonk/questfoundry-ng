@@ -1,0 +1,59 @@
+beats:
+- beat:ally-by-consent
+- beat:alone-at-the-dark-lamp
+- beat:break-the-seal-and-light
+- beat:carrying-the-meaning
+- beat:corran-offers-the-coin
+- beat:corran-unmasked-to-himself
+- beat:deciding-blind
+- beat:down-from-the-lamps
+- beat:family-answers
+- beat:let-the-flames-die
+- beat:pocket-the-ledger
+- beat:read-the-ledger-aloud
+- beat:read-to-the-end
+- beat:refuse-the-stipend
+- beat:sable-at-the-door
+- beat:sable-chooses
+- beat:sable-reckons-publicly
+- beat:studying-the-map
+- beat:tending-as-jailing
+- beat:the-caged-knock
+- beat:the-circling-shape
+- beat:the-forty-two-lamps
+- beat:the-knock-quieted
+- beat:the-lamps-are-bars
+- beat:the-lamps-begin-to-go
+- beat:the-ledger-ends
+- beat:the-ledger-surfaces
+- beat:the-logbook-burns
+- beat:the-ring-endures
+- beat:the-same-bargain
+- beat:the-seal-in-her-hand
+- beat:the-sealed-page
+- beat:the-town-spared
+- beat:the-truth-stays-in-reach
+- beat:the-vigil-goes-quiet
+- beat:the-vote-approaches
+- beat:the-vote-passes
+- beat:the-warning-legible
+- beat:the-water-knocks
+- beat:the-water-moves
+- beat:the-weight-of-knowing
+forks:
+  dilemma:corran-confession:
+  - beat:refuse-the-stipend
+  dilemma:expose-or-shield:
+  - beat:pocket-the-ledger
+  - beat:read-the-ledger-aloud
+  dilemma:light-or-dark:
+  - beat:break-the-seal-and-light
+  - beat:let-the-flames-die
+  dilemma:read-or-burn:
+  - beat:read-to-the-end
+  - beat:the-logbook-burns
+  dilemma:worship-or-imprison:
+  - beat:the-lamps-are-bars
+convergences:
+  dilemma:read-or-burn:
+  - beat:the-lamps-are-bars

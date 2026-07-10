@@ -1,0 +1,9 @@
+id: beat:fb-ledger-names
+created_by: polish
+summary: Tamsin lingers on the familiar names in the margins, townsfolk who still nod to her
+  in the lane.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- object:junia-logbook

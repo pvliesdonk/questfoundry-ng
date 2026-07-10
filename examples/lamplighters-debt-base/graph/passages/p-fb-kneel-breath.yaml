@@ -1,0 +1,18 @@
+id: passage:p-fb-kneel-breath
+summary: Tamsin steadies her breathing to match the slow rhythm rising through the floor.
+  She and the knock fall into one time.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:question-unanswered
+- flag:wiring-halted
+beats:
+- beat:fb-kneel-breath
+choices:
+- label: Give it the tenderness it was owed
+  to: passage:p-owed-tenderness

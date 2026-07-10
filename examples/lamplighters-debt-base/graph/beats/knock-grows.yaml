@@ -1,0 +1,13 @@
+id: beat:knock-grows
+summary: The knocking beneath the black water grows insistent and rhythmic, no longer ignorable,
+  timed to the hours Junia once kept on her route.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:answer-with-mercy
+- path:refuse-the-creed

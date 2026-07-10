@@ -1,0 +1,12 @@
+passage: passage:p-the-caged-knock
+priority: 4
+caption: Tamsin crouches at the sealed mechanism as the knock rises through the stone.
+prompt: Painterly gothic realism, extreme restraint. A young woman in an oversized oilskin
+  coat crouched on a stone stair worn hollow in the middle, a wick-hook laid across her knees,
+  beside a cold iron lamp column blistered with paint, glass housing empty and stained green,
+  standing above the deepest bend of a black canal. Green-lit gloom against wet iron black
+  and waterlogged brown; dread implied by darkness and empty space, her face lit as by a single
+  flame.
+entities:
+- location:lamp-forty-two
+- character:tamsin-veil

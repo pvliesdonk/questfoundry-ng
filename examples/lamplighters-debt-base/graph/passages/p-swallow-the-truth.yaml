@@ -1,0 +1,23 @@
+id: passage:p-swallow-the-truth
+summary: Tamsin swallows the truth, preserving Mowe and the old arrangement for one more generation
+  and keeping the paid silence her family always kept. Mowe's hereditary bribe stays buried,
+  and the town's ignorance goes unbroken because it was never asked.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+irrelevant_flags:
+- flag:summoning-risked
+beats:
+- beat:bribe-stays-buried
+- beat:swallow-the-truth
+choices:
+- label: Drive Oren off before it can reach him
+  grants:
+  - flag:oren-gone
+  - flag:wiring-halted
+  to: passage:p-frighten-him-off
+- label: Tell Oren the whole of it
+  grants:
+  - flag:oren-fate-tied
+  - flag:oren-knows
+  to: passage:p-tell-oren-all

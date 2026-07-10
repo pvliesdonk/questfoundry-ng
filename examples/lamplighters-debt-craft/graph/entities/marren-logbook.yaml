@@ -1,0 +1,12 @@
+id: object:marren-logbook
+name: Marren's Logbook
+concept: The sealed logbook from lamp forty-two's column whose last page is a wet-inked map
+  of something vast circling beneath the canals.
+pronouns: it/its
+base:
+  appearance: waterlogged leather, greenish stains, a final page where the ink never dries
+  manner: reads like a mother's voice — warnings folded inside instructions
+  second-hand: Its margins carry a second, older hand in browner ink leaning the wrong way,
+    answering Marren's notes rather than instructing.
+  seal_mark: Its seal bears a plain closed ring crossed by a single line, the same mark Marren
+    scored into the base of lamp forty-two.

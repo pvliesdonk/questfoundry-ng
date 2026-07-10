@@ -1,0 +1,11 @@
+passage: passage:p-fb-mercy-eyes
+priority: 6
+caption: She meets the old man's eyes as he waits to learn if he is forgiven.
+prompt: 'Painterly gothic tender close-up by lamplight through fog: a tall stooped gentle-faced
+  elder with a silver watch-chain looped at his side that he worries between two fingers,
+  rheumy pale eyes lifted in pleading; a young woman in an oversized oilskin coat with wet-rope
+  hair facing him, quiet and watchful. Deep chiaroscuro, lamp-oil ambers, corroded iron blacks,
+  silver highlights.'
+entities:
+- character:tamsin-veil
+- character:eldric-mowe

@@ -1,0 +1,12 @@
+id: beat:name-them-arm
+created_by: polish
+summary: Sable stands where the neighbors can see her, the family name spoken aloud and no
+  longer hers alone to carry. Whatever she is to Tamsin now is raw, exposed, shaped by the
+  wound that was made public.
+beat_class: structural
+purpose: residue
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+requires_flags:
+- flag:family-exposed

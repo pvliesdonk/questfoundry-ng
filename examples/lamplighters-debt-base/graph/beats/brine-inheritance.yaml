@@ -1,0 +1,10 @@
+id: beat:brine-inheritance
+summary: Tamsin walks her drowned mother's lamplighting route for the first time, lighting
+  the greenish flames along the canal ring at dusk while the town watches her take up Junia's
+  oath.
+beat_class: structural
+purpose: setup
+entities:
+- character:tamsin-veil
+- character:junia-veil
+- location:lamp-forty-two

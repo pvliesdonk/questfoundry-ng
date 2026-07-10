@@ -1,0 +1,11 @@
+id: passage:p-fb-oren-talk
+summary: Tamsin overhears townsfolk mutter about the outsider's coat and mainland vowels as
+  Oren passes. He is not one of them and never will be.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+beats:
+- beat:fb-oren-talk
+choices:
+- label: Walk the ring the dusk before the vote
+  to: passage:p-vote-called

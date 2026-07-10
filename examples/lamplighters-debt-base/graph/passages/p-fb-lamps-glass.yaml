@@ -1,0 +1,13 @@
+id: passage:p-fb-lamps-glass
+summary: Tamsin presses her palm to the warm lamp-glass and feels the knocking answer through
+  it. The rhythm has the shape of a name spoken too softly to catch, and she stays with her
+  hand there long past sense.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:fb-lamps-glass
+- beat:fb-lamps-glass-followup
+choices:
+- label: Study where your mother's line trails off
+  to: passage:p-map-half-drawn

@@ -1,0 +1,13 @@
+She goes down to the water first. The knock will keep. It has kept two hundred years.
+
+The stone stair to the tide-line is slick and green underfoot, worn to a shine by feet she cannot count. She sets her hand to the wet iron rail and the cold of it climbs into her wrist. Above her the green flames breathe. Below her the sea has drawn back and left its offering along the base of the wall, and Tamsin bends to read it the way her mother taught her to read a room before speaking.
+
+Wrack. Kelp black as boiled leather, coiled like rope that has learned a habit of coiling. A boot, single, the leather gone soft as a tongue. Netting furred with salt. She crouches. Her mother's hem drags in the shallow film of water and she does not lift it.
+
+Here is a spoon, tin, its bowl bent. Here a child's shoe, laces still tied. Here a comb with three teeth. She knows this comb. It is her grandmother's comb, given to the water in a box weighted with a stone, and the water has combed the box away and kept the comb and set it back against the wall for her to find. The sea does not take. That is the lie the town tells at the bridges. The sea keeps, and the sea returns, and it returns things in the wrong order and wrong condition and its own wrong time, and the difference between a burial and a loan is only how long you are willing to wait for the payment to come back changed.
+
+She lifts the comb. Salt has crusted it white. It weighs nothing and it weighs everything her family fed the canal to keep the ring quiet.
+
+Behind her the knock finds her again, patient, three beats through the stone and the water and the soles of her feet. Here. Here. Here. She understands now that the wrack is a kind of answer to it. Everything the sea has given back was first something given down. The exchange has been running under this town for longer than the lamps. Her thumb rests where two hundred thumbs have rested. She turns the comb over once and sets it back exactly where she found it, teeth to the wall, because she is not ready yet to accept what taking it would mean.
+
+The green light lies flat on the receding water. Somewhere beneath the map folded wet against her ribs, an answer waits to be drawn out to its end. She straightens. Her mother's coat drips. The logbook is up in the dark of the column, sealed, and the black lamp is knocking, and she has read enough of the shore to know she must go and read that too.

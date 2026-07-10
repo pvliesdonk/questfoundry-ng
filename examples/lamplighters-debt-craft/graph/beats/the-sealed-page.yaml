@@ -1,0 +1,14 @@
+id: beat:the-sealed-page
+summary: 'Tamsin breaks into her mother''s logbook and finds the last page: a wet-inked map
+  of something vast circling beneath the canals, half-finished, unbearable to read fully.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:read-or-burn
+  effect: reveals
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:marren-veil
+belongs_to:
+- path:burn-the-book
+- path:read-it-all

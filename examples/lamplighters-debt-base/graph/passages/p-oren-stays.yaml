@@ -1,0 +1,20 @@
+id: passage:p-oren-stays
+summary: Oren chooses to stay despite the weight, an outsider now carrying the truth of the
+  knocking alongside Tamsin instead of fleeing. His wiring and his fate are knotted to hers
+  — whatever comes at the ring, they face it together.
+entities:
+- character:oren-quist
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:question-unanswered
+beats:
+- beat:fates-bound
+- beat:oren-stays
+choices:
+- label: Turn to the wiring with him beside you
+  requires:
+  - flag:oren-fate-tied
+  to: passage:p-residue-oren-tied

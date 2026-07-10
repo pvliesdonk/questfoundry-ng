@@ -1,0 +1,32 @@
+id: passage:p-next-keeper-of-quiet
+summary: Tamsin becomes the next keeper of a paid quiet she never chose, the chain unbroken
+  and the cost of silence passed to her as it was to her mother. The ring burns greenish and
+  afraid each night, Mowe's plan to end the debt collapses, and the town lives on in vigilant
+  dread with its lamps still lit.
+entities:
+- character:tamsin-veil
+- character:junia-veil
+- location:lamp-forty-two
+- character:eldric-mowe
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:question-unanswered
+beats:
+- beat:mowe-collapses
+- beat:next-keeper-of-quiet
+- beat:ring-burns-afraid
+choices:
+- label: Kneel to the water and answer the knock
+  grants:
+  - flag:creed-continues
+  - flag:tamsin-becomes-keeper
+  to: passage:p-kneel-to-knock
+- label: Turn from the water and name the cage aloud
+  grants:
+  - flag:creed-broken
+  - flag:halvard-estranged
+  to: passage:p-refuse-to-listen

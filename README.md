@@ -58,13 +58,19 @@ fork-less storyline woven through every playthrough — BRAINSTORM
 overgenerates, triage locks the surplus; in a mystery, the red
 herrings) and **richer residue** (every soft convergence gets a
 flag-gated residue arm per path — the story visibly remembers — and an
-arm may be a 2-beat chain that reads as one passage). The M6 engine
-work has landed: configure a `craft:` corpus in project.yaml and a
-**research pass** heads every stage — the model proposes queries, the
-engine retrieves from the markdown corpus (hybrid search, pinned local
-embeddings) and persists an author-editable digest per stage that
-later passes read as advisory craft notes. Without a corpus nothing
-changes, to the byte. M6 completes with the live A/B validation run.
+arm may be a 2-beat chain that reads as one passage). **M6 —
+craft-corpus research — is complete**: configure a `craft:` corpus in
+project.yaml and a **research pass** heads every stage — the model
+proposes queries, the engine retrieves from the markdown corpus
+(hybrid search, pinned local embeddings) and persists an
+author-editable digest per stage that later passes read as advisory
+craft notes. Without a corpus nothing changes, to the byte. The A/B
+exit run — the same folk-horror premise generated
+[bare](examples/lamplighters-debt-base/) and
+[corpus-grounded](examples/lamplighters-debt-craft/) — shows the
+grounding exactly where the corpus speaks: the grounded story opens in
+second person present, the corpus's stated gamebook default, where the
+bare run chose third limited.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch) and the residue diamond — and prints

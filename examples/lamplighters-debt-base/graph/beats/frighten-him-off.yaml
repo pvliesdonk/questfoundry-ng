@@ -1,0 +1,13 @@
+id: beat:frighten-him-off
+summary: To spare him, Tamsin deliberately frightens Oren off the job — feeding his dread
+  until he abandons the wiring and flees back toward the mainland.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two
+belongs_to:
+- path:send-him-away

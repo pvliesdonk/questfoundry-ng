@@ -1,0 +1,15 @@
+id: beat:halvard-creed
+summary: 'Sister Halvard finds Tamsin at the dark lamp and explains the true creed: the flames
+  are not a defense but a mercy owed to the drowned thing below, and the knock is a plea to
+  be answered.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: reveals
+entities:
+- character:sister-halvard
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:answer-with-mercy
+- path:refuse-the-creed

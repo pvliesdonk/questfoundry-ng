@@ -1,0 +1,13 @@
+id: beat:ignorance-as-honor
+summary: Tamsin re-seals the logbook the way Junia sealed it, honoring her mother by refusing
+  to ask, keeping the family's ignorance as a chosen tenderness.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: complicates
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+belongs_to:
+- path:leave-it-unfinished

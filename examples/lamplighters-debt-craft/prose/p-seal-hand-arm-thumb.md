@@ -1,0 +1,11 @@
+You take the seal between your finger and your thumb.
+
+It is smaller than you thought a thing could be that holds a whole town's breath. A plain closed ring crossed by a single line, the mark she scored into the base of this lamp with the point of the wick-hook that lies across your knees now, warm where your leg has warmed it. The wax has gone soft at the edges. Where the iron pinches it thin, the ring lifts a little from the metal, and under the pad of your thumb you feel the give of it, the small breath of air behind where the seal no longer sits true.
+
+So little. That is the thing your hands learn before your head will hear it. Not a wrench, not a striker, not two hundred years of anyone's bowed neck. A pinch. The pressure you would use to lift a splinter from a child's palm, or to pinch a wick out between wet fingers so it does not smoke. Your mother pinched a hundred wicks that way. She taught you the trick of it, the quick close, the way you do not flinch from the heat if you are fast and sure.
+
+You are fast and sure now. You could be. The seal would come away between your finger and thumb like something ripe, and the seam would open the width of a held word, and that would be the whole of it. You have carried the wick-hook a season believing the route was heavy. It is not heavy. It was never heavy. It was only close, always this close, one small motion from her hands and then from yours, and the weight was never in the iron. The weight was in not doing it.
+
+Below the bend the water keeps its count. You feel it come up through your knees. You hold the seal the way you would hold a thing you meant to keep, and you do not press, and you do not let go, and the not-pressing is a choice your fingers make one heartbeat at a time. She held it too. She must have crouched exactly here with her thumb on exactly this, and understood exactly how little it would take, and set her palm flat instead and written the word that held. Don't. Not an instruction. A hand reaching back up the stair for yours.
+
+The green burns low. The seal is warm. What happens next lives in the space between your finger and your thumb, and no one is coming up the boards to take it from you.

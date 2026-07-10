@@ -1,0 +1,14 @@
+id: beat:corran-offers-the-coin
+summary: 'Elder Corran finds Tamsin and offers what he offered her mother: his silence and
+  a lifelong stipend if she stops asking why lamp forty-two stays dark. He frames it as mercy,
+  as protection.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corran-confession
+  effect: advances
+entities:
+- character:elder-corran
+- character:tamsin-veil
+- location:lamp-forty-two
+belongs_to:
+- path:refuse-the-coin

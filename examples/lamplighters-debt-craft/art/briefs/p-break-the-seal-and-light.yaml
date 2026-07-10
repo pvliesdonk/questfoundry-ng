@@ -1,0 +1,13 @@
+passage: passage:p-break-the-seal-and-light
+priority: 7
+caption: Tamsin lifts the two-century lead seal to kindle the forty-second lamp at last.
+prompt: Painterly gothic realism, single roaring flame as light source. A young woman in a
+  too-large oilskin coat working an old wick-hook into the seam of a cold iron lamp column
+  blistered with paint, its glass housing empty and green-stained, above the deepest bend
+  of a black canal, a stone stair worn hollow beside her; grey-white lead seal in her hand,
+  a rising green flame beginning to catch. Dominant sickly green against wet iron black, pale
+  warmth on her face and hands, hushed and reverent framing.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- faction:the-council

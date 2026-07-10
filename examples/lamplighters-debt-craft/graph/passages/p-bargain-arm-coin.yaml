@@ -1,0 +1,11 @@
+id: passage:p-bargain-arm-coin
+summary: Tamsin turns the offered coin in her fingers, watching the green light catch its
+  worn face.
+entities:
+- character:tamsin-veil
+- character:elder-corran
+beats:
+- beat:bargain-arm-coin
+choices:
+- label: Press the coin back into his palm
+  to: passage:p-refuse-the-stipend

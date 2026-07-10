@@ -1,0 +1,14 @@
+id: passage:p-fb-mercy-eyes
+summary: Tamsin meets Mowe's rheumy eyes and sees an old man waiting to learn whether he is
+  forgiven. The verdict rests with her.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-mercy-eyes
+choices:
+- label: Swallow it and keep the quiet
+  to: passage:p-swallow-the-truth

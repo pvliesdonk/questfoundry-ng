@@ -1,0 +1,11 @@
+You carry the ledger up into the light with both hands, the way you would carry a lamp too full of oil. The town is already gathered in the square, faces turned to the council table where they wait to switch the past off by morning. You do not ask them to be quiet. You open the book to the column that matters and you begin to read.
+
+You read the years first, because the years are the weight of it. Two hundred of them, folded down the page in different inks and different hands, each one a payment made so that a family would look at lamp forty-two and say nothing. Then you read the names. You name the Ondreys. You read Corran's signature, forty years of it, the same careful stroke narrowing where his hand began to tremble. You keep your voice plain. You let the sums say what they are. A house paid for. A daughter clothed in a town of thrift. A silence bought season after season, cheaper than the truth would have cost.
+
+The square does not gasp. It settles, the way water settles when something heavy has gone under it, and in the settling everyone turns to find her.
+
+Sable stands near the front where she always stands, well-dressed among the mended coats. Her hand goes to the key on its chain and works it against her collar, thin from the working. She did not choose the money. She only lived inside it, in the warmth of a house she was told never to ask why it stayed warm while lamp forty-two stayed dark. Now the neighbors know the shape of that warmth. She looks at you and there is no forgiveness in the look, only the raw asking for it, the thing she has wanted her whole life and never learned to say.
+
+You close the book. You do not read the last page, the wet one, the one that will not dry. That reading stays in you, cold water in cloth. But this much you have set down where all of them can hold it, not one pair of hands, not the buying kind, but the whole town's, at once.
+
+You step down from the table. You cross the space the crowd has opened around her, and you go and stand at Sable's side, close enough that the neighbors must see the two of you together in the green-going light. You do not touch her. You do not tell her it is well. You simply stand where the wound is, so she does not stand in it alone.

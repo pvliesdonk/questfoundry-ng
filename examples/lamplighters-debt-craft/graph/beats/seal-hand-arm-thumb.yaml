@@ -1,0 +1,9 @@
+id: beat:seal-hand-arm-thumb
+created_by: polish
+summary: Tamsin presses the loosened seal between finger and thumb, feeling how little it
+  would take.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- object:marren-logbook

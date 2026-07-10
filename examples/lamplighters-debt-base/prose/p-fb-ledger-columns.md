@@ -1,0 +1,11 @@
+She traces the column with one brine-chapped finger, top to bottom, the way she was taught to count lamps. It is the same motion. Her body knows it before her grief does. Date, sum, the worn word in the margin. Date, sum, the word. Down and down, into ink gone the brown of old kelp, past her mother's hand into the hand that shaped her mother's, and older, and older still, until the strokes lean the way strokes lean when a person is afraid of the paper.
+
+The figures are not large. That is what settles the cold into her. Nobody grew rich on this. The coin is the size of a thing paid so it will not have to be thought about, month laid on month, quiet as silt sinking in the still parts of the canal. A small sum is a promise. A large one is a bargain. These are promises, two hundred years of them, and every one of them kept.
+
+She does the arithmetic she cannot help doing. The tallies run even. Not one figure struck out. Not one late, not one short, not one begrudged in a shaking downstroke. Her people paid this on time through drownings and lean tides and whatever grief lived under the oilskin before it was hers. They fed the count above and they fed the coin below and they never once let either lapse, because to lapse the count is to lose the ring, and to lapse the coin is to loose the tongue, and both of those were the same fear wearing two coats.
+
+Her thumb finds the last dry entry. Received. Below it the ruled line waits, clean, expectant, the width of a name. Her name. The ledger has already made the room for her the way a coat makes the room for the shoulders that will fill it. She does not have to sign. She only has to keep paying, and the keeping will do the signing.
+
+Somewhere beneath the floor the water holds its breath and turns. She holds hers. Two ledgers, one book. The one that says how much. The one, further on, that says nothing at all except how much it was worth. She has traced the coin now, year on year, and she knows the shape of the debt without knowing its name.
+
+That is the trouble with a sum. It tells you the size of a thing and leaves you to guess the thing. She closes her hand on the page, not hard, the way you hold a hand that is already going cold. Someone should be told this. She sits very still and lets the question settle: which someone, and how much.

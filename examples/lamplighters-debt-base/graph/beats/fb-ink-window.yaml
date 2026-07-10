@@ -1,0 +1,9 @@
+id: beat:fb-ink-window
+created_by: polish
+summary: Tamsin glances to the window where the ring of lamps blurs in the wet dark, then
+  back to the stubborn wet line of her own writing.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

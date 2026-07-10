@@ -1,0 +1,13 @@
+id: passage:p-fb-ledger-columns
+summary: Tamsin traces the ledger's neat columns of coin paid out year on year to keep certain
+  mouths shut. The bookkeeping is meticulous, generational.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+irrelevant_flags:
+- flag:summoning-risked
+beats:
+- beat:fb-ledger-columns
+choices:
+- label: Consider who ought to be told
+  to: passage:p-temptation-to-tell

@@ -1,0 +1,13 @@
+id: beat:the-lamps-are-bars
+summary: 'Tamsin decides the lamps are bars: two centuries of green flame have been holding
+  something starving in the dark, and every act of tending has been imprisonment, not worship.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:worship-or-imprison
+  effect: commits
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:marren-logbook
+belongs_to:
+- path:it-is-a-cage

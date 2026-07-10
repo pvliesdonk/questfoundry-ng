@@ -1,0 +1,13 @@
+id: beat:ledger-of-bribes
+summary: Tamsin discovers in Junia's logbook the record of Eldric Mowe's hereditary hush-money
+  — generations of quiet payments to keep the Veils silent about the ring.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: reveals
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- object:junia-logbook
+belongs_to:
+- path:keep-the-silence

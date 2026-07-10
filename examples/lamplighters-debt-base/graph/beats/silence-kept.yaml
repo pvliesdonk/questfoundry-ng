@@ -1,0 +1,12 @@
+id: beat:silence-kept
+summary: The map stays half-drawn, its wet ink never followed; Tamsin tells herself that what
+  her mother died reaching for is better left a question than a horror.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: advances
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+belongs_to:
+- path:leave-it-unfinished

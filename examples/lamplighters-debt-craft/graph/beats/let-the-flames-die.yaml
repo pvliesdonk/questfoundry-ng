@@ -1,0 +1,16 @@
+id: beat:let-the-flames-die
+summary: Tamsin sets down her mother's tools and lets the electrification proceed, refusing
+  to light the forty-second. By morning every green flame has guttered out.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: commits
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- faction:the-council
+temporal_hints:
+- dilemma: dilemma:read-or-burn
+  position: after_commit
+belongs_to:
+- path:let-them-snuff-it

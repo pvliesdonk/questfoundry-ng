@@ -1,0 +1,10 @@
+id: passage:p-weight-arm-water
+summary: Tamsin stares down into the water where the knocking always seems to start.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:weight-arm-water
+choices:
+- label: Close the logbook and go down to the town
+  to: passage:p-the-circling-shape

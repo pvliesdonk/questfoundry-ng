@@ -1,0 +1,11 @@
+id: passage:p-bargain-arm-corran
+summary: Tamsin studies Corran's steady hands, the same hands that once shook another keeper's
+  the same way.
+entities:
+- character:tamsin-veil
+- character:elder-corran
+beats:
+- beat:bargain-arm-corran
+choices:
+- label: Refuse him to his face
+  to: passage:p-refuse-the-stipend

@@ -1,0 +1,14 @@
+id: beat:read-the-ledger-aloud
+summary: Before the assembled town, Tamsin reads the hush-money ledger aloud, naming the Ondrey
+  family and Corran's forty years of signatures as the price of two centuries of silence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: commits
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:elder-corran
+- character:sable-ondrey
+belongs_to:
+- path:name-them

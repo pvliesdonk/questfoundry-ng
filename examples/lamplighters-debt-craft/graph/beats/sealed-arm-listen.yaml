@@ -1,0 +1,9 @@
+id: beat:sealed-arm-listen
+created_by: polish
+summary: Tamsin holds still, the sealed page heavy in her lap, while the water mutters somewhere
+  below.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

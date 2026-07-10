@@ -1,0 +1,13 @@
+id: beat:the-vote-passes
+summary: The council votes to electrify the ring; the green flames are to be snuffed by morning.
+  Corran's forty-year campaign to end the ledger forever is won.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-dark
+  effect: advances
+entities:
+- faction:the-council
+- character:elder-corran
+belongs_to:
+- path:kindle-the-forty-second
+- path:let-them-snuff-it

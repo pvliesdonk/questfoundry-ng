@@ -1,0 +1,9 @@
+id: beat:the-vigil-goes-quiet
+created_by: grow
+summary: The last obligation passes out of Tamsin's hands and the town settles into its new
+  silence; below, at lamp forty-two, the water in the deepest bend keeps its own count.
+beat_class: structural
+purpose: bridge
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

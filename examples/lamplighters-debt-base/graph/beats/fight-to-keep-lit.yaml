@@ -1,0 +1,13 @@
+id: beat:fight-to-keep-lit
+summary: Tamsin fights to keep the old flames burning, accepting fear as the price of whatever
+  the fire holds back — or holds close — and the ring is not snuffed by morning.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:snuff-or-keep
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- location:lamp-forty-two
+belongs_to:
+- path:keep-them-lit

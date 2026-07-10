@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M6 engine landed (research pass, A17, PR #30) — the live A/B validation run completes the milestone
+> Last updated: 2026-07-10 · **M6 complete** — the A/B exit run shipped ("The Lamplighter's Debt", live run 7, five engine findings fixed in-flight); scaffold deepening is next
 
 ## Where we are
 
@@ -27,7 +27,29 @@ vision edit re-retrieves; deleting the file forces it). Corpus-less
 projects are untouched to the byte — the pass skips, positional
 fixtures hold, and CI never installs the retrieval stack (tests drive
 real hybrid search through a deterministic fake embedding provider).
-Not yet done: the live A/B exit run (next up #1).
+
+**M6 is complete.** The exit run (live run 7, decision log): one fresh
+`short` premise — "The Lamplighter's Debt", canal-town folk horror —
+generated twice on the default Opus/Haiku map, run A bare and run B
+grounded in the author's 80-note IF-craft corpus (fingerprint
+`41d6e056…`, scoped to the eight non-exemplar clusters). Both stories
+gate-clean, 8/8 arcs complete, all four exports round-trip, preserved
+as `examples/lamplighters-debt-base/` and `…-craft/` (the pair is the
+A/B record). Grounding is visible exactly where the corpus speaks:
+run B opens in second person present (the corpus's stated gamebook
+default; ungrounded run A chose third limited), reads
+objects-carry-the-grief, and its research digests are on-topic per
+stage. Every §PR-2 check passed live: digests at all seven stages,
+snapshots accumulate them, reports name the fingerprint, run A's
+reports show the skip; a deleted digest reproduced **byte-identically
+with zero LLM calls** under `rerun --keep research`; a hand-edited
+digest survived a rerun with the freshness skip firing; two real
+mid-stage failures resumed through the A16 ledger with research and
+triage replayed free. Costs: A ≈ $3.50, B ≈ $4.03 (including all
+tuition). The run also delivered the pending locked-dilemmas live
+validation — triage locked 2 of 5 dilemmas sensibly in both runs —
+and five engine findings, each fixed in-flight with a
+violating-construction test (decision log).
 
 **Locked dilemmas + richer residue are built** (the structural
 volume/depth effort, author-blessed 2026-07-09; decision log below has
@@ -62,9 +84,11 @@ the design record):
   round-trip clean, PDF compiles with zero numbering warnings (the old
   7-passage impossibility dissolved at 8). 256 tests.
 
-Not yet exercised live: the next generated story should confirm a real
-model locks sensible dilemmas at triage and writes residue followups
-where they earn their room (the prompts ask for exactly this).
+Exercised live in run 7 (both A and B): triage locked 2 of 5 dilemmas
+with sensible reasons twice, locked chains wove through the story and
+survived the dense relation webs they created, and residue arms landed
+per path (run A's second G4 finding was an engine bug in multi-flag
+coverage, not a model miss — decision log).
 
 **M5 is complete.** Both halves of the exit criterion are met: the
 golden story prints as a real gamebook (PR #20), and the pipeline
@@ -330,29 +354,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M5 — DRESS, print gamebook, scope hardening** — DRESS/G6,
   `qf export pdf`, `qf rerun --keep` (PR #20); multi-hard weaving
   (PR #22); the live `medium`-scope run within budget (PR #23)
-- [ ] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
-  design docs 02 §1 and 03 §10) — ground the pipeline's LLM calls in a
-  markdown craft corpus via an engine-side research pass; **engine
-  built** (PR #30, plan: PR #29 / `docs/plans/m6-craft-corpus.md`);
-  exit = the live A/B run (same premise with and without a corpus)
+- [x] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
+  design docs 02 §1 and 03 §10) — engine (PR #30, plan: PR #29) + the
+  live A/B exit run "The Lamplighter's Debt" (PR #31, live run 7)
 
 ## Next up
 
-1. **M6 exit — the live A/B validation run** (procedure:
-   `docs/plans/m6-craft-corpus.md` §PR-2): the author exports the
-   IF-craft subtree of his vault as a local corpus directory, then the
-   same premise generates with and without a `craft:` block — verify
-   digests at every stage, fingerprints in every report, the
-   byte-stability drills (crash-resume, `--keep research`, edited
-   digest surviving a rerun), and judge the craft-grounding delta
-   side by side.
-2. **A live run exercising locked dilemmas + richer residue** — folds
-   into the M6 validation premise; watch triage's lock choices, the
-   residue followup judgment, and whether the new summary register
-   holds (beat summaries as briefs, not prose).
-3. **Scaffold deepening after M6** (corpus-medium word totals, 20–60k):
-   deeper/tensored Ys once the research pass can feed them real
-   material; scale table becomes words-primary at that point.
+1. **Scaffold deepening** (corpus-medium word totals, 20–60k):
+   deeper/tensored Ys now that the research pass can feed them real
+   material; scale table becomes words-primary at that point. Live
+   run 7's B4/B3 overshoots (49-55-beat arcs vs the 14-40 band at
+   `short`, driven by two locked chains) say the presets and the
+   scaffold depth need recalibrating together.
+2. **A first-class exemplar mechanism** (from live run 7's exemplar
+   leak, decision log): style exemplars belong at the voice pass as a
+   contrasting spread (02 §1) and nowhere else — today the only guard
+   is scoping `craft.folders` away from the exemplar cluster. Design
+   the reserved-folder config + diverse-spread retrieval at the voice
+   pass in a frontier session.
 4. Optional polish: an image backend behind the briefs (design doc 02
    lists illustrations as optional; briefs + the PDF/HTML plumbing are
    in place — `art/images/<passage-slug>.png` is picked up when
@@ -504,6 +523,45 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M6 exit: live run 7, the A/B — "The Lamplighter's
+  Debt", PR #31):** One fresh `short` folk-horror premise generated
+  twice on the default Opus/Haiku map: run A bare (~$3.50), run B
+  grounded in the author's IF-craft corpus (~$4.03, 80 notes,
+  fingerprint `41d6e056…`), both preserved under `examples/`. **The
+  grounding delta is real and traceable**: run B's voice is second
+  person present — the corpus's stated gamebook default — where
+  ungrounded A chose third limited; B's prose leans on
+  objects-carry-the-grief craft the digests surfaced; B6 reads
+  slightly tighter (1138 vs 1248 words/choice). All §PR-2 mechanical
+  checks passed live, including a deleted digest reproduced
+  byte-identically with zero LLM calls and an edited digest surviving
+  a rerun behind the freshness skip. Five engine findings, all fixed
+  in-flight with violating-construction tests: (1) *the intersections
+  repair error named no culprit* — groups now probe one at a time;
+  (2) **a one-validation-path violation**: `queries.dilemma_flags`
+  collapsed a multi-flag path to an order-dependent winner, so the
+  DRESS gate passed in memory while `qf validate` failed the reloaded
+  project — now list-valued and sorted, G4 accepts any of a path's
+  flags, POLISH gates deterministically on the sorted-first;
+  (3) *scaffold shape errors arrived one per repair round* — the model
+  fixed the named arm while a sibling had the same defect and lost the
+  stage chasing the moving target; all shape violations now batch into
+  one error; (4) **intersections are advisory** like temporal hints
+  (02 §2 amended): on run 7's dense webs (one dilemma wrapping
+  everything + two serial-locked chains) even culprit-naming repairs
+  couldn't converge — unsatisfiable groups are now dropped with a
+  report note naming the group and why, never failing the stage;
+  (5) *the exemplar leak*: unscoped retrieval filled early-stage
+  digests wall-to-wall with style exemplars (atmospheric queries
+  nearest-match atmospheric prose) — the 02 §1 bias vector; mitigated
+  by scoping `craft.folders` to the eight non-exemplar clusters, with
+  the first-class mechanism recorded as next-up #2. Calibration data:
+  both runs overshoot `short`'s B3/B4 bands (35-48 passages, 48-55
+  beat arcs; two locked chains add real volume) and B6 still reads
+  ~1.2k words/choice — the scaffold-deepening effort owns both. The
+  plan doc `docs/plans/m6-craft-corpus.md` is retired with this entry
+  (its contract lives in 02 §1 / 03 §9-10; its record lives here).
 
 - **2026-07-10 (M6 engine: research pass, A17, spike findings —
   PR #30):** Built to the PR #29 plan; what the record needs beyond it:

@@ -1,0 +1,13 @@
+id: beat:studying-the-map
+summary: Poring over her mother's map, Tamsin studies how the forty-two flames encircle the
+  thing below, and asks whether the ring honors it or holds it.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:worship-or-imprison
+  effect: advances
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- location:lamp-forty-two
+belongs_to:
+- path:it-is-a-cage

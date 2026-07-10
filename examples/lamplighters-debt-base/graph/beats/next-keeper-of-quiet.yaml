@@ -1,0 +1,12 @@
+id: beat:next-keeper-of-quiet
+summary: Tamsin becomes the next keeper of a paid quiet she never chose, the chain unbroken,
+  the cost of silence passed to her as it was passed to her mother.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:junia-veil
+belongs_to:
+- path:keep-the-silence

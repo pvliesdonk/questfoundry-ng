@@ -1,0 +1,9 @@
+id: beat:bargain-arm-coin
+created_by: polish
+summary: Tamsin turns the offered coin in her fingers, watching how the green light catches
+  its worn face.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:elder-corran

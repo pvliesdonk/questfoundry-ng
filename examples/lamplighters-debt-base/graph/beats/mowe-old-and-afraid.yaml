@@ -1,0 +1,12 @@
+id: beat:mowe-old-and-afraid
+summary: She sees Eldric Mowe old and afraid, and understands that exposure would unravel
+  not just his name but the fragile quiet holding the town together.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+belongs_to:
+- path:keep-the-silence

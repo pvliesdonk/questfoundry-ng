@@ -1,0 +1,13 @@
+id: beat:pocket-the-ledger
+summary: Tamsin folds the ledger away and says nothing to the town. She takes Sable aside
+  instead and tells her privately what her family was paid to protect.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: commits
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+- object:marren-logbook
+belongs_to:
+- path:keep-their-name

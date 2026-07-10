@@ -1,0 +1,13 @@
+id: character:sable-ondrey
+name: Sable Ondrey
+concept: The last of the paid family, raised on the money to never ask why lamp forty-two
+  stays dark, now torn between the comfort that bought her whole life and the answer she was
+  forbidden.
+pronouns: she/her
+base:
+  appearance: well-dressed in a town of thrift, a locked house key worn on a chain
+  manner: defensive, brittle, aching to be forgiven for a silence she never chose
+  tell: Worries the key on its chain against her collar when she is unsure, thin from the
+    habit.
+  appearance-detail: In a town of mended coats her clothes are unmended, the difference visible
+    at a glance.

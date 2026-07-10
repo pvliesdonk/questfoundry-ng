@@ -1,0 +1,10 @@
+id: beat:down-from-the-lamps
+created_by: grow
+summary: Tamsin closes the logbook and descends from lamp forty-two into the town, where the
+  council has already begun to gather for the vote.
+beat_class: structural
+purpose: bridge
+entities:
+- character:tamsin-veil
+- faction:the-council
+- object:marren-logbook

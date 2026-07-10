@@ -1,0 +1,14 @@
+id: passage:p-fb-tell-book
+summary: Tamsin opens Junia's logbook across Oren's knees and lets him read what she cannot
+  say aloud. The truth passes to him on the page.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- object:junia-logbook
+irrelevant_flags:
+- flag:summoning-risked
+beats:
+- beat:fb-tell-book
+choices:
+- label: Take his hand as he decides to stay
+  to: passage:p-oren-stays

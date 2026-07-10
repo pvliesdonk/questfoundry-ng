@@ -1,0 +1,12 @@
+passage: passage:p-the-ledger-surfaces
+priority: 3
+caption: Among her mother's things Tamsin uncovers a council-grey ledger and the sealed logbook's
+  wet-inked map.
+prompt: Painterly gothic realism, candlelit interior. A young woman with short hair and salt-chapped
+  hands, in a too-large oilskin coat, kneeling at an open shelf, lifting a council-grey ledger
+  from beneath a tin of wicks; beside it a sealed book of waterlogged leather with greenish
+  stains, open to a wet-inked map whose ink glistens as if never dry. Low green-tinged light,
+  browner ink accents, wet iron black shadows, pale warmth on her hands and the page.
+entities:
+- character:tamsin-veil
+- object:marren-logbook

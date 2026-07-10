@@ -1,0 +1,17 @@
+id: passage:p-frighten-him-off
+summary: To spare him, Tamsin deliberately frightens Oren off the job, feeding his dread until
+  he abandons the wiring and flees toward the mainland. She saves him by driving him away.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:frighten-him-off
+choices:
+- label: Build the warning slowly, word by word
+  to: passage:p-fb-frighten-lie
+- label: Hold the door open for him to go
+  to: passage:p-fb-frighten-door

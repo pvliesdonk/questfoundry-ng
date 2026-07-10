@@ -1,0 +1,18 @@
+id: passage:p-residue-oren-tied
+summary: Oren works at Tamsin's side, their hands moving over the same wiring; whatever waits,
+  they will meet it as one, and neither can now leave the other to it. In a pause he admits
+  he no longer knows where his fate ends and hers begins — the fear is doubled, and so is
+  the not-being-alone in it.
+entities:
+- character:oren-quist
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:residue-oren-tied
+- beat:residue-oren-tied-followup
+choices:
+- label: Take up the wicks against the dark
+  to: passage:p-fight-to-keep-lit

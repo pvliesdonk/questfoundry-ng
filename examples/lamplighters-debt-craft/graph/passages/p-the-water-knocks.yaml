@@ -1,0 +1,18 @@
+id: passage:p-the-water-knocks
+summary: Beneath the dark lamp the black water begins to knock softly against the stone. The
+  council votes to electrify the ring and snuff every green flame by morning, winning Corran's
+  forty-year campaign; one by one the flames go out until only the forty-second still burns.
+entities:
+- location:lamp-forty-two
+- faction:the-council
+- character:elder-corran
+- character:tamsin-veil
+beats:
+- beat:the-lamps-begin-to-go
+- beat:the-vote-passes
+- beat:the-water-knocks
+choices:
+- label: Walk out past the dying northern lamps
+  to: passage:p-lamps-go-arm-north
+- label: Slip past the electrician crews at their cables
+  to: passage:p-lamps-go-arm-crews

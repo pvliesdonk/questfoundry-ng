@@ -1,0 +1,12 @@
+id: beat:bribe-stays-buried
+summary: Eldric Mowe's hereditary bribe stays buried, and the town never learns what it was
+  never asked, its ignorance unbroken.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-the-payments
+  effect: advances
+entities:
+- character:eldric-mowe
+- character:tamsin-veil
+belongs_to:
+- path:keep-the-silence

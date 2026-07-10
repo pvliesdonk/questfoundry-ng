@@ -1,0 +1,10 @@
+id: passage:p-lamps-go-arm-north
+summary: Tamsin passes the northern lamps as their green light thins and dies, one after another.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:lamps-go-arm-north
+choices:
+- label: Take your mother's tools to lamp forty-two
+  to: passage:p-alone-at-the-dark-lamp

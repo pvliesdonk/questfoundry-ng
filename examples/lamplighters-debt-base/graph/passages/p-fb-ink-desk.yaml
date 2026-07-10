@@ -1,0 +1,11 @@
+id: passage:p-fb-ink-desk
+summary: Tamsin watches the fresh ink refuse to set, beading like brine that will not be blotted.
+  The page will not let the matter rest.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+beats:
+- beat:fb-ink-desk
+choices:
+- label: Go out to the dark lamp where Halvard waits
+  to: passage:p-halvard-creed

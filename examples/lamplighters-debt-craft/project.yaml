@@ -1,0 +1,15 @@
+name: lamplighters-debt-craft
+stage: dress
+ifid: 366DC52F-FD4C-41AD-A303-C0F4E52086D9
+print_seed: 1
+craft:
+  corpus: /home/user/corpus/interactive-fiction
+  folders:
+  - audience-and-access
+  - craft-foundations
+  - emotional-design
+  - genre-conventions
+  - narrative-structure
+  - prose-and-language
+  - scope-and-planning
+  - world-and-setting

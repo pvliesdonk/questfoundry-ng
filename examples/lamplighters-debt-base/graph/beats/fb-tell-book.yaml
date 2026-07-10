@@ -1,0 +1,10 @@
+id: beat:fb-tell-book
+created_by: polish
+summary: Tamsin opens Junia's logbook across Oren's knees and lets him read what she cannot
+  say aloud.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- object:junia-logbook

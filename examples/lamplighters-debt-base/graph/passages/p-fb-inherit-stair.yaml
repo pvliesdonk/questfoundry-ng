@@ -1,0 +1,11 @@
+id: passage:p-fb-inherit-stair
+summary: Tamsin climbs the salt-scoured tower stair, her feet finding the grooves worn by
+  generations of keepers before her. The route is older than any single life.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:fb-inherit-stair
+choices:
+- label: Break the seal on your mother's logbook
+  to: passage:p-the-wet-ink

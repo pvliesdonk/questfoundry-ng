@@ -1,0 +1,8 @@
+id: beat:weight-arm-water
+created_by: polish
+summary: Tamsin stares down into the water where the knocking always seems to start.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

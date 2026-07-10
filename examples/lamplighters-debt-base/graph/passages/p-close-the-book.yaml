@@ -1,0 +1,17 @@
+id: passage:p-close-the-book
+summary: Tamsin shuts the logbook on its half-drawn map and sets the pen down unused, deciding
+  the paid silence is a mercy. She re-seals the book as Junia sealed it, keeping the family's
+  ignorance as a chosen tenderness rather than trade it for a horror.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two
+beats:
+- beat:close-the-book
+- beat:ignorance-as-honor
+- beat:silence-kept
+choices:
+- label: Search the sealed pages for what else she hid
+  requires:
+  - flag:question-unanswered
+  to: passage:p-ledger-of-bribes-unanswered

@@ -1,0 +1,18 @@
+id: passage:p-the-logbook-burns
+summary: Tamsin holds the logbook to a green flame and watches the wet-inked map curl and
+  blacken, ending the knowing so no one else inherits it. The map's answer dies with her mother
+  and the town is spared the truth of what circles beneath the canals, but now Tamsin alone
+  must decide the ring's fate without the knowledge she destroyed.
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:marren-veil
+beats:
+- beat:deciding-blind
+- beat:the-logbook-burns
+- beat:the-town-spared
+choices:
+- label: Look again at the ring of lamps
+  requires:
+  - flag:map-dies-with-her
+  to: passage:p-the-lamps-are-bars-ashes

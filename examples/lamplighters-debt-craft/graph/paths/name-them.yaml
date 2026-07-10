@@ -1,0 +1,10 @@
+id: path:name-them
+name: Name the Silencers
+explores: answer:name-them
+consequences:
+- id: consequence:family-exposed
+  text: The hush-money ledger is laid before the town and Sable's family must answer for two
+    centuries of paid silence.
+- id: consequence:sable-allied-or-ruined
+  text: Dragged into the light, Sable is forced to reckon publicly with the comfort that bought
+    her whole life.

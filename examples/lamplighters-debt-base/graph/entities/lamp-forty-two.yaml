@@ -1,0 +1,12 @@
+id: location:lamp-forty-two
+name: The Dark Lamp (Lamp Forty-Two)
+concept: The unlit lamp-column on the canal ring, hollow inside, where Junia's logbook was
+  sealed and where the knocking is loudest.
+pronouns: it/its
+base:
+  appearance: black iron corroded green, salt-crusted, a column that hums faintly against
+    the palm
+  sound: Its knock keeps a slow, patient rhythm that carries up through the tower's stone
+    and iron even at a distance.
+  touch: Its faint hum carries up through the stone and iron into the soles of a person standing
+    near it, felt before it is heard.

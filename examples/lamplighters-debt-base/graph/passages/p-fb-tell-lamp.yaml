@@ -1,0 +1,15 @@
+id: passage:p-fb-tell-lamp
+summary: Tamsin leads Oren out to the lamp itself and lets the knocking speak for her. The
+  proof needs no words.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-tell-lamp
+choices:
+- label: Take his hand as he decides to stay
+  to: passage:p-oren-stays

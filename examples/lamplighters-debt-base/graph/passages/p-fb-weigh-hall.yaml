@@ -1,0 +1,14 @@
+id: passage:p-fb-weigh-hall
+summary: Tamsin crosses the cold, emptied council hall toward Mowe, her steps loud in the
+  silence. The confrontation is close.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-weigh-hall
+choices:
+- label: Stand before the old man and let him speak
+  to: passage:p-mowe-old-and-afraid

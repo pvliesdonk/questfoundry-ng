@@ -1,0 +1,8 @@
+id: path:leave-it-unfinished
+name: The Half-Drawn Silence
+explores: answer:leave-it-unfinished
+consequences:
+- id: consequence:map-unfinished
+  text: Junia's map stays half-drawn, its wet ink never followed, the family's silence kept.
+- id: consequence:question-unanswered
+  text: What Junia died reaching for remains a mercy of ignorance, honored by refusal to ask.

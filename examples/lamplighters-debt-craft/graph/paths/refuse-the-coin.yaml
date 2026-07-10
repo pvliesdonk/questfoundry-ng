@@ -1,0 +1,10 @@
+id: path:refuse-the-coin
+name: Refuse Corran's Coin
+explores: answer:refuse-the-coin
+consequences:
+- id: consequence:corran-faced
+  text: Tamsin refuses the stipend and silence, forcing Elder Corran to face forty years of
+    signatures and the questions his money buried.
+- id: consequence:investigation-alive
+  text: The bargain that killed her mother's questions dies with Tamsin's refusal, and the
+    truth beneath the water stays within reach.

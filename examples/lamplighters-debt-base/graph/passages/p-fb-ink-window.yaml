@@ -1,0 +1,11 @@
+id: passage:p-fb-ink-window
+summary: Tamsin glances from the window's blurred ring of lamps back to the stubborn wet line
+  of her own writing. The choice to draw or not is hers alone.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:fb-ink-window
+choices:
+- label: Go out to the dark lamp where Halvard waits
+  to: passage:p-halvard-creed

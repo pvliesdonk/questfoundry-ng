@@ -1,0 +1,12 @@
+id: beat:keep-their-name-arm-followup
+created_by: polish
+summary: Sable's hand rests near the tools but does not reach; the thing they agreed never
+  to say fills the silence like water rising slow. Tamsin feels the mercy and the weight of
+  it both, and lets it stay buried.
+beat_class: structural
+purpose: residue
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+requires_flags:
+- flag:ledger-withheld

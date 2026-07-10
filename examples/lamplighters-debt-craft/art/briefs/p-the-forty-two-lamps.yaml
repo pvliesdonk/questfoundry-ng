@@ -1,0 +1,13 @@
+passage: passage:p-the-forty-two-lamps
+priority: 1
+caption: Tamsin walks her mother's route for the first time, kindling the green flames along
+  the canal.
+prompt: Painterly gothic realism, low-key candlelight and canal-damp shadow. A nineteen-year-old
+  girl with salt-chapped hands and short-cut hair, wearing an oversized oilskin coat with
+  sleeves rolled twice, kindling a green flame at a cold iron lamp column beside a black canal.
+  Sickly luminous green glow against wet iron black and waterlogged brown, her face and hands
+  lit as by a single tended flame. Quiet, intimate composition; darkness and empty space around
+  her.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

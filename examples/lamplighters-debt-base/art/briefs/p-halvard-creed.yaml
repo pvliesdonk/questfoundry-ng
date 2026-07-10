@@ -1,0 +1,13 @@
+passage: passage:p-halvard-creed
+priority: 3
+caption: At the dark lamp, the serene keeper reveals the true creed.
+prompt: 'Painterly gothic tableau in dense fog by lamplight: a serene keeper in an ash-grey
+  habit, one left eye clouded milky, standing at an unlit black iron lamp-column gone green
+  as old bruises, hands folded; before her a young woman in an oversized oilskin coat holding
+  a swollen waterlogged leather ledger. Deep chiaroscuro, drowned brine-blues, lamp-oil ambers,
+  salt-white crusting, silver highlights. Vast hushed canal architecture beyond.'
+entities:
+- character:sister-halvard
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:junia-logbook

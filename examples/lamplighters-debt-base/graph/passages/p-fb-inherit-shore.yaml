@@ -1,0 +1,11 @@
+id: passage:p-fb-inherit-shore
+summary: Tamsin walks the tide-line below the lamp and reads the wrack the sea has left against
+  the stones. The debris hints that the water gives things back.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+beats:
+- beat:fb-inherit-shore
+choices:
+- label: Return to Junia's sealed logbook
+  to: passage:p-the-wet-ink

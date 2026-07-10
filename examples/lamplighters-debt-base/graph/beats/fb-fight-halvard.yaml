@@ -1,0 +1,9 @@
+id: beat:fb-fight-halvard
+created_by: polish
+summary: Tamsin passes Sister Halvard at the tower's foot, the nun's lips moving in a prayer
+  neither of them will name.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:sister-halvard

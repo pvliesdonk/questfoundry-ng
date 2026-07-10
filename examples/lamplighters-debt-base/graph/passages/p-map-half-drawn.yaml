@@ -1,0 +1,16 @@
+id: passage:p-map-half-drawn
+summary: Tamsin studies the map's unfinished edge, where Junia's lines trail off mid-arc as
+  if interrupted, and realizes the shape would close into something enormous. Nights pass
+  and the ink stays wet; she understands the map is not dying but waiting, and that her mother
+  meant someone to take up the pen.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+beats:
+- beat:ink-that-wont-dry
+- beat:map-half-drawn
+choices:
+- label: Watch the fresh ink refuse to set
+  to: passage:p-fb-ink-desk
+- label: Look to the blurred ring beyond the window
+  to: passage:p-fb-ink-window

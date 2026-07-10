@@ -1,0 +1,26 @@
+id: passage:p-let-the-flames-die
+summary: Tamsin sets down her mother's tools and lets the electrification proceed, refusing
+  to light the forty-second, and by morning every green flame has guttered out. The two-hundred-year
+  vigil ends in her hands and Corran's dream is complete, but below the deepest bend the black
+  water no longer knocks softly — it moves, and whatever the lamps restrained is now loose
+  in the dark.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+- faction:the-council
+- character:elder-corran
+- character:marren-veil
+ending:
+  id: e-let-the-flames-die
+  title: What the Water Keeps
+irrelevant_flags:
+- flag:family-exposed
+- flag:ledger-withheld
+- flag:map-dies-with-her
+- flag:sable-allied-or-ruined
+- flag:sable-own-reckoning
+beats:
+- beat:let-the-flames-die
+- beat:the-ledger-ends
+- beat:the-vigil-goes-quiet
+- beat:the-water-moves

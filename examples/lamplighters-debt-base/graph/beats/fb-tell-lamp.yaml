@@ -1,0 +1,9 @@
+id: beat:fb-tell-lamp
+created_by: polish
+summary: Tamsin leads Oren out to the lamp itself and lets the knocking speak for her.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- location:lamp-forty-two

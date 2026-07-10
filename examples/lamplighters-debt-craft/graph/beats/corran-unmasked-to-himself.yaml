@@ -1,0 +1,12 @@
+id: beat:corran-unmasked-to-himself
+summary: Stripped of the transaction he hid behind for forty years, Corran can no longer call
+  his signing mercy. He is left to sit with what his silence protected.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corran-confession
+  effect: complicates
+entities:
+- character:elder-corran
+- character:tamsin-veil
+belongs_to:
+- path:refuse-the-coin

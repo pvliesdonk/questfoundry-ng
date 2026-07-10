@@ -1,0 +1,12 @@
+id: beat:residue-wiring-halted
+created_by: polish
+summary: The mainland wiring sits half-finished and dead; the council's anger reaches Tamsin
+  only as distant rumor, and no voice in town will vouch for the knocking she still hears
+  alone.
+beat_class: structural
+purpose: residue
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+requires_flags:
+- flag:wiring-halted

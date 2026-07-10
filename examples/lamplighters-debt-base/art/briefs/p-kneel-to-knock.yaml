@@ -1,0 +1,12 @@
+passage: passage:p-kneel-to-knock
+priority: 8
+caption: She kneels at the water's edge and offers the mercy the creed demands.
+prompt: 'Painterly gothic scene by lamplight in fog: a young woman in an oversized oilskin
+  coat kneeling on the salt-crusted lip of stone where the canal ring meets black water, a
+  trimming iron set aside; a serene keeper in an ash-grey habit with one milky clouded eye
+  standing near a black iron lamp-column corroded green. Deep chiaroscuro, drowned brine-blues,
+  algae greens, lamp-oil ambers, salt-white crusting, silver highlights.'
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two

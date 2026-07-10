@@ -1,0 +1,22 @@
+id: passage:p-refuse-to-listen
+summary: Tamsin turns from the water and refuses the knock, declaring aloud that the ritual
+  is a cage and that she will not spend her life listening for the drowned. She breaks with
+  the creed.
+entities:
+- character:tamsin-veil
+- character:sister-halvard
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:refuse-to-listen
+choices:
+- label: Drag the cloths across the lamp-glass
+  to: passage:p-fb-refuse-cover
+- label: Fix your eyes on the door and walk
+  to: passage:p-fb-refuse-turn

@@ -1,0 +1,13 @@
+id: beat:keep-their-name-arm
+created_by: polish
+summary: Sable stands beside Tamsin at the deepest bend, allied by her own choice, but neither
+  of them looks at the withheld page between them. The unspoken complicity sits in the damp
+  air, settled and unsettled at once.
+beat_class: structural
+purpose: residue
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+- object:marren-logbook
+requires_flags:
+- flag:ledger-withheld

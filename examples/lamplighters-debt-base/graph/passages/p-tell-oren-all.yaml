@@ -1,0 +1,19 @@
+id: passage:p-tell-oren-all
+summary: At the dark lamp Tamsin tells Oren everything — the logbook, the hush-money, the
+  thing beneath — binding him into the danger with the full truth. He now carries what she
+  carries.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+- object:junia-logbook
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:tell-oren-all
+choices:
+- label: Lead him to the lamp and let it knock
+  to: passage:p-fb-tell-lamp
+- label: Open the logbook across his knees
+  to: passage:p-fb-tell-book

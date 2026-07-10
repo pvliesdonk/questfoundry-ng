@@ -1,0 +1,13 @@
+id: beat:sable-reckons-publicly
+summary: Sable stands exposed among neighbors who now know what her family took to look away.
+  Her reckoning is forced and raw, and whatever she becomes to Tamsin is shaped by that public
+  wound.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: complicates
+entities:
+- character:sable-ondrey
+- character:tamsin-veil
+belongs_to:
+- path:name-them

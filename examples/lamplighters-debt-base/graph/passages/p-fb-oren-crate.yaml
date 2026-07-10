@@ -1,0 +1,11 @@
+id: passage:p-fb-oren-crate
+summary: Tamsin watches Oren unpack crated copper and glass instruments, laid out on the cold
+  floor like relics. His confidence in progress is total.
+entities:
+- character:tamsin-veil
+- character:oren-quist
+beats:
+- beat:fb-oren-crate
+choices:
+- label: Walk the ring the dusk before the vote
+  to: passage:p-vote-called

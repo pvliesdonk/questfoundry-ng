@@ -1,0 +1,12 @@
+passage: passage:p-draw-to-the-end
+priority: 4
+caption: She takes up the pen and follows the wet line to its close.
+prompt: 'Painterly gothic close-up by lamplight through fog: brine-chapped hands setting a
+  cold pen to the impossibly wet, silver-gleaming last stroke of a half-drawn map in a swollen
+  waterlogged leather ledger balanced on a forearm in an oversized oilskin coat sleeve. A
+  black iron lamp-column corroded green and salt-crusted looms behind in brine-blue fog. Deep
+  chiaroscuro, lamp-oil ambers, algae greens, salt-white crusting.'
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+- location:lamp-forty-two

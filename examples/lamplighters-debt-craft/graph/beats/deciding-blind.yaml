@@ -1,0 +1,12 @@
+id: beat:deciding-blind
+summary: Tamsin alone must now decide the ring's fate without the knowledge she burned, her
+  mother's warning reduced to ash and silence she can never question again.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:read-or-burn
+  effect: complicates
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+belongs_to:
+- path:burn-the-book

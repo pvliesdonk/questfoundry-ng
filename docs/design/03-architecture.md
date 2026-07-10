@@ -278,7 +278,12 @@ Roadmap milestone M6 owns it; contract details in
   `words_per_query`, `max_queries`). The engine is corpus-agnostic; the
   corpus fingerprint (content hash over the eligible files) is recorded
   in the digest's frontmatter and each stage report, so a run names
-  exactly what it read.
+  exactly what it read. **Scope `folders` away from style-exemplar
+  clusters**: atmospheric queries nearest-match atmospheric prose, so
+  an unscoped corpus fills early-stage digests with exemplars — the
+  02 §1 bias vector (exemplars belong at the voice pass as a
+  contrasting spread; live run 7 hit this). A first-class reserved
+  exemplar mechanism is future work (STATUS next-up).
 - **Determinism rules.** Search results feed prompt bytes, so retrieval
   runs once per stage (inside the research pass's apply — replay
   re-retrieves identically), and the persisted `research/<stage>.md` is

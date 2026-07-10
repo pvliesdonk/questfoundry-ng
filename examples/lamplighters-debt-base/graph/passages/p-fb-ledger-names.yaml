@@ -1,0 +1,13 @@
+id: passage:p-fb-ledger-names
+summary: Tamsin lingers on the familiar names in the ledger's margins — townsfolk who still
+  nod to her in the lane. The silence implicates people she knows.
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+irrelevant_flags:
+- flag:summoning-risked
+beats:
+- beat:fb-ledger-names
+choices:
+- label: Consider who ought to be told
+  to: passage:p-temptation-to-tell

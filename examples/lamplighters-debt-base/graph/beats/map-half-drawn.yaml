@@ -1,0 +1,13 @@
+id: beat:map-half-drawn
+summary: Tamsin studies the map's unfinished edge, where her mother's lines trail off mid-arc
+  as if interrupted, and realizes the shape would close into something enormous if completed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:finish-the-map
+  effect: advances
+entities:
+- character:tamsin-veil
+- object:junia-logbook
+belongs_to:
+- path:complete-it
+- path:leave-it-unfinished

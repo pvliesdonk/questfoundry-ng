@@ -1,0 +1,17 @@
+id: passage:p-ledger-of-bribes-unanswered
+summary: With the map left half-drawn and the question refused, Tamsin finds in Junia's logbook
+  the record of Eldric Mowe's hereditary hush-money — payments to keep the Veils silent. She
+  still does not know what was being hidden, only that it was worth two centuries of coin.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- object:junia-logbook
+irrelevant_flags:
+- flag:map-finished
+beats:
+- beat:ledger-of-bribes
+choices:
+- label: Trace the columns of coin, year on year
+  to: passage:p-fb-ledger-columns
+- label: Read the names written in the margins
+  to: passage:p-fb-ledger-names

@@ -1,0 +1,14 @@
+id: passage:p-fb-weigh-hands
+summary: Tamsin notices Mowe's hands shaking around the ledger before she reaches him. His
+  power is thinner than she assumed.
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+beats:
+- beat:fb-weigh-hands
+choices:
+- label: Stand before the old man and let him speak
+  to: passage:p-mowe-old-and-afraid

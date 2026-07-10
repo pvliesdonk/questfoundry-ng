@@ -1,0 +1,23 @@
+id: passage:p-name-them-arm
+summary: Sable stands where the neighbors can see her, the family name spoken aloud and no
+  longer hers alone to carry. Whatever she is to Tamsin now is raw and exposed, shaped by
+  the wound that was made public.
+entities:
+- character:tamsin-veil
+- character:sable-ondrey
+irrelevant_flags:
+- flag:map-dies-with-her
+- flag:mercy-of-ignorance
+beats:
+- beat:name-them-arm
+choices:
+- label: Break the seal and kindle the forty-second
+  grants:
+  - flag:tamsin-becomes-keeper
+  - flag:town-keeps-its-chains
+  to: passage:p-break-the-seal-and-light
+- label: Set down the tools and let the flames die
+  grants:
+  - flag:flames-die-forever
+  - flag:the-thing-unbound
+  to: passage:p-let-the-flames-die

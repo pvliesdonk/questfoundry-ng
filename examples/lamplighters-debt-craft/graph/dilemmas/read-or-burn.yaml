@@ -1,0 +1,19 @@
+id: dilemma:read-or-burn
+question: Does Tamsin finish reading her mother's map and speak its meaning aloud, or destroy
+  the logbook to keep the town from ever knowing?
+why_it_matters: The right to know why is set against the mercy of ignorance; knowledge cannot
+  be given back once shared, and it decides whether her mother's death was a warning or merely
+  a secret.
+role: soft
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:read-it-all
+  text: Read the wet page to its end and carry the knowledge, however unbearable, into the
+    choices that follow.
+- id: answer:burn-the-book
+  text: Burn the logbook so the map dies with her mother and no one else inherits the knowing.
+anchored_to:
+- character:tamsin-veil
+- object:marren-logbook
+- character:marren-veil

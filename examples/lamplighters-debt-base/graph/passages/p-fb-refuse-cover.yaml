@@ -1,0 +1,18 @@
+id: passage:p-fb-refuse-cover
+summary: Tamsin drags the old cloths over the lamp-glass, muffling its glow to a bruise. She
+  smothers the mercy the creed demanded.
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+irrelevant_flags:
+- flag:map-finished
+- flag:map-unfinished
+- flag:oren-fate-tied
+- flag:oren-gone
+- flag:oren-knows
+- flag:wiring-halted
+beats:
+- beat:fb-refuse-cover
+choices:
+- label: Leave the knock unanswered
+  to: passage:p-halvard-repudiated

@@ -1,0 +1,25 @@
+id: passage:p-halvard-creed
+summary: 'Sister Halvard finds Tamsin at the dark lamp and reveals the true creed: the flames
+  are not defense but mercy owed to the drowned thing below, and the knock is a plea to be
+  answered. At Lamp Forty-Two the knocking aligns with the map''s rhythm, and Tamsin feels
+  her mother''s abandoned question press against her — to draw is to know, and to know is
+  to never unknow.'
+entities:
+- character:sister-halvard
+- character:tamsin-veil
+- location:lamp-forty-two
+- object:junia-logbook
+beats:
+- beat:halvard-creed
+- beat:the-pen-in-hand
+choices:
+- label: Set the pen down and shut the book
+  grants:
+  - flag:map-unfinished
+  - flag:question-unanswered
+  to: passage:p-close-the-book
+- label: Take up the pen and follow the line home
+  grants:
+  - flag:map-finished
+  - flag:summoning-risked
+  to: passage:p-draw-to-the-end

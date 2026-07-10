@@ -1,0 +1,23 @@
+id: dilemma:finish-the-map
+question: Does Tamsin complete her mother's half-finished map of the thing beneath the canals,
+  following the wet ink to its end?
+why_it_matters: Completing the map is an act of grief-as-listening that answers what her mother
+  died reaching for — but knowledge here cannot be un-known, and finishing may be exactly
+  the summoning the dark lamp has been waiting two hundred years to receive.
+role: soft
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:complete-it
+  text: She draws the map to its end, honoring her mother by asking why at last.
+- id: answer:leave-it-unfinished
+  text: She lets the map stay half-drawn, keeping the silence her family was paid to keep.
+anchored_to:
+- character:tamsin-veil
+- character:junia-veil
+- object:junia-logbook
+- location:lamp-forty-two
+serial:
+- dilemma:expose-the-payments
+concurrent:
+- dilemma:trust-the-outsider

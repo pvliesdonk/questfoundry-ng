@@ -1,0 +1,14 @@
+id: beat:thing-decides
+summary: The unanswered thing beneath is left to decide what comes; the wrongness the creed
+  held in check stirs toward its own will, and the story closes on a ring no ritual guards
+  anymore.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:answer-the-knock
+  effect: advances
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two
+is_ending: true
+belongs_to:
+- path:refuse-the-creed

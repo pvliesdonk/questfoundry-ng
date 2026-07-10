@@ -1,0 +1,19 @@
+id: passage:p-vote-called
+summary: The council calls a vote to electrify the ring by morning, Eldric Mowe championing
+  it as the end of the Veils' long-paid debt. Walking the guttering flames one last dusk,
+  Tamsin feels how badly the town wants its fear gone; meanwhile the lamps begin to knock
+  and almost speak to Oren, curdling his cheer into unease he carries to her.
+entities:
+- character:eldric-mowe
+- character:tamsin-veil
+- location:lamp-forty-two
+- character:oren-quist
+beats:
+- beat:greenish-fear
+- beat:lamps-speak
+- beat:vote-called
+choices:
+- label: Lay your palm against the lamp's warm glass
+  to: passage:p-fb-lamps-glass
+- label: Turn back to the logbook's shivering ink
+  to: passage:p-fb-lamps-logbook

@@ -1,0 +1,13 @@
+id: beat:work-stalls
+summary: The mainland electrification stalls without its electrician; the council fumes, and
+  no one left in town believes Tamsin's account of the knocking.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-the-outsider
+  effect: complicates
+entities:
+- character:tamsin-veil
+- character:eldric-mowe
+- location:lamp-forty-two
+belongs_to:
+- path:send-him-away

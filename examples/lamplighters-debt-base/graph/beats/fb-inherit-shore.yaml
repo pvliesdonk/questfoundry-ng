@@ -1,0 +1,9 @@
+id: beat:fb-inherit-shore
+created_by: polish
+summary: Tamsin walks the tide-line below the lamp, reading the wrack the sea has left against
+  the stones.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:tamsin-veil
+- location:lamp-forty-two

@@ -1,0 +1,11 @@
+id: beat:residue-oren-tied-followup
+created_by: polish
+summary: In the pause between tasks Oren admits he no longer knows where his fate ends and
+  Tamsin's begins; the fear is doubled now, and so is the not-being-alone in it.
+beat_class: structural
+purpose: residue
+entities:
+- character:oren-quist
+- character:tamsin-veil
+requires_flags:
+- flag:oren-fate-tied

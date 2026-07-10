@@ -1,0 +1,27 @@
+id: passage:p-the-circling-shape
+summary: The map shows the vast shape circling always beneath the flames, never rising, never
+  fed, and Tamsin cannot decide if two centuries of tending was reverence or restraint. She
+  closes the logbook and descends to the town, where the council gathers for the vote, realizing
+  the ledger spoken aloud could turn the room or ruin the one person who might stand with
+  her.
+entities:
+- object:marren-logbook
+- character:marren-veil
+- location:lamp-forty-two
+- character:tamsin-veil
+- faction:the-council
+beats:
+- beat:down-from-the-lamps
+- beat:the-circling-shape
+- beat:the-vote-approaches
+choices:
+- label: Break the seal and read the page to its end
+  grants:
+  - flag:knowledge-carried
+  - flag:marren-a-warning
+  to: passage:p-read-to-the-end
+- label: Hold the page to the green flame
+  grants:
+  - flag:map-dies-with-her
+  - flag:mercy-of-ignorance
+  to: passage:p-the-logbook-burns

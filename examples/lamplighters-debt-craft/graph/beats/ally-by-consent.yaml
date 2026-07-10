@@ -1,0 +1,12 @@
+id: beat:ally-by-consent
+summary: Sable becomes an ally by consent rather than exposure, but the buried complicity
+  remains a private wound between them, unspoken and never quite settled.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: complicates
+entities:
+- character:sable-ondrey
+- character:tamsin-veil
+belongs_to:
+- path:keep-their-name

@@ -1,0 +1,10 @@
+id: path:refuse-the-creed
+name: The Flames Were a Cage
+explores: answer:refuse-the-creed
+consequences:
+- id: consequence:creed-broken
+  text: Tamsin names the ritual a cage and refuses to listen, letting the unanswered thing
+    beneath decide what comes.
+- id: consequence:halvard-estranged
+  text: Sister Halvard's faith is repudiated, and the wrongness the creed held in check is
+    loosed to its own will.

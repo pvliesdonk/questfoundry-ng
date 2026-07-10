@@ -1,0 +1,16 @@
+id: beat:the-ledger-surfaces
+summary: 'Among her mother''s things Tamsin finds the hush-money ledger: forty years of Corran''s
+  signatures paying the Ondrey family to never ask why lamp forty-two stays dark. Sable''s
+  whole life was bought by this silence.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-shield
+  effect: reveals
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:sable-ondrey
+- character:elder-corran
+belongs_to:
+- path:keep-their-name
+- path:name-them

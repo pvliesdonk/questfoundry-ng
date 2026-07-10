@@ -1,0 +1,12 @@
+id: beat:the-caged-knock
+summary: The soft knock beneath lamp forty-two now carries the weight of a caged, hungering
+  thing. The whole ring is recolored with fear rather than reverence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:worship-or-imprison
+  effect: complicates
+entities:
+- location:lamp-forty-two
+- character:tamsin-veil
+belongs_to:
+- path:it-is-a-cage

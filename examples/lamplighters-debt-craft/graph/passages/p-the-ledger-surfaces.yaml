@@ -1,0 +1,20 @@
+id: passage:p-the-ledger-surfaces
+summary: 'Among her mother''s things Tamsin finds the hush-money ledger: forty years of Corran''s
+  signatures paying the Ondrey family never to ask why lamp forty-two stays dark, meaning
+  Sable''s whole life was bought by this silence. She breaks into her mother''s logbook and
+  finds the last page, a wet-inked map of something vast circling beneath the canals, half-finished
+  and unbearable to read fully.'
+entities:
+- character:tamsin-veil
+- object:marren-logbook
+- character:sable-ondrey
+- character:elder-corran
+- character:marren-veil
+beats:
+- beat:the-ledger-surfaces
+- beat:the-sealed-page
+choices:
+- label: Run your thumb over the old wax seal
+  to: passage:p-sealed-arm-wax
+- label: Sit still and listen to the water below
+  to: passage:p-sealed-arm-listen

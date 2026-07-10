@@ -154,7 +154,9 @@ def rerun(
     """Partial regeneration (design doc 02 §3): rewind to the stage's
     predecessor checkpoint, then run the stage again — regenerating
     everything except the passes named with --keep. Downstream stages
-    are rewound with it and need re-running."""
+    are rewound with it and need re-running. The stage's own research
+    digest survives the rewind and is reused while fresh (mini-ADR
+    A17); delete research/<stage>.md first to force re-retrieval."""
     from questfoundry.models.base import Stage as StageEnum
     from questfoundry.pipeline.runner import (
         RunnerError,

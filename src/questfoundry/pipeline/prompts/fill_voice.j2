@@ -13,6 +13,15 @@ THE STORY'S SHAPE:
 {% endfor %}
 Endings: {{ endings | join(" / ") }}.
 
+{% if research %}
+CRAFT NOTES — voices and craft material from the author's corpus. Advisory, and
+for the style exemplars among them a hard rule: they are a contrasting spread, a
+map of the possibility space, never candidates — commit to a voice none of them
+uses. If a decision below drifts toward sounding like one, move it. Never quote
+or imitate a note's wording.
+
+{{ research }}
+{% endif %}
 Decide:
 - pov: whose head, how close ("third person limited (Maren)", "second person").
 - tense: past or present.

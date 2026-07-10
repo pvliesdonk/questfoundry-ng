@@ -3,15 +3,16 @@ mini-ADR A13).
 
 Deterministic retrieval over a markdown vault: standing queries derived
 from the vision, hybrid/keyword search via ``markdown-vault-mcp``, merged
-and stably re-sorted (never trust library tie-breaking, H7), rendered
+and stably re-sorted (never trust library tie-breaking), rendered
 into a byte-identical digest markdown. Search results feed prompt bytes,
 so this module is a pure function of (config, corpus, queries) with no
 non-deterministic content (no timestamps).
 
-This is the retrieval core only — the research pass, `PassSpec`,
-`with_research`, and runner integration are a separate module (M6
-phase 3) that imports from here; this module must not import
-`pipeline.runner`, `pipeline.stages`, or `pipeline.prompts`.
+The pass layer lives here too: `research_pass(stage)` is the head pass
+`with_research` prepends to every stage, its `apply` performing the
+retrieval (mini-ADR A13: the model decides *what it needs*, the engine
+fetches). This module must not import `pipeline.runner`,
+`pipeline.stages`, or `pipeline.prompts`.
 """
 
 from __future__ import annotations
@@ -26,6 +27,8 @@ from pydantic import BaseModel, ConfigDict
 from questfoundry.models.base import Stage
 from questfoundry.models.concept import Vision
 from questfoundry.models.craft import CraftConfig
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.project.io import Project
 
 
 class ResearchQuery(BaseModel):
@@ -118,7 +121,7 @@ def _search_query(vault: Any, cfg: CraftConfig, query: str) -> list[tuple[str, s
     snippets: one search per eligible folder (``cfg.folders == []``
     searches the whole vault once), flattened `GroupedResult.sections`,
     merged, and stably re-sorted by ``(-score, path, heading or "")`` —
-    the library's own ordering is not a contract we lean on (H7)."""
+    the library's own ordering is not a contract we lean on."""
     folders: list[str | None] = list(cfg.folders) if cfg.folders else [None]
     ranked_keys: list[tuple[float, str, str]] = []
     contents: dict[tuple[str, str], str] = {}
@@ -261,3 +264,157 @@ def digest_meta(text: str) -> dict:
     header, _ = _split_frontmatter(text)
     meta = yaml.safe_load(header)
     return meta if isinstance(meta, dict) else {}
+
+
+# One line per stage on what the librarian is researching *for* — the only
+# stage-varying ingredient of the research prompt (standing queries are
+# story-identity, not stage-specific).
+STAGE_FOCUS: dict[Stage, str] = {
+    Stage.DREAM: "expanding a bare premise into the creative contract — "
+    "genre, tone, themes, audience, content boundaries.",
+    Stage.BRAINSTORM: "inventing the cast and the dramatic dilemmas; "
+    "every entity must anchor a dilemma.",
+    Stage.SEED: "triaging dilemmas (branched or locked) and scaffolding "
+    "each into its paths, beats, and endings.",
+    Stage.GROW: "weaving the dilemma scaffolds into one story DAG — "
+    "interleaving, intersections, bridge beats.",
+    Stage.POLISH: "compiling frozen beats into passages and choices — "
+    "residue, variants, pacing diamonds, ending titles.",
+    Stage.FILL: "locking the story's voice, then writing every passage's "
+    "prose.",
+    Stage.DRESS: "art direction, illustration briefs, the diegetic codex, "
+    "and codewords.",
+}
+
+
+def corpus_root(cfg: CraftConfig, project_root: Path) -> Path:
+    """`craft.corpus` is absolute or project-relative."""
+    root = Path(cfg.corpus)
+    return root if root.is_absolute() else project_root / root
+
+
+def _require_library() -> None:
+    """Fail loud, before any LLM spend, when a corpus is configured but
+    the retrieval library is missing — the corpus-less path never gets
+    here (skip_if fires first), so base installs stay dependency-free."""
+    try:
+        import markdown_vault_mcp  # noqa: F401
+    except ImportError as exc:
+        raise RuntimeError(
+            "a craft corpus is configured but markdown-vault-mcp is not "
+            "installed — install the 'craft' extra (questfoundry[craft])"
+        ) from exc
+
+
+def digest_fresh(text: str, project: Project) -> bool:
+    """A17 freshness: the digest was retrieved from the current corpus
+    with the current standing queries. Either drifting means the world
+    the digest described is gone — re-retrieve. Malformed metadata is
+    stale, never fatal (the tolerant half of the A16 staleness contract).
+    """
+    cfg = project.craft
+    if cfg is None:
+        return False
+    try:
+        meta = digest_meta(text)
+        stage = Stage(meta.get("stage", ""))
+    except ValueError:
+        return False
+    root = corpus_root(cfg, project.root)
+    return meta.get("corpus_fingerprint") == corpus_fingerprint(cfg, root) and meta.get(
+        "standing_queries", []
+    ) == standing_queries(project.vision, stage)
+
+
+def research_pass(stage: Stage) -> PassSpec:
+    """The head pass of every stage when a corpus is configured: the
+    librarian proposes queries, apply retrieves and sets the digest.
+    Note the runner dispatches `skip_if` before keep/resume replay
+    (`runner.run_stage`), which is what makes the freshness skip
+    (mini-ADR A17) take precedence over a stale ledger entry.
+    """
+
+    def _skip(project: Project) -> str | None:
+        if project.craft is None:
+            return "no craft corpus configured"
+        existing = project.research.get(stage.value)
+        if existing is not None and digest_fresh(existing, project):
+            return f"digest is fresh (delete research/{stage.value}.md to re-retrieve)"
+        return None
+
+    def _context(project: Project) -> dict:
+        _require_library()
+        cfg = project.craft
+        root = corpus_root(cfg, project.root)
+        if not root.is_dir():
+            raise RuntimeError(f"craft corpus not found at {root} (craft.corpus in project.yaml)")
+        standing = standing_queries(project.vision, stage)
+        return {
+            "stage": stage.value,
+            "stage_focus": STAGE_FOCUS[stage],
+            # A placeholder vision (DREAM's head) yields no standing
+            # queries; the prompt then grounds on the premise instead.
+            "vision": project.vision if standing else None,
+            "premise": project.vision.premise,
+            "standing": standing,
+            "max_queries": cfg.max_queries,
+        }
+
+    def _apply(proposal: ResearchProposal, project: Project) -> list[str]:
+        cfg = project.craft
+        if len(proposal.queries) > cfg.max_queries:
+            raise ApplyError(
+                f"{len(proposal.queries)} queries exceed the cap of "
+                f"{cfg.max_queries}; keep only the sharpest"
+            )
+        standing = standing_queries(project.vision, stage)
+        taken = {q.casefold() for q in standing}
+        librarian: list[str] = []
+        dropped = 0
+        for q in proposal.queries:
+            text = q.query.strip()
+            if not text or text.casefold() in taken:
+                dropped += 1
+                continue
+            taken.add(text.casefold())
+            librarian.append(text)
+        root = corpus_root(cfg, project.root)
+        queries = [("standing", q) for q in standing] + [("librarian", q) for q in librarian]
+        digest = retrieve(cfg, root, project.root / "cache" / "research", stage, queries)
+        project.research[stage.value] = digest
+        meta = digest_meta(digest)
+        lines = [
+            f"corpus {meta['corpus_fingerprint'][:12]}: "
+            f"{len(standing)} standing + {len(librarian)} librarian queries, "
+            f"{len(meta['sources'])} source note(s)"
+        ]
+        if dropped:
+            lines.append(f"{dropped} duplicate/empty librarian query(ies) dropped")
+        return lines
+
+    return PassSpec(
+        name="research",
+        role="architect",
+        template="research.j2",
+        schema=ResearchProposal,
+        build_context=_context,
+        apply=_apply,
+        skip_if=_skip,
+    )
+
+
+def with_research(impl: StageImpl) -> StageImpl:
+    """Prepend the research pass. Callable pass lists stay callable and
+    are resolved per run — DRESS builds per-run review closures and FILL
+    its per-project queue inside theirs; resolving eagerly here would
+    freeze that state across runs."""
+    head = research_pass(impl.stage)
+    if callable(impl.passes):
+        original = impl.passes
+
+        def passes(project: Project) -> tuple[PassSpec, ...]:
+            return (head, *original(project))
+
+    else:
+        passes = (head, *impl.passes)
+    return StageImpl(stage=impl.stage, passes=passes, gate=impl.gate)

@@ -28,6 +28,7 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from questfoundry.graph.mutations import MutationError
 from questfoundry.models.base import Stage
+from questfoundry.pipeline.research import corpus_fingerprint, corpus_root, digest_body
 from questfoundry.pipeline.types import ApplyError, PassReport, StageImpl, StageReport
 from questfoundry.project.io import Project, save_project
 
@@ -100,15 +101,38 @@ def _backup(project: Project) -> tuple:
         copy.deepcopy(project.vision),
         copy.deepcopy(project.voice),
         copy.deepcopy(project.enrichment),
+        dict(project.research),
     )
 
 
 def _restore(project: Project, backup: tuple) -> None:
-    project.graph, project.vision, project.voice, project.enrichment = backup
+    (
+        project.graph,
+        project.vision,
+        project.voice,
+        project.enrichment,
+        project.research,
+    ) = backup
+
+
+def _research_body(project: Project, stage: Stage) -> str:
+    """The stage's digest body for prompt injection — read at render time
+    so passes after the research pass see what it just retrieved.
+    Templates opt in via `_craft.j2`; review prompts are structurally
+    immune because their functions render templates themselves and never
+    receive this variable (design doc 02 §1)."""
+    text = project.research.get(stage.value)
+    return digest_body(text) if text else ""
 
 
 def _run_pass(
-    project: Project, spec, env: Environment, adapter: Any, notes: str, max_repairs: int
+    project: Project,
+    spec,
+    env: Environment,
+    adapter: Any,
+    notes: str,
+    max_repairs: int,
+    stage: Stage,
 ) -> PassReport | str:
     """Runs one pass to a decision: a `PassReport` on success, or a
     human-readable error string once repairs are exhausted."""
@@ -117,7 +141,12 @@ def _run_pass(
     repair_errors: list[str] = []
     repairs_used = 0
     while True:
-        rendered = template.render(**context, notes=notes, repair_errors=repair_errors)
+        rendered = template.render(
+            **context,
+            notes=notes,
+            repair_errors=repair_errors,
+            research=_research_body(project, stage),
+        )
         proposal = adapter.complete(
             system=SYSTEM_PROMPT.format(role=spec.role),
             prompt=rendered,
@@ -192,7 +221,7 @@ def _stage_fingerprint(project: Project, notes: str) -> str:
     h = hashlib.sha256()
     root = project.root
     files = [root / "vision.yaml", root / "voice.yaml"]
-    for sub in ("graph", "prose", "art", "codex"):
+    for sub in ("graph", "prose", "art", "codex", "research"):
         if (root / sub).is_dir():
             files.extend(p for p in (root / sub).rglob("*") if p.is_file())
     for path in sorted(p for p in files if p.is_file()):
@@ -201,6 +230,17 @@ def _stage_fingerprint(project: Project, notes: str) -> str:
         h.update(path.read_bytes())
         h.update(b"\0")
     knobs = {"notes": notes, "fill_seed": project.fill_seed, "llm": project.llm}
+    if project.craft is not None:
+        # A corpus edit voids the ledger: resume replays the research
+        # apply, which re-retrieves and must reproduce the same bytes.
+        # Keyed only when configured, so corpus-less fingerprints are
+        # byte-identical to pre-M6 ones.
+        knobs["craft"] = {
+            "config": project.craft.model_dump(mode="json"),
+            "corpus": corpus_fingerprint(
+                project.craft, corpus_root(project.craft, project.root)
+            ),
+        }
     h.update(json.dumps(knobs, sort_keys=True, ensure_ascii=False).encode())
     return h.hexdigest()
 
@@ -244,7 +284,7 @@ def _checkpoint(project: Project, report: StageReport) -> None:
     shutil.copy2(root / "vision.yaml", snap_dir / "vision.yaml")
     if (root / "voice.yaml").exists():
         shutil.copy2(root / "voice.yaml", snap_dir / "voice.yaml")
-    for sub in ("graph", "prose", "art", "codex"):
+    for sub in ("graph", "prose", "art", "codex", "research"):
         if (root / sub).exists():
             shutil.copytree(root / sub, snap_dir / sub, dirs_exist_ok=True)
 
@@ -306,11 +346,11 @@ def run_stage(
             result = _run_kept_pass(project, spec, resume[spec.name], label="resumed")
             if isinstance(result, str):
                 stale_note = result
-                result = _run_pass(project, spec, env, adapter, notes, max_repairs)
+                result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
                 if isinstance(result, PassReport):
                     result.applied.insert(0, f"stale in-flight proposal discarded ({stale_note})")
         else:
-            result = _run_pass(project, spec, env, adapter, notes, max_repairs)
+            result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
         if isinstance(result, str):
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)
         pass_reports.append(result)
@@ -337,10 +377,11 @@ def recorded_proposals(root: Path, stage: Stage) -> dict[str, dict]:
 def prepare_rerun(root: Path, target: Stage) -> None:
     """Restore the on-disk project to `target`'s predecessor checkpoint so
     the stage can run again: stage artifacts (graph, prose, art, codex,
-    voice) come back from the snapshot; author knobs stay current —
-    project.yaml keeps its llm/steering/seeds (only `stage` is rewound)
-    and vision.yaml is never restored, because editing it is a main
-    reason to rerun. The in-flight ledger is discarded wholesale: a
+    research, voice) come back from the snapshot; author knobs stay
+    current — project.yaml keeps its llm/steering/seeds (only `stage` is
+    rewound), and vision.yaml and the target's own research digest are
+    never restored, because editing them is a main reason to rerun
+    (mini-ADR A17). The in-flight ledger is discarded wholesale: a
     rewind ends every interrupted run. Reload the project after
     calling this."""
     predecessor = list(Stage)[target.order - 1]
@@ -351,11 +392,20 @@ def prepare_rerun(root: Path, target: Stage) -> None:
             f"predecessor {predecessor.value!r} under {snap_dir}"
         )
     shutil.rmtree(root / "inflight", ignore_errors=True)
-    for sub in ("graph", "prose", "art", "codex"):
+    # The target's own research digest survives the rewind (mini-ADR A17):
+    # the predecessor snapshot never contains it, and editing the digest is
+    # a reason to rerun — like vision.yaml. The research pass reuses it
+    # while fresh; deleting the file forces re-retrieval.
+    target_digest = root / "research" / f"{target.value}.md"
+    kept_digest = target_digest.read_text(encoding="utf-8") if target_digest.exists() else None
+    for sub in ("graph", "prose", "art", "codex", "research"):
         if (root / sub).exists():
             shutil.rmtree(root / sub)
         if (snap_dir / sub).exists():
             shutil.copytree(snap_dir / sub, root / sub)
+    if kept_digest is not None:
+        target_digest.parent.mkdir(parents=True, exist_ok=True)
+        target_digest.write_text(kept_digest, encoding="utf-8")
     (root / "voice.yaml").unlink(missing_ok=True)
     if (snap_dir / "voice.yaml").exists():
         shutil.copy2(snap_dir / "voice.yaml", root / "voice.yaml")

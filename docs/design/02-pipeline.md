@@ -39,7 +39,13 @@ Key properties:
   for genuinely creative judgment.
 - **Checkpoint every stage.** A snapshot of the whole project is written
   after each gate. Any stage can be re-run from its predecessor's
-  snapshot.
+  snapshot. Between checkpoints, each accepted pass's proposal is
+  journaled to an **in-flight ledger** (`inflight/<stage>/`, mini-ADR
+  A16). The ledger is *not* a checkpoint — no gate has passed, no
+  snapshot exists, and no stage artifacts (prose files, graph YAML)
+  reach the working tree. It exists so an interrupted stage resumes
+  without re-buying completed passes, and it is consumed and cleared
+  at the stage's gate-passing checkpoint.
 
 ### Craft context (planned — M6)
 
@@ -339,6 +345,15 @@ Review is a stage-boundary concept, uniform everywhere:
   "keep the cartographer morally gray", "no more than one death".
 - **Targeted re-runs** — `qf rerun seed --keep triage` style partial
   re-execution: keep accepted sub-artifacts, regenerate the rest.
+- **Crash resume** — re-running an interrupted stage replays its
+  in-flight passes through the same kept-pass machinery, no LLM calls.
+  Unlike `--keep` (fail-loud: the author demanded that proposal), a
+  stale in-flight entry degrades to a live run with a report note; a
+  change to any stage input (vision, steering, graph/prose edits,
+  model map) voids the whole ledger — review = edit + revalidate wins
+  over resume. `qf rerun` always discards it. A gate *failure* retains
+  the ledger, so re-running reproduces the failure quickly and for
+  free until an input changes.
 
 The intended rhythm: churn cheaply in DREAM/BRAINSTORM, review SEED's
 triage carefully (it decides the whole story), skim GROW's report (it is

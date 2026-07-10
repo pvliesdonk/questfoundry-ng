@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · summary register hardened (briefs, not prose) — M6 (craft-corpus research) is next
+> Last updated: 2026-07-10 · crash resume hardened (in-flight proposal ledger, A16) — M6 (craft-corpus research) is next
 
 ## Where we are
 
@@ -344,19 +344,19 @@ PR #5) and this agent/doc infrastructure (PR #6).
   "live run 4" decision-log entry. All three provider families
   (Anthropic, OpenAI, Gemini) have now produced a complete story.
 
-- **Crash-resume replay of FILL was leaky — the cache half is fixed**
-  (found and fixed 2026-07-08; see the decision log), and the medium
-  run fixed a third leak: `save_project` now prunes files of removed
-  nodes (stale template-beat files used to resurrect on reload —
-  PR #23). What remains open is the artifact half: prose still reaches
-  disk only at the gate-passing checkpoint, so a mid-FILL crash loses
-  the *files* (recoverable via the now-exact cache replay, but
-  wall-clock, and only while the cache and code are unchanged).
-  Flushing prose per write pass instead of per stage would protect the
-  artifact directly, but changes design doc 02's checkpoint semantics
-  (partial FILL state on disk is not a gated checkpoint) — needs a
-  frontier-tier design decision first. The medium run's crash-resumes
-  validated the cache half hard: 88 of 187 calls replayed free.
+- ~~Crash-resume replay of FILL was leaky~~ **Both halves are now
+  fixed.** The cache half (byte-stable prompts) was fixed 2026-07-08,
+  and `save_project` pruning closed the stale-file leak (PR #23). The
+  artifact half is resolved by the **in-flight proposal ledger**
+  (2026-07-10, mini-ADR A16 — see the decision log): every accepted
+  pass journals its proposal to `inflight/<stage>/` as it lands, and
+  re-entering an interrupted stage replays those passes through the
+  kept-pass machinery with zero LLM calls, independent of the cache.
+  Prose files still reach the working tree only at the gate-passing
+  checkpoint — the ledger is not a checkpoint, so 02's semantics hold.
+  Residual (recorded, accepted): a crash *inside* `_checkpoint` itself
+  can leave a partial snapshot — pre-existing, unrelated to the
+  ledger, and recoverable by rerunning the stage.
 
 - ~~Prompt framing: early stages claim certainty they don't have~~
   **Addressed** (calibration batch, see decision log): DREAM's prompt
@@ -479,6 +479,42 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (crash resume: the in-flight proposal ledger, mini-ADR
+  A16):** The open artifact-half question is decided: **not** per-pass
+  prose flushing but a per-pass **proposal ledger** — every accepted
+  pass journals its proposal to `inflight/<stage>/proposals/` the
+  moment apply + review succeed, and re-entering an interrupted stage
+  replays those passes through the existing `rerun --keep` machinery
+  (schema-validate → apply through the mutation layer, no LLM call).
+  Prose flushing was rejected on three grounds: a write pass produces
+  more than prose (entity micro-details; the voice pass produces the
+  Voice — files alone lose graph state), partial prose in the working
+  tree breaks 02 §1's checkpoint definition, and reloading flushed
+  prose before re-running from pass 0 can leak later-written
+  predecessor prose into earlier windows (writing order is
+  reference-arc-first, not globally topological), silently breaking
+  the byte-stability fixed on 2026-07-08. Two hardenings shipped with
+  it, both found in design stress-testing: (1) a **stage-input
+  fingerprint** (vision/voice/graph/prose/art/codex bytes + steering +
+  fill_seed + llm config) voids the whole ledger on any author edit —
+  without it the ledger would silently replay stale proposals where
+  the cache would have regenerated, a regression against "review =
+  edit + revalidate"; (2) ledger writes are atomic (`os.replace`) and
+  reads tolerant — a torn entry is stale, never fatal. The staleness
+  contract splits by intent: auto-resume degrades to a live run with a
+  report note; explicit `--keep` stays fail-loud and takes precedence.
+  The checkpoint consumes the ledger; `prepare_rerun` discards all of
+  `inflight/` (a rewind ends every interrupted run); a gate failure
+  retains it, so unchanged-input retries reproduce the failure free.
+  Uniform across all stages (A4) — DRESS and GROW passes are now as
+  crash-resumable as FILL's — and independent of the LLM cache, which
+  remains the second net for a pass that died before its ledger write.
+  Also fixed in passing: `.gitignore` now actually ignores `cache/`
+  (design doc 03 §6 claimed it already; the drift would otherwise have
+  extended to `inflight/`). 13 new tests including an e2e that kills
+  FILL mid-stage at a pass boundary and proves the resumed story is
+  byte-identical to an uninterrupted run with zero re-spent calls.
 
 - **2026-07-10 (summary register: briefs, not prose):** The author
   flagged that generated beat summaries arrive as finished prose ("her

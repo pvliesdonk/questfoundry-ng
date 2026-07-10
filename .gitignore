@@ -216,4 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# QuestFoundry story-project transients (never committed — AGENTS.md)
 exports/
+cache/
+inflight/

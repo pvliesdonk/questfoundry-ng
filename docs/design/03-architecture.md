@@ -113,6 +113,13 @@ snapshots, stage reports, resume-from-snapshot, the spend ledger, and
 `--interactive` pauses. Multi-pass stages (SEED, FILL) are expressed as
 sub-stages sharing one gate.
 
+Mid-stage crash resume is likewise the runner's, not any stage's: every
+accepted pass journals its proposal to the in-flight ledger
+(`inflight/<stage>/`, A16) and re-entering the stage replays those
+passes without LLM calls. The content-addressed cache (§5) remains an
+independent second net — a pass that succeeded but never reached the
+ledger re-runs live and hits the cache for free.
+
 FILL additionally gets a **work queue**: passages ordered reference-arc-
 first (the reference arc is FILL-local scheduling state — seeded,
 author-overridable, invisible to other stages), then per-arc toward
@@ -172,6 +179,7 @@ keepers-bargain/
   research/<stage>.md    # persisted craft-corpus digests per stage (M6)
   reports/<run>/<stage>.md   # stage reports (human-readable audit trail)
   snapshots/<run>/<stage>/   # full-graph checkpoint per gate
+  inflight/<stage>/          # in-flight pass ledger (transient, gitignored; consumed at checkpoint)
   cache/llm/                 # call cache (gitignored)
   exports/                   # twee/html/json/pdf (gitignored)
 ```
@@ -240,6 +248,7 @@ interface before that.
 | A13 | Craft-corpus retrieval is engine-side (a research pass emitting queries), and retrieved digests persist as checkpointed artifacts that later passes read | Mid-call tool use (the original QuestFoundry's approach); live MCP access from the adapter; re-searching on every rerun/resume | Preserves A3's one-shot adapter, the content-addressed cache, positional fixture replay, and crash-resume byte-stability; the persisted artifact is author-reviewable ("review = edit + revalidate" covers what the pipeline read); the model still decides *what it needs* — it just cannot fetch mid-thought (§10) |
 | A14 | Multi-hard realization is part of the weave: every unit after the first hard fork is instantiated once per world with the template Y removed symmetrically; the nesting order is an ordinary interleaving choice (wraps/serial-constrained), and a contextualize pass rewrites per-world content | A duplication layer bolted onto POLISH; SEED declaring the nesting; keeping the SEED-authored beats as the first world's instance | Structure is copied, content follows the full coordinate (01 §5): the copy is mechanical and belongs to the weave, the words belong to an LLM pass; a template kept as "world one" would be a canonical-world bias vector — the same trap as the removed canonical answer |
 | A15 | A locked dilemma is derived from topology — exactly one explored path (heritage: an answer no `explores` edge points at is the shadow) — and its outcome derives no state flag | A stored disposition marker on the dilemma; deriving flags from locked consequences like any other | The graph already says it, so a marker could only drift out of sync; a flag every reader holds can gate nothing and would only bloat the flag universe — a locked outcome is a world fact FILL reads from the beats themselves (G3 rejects flags granted from locked paths, both directions) |
+| A16 | Crash resume is a per-pass in-flight proposal ledger replayed through the kept-pass machinery, voided by a stage-input fingerprint | Flushing prose files per write pass; relying on the LLM cache alone | A pass's effects exceed prose (micro-details, voice) and must reproduce through the mutation layer; the working tree never carries ungated partial state (02 §1's checkpoint definition holds); uniform across stages (A4) and independent of cache eviction or prompt-code changes. Auto-resume degrades to live on staleness while `--keep` stays fail-loud, and any input edit voids the ledger — "review = edit + revalidate" is never bypassed. Replay assumes apply functions are deterministic, the same assumption `rerun --keep` and cache replay already make |
 
 ## 10. Craft-corpus research (M6)
 

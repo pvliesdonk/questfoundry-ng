@@ -2,9 +2,10 @@
 
 Four passes sharing gate G3:
 
-1. *intersections* — the LLM proposes co-occurrence groups over shared
-   pre-commit beats of different dilemmas (from shared entities and
-   SEED's flexibility notes); grouped beats become one interleaving unit.
+1. *intersections* — the LLM proposes co-occurrence groups over beats
+   every player sees (shared pre-commit beats, locked-storyline beats)
+   of different dilemmas, from shared entities and SEED's flexibility
+   notes; grouped beats become one interleaving unit.
 2. *weave* — the engine enumerates valid interleavings (relations +
    temporal hints + intersection adjacency; with several hard dilemmas,
    one enumeration per viable nesting order); the LLM only chooses among
@@ -71,12 +72,15 @@ def _shared_beat_table(project: Project) -> list[dict]:
     g = project.graph
     table = []
     for shape in weave.shapes(g)[0]:
+        # every player sees a branched dilemma's pre-commit beats and a
+        # locked storyline's whole chain — both may intersect
+        groupable = next(iter(shape.chains.values())) if shape.locked else shape.pre
         beats = []
-        for b in shape.pre:
+        for b in groupable:
             beat = g.node(b)
             assert isinstance(beat, Beat)
             beats.append(beat)
-        table.append({"dilemma": g.node(shape.dilemma), "beats": beats})
+        table.append({"dilemma": g.node(shape.dilemma), "beats": beats, "locked": shape.locked})
     return table
 
 
@@ -86,13 +90,18 @@ def _intersections_context(project: Project) -> dict:
 
 def _intersections_apply(proposal: IntersectionProposal, project: Project) -> list[str]:
     g = project.graph
-    shared = {b for shape in weave.shapes(g)[0] for b in shape.pre}
+    shared = {
+        b
+        for shape in weave.shapes(g)[0]
+        for b in (next(iter(shape.chains.values())) if shape.locked else shape.pre)
+    }
     used: set[str] = set()
     for spec in proposal.groups:
         for m in spec.members:
             if m not in shared:
                 raise ApplyError(
-                    f"intersection {spec.id}: member {m} is not a shared pre-commit beat"
+                    f"intersection {spec.id}: member {m} is not a shared pre-commit "
+                    "or locked-storyline beat"
                 )
             if m in used:
                 raise ApplyError(f"beat {m} appears in more than one intersection group")
@@ -146,6 +155,9 @@ def _unit_label(g, planned: weave.WeavePlan, key: str) -> str:
     )
     if key.startswith("group:"):
         return f"[one scene: {summaries}]"
+    locked = planned.locked_of_beat.get(unit.beats[0])
+    if locked:
+        return f"({locked}, locked subplot) {summaries}"
     return summaries
 
 
@@ -184,7 +196,14 @@ def _weave_context(project: Project) -> dict:
 
 def _derive_flags(g) -> list[str]:
     lines = []
+    locked_paths = {
+        p
+        for d_id in queries.locked_dilemmas(g)
+        for p in queries.explored_paths(g, d_id)
+    }
     for path in sorted(g.nodes_of(Path), key=lambda p: p.id):
+        if path.id in locked_paths:
+            continue  # a locked outcome is a world fact, never a flag (G3-FLAGS)
         for cid in g.out_ids(path.id, EdgeKind.HAS_CONSEQUENCE):
             flag = StateFlag(
                 id="flag:" + cid.split(":", 1)[1],
@@ -283,7 +302,10 @@ def _de_ended_tails(g) -> list[Beat]:
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
         if d.role != DilemmaRole.HARD:
             continue
-        for p in queries.explored_paths(g, d.id):
+        paths = queries.explored_paths(g, d.id)
+        if len(paths) != 2:
+            continue  # a locked chain interleaves; its beats are not fork tails
+        for p in paths:
             exclusive = set(queries.exclusive_beats(g, p))
             for b in sorted(exclusive):
                 succs = set(queries.successors(g, b))

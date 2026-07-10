@@ -153,6 +153,45 @@ def test_freeze_records_per_world_forks(vision):
     assert _errors(g, vision, checks={"I9"}) == []
 
 
+# -- a locked storyline inside the worlds -----------------------------------------
+
+
+def test_between_fork_locked_chain_lives_per_world(vision):
+    from questfoundry.pipeline.stages.grow import _clone_targets
+    from tests.conftest import make_locked_chain
+
+    g = StoryGraph()
+    two_hard_story(g)
+    dl, path, _ = make_dilemma(g, "lock", explore=1)
+    make_locked_chain(g, "lock", dl, path)
+    # serial(main, lock): the chain enters after main's fork, so every
+    # beat of it is instantiated once per world like any other unit
+    mutations.add_dilemma_relation(g, EdgeKind.SERIAL, "dilemma:main", dl)
+    report = realize_first(g, lambda o: o[-1] == "resolve:dilemma:twist")
+    _derive_flags(g)
+
+    for slug in ("lock-lead", "lock-resolve", "lock-after"):
+        assert f"beat:{slug}" not in g
+        assert report.clones[f"beat:{slug}"] == [
+            f"beat:{slug}--main-a",
+            f"beat:{slug}--main-b",
+        ]
+    commits = queries.commit_beats(g, path)
+    assert commits == ["beat:lock-resolve--main-a", "beat:lock-resolve--main-b"]
+    assert {queries.world_of(g, c) for c in commits} == {
+        frozenset({"beat:main-commit-a"}),
+        frozenset({"beat:main-commit-b"}),
+    }
+    # I3 (one resolution per world), I6 (every arc resolves it once) hold
+    assert _errors(g, vision) == []
+    for selection in queries.arc_selections(g):
+        view = queries.arc_view(g, selection)
+        assert len([c for c in commits if c in view]) == 1
+    # the clones are contextualize targets like any per-world instance
+    clone_ids = {b.id for b in _clone_targets(g)}
+    assert {f"beat:lock-resolve--main-{w}" for w in ("a", "b")} <= clone_ids
+
+
 # -- a soft dilemma inside the worlds ---------------------------------------------
 
 

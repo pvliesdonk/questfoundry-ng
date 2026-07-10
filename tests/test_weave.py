@@ -16,12 +16,13 @@ from questfoundry.models.structure import (
     HintPosition,
     ImpactEffect,
     IntersectionGroup,
+    StateFlag,
     StructuralPurpose,
     TemporalHint,
 )
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import _derive_flags
-from tests.conftest import make_dilemma, narrative_beat
+from tests.conftest import make_dilemma, make_locked_chain, narrative_beat
 
 
 def scaffold(
@@ -171,11 +172,98 @@ def test_intersection_group_members_stay_adjacent():
     assert g.has_edge(EdgeKind.PREDECESSOR, members[0], members[1])
 
 
+# -- locked storylines (fork-less linear units; design doc 01 §4) ------------
+
+
+def locked_story(g: StoryGraph) -> tuple[str, str]:
+    """seeded_story plus a locked soft dilemma. Returns (dilemma, path)."""
+    seeded_story(g)
+    dl, path, _ = make_dilemma(g, "lock", explore=1)
+    make_locked_chain(g, "lock", dl, path)
+    return dl, path
+
+
+def test_locked_chain_weaves_as_movable_units():
+    g = StoryGraph()
+    locked_story(g)
+    planned = weave.plan(g)
+    assert planned.locked_of_beat["beat:lock-lead"] == "dilemma:lock"
+    for order in weave.candidates(planned):
+        # chain order holds while other units may interleave between links
+        assert (
+            order.index("pre:beat:lock-lead")
+            < order.index("pre:beat:lock-resolve")
+            < order.index("pre:beat:lock-after")
+        )
+        assert order[-1] == "resolve:dilemma:main"
+
+
+def test_locked_story_realizes_gate_clean(vision):
+    g = StoryGraph()
+    locked_story(g)
+    planned = weave.plan(g)
+    weave.realize(g, planned, weave.candidates(planned)[0])
+    _derive_flags(g)
+    checked = {"I3", "I4", "I5", "I6", "I7", "I8", "I9", "G3-FLAGS", "B1"}
+    issues = run_checks(g, vision, Stage.GROW)
+    assert [i for i in issues if i.severity == Severity.ERROR and i.check in checked] == []
+    # no fork, no arc multiplication: still 2x2, and every arc walks the chain
+    selections = queries.arc_selections(g)
+    assert len(selections) == 4
+    for selection in selections:
+        view = queries.arc_view(g, selection)
+        assert {"beat:lock-lead", "beat:lock-resolve", "beat:lock-after"} <= view
+    # the locked outcome derived no flag
+    assert all(f.path != "path:lock-a" for f in g.nodes_of(StateFlag))
+
+
+def test_wraps_anchors_a_locked_dilemma_at_its_resolution():
+    g = StoryGraph()
+    dl, _ = locked_story(g)
+    mutations.add_dilemma_relation(g, EdgeKind.WRAPS, "dilemma:main", dl)
+    for order in weave.candidates(weave.plan(g)):
+        assert order.index("pre:beat:main-pre0") < order.index("pre:beat:lock-lead")
+        assert order.index("pre:beat:lock-resolve") < order.index("resolve:dilemma:main")
+
+
+def test_locked_beats_may_intersect_other_dilemmas():
+    g = StoryGraph()
+    locked_story(g)
+    group = IntersectionGroup(id="intersection:collision", created_by=Stage.GROW)
+    mutations.add_intersection(g, group, ["beat:main-pre1", "beat:lock-lead"])
+    planned = weave.plan(g)
+    orders = weave.candidates(planned)
+    weave.realize(g, planned, orders[0])
+    members = sorted(["beat:main-pre1", "beat:lock-lead"])
+    assert g.has_edge(EdgeKind.PREDECESSOR, members[0], members[1])
+
+
+def test_locked_chain_with_two_resolutions_is_rejected():
+    g = StoryGraph()
+    seeded_story(g)
+    dl, path, _ = make_dilemma(g, "lock", explore=1)
+    mutations.add_beat(g, narrative_beat("lock-r1", dl, ImpactEffect.COMMITS), [path])
+    mutations.add_beat(g, narrative_beat("lock-r2", dl, ImpactEffect.COMMITS), [path])
+    mutations.add_ordering(g, "beat:lock-r1", "beat:lock-r2")
+    with pytest.raises(weave.WeaveError, match="resolution beats"):
+        weave.plan(g)
+
+
 def test_zero_hard_dilemmas_are_rejected():
     g = StoryGraph()
     d1, p1a, p1b = make_dilemma(g, "one", role=DilemmaRole.SOFT)
     scaffold(g, "one", d1, p1a, p1b, endings=False)
     with pytest.raises(weave.WeaveError, match="hard dilemma"):
+        weave.plan(g)
+
+
+def test_a_locked_hard_dilemma_is_no_backbone():
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "one", role=DilemmaRole.SOFT)
+    scaffold(g, "one", d1, p1a, p1b, endings=False)
+    dl, path, _ = make_dilemma(g, "lock", role=DilemmaRole.HARD, explore=1)
+    make_locked_chain(g, "lock", dl, path)
+    with pytest.raises(weave.WeaveError, match="branched hard"):
         weave.plan(g)
 
 

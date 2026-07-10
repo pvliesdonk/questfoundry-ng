@@ -1,11 +1,15 @@
 """GROW's deterministic interleaving core (design doc 02, GROW).
 
-The weave turns SEED's disconnected Y scaffolds into one beat DAG. Each
-dilemma contributes its shared pre-commit beats as movable *units* and
-its fork as one atomic unit — commit beats plus post-commit chains: a
-diamond that reconverges for a soft dilemma, the terminal split for a
-hard one. Constraints come from dilemma relations (wraps/serial),
-temporal hints, and intersection adjacency; candidate interleavings are
+The weave turns SEED's disconnected scaffolds into one beat DAG. Each
+branched dilemma contributes its shared pre-commit beats as movable
+*units* and its fork as one atomic unit — commit beats plus post-commit
+chains: a diamond that reconverges for a soft dilemma, the terminal
+split for a hard one. A locked dilemma (single explored path, design
+doc 01 §4) has no fork: every beat of its chain is a movable unit under
+chain constraints, so the storyline threads through the whole story.
+Constraints come from dilemma relations (wraps/serial — a locked
+dilemma anchors at its first beat and its resolution beat), temporal
+hints, and intersection adjacency; candidate interleavings are
 topological orders of the units. The LLM only *chooses among* candidates
 (it never invents an order); realization then recomputes the full
 PREDECESSOR edge set through the mutation layer.
@@ -77,6 +81,10 @@ class DilemmaShape:
     role: DilemmaRole
     pre: list[str]  # shared pre-commit beats in scaffold chain order
     chains: dict[str, list[str]]  # path id -> [commit, post-commit...]
+    # locked (design doc 01 §4): the single explored path's whole chain
+    # lives in `chains`; there is no fork, so every beat is a movable
+    # unit and the dilemma contributes no resolve unit.
+    locked: bool = False
 
 
 @dataclass
@@ -87,6 +95,7 @@ class WeavePlan:
     unit_of_beat: dict[str, str]  # shared beat -> unit key (group-aware)
     hard_resolves: list[str] = field(default_factory=list)  # sorted resolve keys
     dropped_hints: list[str] = field(default_factory=list)
+    locked_of_beat: dict[str, str] = field(default_factory=dict)  # beat -> locked dilemma
 
 
 @dataclass
@@ -131,10 +140,28 @@ def shapes(g: StoryGraph) -> tuple[list[DilemmaShape], list[str]]:
     claimed: set[str] = set()
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
         paths = queries.explored_paths(g, d.id)
+        if len(paths) == 1:
+            # locked at triage: one fork-less chain on the single path
+            (path,) = paths
+            members = set(g.in_ids(path, EdgeKind.BELONGS_TO))
+            if not members:
+                raise WeaveError(f"locked dilemma {d.id} has no beats on its path")
+            chain = _chain_order(g, members, f"locked storyline of {d.id}")
+            commits = [b for b in chain if d.id in g.node(b).commits_dilemmas]  # type: ignore[union-attr]
+            if len(commits) != 1:
+                raise WeaveError(
+                    f"locked storyline of {d.id} has {len(commits)} resolution "
+                    "beats; the weave starts from SEED's single resolution"
+                )
+            result.append(
+                DilemmaShape(dilemma=d.id, role=d.role, pre=[], chains={path: chain}, locked=True)
+            )
+            claimed.update(chain)
+            continue
         if len(paths) != 2:
             raise WeaveError(
                 f"dilemma {d.id} has {len(paths)} explored path(s); "
-                "the weave needs both answers explored"
+                "the weave needs both answers explored (or exactly one, locked)"
             )
         pre = {
             b
@@ -171,7 +198,8 @@ def shapes(g: StoryGraph) -> tuple[list[DilemmaShape], list[str]]:
             claimed.update(chain)
     if not hard:
         raise WeaveError(
-            "the weave needs at least one hard dilemma (the backbone whose fork ends the story)"
+            "the weave needs at least one branched hard dilemma "
+            "(the backbone whose fork ends the story)"
         )
     setup = {
         b.id
@@ -246,12 +274,21 @@ def plan(g: StoryGraph) -> WeavePlan:
     if setup_chain:
         units["setup"] = _linear("setup", setup_chain)
 
-    shared_beats = {b for s in shape_list for b in s.pre}
+    # Locked storylines are on every arc, so their beats are groupable
+    # exactly like shared pre-commit beats (groups stay pre-fork below).
+    groupable = {b for s in shape_list for b in s.pre}
+    locked_of_beat: dict[str, str] = {}
+    for s in shape_list:
+        if s.locked:
+            (chain,) = s.chains.values()
+            groupable.update(chain)
+            for b in chain:
+                locked_of_beat[b] = s.dilemma
     for beat_id in group_of_beat:
-        if beat_id not in shared_beats:
+        if beat_id not in groupable:
             raise WeaveError(
-                f"intersection member {beat_id} is not a shared pre-commit beat; "
-                "M2 intersections group shared beats only"
+                f"intersection member {beat_id} is not a shared pre-commit or "
+                "locked-storyline beat; intersections group beats every player sees"
             )
     for key, members in group_members.items():
         units[key] = _linear(key, members)
@@ -266,6 +303,25 @@ def plan(g: StoryGraph) -> WeavePlan:
             constraints.add((a, b))
 
     for shape in shape_list:
+        if shape.locked:
+            # every beat is its own movable unit on a chain of constraints:
+            # the storyline threads through the story instead of lumping
+            (chain,) = shape.chains.values()
+            for b in chain:
+                if b not in unit_of_beat:
+                    key = f"pre:{b}"
+                    units[key] = _linear(key, [b])
+                    unit_of_beat[b] = key
+            (commit,) = [
+                b
+                for b in chain
+                if shape.dilemma in g.node(b).commits_dilemmas  # type: ignore[union-attr]
+            ]
+            first_pre[shape.dilemma] = unit_of_beat[chain[0]]
+            resolve_key[shape.dilemma] = unit_of_beat[commit]
+            for a, b in zip(chain, chain[1:], strict=False):
+                constrain(unit_of_beat[a], unit_of_beat[b])
+            continue
         for b in shape.pre:
             if b not in unit_of_beat:
                 key = f"pre:{b}"
@@ -287,7 +343,9 @@ def plan(g: StoryGraph) -> WeavePlan:
             constrain(resolve_key[e.src], first_pre[e.dst])
 
     hard_rkeys = sorted(
-        resolve_key[s.dilemma] for s in shape_list if s.role == DilemmaRole.HARD
+        resolve_key[s.dilemma]
+        for s in shape_list
+        if s.role == DilemmaRole.HARD and not s.locked
     )
     # Units after a hard fork are realized per world (cloned), so shared
     # units MAY follow it — except intersection groups, whose whole point
@@ -312,9 +370,11 @@ def plan(g: StoryGraph) -> WeavePlan:
         shapes=shape_list,
         unit_of_beat=unit_of_beat,
         hard_resolves=hard_rkeys,
+        locked_of_beat=locked_of_beat,
     )
     for shape in shape_list:
-        for b in shape.pre:
+        movable = next(iter(shape.chains.values())) if shape.locked else shape.pre
+        for b in movable:
             beat = g.node(b)
             assert isinstance(beat, Beat)
             for hint in beat.temporal_hints:

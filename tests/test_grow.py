@@ -53,7 +53,7 @@ def group(members: list[str], id: str = "intersection:x") -> IntersectionProposa
 
 
 def test_intersections_reject_non_shared_members(project):
-    with pytest.raises(ApplyError, match="not a shared pre-commit beat"):
+    with pytest.raises(ApplyError, match="not a shared pre-commit"):
         _intersections_apply(group(["beat:main-commit-a", "beat:sub-pre0"]), project)
 
 

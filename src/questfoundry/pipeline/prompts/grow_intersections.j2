@@ -7,9 +7,10 @@ backbone's tension instead of alternating politely with it.
 
 VISION: {{ vision.genre }}, {{ vision.tone }}.
 
-SHARED BEATS (experienced by every player; only these may intersect):
+SHARED BEATS (experienced by every player; only these may intersect — a locked
+storyline is a fork-less subplot on every playthrough, so its beats qualify too):
 {% for d in dilemmas %}
-- {{ d.dilemma.id }} ({{ d.dilemma.role }}): {{ d.dilemma.question }}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}{% if d.locked %}, locked storyline{% endif %}): {{ d.dilemma.question }}
 {% for b in d.beats %}
   - {{ b.id }} — {{ b.summary }} (entities: {{ b.entities | join(", ") }})
 {% if b.flexibility %}

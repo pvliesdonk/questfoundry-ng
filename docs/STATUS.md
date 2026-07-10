@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · **M6 complete** — the A/B exit run shipped ("The Lamplighter's Debt", live run 7, five engine findings fixed in-flight); scaffold deepening is next
+> Last updated: 2026-07-10 · M6 complete; roadmap extended with M7 (illustrations, pulled up front at the author's call), M8 (depth & scale), M9 (retrieval refinement), M10 (SHIP & the author loop) — M7 is next
 
 ## Where we are
 
@@ -357,25 +357,44 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - [x] **M6 — Craft-corpus research** (added 2026-07-09; roadmap §M6,
   design docs 02 §1 and 03 §10) — engine (PR #30, plan: PR #29) + the
   live A/B exit run "The Lamplighter's Debt" (PR #31, live run 7)
+- [ ] **M7 — Illustrations** (added 2026-07-10, pulled up front at
+  the author's call; roadmap §M7) — `qf illustrate` renders DRESS
+  briefs via `image-generation-mcp` as a library (OpenAI/Gemini +
+  hermetic placeholder)
+- [ ] **M8 — Depth & scale** (added 2026-07-10; roadmap §M8) —
+  deeper/tensored scaffolds, words-primary scale table, presets
+  recalibrated against measured runs
+- [ ] **M9 — Retrieval refinement** (added 2026-07-10; roadmap §M9) —
+  reserved exemplar mechanism + standing-query shape
+- [ ] **M10 — SHIP & the author loop** (added 2026-07-10; roadmap
+  §M10) — SHIP stage with Twee lint, interactive checkpoint review,
+  `qf simulate --random`
 
 ## Next up
 
-1. **Scaffold deepening** (corpus-medium word totals, 20–60k):
-   deeper/tensored Ys now that the research pass can feed them real
-   material; scale table becomes words-primary at that point. Live
-   run 7's B4/B3 overshoots (49-55-beat arcs vs the 14-40 band at
-   `short`, driven by two locked chains) say the presets and the
-   scaffold depth need recalibrating together.
-2. **A first-class exemplar mechanism** (from live run 7's exemplar
-   leak, decision log): style exemplars belong at the voice pass as a
-   contrasting spread (02 §1) and nowhere else — today the only guard
-   is scoping `craft.folders` away from the exemplar cluster. Design
-   the reserved-folder config + diverse-spread retrieval at the voice
-   pass in a frontier session.
-4. Optional polish: an image backend behind the briefs (design doc 02
-   lists illustrations as optional; briefs + the PDF/HTML plumbing are
-   in place — `art/images/<passage-slug>.png` is picked up when
-   present).
+1. **M7 — illustrations** (roadmap §M7): `qf illustrate` — a
+   post-DRESS command (not a stage pass: cloud image generation has no
+   seeds, so its bytes can never join checkpoint/A16 replay semantics)
+   rendering briefs via `image-generation-mcp` as a library. Engine
+   owns prompt assembly (art direction + entity visual fragments),
+   sample-first gate, budget/priority, skip-if-exists, ledger; the
+   placeholder provider is CI's hermetic path. Both cloud keys are
+   already in the dev environment.
+2. **M8 — depth & scale** (roadmap §M8): deeper/tensored Ys fed by
+   the research pass, a words-primary scale table, presets
+   recalibrated against measured yield. Live run 7's B4/B3 overshoots
+   (48-55-beat arcs vs the 14-40 band at `short`, driven by two
+   locked chains) and the ~1.1-1.25k B6 across runs 5-7 are the
+   motivating data. Frontier session — this is narrative/DAG
+   semantics territory.
+3. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
+   mechanism + standing-query shape rework, both from live run 7's
+   findings (exemplar leak in the decision log; standing-query
+   boilerplate in the open item below).
+4. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage with
+   the Twee lint, real interactive checkpoint review behind
+   `qf run --yes`, and `qf simulate --random N` (its trigger is met —
+   generated stories carry false branches on every run).
 
 ## Known deferrals / open items
 
@@ -475,11 +494,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - ~~The HTML player has no codex panel yet~~ **Built** with DRESS
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
-- **Image generation is unbuilt** (deliberately — design doc 02 lists
-  illustrations as optional). Briefs, the runtime `art` entries, the
-  HTML embedding path, and the PDF illustration slots all exist and key
-  off `art/images/<passage-slug>.png`; a pluggable backend that renders
-  briefs into those files is future work.
+- ~~Image generation is unbuilt~~ **Planned as M7** (roadmap §M7,
+  pulled up front at the author's call, 2026-07-10 decision-log
+  entry): `qf illustrate` renders briefs via `image-generation-mcp`
+  as a Python library — which is itself the hardened fork of the
+  original QuestFoundry's image providers, so the heritage design
+  (ImageBrief contract, entity visual fragments for consistency,
+  sample-first cost gate) comes back with Gemini + gpt-image-2 +
+  reference-image editing on top. Briefs, runtime `art` entries, HTML
+  embedding, and PDF slots have been in place since M5.
 - **Derived fallback codewords may contain digits** (slugs allow them;
   `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
   worst — a print warning already tells authors to run DRESS.
@@ -492,9 +515,17 @@ PR #5) and this agent/doc infrastructure (PR #6).
   (PR #30 decision-log entry): hybrid ranking deterministic across
   repeats and rebuilds, warm-cache embeddings fully offline, custom
   provider accepted — the item is closed.
+- **Standing queries retrieve boilerplate** (live run 7's digests,
+  observed post-merge): verbatim vision fields make poor search
+  strings — the 30-word tone sentence pulled the same
+  audience-targeting age-band notes into the GROW and FILL digests,
+  while the librarian's condensed queries were consistently on-topic.
+  The value split is librarian ≫ standing today. Owned by M9
+  (roadmap §M9): condense standing queries to keyword form or
+  rebalance toward the librarian.
 - **Twee prose mapping is bounded and unlinted** — the lint step that
   flags constructs that don't survive SugarCube conversion arrives with
-  SHIP (design doc 04 §3).
+  SHIP (design doc 04 §3, roadmap §M10).
 - **False branches carry no cosmetic flags yet** (choice-feel diamonds
   only). The flag machinery exists (`FlagSource.COSMETIC`); wire grants
   when a residue beat or print codeword actually wants one.
@@ -523,6 +554,65 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (illustrations pulled up front as M7):** The author's
+  call: the image backend moves from "Later" to the next milestone —
+  the consuming plumbing has existed since M5 and both cloud keys are
+  in the dev environment. Research across the two source repos
+  settled the approach. (1) **The provider seam is a re-adoption, not
+  a new bet**: `image-generation-mcp` is the hardened fork of the
+  original QuestFoundry's own image providers ("Ported from
+  questfoundry" in its docstrings) — consuming it as a library
+  (`ImageService` + `register_provider`, importable without touching
+  fastmcp code; OpenAI gpt-image-2 lineup, Gemini
+  3.1-flash-image, deterministic zero-network placeholder for CI)
+  returns the original's provider work with the upgrades on top,
+  mirroring the markdown-vault-mcp precedent. (2) **`qf illustrate`
+  is a command, not a stage pass**: OpenAI and Gemini expose no
+  seeds, so rendered bytes are non-reproducible and can never join
+  checkpoint byte-stability or A16 fingerprint replay — generation
+  sits beside `qf export`, idempotent by file presence (mini-ADR when
+  built). (3) **Orchestration stays engine-side** — the library
+  deliberately has no prompt cache, budget, or ledger: NG owns
+  skip-if-exists, sample-first (the heritage cost gate), `--budget` /
+  priority filtering, cost accounting, and one reformulation attempt
+  on a typed content-policy refusal (the failure mode the original
+  swallowed). (4) **Heritage carries the consistency design**: prompt
+  assembly injects art direction + per-entity visual profile
+  fragments (DRESS already produces both since M5); the library's
+  reference-image edit path is the escalation if sample images show
+  character drift. Known trade recorded: NG keeps slug-named files
+  (`art/images/<passage-slug>.png`, human-readable, presence-keyed
+  skip) over the original's content-addressed store (free dedup) —
+  the export plumbing already keys on slugs. Depth & scale, retrieval
+  refinement, and SHIP shift to M8–M10.
+
+- **2026-07-10 (roadmap extended: depth & scale, retrieval, SHIP):** The post-M6 deferred and
+  future items across STATUS were consolidated into three milestones,
+  risk-first per the roadmap's own ordering principle (numbering
+  final after the illustrations insertion above: §M8–§M10).
+  **Depth & scale** leads the creative-risk order because it is the riskiest remaining creative bet —
+  whether the narrative/DAG mapping holds at book scale (20–60k
+  words, deeper/tensored Ys, words-primary presets); every live run's
+  B6 sits ~1.4–1.6× over the feel band and the fix is structural.
+  **M9 retrieval refinement** packages live run 7's two retrieval
+  findings (reserved exemplar mechanism, standing-query shape — the
+  standing half retrieves audience boilerplate from verbatim vision
+  prose, recorded as a new open item). **SHIP & the author loop**
+  collects the SHIP-tied deferrals (Twee lint), the `qf run --yes`
+  stub (real interactive checkpoint review), and `qf simulate
+  --random` — whose documented trigger ("once false branches occur in
+  generated stories") is now met on every run since calibration. The
+  risks table refreshed: GROW interleaving quality and convergence
+  prose coherence are retired (seven live runs, three provider
+  families), replaced by the scale-era risks (cadence math under deep
+  scaffolds, preset-calibration circularity, candidate-spread
+  thinning) and the exemplar-leakage risk the retrieval milestone
+  closes. Demand-triggered
+  items (pacing report + scene_type, character-arc metadata,
+  exclusive-beat intersections, cosmetic flags, non-digit codeword
+  fallbacks) stay out of milestones by design — 01 §10's annotation
+  discipline — and the roadmap now names them as such.
 
 - **2026-07-10 (M6 exit: live run 7, the A/B — "The Lamplighter's
   Debt", PR #31):** One fresh `short` folk-horror premise generated

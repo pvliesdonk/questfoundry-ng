@@ -197,10 +197,12 @@ false-branch diamonds now occur in every generated story, and
 `--all-arcs` never walks them.
 
 Run resilience lands here too: a transient transport failure
-(provider disconnect, 5xx — live run 8 died twice on "server
-disconnected" before the Gemini provider streamed) should auto-resume
-the interrupted stage with bounded backoff instead of exiting. The
-A16 in-flight ledger already makes the retry free; today a human
+(provider disconnect, 5xx — live run 8 died three times on "server
+disconnected") should auto-resume the interrupted stage with bounded
+backoff instead of exiting. The Gemini provider now streams and
+retries transport drops per call, which absorbs most transient
+disconnects; a sustained failure still exits, and the A16 in-flight
+ledger already makes the stage-level retry free — today a human
 re-invokes `qf run`.
 
 And progress reporting: a deep-scope FILL is ~300 calls over an hour+,

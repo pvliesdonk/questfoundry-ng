@@ -2,6 +2,8 @@ The storm season comes early to the Stilt Light, the way it always does, sea and
 
 She reads the ledger by lamp-light when the work allows her that much rest, her grandmother's hand gone brown and spidering across pages that smell of oil and old paper. Terms, mostly. What is owed and to whom, what has already been paid, and by whom, in what coin. Near the end, a line left blank, waiting the way a grave waits, for a name Maren has not yet let herself write.
 
+It is in the back pages, hunting an older tide table, that she finds the other hand — her mother's, quicker than her grandmother's and pressing harder. Not terms. Courses. Bearings run fair for the coast, provisions counted in a margin, all of it dated the winter the light went dark three nights running, the winter Maren was sent ashore to her aunt and came back to her grandmother older and the lamp lit and nobody saying why. The entries stop in the middle of a line, the way a voice stops when a door opens.
+
 The boat comes in on the neap tide, low in the water with chart cases and a man who introduces himself before his feet have found the ladder. Elias Wren, hired by the coastal survey to put the shoals on paper at last, ink already at his cuffs though he has been ashore a matter of minutes. He asks after the light's hours the first evening, mild as weather, and does not stop asking.
 
 By the third day his soundings come back wrong. He shows her the numbers with the patient excitement of a man who trusts his instruments more than his instincts — depths where there should be none, a shelf that drops away and does not stop, figures that argue with the charts his survey gave him and with each other besides. He holds the sounding line out to her like a question she is obliged to answer, and waits.

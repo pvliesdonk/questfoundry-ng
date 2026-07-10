@@ -1,0 +1,15 @@
+id: dilemma:second-keeper
+question: What ended the watch of the keeper before Maren?
+why_it_matters: >-
+  The ledger's blank line is a debt, not an invitation: whether Maren's
+  mother served her term or fled it decides what leaving would truly
+  cost, and the coast has never said.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:mother-served
+  text: She served her term, and the sea took its pay in years.
+- id: answer:mother-left
+  text: She tried to leave, and the sea kept the toll it takes.
+anchored_to: [character:keeper, location:lighthouse]

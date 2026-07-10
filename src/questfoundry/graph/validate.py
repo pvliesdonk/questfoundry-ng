@@ -662,7 +662,8 @@ def check_g4_choice_labels(ctx: Context) -> None:
 
 def check_g4_residue_coverage(ctx: Context) -> None:
     """G4: per world, every light-residue soft convergence has a residue
-    beat in that world gated on one of the dilemma's flags; every heavy
+    arm per path in that world, gated on that path's flag (the residue
+    diamond: the story remembers whichever side was chosen); every heavy
     one has variant passages at every beat of that world's rejoin
     frontier (one beat when a convergence passage exists, one per deeper
     world when the diamond feeds a hard fork — design doc 02, gate G4)."""
@@ -671,23 +672,25 @@ def check_g4_residue_coverage(ctx: Context) -> None:
     for d in ctx.g.nodes_of(Dilemma):
         if d.role != DilemmaRole.SOFT:
             continue
-        flags = set(queries.dilemma_flags(ctx.g, d.id).values())
+        path_flags = queries.dilemma_flags(ctx.g, d.id)
         for world, frontier in queries.soft_rejoin_frontiers(ctx.g, d.id):
             where = queries.world_label(ctx.g, world)
             suffix = f" (world {where})" if where else ""
             if d.residue_weight == ResidueWeight.LIGHT:
-                covered = any(
-                    b.purpose == StructuralPurpose.RESIDUE
-                    and set(b.requires_flags) & flags
-                    and queries.world_of(ctx.g, b.id) == world
-                    for b in ctx.g.nodes_of(Beat)
-                )
-                if not covered:
-                    ctx.error(
-                        "G4",
-                        f"light-residue dilemma {d.id} rejoins at {', '.join(frontier)}"
-                        f"{suffix} with no residue beat gated on its flags there",
+                for path, flag in sorted(path_flags.items()):
+                    covered = any(
+                        b.purpose == StructuralPurpose.RESIDUE
+                        and flag in b.requires_flags
+                        and queries.world_of(ctx.g, b.id) == world
+                        for b in ctx.g.nodes_of(Beat)
                     )
+                    if not covered:
+                        ctx.error(
+                            "G4",
+                            f"light-residue dilemma {d.id} rejoins at "
+                            f"{', '.join(frontier)}{suffix} with no residue beat "
+                            f"gated on {flag} ({path}) there",
+                        )
             elif d.residue_weight == ResidueWeight.HEAVY:
                 for beat_id in frontier:
                     if len(queries.passages_of_beat(ctx.g, beat_id)) < 2:

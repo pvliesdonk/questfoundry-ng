@@ -1,8 +1,10 @@
 id: passage:p-counsel
-summary: Elias will stay or sail by her word, but he will not choose for her.
+summary: >-
+  Elias will stay or sail by her word, but he will not choose for her;
+  his finished chart puts the truth of the water in her hands.
 created_by: polish
 entities: [character:keeper, character:cartographer, location:lighthouse]
-beats: [beat:counsel]
+beats: [beat:counsel, beat:honest-chart]
 choices:
 - to: passage:p-long-watch
   label: Send the ship away and tend the light

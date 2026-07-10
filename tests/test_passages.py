@@ -191,13 +191,22 @@ def test_residue_insertion_preserves_convergence(vision):
         purpose=StructuralPurpose.RESIDUE,
         requires_flags=[need.path_flags["path:sub-a"]],
     )
-    pc.insert_residue_beat(g, beat, "path:sub-a", need.rejoin)
+    followup = Beat(
+        id="beat:afterglow-2",
+        created_by=Stage.POLISH,
+        summary="s2",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"]],
+    )
+    pc.insert_residue_chain(g, [beat, followup], "path:sub-a", need.rejoin)
     issues = run_checks(g, vision, Stage.GROW)
     assert [i for i in issues if i.check == "I9"] == []  # freeze intact
-    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:afterglow", need.rejoin[0])
-    # gated beats become singleton passages
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:afterglow", "beat:afterglow-2")
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:afterglow-2", need.rejoin[0])
+    # an identically gated chain collapses into ONE gated passage
     groups = pc.collapse_groups(g)
-    assert ["beat:afterglow"] in groups
+    assert ["beat:afterglow", "beat:afterglow-2"] in groups
 
 
 def _fork_rejoin_story(g: StoryGraph, sub_residue: ResidueWeight) -> None:
@@ -248,7 +257,7 @@ def test_residue_at_fork_rejoin_reaches_every_world(vision):
         purpose=StructuralPurpose.RESIDUE,
         requires_flags=[need.path_flags["path:sub-a"]],
     )
-    pc.insert_residue_beat(g, beat, "path:sub-a", need.rejoin)
+    pc.insert_residue_chain(g, [beat], "path:sub-a", need.rejoin)
     assert set(queries.successors(g, "beat:afterglow")) == set(need.rejoin)
     issues = run_checks(g, vision, Stage.GROW)
     errors = [i for i in issues if i.check in ("I6", "I9") and i.severity == Severity.ERROR]

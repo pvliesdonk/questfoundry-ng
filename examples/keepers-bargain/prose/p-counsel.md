@@ -4,4 +4,6 @@ He does not ask her to choose. She waits for him to — some version of him, som
 
 Maren understands, standing there, that this is the kindest thing anyone has offered her since the ledger came into her hands: not rescue, not argument, just company inside the decision, and the decision left entirely hers. Outside, the tide keeps falling, and somewhere past the stilts the ship waits with its sails already loosed.
 
+Before they go down he clears the table with his forearm and unrolls the chart he came here to make. It is finished. The shoals lie on the paper the way they lie under the water, every false depth corrected in his careful ink, and in the middle of it the hollow where the sleeper turns, drawn plain and unnamed, a depth with no bottom marked. The first honest map of this coast, and he weights its corners with sounding-leads and steps back from it, leaving it facing her. Whichever way the morning goes, the truth of the water is on paper now, and it is hers.
+
 She has to choose. There is no more counsel to be had than this.

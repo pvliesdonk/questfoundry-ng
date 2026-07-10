@@ -1,9 +1,11 @@
 id: passage:p-arrival
 summary: >-
-  The Stilt Light in storm season; the ledger and its blank line; Elias
-  lands, and his soundings come back wrong.
+  The Stilt Light in storm season; the ledger, its blank line, and her
+  mother's abandoned courses; Elias lands, and his soundings come back
+  wrong.
 entities: [character:keeper, character:cartographer, location:lighthouse]
-beats: [beat:storm-glass, beat:the-ledger, beat:elias-lands, beat:false-soundings]
+beats: [beat:storm-glass, beat:the-ledger, beat:mothers-line, beat:elias-lands,
+  beat:false-soundings]
 choices:
 - to: passage:p-lamp-room
   label: Take him down to the lamp room and tell him the truth

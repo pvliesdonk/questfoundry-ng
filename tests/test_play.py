@@ -26,6 +26,7 @@ ONWARD_HIDE = "Let the weather take the blame and the days pass"
 KEEP = "Send the ship away and tend the light"
 BREAK = "Cap the lamp and go aboard"
 COUNSEL = "Ask Elias what he would do"
+GALLERY = "Walk the gallery alone before answering"
 
 
 def test_four_distinct_journeys_reach_their_endings(golden):
@@ -48,21 +49,26 @@ def test_four_distinct_journeys_reach_their_endings(golden):
 def test_gated_choice_hidden_without_its_flag(golden):
     g = golden.graph
     telling = journey(g, [TELL, ONWARD_TELL])
-    assert COUNSEL in [c.label for c in telling.choices()]
+    offered = [c.label for c in telling.choices()]
+    assert COUNSEL in offered and GALLERY not in offered
     hiding = journey(g, [HIDE, ONWARD_HIDE])
-    assert COUNSEL not in [c.label for c in hiding.choices()]
+    offered = [c.label for c in hiding.choices()]
+    assert GALLERY in offered and COUNSEL not in offered
 
 
-def test_counsel_detour_rejoins_the_fork(golden):
+def test_residue_detours_rejoin_the_fork(golden):
     player = journey(golden.graph, [TELL, ONWARD_TELL, COUNSEL, KEEP])
     assert player.ending is not None and player.ending.title == "The Long Watch"
     assert "passage:p-counsel" in player.visited
+    player = journey(golden.graph, [HIDE, ONWARD_HIDE, GALLERY, BREAK])
+    assert player.ending is not None and player.ending.title == "The Wide Water"
+    assert "passage:p-unspoken" in player.visited
 
 
 def test_prose_renders_beat_summaries_in_order(golden):
     player = Player(golden.graph)
     prose = player.prose()
-    assert len(prose) == 4  # p-arrival holds four beats
+    assert len(prose) == 5  # p-arrival holds five beats
     assert "Storm season" in prose[0]
 
 

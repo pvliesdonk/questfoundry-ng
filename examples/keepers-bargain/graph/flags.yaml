@@ -9,6 +9,7 @@ flags:
   description: A lie stands between Maren and Elias.
   source: dilemma
   path: path:hide
+  codeword: UNSPOKEN
   derived_from: [consequence:lie-between]
 - id: flag:bound-to-light
   description: Maren is bound to the light for good.

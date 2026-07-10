@@ -257,14 +257,14 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
     needs = [n for n in pc.convergence_needs(g) if n.dilemma == "dilemma:sub"]
     assert [n.world for n in needs] == ["path:main-a", "path:main-b"]
 
-    def residue(world_slug: str) -> Beat:
+    def residue(world_slug: str, side: str = "a") -> Beat:
         return Beat(
-            id=f"beat:afterglow-{world_slug}",
+            id=f"beat:afterglow-{side}-{world_slug}",
             created_by=Stage.POLISH,
             summary="s",
             beat_class=BeatClass.STRUCTURAL,
             purpose=StructuralPurpose.RESIDUE,
-            requires_flags=[needs[0].path_flags["path:sub-a"]],
+            requires_flags=[needs[0].path_flags[f"path:sub-{side}"]],
         )
 
     mutations.freeze_topology(g)
@@ -277,7 +277,8 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
         ["beat:opening"],
     )
     # covering one world only is a violating construction: G4 names the other
-    pc.insert_residue_beat(g, residue("main-a"), "path:sub-a", needs[0].rejoin)
+    for side in ("a", "b"):
+        pc.insert_residue_chain(g, [residue("main-a", side)], f"path:sub-{side}", needs[0].rejoin)
     issues = run_checks(g, vision, Stage.POLISH)
     uncovered = [
         i
@@ -285,8 +286,17 @@ def test_per_world_convergence_needs_and_residue_coverage(vision):
         if i.check == "G4" and "residue" in i.message and "path:main-b" in i.message
     ]
     assert uncovered
-    # covering both worlds clears it, and no arc dead-ends at the splices
-    pc.insert_residue_beat(g, residue("main-b"), "path:sub-a", needs[1].rejoin)
+    # so is covering one path only: the residue diamond needs both arms
+    pc.insert_residue_chain(g, [residue("main-b")], "path:sub-a", needs[1].rejoin)
+    issues = run_checks(g, vision, Stage.POLISH)
+    one_armed = [
+        i
+        for i in issues
+        if i.check == "G4" and "flag:sub-b (path:sub-b)" in i.message and "main-b" in i.message
+    ]
+    assert one_armed
+    # covering both paths in both worlds clears it; no arc dead-ends
+    pc.insert_residue_chain(g, [residue("main-b", "b")], "path:sub-b", needs[1].rejoin)
     issues = run_checks(g, vision, Stage.POLISH)
     assert not [i for i in issues if i.check == "G4" and "residue" in i.message]
     assert _errors(g, vision, checks={"I6"}) == []

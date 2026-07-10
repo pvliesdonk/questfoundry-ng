@@ -4,22 +4,26 @@ Finalize the story's structure before it becomes passages. Two jobs, both additi
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 
 {% if needs %}
-RESIDUE BEATS (required). Where a subplot's paths rejoin, the choice must still be
-felt. For each convergence below, write a short flag-gated mood-setter per side: one
-beat that establishes how the world feels for a player who took that path, placed
-just before the storylines rejoin. 1-2 sentences, present tense, mood not plot — it
-must not advance, reveal, or decide anything.
+RESIDUE ARMS (required). Where a subplot's paths rejoin, the choice must still be
+felt: the story visibly remembers whichever side the player took. For EACH
+convergence below, write one flag-gated arm PER PATH — a beat that establishes
+how the world feels for a player who took that path, placed just before the
+storylines rejoin. 1-2 sentences, present tense, mood and memory, not plot — it
+must not advance, reveal, or decide anything. When a path's memory deserves a
+scene rather than a sentence, give its arm a "followup" beat (same gate; the
+pair reads as one passage) — use it where the residue carries real weight, skip
+it where a single breath is honest.
 {% for n in needs %}
 - {{ n.dilemma.id }} (residue: light{% if n.need.world %}; in the world of {{ n.need.world }}{% endif %}) rejoins at {% for c in n.rejoin %}{{ c.id }} — "{{ c.summary }}"{% if not loop.last %} / {% endif %}{% endfor %}
 {% for path, flag in n.need.path_flags.items() %}
   - path {{ path }} (its truth: {{ flag }}) arrives from: {{ n.tails[path].summary }}
 {% endfor %}
 {% endfor %}
-Emit >=1 residue entry per convergence above (one per path is better when both
-sides carry a distinct mood). Each entry: {"dilemma", "path", "id": "beat:slug",
-"summary", "entities": [...]}; when a convergence names a world, echo it as
-"world" exactly (a nested story rejoins once per world — each world needs its
-own beats, colored by that world's truth).
+Emit exactly one residue entry per path per convergence above. Each entry:
+{"dilemma", "path", "id": "beat:slug", "summary", "entities": [...],
+"followup": {"id", "summary", "entities"} or omit}; when a convergence names a
+world, echo it as "world" exactly (a nested story rejoins once per world — each
+world needs its own arms, colored by that world's truth).
 {% endif %}
 {% if long_runs %}
 FALSE BRANCHES (cadence). The story's real choices — its dilemmas — are

@@ -1,0 +1,11 @@
+id: beat:inherited-watch
+summary: >-
+  Maren reads the blank line right for the first time: not an
+  invitation but a debt carried forward. Whatever she owes the coast,
+  her mother's leaving is already part of the sum.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:second-keeper
+  effect: complicates
+entities: [character:keeper, location:lighthouse]
+belongs_to: [path:mother-left]

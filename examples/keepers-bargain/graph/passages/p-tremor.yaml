@@ -1,9 +1,10 @@
 id: passage:p-tremor
 summary: >-
-  The sea pulls back and the lamp gutters; the bargain comes due as
+  The sea pulls back and the lamp gutters; the bar gives up her
+  mother's boat and the old question settles; the bargain comes due as
   Elias offers Maren the dawn sailing.
-entities: [character:keeper, character:cartographer, character:sleeper]
-beats: [beat:tremor, beat:offer]
+entities: [character:keeper, character:cartographer, character:sleeper, location:lighthouse]
+beats: [beat:tremor, beat:returned-boat, beat:inherited-watch, beat:offer]
 choices:
 - to: passage:p-long-watch
   label: Send the ship away and tend the light
@@ -14,3 +15,6 @@ choices:
 - to: passage:p-counsel
   label: Ask Elias what he would do
   requires: [flag:elias-knows]
+- to: passage:p-unspoken
+  label: Walk the gallery alone before answering
+  requires: [flag:lie-between]

@@ -5,9 +5,24 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M7 complete (illustrations: `qf illustrate`, exercised live on both cloud providers) — M8 (depth & scale) is next, a frontier session
+> Last updated: 2026-07-10 · M8 (depth & scale) is planned — implementation contract in `docs/plans/m8-depth-scale.md`; engine PR (PR-1) is next
 
 ## Where we are
+
+**M8 is planned** (frontier planning session; the plan doc
+[`docs/plans/m8-depth-scale.md`](plans/m8-depth-scale.md) is the
+hand-off contract, the decision-log entry below is the record). The
+milestone in one line: the SEED scaffold's depth numbers are prompt
+literals identical at every scope, so stories come out good but small
+(8–22k words, B6 ~1.1–1.25k across runs 5–7); M8 makes depth preset
+data, anchors the scale table on total prose words (mini-ADR A19,
+lands with PR-1), and recalibrates the bands by structural simulation
+through the real weave and collapse instead of against our own
+generated stories. Build order: PR-1 engine (words-primary table,
+`ScaffoldShape` per scope, words-aware cadence targeting, weave-spread
+measurement), PR-1b tensored residue arms (+ golden-story extension),
+PR-2 the live corpus-grounded `medium` exit run at 20–60k words
+(budget est. $8–14, cap $20).
 
 **M7 is complete** (PR #33; decision log below has the record).
 `qf illustrate` renders DRESS briefs to `art/images/<slug>.png` —
@@ -399,13 +414,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M8 — depth & scale** (roadmap §M8): deeper/tensored Ys fed by
-   the research pass, a words-primary scale table, presets
-   recalibrated against measured yield. Live run 7's B4/B3 overshoots
-   (48-55-beat arcs vs the 14-40 band at `short`, driven by two
-   locked chains) and the ~1.1-1.25k B6 across runs 5-7 are the
-   motivating data. Frontier session — this is narrative/DAG
-   semantics territory.
+1. **M8 PR-1 — the depth & scale engine work** (contract:
+   `docs/plans/m8-depth-scale.md`, phases 0–4): phase 0 (structural
+   simulation, band calibration, 01 §2 rewrite, A19) is frontier;
+   phases 1/2/4 are mid-tier delegable against the plan's decisions
+   D2/D4/D6. Then PR-1b (tensored residue arms, D5 — frontier) and
+   PR-2 (the live corpus-grounded `medium` exit run).
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
@@ -575,6 +589,54 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-10 (M8 planned — the depth & scale implementation
+  contract):** Full milestone plan written to
+  `docs/plans/m8-depth-scale.md` (frontier planning session; the plan
+  is the hand-off contract, this entry is the record). Five decisions
+  worth logging. (1) **The scale table anchors on total prose words**
+  (mini-ADR A19, lands with PR-1): each preset gains a primary
+  `words_total` band; B3/B4 and the other budgets become derived,
+  recalibrated quantities — stored plainly (gates read numbers), with
+  the derivation recorded in 01 §2 so the next recalibration is
+  arithmetic. Playthrough-words-primary was rejected (feel is B6's
+  job; the author holds, prints, and pays for total prose), as was the
+  passage-primary status quo (passages are a collapse artifact,
+  already redefined once under the old numbers). (2) **Scaffold depth
+  becomes preset data** — a `ScaffoldShape` per scope replaces
+  `seed_scaffold.j2`'s universal literals, enforced repairably in
+  `_scaffold_apply` (the Sonnet-evaluation lesson: scaffold contract
+  violations die at SEED, never at GROW's unrepairable gate); micro
+  pins today's literals so the golden story and every fixture hold
+  unedited. (3) **Bands are calibrated by structural simulation** —
+  synthetic scaffolds at the proposed bands run through the *real*
+  weave and collapse, LLM-free, and the counts plus the corpus's
+  external 300–600 words/choice band set B3/B4/`words_total`; this
+  breaks the calibration-circularity risk (bands tuned on stories
+  generated under the old bands) and the live run confirms rather
+  than defines. (4) **The cadence arithmetic is the milestone's
+  central creative risk, stated honestly in the plan**: a deep medium
+  playthrough needs ~23–30 choice points for B6 ≤ 800 and only ~4 are
+  real forks — a ~5:1 cosmetic:real ratio. POLISH's diamond targeting
+  becomes words-aware (site budgets computed from the B6 target, not
+  "every 3–5 beats"), tensored residue arms (PR-1b) make
+  post-convergence choices state-flavored rather than cosmetic, and —
+  the author's call, same day, promoted from the plan's original
+  fallback — **the dilemma budgets themselves (hard and/or soft) are a
+  first-class phase-0 lever**: the simulation compares deep chains at
+  current counts against +1-soft and +1-hard mixes per scope, with the
+  economics stated (soft raises buy real forks cheaply, arcs are
+  computed; hard raises buy volume and ending richness but multiply
+  worlds for one more real choice per arc). The exit run must record
+  the measured ratio either way. (5) **Weave spread is measured before it
+  is fixed**: enumeration gains a spread metric and a synthetic
+  clustering test at deep-medium unit counts (~25–40 units against
+  the 64 cap); stratified enumeration (cap allocated across distinct
+  early-position prefixes) ships only when the metric shows the
+  expected clustering. Sequencing per the tiering policy: phase 0
+  and everything touching I3/I7/G4/cadence math at frontier tier;
+  preset plumbing, template wiring, and tests mid-tier against the
+  plan's numbered decisions.
 
 - **2026-07-10 (M7 complete: `qf illustrate`, live on both cloud
   providers — PR #33):** Built to the roadmap §M7 contract; what the

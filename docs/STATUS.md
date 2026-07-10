@@ -464,13 +464,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
 - **Derived fallback codewords may contain digits** (slugs allow them;
   `^[A-Z]{3,12}$` binds only DRESS-stored codewords). Cosmetic at
   worst — a print warning already tells authors to run DRESS.
-- **M6's retrieval library is an external bet**:
-  `pvliesdonk/markdown-vault-mcp` used *as a Python library* (not as an
-  MCP server) — QuestFoundry would be its first non-dogfood library
-  consumer, so its library-facing API may need upstream work before or
-  during M6. Validate the library seam (hybrid search over a corpus
-  directory, pinned local embeddings, deterministic ranking) early in
-  the milestone, before building the research pass on top.
+- ~~M6's retrieval library is an external bet~~ **Largely retired at
+  planning time** (2026-07-10 decision-log entry): as of 3.1.0 the
+  library ships a documented Python API (`Vault` facade with
+  reader/index facets, hybrid `search(query, mode, folder)`, a public
+  `EmbeddingProvider` ABC with a local pinned `FastEmbedProvider`, an
+  `[embeddings]` extra). The phase-0 spike then passed everything
+  (PR #30 decision-log entry): hybrid ranking deterministic across
+  repeats and rebuilds, warm-cache embeddings fully offline, custom
+  provider accepted — the item is closed.
 - **Twee prose mapping is bounded and unlinted** — the lint step that
   flags constructs that don't survive SugarCube conversion arrives with
   SHIP (design doc 04 §3).
@@ -527,6 +529,41 @@ PR #5) and this agent/doc infrastructure (PR #6).
   citation (planning-doc-internal hazard numbering leaking into code
   comments) — worth keeping in mind when code is built from a plan
   document: cite repo artifacts, not the plan's internal labels.
+
+- **2026-07-10 (M6 planned — the craft-corpus implementation
+  contract):** Full milestone plan written to
+  `docs/plans/m6-craft-corpus.md` (frontier planning session; the
+  plan is the hand-off contract, this entry is the record). Four
+  decisions worth logging. (1) **The library bet is largely retired
+  on paper**: `markdown-vault-mcp` 3.1.0 publishes a documented
+  Python API — `Vault` facade, hybrid `search(query, mode, folder)`,
+  a public `EmbeddingProvider` ABC with a pinned local
+  `FastEmbedProvider`, an `[embeddings]` extra — so the feared
+  upstream API work shrinks to a phase-0 spike on two questions:
+  hybrid tie-break determinism (the plan re-sorts `(-score, path,
+  heading)` itself either way) and offline behavior on a warm
+  embedding cache. (2) **A17, the plan's one real design find — rerun
+  semantics for author-edited digests**: as specced, "author-editable
+  artifact" would be vacuous (a rerun rewinds to the *predecessor*
+  snapshot, which never contains the target stage's digest, and
+  re-retrieval would clobber the edit). Resolution: `prepare_rerun`
+  preserves the working tree's `research/<target>.md`; the research
+  pass skips when the digest is *fresh* (frontmatter-recorded corpus
+  fingerprint + standing queries match current values — corpus or
+  vision edits re-retrieve, unchanged worlds reuse for free); forcing
+  re-retrieval = deleting the file. Mirrors the vision.yaml
+  precedent; the mini-ADR row lands in 03 §9 with the engine PR.
+  (3) **DREAM's research runs premise-only** — no vision exists at
+  the stage head, so standing queries start at BRAINSTORM (02 §1
+  amendment with the PR). (4) **Digest injection is one runner-level
+  render variable**, so review templates are structurally immune
+  (they render themselves) rather than immune by convention; the
+  exclusion list gains `polish_audit` (review-shaped — the same
+  taste-laundering channel 02 §1 already closes). Sequencing per the
+  tiering policy: contracts and prompt framing at frontier tier,
+  mechanical phases delegable; engine PR first, live A/B exit run as
+  a second PR once the author exports the IF-craft corpus from his
+  vault (the locked-dilemmas live validation rides that premise).
 
 - **2026-07-10 (crash resume: the in-flight proposal ledger, mini-ADR
   A16):** The open artifact-half question is decided: **not** per-pass

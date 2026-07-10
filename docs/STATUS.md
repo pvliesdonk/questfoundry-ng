@@ -477,6 +477,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
   (and the streaming fix removed the biggest cause). Auto-resume the
   interrupted stage with bounded backoff; owned by M10 (roadmap §M10,
   run resilience).
+- **Long runs report no progress** (author call, live run 8): a
+  deep-scope FILL is ~300 calls with no in-stage signal — console
+  output block-buffers when piped, so monitoring fell back to counting
+  cache files. `qf run` gets a flushed per-pass heartbeat (pass m/n,
+  spend); `qf status` learns to read live run state from the artifacts
+  it already has. Owned by M10 (roadmap §M10).
 
 - ~~A Gemini provider is unbuilt~~ **Built and validated** (PR #18):
   `llm/providers/gemini.py` over the google-genai SDK, wired into the

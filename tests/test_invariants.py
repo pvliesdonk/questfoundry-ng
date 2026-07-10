@@ -219,6 +219,116 @@ def test_g3_underived_consequence_flagged(vision):
     assert errors_for("G3-FLAGS", g, vision) == []
 
 
+# -- locked dilemmas (single explored path; design doc 01 §4) ---------------
+
+
+def test_b1_pre_triage_overgeneration_within_allowance(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD, explore=0)
+    make_dilemma(g, "sub", explore=0)
+    make_dilemma(g, "extra", explore=0)  # micro allows 1 locked
+    assert errors_for("B1", g, vision, Stage.BRAINSTORM) == []
+    make_dilemma(g, "surplus", explore=0)
+    issues = errors_for("B1", g, vision, Stage.BRAINSTORM)
+    assert any("at most 1 to lock" in i.message for i in issues)
+
+
+def test_b1_pre_triage_branched_shortfall_flagged(vision):
+    g = StoryGraph()
+    make_dilemma(g, "sub", explore=0)  # no hard dilemma at all
+    issues = errors_for("B1", g, vision, Stage.BRAINSTORM)
+    assert any(">=1 hard" in i.message for i in issues)
+
+
+def test_b1_post_triage_locked_counts(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_dilemma(g, "sub")
+    make_dilemma(g, "herring", explore=1)
+    assert errors_for("B1", g, vision, Stage.BRAINSTORM) == []
+    make_dilemma(g, "surplus", explore=1)
+    issues = errors_for("B1", g, vision, Stage.BRAINSTORM)
+    assert any("2 locked dilemma(s)" in i.message for i in issues)
+
+
+def test_b1_post_triage_locked_hard_leaves_branched_shortfall(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD, explore=1)  # locked, not branched
+    make_dilemma(g, "sub")
+    issues = errors_for("B1", g, vision, Stage.BRAINSTORM)
+    assert any("expects 1 branched hard" in i.message for i in issues)
+
+
+def test_i3_locked_chain_needs_resolution_lead_in_and_aftermath(vision):
+    g = StoryGraph()
+    d, path, _ = make_dilemma(g, "lock", explore=1)
+    mutations.add_beat(g, narrative_beat("lock-lead", d), [path])
+    issues = errors_for("I3", g, vision, Stage.SEED)
+    assert any("no resolution" in i.message for i in issues)
+    mutations.add_beat(g, narrative_beat("lock-resolve", d, ImpactEffect.COMMITS), [path])
+    mutations.add_ordering(g, "beat:lock-lead", "beat:lock-resolve")
+    issues = errors_for("I3", g, vision, Stage.SEED)
+    assert any("no aftermath beat" in i.message for i in issues)
+    mutations.add_beat(g, narrative_beat("lock-after", d), [path])
+    mutations.add_ordering(g, "beat:lock-resolve", "beat:lock-after")
+    assert errors_for("I3", g, vision, Stage.SEED) == []
+
+
+def test_i3_locked_resolution_first_has_no_lead_in(vision):
+    g = StoryGraph()
+    d, path, _ = make_dilemma(g, "lock", explore=1)
+    mutations.add_beat(g, narrative_beat("lock-resolve", d, ImpactEffect.COMMITS), [path])
+    mutations.add_beat(g, narrative_beat("lock-after", d), [path])
+    mutations.add_ordering(g, "beat:lock-resolve", "beat:lock-after")
+    issues = errors_for("I3", g, vision, Stage.SEED)
+    assert any("no lead-in beat" in i.message for i in issues)
+
+
+def test_i6_every_arc_must_resolve_a_locked_dilemma(vision):
+    from tests.conftest import make_locked_chain
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_y_scaffold(g, "main", d, pa, pb)
+    dl, path, _ = make_dilemma(g, "lock", explore=1)
+    make_locked_chain(g, "lock", dl, path)
+    # woven into ONE branch only: the path:main-b arc never resolves it
+    g.node("beat:main-post-a").is_ending = False
+    mutations.add_ordering(g, "beat:main-commit-a", "beat:lock-lead")
+    mutations.add_ordering(g, "beat:lock-after", "beat:main-post-a")
+    issues = errors_for("I6", g, vision)
+    assert any("never commits path path:lock-a" in i.message for i in issues)
+
+
+def test_locked_dilemmas_make_no_worlds_and_need_no_flags(vision):
+    from questfoundry.graph import queries
+    from questfoundry.models.structure import FlagSource, StateFlag
+    from tests.conftest import make_locked_chain
+
+    g = StoryGraph()
+    d, path, _ = make_dilemma(g, "lock", role=DilemmaRole.HARD, explore=1)
+    make_locked_chain(g, "lock", d, path)
+    # a locked hard-role dilemma never forks: no worlds, no arc multiplication
+    assert queries.hard_commit_beats(g) == set()
+    assert queries.world_of(g, "beat:lock-after") == frozenset()
+    assert queries.arc_selections(g) == [{}]
+    # its consequence is exempt from flag derivation...
+    assert errors_for("G3-FLAGS", g, vision) == []
+    # ...and granting a flag from a locked path is itself an error
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:lock-a",
+            created_by=Stage.GROW,
+            description="d",
+            source=FlagSource.DILEMMA,
+            path=path,
+        ),
+    )
+    issues = errors_for("G3-FLAGS", g, vision)
+    assert any("world fact" in i.message for i in issues)
+
+
 def test_b4_arc_beat_budget_is_advisory(vision):
     g = StoryGraph()
     d, pa, pb = make_dilemma(g, "one")

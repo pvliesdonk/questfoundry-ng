@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. The full DRESS is blocked by a *non-reference* POLISH finalize gap (the experiment tier over-proposes a cadence false-branch that residue invalidates — a prompt/model-capability matter for next-up #1, not the pinning class); no cloud-tier example preserved yet, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet; then M9
 
 ## Where we are
 
@@ -627,26 +627,40 @@ PR #5) and this agent/doc infrastructure (PR #6).
      is validated live through GROW:** a fresh `--to dress` run cleared
      every reference-heavy stage on `gpt-oss:120b` cloud — DREAM,
      BRAINSTORM, SEED (triage/scaffold/order all first-attempt), and GROW
-     (intersections, weave, flag derivation, bridges). **The full DRESS is
-     blocked by a *non-reference* gap at POLISH finalize**, so no cloud-tier
-     example is preserved yet: the model proposed an optional cadence
-     false-branch at `bridge:gap-6`, a beat that is in a long linear run at
-     finalize-start (so the pinned `before`/`after` enum accepts it) but is
-     broken out of one once residue beats are spliced in the same apply (so
-     `_finalize_apply` rejects it — the enum is the tightest *computable*
-     over-approximation, since the apply-valid set depends on same-proposal
-     residue). Strong models (Gemini/Opus, runs 7–8) don't over-propose
-     here; `gpt-oss:120b` does and exhausts repairs. This is a
-     model-capability / prompt-quality matter for the experiment tier
-     (next-up #1), **not** the dangling-reference class this effort fixed —
-     deliberately left to that effort rather than piled into the pinning
-     PR. Companion fix that *did* land (correct + safe, though inert for
-     this story, which has long runs): finalize now forbids `false_branches`
-     outright when there is no long linear run to hold one (`max_length=0`)
-     — the reference discipline's list cousin. Still pending: a
-     prose/prompt pass that lets `gpt-oss:120b` clear POLISH→DRESS and earn
-     a cloud-tier example; the local `qwen3.5`-class confirmation still
-     wants a run when a daemon host is reachable.
+     (intersections, weave, flag derivation, bridges). **A follow-up
+     effort (the DRESS-chase branch) then drove the weak tier deeper.** The
+     POLISH finalize failure turned out to be a *real latent engine bug*,
+     not a model quirk: `_finalize_apply` inserted residue first and then
+     recomputed the long runs it validates false branches against, so a
+     beat the model was correctly shown inside a long run (and the pinned
+     `before`/`after` enum accepted) could be evicted by residue splicing at
+     a neighbouring convergence — the enum said valid, the post-residue
+     apply said no. Both additions target the frozen pre-finalize topology,
+     so finalize now splices false branches against the pristine long runs
+     *before* residue, and **POLISH clears live** (the exact
+     `beat:spirit-post-2-burn -> bridge:gap-6` diamond that failed now
+     applies). FILL then surfaced three genuine weak-tier prose gaps, each
+     diagnosed against the graph before deciding writer-vs-reviewer fault
+     and each a firmer restatement of an existing contract (strong models
+     already hold them): (1) tense as an explicit directive handling
+     narrated-past events (Rule 1); (2) POSSIBLE-state honesty stated
+     plainly under WORLD STATE, so the writer stops asserting path-dependent
+     flags as fact to fill a scene (Rule 4); (3) the review's Rule 2
+     sharpened so a weak reviewer stops laundering dropped *scenery*
+     (time-of-day, light) as a missing *event*. These carry `gpt-oss:120b`
+     from 0 to several clean FILL passages. **Still open:** a full clean
+     DRESS on `gpt-oss:120b` is gated by residual weak-tier prose
+     inconsistency — the writer stochastically re-asserts possible-state
+     content on the hardest passages (cosmetic all-possible-flag cadence
+     arms), clearing Rule 4 in two rounds on some, exhausting on others.
+     That is the prose-quality-at-scale milestone (next-up #1: input-role
+     framing, register rules, a rolling story-so-far summary, character-arc
+     metadata), not a prompt tweak — so no cloud example is preserved yet
+     and the chase stopped at diminishing returns rather than grinding
+     expensive re-runs. The companion `max_length=0` fix (forbid
+     `false_branches` when no long run exists) still stands. The local
+     `qwen3.5`-class confirmation still wants a run when a daemon host is
+     reachable.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -829,6 +843,39 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (DRESS-chase follow-up — finalize engine bug + weak-tier
+  FILL prose hardening; author-directed "pursue the full cloud dress as a
+  follow-up PR"):** Picked up after #44 merged, on a branch reset onto the
+  merged `main`. Two kinds of result. **(1) A real latent engine bug.**
+  The POLISH finalize failure that blocked the cloud DRESS was not a model
+  quirk: `_finalize_apply` spliced residue first, then recomputed the long
+  runs it validates false branches against — so a beat the model was shown
+  inside a long run (and the pinned `before`/`after` enum accepted) could
+  be evicted by residue splicing at a neighbouring convergence, and its
+  cadence diamond wrongly rejected against a structure the model never saw.
+  Both residue and false branches are additions to the frozen pre-finalize
+  topology, so both must validate against it: finalize now splices false
+  branches against the pristine long runs before residue. POLISH clears
+  live — the exact failing `beat:spirit-post-2-burn -> bridge:gap-6`
+  diamond now applies — and a regression test asserts the ordering. This
+  is tier-independent correctness, worth landing regardless of the chase.
+  **(2) Weak-tier FILL prose is a milestone, not a bug.** Three genuine
+  prose gaps, each diagnosed against the graph/flags before deciding
+  writer-vs-reviewer fault: tense as a directive (narrated-past events in
+  the voice's tense, Rule 1); POSSIBLE-state honesty stated plainly so the
+  writer stops asserting path-dependent flags as fact to fill a scene
+  (Rule 4); the review's Rule 2 sharpened so a weak reviewer stops
+  laundering dropped scenery as a missing event. Each is a firmer
+  restatement of an existing contract (strong models already hold them),
+  and they moved `gpt-oss:120b` from 0 to several clean FILL passages. But
+  a full clean DRESS stayed out of reach: the writer stochastically
+  re-asserts possible-state content on cosmetic all-possible-flag cadence
+  arms, passing Rule 4 in two rounds on some and exhausting on others.
+  That residue is the prose-quality-at-scale milestone (next-up #1), so the
+  chase stopped at diminishing returns rather than grinding expensive
+  re-runs, no cloud example was fabricated, and the honest state is
+  recorded. 431 tests, ruff clean, golden 0/0.
 
 - **2026-07-11 (reference-pinning generalized pipeline-wide —
   author-directed: "we want all of this class over all stages fixed"):**

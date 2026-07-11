@@ -18,8 +18,10 @@ from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import _derive_flags
 from questfoundry.pipeline.stages.polish import (
+    ArmSpec,
     AuditEntry,
     AuditProposal,
+    FalseBranchSpec,
     FinalizeProposal,
     ForkSpec,
     LabelSpec,
@@ -470,6 +472,45 @@ def test_false_branch_splice_and_long_run_detection():
     assert ["beat:via-the-shore", "beat:shore-tidepools"] in new_groups
     # the diamond rejoins: both arms feed `after`
     assert set(queries.predecessors(g, after)) == {"beat:via-the-cliffs", "beat:shore-tidepools"}
+
+
+def test_finalize_splices_false_branches_against_pristine_topology(vision, tmp_path, monkeypatch):
+    """Both residue arms and cadence false branches add to the *frozen*
+    topology, so a false branch validates and splices against the long
+    runs the model was shown — BEFORE residue splicing shortens them.
+    Otherwise a beat inside a long run at proposal time can be evicted by
+    residue and its diamond wrongly rejected (the live gpt-oss:120b cloud
+    finalize failure, 2026-07-11). Assert the order directly: the false
+    branch is spliced before any residue arm."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+
+    order: list[str] = []
+    for name in ("insert_sidetrack", "insert_residue_chain", "insert_residue_diamond"):
+        real = getattr(pc, name)
+        tag = "false" if name == "insert_sidetrack" else "residue"
+        monkeypatch.setattr(
+            pc, name, lambda *a, _r=real, _t=tag, **k: (order.append(_t), _r(*a, **k))[1]
+        )
+
+    proposal = FinalizeProposal(
+        residue=[
+            ResidueSpec(dilemma="dilemma:sub", path="path:sub-a", id="beat:mem-a", summary="s"),
+            ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
+        ],
+        false_branches=[
+            FalseBranchSpec(
+                before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
+            )
+        ],
+    )
+    _finalize_apply(proposal, project)
+    assert order and order[0] == "false"  # the diamond lands before residue shortens the run
+    assert order.count("residue") == 2  # both arms still applied
+    assert isinstance(g.node("beat:detour"), Beat)
 
 
 def test_llm_beat_entities_must_be_ids(vision, tmp_path):

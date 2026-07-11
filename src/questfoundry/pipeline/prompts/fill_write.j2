@@ -8,6 +8,14 @@ VOICE (binding):
 - Banned: {{ voice.banned | join("; ") }}
 - Notes: {{ voice.notes }}
 
+TENSE IS ABSOLUTE: narrate in {{ voice.tense }} tense, every verb, start to
+finish — the review checks this verb by verb and it is the most common failure.
+Events that happened before this moment are still told in {{ voice.tense }}: a
+present-tense voice renders a prior event in the present perfect or simple
+present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
+your first sentence back before anything else — that is where the wrong tense
+slips in.
+
 PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
 summary: {{ passage.summary }}
 Realize these beats, in order, as one continuous scene. The summaries are your
@@ -27,13 +35,18 @@ CAST IN SCENE:
 {% endif %}
 {% endfor %}
 
-WORLD STATE AT THIS PASSAGE:
+WORLD STATE AT THIS PASSAGE — only CERTAIN facts may be stated as true:
 {% for f in flags %}
-- {{ f.flag.description }} — {{ f.status }}{% if f.status == "possible" %} (may or may not be true here: the prose must be honest either way){% endif %}
+- {{ f.flag.description }} — {{ f.status }}
 {% endfor %}
 {% if not flags %}
 - nothing committed yet
 {% endif %}
+A POSSIBLE fact is true on some routes here and false on others: NEVER depict
+it happening, name its result, or let the narration assume it — a reader who
+did not reach it must find no contradiction. Do not reach for it to fill a
+scene; write around it so the passage reads true either way. State only what is
+CERTAIN. (This is checked: asserting a possible state as fact fails review.)
 
 THE ROADS NOT TAKEN (shadows — let their weight color the prose, never name them):
 {% for s in shadows %}

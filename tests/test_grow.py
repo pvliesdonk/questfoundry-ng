@@ -4,6 +4,7 @@ derivation, bridge splicing, and the freeze-on-clean-gate contract."""
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
@@ -34,6 +35,7 @@ from questfoundry.pipeline.stages.grow import (
     _intersections_apply,
     _spread,
     _weave_apply,
+    intersections_proposal_schema,
 )
 from questfoundry.pipeline.stages.polish import _finalize_context
 from questfoundry.pipeline.types import ApplyError
@@ -78,6 +80,18 @@ def test_empty_intersection_proposal_is_valid(project):
     assert _intersections_apply(IntersectionProposal(groups=[]), project) == [
         "no intersections proposed"
     ]
+
+
+def test_intersections_schema_pins_members_and_location(project):
+    # the pre-weave builder: `members` enumerated to the shared/lockable
+    # beats, `location` to entity ids plus "" (its no-anchor default) —
+    # closing the previously unchecked `location` dangling-reference hole
+    schema = intersections_proposal_schema(project)
+    props = schema.model_json_schema()["$defs"]["IntersectionSpec"]["properties"]
+    assert "beat:main-pre0" in props["members"]["items"]["enum"]
+    assert "" in props["location"]["enum"]
+    with pytest.raises(ValidationError):  # a beat that isn't shared is unrepresentable
+        schema.model_validate({"groups": [{"id": "intersection:x", "members": ["beat:invented"]}]})
 
 
 def test_unsatisfiable_intersection_is_dropped_with_a_note(tmp_path, vision):

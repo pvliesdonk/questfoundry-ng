@@ -38,6 +38,7 @@ from questfoundry.models.enrichment import (
 )
 from questfoundry.models.presentation import Passage
 from questfoundry.models.world import Entity
+from questfoundry.pipeline.refpin import pin, retained_entity_ids
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
 from questfoundry.project.io import Project
 
@@ -417,12 +418,34 @@ def _codewords_apply(proposal: CodewordsProposal, project: Project) -> list[str]
 
 
 def _passes(project: Project) -> tuple[PassSpec, ...]:
+    # Every DRESS reference set exists at stage start (after FILL) and no
+    # pass changes another's, so pin each here (exact ids — these fields
+    # are all exact-membership, not resolve_entity_ref; pipeline/refpin.py).
+    g = project.graph
+    passages = sorted(p.id for p in g.nodes_of(Passage))
+    passage_entities = list(dict.fromkeys(e for p in g.nodes_of(Passage) for e in p.entities))
+    direction_schema = pin(
+        DirectionProposal, "DirectionProposal", {("ProfileItem", "entity"): retained_entity_ids(g)}
+    )
+    briefs_schema = pin(
+        BriefsProposal,
+        "BriefsProposal",
+        {("BriefItem", "passage"): passages, ("BriefItem", "entities"): passage_entities},
+    )
+    codex_schema = pin(
+        CodexProposal, "CodexProposal", {("CodexItem", "entity"): sorted(_anchoring_entities(g))}
+    )
+    codewords_schema = pin(
+        CodewordsProposal,
+        "CodewordsProposal",
+        {("CodewordItem", "flag"): sorted(_pending_codewords(g))},
+    )
     return (
         PassSpec(
             name="direction",
             role="architect",
             template="dress_direction.j2",
-            schema=DirectionProposal,
+            schema=direction_schema,
             build_context=_direction_context,
             apply=_direction_apply,
             skip_if=_direction_skip,
@@ -431,7 +454,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             name="briefs",
             role="writer",
             template="dress_briefs.j2",
-            schema=BriefsProposal,
+            schema=briefs_schema,
             build_context=_briefs_context,
             apply=_briefs_apply,
         ),
@@ -439,7 +462,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             name="codex",
             role="writer",
             template="dress_codex.j2",
-            schema=CodexProposal,
+            schema=codex_schema,
             build_context=_codex_context,
             apply=_codex_apply,
             review=_codex_review_for(),
@@ -448,7 +471,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             name="codewords",
             role="utility",
             template="dress_codewords.j2",
-            schema=CodewordsProposal,
+            schema=codewords_schema,
             build_context=_codewords_context,
             apply=_codewords_apply,
             skip_if=_codewords_skip,

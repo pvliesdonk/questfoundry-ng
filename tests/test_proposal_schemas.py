@@ -99,3 +99,33 @@ def test_dynamic_triage_schema_stays_inside_the_subset() -> None:
     bad: list[str] = []
     _check(schema.model_json_schema(), schema.__name__, bad)
     assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)
+
+
+def test_every_stage_reference_pinned_schema_stays_inside_the_subset() -> None:
+    """Every stage now builds per-project schemas that pin id-reference
+    fields to `Literal` enums (pipeline/refpin.py). The walker can't see
+    them (they're built at pass-run), so exercise each builder against the
+    golden story and re-lint — an enum/const is grammar-safe, but a future
+    builder that reached for `pattern` or `oneOf` would be caught here."""
+    from questfoundry.pipeline.stages import dress, fill, polish, seed
+    from questfoundry.project import load_project
+    from tests.conftest import GOLDEN
+
+    project = load_project(GOLDEN)
+    schemas = [
+        seed.scaffold_proposal_schema(project),
+        seed.order_proposal_schema(project),
+        polish.finalize_proposal_schema(project),
+        polish.passages_proposal_schema(project),
+        polish.audit_proposal_schema(project),
+        *(spec.schema for spec in dress._passes(project)),
+        *(
+            spec.schema
+            for spec in fill._passes(project)
+            if spec.name.startswith("write:")
+        ),
+    ]
+    bad: list[str] = []
+    for schema in schemas:
+        _check(schema.model_json_schema(), schema.__name__, bad)
+    assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)

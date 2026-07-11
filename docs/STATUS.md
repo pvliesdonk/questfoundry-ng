@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live — A20 confirmed on both tiers; the triage referential-integrity gap (#40) is fixed (`explores` pinned to an enum of real answer ids) AND its sibling (`locked[].dilemma` pinned to a dilemma-id enum), both **re-confirmed live** on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY` — a clean `--to seed`; pending: carry that local/cloud run onward to DRESS to earn an example, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: clean `--to seed`, then a full `--to dress` run; pending: preserve the resulting story as an example, then M9
 
 ## Where we are
 
@@ -40,16 +40,35 @@ constraint in the schema, the correction brief names the valid ids on a
 miss, and under grammar-constrained decoding a dangling reference is
 unrepresentable at decode time. First dynamically-built proposal schema
 (the FILL computed-passes seam, extended to schemas); the pattern's
-generalization to other id-reference fields was **realized for
-triage's one sibling** (2026-07-11): a live `gpt-oss:120b` cloud
-`--to seed` re-run — reached via `OLLAMA_API_KEY`, the exact model that
-first exposed #40 — cleared the `explores` enum on the first attempt and
-then failed triage the *identical* way on `locked[].dilemma` (an
-unprefixed dilemma slug), so `triage_proposal_schema` now pins that
-field to a dilemma-id enum too. A clean re-run followed: SEED passed
-first attempt with `locked: dilemma:hand-locket` prefixed and valid. The
-further generalization to id-reference fields in *other* passes stays a
-deliberate prompt-quality-effort decision, not creep. 412 tests.
+generalization to other id-reference fields is now **realized across the
+whole pipeline** (2026-07-11): a live `gpt-oss:120b` cloud `--to seed`
+re-run — reached via `OLLAMA_API_KEY`, the exact model that first exposed
+#40 — cleared the `explores` enum on the first attempt and then failed
+triage the *identical* way on `locked[].dilemma` (an unprefixed dilemma
+slug); rather than patch that one sibling, the discipline was lifted into
+a shared helper (`pipeline/refpin.py`) and applied to **every** reference
+field in every stage. `pin(model, name, resolvers)` recursively rebuilds a
+proposal model — nested specs and all — pinning each leaf str/list[str]
+reference field to a `Literal` enum of the real ids (`FieldInfo`,
+`min_length`, defaults preserved; single-value enums render as grammar-safe
+`const`). Coverage: SEED (triage `cut_entities`/`explores`/`locked`,
+scaffold dispositions+paths+`entities`+hints, order relations), GROW
+(intersection `members` **and the previously *unchecked* `location`**,
+contextualize `beat`, bridge `entities`), POLISH (finalize
+`dilemma`/`world`/`path`/`entities` + false-branch `before`/`after`,
+passages variant `flag`, audit `passage`/`irrelevant`), FILL
+(`micro_details.entity`), DRESS (all four passes). A field validated by
+`resolve_entity_ref` pins to ids **+ unambiguous bare slugs** (preserving
+that affordance); a field validated by exact membership pins to exact ids
+only (`retained_entity_ids`) so the enum never admits a value the apply
+rejects. Schemas that depend on an earlier same-stage pass's writes (SEED
+scaffold needs triage's dispositions; POLISH audit needs the passages
+pass) pass a *callable* schema the runner resolves at pass-run time
+(`PassSpec.schema_for`). The apply-layer guards all stay — the enums narrow
+the space; the guards still enforce joint constraints an independent enum
+can't (finalize's (dilemma, world, path) triple). Two BRAINSTORM refs stay
+**deliberately unpinned**: `anchored_to` references entities coined in the
+same proposal (no pass-build-time set). 428 tests.
 
 **M8 is complete** (PR #37 carried the run's engine findings; the
 example PR carries the exit record). The exit run — live run 8,
@@ -787,6 +806,39 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (reference-pinning generalized pipeline-wide —
+  author-directed: "we want all of this class over all stages fixed"):**
+  The #40 → `locked[].dilemma` re-confirmation (entry below) showed the
+  dangling-reference class recurs field by field as model capability drops,
+  so instead of patching siblings one at a time the discipline became a
+  shared helper (`pipeline/refpin.py`) applied to every reference field in
+  every stage. An Explore-agent audit catalogued the class across all
+  proposal schemas — ~25 pinnable reference fields plus two correctly
+  *unpinnable* ones (BRAINSTORM `anchored_to`, which references entities
+  coined in the same proposal), and flagged one latent hole: GROW
+  intersection `location` was a semantic entity reference with **no
+  validation anywhere** — now pinned, closing it. Design decisions worth
+  keeping: (1) one recursive `pin(model, name, resolvers)` rebuilds nested
+  specs and preserves every `FieldInfo` (min_length, defaults), so a stage
+  is a one-liner and `$defs` stay minimal; (2) the exact-vs-slug split —
+  `resolve_entity_ref` fields pin to ids **+ unambiguous slugs**
+  (`entity_ref_ids`), exact-membership fields to exact ids only
+  (`retained_entity_ids`), so a grammar-constrained model can never emit a
+  schema-valid value the apply then rejects; (3) `PassSpec.schema` may now
+  be a **callable** resolved at pass-run time (`schema_for`), because a
+  pass's enums can depend on an earlier same-stage pass's graph writes
+  (SEED scaffold ⇐ triage dispositions, POLISH audit ⇐ the passages pass) —
+  the runner builds the pass list once, before those writes exist; (4) the
+  apply guards stay as defense in depth and to enforce joint constraints
+  (finalize's (dilemma, world, path) triple) the independent enums can't
+  express. Tests: a `pin` unit suite (scalar/list/nested/const/empty/
+  constraint-preservation), the exact-vs-slug helpers, a per-stage
+  violating-construction test on the golden (incl. the exact live
+  `world='share-legend'` finalize failure, now rejected), a GROW
+  pre-weave intersection test, and the grammar-subset lint extended to the
+  dynamic builders. 428 tests, ruff clean, golden 0/0. Live: a full
+  `--to dress` on `gpt-oss:120b` cloud (record in open item 5).
 
 - **2026-07-11 (Ollama cloud tier — #40 re-confirmed live + its sibling
   `locked[].dilemma` pinned):** From this hosted environment (supplies

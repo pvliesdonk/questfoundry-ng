@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
@@ -37,6 +37,7 @@ from questfoundry.models.structure import (
 )
 from questfoundry.models.world import Entity
 from questfoundry.pipeline import weave
+from questfoundry.pipeline.refpin import entity_ref_ids, pin, retained_entity_ids
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -86,37 +87,34 @@ class TriageProposal(BaseModel):
 
 
 def triage_proposal_schema(
-    answer_ids: list[str], dilemma_ids: list[str] | None = None
+    answer_ids: list[str],
+    dilemma_ids: list[str] | None = None,
+    entity_ids: list[str] | None = None,
 ) -> type[TriageProposal]:
-    """Pin triage's two id-reference fields to enums of the real ids:
-    `explores` to the answer ids (issue #40) and `locked[].dilemma` to
-    the dilemma ids (its sibling, generalized here).
+    """Pin triage's three id-reference fields to enums of the real ids:
+    `paths[].explores` to the answer ids (issue #40), `locked[].dilemma`
+    to the dilemma ids (its sibling), and `cut_entities[].id` to the
+    entity ids.
 
     Two unrelated strong model families invented readable-but-dangling
     answer slugs at triage and exhausted repairs (Ollama live validation,
     2026-07-11) — an under-specified prompt, not model noise. #40 pinned
-    `explores`; a later live `gpt-oss:120b-cloud` run then failed the
-    identical way on `locked[].dilemma` (naming an unprefixed dilemma
-    slug), so the same discipline covers it. The enum states the
-    constraint in the schema for every provider, the correction brief
-    names the valid ids on a miss, and under grammar-constrained decoding
-    (A20) a dangling reference becomes unrepresentable at decode time.
-    `explores` keeps graph order because answers are strictly equal (iron
-    rule 3) and an ordered list a model could read as ranked must at
-    least not be *our* ranking; dilemma ordering carries no such marker.
+    `explores`; a later live `gpt-oss:120b-cloud` run failed the identical
+    way on `locked[].dilemma`, so the discipline generalized to every
+    reference field (pipeline/refpin.py). The enum states the constraint
+    in the schema for every provider, the correction brief names the valid
+    ids on a miss, and under grammar-constrained decoding (A20) a dangling
+    reference becomes unrepresentable at decode time. `explores` keeps
+    graph order because answers are strictly equal (iron rule 3) and an
+    ordered list a model could read as ranked must at least not be *our*
+    ranking; dilemma/entity ordering carries no such marker.
     """
-    overrides: dict = {}
-    if answer_ids:
-        explores_t = Literal[tuple(answer_ids)]  # type: ignore[valid-type]
-        path_spec = create_model("PathSpec", __base__=PathSpec, explores=(explores_t, ...))
-        overrides["paths"] = (list[path_spec], Field(min_length=2))  # type: ignore[valid-type]
-    if dilemma_ids:
-        dilemma_t = Literal[tuple(dilemma_ids)]  # type: ignore[valid-type]
-        lock_spec = create_model("LockSpec", __base__=LockSpec, dilemma=(dilemma_t, ...))
-        overrides["locked"] = (list[lock_spec], [])  # type: ignore[valid-type]
-    if not overrides:
-        return TriageProposal
-    return create_model("TriageProposal", __base__=TriageProposal, **overrides)
+    resolvers = {
+        ("PathSpec", "explores"): answer_ids or [],
+        ("LockSpec", "dilemma"): dilemma_ids or [],
+        ("CutSpec", "id"): entity_ids or [],
+    }
+    return pin(TriageProposal, "TriageProposal", resolvers)
 
 
 def _triage_context(project: Project) -> dict:
@@ -605,45 +603,77 @@ def _order_apply(proposal: OrderProposal, project: Project) -> list[str]:
     return [f"relations: {', '.join(f'{r.a} {r.kind} {r.b}' for r in proposal.relations)}"]
 
 
-_SCAFFOLD_PASS = PassSpec(
-    name="scaffold",
-    role="architect",
-    template="seed_scaffold.j2",
-    schema=ScaffoldProposal,
-    build_context=_scaffold_context,
-    apply=_scaffold_apply,
-)
+def scaffold_proposal_schema(project: Project) -> type[ScaffoldProposal]:
+    """Pin scaffold's reference fields: each `dilemma` to its disposition's
+    ids (branched vs locked), each `path` to the explored paths of that
+    disposition, every `BeatSpec.entities` ref to the entity ids, and every
+    `HintSpec.dilemma` to a known dilemma (pipeline/refpin.py)."""
+    g = project.graph
+    branched = queries.branched_dilemmas(g)
+    locked = queries.locked_dilemmas(g)
+    resolvers = {
+        ("DilemmaScaffold", "dilemma"): branched,
+        ("PathScaffold", "path"): [p for d in branched for p in queries.explored_paths(g, d)],
+        ("LockedScaffold", "dilemma"): locked,
+        ("LockedScaffold", "path"): [p for d in locked for p in queries.explored_paths(g, d)],
+        ("BeatSpec", "entities"): entity_ref_ids(g),
+        ("HintSpec", "dilemma"): branched + locked,
+    }
+    return pin(ScaffoldProposal, "ScaffoldProposal", resolvers)
 
-_ORDER_PASS = PassSpec(
-    name="order",
-    role="architect",
-    template="seed_order.j2",
-    schema=OrderProposal,
-    build_context=_order_context,
-    apply=_order_apply,
-)
+
+def order_proposal_schema(project: Project) -> type[OrderProposal]:
+    """Pin order's `relations[].a`/`.b` to the dilemma ids."""
+    dilemma_ids = [d.id for d in project.graph.nodes_of(Dilemma)]
+    return pin(
+        OrderProposal,
+        "OrderProposal",
+        {("RelationSpec", "a"): dilemma_ids, ("RelationSpec", "b"): dilemma_ids},
+    )
 
 
 def _seed_passes(project: Project) -> tuple[PassSpec, ...]:
-    # Triage's schema is built per project: `explores` is an enum of the
-    # answer ids and `locked[].dilemma` an enum of the dilemma ids
-    # BRAINSTORM actually created (graph order). Computed at stage start,
-    # so kept-pass replay and ledger resume revalidate a recorded proposal
-    # against the same enums they were accepted under.
+    # Every pass's schema pins its id-reference fields to enums of the ids
+    # that exist when the pass runs (graph order — pipeline/refpin.py), so
+    # a dangling reference can't be emitted and kept-pass replay / ledger
+    # resume revalidate against the same enums the proposal was accepted
+    # under. Triage's references (answers, dilemmas, entities) all exist at
+    # SEED start, so its schema is built eagerly here; scaffold and order
+    # reference triage's own writes (branched/locked dispositions, explored
+    # paths), so they pass a *callable* schema the runner resolves at
+    # pass-run time — after triage has mutated the graph (PassSpec.schema_for).
     g = project.graph
-    dilemma_ids = [d.id for d in g.nodes_of(Dilemma)]
-    answer_ids = [a for d in g.nodes_of(Dilemma) for a in queries.answers_of(g, d.id)]
+    dilemmas = g.nodes_of(Dilemma)
+    dilemma_ids = [d.id for d in dilemmas]
+    answer_ids = [a for d in dilemmas for a in queries.answers_of(g, d.id)]
+    # cut_entities[].id is validated by exact membership (set_entity_disposition),
+    # so pin it to exact ids — not the bare-slug-inclusive resolve set.
+    entity_ids = retained_entity_ids(g)
     return (
         PassSpec(
             name="triage",
             role="architect",
             template="seed_triage.j2",
-            schema=triage_proposal_schema(answer_ids, dilemma_ids),
+            schema=triage_proposal_schema(answer_ids, dilemma_ids, entity_ids),
             build_context=_triage_context,
             apply=_triage_apply,
         ),
-        _SCAFFOLD_PASS,
-        _ORDER_PASS,
+        PassSpec(
+            name="scaffold",
+            role="architect",
+            template="seed_scaffold.j2",
+            schema=scaffold_proposal_schema,
+            build_context=_scaffold_context,
+            apply=_scaffold_apply,
+        ),
+        PassSpec(
+            name="order",
+            role="architect",
+            template="seed_order.j2",
+            schema=order_proposal_schema,
+            build_context=_order_context,
+            apply=_order_apply,
+        ),
     )
 
 

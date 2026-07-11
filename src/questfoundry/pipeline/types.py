@@ -80,11 +80,21 @@ class PassSpec:
     name: str
     role: ModelRole
     template: str
-    schema: type[BaseModel]
+    schema: type[BaseModel] | Callable[[Project], type[BaseModel]]
     build_context: Callable[[Project], dict]
     apply: Callable[[BaseModel, Project], list[str]]
     skip_if: Callable[[Project], str | None] | None = None
     review: Callable[[BaseModel, Project, Any], list[str]] | None = None
+
+    def schema_for(self, project: Project) -> type[BaseModel]:
+        """Resolve the proposal schema against the current project. A
+        callable `schema` is evaluated at pass-run time (not stage start),
+        so a pass whose reference enums depend on an earlier same-stage
+        pass's graph writes — SEED scaffold needs triage's dispositions —
+        pins against the post-triage graph (pipeline/refpin.py)."""
+        if isinstance(self.schema, type):
+            return self.schema
+        return self.schema(project)
 
 
 @dataclass(frozen=True)

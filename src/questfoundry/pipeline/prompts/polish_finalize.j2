@@ -27,9 +27,11 @@ strong arm beats two thin ones.
 {% endfor %}
 Emit exactly one residue entry per path per convergence above. Each entry:
 {"dilemma", "path", "id": "beat:slug", "summary", "entities": [...],
-"followup": {"id", "summary", "entities"} or omit}; when a convergence names a
-world, echo it as "world" exactly (a nested story rejoins once per world — each
-world needs its own arms, colored by that world's truth).
+"followup": {"id", "summary", "entities"} or omit,
+"fork": {"id", "summary", "entities", "followup" or omit} or omit}; when a
+convergence names a world, echo it as "world" exactly (a nested story rejoins
+once per world — each world needs its own arms, colored by that world's
+truth); when it names none, omit "world".
 {% endif %}
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}

@@ -6,6 +6,7 @@ must obey.
 VISION: {{ vision.genre }}{% if vision.subgenre %} / {{ vision.subgenre }}{% endif %}, {{ vision.tone }}.
 Themes: {{ vision.themes | join("; ") }}. Audience: {{ vision.audience }}.
 POV hint (advisory): {{ vision.pov_hint or "none" }}.
+PREMISE (the author's ask): {{ vision.premise }}
 
 THE STORY'S SHAPE:
 {% for d in dilemmas %}

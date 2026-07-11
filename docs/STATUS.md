@@ -5,9 +5,26 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet; then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log). Then M9
 
 ## Where we are
+
+**Every prompt is audited** (2026-07-11, author-directed: "crystal-clear
+intent and expectation, full context — never inferred"): all 24 shipped
+templates, the review system prompts, the adapter's JSON instruction and
+correction brief, and every pass's render context, against a rubric drawn
+from the vendored semantic conventions (directive language, explicit
+constraints, enums for finite sets) and standard prompt-engineering
+practice. The yield is mostly *context* fixes — a prompt held to a rule
+whose inputs it couldn't see — plus one real engine bug the audit's "the
+context must be TRUE" clause caught: a gated residue or variant passage's
+own truth rendered as merely "possible" in FILL's WORLD STATE, so the
+Rule-4 honesty directive ordered the writer to stay neutral about the very
+fact the passage exists to carry (and the review's rule 4 would fail prose
+that asserted it). Gate certainty now propagates along the dilemma — beat
+gates *and* choice-edge gates (how variants are wired) make the gated
+path's flags CERTAIN and every rival path's flag FORECLOSED. Full findings
+in the decision log. 433 tests.
 
 **An Ollama backend is built** (author-directed, unplanned addition;
 the decision-log entry below records the design discussion):
@@ -843,6 +860,75 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (prompt-engineering audit — author-directed: "a full audit
+  of all prompts against best practices; perfectly clear in intent and
+  expectation, with the full context they need — never inferred"):** Every
+  shipped template (24 `.j2` files), the review system prompts, the
+  adapter's JSON instruction and correction brief, and each pass's render
+  context were audited against a rubric drawn from
+  `docs/heritage/semantic-conventions.md` (directive language, explicit
+  constraints, enums for finite sets, axis separation) and standard
+  prompt-engineering practice: intent stated directively up front, terms of
+  art defined in-prompt, context complete AND true, output shape explicit,
+  prompt consistent with what the apply actually enforces. The prompts were
+  already strong (two hardening batches preceded this); the audit's yield:
+  1. **A real engine bug** (`fill._flag_status`, the "context must be TRUE"
+     clause): gate certainty did not propagate along the dilemma. A gated
+     residue passage sits at a convergence with *both* commits upstream, so
+     ancestry read the rival path's flag as "possible" (golden story:
+     `p-unspoken`, gated on hide's flag, showed tell's flag as possible);
+     a variant passage was worse — its gate lives on the *choice edge*,
+     which the status never consulted, so its own defining flag read as
+     possible. Under the fresh Rule-4 honesty directive the writer was
+     ordered to stay neutral about the very fact the passage exists to
+     carry, and the review's rule 4 would fail prose that asserted it. Now
+     a beat gate or a gate every incoming choice requires makes the gated
+     path's flags CERTAIN and every rival path's flag of the same dilemma
+     FORECLOSED (dropped from the writer's WORLD STATE). Two regression
+     tests, golden-anchored.
+  2. **Context gaps** — a prompt held to a rule whose inputs it couldn't
+     see: *seed_order* never showed dispositions, yet its central rule
+     ("the story ends at a **branched** hard resolution") turns on them —
+     it now renders branched/locked per dilemma, states that an omitted
+     pair is unconstrained and that `concurrent` adds no constraint (the
+     weave consumes it nowhere — declaring otherwise invited false
+     expectations), and warns about serial(hard, locked) up front instead
+     of only in the repair error; *dress_codewords* demanded global
+     uniqueness ("old or new") while showing only pending flags — it now
+     renders the codewords already in use; *seed_triage* and *fill_voice*
+     get the premise (the author's one-paragraph ask governs what triage
+     keeps and what the voice serves; it was rendered only at DREAM /
+     BRAINSTORM); the FILL reviewer's rule 3 was asked to judge continuity
+     against adjacent prose but shown only the *preceding* excerpts — it
+     now sees the following ones too; grow_weave's step notation
+     (COMMITS / worlds / "(in each world)" / intersections / locked) is
+     glossed, the worlds part only when multi-hard.
+  3. **Prompt/spec consistency**: polish_finalize's residue entry format
+     omitted "fork" (described in prose above it) and the world-omission
+     case; fill_write's micro_details never stated its shape; polish's
+     variant ids weren't said to be passage ids; scaffold now states that
+     every non-setup/non-commit beat carries an effect (it was phrased as
+     pre-commit-only, but the apply reads it on post-commit and locked
+     beats too) and that hints/flexibility are consumed only on movable
+     beats (weave reads hints from pre-commit and locked-chain beats
+     only); intersections' `location` omission case stated; brainstorm
+     states the total dilemma arithmetic and dream names the locked
+     allowance; research states an empty query list is valid (standing
+     queries always run); `VoiceProposal.tense` is now the
+     `Literal["past","present"]` the prompt promises (A11 — the write
+     prompt builds sentences around the value); `_shared.j2`'s repair
+     block stops implying the model can "fix" a proposal it can never see
+     (single-shot renders — it now asks for a fresh proposal avoiding the
+     accumulated problems, newest last); fill_review guards the banned
+     block when a voice bans nothing.
+  Deliberately unchanged: the review prompts' numbered-rule register
+  (fresh from the DRESS-chase hardening), cadence's directive framing over
+  an advisory budget, and the write prompt's input-role framing — that
+  rewrite belongs to the prose-quality effort (next-up #1), which this
+  audit sharpens but does not replace. Design docs untouched: they are
+  silent on all surfaces changed here (flag-status semantics live in
+  `fill.py`; prompt wording is implementation).
 
 - **2026-07-11 (DRESS-chase follow-up — finalize engine bug + weak-tier
   FILL prose hardening; author-directed "pursue the full cloud dress as a

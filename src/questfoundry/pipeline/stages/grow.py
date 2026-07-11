@@ -228,7 +228,7 @@ def _weave_context(project: Project) -> dict:
             if key in planned.hard_resolves:
                 in_worlds = True
         rendered.append({"index": i, "steps": steps})
-    return {"vision": project.vision, "candidates": rendered}
+    return {"vision": project.vision, "candidates": rendered, "multi_hard": multi_hard}
 
 
 def _derive_flags(g) -> list[str]:

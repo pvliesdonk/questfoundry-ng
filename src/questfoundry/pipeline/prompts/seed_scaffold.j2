@@ -23,11 +23,15 @@ DILEMMAS AND PATHS:
 REQUIREMENTS:
 - setup: {{ shape.setup[0] }}-{{ shape.setup[1] }} structural beats of world-building that open the story before any
   dilemma is introduced.
+- Every beat except setup and commit beats carries an effect: "advances"
+  (the default — the storyline moves), "reveals" (a truth surfaces), or
+  "complicates" (doubt deepens). A commit beat's effect is implied — the
+  commitment itself.
 - scaffolds: one entry per BRANCHED dilemma (two paths), naming its two paths
   exactly as listed above.
 - locked_scaffolds: one entry per LOCKED dilemma. A locked storyline is a
   fork-less subplot every player experiences: lead_in ({{ shape.locked_lead_in[0] }}-{{ shape.locked_lead_in[1] }} beats that introduce
-  and develop the question, effects as below), resolution (ONE beat where the
+  and develop the question), resolution (ONE beat where the
   story settles it — the explored answer becomes fact, no player choice), and
   aftermath ({{ shape.locked_aftermath[0] }}-{{ shape.locked_aftermath[1] }} beats playing out what the resolution leaves behind). It must
   read as a complete mini-story on its own, and it must never end the story:
@@ -35,8 +39,7 @@ REQUIREMENTS:
   "lead_in": [...], "resolution": {...}, "aftermath": [...]} with ordinary
   beat objects.
 - pre_commit: {{ shape.pre_commit[0] }}-{{ shape.pre_commit[1] }} beats per dilemma that introduce and develop the question —
-  every player sees these regardless of their eventual choice. Use effect
-  "advances", "reveals" (a truth surfaces), or "complicates" (doubt deepens).
+  every player sees these regardless of their eventual choice.
   A deep chain must ESCALATE, never idle: each beat raises the cost of both
   answers or narrows the room to avoid choosing — cut any beat that only
   restates the stakes.
@@ -56,10 +59,15 @@ REQUIREMENTS:
   hints: [{"dilemma": "dilemma:other", "position": "before_commit" | "after_commit"}]
   — "this beat should land before/after that dilemma's point of no return". A later
   stage interleaves the scaffolds and uses these to order scenes. Hints are optional
-  and advisory; use them only where the drama genuinely demands an ordering.
+  and advisory; use them only where the drama genuinely demands an ordering. Only
+  the movable beats are read for hints — pre-commit beats and locked-storyline
+  beats; a hint on a commit or post-commit beat is ignored (those travel with
+  their dilemma's resolution as one block).
 - Where a beat's scene could flex to co-occur with another dilemma's business (same
   place, same people), note it in one sentence: flexibility: "the soundings could be
-  read anywhere Elias works". These invite the interleaver to merge scenes. Optional.
+  read anywhere Elias works". These invite the interleaver to merge scenes. Optional,
+  and meaningful only on pre-commit and locked-storyline beats — the beats every
+  player sees are the only ones that can share a scene.
 - Beat ids: beat:slug. Reference entity ids in each beat's entities list.
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}

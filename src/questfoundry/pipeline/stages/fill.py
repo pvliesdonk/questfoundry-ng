@@ -77,7 +77,11 @@ class VoiceProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     pov: str
-    tense: str
+    # the write prompt builds sentences around this value ("narrate in
+    # {tense} tense"), so it must be exactly one of the two words the
+    # prompt promises — an enum, per the A11 finite-set discipline
+    # (Voice itself stays open for author-provided voice.yaml files)
+    tense: Literal["past", "present"]
     diction: str
     rhythm: str = ""
     banned: list[str] = []
@@ -129,21 +133,50 @@ class ReviewVerdict(BaseModel):
     issues: list[str] = []
 
 
+def _gate_certain_flags(g, passage_id: str) -> set[str]:
+    """Flags every arriving player provably holds: a beat of the passage
+    requires them (gated residue beats), or every choice into the passage
+    requires them (variant passages — their gate lives on the choice
+    edge, not the shared beats)."""
+    certain = {
+        f
+        for b in queries.beats_of_passage(g, passage_id)
+        for f in g.node(b).requires_flags
+    }
+    in_choices = g.in_edges(passage_id, EdgeKind.CHOICE)
+    if in_choices:
+        certain |= set.intersection(
+            *[set(e.payload.get("requires", [])) for e in in_choices]
+        )
+    return certain
+
+
 def _flag_status(g, passage_id: str, flag: StateFlag) -> str:
-    """certain (granted on every route here, or this passage is gated on
-    it), foreclosed (the other side committed upstream), or possible.
-    Grant/commit beats are per world; one in the ancestry decides."""
+    """certain (granted on every route here, or gating guarantees it),
+    foreclosed (the other side committed upstream, or gating guarantees
+    a rival path), or possible. Grant/commit beats are per world; one in
+    the ancestry decides.
+
+    Gate certainty propagates along the dilemma: a passage only holders
+    of path P reach makes every one of P's flags certain and every rival
+    path's flag foreclosed — without this, a residue or variant passage's
+    own truth read as merely "possible" and the write prompt ordered the
+    writer to stay neutral about the very fact the passage exists to
+    carry (prompt audit, 2026-07-11)."""
     grants = queries.grant_beats(g, flag.id)
     if not grants or flag.path is None:
         return "possible"
+    dilemma = queries.dilemma_of_path(g, flag.path)
+    flag_paths = {fl.id: fl.path for fl in g.nodes_of(StateFlag)}
+    gate_paths = {flag_paths.get(f) for f in _gate_certain_flags(g, passage_id)}
+    if flag.path in gate_paths:
+        return "certain"
+    if gate_paths & (set(queries.explored_paths(g, dilemma)) - {flag.path}):
+        return "foreclosed"
     beats = queries.beats_of_passage(g, passage_id)
-    for b in beats:
-        if flag.id in g.node(b).requires_flags:
-            return "certain"  # a gated (residue) passage: only holders arrive
     ancestry = set(beats)
     for b in beats:
         ancestry |= queries.ancestors(g, b)
-    dilemma = queries.dilemma_of_path(g, flag.path)
     other_commits = [
         c
         for p in queries.explored_paths(g, dilemma)

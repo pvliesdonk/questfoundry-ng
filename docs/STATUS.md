@@ -861,6 +861,36 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-11 (audit follow-up — the flag-status fix validated live; a
+  voice example-name bleed found and fixed):** Re-ran the `gpt-oss:120b`
+  cloud DRESS chase (fresh micro premise, canal lockkeeper register, all
+  three roles on the weak tier) to measure the audit's `_flag_status` fix
+  against yesterday's failure signature. **Result: the Rule-4
+  possible-state failure class did not recur** — zero occurrences; the
+  first passage (which carries possible flags) cleared in two attempts
+  with a legitimate micro-detail, and every structural stage
+  (DREAM→POLISH: refpin enums, finalize ordering, cadence diamonds,
+  residue arms) ran clean on the weak tier. The run instead died one bug
+  deeper, on a prompt defect of exactly the audited class: `fill_voice.j2`'s
+  pov example — `"third person limited (Maren)"` — planted a concrete
+  name while the voice pass was shown **no cast**, and the model copied
+  the example's name over the real protagonist ("Marin Voss"). Cascade:
+  the first passage's accepted prose says "Maren", the next writer used
+  "Marin" (matching the cast), review failed it for name-mismatch/POV,
+  the writer flip-flopped, and the same-tier arbiter finally
+  hallucinated a "beat absent" verdict against prose containing the beat
+  nearly verbatim (an all-one-model map gives arbitration no tier
+  escalation — a structural limit worth remembering). Fixes: the voice
+  context renders the retained characters with canonical spellings
+  ("any name the voice uses must match one of them exactly"), the pov
+  bullet demands the exact cast spelling with the bleedable example name
+  removed (a test pins the template source clean of concrete pov example
+  names), and the review's Rule 2 gained the texture-beat clause — a beat
+  whose only content IS scenery is fulfilled by any wording delivering
+  the impression (attempt 1 was genuinely failed for paraphrasing
+  "quiet reminder of the tunnel's age"). 434 tests. The re-run with
+  these fixes is the pending validation; its outcome updates this entry.
+
 - **2026-07-11 (prompt-engineering audit — author-directed: "a full audit
   of all prompts against best practices; perfectly clear in intent and
   expectation, with the full context they need — never inferred"):** Every

@@ -93,13 +93,29 @@ def _voice_skip(project: Project) -> str | None:
 
 
 def _voice_context(project: Project) -> dict:
+    # The pov decision names a viewpoint character, so the prompt must show
+    # the cast's exact spellings: a live gpt-oss:120b run copied the prompt
+    # example's name ("Maren") over the real protagonist ("Marin") and every
+    # later passage failed review on the name mismatch (prompt audit
+    # follow-up, 2026-07-11).
     g = project.graph
     endings = [p.ending.title for p in g.nodes_of(Passage) if p.ending]
+    from questfoundry.models.world import EntityCategory
+
+    cast = sorted(
+        (
+            e
+            for e in g.nodes_of(Entity)
+            if e.retained and e.category == EntityCategory.CHARACTER
+        ),
+        key=lambda e: e.id,
+    )
     return {
         "vision": project.vision,
         "dilemmas": g.nodes_of(Dilemma),
         "endings": endings,
         "passage_count": len(g.nodes_of(Passage)),
+        "cast": cast,
     }
 
 

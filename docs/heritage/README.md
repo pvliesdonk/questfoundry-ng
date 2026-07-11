@@ -1,19 +1,28 @@
 # Heritage — the original QuestFoundry source documents
 
-These are the two documents that defined the original QuestFoundry's
-story model, carried here verbatim (plus an import banner):
+Documents from the original QuestFoundry, carried here verbatim (plus
+an import banner). The first two defined its story model; the third
+its interface conventions:
 
 - [`how-branching-stories-work.md`](how-branching-stories-work.md) —
   the narrative guide: what an author is trying to accomplish at each
   stage and why.
 - [`story-graph-ontology.md`](story-graph-ontology.md) — the formal
   data model that translates the guide into graph terms.
+- [`semantic-conventions.md`](semantic-conventions.md) — the semantic
+  clarity conventions (typed id prefixes, axis separation in outcomes,
+  purpose-named fields, directive prompt register, diegetic gate
+  language). NG already embodies several (typed `kind:slug` ids per
+  mini-ADR A11, enums for finite sets, actionable repair errors); the
+  prompt-register conventions are reference input for the prose-quality
+  effort (author-supplied 2026-07-11, see `docs/STATUS.md`).
 
 ## Status: reference, not authority
 
 **NG's single source of truth is [`docs/design/`](../design/).** These
-files carry their original "Status: Authoritative" banners — that
-status applied to the *original* project and does not transfer. NG
+files carry their original status banners ("Authoritative",
+"Canonical") — that status applied to the *original* project and does
+not transfer. NG
 deliberately departs from the original in recorded ways (see the
 Departures sections in design docs 01/02 and the mini-ADR table in
 03 §9); treating these files as binding would silently reopen those

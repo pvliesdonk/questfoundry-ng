@@ -504,6 +504,13 @@ PR #5) and this agent/doc infrastructure (PR #6).
    micro-details (and a richer Voice), a utility-summarized rolling
    story-so-far in the write context, and **character-arc metadata**
    (deferral trigger met — see the decision log). Frontier session.
+   Reference input (author-supplied 2026-07-11): the legacy semantic
+   conventions, now vendored at
+   [`docs/heritage/semantic-conventions.md`](heritage/semantic-conventions.md)
+   — the prompt-register rules (directive language, explicit
+   constraints, axis-separated feedback, diegetic gate language) are
+   the codified form of what this effort is rewriting toward; its
+   id-prefix and enum lessons are already NG law (A11).
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query

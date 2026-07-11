@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
@@ -83,6 +83,30 @@ class TriageProposal(BaseModel):
     cut_entities: list[CutSpec] = []
     locked: list[LockSpec] = []
     paths: list[PathSpec] = Field(min_length=2)
+
+
+def triage_proposal_schema(answer_ids: list[str]) -> type[TriageProposal]:
+    """Pin `explores` to an enum of the real answer ids (issue #40).
+
+    Two unrelated strong model families invented readable-but-dangling
+    answer slugs at triage and exhausted repairs (Ollama live validation,
+    2026-07-11) — an under-specified prompt, not model noise. The enum
+    states the constraint in the schema for every provider, the
+    correction brief names the valid ids on a miss, and under
+    grammar-constrained decoding (A20) a dangling reference becomes
+    unrepresentable at decode time. The enum keeps graph order: answers
+    are strictly equal (iron rule 3), and an ordered list a model could
+    read as ranked must at least not be *our* ranking.
+    """
+    if not answer_ids:
+        return TriageProposal
+    explores_t = Literal[tuple(answer_ids)]  # type: ignore[valid-type]
+    path_spec = create_model("PathSpec", __base__=PathSpec, explores=(explores_t, ...))
+    return create_model(
+        "TriageProposal",
+        __base__=TriageProposal,
+        paths=(list[path_spec], Field(min_length=2)),  # type: ignore[valid-type]
+    )
 
 
 def _triage_context(project: Project) -> dict:
@@ -571,33 +595,48 @@ def _order_apply(proposal: OrderProposal, project: Project) -> list[str]:
     return [f"relations: {', '.join(f'{r.a} {r.kind} {r.b}' for r in proposal.relations)}"]
 
 
-SEED_STAGE = StageImpl(
-    stage=Stage.SEED,
-    passes=(
+_SCAFFOLD_PASS = PassSpec(
+    name="scaffold",
+    role="architect",
+    template="seed_scaffold.j2",
+    schema=ScaffoldProposal,
+    build_context=_scaffold_context,
+    apply=_scaffold_apply,
+)
+
+_ORDER_PASS = PassSpec(
+    name="order",
+    role="architect",
+    template="seed_order.j2",
+    schema=OrderProposal,
+    build_context=_order_context,
+    apply=_order_apply,
+)
+
+
+def _seed_passes(project: Project) -> tuple[PassSpec, ...]:
+    # Triage's schema is built per project: `explores` is an enum of the
+    # answer ids BRAINSTORM actually created (graph order). Computed at
+    # stage start, so kept-pass replay and ledger resume revalidate a
+    # recorded proposal against the same enum they were accepted under.
+    g = project.graph
+    answer_ids = [a for d in g.nodes_of(Dilemma) for a in queries.answers_of(g, d.id)]
+    return (
         PassSpec(
             name="triage",
             role="architect",
             template="seed_triage.j2",
-            schema=TriageProposal,
+            schema=triage_proposal_schema(answer_ids),
             build_context=_triage_context,
             apply=_triage_apply,
         ),
-        PassSpec(
-            name="scaffold",
-            role="architect",
-            template="seed_scaffold.j2",
-            schema=ScaffoldProposal,
-            build_context=_scaffold_context,
-            apply=_scaffold_apply,
-        ),
-        PassSpec(
-            name="order",
-            role="architect",
-            template="seed_order.j2",
-            schema=OrderProposal,
-            build_context=_order_context,
-            apply=_order_apply,
-        ),
-    ),
+        _SCAFFOLD_PASS,
+        _ORDER_PASS,
+    )
+
+
+SEED_STAGE = StageImpl(
+    stage=Stage.SEED,
+    passes=_seed_passes,
     gate=lambda p: run_checks(p.graph, p.vision, Stage.SEED),
 )

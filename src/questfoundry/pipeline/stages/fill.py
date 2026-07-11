@@ -31,7 +31,7 @@ from questfoundry.models.concept import Voice
 from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
-from questfoundry.models.world import Entity
+from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
@@ -100,8 +100,6 @@ def _voice_context(project: Project) -> dict:
     # follow-up, 2026-07-11).
     g = project.graph
     endings = [p.ending.title for p in g.nodes_of(Passage) if p.ending]
-    from questfoundry.models.world import EntityCategory
-
     cast = sorted(
         (
             e

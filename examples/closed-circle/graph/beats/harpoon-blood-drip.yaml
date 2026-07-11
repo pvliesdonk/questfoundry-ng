@@ -1,0 +1,15 @@
+id: beat:harpoon-blood-drip
+summary: Beaumont notices the antique harpoon is dripping thick, red blood directly onto his
+  incredibly expensive Persian rug.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: advances
+entities:
+- character:beaumont
+- object:antique-harpoon
+temporal_hints:
+- dilemma: dilemma:the-first-body
+  position: after_commit
+belongs_to:
+- path:wipe-curtains

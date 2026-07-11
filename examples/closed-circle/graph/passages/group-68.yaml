@@ -1,0 +1,16 @@
+id: passage:group-68
+summary: Beaumont nervously cleans up the spilled tea, constantly checking over his shoulder
+  to ensure the other guests haven't disturbed the stiffly posed corpse in the study.
+entities:
+- character:beaumont
+- character:sylvia
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-cleanup--pose-study
+choices:
+- label: Pray that Sylvia doesn't demand the new body be moved.
+  requires:
+  - flag:sylvia-incapacitated
+  to: passage:group-71

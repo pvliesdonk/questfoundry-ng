@@ -1,0 +1,20 @@
+id: passage:group-66
+summary: Beaumont serves Sylvia the suspect tea. She collapses in sudden agony, her pained
+  gasps echoing through the room and masking any noises from the bloody pantry before she
+  demands to be escorted upstairs.
+entities:
+- character:beaumont
+- character:sylvia
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-commit-sylvia--stuff-pantry
+- beat:tea-sylvia-agony--stuff-pantry
+- beat:tea-sylvia-bedridden--stuff-pantry
+choices:
+- label: Listen to Sylvia demand a cold compress for her illness.
+  to: passage:group-74
+- label: Hear Sylvia blame the offensive leaves for her agony.
+  to: passage:group-75

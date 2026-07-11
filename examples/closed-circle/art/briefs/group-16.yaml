@@ -1,0 +1,14 @@
+passage: passage:group-16
+priority: 12
+caption: The gruesome task of hiding the body in the pantry is interrupted by Sylvia's sharp
+  demand for pickled onions.
+prompt: Claustrophobic, tightly composed line-art. A cavernous, freezing, and claustrophobically
+  overcrowded storage room is visually dominated by a heavy oak door bearing an antiquated
+  brass latch. Sylvia stands outside with an exacting, perpendicular spinal alignment, aggressively
+  draped in a sharp cashmere shawl, wearing formal silk gloves while pressing two fingers
+  to her temples in theatrical displeasure. The heavy crosshatching creates a sense of suffocating
+  dread. Monochromatic grayscale with frostbite blue radiating from the heavy oak door and
+  bruised burgundy on Sylvia's shawl.
+entities:
+- location:the-pantry
+- character:sylvia

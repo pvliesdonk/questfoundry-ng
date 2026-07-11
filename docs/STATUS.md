@@ -5,9 +5,30 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-10 · M8 PR-1 + PR-1b (depth & scale engine, tensored residue arms) are built — next: PR-2, the live medium exit run
+> Last updated: 2026-07-11 · M8 complete (depth & scale: live run 8, "Closed Circle", every exit criterion met) — next: M9, retrieval refinement
 
 ## Where we are
+
+**M8 is complete** (PR #37 carried the run's engine findings; the
+example PR carries the exit record). The exit run — live run 8,
+"Closed Circle", from the author's seed "an Agatha Christie closed
+circle murder mystery that escalates Fargo style" — generated a
+corpus-grounded `medium` story end-to-end on Gemini
+(gemini-3.1-pro-preview architect/writer + gemini-2.5-flash utility,
+a third provider family) and met **every roadmap §M8 exit criterion**:
+49,381 prose words (target 20-60k), 148 passages (B3 band 90-160),
+114-123 beats per arc (B4 band 80-150), walk-B6 **644** mean
+(618-663; target <= ~800), 32/32 arcs simulate complete, all four
+exports round-trip clean including the 250+-section print PDF, at
+~$17 (cap $20; pro 397 calls 0.93M in / 1.13M out, flash 292 calls).
+The measured cosmetic:real choice ratio is 4.6:1 against the plan's
+predicted ~5:1 and the simulation's ~4:1 — the calibration
+methodology (bands set by structural simulation, live run confirms)
+held. Preserved as `examples/closed-circle/`. Five engine findings,
+each fixed in-flight with the live-run pattern (decision log). The
+plan doc `docs/plans/m8-depth-scale.md` is retired with this entry
+(its contract lives in 01 §2/§5-6, 02, 03 §9/A19; its record lives
+here). 393 tests.
 
 **Tensored residue arms are built** (M8 PR-1b, plan D5): a light
 residue arm may fork into two same-gate branches — the reader who made
@@ -440,9 +461,11 @@ PR #5) and this agent/doc infrastructure (PR #6).
   briefs via `image-generation-mcp` as a library (OpenAI/Gemini +
   hermetic placeholder); live exit run on both cloud providers
   (PR #33)
-- [ ] **M8 — Depth & scale** (added 2026-07-10; roadmap §M8) —
-  deeper/tensored scaffolds, words-primary scale table, presets
-  recalibrated against measured runs
+- [x] **M8 — Depth & scale** (added 2026-07-10; roadmap §M8) —
+  deeper/tensored scaffolds, words-primary scale table (A19), presets
+  recalibrated by structural simulation — plan PR #34, engine PR #35,
+  tensored arms PR #36, live-run findings PR #37, exit run "Closed
+  Circle" (live run 8, this PR)
 - [ ] **M9 — Retrieval refinement** (added 2026-07-10; roadmap §M9) —
   reserved exemplar mechanism + standing-query shape
 - [ ] **M10 — SHIP & the author loop** (added 2026-07-10; roadmap
@@ -451,25 +474,37 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M8 PR-2 — the live exit run**: fresh premise, corpus-grounded
-   `medium` on the default Opus/Haiku map, budget est. $8–14 (cap
-   $20; ~124–142 passages projected vs run 7's 35–48 at $4.03).
-   Acceptance: roadmap §M8 exit; record the measured cosmetic:real
-   ratio and walk-B6 against the simulation's projections (780
-   plain-arms; 690 where the model tensors arms). This also delivers
-   the pending live validation of the whole M8 machinery: shape-band
-   repairs, the cadence budget's prompt-compliance, texture-band
-   writes, and fair-split candidate quality.
+1. **Prose quality at scale** (author-directed, 2026-07-11 — the
+   live run 8 reading findings; sequencing vs M9 at the author's
+   call): the echo check at FILL apply, write-prompt input-role
+   framing, the everything-not-prose-is-not-prose register rule for
+   micro-details (and a richer Voice), a utility-summarized rolling
+   story-so-far in the write context, and **character-arc metadata**
+   (deferral trigger met — see the decision log). Frontier session.
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
-   boilerplate in the open item below).
-3. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage with
-   the Twee lint, real interactive checkpoint review behind
-   `qf run --yes`, and `qf simulate --random N` (its trigger is met —
-   generated stories carry false branches on every run).
+   boilerplate in the open items).
+3. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage
+   with the Twee lint, real interactive checkpoint review behind
+   `qf run --yes`, `qf simulate --random N`, and the run-experience
+   items live run 8 earned it: stage-level auto-resume and per-pass
+   progress reporting.
+4. **Embed a curated craft-corpus subset in the repo** (author call,
+   live run 8 — see open items): stop hand-staging vault exports for
+   corpus-grounded runs.
 
 ## Known deferrals / open items
+
+- **The craft corpus should live (curated) in the repo** (author
+  call, 2026-07-11, during live run 8 setup): corpus-grounded runs
+  depend on an out-of-repo export (`/home/user/corpus/
+  interactive-fiction`) that runs 7 and 8 each had to re-stage by
+  hand — run 8's came from the author's vault repo. Embed a curated
+  subset indefinitely (scoped to the eight non-exemplar clusters;
+  the exemplar mechanism is M9's), so corpus runs and future
+  retrieval tests are reproducible without vault access. Curation
+  and licensing are the author's pass.
 
 - **Transient transport failures kill the run** (author call, live
   run 8): a provider disconnect exits `qf run` even though the A16
@@ -547,16 +582,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
   cover; revisit when a generated story demands one. Same for temporal
   hints: only hints on shared beats are consumed (a hint on a beat
   inside an atomic fork unit has nothing to move).
-- **The weave enumerates at most 64 candidates** (deterministic DFS,
-  up to 8 shown to the model, evenly spread; with several hard
-  dilemmas the cap is split evenly across viable nestings so every
-  nesting is represented). First `medium` data point (13 units, 2
-  nestings): the model chose #3 of 8 shown, weave realized first-shot,
-  and `world_of` cost nothing measurable on the 66-beat graph — but
-  one story is not a profile; keep watching the spread heuristic as
-  stories grow (the lexicographic DFS varies the tail of the order
-  first, so early-position variety may still under-sample at larger
-  unit counts).
+- ~~The weave's 64-candidate spread heuristic needed watching at
+  scale~~ **Measured and fixed in M8 PR-1, exercised live in run 8**:
+  at deep-scope unit counts plain lexicographic DFS returned 64
+  near-identical orders (63 units: all candidates shared a
+  12-position prefix); enumeration now fair-splits when the plain
+  sample is truncated inside one subtree, recorded stories keep plain
+  enumeration byte-stable, and run 8's weave chose among genuinely
+  distinct orders at 40+ units and realized first-shot.
 - ~~Locked dilemmas (heritage's "unexplored dilemmas") are the designed
   next structural effort~~ **Built** (2026-07-10, this PR — see "Where
   we are" and the decision-log entry): overgeneration + locked
@@ -573,11 +606,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
   M4+ if the gap shows.
 - **Character-arc metadata remains unbuilt** (a POLISH output in design
   doc 02, deferred to be shaped by its consumer). M4's FILL wrote a
-  micro story well without it — entities+overlays+shadows+window proved
-  sufficient context at this scale. Per the annotation discipline
-  (design doc 01 §10), add it when a FILL quality gap at `short`+
-  scope demonstrably calls for it, and update doc 02 if it never earns
-  its keep.
+  micro story well without it. **The deferral's trigger condition has
+  now demonstrably fired** (live run 8 reading: detail-stamping at
+  book scale — decision log 2026-07-11); it joins the author-directed
+  prose-quality effort (next-up #1) as the lever that paces specific
+  aspects of a character per scene instead of all details in all
+  scenes.
 - ~~The HTML player has no codex panel yet~~ **Built** with DRESS
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
@@ -643,6 +677,90 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (live run 8 reading findings — stylistic repetition;
+  the author's design direction for the prose-quality effort):**
+  Reading "Closed Circle" at book scale surfaced the first
+  quality gap only a 49k-word read could: **verbatim recurring
+  descriptions** — Beaumont takes "the wide lateral stance of a
+  classical fencer" in 25 of 148 passages, near word-for-word; his eye
+  twitch in 12; the velvet smoking jacket in 16. Diagnosis (traced,
+  not guessed): the entity micro-detail machinery works as built and
+  stamps the prose — FILL discovers a vivid detail once, every later
+  write context renders it verbatim whenever the entity is on stage,
+  the writer performs the phrase already sitting in its prompt, the
+  window doubles the exposure, and the review *rewards* it (each
+  passage is judged in isolation, where repetition reads as the
+  consistency the rules check). The key-level single-assignment guard
+  also let near-duplicate details accrue under different keys
+  (`habit` vs `stance_width`, both the fencer stance), and details
+  were stored as performed sentences — the pre-voiced-summary bias
+  vector, now in the entity layer. The author's direction, recorded
+  as the design brief for the effort: (1) the deterministic echo
+  check at FILL apply (long verbatim n-gram overlap with rendered
+  detail values or window prose, repairable) is approved — modest
+  expectations, cannot hurt; (2) most of the fix is **prompt
+  engineering: tell the writer how to interpret each context block
+  and what to do with it** (facts are constraints, not choreography;
+  the window is continuity, not a style template); (3) the rule of
+  thumb, generalizing the summary-register lesson: **everything that
+  is not prose should not be prose** — micro-details and every other
+  LLM-written non-prose field carry the brief register; relatedly,
+  a too-thin Voice record may itself cause copying (a writer short on
+  style guidance leans on whatever styled text is at hand); (4) a
+  deeper look-back helps only to a point and blows up tokens — a
+  **rolling story-so-far summary by a utility-tier summarizer** is
+  worth building instead; (5) **high hopes for character-arc
+  metadata** (the POLISH output deferred under 01 §10): it turns each
+  scene's focus onto pacing *specific aspects* of a character or
+  object instead of pushing all details into all scenes — the
+  deferral's trigger condition ("a FILL quality gap at short+ scope
+  demonstrably calls for it") has now demonstrably fired. Sequencing
+  relative to M9 is the author's call; the effort is frontier-tier
+  (prompt framing and the arc-metadata contract are bias-sensitive).
+
+- **2026-07-11 (M8 exit: live run 8 — "Closed Circle"):** From the
+  author's seed "an Agatha Christie closed circle murder mystery that
+  escalates Fargo style", a corpus-grounded `medium` story generated
+  end-to-end on Gemini (3.1-pro-preview architect/writer + 2.5-flash
+  utility — the M8 machinery's third provider family), preserved as
+  `examples/closed-circle/`. **Every §M8 exit criterion met, and the
+  calibration methodology validated**: 49,381 words (20-60k), 148
+  passages (90-160), B4 114-123 (80-150), walk-B6 644 mean / 618-663
+  (<= ~800; the simulation projected 690-780 — live texture passages
+  wrote leaner than projected), 32/32 arcs complete, four exports
+  round-trip clean, ~$17 vs the $20 cap (above the $8-14 estimate:
+  ~1.1M of the pro output tokens are billed thinking, plus re-spend
+  across four transport interruptions). The cosmetic:real choice
+  ratio measured **4.6:1** against the plan's predicted ~5:1 —
+  recorded as promised; whether it reads as texture or tax is a
+  play-through judgment for the author. Structure: 260 beats, 2
+  worlds, 4 endings, 3 locked storylines woven through the spine,
+  8-beat locked chains, full DRESS enrichment (20 briefs, 10 codex
+  entries, crosshatched line-art direction). Five engine findings,
+  each fixed in-flight: (1) *jointly-infeasible order relations* —
+  pairwise-acyclic wraps/serial webs left no valid climax (a locked
+  chain serial-after every hard resolve); SEED's order apply now
+  probes the weave repairably, with a violating-construction test —
+  the model restructured correctly on the first repaired attempt.
+  (2) *the Gemini provider held silent non-streaming connections* —
+  idle-intolerant middleboxes killed them; it streams and collects
+  now (the Anthropic provider's rationale, extended). (3) *thinking
+  gaps kill even streams* — a bounded per-call transport retry.
+  (4) *5xx ServerError sailed past the transport class* — the retry
+  covers it; 4xx stays fatal. (5) Two author roadmap calls landed on
+  M10: stage-level auto-resume and per-pass progress reporting (the
+  run needed four manual re-invokes and its only live telemetry was
+  counting cache files). Also exercised live, worth the record: the
+  FILL halt fired once and *correctly* — the writer twice asserted an
+  undecided flag's state in a texture arm (Rule 4), arbitration
+  upheld — and was resolved through the designed author knob (a
+  beat-brief edit + revalidate), with cache replay making the resume
+  nearly free; `qf rerun seed --keep triage --keep scaffold` replayed
+  both expensive passes free after finding 1; A17 freshness preserved
+  every research digest across five process restarts; the SEED depth
+  nudge visibly steered the librarian ("intersecting subplots
+  consequence compounding"). M8 closes; M9 is next.
 
 - **2026-07-10 (M8 PR-1b: tensored residue arms):** The shape deferred
   from the locked-dilemmas effort, built to plan D5 with the PR-1

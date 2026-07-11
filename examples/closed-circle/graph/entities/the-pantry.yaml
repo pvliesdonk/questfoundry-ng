@@ -1,0 +1,11 @@
+id: location:the-pantry
+name: The Walk-In Pantry
+concept: A freezing, cavernous storage room currently serving as a highly inconvenient and
+  increasingly crowded temporary morgue.
+base:
+  closure_mechanism: The heavy oak door relies upon an antiquated, weighted brass latch that
+    requires a deliberate, forceful depression to properly secure the threshold against internal
+    pressure.
+  volumetric_allowance: Operates under an absolute maximum volumetric allowance that strictly
+    precludes the simultaneous storage of multiple adult human casualties alongside standard
+    preserves.

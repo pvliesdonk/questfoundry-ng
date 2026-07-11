@@ -1,0 +1,16 @@
+passage: passage:group-138
+priority: 7
+caption: A drunken Cecily seizes the controversial ledger, reading its ruinous secrets aloud
+  to a furious Sylvia.
+prompt: Claustrophobic line-art with oppressive negative space. Cecily languidly and precariously
+  drapes against heavy furniture molding in expensive silk pyjamas, holding a thick, heavy
+  leather ledger with vellum pages. Sylvia stands in exact perpendicular alignment, her sharp
+  cashmere shawl drawn aggressively as she presses two silk-gloved fingers to her temples
+  in theatrical displeasure. Arthur cowers rigidly, a sweaty figure clutching his briefcase.
+  Grayscale with vintage burgundy highlights on the heavy ledger and frostbite blue on Cecily's
+  silk pyjamas.
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+- character:sylvia

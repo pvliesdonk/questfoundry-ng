@@ -1,0 +1,9 @@
+id: beat:bridge-2
+created_by: grow
+summary: Just as the heavy wooden door clicks shut on the bloody secret, footsteps approach
+  from the drawing room.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-pantry
+- character:sylvia

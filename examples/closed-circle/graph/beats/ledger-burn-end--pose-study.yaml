@@ -1,0 +1,12 @@
+id: beat:ledger-burn-end--pose-study
+created_by: grow
+summary: The party devolves into an anarchic brawl over the remaining expensive alcohol. The
+  fighting quickly spills into the study, inevitably knocking the newspaper off the deceased
+  guest and shattering the last polite illusion of the evening.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+is_ending: true
+belongs_to:
+- path:burn-it

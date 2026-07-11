@@ -1,0 +1,14 @@
+id: beat:podcast-resolution-smash--stuff-pantry
+created_by: grow
+summary: Beaumont abruptly snatches the smartphone and violently smashes it into pieces with
+  a candlestick. The sudden act of violence shocks the room into silence, amplifying the faint
+  sound of something heavy shifting inside the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:smash-phone

@@ -1,0 +1,21 @@
+id: passage:group-95-body-in-snow
+summary: Beaumont severs the phone cord as the ceiling shatters, isolating the manor while
+  he continually checks the window to ensure the second body remains hidden in the snow outside.
+entities:
+- character:beaumont
+- location:conservatory
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:collapse-aftermath-isolated--pose-study
+- beat:collapse-aftermath-shatter--pose-study
+- beat:collapse-resolution-cut--pose-study
+choices:
+- label: Listen to Cecily curse the miserable freezing architecture.
+  to: passage:group-101
+- label: Watch Arthur pace frantically to ward off the chill.
+  to: passage:group-102
+variant_of: passage:group-95-arthur-terrified

@@ -1,0 +1,15 @@
+id: passage:group-112
+summary: A brittle, ancient piece of the ledger's leather cover flakes off and flutters uselessly
+  onto the dusty floor.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s3-a2
+choices:
+- label: Get cornered by Munroe and her smartphone microphone.
+  to: passage:group-114

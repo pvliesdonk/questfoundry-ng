@@ -1,0 +1,13 @@
+id: beat:tea-sylvia-agony--stuff-pantry
+created_by: grow
+summary: Sylvia takes a sip, turns a distinct shade of green, and clutches her stomach in
+  sudden agony. Her pained gasps echo through the room, masking any noises that might be coming
+  from the bloody pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:sylvia
+belongs_to:
+- path:serve-sylvia

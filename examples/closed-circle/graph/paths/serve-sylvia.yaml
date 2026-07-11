@@ -1,0 +1,7 @@
+id: path:serve-sylvia
+name: Lethal Earl Grey
+explores: answer:serve-sylvia
+consequences:
+- id: consequence:sylvia-incapacitated
+  text: Sylvia is bedridden with severe gastric distress, temporarily removing her hyper-critical
+    presence from the manor.

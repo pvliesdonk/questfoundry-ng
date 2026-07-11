@@ -1,0 +1,20 @@
+id: passage:group-43
+summary: Sylvia threatens Beaumont with terrible social reviews for his slow service. Arthur
+  frantically whispers that poisoning her will guarantee their execution, forcing Beaumont
+  to realize a second death will ruin his napping charade.
+entities:
+- character:sylvia
+- character:beaumont
+- character:arthur
+beats:
+- beat:tea-arthur-warns--pose-study
+- beat:tea-sylvia-countdown--pose-study
+choices:
+- label: Trick Munroe into locking herself in the conservatory.
+  grants:
+  - flag:munroe-interrogation
+  to: passage:group-44
+- label: Allow Munroe to coat the room in baking flour.
+  grants:
+  - flag:flour-contamination
+  to: passage:group-45

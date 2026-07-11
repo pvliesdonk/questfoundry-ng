@@ -1,0 +1,9 @@
+id: beat:harpoon-aftermath-sticky
+summary: The curtains are left with a suspiciously dark, sticky stain that smells strongly
+  of iron.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: advances
+belongs_to:
+- path:wipe-curtains

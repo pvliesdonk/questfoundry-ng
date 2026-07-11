@@ -1,0 +1,16 @@
+id: passage:group-5
+summary: Sylvia approaches the study while complaining about the noise, completely unaware
+  of the gruesome scene. Beaumont desperately blocks the doorway with his body to maintain
+  the illusion of a perfect party.
+entities:
+- character:sylvia
+- character:beaumont
+beats:
+- beat:bridge-6
+- beat:first-body-beau-blocks
+- beat:first-body-sylvia-complains
+choices:
+- label: Stretch out to show off the wallpaper.
+  to: passage:group-6
+- label: Loudly recite the manor's architectural history.
+  to: passage:group-7

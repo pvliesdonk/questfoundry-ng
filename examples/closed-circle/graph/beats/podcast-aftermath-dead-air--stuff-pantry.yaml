@@ -1,0 +1,11 @@
+id: beat:podcast-aftermath-dead-air--stuff-pantry
+created_by: grow
+summary: The broadcast cuts to dead air, stopping the flow of evidence to the outside world.
+  Beaumont breathes easier, knowing Munroe's live stream of the bloody hallway floor has been
+  permanently severed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: advances
+belongs_to:
+- path:smash-phone

@@ -1,0 +1,11 @@
+id: beat:podcast-aftermath-dead-air--pose-study
+created_by: grow
+summary: The broadcast cuts to dead air, stopping the flow of evidence to the outside world.
+  Beaumont is relieved, knowing the podcaster can no longer upload photos of the man "sleeping"
+  under the newspaper in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: advances
+belongs_to:
+- path:smash-phone

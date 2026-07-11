@@ -1,0 +1,7 @@
+id: path:pose-study
+name: Weekend at Beau's
+explores: answer:pose-study
+consequences:
+- id: consequence:study-weekend-at-bernies
+  text: The study becomes the stage for a tense, ongoing charade to convince passersby that
+    the dead guest is merely asleep.

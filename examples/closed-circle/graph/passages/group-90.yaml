@@ -1,0 +1,13 @@
+id: passage:group-90
+summary: A sudden, violent gust of wind rattles the icy windowpanes, making everyone in the
+  room flinch simultaneously.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run15-s1-a1
+choices:
+- label: Manic window-management to keep the snow corpse hidden.
+  to: passage:group-94

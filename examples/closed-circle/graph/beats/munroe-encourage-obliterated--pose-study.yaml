@@ -1,0 +1,13 @@
+id: beat:munroe-encourage-obliterated--pose-study
+created_by: grow
+summary: The thick dusting of flour completely obliterates any real forensic evidence. It
+  also settles conspicuously over the dead man and his newspaper, creating a ghostly pallor
+  that Beaumont struggles to brush away unnoticed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: reveals
+entities:
+- object:poisoned-tea-set
+belongs_to:
+- path:encourage-dusting

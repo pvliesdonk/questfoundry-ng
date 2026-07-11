@@ -1,0 +1,15 @@
+id: beat:podcast-demands-confession--pose-study
+created_by: grow
+summary: Munroe shoves the phone in Beaumont's face, demanding an on-the-record confession
+  about the poisoned tea set. Beaumont stammers, trying to maintain his polite composure while
+  physically blocking her view of the corpse in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: complicates
+entities:
+- character:det-munroe
+- character:beaumont
+- object:poisoned-tea-set
+belongs_to:
+- path:smash-phone

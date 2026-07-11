@@ -1,0 +1,15 @@
+id: beat:tea-sylvia-countdown--pose-study
+created_by: grow
+summary: Sylvia accuses Beaumont of being a terrible host, loudly promising to leave an awful
+  review to their social circle. Beaumont accepts the insult with a bow, silently thinking
+  that a bad review is better than her uncovering the corpse in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:sylvia
+- character:beaumont
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

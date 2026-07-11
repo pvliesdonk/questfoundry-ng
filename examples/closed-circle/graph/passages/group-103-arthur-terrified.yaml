@@ -1,0 +1,21 @@
+id: passage:group-103-arthur-terrified
+summary: Beaumont cuts the phone line right as the glass ceiling shatters, trapping the group
+  with Arthur, who loudly panics about the corpse upstairs whispering to the bloody one in
+  the pantry.
+entities:
+- character:beaumont
+- location:conservatory
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:collapse-aftermath-isolated--stuff-pantry
+- beat:collapse-aftermath-shatter--stuff-pantry
+- beat:collapse-resolution-cut--stuff-pantry
+choices:
+- label: Shiver as Cecily bitterly curses the cold house.
+  to: passage:group-105
+- label: Watch Arthur pace back and forth to stay warm.
+  to: passage:group-106

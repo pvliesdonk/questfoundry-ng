@@ -1,0 +1,11 @@
+id: beat:first-body-commit-pantry
+summary: The group drags the bleeding victim down the hall and shoves them behind the pickled
+  onions in the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: commits
+entities:
+- location:the-pantry
+belongs_to:
+- path:stuff-pantry

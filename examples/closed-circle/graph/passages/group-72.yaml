@@ -1,0 +1,20 @@
+id: passage:group-72
+summary: A second guest chokes on a poisoned crumpet in the hallway. Beaumont realizes the
+  pantry door is jammed from the inside, leaving him with no place to hide a second body while
+  the guests excitedly ask to explore the hall.
+entities:
+- character:beaumont
+- location:the-pantry
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-choke--pose-study
+- beat:overflow-door-jammed--pose-study
+- beat:overflow-guests-explore--pose-study
+choices:
+- label: Watch a guest scramble backward over an ottoman.
+  to: passage:group-81
+- label: Shush Arthur before his shouting draws attention.
+  to: passage:group-83

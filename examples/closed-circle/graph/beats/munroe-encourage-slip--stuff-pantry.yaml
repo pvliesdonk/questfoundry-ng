@@ -1,0 +1,13 @@
+id: beat:munroe-encourage-slip--stuff-pantry
+created_by: grow
+summary: Munroe slips on a pile of flour and knocks herself out, temporarily halting her investigation.
+  The sudden thud of her fall effectively masks the quiet, wet sound of the bleeding body
+  shifting behind the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+belongs_to:
+- path:encourage-dusting

@@ -1,4 +1,4 @@
-"""Structural scale simulation (M8 phase 0; docs/plans/m8-depth-scale.md D3).
+"""Structural scale simulation (M8; design doc 01 §2, mini-ADR A19).
 
 Synthetic stories at parameterized dilemma mixes and chain depths, built
 and compiled through the real machinery — SEED-shaped graph construction,

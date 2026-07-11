@@ -1,0 +1,17 @@
+id: passage:group-8
+summary: Beaumont notices the antique harpoon dripping thick blood onto his incredibly expensive
+  Persian rug. Cecily stumbles into the room, threatening to turn on the main overhead lights
+  to admire the rug's pattern.
+entities:
+- character:beaumont
+- object:antique-harpoon
+- character:cecily
+beats:
+- beat:first-body-blood-pool
+- beat:harpoon-blood-drip
+- beat:harpoon-cecily-lights
+choices:
+- label: Wait for Cecily to light a cigarette.
+  to: passage:group-9
+- label: Search frantically for a spare towel.
+  to: passage:group-10

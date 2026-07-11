@@ -1,0 +1,14 @@
+id: beat:munroe-distract-freeze--pose-study
+created_by: grow
+summary: The temperature in the conservatory drops, turning Munroe's true-crime fantasy into
+  a genuine survival situation. While she freezes outside, Beaumont remains inside, rigidly
+  maintaining the polite fiction that the study's occupant is just taking a nap.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: complicates
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

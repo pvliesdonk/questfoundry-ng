@@ -1,0 +1,15 @@
+id: beat:ledger-commit-read--pose-study
+created_by: grow
+summary: Cecily drunkenly wrestles the ledger away from Arthur and begins enthusiastically
+  reading everyone's debts aloud. She paces around the study for dramatic effect, coming dangerously
+  close to the propped-up victim and his newspaper disguise.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: commits
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+belongs_to:
+- path:let-cecily-read

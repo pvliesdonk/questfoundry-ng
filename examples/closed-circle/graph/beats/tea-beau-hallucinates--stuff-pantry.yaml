@@ -1,0 +1,13 @@
+id: beat:tea-beau-hallucinates--stuff-pantry
+created_by: grow
+summary: Mild hallucinations set in, causing Beaumont to hold an earnest, polite conversation
+  with a coat rack. In his poisoned delirium, he loudly promises the furniture that he will
+  mop up the pantry later, confusing the remaining guests.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

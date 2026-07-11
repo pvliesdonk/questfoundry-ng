@@ -1,0 +1,14 @@
+id: beat:munroe-flour-intro--pose-study
+created_by: grow
+summary: Munroe announces she is taking charge of the crime scene, pulling out a massive bag
+  of baking flour to dust for fingerprints. She heads straight for the study, threatening
+  to coat Beaumont's carefully posed "sleeping" man in baking goods.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

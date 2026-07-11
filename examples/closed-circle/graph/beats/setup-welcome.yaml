@@ -1,0 +1,7 @@
+id: beat:setup-welcome
+summary: Beaumont Sterling graciously welcomes his weekend guests to the manor, dutifully
+  pouring champagne while ignoring the creeping blizzard outside.
+beat_class: structural
+purpose: setup
+entities:
+- character:beaumont

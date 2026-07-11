@@ -1,0 +1,13 @@
+id: beat:podcast-cornered--stuff-pantry
+created_by: grow
+summary: Munroe corners the group in the hallway, aggressively holding her smartphone out
+  like a microphone. She pins them against the wall, standing completely oblivious to the
+  walk-in pantry just inches behind her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: advances
+entities:
+- character:det-munroe
+belongs_to:
+- path:smash-phone

@@ -1,0 +1,13 @@
+id: beat:overflow-room-paranoid--stuff-pantry
+created_by: grow
+summary: Arthur becomes severely paranoid, convinced the upstairs victim is whispering through
+  the floorboards. His terrified rambling makes the other guests increasingly uneasy about
+  the strange, wet noises coming from the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

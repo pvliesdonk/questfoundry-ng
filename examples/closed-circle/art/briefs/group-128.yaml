@@ -1,0 +1,12 @@
+passage: passage:group-128
+priority: 14
+caption: A furious Munroe hunts Beaumont into the hallway, trapping him near the walk-in pantry.
+prompt: Darkly farcical line-art with heavy crosshatching. Munroe marches in thick-soled tactical
+  boots and heavily reinforced canvas outerwear indoors, artificially rigid and gripping a
+  heavily armored smartphone with two hands. Beaumont retreats with a perfectly rigid spine
+  and a wide lateral fencer's stance in his impeccable velvet smoking jacket and flawless
+  shirt cuffs. They are physically boxed in by oppressive negative space. Grayscale with frostbite
+  blue on the armored smartphone screen and bruised burgundy on Beaumont's velvet jacket.
+entities:
+- character:det-munroe
+- character:beaumont

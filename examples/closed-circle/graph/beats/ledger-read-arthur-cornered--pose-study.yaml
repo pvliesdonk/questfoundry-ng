@@ -1,0 +1,13 @@
+id: beat:ledger-read-arthur-cornered--pose-study
+created_by: grow
+summary: Arthur is cornered by enraged guests demanding to know why he cooked their books.
+  The angry mob pushes him backward into the study, backing him directly up against the armchair
+  holding the propped-up corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:arthur
+belongs_to:
+- path:let-cecily-read

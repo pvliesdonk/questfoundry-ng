@@ -1,0 +1,21 @@
+id: passage:group-128
+summary: The broadcast dies, preventing the evidence from escaping. A screaming, furious Munroe
+  abandons her investigation and aggressively hunts Beaumont into the hallway, trapping him
+  directly in front of the walk-in pantry.
+entities:
+- character:det-munroe
+- character:beaumont
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:podcast-aftermath-dead-air--stuff-pantry
+- beat:podcast-aftermath-fury--stuff-pantry
+- beat:podcast-aftermath-hunted--stuff-pantry
+choices:
+- label: Stand in the profound, suffocating silence of the hall.
+  to: passage:group-132
+- label: Dodge past her and sprint for the dining room.
+  to: passage:group-133

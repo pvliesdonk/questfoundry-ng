@@ -1,0 +1,11 @@
+id: object:poisoned-tea-set
+name: The Silver Tea Set
+concept: A highly valuable tea service that has definitely been poisoned, though no one can
+  remember which cup is which.
+base:
+  acoustic_property: Chimes with a delicate, perfectly tuned metallic ring when transported
+    across uneven floorboards.
+  porcelain_insulation: The accompanying saucers are crafted from bone china of such exquisite
+    thinness that they offer absolutely zero insulation against scalding temperatures.
+  visual_flaw: A microscopic chip on the rim of the third teacup serves as the sole blemish
+    on an otherwise flawless, albeit presently lethal, service.

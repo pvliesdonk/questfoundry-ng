@@ -1,0 +1,22 @@
+id: passage:group-123
+summary: Arthur realizes the broadcast is showing the blood trail to the pantry. To stop her
+  demands for a confession, Beaumont violently smashes the smartphone with a candlestick,
+  amplifying the faint sound of a heavy shift inside the pantry.
+entities:
+- character:arthur
+- character:det-munroe
+- character:beaumont
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:podcast-arthur-realizes--stuff-pantry
+- beat:podcast-demands-confession--stuff-pantry
+- beat:podcast-resolution-smash--stuff-pantry
+choices:
+- label: Watch jagged shards scatter aggressively across the rug.
+  to: passage:group-125
+- label: Hear the final electronic whine of the destroyed device.
+  to: passage:group-126

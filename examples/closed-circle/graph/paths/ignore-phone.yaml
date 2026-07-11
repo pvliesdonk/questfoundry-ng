@@ -1,0 +1,7 @@
+id: path:ignore-phone
+name: Severed Ties
+explores: answer:ignore-phone
+consequences:
+- id: consequence:line-severed
+  text: The manor's only landline is completely severed, guaranteeing total isolation from
+    the outside world.

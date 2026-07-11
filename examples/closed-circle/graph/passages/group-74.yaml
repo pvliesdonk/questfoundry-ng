@@ -1,0 +1,11 @@
+id: passage:group-74
+summary: Sylvia dramatically demands a cold compress, loudly groaning that the manor's dreadful
+  drafts are responsible for her suffering.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run11-s1-a1
+choices:
+- label: Scrub away a fresh streak of blood from the floor.
+  to: passage:group-77

@@ -1,0 +1,10 @@
+id: beat:bridge-0
+created_by: grow
+summary: Beaumont herds the shivering guests out of the drafty conservatory and into the dining
+  room to warm up, keeping them tightly clustered.
+beat_class: structural
+purpose: bridge
+entities:
+- location:conservatory
+- character:beaumont
+- character:cecily

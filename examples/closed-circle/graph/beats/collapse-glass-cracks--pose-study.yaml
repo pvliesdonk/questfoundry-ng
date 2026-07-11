@@ -1,0 +1,13 @@
+id: beat:collapse-glass-cracks--pose-study
+created_by: grow
+summary: The glass ceiling begins to groan and crack under the immense weight of accumulated
+  snow. The guests back away from the impending collapse, inadvertently crowding into the
+  study where Beaumont is desperately guarding the "napping" victim.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: complicates
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

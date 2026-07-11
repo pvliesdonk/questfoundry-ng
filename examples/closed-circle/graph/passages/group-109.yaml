@@ -1,0 +1,23 @@
+id: passage:group-109
+summary: Arthur panics and lunges for his ledger, drawing massive suspicion. Munroe seizes
+  it as forensic evidence and cracks the seal, exposing Beaumont's financial ruin and providing
+  a clear motive for murder.
+entities:
+- character:arthur
+- object:the-ledger
+- character:det-munroe
+- character:beaumont
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:ledger-arthur-panic--pose-study
+- beat:ledger-munroe-intervenes--pose-study
+- beat:ledger-seal-cracks--pose-study
+choices:
+- label: Cough at the cloud of dry dust from the binding.
+  to: passage:group-111
+- label: Watch a brittle piece of the leather cover flake off.
+  to: passage:group-112

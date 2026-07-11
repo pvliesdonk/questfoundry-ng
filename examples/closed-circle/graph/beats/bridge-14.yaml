@@ -1,0 +1,9 @@
+id: beat:bridge-14
+created_by: grow
+summary: The sound of shattering crystal draws the rest of the furious debtors into the room
+  to confront the accountant.
+beat_class: structural
+purpose: bridge
+entities:
+- character:sylvia
+- character:arthur

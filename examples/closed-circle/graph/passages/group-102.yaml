@@ -1,0 +1,14 @@
+id: passage:group-102
+summary: Arthur paces frantically back and forth, vigorously rubbing his hands together to
+  ward off the rapidly encroaching chill.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s1-a2
+choices:
+- label: Watch Cecily slide the encrypted ledger under the table.
+  to: passage:group-104

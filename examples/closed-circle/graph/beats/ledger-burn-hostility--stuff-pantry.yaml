@@ -1,0 +1,11 @@
+id: beat:ledger-burn-hostility--stuff-pantry
+created_by: grow
+summary: Freed from the proof of their debts, the guests abandon polite manners entirely and
+  begin actively antagonizing one another. The breakdown of trust means they start openly
+  interrogating each other about the blood trail leading to the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+belongs_to:
+- path:burn-it

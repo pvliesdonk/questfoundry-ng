@@ -1,0 +1,8 @@
+id: beat:residue-beau-study-fork
+created_by: polish
+summary: Beaumont attempts to loudly redirect the guests away from the new corpse, but a sharp
+  cramp from the poisoned tea leaves him gasping instead.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:beau-poisoned

@@ -1,0 +1,12 @@
+id: beat:first-body-discovery
+summary: The group rushes into the study to find a guest pinned to the wall by the oversized
+  antique harpoon.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: reveals
+entities:
+- object:antique-harpoon
+belongs_to:
+- path:pose-study
+- path:stuff-pantry

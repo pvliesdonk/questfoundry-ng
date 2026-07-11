@@ -1,0 +1,9 @@
+id: beat:bridge-1
+created_by: grow
+summary: Retreating from the shattered glass and freezing wind, the guests cluster in the
+  adjacent dining room to seek warmth.
+beat_class: structural
+purpose: bridge
+entities:
+- location:conservatory
+- character:cecily

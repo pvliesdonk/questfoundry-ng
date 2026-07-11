@@ -1,0 +1,11 @@
+id: beat:overflow-snow-covered--pose-study
+created_by: grow
+summary: The blizzard quickly covers the body in the snowdrift, providing a temporary hiding
+  spot outside. Beaumont breathes a sigh of relief, realizing he only has to worry about maintaining
+  the illusion of the single "sleeping" guest indoors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+belongs_to:
+- path:snow-drift

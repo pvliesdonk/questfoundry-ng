@@ -1,0 +1,15 @@
+id: location:conservatory
+name: The Glass Conservatory
+concept: A structurally unsafe, freezing botanical room that houses the manor's only working
+  landline.
+base:
+  thermal_failure: The botanical room's central heating apparatus suffered a catastrophic
+    failure three winters prior and remains neglected, effectively rendering it an outdoor
+    environment.
+  potting_bench: An abandoned potting bench in the corner retains a heavy, rust-spotted pair
+    of botanical shears from the room's former operational days.
+  fixture_degradation: The botanical annex's wrought-iron plant stands exhibit advanced, unsightly
+    oxidation, an aesthetic failing born of chronic wintertime condensation and systematic
+    staff neglect.
+  shear_heft: The antique botanical shears possess an unevenly distributed weight that forces
+    the operator to apply downward pressure strictly from the shoulder.

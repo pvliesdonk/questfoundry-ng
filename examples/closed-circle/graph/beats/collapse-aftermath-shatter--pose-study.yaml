@@ -1,0 +1,13 @@
+id: beat:collapse-aftermath-shatter--pose-study
+created_by: grow
+summary: A massive pane of glass shatters from the ceiling, burying the telephone in lethal
+  shards and snow. The sudden noise causes several guests to jump, nearly knocking over the
+  armchair where the dead victim is supposedly sleeping.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

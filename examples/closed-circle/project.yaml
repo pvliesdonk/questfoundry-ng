@@ -1,0 +1,15 @@
+name: Closed Circle
+stage: dress
+craft:
+  corpus: /home/user/corpus/interactive-fiction
+  folders:
+  - audience-and-access
+  - craft-foundations
+  - emotional-design
+  - genre-conventions
+  - narrative-structure
+  - prose-and-language
+  - scope-and-planning
+  - world-and-setting
+ifid: E5608A84-3665-45EE-B830-2B9468816873
+print_seed: 1

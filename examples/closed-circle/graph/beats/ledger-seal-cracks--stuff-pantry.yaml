@@ -1,0 +1,15 @@
+id: beat:ledger-seal-cracks--stuff-pantry
+created_by: grow
+summary: The seal cracks open, exposing a page detailing Beaumont's massive financial ruin.
+  With his murderous motive suddenly visible, the blood-stained path leading to the locked
+  pantry looks much more suspicious.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:beaumont
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

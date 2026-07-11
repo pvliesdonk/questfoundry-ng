@@ -1,0 +1,9 @@
+id: beat:bridge-22
+created_by: grow
+summary: The furious entrance coincides with the arrival of the afternoon refreshment cart,
+  forcing a bizarre clash of lethal threats and high-society manners.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- object:poisoned-tea-set

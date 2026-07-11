@@ -1,0 +1,15 @@
+id: passage:group-127
+summary: A profound, suffocating silence descends on the ruined room, thick with unsaid accusations
+  and mounting dread.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s6-a1
+choices:
+- label: Dodge past my attacker and run for the financial records.
+  to: passage:group-129

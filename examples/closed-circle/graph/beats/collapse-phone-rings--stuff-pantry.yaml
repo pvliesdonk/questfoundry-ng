@@ -1,0 +1,13 @@
+id: beat:collapse-phone-rings--stuff-pantry
+created_by: grow
+summary: The manor's landline in the conservatory begins to ring shrilly, echoing down the
+  hall. The sudden noise startles the group, briefly distracting them from their collective
+  anxiety over the bleeding body shoved behind the pickled onions.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

@@ -1,0 +1,14 @@
+id: passage:group-136
+summary: Sylvia's furious tirade is momentarily interrupted by a violent, racking coughing
+  fit, though it does nothing to temper her rage.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run21-s1-a1
+choices:
+- label: Watch the angry mob push Arthur directly into the study.
+  to: passage:group-140

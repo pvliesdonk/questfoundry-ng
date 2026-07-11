@@ -1,0 +1,20 @@
+id: passage:group-93
+summary: Arthur becomes severely paranoid, convinced the upstairs victim is whispering through
+  the floorboards. The shrill ring of the manor's landline pierces the tense atmosphere, threatening
+  to connect their hysteria to the outside world.
+entities:
+- character:arthur
+- character:beaumont
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-28
+- beat:overflow-room-paranoid--pose-study
+choices:
+- label: Grab garden shears and snip the phone cord entirely.
+  requires:
+  - flag:arthur-terrified
+  to: passage:group-95-arthur-terrified

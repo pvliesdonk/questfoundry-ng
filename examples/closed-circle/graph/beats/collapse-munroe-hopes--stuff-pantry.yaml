@@ -1,0 +1,14 @@
+id: beat:collapse-munroe-hopes--stuff-pantry
+created_by: grow
+summary: Munroe realizes the ringing phone is her only chance to call in outside investigators
+  before someone cleans up the mysterious blood trail leading to the pantry. She aggressively
+  demands someone answer it despite the structural danger.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: reveals
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:ignore-phone

@@ -1,0 +1,13 @@
+id: beat:podcast-aftermath-fury--pose-study
+created_by: grow
+summary: Munroe stares at her destroyed equipment, her true-crime persona breaking into unbridled
+  fury. She lunges at Beaumont, bringing their violent scuffle perilously close to the quiet,
+  motionless figure in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: reveals
+entities:
+- character:det-munroe
+belongs_to:
+- path:smash-phone

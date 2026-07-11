@@ -1,0 +1,15 @@
+id: passage:group-135
+summary: Angry sparks pop aggressively from the roaring fireplace as the heavy ledger hits
+  the burning embers.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run20-s1-a2
+choices:
+- label: Surrender as the party devolves into an anarchic brawl.
+  to: passage:group-139

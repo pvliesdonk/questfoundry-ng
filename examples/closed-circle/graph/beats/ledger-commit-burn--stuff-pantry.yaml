@@ -1,0 +1,14 @@
+id: beat:ledger-commit-burn--stuff-pantry
+created_by: grow
+summary: Beaumont snatches the ledger from the table and hurls it into the roaring fireplace
+  to protect his secrets. He calculates that creating a new crisis in the dining room will
+  keep anyone from wandering off toward the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: commits
+entities:
+- character:beaumont
+- object:the-ledger
+belongs_to:
+- path:burn-it

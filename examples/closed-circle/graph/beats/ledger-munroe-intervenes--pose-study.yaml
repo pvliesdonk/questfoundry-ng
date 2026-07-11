@@ -1,0 +1,15 @@
+id: beat:ledger-munroe-intervenes--pose-study
+created_by: grow
+summary: Munroe declares the ledger is key forensic evidence and begins actively picking at
+  its wax seal. Her investigative zeal makes Beaumont sweat, as he fears she will soon apply
+  the same scrutiny to the unusually still man in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:det-munroe
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

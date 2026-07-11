@@ -1,0 +1,15 @@
+id: beat:tea-commit-sylvia--pose-study
+created_by: grow
+summary: Beaumont calls Sylvia's bluff with a strained smile, serving her the suspect Earl
+  Grey directly. He hands her the cup while standing firmly between her and the armchair,
+  praying the poison works before she notices the corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: commits
+entities:
+- character:beaumont
+- character:sylvia
+- object:poisoned-tea-set
+belongs_to:
+- path:serve-sylvia

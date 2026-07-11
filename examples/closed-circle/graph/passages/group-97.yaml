@@ -1,0 +1,13 @@
+id: passage:group-97
+summary: Arthur inches subtly toward the brass fire poker, his paranoia driving him to seek
+  a weapon.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run16-s1-a2
+choices:
+- label: Panic as an incoming call rings on the landline.
+  to: passage:group-99

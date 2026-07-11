@@ -1,0 +1,15 @@
+id: passage:group-23
+summary: The newspaper slips off the dead man's face, exposing the corpse to the remaining
+  guests. Panic erupts in the study, further compounded by the howling blizzard and the shrill
+  ringing of the manor's landline.
+entities:
+- location:conservatory
+beats:
+- beat:collapse-blizzard--pose-study
+- beat:collapse-phone-rings--pose-study
+- beat:first-body-pose-end
+choices:
+- label: Stare paralyzed at the shrill ringing phone.
+  to: passage:group-25
+- label: Listen to Arthur mutter about the dead lines.
+  to: passage:group-26

@@ -1,0 +1,14 @@
+id: passage:group-126
+summary: The ruined device lets out a final, pathetic whine before dying in the gloom.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s5-a2
+choices:
+- label: Flee as Munroe actively hunts me through the manor.
+  to: passage:group-128

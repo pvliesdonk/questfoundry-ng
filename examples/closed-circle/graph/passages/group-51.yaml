@@ -1,0 +1,17 @@
+id: passage:group-51
+summary: Beaumont tricks Munroe into locking herself in the freezing conservatory. With the
+  podcaster safely trapped outside, the group quietly attempts to scrub the bloody smears
+  leading to the walk-in pantry.
+entities:
+- character:beaumont
+- character:det-munroe
+- location:conservatory
+beats:
+- beat:munroe-commit-distract--stuff-pantry
+- beat:munroe-distract-fern--stuff-pantry
+- beat:munroe-distract-freeze--stuff-pantry
+choices:
+- label: Think about throwing my pocket watch to divert attention.
+  to: passage:group-55
+- label: Watch Munroe break out of the conservatory with an icicle.
+  to: passage:group-60

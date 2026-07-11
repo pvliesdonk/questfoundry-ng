@@ -1,0 +1,12 @@
+id: beat:first-body-commit-pose
+summary: Beaumont wrestles the victim off the harpoon and hastily props them in an armchair
+  with a newspaper covering their face.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: commits
+entities:
+- character:beaumont
+- object:antique-harpoon
+belongs_to:
+- path:pose-study

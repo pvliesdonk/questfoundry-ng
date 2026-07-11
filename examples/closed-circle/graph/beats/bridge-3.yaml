@@ -1,0 +1,9 @@
+id: beat:bridge-3
+created_by: grow
+summary: The horrified silence of the discovery is abruptly shattered by the click of high
+  heels approaching in the adjacent hall.
+beat_class: structural
+purpose: bridge
+entities:
+- object:antique-harpoon
+- character:sylvia

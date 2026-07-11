@@ -1,0 +1,11 @@
+id: beat:munroe-encourage-footprints--pose-study
+created_by: grow
+summary: Guests track flour footprints all over the manor, creating a chaotic map of everyone's
+  movements. Beaumont constantly sweeps the powder away from the armchair to ensure nobody
+  examines the dead man's suspiciously motionless shoes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: complicates
+belongs_to:
+- path:encourage-dusting

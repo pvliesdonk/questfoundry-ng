@@ -1,0 +1,12 @@
+id: beat:first-body-sylvia-complains
+summary: Sylvia approaches from the hallway, complaining about the noise while entirely oblivious
+  to the gruesome scene inside.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: complicates
+entities:
+- character:sylvia
+belongs_to:
+- path:pose-study
+- path:stuff-pantry

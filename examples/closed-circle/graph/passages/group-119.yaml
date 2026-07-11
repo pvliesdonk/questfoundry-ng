@@ -1,0 +1,22 @@
+id: passage:group-119
+summary: Arthur panics, realizing Munroe is broadcasting their crimes to her loyal subscribers.
+  After Munroe demands an on-the-record confession, Beaumont violently snatches the smartphone
+  and smashes it with a heavy brass candlestick.
+entities:
+- character:arthur
+- character:det-munroe
+- character:beaumont
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:podcast-arthur-realizes--pose-study
+- beat:podcast-demands-confession--pose-study
+- beat:podcast-resolution-smash--pose-study
+choices:
+- label: Stare at the jagged shards of cheap plastic on the carpet.
+  to: passage:group-121
+- label: Listen to the ruined device let out a pathetic whine.
+  to: passage:group-122

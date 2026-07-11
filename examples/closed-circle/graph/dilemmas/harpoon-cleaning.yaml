@@ -1,0 +1,17 @@
+id: dilemma:harpoon-cleaning
+question: The bloody antique harpoon is dripping onto Beau's favorite Persian rug; how do
+  you clean the absurd murder weapon before dinner?
+why_it_matters: Leaves obvious, ridiculous clues that fundamentally compromise the party's
+  innocent facade.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:use-bleach
+  text: Use copious amounts of industrial bleach, making the dining room smell intensely like
+    a crime scene.
+- id: answer:wipe-curtains
+  text: Haphazardly wipe it on the velvet curtains and hope it just looks like a spilled Merlot.
+anchored_to:
+- object:antique-harpoon
+- character:beaumont

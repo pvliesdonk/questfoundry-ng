@@ -1,0 +1,31 @@
+id: character:det-munroe
+name: Sarah Munroe
+concept: An avid true-crime podcaster who blatantly lied about being a real homicide detective
+  to take charge of the situation.
+pronouns: she/her
+base:
+  appearance: Trench coat worn indoors, holding a smartphone like a badge.
+  manner: Speaks entirely in dramatic narration meant for her audio audience.
+  locomotion: Strikes the floorboards with unnecessarily heavy footsteps to artificially emphasize
+    her investigative authority.
+  device_protection: Munroe equips her smartphone with a heavily armored, military-grade casing
+    entirely disproportionate to the actual physical hazards of domestic audio recording.
+  device_grip: Employs a severe, two-handed grip upon her mobile device when actively broadcasting,
+    utilizing the object as a physical extension of her interrogative authority.
+  posture_habit: She maintains a rigid phantom grip in the air for several seconds whenever
+    an object is forcefully confiscated from her hands.
+  forensic_substitutes: Munroe maintains a ready supply of common household baking ingredients
+    upon her person, under the deeply flawed assumption that culinary powders serve as adequate
+    substitutes for professional forensic dusting agents.
+  footwear_preference: Exclusively utilizes aggressively practical, thick-soled boots that
+    prioritize absolute traction over any semblance of indoor propriety.
+  footwear: Prefers uncompromising, heavy-soled tactical boots entirely unsuited for traversing
+    delicate interior flooring.
+  coat_material: Constructs her outerwear from heavily reinforced canvas designed to withstand
+    severe tactical abrasion rather than standard domestic wear.
+  recording_cadence: Munroe adopts an artificially lowered, sharply articulated vocal cadence
+    when recording, erroneously believing it projects an aura of unimpeachable investigative
+    authority.
+  vocal_affectation: She employs a breathless, theatrical whisper under the entirely false
+    assumption that dramatic modulation successfully excuses the profound rudeness of public
+    eavesdropping.

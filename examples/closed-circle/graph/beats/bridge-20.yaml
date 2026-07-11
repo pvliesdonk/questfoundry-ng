@@ -1,0 +1,9 @@
+id: beat:bridge-20
+created_by: grow
+summary: The amateur sleuth enthusiastically flings her makeshift fingerprint powder across
+  every surface in the room.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:det-munroe

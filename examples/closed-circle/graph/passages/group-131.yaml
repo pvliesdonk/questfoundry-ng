@@ -1,0 +1,24 @@
+id: passage:group-131
+summary: Cecily wrestles the ledger away and enthusiastically reads everyone's debts aloud.
+  Sylvia learns she is bankrupt and flies into a screaming rage, violently throwing her wine
+  glass and nearly hitting the dead guest in the armchair.
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+- character:sylvia
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:bridge-12
+- beat:ledger-commit-read--pose-study
+- beat:ledger-read-sylvia-rage--pose-study
+choices:
+- label: Listen to Sylvia's furious tirade get interrupted by a cough.
+  to: passage:group-136
+- label: Watch the enraged guests corner Arthur in the study.
+  to: passage:group-140

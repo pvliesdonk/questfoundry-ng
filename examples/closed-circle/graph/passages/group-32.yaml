@@ -1,0 +1,16 @@
+id: passage:group-32
+summary: The glass ceiling groans, forcing guests toward the hallway pantry. Munroe aggressively
+  demands someone answer the ringing phone and begins tossing baking flour, threatening to
+  highlight the wet bloodstains leading to the pantry.
+entities:
+- location:conservatory
+- character:det-munroe
+beats:
+- beat:collapse-glass-cracks--stuff-pantry
+- beat:collapse-munroe-hopes--stuff-pantry
+- beat:munroe-flour-intro--stuff-pantry
+choices:
+- label: Watch Inspector Munroe adjust her pristine lapel.
+  to: passage:group-34
+- label: Let Cecily loudly mock the amateur sleuth.
+  to: passage:group-37

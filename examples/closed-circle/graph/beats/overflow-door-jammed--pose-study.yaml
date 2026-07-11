@@ -1,0 +1,15 @@
+id: beat:overflow-door-jammed--pose-study
+created_by: grow
+summary: Beaumont attempts to drag the second victim into the pantry, but the door is securely
+  jammed shut from the inside. He realizes with mounting dread that he has no place to hide
+  a second body, as the study is already serving as a morbid stage.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+entities:
+- character:beaumont
+- location:the-pantry
+belongs_to:
+- path:arthur-room
+- path:snow-drift

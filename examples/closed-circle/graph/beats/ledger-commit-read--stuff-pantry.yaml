@@ -1,0 +1,15 @@
+id: beat:ledger-commit-read--stuff-pantry
+created_by: grow
+summary: Cecily drunkenly wrestles the ledger away from Arthur and begins enthusiastically
+  reading everyone's debts aloud. The explosive revelations capture the full attention of
+  the room, completely overriding any thoughts about the locked pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: commits
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+belongs_to:
+- path:let-cecily-read

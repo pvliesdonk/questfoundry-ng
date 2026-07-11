@@ -1,0 +1,7 @@
+id: path:burn-it
+name: Ashes of Debt
+explores: answer:burn-it
+consequences:
+- id: consequence:ledger-destroyed
+  text: The ledger is reduced to ashes, destroying the only concrete evidence of the guests'
+    intertwined debts and motives.

@@ -1,0 +1,10 @@
+id: beat:first-body-blood-pool
+summary: Blood begins pooling dangerously close to the hallway threshold, threatening immediate
+  discovery if action is not taken.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: complicates
+belongs_to:
+- path:pose-study
+- path:stuff-pantry

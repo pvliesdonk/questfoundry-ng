@@ -1,0 +1,13 @@
+id: beat:collapse-phone-rings--pose-study
+created_by: grow
+summary: The manor's landline in the conservatory begins to ring shrilly, cutting through
+  the tense silence. The loud noise draws everyone's attention, nearly ruining Beaumont's
+  insistence that the man in the armchair is just enjoying a deep slumber.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

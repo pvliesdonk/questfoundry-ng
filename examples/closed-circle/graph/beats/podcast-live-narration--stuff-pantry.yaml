@@ -1,0 +1,14 @@
+id: beat:podcast-live-narration--stuff-pantry
+created_by: grow
+summary: She loudly narrates a live podcast episode, meticulously detailing the group's strange
+  behavior. She informs her audience about the bizarre streaks of wet red fluid leading straight
+  under the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: complicates
+entities:
+- character:det-munroe
+- character:beaumont
+belongs_to:
+- path:smash-phone

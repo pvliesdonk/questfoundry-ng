@@ -1,0 +1,7 @@
+id: path:stuff-pantry
+name: Pantry Tomb
+explores: answer:stuff-pantry
+consequences:
+- id: consequence:pantry-corpse
+  text: The walk-in pantry is occupied by a bloody victim hidden behind pickled onions, making
+    food retrieval highly traumatic.

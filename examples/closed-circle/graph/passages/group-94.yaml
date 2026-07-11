@@ -1,0 +1,17 @@
+id: passage:group-94
+summary: Beaumont is forced to constantly draw the curtains to hide the corpse in the snow
+  outside. His manic window-management pulls his attention away from guarding the study, leaving
+  the armchair body highly vulnerable.
+entities:
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-snow-curtains--pose-study
+choices:
+- label: Sever the ringing phone line as the roof shatters.
+  requires:
+  - flag:body-in-snow
+  to: passage:group-95-body-in-snow

@@ -1,0 +1,13 @@
+id: beat:overflow-room-foot--stuff-pantry
+created_by: grow
+summary: The upstairs victim's foot slowly slides out from under the bedspread, forcing Arthur
+  to constantly run back and kick it under. Between the bedroom and the bloody pantry downstairs,
+  the hosts are rapidly running out of containment strategies.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

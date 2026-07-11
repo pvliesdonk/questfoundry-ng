@@ -1,0 +1,23 @@
+id: passage:group-87
+summary: Arthur loudly panics about the smell of death ruining the wine collection, drawing
+  dangerous attention to the pantry. Beaumont realizes the hiding spot is full and scrambles
+  to find a new location for the latest casualty.
+entities:
+- character:arthur
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-27
+- beat:overflow-arthur-smell--stuff-pantry
+choices:
+- label: Shove the second victim under Arthur's bed upstairs.
+  grants:
+  - flag:arthur-terrified
+  to: passage:group-91
+- label: Chuck the newest victim out the window into a snowdrift.
+  grants:
+  - flag:body-in-snow
+  to: passage:group-92

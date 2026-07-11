@@ -1,0 +1,20 @@
+id: passage:group-91
+summary: Unable to fit another body in the pantry, Beaumont and Arthur shove the new victim
+  under Arthur's bed upstairs. Arthur paces nervously in the hallway downstairs while the
+  victim's foot constantly slides out from under the bedspread.
+entities:
+- character:beaumont
+- character:arthur
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-commit-room--stuff-pantry
+- beat:overflow-room-foot--stuff-pantry
+- beat:overflow-room-hover--stuff-pantry
+choices:
+- label: Murmur nervously in the corners of the room.
+  to: passage:group-96
+- label: Watch Arthur subtlely grab the brass fire poker.
+  to: passage:group-97

@@ -1,0 +1,9 @@
+id: beat:bridge-23
+created_by: grow
+summary: The aggressive interrogation is interrupted when the silver refreshment cart is hastily
+  wheeled into the tense hallway.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- object:poisoned-tea-set

@@ -1,0 +1,11 @@
+id: beat:overflow-snow-covered--stuff-pantry
+created_by: grow
+summary: The blizzard quickly covers the exterior body, providing a temporary frozen hiding
+  spot. It is a far cleaner solution than the first corpse, which is currently thawing and
+  bleeding all over the pantry floor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+belongs_to:
+- path:snow-drift

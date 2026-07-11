@@ -1,0 +1,8 @@
+id: passage:group-1
+summary: Beaumont aggressively polishes a silver tray, muttering to himself in sheer frustration
+  over Sylvia's impossible social standards.
+beats:
+- beat:fb-run1-s1-a1
+choices:
+- label: Tolerate the oppressive dinner conversation.
+  to: passage:group-3

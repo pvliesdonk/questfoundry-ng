@@ -1,0 +1,11 @@
+id: passage:group-62
+summary: Beaumont sees the ornate floral patterns on the wallpaper seemingly writhe like trapped
+  snakes, a terrifying side effect of the poison.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run8-s1-a1
+choices:
+- label: Realize my poison delirium is unnerving the guests.
+  to: passage:group-67

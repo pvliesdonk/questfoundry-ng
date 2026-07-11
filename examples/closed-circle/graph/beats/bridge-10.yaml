@@ -1,0 +1,10 @@
+id: beat:bridge-10
+created_by: grow
+summary: The flames flare up wildly around the leather binding, instantly catching the attention
+  of everyone present.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:arthur
+- object:the-ledger

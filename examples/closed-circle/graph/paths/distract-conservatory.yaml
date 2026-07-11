@@ -1,0 +1,7 @@
+id: path:distract-conservatory
+name: Ice Cold Interrogation
+explores: answer:distract-conservatory
+consequences:
+- id: consequence:munroe-interrogation
+  text: Munroe conducts frantic, freezing interrogations in the structurally unsafe botanical
+    room.

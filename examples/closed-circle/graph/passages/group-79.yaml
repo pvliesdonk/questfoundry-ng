@@ -1,0 +1,11 @@
+id: passage:group-79
+summary: Beaumont feels a grim relief that Sylvia is too violently ill to witness this new
+  disaster, saving him from at least one shrill reprimand.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:residue-sylvia-pantry
+choices:
+- label: Realize the first corpse prevents hiding the second one.
+  to: passage:group-82

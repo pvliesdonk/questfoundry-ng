@@ -1,0 +1,13 @@
+passage: passage:group-95-arthur-terrified
+priority: 15
+caption: Beaumont severs the phone line in the freezing conservatory to isolate the manor
+  from rescue.
+prompt: Tightly composed, claustrophobic line-art. Beaumont stands in a wide, lateral fencer's
+  stance in a structurally degraded, freezing botanical enclosure with neglected, highly oxidized
+  wrought-iron plant stands and an abandoned potting bench. His flawless shirt cuffs contrast
+  with his desperate action as his left eye twitches. Oppressive use of negative space heavily
+  boxes him in. Monochromatic grayscale with intense frostbite blue highlights on the freezing,
+  oxidized plant stands and bruised burgundy on Beaumont's velvet smoking jacket.
+entities:
+- character:beaumont
+- location:conservatory

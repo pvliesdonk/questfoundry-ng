@@ -1,0 +1,13 @@
+id: passage:group-89
+summary: Arthur edges subtly toward the heavy brass fire poker, unconsciously seeking a weapon
+  to defend against his fellow guests.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run14-s1-a2
+choices:
+- label: Hear the shrill ring of the manor's landline pierce the room.
+  to: passage:group-93

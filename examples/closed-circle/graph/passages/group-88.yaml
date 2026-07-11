@@ -1,0 +1,13 @@
+id: passage:group-88
+summary: The surviving guests murmur nervously in the corners, eyeing each other with open,
+  undisguised suspicion.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run14-s1-a1
+choices:
+- label: Deal with Arthur's paranoia about the whispering floorboards.
+  to: passage:group-93

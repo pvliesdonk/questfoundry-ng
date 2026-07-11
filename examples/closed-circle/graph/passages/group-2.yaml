@@ -1,0 +1,8 @@
+id: passage:group-2
+summary: Beaumont meticulously adjusts a crooked portrait in the hall, attempting to impose
+  a semblance of order on a rapidly deteriorating evening.
+beats:
+- beat:fb-run1-s1-a2
+choices:
+- label: Suffer through the suffocating meal.
+  to: passage:group-3

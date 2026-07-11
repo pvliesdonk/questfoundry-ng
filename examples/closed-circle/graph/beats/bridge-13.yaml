@@ -1,0 +1,9 @@
+id: beat:bridge-13
+created_by: grow
+summary: Cecily gleefully announces the final tallies, prompting an explosive reaction from
+  the manor's most demanding guest.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cecily
+- character:sylvia

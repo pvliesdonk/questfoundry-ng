@@ -1,0 +1,9 @@
+id: beat:bridge-26
+created_by: grow
+summary: Realizing they cannot leave another casualty out in the open, the conspirators quickly
+  search for a secondary hiding spot.
+beat_class: structural
+purpose: bridge
+entities:
+- character:arthur
+- character:beaumont

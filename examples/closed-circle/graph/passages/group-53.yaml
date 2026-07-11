@@ -1,0 +1,20 @@
+id: passage:group-53
+summary: Munroe breaks down the conservatory door, freezing, furious, and wielding a sharpened
+  icicle. Her violent entrance coincides with the arrival of the afternoon refreshment cart,
+  forcing a clash of lethal threats and high-society manners.
+entities:
+- character:det-munroe
+- location:conservatory
+- object:poisoned-tea-set
+beats:
+- beat:bridge-22
+- beat:munroe-distract-escape--pose-study
+choices:
+- label: Drink the tea myself to maintain perfect decorum.
+  grants:
+  - flag:beau-poisoned
+  to: passage:group-58
+- label: Serve the suspect Earl Grey directly to Sylvia.
+  grants:
+  - flag:sylvia-incapacitated
+  to: passage:group-59

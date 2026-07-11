@@ -1,0 +1,13 @@
+id: beat:ledger-burn-arthur-shriek--pose-study
+created_by: grow
+summary: Arthur shrieks in horror as his ledger burns, erasing the only record of everyone's
+  debts. His wailing fills the room, making it completely impossible for Beaumont to continue
+  pretending the dead guest in the armchair is merely asleep.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:arthur
+belongs_to:
+- path:burn-it

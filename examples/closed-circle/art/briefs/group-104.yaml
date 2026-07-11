@@ -1,0 +1,17 @@
+passage: passage:group-104
+priority: 9
+caption: Driven into the freezing halls, the guests watch as Cecily uses the encrypted ledger
+  to stabilize a table.
+prompt: Claustrophobic, darkly farcical line-art. The background features a structurally degraded,
+  freezing botanical enclosure with neglected, highly oxidized wrought-iron plant stands.
+  In the tight foreground, Cecily languidly leans against a table in silk pyjamas, wedging
+  a thick, heavy leather ledger beneath its leg. Beaumont stands with a perfectly rigid spine
+  in his smoking jacket, left eye twitching. Arthur is a sweaty, bumbling figure clutching
+  his brass-reinforced briefcase. Grayscale with frostbite blue highlights on the freezing
+  conservatory and bruised burgundy on the ledger.
+entities:
+- location:conservatory
+- character:beaumont
+- character:cecily
+- character:arthur
+- object:the-ledger

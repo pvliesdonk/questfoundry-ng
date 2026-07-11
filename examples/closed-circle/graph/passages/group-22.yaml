@@ -1,0 +1,17 @@
+id: passage:group-22
+summary: Arthur is sent to the freezing pantry for onions and returns visibly traumatized.
+  The pantry door swings open under the weight of the hidden corpse, dumping the bloody victim
+  into the hallway and shattering the polite facade.
+entities:
+- character:sylvia
+- character:arthur
+- location:the-pantry
+beats:
+- beat:bridge-5
+- beat:first-body-pantry-arthur
+- beat:first-body-pantry-end
+choices:
+- label: Lean heavily against the closed pantry door.
+  to: passage:group-24
+- label: Flee with the guests to the glass-walled conservatory.
+  to: passage:group-27

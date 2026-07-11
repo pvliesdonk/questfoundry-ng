@@ -1,0 +1,16 @@
+passage: passage:group-113
+priority: 3
+caption: Arthur lunges in sheer panic as Detective Munroe breaks the wax seal on his encrypted
+  financial ledger.
+prompt: Darkly farcical, tightly composed line-art. Arthur, a sweaty, bumbling figure in visually
+  inadequate tailoring, lunges frantically while clutching his brass-reinforced leather briefcase
+  against his sternum. Munroe stands with an artificially rigid posture in canvas outerwear,
+  aggressively gripping a thick, heavy leather ledger filled with excessively thick vellum
+  pages. Beaumont observes with a perfectly rigid spine and velvet smoking jacket. Heavy crosshatching
+  physically boxes them in. Grayscale with bruised burgundy on the ledger and frostbite blue
+  on Arthur's sweaty brow.
+entities:
+- character:arthur
+- object:the-ledger
+- character:det-munroe
+- character:beaumont

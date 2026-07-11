@@ -1,0 +1,15 @@
+id: beat:munroe-threatens-silverware--stuff-pantry
+created_by: grow
+summary: Munroe aggressively approaches the dining table to dust the antique silverware. Her
+  intense focus on the dining room keeps her back turned to the bloody hallway and the compromised
+  pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: complicates
+entities:
+- character:det-munroe
+- object:poisoned-tea-set
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

@@ -1,0 +1,11 @@
+id: beat:overflow-snow-hand--pose-study
+created_by: grow
+summary: The wind exposes a frozen, grasping hand outside the drawing room window. The grim
+  sight terrifies the guests, and Beaumont desperately tries to keep them from fleeing into
+  the study where the first corpse sits.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+belongs_to:
+- path:snow-drift

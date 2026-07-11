@@ -1,0 +1,7 @@
+id: beat:setup-sylvia-demands
+summary: Sylvia loudly criticizes the decor and demands dinner, setting a suffocating tone
+  of forced etiquette that puts everyone on edge.
+beat_class: structural
+purpose: setup
+entities:
+- character:sylvia

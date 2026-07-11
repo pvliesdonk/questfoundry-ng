@@ -1,0 +1,15 @@
+id: passage:group-105
+summary: Cecily wraps her arms tightly around her shoulders, bitterly cursing the miserable,
+  freezing architecture.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s1-a1
+choices:
+- label: Move the guests into the adjacent dining room to warm up.
+  to: passage:group-108

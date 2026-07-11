@@ -1,0 +1,15 @@
+id: beat:ledger-seal-cracks--pose-study
+created_by: grow
+summary: The seal cracks open, exposing a page detailing Beaumont's massive financial ruin.
+  His motive for murder is now plainly visible to anyone in the room, threatening to connect
+  him instantly to the dead man propped in the corner.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:beaumont
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

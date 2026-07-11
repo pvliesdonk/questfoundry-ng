@@ -1,0 +1,13 @@
+id: beat:tea-sylvia-bedridden--stuff-pantry
+created_by: grow
+summary: Sylvia violently demands to be taken to the guest bedroom, removing her hyper-critical
+  presence from the main floor. Her departure prevents her from demanding access to the food
+  supplies trapped in the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: reveals
+entities:
+- character:sylvia
+belongs_to:
+- path:serve-sylvia

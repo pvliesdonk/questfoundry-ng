@@ -1,0 +1,7 @@
+id: path:wipe-curtains
+name: Merlot Stains
+explores: answer:wipe-curtains
+consequences:
+- id: consequence:bloody-curtains
+  text: The dining room curtains are stained with obvious gore that the guests politely pretend
+    is spilled Merlot.

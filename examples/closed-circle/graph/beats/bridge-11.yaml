@@ -1,0 +1,10 @@
+id: beat:bridge-11
+created_by: grow
+summary: The sudden crackle of the burning book draws the room's gaze just as its original
+  owner realizes what is happening.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:arthur
+- object:the-ledger

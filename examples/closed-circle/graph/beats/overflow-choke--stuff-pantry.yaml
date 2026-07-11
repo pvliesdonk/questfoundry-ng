@@ -1,0 +1,14 @@
+id: beat:overflow-choke--stuff-pantry
+created_by: grow
+summary: A second guest chokes on a poisoned crumpet in the hallway, adding another corpse
+  to the nightmare. The group stares at the new body, knowing the walk-in pantry is already
+  at full capacity with the first victim.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:arthur-room
+- path:snow-drift

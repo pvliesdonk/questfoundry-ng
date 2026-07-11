@@ -1,0 +1,24 @@
+id: passage:group-138
+summary: Cecily drunkenly wrestles the ledger away and reads everyone's debts aloud, captivating
+  the room. Sylvia learns she is bankrupt and violently threatens to tear the house apart
+  looking for food in the pantry.
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+- character:sylvia
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:bridge-13
+- beat:ledger-commit-read--stuff-pantry
+- beat:ledger-read-sylvia-rage--stuff-pantry
+choices:
+- label: Hear Sylvia's tirade interrupted by a racking cough.
+  to: passage:group-143
+- label: Watch the enraged guests chase Arthur down the hallway.
+  to: passage:group-145

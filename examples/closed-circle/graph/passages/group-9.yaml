@@ -1,0 +1,8 @@
+id: passage:group-9
+summary: Cecily offers a cigarette to a deeply uncomfortable Arthur, blowing a cloud of smoke
+  that momentarily obscures the horrific view down the hallway.
+beats:
+- beat:fb-run1-s4-a1
+choices:
+- label: Look for something to soak up the mess.
+  to: passage:group-10

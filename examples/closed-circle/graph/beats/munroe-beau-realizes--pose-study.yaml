@@ -1,0 +1,15 @@
+id: beat:munroe-beau-realizes--pose-study
+created_by: grow
+summary: Beaumont realizes that if Munroe is left unchecked, her amateur sleuthing will inevitably
+  lead her straight to the newspaper-covered corpse. He needs a way to stop her before she
+  closely inspects the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: reveals
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

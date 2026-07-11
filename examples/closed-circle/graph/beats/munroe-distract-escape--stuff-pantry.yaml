@@ -1,0 +1,14 @@
+id: beat:munroe-distract-escape--stuff-pantry
+created_by: grow
+summary: Munroe breaks down the conservatory door, freezing, furious, and wielding a highly
+  dangerous sharpened icicle. She stomps back into the hallway, demanding answers as she stands
+  dangerously close to the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

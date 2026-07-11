@@ -1,0 +1,18 @@
+id: passage:group-33
+summary: Cecily loudly mocks Munroe's podcast-derived forensic techniques, sparking a shouting
+  match. Munroe threatens to dust the antique silverware, prompting Beaumont to realize she
+  will soon inspect the newspaper-covered corpse.
+entities:
+- character:cecily
+- character:det-munroe
+- object:poisoned-tea-set
+- character:beaumont
+beats:
+- beat:munroe-beau-realizes--pose-study
+- beat:munroe-cecily-mocks--pose-study
+- beat:munroe-threatens-silverware--pose-study
+choices:
+- label: Clench my jaw and project aristocratic grace.
+  to: passage:group-35
+- label: Study the intricate rug to avoid eye contact.
+  to: passage:group-36

@@ -1,0 +1,8 @@
+id: passage:group-41
+summary: Beaumont realizes he has forgotten the silver sugar tongs, a minor social infraction
+  that inexplicably feels worse than the murders.
+beats:
+- beat:fb-run3-s5-a1
+choices:
+- label: Accept Sylvia's vicious insults with a polite bow.
+  to: passage:group-43

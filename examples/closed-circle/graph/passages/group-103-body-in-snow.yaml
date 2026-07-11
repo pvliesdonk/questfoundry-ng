@@ -1,0 +1,22 @@
+id: passage:group-103-body-in-snow
+summary: Beaumont severs the phone cord just before the glass ceiling collapses, cutting off
+  rescue while he furiously tries to block the guests' view of both the pantry door and the
+  frozen hand visible outside.
+entities:
+- character:beaumont
+- location:conservatory
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:collapse-aftermath-isolated--stuff-pantry
+- beat:collapse-aftermath-shatter--stuff-pantry
+- beat:collapse-resolution-cut--stuff-pantry
+choices:
+- label: Shiver as Cecily bitterly curses the cold house.
+  to: passage:group-105
+- label: Watch Arthur pace back and forth to stay warm.
+  to: passage:group-106
+variant_of: passage:group-103-arthur-terrified

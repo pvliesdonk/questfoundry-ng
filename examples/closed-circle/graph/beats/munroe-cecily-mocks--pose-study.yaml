@@ -1,0 +1,15 @@
+id: beat:munroe-cecily-mocks--pose-study
+created_by: grow
+summary: Cecily pours another glass of wine, loudly mocking Munroe's podcast-derived forensic
+  techniques. The mockery sparks a shouting match in the study, threatening to disrupt Beaumont's
+  carefully arranged "sleeping" body.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:cecily
+- character:det-munroe
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

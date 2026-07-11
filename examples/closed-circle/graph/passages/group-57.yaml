@@ -1,0 +1,8 @@
+id: passage:group-57
+summary: Munroe steps squarely onto a blood-specked handkerchief, inadvertently smudging crucial
+  evidence into the carpet.
+beats:
+- beat:fb-run7-s1-a2
+choices:
+- label: Let Munroe slip and knock herself out.
+  to: passage:group-61

@@ -1,0 +1,14 @@
+id: beat:podcast-arthur-realizes--stuff-pantry
+created_by: grow
+summary: Arthur realizes she is broadcasting their exact crimes over the cell network. He
+  pales as he realizes her loyal subscribers are watching her follow the victim's blood trail
+  directly to the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: reveals
+entities:
+- character:arthur
+- character:det-munroe
+belongs_to:
+- path:smash-phone

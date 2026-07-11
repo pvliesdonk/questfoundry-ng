@@ -1,0 +1,16 @@
+passage: passage:group-119
+priority: 6
+caption: Desperate to stop the broadcast, Beaumont violently shatters Munroe's phone, sending
+  Arthur into a panic.
+prompt: Tightly composed, darkly farcical line-art. Beaumont, in a flawless silk waistcoat
+  and velvet smoking jacket, maintains a wide fencer's stance as his left eye twitches. Munroe,
+  artificially rigid in canvas outerwear, holds an armored smartphone tightly with two hands.
+  Arthur cowers in the suffocating background, a sweaty, bumbling figure pressing a leather
+  briefcase to his sternum. A flawless silver tea service is visible on the edge. Monochromatic
+  grayscale with bruised burgundy highlights on Beaumont's jacket and frostbite blue on the
+  smartphone.
+entities:
+- character:arthur
+- character:det-munroe
+- character:beaumont
+- object:poisoned-tea-set

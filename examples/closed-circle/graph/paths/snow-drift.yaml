@@ -1,0 +1,7 @@
+id: path:snow-drift
+name: Frozen Assets
+explores: answer:snow-drift
+consequences:
+- id: consequence:body-in-snow
+  text: A second corpse is buried in a snowdrift outside, creating a ticking clock for when
+    the storm clears.

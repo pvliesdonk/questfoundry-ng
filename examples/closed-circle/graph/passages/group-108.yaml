@@ -1,0 +1,23 @@
+id: passage:group-108
+summary: The shattered roof freezes the manor, causing Beaumont to worry that the pantry body
+  will soon freeze stiff. He moves the guests to the dining room, where Cecily uses Arthur's
+  encrypted ledger to fix a wobbly table.
+entities:
+- location:conservatory
+- character:cecily
+- character:arthur
+- object:the-ledger
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-1
+- beat:collapse-aftermath-freezing--stuff-pantry
+- beat:ledger-wobbly-table--stuff-pantry
+choices:
+- label: Consider fixing a wobbly side table instead.
+  to: passage:group-110
+- label: Watch Arthur panic and draw attention to the black book.
+  to: passage:group-113

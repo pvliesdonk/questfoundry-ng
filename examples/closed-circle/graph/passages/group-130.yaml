@@ -1,0 +1,22 @@
+id: passage:group-130
+summary: Beaumont hurls the ledger into the roaring fireplace to protect his secrets. The
+  flames flare up, and Arthur shrieks in horror as his records burn, making it impossible
+  for Beaumont to continue his polite charade.
+entities:
+- character:beaumont
+- object:the-ledger
+- character:arthur
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-10
+- beat:ledger-burn-arthur-shriek--pose-study
+- beat:ledger-commit-burn--pose-study
+choices:
+- label: Gag on the foul, chemical-smelling smoke from the fire.
+  to: passage:group-134
+- label: Watch angry sparks pop aggressively from the embers.
+  to: passage:group-135

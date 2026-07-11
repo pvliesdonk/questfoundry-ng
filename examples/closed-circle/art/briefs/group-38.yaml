@@ -1,0 +1,16 @@
+passage: passage:group-38
+priority: 2
+caption: Sylvia demands her afternoon tea while a paralyzed Beaumont stares at the potentially
+  lethal silver cups.
+prompt: Claustrophobic line-art utilizing oppressive negative space. Beaumont stands with
+  a flawlessly aligned spine and a minute twitch in his left eye, staring fixedly at a flawless
+  silver tea service resting on exquisitely thin bone china, marred by a microscopic rim chip.
+  Sylvia sits with severe perpendicular alignment, wrapped aggressively in a sharp cashmere
+  shawl. Munroe looms rigidly in the background in reinforced canvas outerwear and thick-soled
+  tactical boots, gripping a smartphone. Grayscale with vintage burgundy accents on the tea
+  set reflections and frostbite blue on Beaumont's flawless cuffs.
+entities:
+- character:det-munroe
+- character:sylvia
+- object:poisoned-tea-set
+- character:beaumont

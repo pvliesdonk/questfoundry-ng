@@ -1,0 +1,9 @@
+id: beat:bridge-6
+created_by: grow
+summary: The demanding guest marches straight toward the open door of the crime scene, forcing
+  a physical interception.
+beat_class: structural
+purpose: bridge
+entities:
+- character:sylvia
+- character:beaumont

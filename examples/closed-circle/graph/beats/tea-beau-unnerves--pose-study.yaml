@@ -1,0 +1,13 @@
+id: beat:tea-beau-unnerves--pose-study
+created_by: grow
+summary: Beaumont's profoundly erratic behavior unnerves the guests, stripping away his remaining
+  authority. Without his overbearing host presence to stop them, guests begin wandering dangerously
+  close to the newspaper-covered corpse in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

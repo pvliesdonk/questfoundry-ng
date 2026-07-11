@@ -1,0 +1,19 @@
+id: passage:group-67
+summary: Beaumont's profoundly erratic behavior strips away his remaining authority, leading
+  unsupervised guests to wander dangerously close to the newspaper-covered corpse in the armchair.
+entities:
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-unnerves--pose-study
+choices:
+- label: Watch helplessly as the guests' attention shifts to the fresh corpse.
+  requires:
+  - flag:beau-poisoned
+  to: passage:group-69
+- label: Attempt to loudly redirect the guests away from the corpse.
+  requires:
+  - flag:beau-poisoned
+  to: passage:group-70

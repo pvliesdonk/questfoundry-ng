@@ -1,0 +1,24 @@
+id: passage:group-83
+summary: Arthur loudly panics about the smell of death ruining the vintage wine collection.
+  Realizing they cannot leave the fresh casualty in the open, the conspirators quickly search
+  for a secondary hiding spot.
+entities:
+- character:arthur
+- character:beaumont
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-26
+- beat:overflow-arthur-smell--pose-study
+choices:
+- label: Haul the crumpet victim upstairs under Arthur's bed.
+  grants:
+  - flag:arthur-terrified
+  to: passage:group-84
+- label: Pry open a window and chuck the victim into a snowdrift.
+  grants:
+  - flag:body-in-snow
+  to: passage:group-85

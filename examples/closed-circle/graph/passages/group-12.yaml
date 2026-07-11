@@ -1,0 +1,8 @@
+id: passage:group-12
+summary: A guest grumbles about the oppressive, dim lighting in the hallway, squinting uselessly
+  into the gathering gloom.
+beats:
+- beat:fb-run1-s5-a2
+choices:
+- label: Smear the gory weapon against the expensive drapery.
+  to: passage:group-13

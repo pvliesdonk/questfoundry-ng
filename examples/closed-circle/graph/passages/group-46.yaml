@@ -1,0 +1,8 @@
+id: passage:group-46
+summary: Beaumont realizes he has forgotten the silver sugar tongs, a breach of etiquette
+  that inexplicably weighs on him heavier than the murder.
+beats:
+- beat:fb-run2-s6-a1
+choices:
+- label: Endure Sylvia's loud accusations of being a terrible host.
+  to: passage:group-47

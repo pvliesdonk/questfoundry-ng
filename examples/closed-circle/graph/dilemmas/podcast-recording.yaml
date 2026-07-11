@@ -1,0 +1,18 @@
+id: dilemma:podcast-recording
+question: Munroe starts recording a live podcast episode detailing your exact crimes into
+  her phone; how do you silence her?
+why_it_matters: Risks a full, public confession being uploaded the moment the manor's spotty
+  WiFi reconnects.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:bribe-ledger
+  text: Bribe her into silence with exclusive publishing rights to the secrets in Arthur's
+    ledger.
+- id: answer:smash-phone
+  text: Simply snatch her smartphone and smash it with a candlestick, facing her unbridled
+    wrath.
+anchored_to:
+- character:det-munroe
+- object:the-ledger

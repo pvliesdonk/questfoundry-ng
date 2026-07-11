@@ -1,0 +1,20 @@
+id: dilemma:arthur-ledger
+question: Arthur's ledger slides out from under the wobbly table; do you allow it to be decrypted,
+  revealing the guests' massive debts?
+why_it_matters: Irrevocably shifts the narrative from a tragic accident to premeditated survival
+  by establishing clear motives for everyone.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:let-cecily-read
+  text: Let a drunk Cecily read it out loud, airing everyone's dirty laundry over hors d'oeuvres.
+- id: answer:burn-it
+  text: Toss it in the fireplace to protect your own secrets, destroying the only map of who
+    owes what.
+anchored_to:
+- character:arthur
+- object:the-ledger
+- character:cecily
+wraps:
+- dilemma:podcast-recording

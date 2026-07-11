@@ -1,0 +1,11 @@
+id: beat:harpoon-stain-spreads
+summary: The blood pool expands, threatening to leave a permanent, damning stain on the host's
+  reputation if not addressed within seconds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: complicates
+entities:
+- object:antique-harpoon
+belongs_to:
+- path:wipe-curtains

@@ -1,0 +1,17 @@
+id: passage:group-44
+summary: Beaumont tricks Munroe into locking herself in the freezing conservatory, where she
+  bizarrely interrogates a potted fern. Her entrapment keeps her away from the study, allowing
+  Beaumont to guard the ostensibly napping guest.
+entities:
+- character:beaumont
+- character:det-munroe
+- location:conservatory
+beats:
+- beat:munroe-commit-distract--pose-study
+- beat:munroe-distract-fern--pose-study
+- beat:munroe-distract-freeze--pose-study
+choices:
+- label: Consider tossing my pocket watch to create a distraction.
+  to: passage:group-48
+- label: Flinch as Munroe breaks out wielding a sharpened icicle.
+  to: passage:group-53

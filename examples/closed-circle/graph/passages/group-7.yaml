@@ -1,0 +1,8 @@
+id: passage:group-7
+summary: Beaumont loudly recites the architectural history of the manor, desperately raising
+  his voice to drown out any noise coming from the shadows behind him.
+beats:
+- beat:fb-run1-s3-a2
+choices:
+- label: Keep talking over the gruesome reality.
+  to: passage:group-8

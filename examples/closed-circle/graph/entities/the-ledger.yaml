@@ -1,0 +1,10 @@
+id: object:the-ledger
+name: Arthur's Encrypted Ledger
+concept: A book containing everyone's financial ruin, currently being used by Cecily to prop
+  up a wobbly dining table.
+base:
+  combustibility: Bound in thick, aged leather that emits a singularly foul, acrid odor when
+    subjected to the temperatures of a standard residential hearth.
+  page_texture: The ledger's pages are composed of an excessively thick vellum that resists
+    quick turning, forcing the reader to deliberately emphasize each catastrophic financial
+    entry.

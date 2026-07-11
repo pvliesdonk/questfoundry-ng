@@ -1,0 +1,14 @@
+passage: passage:group-17
+priority: 1
+caption: Beaumont frantically attempts to mask a gruesome harpoon wound from the demanding
+  matriarch.
+prompt: Claustrophobic, tightly composed line-art with heavy crosshatching. Beaumont, maintaining
+  a rigidly wide fencer's stance in his velvet smoking jacket, blocks the view of an unsteady,
+  oversized antique harpoon. Sylvia stands perpendicularly in the tight foreground, aggressively
+  draped in a cashmere shawl and pearls, pressing two silk-gloved fingers to her temples in
+  displeasure. Suffocating negative space physically boxes them in. Monochromatic grayscale
+  with bruised vintage burgundy highlights on the harpoon and frostbite blue on Sylvia's pearls.
+entities:
+- character:beaumont
+- object:antique-harpoon
+- character:sylvia

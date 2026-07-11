@@ -1,0 +1,13 @@
+id: beat:overflow-room-paranoid--pose-study
+created_by: grow
+summary: Arthur becomes severely paranoid, convinced the upstairs victim is whispering through
+  the floorboards. His mental breakdown makes Beaumont's charade infinitely harder, as he
+  must manage a hysterical host alongside a silent, newspaper-covered corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

@@ -1,0 +1,11 @@
+id: beat:first-body-pose-adjust
+summary: Beaumont is forced to continuously adjust the sliding corpse to maintain the illusion
+  of sleep while guests wander through.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: complicates
+entities:
+- character:beaumont
+belongs_to:
+- path:pose-study

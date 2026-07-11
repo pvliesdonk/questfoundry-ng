@@ -1,0 +1,13 @@
+id: beat:collapse-aftermath-shatter--stuff-pantry
+created_by: grow
+summary: A massive pane of glass shatters from the ceiling, burying the telephone in lethal
+  shards and snow. The crash reverberates down the hall, threatening to mask or mimic the
+  sound of the compromised pantry door swinging open.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

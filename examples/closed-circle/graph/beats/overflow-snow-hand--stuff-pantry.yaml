@@ -1,0 +1,11 @@
+id: beat:overflow-snow-hand--stuff-pantry
+created_by: grow
+summary: The wind exposes a frozen, grasping hand outside the window. The terrifying sight
+  sends the guests into a panic, and they scramble toward the hallway, dangerously close to
+  the pantry where the other body is stashed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+belongs_to:
+- path:snow-drift

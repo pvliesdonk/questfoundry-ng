@@ -1,0 +1,9 @@
+id: beat:bridge-16
+created_by: grow
+summary: The stunned silence following the revelation is broken by a camera shutter clicking
+  from the doorway.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:det-munroe

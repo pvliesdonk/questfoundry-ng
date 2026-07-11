@@ -1,0 +1,14 @@
+passage: passage:group-66
+priority: 10
+caption: Beaumont carefully serves the potentially poisoned tea, watching intently for Sylvia's
+  inevitable reaction.
+prompt: Tightly composed line-art with suffocating negative space. Beaumont maintains a perfectly
+  rigid spine in his tailored velvet smoking jacket, extending a flawless silver tea service
+  on bone china, bearing a microscopic rim chip on the cup. Sylvia sits with an exacting,
+  perpendicular spinal alignment, wearing formal silk gloves and a sharp cashmere shawl, pressing
+  fingers to her temples. Grayscale with sickly frostbite blue on the flawless silver tea
+  service and bruised vintage burgundy highlighting Sylvia's tight shawl.
+entities:
+- character:beaumont
+- character:sylvia
+- object:poisoned-tea-set

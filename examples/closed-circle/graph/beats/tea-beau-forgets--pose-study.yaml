@@ -1,0 +1,15 @@
+id: beat:tea-beau-forgets--pose-study
+created_by: grow
+summary: Beaumont nervously stares at the identical cups, completely unable to remember which
+  holds the lethal dose. His mind is entirely scattered by the stress of keeping everyone
+  away from the propped-up victim in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

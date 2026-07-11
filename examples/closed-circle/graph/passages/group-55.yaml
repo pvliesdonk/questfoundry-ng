@@ -1,0 +1,8 @@
+id: passage:group-55
+summary: Beaumont considers tossing his heavy pocket watch into the corner as a distraction,
+  but remembers how ruinously expensive it is.
+beats:
+- beat:fb-run6-s1-a1
+choices:
+- label: Back away as Munroe furiously stomps down the hall.
+  to: passage:group-60

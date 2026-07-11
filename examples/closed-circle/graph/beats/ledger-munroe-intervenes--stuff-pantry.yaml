@@ -1,0 +1,15 @@
+id: beat:ledger-munroe-intervenes--stuff-pantry
+created_by: grow
+summary: Munroe declares the ledger is key forensic evidence and begins actively picking at
+  its wax seal. She demands everyone stay out of the hallway to preserve the scene, inadvertently
+  establishing a perimeter that protects the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:det-munroe
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

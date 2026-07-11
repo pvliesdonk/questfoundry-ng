@@ -1,0 +1,13 @@
+id: beat:collapse-blizzard--stuff-pantry
+created_by: grow
+summary: The blizzard intensifies, violently rattling the glass panes of the conservatory.
+  The howling wind masks all other sounds, making the guests deeply paranoid about who might
+  be sneaking toward the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

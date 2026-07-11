@@ -1,0 +1,9 @@
+id: beat:bridge-18
+created_by: grow
+summary: Before Beaumont can intercept the podcaster, an imperious voice echoes from the adjacent
+  room demanding immediate service.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- character:sylvia

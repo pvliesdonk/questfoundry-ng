@@ -1,0 +1,9 @@
+id: beat:bridge-15
+created_by: grow
+summary: The screams of betrayal incite the other guests, who immediately abandon the dining
+  room to hunt down the man responsible.
+beat_class: structural
+purpose: bridge
+entities:
+- character:sylvia
+- character:arthur

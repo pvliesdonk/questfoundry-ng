@@ -1,0 +1,14 @@
+id: beat:collapse-resolution-cut--pose-study
+created_by: grow
+summary: Beaumont grabs garden shears and snips the phone cord, silencing the ringing permanently.
+  He justifies this as avoiding the falling glass, though his true motive is preventing anyone
+  from reporting the "napping" victim to the police.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: commits
+entities:
+- character:beaumont
+- location:conservatory
+belongs_to:
+- path:ignore-phone

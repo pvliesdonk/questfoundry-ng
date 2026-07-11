@@ -1,0 +1,17 @@
+id: character:cecily
+name: Cecily Sterling
+concept: Beau's perpetually bored wife, whose solution to the escalating body count is to
+  continuously pour herself more expensive wine.
+pronouns: she/her
+base:
+  appearance: Lounging precariously in expensive silk pyjamas holding an empty crystal glass.
+  manner: Treats the lethal chaos around her as a mildly amusing television show.
+  cigarette_storage: Cecily carries her precisely rolled cigarettes in a slender silver case
+    kept in her garments.
+  architectural_lounging: Habitually leans against doorframes and heavy furniture with a precarious
+    disregard for structural propriety, utilizing the molding to support her consistently
+    languid posture.
+  architectural_standards: She views inadequate thermal retention in historic masonry as a
+    direct, calculated insult to her personal comfort.
+  complaint_style: She routinely frames unavoidable environmental discomforts as deliberate,
+    calculated insults to her carefully chosen wardrobe.

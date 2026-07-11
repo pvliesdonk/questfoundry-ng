@@ -1,0 +1,14 @@
+passage: passage:group-51
+priority: 17
+caption: Beaumont tricks the aggressive podcaster into locking herself inside the freezing
+  botanical room.
+prompt: Claustrophobic line-art with suffocating crosshatching. Beaumont maintains a wide,
+  lateral fencer's stance in his tailored velvet smoking jacket and flawless shirt cuffs.
+  Through a doorway, Munroe is visible in a structurally degraded, freezing botanical enclosure
+  with an abandoned potting bench, wearing heavily reinforced canvas outerwear and aggressively
+  gripping an armored smartphone with two hands. Grayscale with frostbite blue highlights
+  on the freezing botanical enclosure and bruised burgundy on Beaumont's tailored jacket.
+entities:
+- character:beaumont
+- character:det-munroe
+- location:conservatory

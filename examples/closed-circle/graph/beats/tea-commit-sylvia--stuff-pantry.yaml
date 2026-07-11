@@ -1,0 +1,15 @@
+id: beat:tea-commit-sylvia--stuff-pantry
+created_by: grow
+summary: Beaumont calls Sylvia's bluff with a strained smile, serving her the suspect Earl
+  Grey directly. He takes the gamble, realizing that if she lives and stays, she will inevitably
+  demand the pickled onions from the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: commits
+entities:
+- character:beaumont
+- character:sylvia
+- object:poisoned-tea-set
+belongs_to:
+- path:serve-sylvia

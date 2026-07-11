@@ -1,0 +1,14 @@
+passage: passage:group-83
+priority: 20
+caption: Arthur devolves into paranoid panic, drawing dangerous attention as Beaumont scrambles
+  for a plan.
+prompt: Tightly composed line-art with heavy crosshatching. Arthur, a sweaty, bumbling figure
+  in visually inadequate, thermally inefficient seasonal tailoring, maintains a rigidly terrified
+  posture, firmly clutching a brass-reinforced leather briefcase directly against his sternum.
+  Beaumont stands nearby with a wide, lateral fencer's stance and perfectly rigid spine in
+  his velvet smoking jacket, a minute twitch in his left eye. Boxed in by oppressive negative
+  space. Grayscale with frostbite blue on Arthur's sweat and bruised burgundy on Beaumont's
+  jacket.
+entities:
+- character:arthur
+- character:beaumont

@@ -1,0 +1,22 @@
+id: passage:group-137
+summary: Beaumont snatches the ledger and hurls it into the fireplace to distract from the
+  pantry. Arthur shrieks in absolute horror as his records burn, his scream echoing toward
+  the kitchen and unnerving the guilty.
+entities:
+- character:beaumont
+- object:the-ledger
+- character:arthur
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-11
+- beat:ledger-burn-arthur-shriek--stuff-pantry
+- beat:ledger-commit-burn--stuff-pantry
+choices:
+- label: Gag on the thick, chemical-smelling smoke from the ledger.
+  to: passage:group-141
+- label: Watch angry sparks pop from the roaring fireplace.
+  to: passage:group-142

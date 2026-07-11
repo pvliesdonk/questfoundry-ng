@@ -1,0 +1,16 @@
+id: passage:group-3
+summary: A sickening crash from the study interrupts the polite dinner. The guests discover
+  a victim pinned to the wall by an antique harpoon, just as footsteps approach from the adjacent
+  hall.
+entities:
+- object:antique-harpoon
+- character:sylvia
+beats:
+- beat:bridge-3
+- beat:first-body-discovery
+- beat:setup-crash
+choices:
+- label: Let Sylvia admire an expensive vase.
+  to: passage:group-4
+- label: Intercept Sylvia before she sees the body.
+  to: passage:group-5

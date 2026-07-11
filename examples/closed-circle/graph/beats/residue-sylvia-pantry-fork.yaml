@@ -1,0 +1,8 @@
+id: beat:residue-sylvia-pantry-fork
+created_by: polish
+summary: Beaumont nervously calculates whether Sylvia's incapacitation makes it easier or
+  harder to drag another body into the pantry without her noticing.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:sylvia-incapacitated

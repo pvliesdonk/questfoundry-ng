@@ -1,0 +1,14 @@
+id: beat:collapse-resolution-cut--stuff-pantry
+created_by: grow
+summary: Beaumont grabs garden shears and snips the phone cord, silencing the ringing permanently.
+  He frames this as keeping everyone safe from the glass, but actually ensures the police
+  will not arrive to discover the pantry's bloody secret.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: commits
+entities:
+- character:beaumont
+- location:conservatory
+belongs_to:
+- path:ignore-phone

@@ -1,0 +1,11 @@
+id: beat:first-body-pose-end
+summary: The newspaper slips off the dead man's face, completely shattering Beaumont's polite
+  charade and exposing the corpse to the remaining guests. Panic erupts in the study as everyone
+  realizes a murderer is among them, but before they can flee, the manor faces even deeper,
+  unresolved crises.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: reveals
+belongs_to:
+- path:pose-study

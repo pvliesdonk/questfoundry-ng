@@ -1,0 +1,13 @@
+id: beat:podcast-cornered--pose-study
+created_by: grow
+summary: Munroe corners the group in the study, aggressively holding her smartphone out like
+  a microphone. She aims the camera directly at the guests, capturing the propped-up corpse
+  and its newspaper disguise in the background of her shot.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: advances
+entities:
+- character:det-munroe
+belongs_to:
+- path:smash-phone

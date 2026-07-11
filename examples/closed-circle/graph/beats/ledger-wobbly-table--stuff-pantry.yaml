@@ -1,0 +1,16 @@
+id: beat:ledger-wobbly-table--stuff-pantry
+created_by: grow
+summary: Cecily tries to fix the wobbly dining table by sliding Arthur's encrypted ledger
+  underneath its shortest leg. This distraction keeps the guests focused on the dining room
+  geometry rather than wandering down the hall toward the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: advances
+entities:
+- character:cecily
+- character:arthur
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

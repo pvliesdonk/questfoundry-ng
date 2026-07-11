@@ -1,0 +1,11 @@
+id: passage:group-70
+summary: Beaumont attempts to loudly redirect the guests away from the new corpse, but a sharp
+  cramp from the poisoned tea leaves him gasping instead.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:residue-beau-study-fork
+choices:
+- label: Realize I cannot pass off two synchronized nappers.
+  to: passage:group-72

@@ -1,0 +1,18 @@
+id: passage:group-42
+summary: Sylvia sharply demands her afternoon tea from the poisoned silver set. Beaumont nervously
+  stares at the cups, finding that the trauma of hiding a bloody body has completely erased
+  his memory of the poison's location.
+entities:
+- character:det-munroe
+- character:sylvia
+- object:poisoned-tea-set
+- character:beaumont
+beats:
+- beat:bridge-19
+- beat:tea-beau-forgets--stuff-pantry
+- beat:tea-sylvia-demands--stuff-pantry
+choices:
+- label: Realize the silver sugar tongs are missing.
+  to: passage:group-46
+- label: Ignore Sylvia's promise to ruin my social standing.
+  to: passage:group-47

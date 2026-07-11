@@ -70,7 +70,13 @@ exit run — the same folk-horror premise generated
 [corpus-grounded](examples/lamplighters-debt-craft/) — shows the
 grounding exactly where the corpus speaks: the grounded story opens in
 second person present, the corpus's stated gamebook default, where the
-bare run chose third limited. **M7 — illustrations — is complete**:
+bare run chose third limited. **M8 — depth & scale — is complete**:
+the scale table is words-primary, scaffold depth is scope data, and
+the exit run generated ["Closed Circle"](examples/closed-circle/) — a
+corpus-grounded 49k-word, 148-passage closed-circle murder farce on
+Gemini — inside every recalibrated band, with a playthrough reading
+644 words per genuine choice against the 250-800 feel target.
+**M7 — illustrations — is complete**:
 `qf illustrate` renders the DRESS briefs to real images via OpenAI
 (gpt-image-2) or Gemini, assembling the art direction and each depicted
 entity's visual profile into every prompt, behind a sample-first cost

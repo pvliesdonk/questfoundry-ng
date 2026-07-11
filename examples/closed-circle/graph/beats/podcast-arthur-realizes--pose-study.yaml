@@ -1,0 +1,14 @@
+id: beat:podcast-arthur-realizes--pose-study
+created_by: grow
+summary: Arthur realizes she is broadcasting their exact crimes over the cell network. He
+  panics, knowing her fiercely loyal subscribers are currently looking at high-definition
+  footage of the deeply suspicious "sleeping" man in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: reveals
+entities:
+- character:arthur
+- character:det-munroe
+belongs_to:
+- path:smash-phone

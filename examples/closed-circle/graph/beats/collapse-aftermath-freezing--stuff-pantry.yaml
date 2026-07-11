@@ -1,0 +1,13 @@
+id: beat:collapse-aftermath-freezing--stuff-pantry
+created_by: grow
+summary: The broken roof plunges the manor into freezing temperatures, threatening the guests
+  with hypothermia. As the cold sets in, the group realizes the body hidden behind the pantry
+  onions will soon freeze stiff, making later disposal much harder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: complicates
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

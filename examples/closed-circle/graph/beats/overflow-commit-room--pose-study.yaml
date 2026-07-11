@@ -1,0 +1,14 @@
+id: beat:overflow-commit-room--pose-study
+created_by: grow
+summary: Beaumont and Arthur haul the crumpet victim upstairs and shove them under Arthur's
+  bed. With the new body hidden, Beaumont hurries back downstairs to ensure nobody has removed
+  the newspaper from the first victim in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: commits
+entities:
+- character:beaumont
+- character:arthur
+belongs_to:
+- path:arthur-room

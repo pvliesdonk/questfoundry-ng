@@ -1,0 +1,8 @@
+id: beat:residue-sylvia-pantry
+created_by: polish
+summary: Beaumont feels a grim relief that Sylvia is too violently ill to witness this new
+  disaster, saving him from at least one shrill reprimand.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:sylvia-incapacitated

@@ -1,0 +1,16 @@
+id: passage:group-0
+summary: Beaumont graciously welcomes his guests to the manor despite the creeping blizzard
+  outside. The suffocating tone of the evening is established when Sylvia loudly criticizes
+  the decor and demands dinner.
+entities:
+- character:beaumont
+- character:sylvia
+beats:
+- beat:bridge-32
+- beat:setup-sylvia-demands
+- beat:setup-welcome
+choices:
+- label: Polish a silver tray to vent the stress.
+  to: passage:group-1
+- label: Straighten a crooked portrait in the hall.
+  to: passage:group-2

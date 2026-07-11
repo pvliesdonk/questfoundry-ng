@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: clean `--to seed`; a full `--to dress` cloud run is validating the generalization end-to-end (in progress at last check); pending: complete it and preserve the resulting story as an example, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. The full DRESS is blocked by a *non-reference* POLISH finalize gap (the experiment tier over-proposes a cadence false-branch that residue invalidates — a prompt/model-capability matter for next-up #1, not the pinning class); no cloud-tier example preserved yet, then M9
 
 ## Where we are
 
@@ -623,12 +623,30 @@ PR #5) and this agent/doc infrastructure (PR #6).
      first exposed #40. Continuing the run then hit the *identical*
      dangling-reference class one stage deeper (POLISH finalize named an
      invented `world`), which motivated pinning the whole class
-     pipeline-wide (decision log; `pipeline/refpin.py`). **In progress:** a
-     fresh full `--to dress` run on `gpt-oss:120b` cloud is validating the
-     generalization end-to-end (SEED cleared, reached GROW at last check) —
-     when it finishes, record the result here and preserve the story as a
-     cloud-tier example. The local `qwen3.5`-class confirmation still wants
-     a run when a daemon host is reachable.
+     pipeline-wide (decision log; `pipeline/refpin.py`). **Reference-pinning
+     is validated live through GROW:** a fresh `--to dress` run cleared
+     every reference-heavy stage on `gpt-oss:120b` cloud — DREAM,
+     BRAINSTORM, SEED (triage/scaffold/order all first-attempt), and GROW
+     (intersections, weave, flag derivation, bridges). **The full DRESS is
+     blocked by a *non-reference* gap at POLISH finalize**, so no cloud-tier
+     example is preserved yet: the model proposed an optional cadence
+     false-branch at `bridge:gap-6`, a beat that is in a long linear run at
+     finalize-start (so the pinned `before`/`after` enum accepts it) but is
+     broken out of one once residue beats are spliced in the same apply (so
+     `_finalize_apply` rejects it — the enum is the tightest *computable*
+     over-approximation, since the apply-valid set depends on same-proposal
+     residue). Strong models (Gemini/Opus, runs 7–8) don't over-propose
+     here; `gpt-oss:120b` does and exhausts repairs. This is a
+     model-capability / prompt-quality matter for the experiment tier
+     (next-up #1), **not** the dangling-reference class this effort fixed —
+     deliberately left to that effort rather than piled into the pinning
+     PR. Companion fix that *did* land (correct + safe, though inert for
+     this story, which has long runs): finalize now forbids `false_branches`
+     outright when there is no long linear run to hold one (`max_length=0`)
+     — the reference discipline's list cousin. Still pending: a
+     prose/prompt pass that lets `gpt-oss:120b` clear POLISH→DRESS and earn
+     a cloud-tier example; the local `qwen3.5`-class confirmation still
+     wants a run when a daemon host is reachable.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -842,11 +860,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
   violating-construction test on the golden (incl. the exact live
   `world='share-legend'` finalize failure, now rejected), a GROW
   pre-weave intersection test, and the grammar-subset lint extended to the
-  dynamic builders. 428 tests, ruff clean, golden 0/0. Live validation: a
-  full `--to dress` run on `gpt-oss:120b` cloud is *in progress* (SEED
-  cleared first — the previously-failing triage plus the newly-pinned
-  scaffold/order — and it reached GROW); the completed record and any
-  further gaps it surfaces land in open item 5 once it finishes.
+  dynamic builders. 430 tests, ruff clean, golden 0/0. Live validation:
+  a full `--to dress` run on `gpt-oss:120b` cloud cleared every
+  reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW, all first-attempt) —
+  the pinning holds live where it matters. It then wedged at POLISH
+  finalize on a *non-reference* gap (a cadence false-branch the model
+  proposed at a beat residue later breaks out of its long run; strong
+  models don't over-propose there), so no cloud example is preserved yet.
+  That gap belongs to the prompt-quality effort (next-up #1), not this
+  class; the full record is in open item 5.
 
 - **2026-07-11 (Ollama cloud tier — #40 re-confirmed live + its sibling
   `locked[].dilemma` pinned):** From this hosted environment (supplies

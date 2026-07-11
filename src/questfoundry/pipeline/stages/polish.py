@@ -24,7 +24,7 @@ deferred to M4 with their consumer (FILL).
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
@@ -507,11 +507,19 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
     to the light-residue convergences' own values, false-branch `before`/
     `after` to the long-linear-run beats, and every `entities` ref to the
     entity ids. The apply still enforces the joint (dilemma, world, path)
-    constraint the independent enums cannot express (pipeline/refpin.py)."""
+    constraint the independent enums cannot express (pipeline/refpin.py).
+
+    A false branch splices only into a long linear run, so when there is
+    none the list must be empty — an empty `before`/`after` enum can't
+    express "no items", so forbid the list outright (`max_length=0`). This
+    is the reference discipline's list cousin: a reference *list* whose
+    valid target set is empty must itself be empty. Without it a model
+    (live gpt-oss:120b cloud, 2026-07-11) proposed a cadence diamond where
+    none was structurally possible and exhausted repairs."""
     needs = _light_needs(project)
     entities = entity_ref_ids(project.graph)
     long_beats = [b for run in _long_runs(project) for b in run]
-    return pin(
+    schema = pin(
         FinalizeProposal,
         "FinalizeProposal",
         {
@@ -526,6 +534,13 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
             ("FalseBranchSpec", "after"): long_beats,
         },
     )
+    if not long_beats:
+        schema = create_model(
+            "FinalizeProposal",
+            __base__=schema,
+            false_branches=(list[FalseBranchSpec], Field(default=[], max_length=0)),
+        )
+    return schema
 
 
 def passages_proposal_schema(project: Project) -> type[PassagesProposal]:

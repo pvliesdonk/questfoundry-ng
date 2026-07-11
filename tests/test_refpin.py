@@ -157,6 +157,24 @@ def test_polish_finalize_rejects_the_live_invented_world(golden):
     )
 
 
+def test_polish_finalize_forbids_false_branches_without_long_runs(golden, monkeypatch):
+    # a false branch splices only into a long linear run; with none, the
+    # list must be empty (the enum can't say "no items") — the live
+    # gpt-oss:120b cloud failure was a proposed diamond where none fit
+    with_runs = polish.finalize_proposal_schema(golden)
+    assert "maxItems" not in with_runs.model_json_schema()["properties"]["false_branches"]
+
+    monkeypatch.setattr(polish, "_long_runs", lambda project: [])
+    without = polish.finalize_proposal_schema(golden)
+    assert without.model_json_schema()["properties"]["false_branches"]["maxItems"] == 0
+    with pytest.raises(ValidationError):
+        without.model_validate(
+            {"residue": [], "false_branches": [
+                {"before": "a", "after": "b", "arms": [{"id": "x", "summary": "s"}]}
+            ]}
+        )
+
+
 def test_polish_audit_pins_passages_and_flags_with_slug_affordance(golden):
     schema = polish.audit_proposal_schema(golden)
     props = schema.model_json_schema()["$defs"]["AuditEntry"]["properties"]

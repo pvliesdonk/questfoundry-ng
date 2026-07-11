@@ -25,7 +25,7 @@ REQUIREMENTS:
   matter beat a full roster with passengers.
 - Exactly {{ scope.hard_dilemmas }} HARD dilemma(s) and {{ scope.soft_dilemmas }} SOFT dilemma(s) will be
   branched into player choices — plus {{ scope.locked_dilemmas }} additional dilemma(s) (either
-  role) beyond those counts. Generate them all now: triage will branch the
+  role) beyond those counts — {{ scope.hard_dilemmas + scope.soft_dilemmas + scope.locked_dilemmas }} dilemmas in total. Generate them all now: triage will branch the
   strongest and LOCK the surplus — a locked dilemma is explored down one answer
   only, as a subplot woven through every playthrough (in a mystery, these are
   the red herrings; extra cast earns its place by anchoring them). Locked

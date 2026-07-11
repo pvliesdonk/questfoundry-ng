@@ -569,9 +569,16 @@ class OrderProposal(BaseModel):
 
 
 def _order_context(project: Project) -> dict:
+    # Dispositions exist by now (triage ran first) and the relation rules
+    # depend on them — "the story ends at a branched hard resolution"
+    # is unstatable without saying which dilemmas are branched.
+    g = project.graph
+    locked = set(queries.locked_dilemmas(g))
     return {
         "vision": project.vision,
-        "dilemmas": project.graph.nodes_of(Dilemma),
+        "dilemmas": [
+            {"dilemma": d, "locked": d.id in locked} for d in g.nodes_of(Dilemma)
+        ],
     }
 
 

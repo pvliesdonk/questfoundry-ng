@@ -35,5 +35,7 @@ question sentence. Each query carries a one-line reason so the author can judge
 the digest.
 
 Fewer, sharper queries beat coverage: every retrieved note spends prompt room
-that the stage's real work could use.
+that the stage's real work could use.{% if standing %} An empty list is a valid
+answer — the standing queries above run regardless; add a query only for what
+they don't ask.{% endif %}
 {% include "_shared.j2" %}

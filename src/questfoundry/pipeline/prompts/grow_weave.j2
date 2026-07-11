@@ -4,6 +4,18 @@ only in dramatic pacing. Pick the one that reads best as a story.
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 
+HOW TO READ A CANDIDATE: each numbered step is one scene-unit, in story order.
+"[dilemma:x COMMITS — …]" is that dilemma's point of no return.
+{% if multi_hard %}
+This story has several hard dilemmas, so the forks nest: "the story forks into
+worlds" marks the first hard commit, "(in each world)" prefixes every scene
+that then plays out once per branch of that fork, and the final commit
+multiplies the endings.
+{% endif %}
+"[one scene: …]" is an intersection group staged as a single scene.
+"(dilemma:x, locked subplot)" marks a beat of a fork-less storyline every
+player walks.
+
 CANDIDATES:
 {% for c in candidates %}
 #{{ c.index }}:
@@ -23,6 +35,7 @@ JUDGE BY:
   fork of its own: thread its beats through the main tension — resolving a locked
   question just before or after a real commit sharpens both.
 
-Respond with {"choice": <candidate number>, "rationale": "<one sentence>"}.
+Respond with {"choice": <the number after # on the candidate you pick>,
+"rationale": "<one sentence>"}.
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

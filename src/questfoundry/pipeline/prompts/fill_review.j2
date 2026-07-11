@@ -24,12 +24,14 @@ flag the same way:
    are naturally he/she/they in ANY pov, and sentences that don't mention
    the narrator (a scene opening on someone else's action) are not
    departures.
+{% if voice.banned %}
    These patterns are BANNED — fail if any of them appears:
    - {{ voice.banned | join("
    - ") }}
    Banned patterns match LITERALLY: a banned rhetorical question must be a
    question in the text; a ban aimed at the reader is not violated by words
    one character speaks to another — dialogue is never reader-address.
+{% endif %}
 2. Beat infidelity — a required beat is missing, out of order, or contradicted:
 {% for b in beats %}
    - {{ b.summary }}
@@ -47,6 +49,11 @@ flag the same way:
 {% if window %}
 {% for w in window %}
    preceding ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
+{% endfor %}
+{% endif %}
+{% if lookahead %}
+{% for w in lookahead %}
+   following ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
 {% endfor %}
 {% endif %}
 4. State dishonesty — asserts as true something marked merely possible:

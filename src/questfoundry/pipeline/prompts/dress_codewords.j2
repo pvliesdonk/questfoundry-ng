@@ -10,6 +10,11 @@ FLAGS NEEDING A CODEWORD:
 {% for f in flags %}
 - {{ f.id }}: {{ f.description }}
 {% endfor %}
+{% if taken %}
+
+ALREADY IN USE (codewords other flags hold — never reuse any of these):
+{{ taken | join(", ") }}
+{% endif %}
 
 {"codewords": [{"flag": "<id>", "codeword": "SINGLEWORD"}, ...]}, exactly one entry
 per flag above, no more, no fewer.

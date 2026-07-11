@@ -37,6 +37,7 @@ from questfoundry.models.enrichment import (
     VisualProfile,
 )
 from questfoundry.models.presentation import Passage
+from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
 from questfoundry.pipeline.refpin import pin, retained_entity_ids
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
@@ -387,9 +388,13 @@ def _codewords_skip(project: Project) -> str | None:
 
 
 def _codewords_context(project: Project) -> dict:
+    # Uniqueness is global (mutations.set_flag_codeword rejects reuse), so
+    # on a rerun the model must see the codewords already spoken for —
+    # "distinct from every other codeword" is unfollowable blind.
     g = project.graph
     flags = [g.node(f) for f in sorted(_pending_codewords(g))]
-    return {"vision": project.vision, "voice": project.voice, "flags": flags}
+    taken = sorted(f.codeword for f in g.nodes_of(StateFlag) if f.codeword)
+    return {"vision": project.vision, "voice": project.voice, "flags": flags, "taken": taken}
 
 
 def _codewords_apply(proposal: CodewordsProposal, project: Project) -> list[str]:

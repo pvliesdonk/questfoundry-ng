@@ -3,7 +3,9 @@ AUTHOR STEERING (must be respected):
 {{ notes }}
 {% endif %}
 {% if repair_errors %}
-YOUR PREVIOUS PROPOSAL WAS REJECTED. Fix these problems and return a corrected proposal:
+YOUR PREVIOUS PROPOSAL WAS REJECTED. The problems below accumulate across
+attempts, newest last. Return a fresh, complete proposal that avoids every one
+of them:
 {% for e in repair_errors %}
 - {{ e }}
 {% endfor %}

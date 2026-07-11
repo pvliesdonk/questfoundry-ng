@@ -1,19 +1,27 @@
 Declare how the dilemmas relate in the story's timeline. These relations guide the
 later interleaving of the scaffolds into one branching narrative.
 
+VISION: {{ vision.genre }}, {{ vision.tone }}.
+
 DILEMMAS:
 {% for d in dilemmas %}
-- {{ d.id }} ({{ d.role }}): {{ d.question }}
+- {{ d.dilemma.id }} ({{ d.dilemma.role }}, {% if d.locked %}locked — a fork-less subplot on every playthrough{% else %}branched — the player chooses{% endif %}): {{ d.dilemma.question }}
 {% endfor %}
 
-RELATIONS (emit one entry per meaningful pair):
+RELATIONS (emit one entry per meaningful pair; a pair you omit is unconstrained
+— the interleaver orders it freely):
 - "wraps": A introduces before B and B resolves before A commits. The backbone
   wraps the subplots — hard dilemmas normally wrap soft ones.
 - "serial": A fully resolves before B introduces. Serial subplots never interact.
 - "concurrent": both active at once, interleaved, neither nesting the other.
+  This adds no ordering constraint — it records that neither of the other two
+  relations holds, same as omitting the pair.
 
 Do not create cycles (if A wraps B, B cannot wrap or precede A). The story
 ENDS at a branched hard dilemma's resolution: never chain anything serial
 after every hard dilemma — a subplot that must outlast a hard resolution
-should be wrapped by it (or concurrent), not serial after it.
+should be wrapped by it (or concurrent), not serial after it. This binds
+locked storylines especially: serial(hard, locked subplot) forces the whole
+subplot after that hard resolution and usually leaves no feasible climax —
+wrap it or leave it concurrent.
 {% include "_shared.j2" %}

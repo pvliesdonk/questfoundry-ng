@@ -1,0 +1,15 @@
+Summarize ONE passage of a branching gamebook for the writers of LATER
+passages. Your summary joins a "story so far" digest those writers read
+instead of this prose — everything they must not contradict has to be in it.
+
+THE PROSE ({{ passage.id }}):
+---
+{{ prose }}
+---
+
+Respond {"summary": "..."}: at most {{ max_words }} words, plain declarative
+present tense — who does what, what changes, what it now costs. Name every
+event, reveal, decision, and significant object. A summary is a note, never
+prose: no imagery, no phrases quoted from the text, no mood performance —
+name a mood only when a later writer needs it ("she leaves shaken").
+{% include "_shared.j2" %}

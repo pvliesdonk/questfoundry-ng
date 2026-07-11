@@ -13,3 +13,7 @@ choices:
 - to: passage:p-fair-weather
   label: Blame the instruments and burn the page
   grants: [flag:lie-between]
+prose_summary: >-
+  Storm season at the Stilt Light. Maren finds the ledger's blank line and her mother's
+  abandoned courses. Elias lands to chart the shoals; his soundings come back wrong and
+  he asks why.

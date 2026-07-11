@@ -84,11 +84,21 @@ gate with `--budget`/`--priority` caps. Re-running costs zero API calls
 (idempotent by file presence), the HTML player inlines the rendered art,
 the print PDF fills its illustration slots, and CI drives the whole
 command through a hermetic zero-network placeholder provider.
+Reading "Closed Circle" at book length surfaced the next
+frontier — **prose quality at scale** — and its engine half has landed:
+a deterministic echo check at the FILL apply (a rendered fact restated
+verbatim, or a run lifted from adjacent prose, is rejected and
+repaired), micro-details held to note form, a richer Voice (imagery
+palette, dialogue rules), a rolling utility-summarized story-so-far in
+every write context, and POLISH's character-arc metadata pass — so each
+scene paces one aspect of a character instead of restating every known
+fact.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
-ended the previous keeper's watch), the residue diamond, and a tensored
+ended the previous keeper's watch), the residue diamond, a tensored
 arm (a texture choice that exists only for players who told Elias the
-truth) — and prints end-to-end:
+truth), character arcs for its two leads, and per-passage story-so-far
+notes — and prints end-to-end:
 
 ```console
 $ uv sync --group dev

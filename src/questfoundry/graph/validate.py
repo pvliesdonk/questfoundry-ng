@@ -18,6 +18,7 @@ from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
+from questfoundry.models.drama import Path as StoryPath
 from questfoundry.models.enrichment import Enrichment
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import (
@@ -703,6 +704,26 @@ def check_g4_residue_coverage(ctx: Context) -> None:
                         )
 
 
+def check_g4_arc_references(ctx: Context) -> None:
+    """G4: character-arc metadata resolves — every pivot names a real
+    beat, every end a real explored path. Arcs are annotations, but a
+    dangling reference in one silently corrupts FILL's arc-position
+    computation later (same class as G3-FLAGS: referential integrity
+    fails loud at the gate, not downstream). Hand-edited files face the
+    same rule as the arcs pass."""
+    for e in ctx.g.nodes_of(Entity):
+        if e.arc is None:
+            continue
+        for pivot in e.arc.pivots:
+            if not isinstance(ctx.g.get(pivot.beat), Beat):
+                ctx.error(
+                    "G4", f"{e.id}: arc pivot {pivot.beat!r} is not a beat in the graph"
+                )
+        for end in e.arc.ends:
+            if not isinstance(ctx.g.get(end.path), StoryPath):
+                ctx.error("G4", f"{e.id}: arc end {end.path!r} is not a path")
+
+
 def check_budget_passages(ctx: Context) -> None:
     preset = ctx.vision.preset
     count = len(ctx.g.nodes_of(Passage))
@@ -979,6 +1000,7 @@ GATES: dict[Stage, list] = {
         check_i13_passage_graph,
         check_g4_choice_labels,
         check_g4_residue_coverage,
+        check_g4_arc_references,
         check_budget_passages,
     ],
     Stage.FILL: [

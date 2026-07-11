@@ -143,8 +143,11 @@ def test_roundtrip_preserves_prose_as_sibling_files(golden, tmp_path):
         )
     )
     # prose is a sibling markdown file, never part of the passage YAML
+    # (prose_summary — the FILL-facing note — stays ON the YAML by design)
     assert (tmp_path / "prose" / "p-arrival.md").read_text() == arrival.prose
-    assert "prose" not in (tmp_path / "graph" / "passages" / "p-arrival.yaml").read_text()
+    yaml_text = (tmp_path / "graph" / "passages" / "p-arrival.yaml").read_text()
+    assert "\nprose:" not in yaml_text and not yaml_text.startswith("prose:")
+    assert "\nprose_summary:" in yaml_text
     reloaded = load_project(tmp_path)
     assert reloaded.graph.node("passage:p-arrival").prose == arrival.prose
 

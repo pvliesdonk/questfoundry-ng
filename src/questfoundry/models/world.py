@@ -26,6 +26,39 @@ class Overlay(BaseModel):
     details: dict[str, str]
 
 
+class ArcPivot(BaseModel):
+    """One turn in an entity's arc, anchored to a real beat: from that
+    beat on, the entity reads as `becomes` (brief register)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    beat: str
+    becomes: str
+
+
+class PathEnd(BaseModel):
+    """Where the arc lands on one explored path (brief register)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    path: str
+    state: str
+
+
+class EntityArc(BaseModel):
+    """Character-arc metadata, POLISH's last output (design doc 02:
+    "begins X, pivots at beat Y, ends Z per path"). FILL consumes it as
+    the per-passage arc position — the lever that paces *specific
+    aspects* of an entity per scene instead of every fact in every
+    scene. Never player-facing."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    begins: str
+    pivots: list[ArcPivot] = []
+    ends: list[PathEnd] = []
+
+
 class Entity(Node):
     """A character, location, object, or faction.
 
@@ -39,6 +72,7 @@ class Entity(Node):
     base: dict[str, str] = {}
     overlays: list[Overlay] = []
     retained: bool = True  # SEED triage disposition
+    arc: EntityArc | None = None  # POLISH arcs pass; FILL-facing only
 
     @model_validator(mode="after")
     def _category_prefix(self) -> Entity:

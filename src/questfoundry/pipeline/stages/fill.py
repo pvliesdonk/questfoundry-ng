@@ -32,6 +32,7 @@ from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity, EntityCategory
+from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
@@ -83,7 +84,12 @@ class VoiceProposal(BaseModel):
     # (Voice itself stays open for author-provided voice.yaml files)
     tense: Literal["past", "present"]
     diction: str
-    rhythm: str = ""
+    rhythm: str
+    # required here though Voice defaults them empty: the pass exists to
+    # give the writer a palette, and a writer short on style guidance
+    # copies whatever styled text is at hand (plan W3)
+    imagery: str
+    dialogue: str
     banned: list[str] = []
     notes: str = ""
 
@@ -206,6 +212,43 @@ def _flag_status(g, passage_id: str, flag: StateFlag) -> str:
     return "possible"
 
 
+def _arc_positions(g, passage_id: str) -> list[dict]:
+    """Per on-stage arced entity (POLISH's arcs pass): the aspect in
+    play now, the turn this passage itself carries, where the entity is
+    heading, and the landings of paths committed upstream. "Passed" is
+    plain ancestry — the same convention flag certainty uses for
+    grants; a pivot on a branch-only beat may read slightly early for
+    readers who skirted it, which is acceptable for a pacing channel
+    (WORLD STATE, not the arc, governs what may be asserted)."""
+    passage = g.node(passage_id)
+    beats = set(queries.beats_of_passage(g, passage_id))
+    ancestry = set(beats)
+    for b in beats:
+        ancestry |= queries.ancestors(g, b)
+    entries = []
+    for eid in passage.entities:
+        e = g.get(eid)
+        if not isinstance(e, Entity) or e.arc is None:
+            continue
+        now, turn, heading = e.arc.begins, None, None
+        for p in e.arc.pivots:
+            if p.beat in beats:
+                turn = p.becomes
+            elif p.beat in ancestry:
+                now = p.becomes
+            elif heading is None and queries.ancestors(g, p.beat) & beats:
+                heading = p.becomes
+        ends = [
+            pe.state
+            for pe in e.arc.ends
+            if any(c in ancestry for c in queries.commit_beats(g, pe.path))
+        ]
+        entries.append(
+            {"entity": e, "now": now, "turn": turn, "heading": heading, "ends": ends}
+        )
+    return entries
+
+
 def _shadows(g) -> list[dict]:
     result = []
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
@@ -217,6 +260,49 @@ def _shadows(g) -> list[dict]:
             answers.append({"text": node.text, "explored": explored})
         result.append({"dilemma": d, "answers": answers})
     return result
+
+
+# Late in a long story a route's summaries still grow linearly; cap the
+# block so deep scopes don't rebuy the token blow-up the summaries exist
+# to avoid (a route is arc-length, ~40+ passages at `long`).
+STORY_SO_FAR_MAX = 40
+
+
+def _story_route(project: Project, passage_id: str) -> list[str]:
+    """One deterministic route from the story's root to this passage,
+    walking in-choice edges backwards: prefer a reference-arc
+    predecessor, else the lowest passage id. Deterministic so prompt
+    bytes are stable across resumes (cache replay)."""
+    g = project.graph
+    view = queries.arc_view(g, reference_selection(project))
+    route: list[str] = []
+    seen = {passage_id}
+    current = passage_id
+    while True:
+        preds = sorted({e.src for e in g.in_edges(current, EdgeKind.CHOICE)} - seen)
+        if not preds:
+            break
+        on_ref = [p for p in preds if set(queries.beats_of_passage(g, p)) <= view]
+        current = (on_ref or preds)[0]
+        seen.add(current)
+        route.append(current)
+    route.reverse()
+    return route
+
+
+def _story_so_far(project: Project, passage_id: str) -> tuple[list[str], int]:
+    """Summaries along the route, oldest first, minus the direct
+    predecessors (their full prose is the window). Returns the rendered
+    list and the count elided by the cap."""
+    g = project.graph
+    window_ids = {e.src for e in g.in_edges(passage_id, EdgeKind.CHOICE)}
+    entries = [
+        g.node(p).prose_summary
+        for p in _story_route(project, passage_id)
+        if p not in window_ids and g.node(p).prose_summary
+    ]
+    elided = max(0, len(entries) - STORY_SO_FAR_MAX)
+    return entries[elided:], elided
 
 
 def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
@@ -263,14 +349,18 @@ def _write_context_for(passage_id: str):
             texture=all(b.is_texture for b in beats),
             ending=passage.ending is not None,
         )
+        story_so_far, story_elided = _story_so_far(project, passage.id)
         return {
             "vision": project.vision,
             "voice": project.voice,
             "passage": passage,
             "beats": beats,
             "entities": entities,
+            "arcs": _arc_positions(g, passage.id),
             "flags": flags,
             "shadows": _shadows(g),
+            "story_so_far": story_so_far,
+            "story_elided": story_elided,
             "window": _neighbor_prose(g, passage.id, "in"),
             "lookahead": _neighbor_prose(g, passage.id, "out"),
             "choices": [
@@ -288,6 +378,66 @@ def _resolve_entity(g, ref: str) -> str:
     only the provably unambiguous slug form is restored (parsing, not
     prediction — display names are rejected, see the STATUS decision log)."""
     return resolve_entity_ref(g, ref)
+
+
+def _check_echoes(g, passage_id: str, prose: str) -> None:
+    """The deterministic floor under the input-role framing (plan W1):
+    a rendered fact performed verbatim, or a run lifted from adjacent
+    prose, is the stamping failure live run 8 read at book scale."""
+    passage = g.node(passage_id)
+    for entity_id in passage.entities:
+        entity = g.get(entity_id)
+        if not isinstance(entity, Entity):
+            continue
+        facts = dict(entity.base)
+        for o in entity.overlays:
+            facts.update(o.details)
+        for key, value in facts.items():
+            if echo.contains_phrase(prose, value, echo.FACT_ECHO_TOKENS):
+                raise ApplyError(
+                    f'prose restates an established fact verbatim: "{value}" '
+                    f"({entity_id}.{key}). Facts are constraints, not choreography — "
+                    "the reader already knows this; keep it true in fresh words or "
+                    "leave it in the background"
+                )
+    for direction in ("in", "out"):
+        for w in _neighbor_prose(g, passage_id, direction):
+            run = echo.longest_shared_run(
+                prose, w["passage"].prose, echo.WINDOW_ECHO_TOKENS
+            )
+            if run:
+                raise ApplyError(
+                    f'prose repeats {w["passage"].id} verbatim: "{run}". Adjacent '
+                    "prose is continuity, not a style template — the reader just "
+                    "read those words; write fresh ones"
+                )
+
+
+def _check_detail_register(g, entity_id: str, detail: MicroDetail, pending: dict) -> None:
+    """Micro-details carry the brief register (plan W3): a fact in note
+    form, never a sentence of the prose — and never an established fact
+    under a new key (the guard the fencer stance walked around)."""
+    words = len(detail.value.split())
+    if words > echo.DETAIL_VALUE_MAX_WORDS:
+        raise ApplyError(
+            f"micro-detail {entity_id}.{detail.key} is {words} words of prose; "
+            f"record a fact in note form (<= {echo.DETAIL_VALUE_MAX_WORDS} words), "
+            "not a sentence of the passage"
+        )
+    entity = g.node(entity_id)
+    known = dict(entity.base)
+    for o in entity.overlays:
+        known.update(o.details)
+    known.update(pending.get(entity_id, {}))
+    for key, value in known.items():
+        if key == detail.key:
+            continue
+        if echo.longest_shared_run(detail.value, value, echo.FACT_ECHO_TOKENS):
+            raise ApplyError(
+                f"micro-detail {entity_id}.{detail.key} restates the established "
+                f"fact {key!r} = {value!r}; the observation is already recorded — "
+                "report a genuinely new one or none"
+            )
 
 
 def _write_apply_for(passage_id: str):
@@ -309,6 +459,12 @@ def _write_apply_for(passage_id: str):
             raise ApplyError(
                 f"prose for {passage_id} is {count} words; the budget is {lo}-{hi}"
             )
+        _check_echoes(g, passage_id, proposal.prose)
+        pending: dict[str, dict[str, str]] = {}
+        for d in proposal.micro_details:
+            entity_id = _resolve_entity(g, d.entity)
+            _check_detail_register(g, entity_id, d, pending)
+            pending.setdefault(entity_id, {})[d.key] = d.value
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
         for d in proposal.micro_details:
@@ -316,6 +472,44 @@ def _write_apply_for(passage_id: str):
             mutations.add_entity_detail(project.graph, entity_id, d.key, d.value)
             lines.append(f"micro-detail: {entity_id}.{d.key} = {d.value}")
         return lines
+
+    return apply
+
+
+# -- summarize passes (the rolling story-so-far, plan W4) ---------------------
+
+SUMMARY_MAX_WORDS = 60
+
+
+class SummaryProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    summary: str
+
+
+def _summary_context_for(passage_id: str):
+    def build(project: Project) -> dict:
+        passage = project.graph.node(passage_id)
+        assert isinstance(passage, Passage)
+        return {
+            "passage": passage,
+            "prose": passage.prose,
+            "max_words": SUMMARY_MAX_WORDS,
+        }
+
+    return build
+
+
+def _summary_apply_for(passage_id: str):
+    def apply(proposal: SummaryProposal, project: Project) -> list[str]:
+        count = len(proposal.summary.split())
+        if count > SUMMARY_MAX_WORDS:
+            raise ApplyError(
+                f"story-so-far summary for {passage_id} is {count} words; the "
+                f"cap is {SUMMARY_MAX_WORDS} — a note for later writers, not prose"
+            )
+        mutations.set_passage_prose_summary(project.graph, passage_id, proposal.summary)
+        return [f"{passage_id}: story-so-far entry, {count} words"]
 
     return apply
 
@@ -389,15 +583,29 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
         WriteProposal, "WriteProposal", {("MicroDetail", "entity"): entity_ref_ids(project.graph)}
     )
     for passage_id in writing_order(project):
+        slug = passage_id.split(":", 1)[1]
         specs.append(
             PassSpec(
-                name=f"write:{passage_id.split(':', 1)[1]}",
+                name=f"write:{slug}",
                 role="writer",
                 template="fill_write.j2",
                 schema=write_schema,
                 build_context=_write_context_for(passage_id),
                 apply=_write_apply_for(passage_id),
                 review=_review_for(passage_id),
+            )
+        )
+        # the rolling story-so-far entry rides right behind the accepted
+        # prose, so every later write pass can read the route in notes
+        # instead of re-buying a deep prose look-back (plan W4)
+        specs.append(
+            PassSpec(
+                name=f"summarize:{slug}",
+                role="utility",
+                template="fill_summary.j2",
+                schema=SummaryProposal,
+                build_context=_summary_context_for(passage_id),
+                apply=_summary_apply_for(passage_id),
             )
         )
     return tuple(specs)

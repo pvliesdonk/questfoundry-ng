@@ -5,9 +5,40 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log). Then M9
+> Last updated: 2026-07-11 · **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation and the review-contract redesign remain). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log). Then M9
 
 ## Where we are
+
+**The prose-quality-at-scale engine is built** (2026-07-11, the frontier
+session next-up #1 called for; plan doc
+[`docs/plans/prose-quality.md`](plans/prose-quality.md), decision log
+below has the record). All five author-approved workstreams landed:
+(1) a deterministic **echo check at the FILL apply** — prose restating a
+rendered entity fact (≥ 4 tokens) or lifting a ≥ 8-token verbatim run
+from adjacent prose is rejected repairably (`pipeline/echo.py`), and
+micro-details are held to note form (≤ 12 words, no re-keying an
+established fact under a new name — the `habit`/`stance_width` accrual);
+(2) the **write prompt states every context block's role** — facts are
+constraints, not choreography; the window is continuity, not a style
+template; (3) the register rule generalized (01 §5): everything that is
+not prose is a note, and the **Voice grew an imagery palette and
+dialogue rules** so a writer short on style guidance has somewhere to
+reach besides the styled text in its prompt; (4) a **rolling
+story-so-far**: a utility-tier `summarize:<slug>` pass rides behind
+every accepted write pass (≤ 60-word note on `Passage.prose_summary`),
+and each write context renders the notes along one deterministic route
+(reference-arc-preferred, window hop excluded, capped at 40);
+(5) **character-arc metadata** — POLISH gained the fourth pass 02 always
+contracted (`arcs`, writer role, refpin-pinned entity/beat/path enums,
+set-once mutation, G4 fails a dangling reference loud), and FILL renders
+the arc *position* per on-stage entity: the aspect in play now, the turn
+this scene carries, where the entity is heading, path landings once
+committed. The golden story models the shape (arcs for both leads,
+story-so-far notes on all nine passages); the keeper e2e fixtures were
+re-recorded with the two new passes spliced in (45 calls). Remaining
+from the plan: live validation (strong-map recurrence read + a weak-tier
+FILL re-attempt) and the review-contract redesign for weak tiers.
+461 tests.
 
 **Every prompt is audited** (2026-07-11, author-directed: "crystal-clear
 intent and expectation, full context — never inferred"): all 24 shipped
@@ -552,20 +583,17 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **Prose quality at scale** (author-directed, 2026-07-11 — the
-   live run 8 reading findings; sequencing vs M9 at the author's
-   call): the echo check at FILL apply, write-prompt input-role
-   framing, the everything-not-prose-is-not-prose register rule for
-   micro-details (and a richer Voice), a utility-summarized rolling
-   story-so-far in the write context, and **character-arc metadata**
-   (deferral trigger met — see the decision log). Frontier session.
-   Reference input (author-supplied 2026-07-11): the legacy semantic
-   conventions, now vendored at
-   [`docs/heritage/semantic-conventions.md`](heritage/semantic-conventions.md)
-   — the prompt-register rules (directive language, explicit
-   constraints, axis-separated feedback, diegetic gate language) are
-   the codified form of what this effort is rewriting toward; its
-   id-prefix and enum lessons are already NG law (A11).
+1. **Prose quality at scale — validate live, then the review
+   contract** (the engine half is built, this session — see "Where we
+   are" and `docs/plans/prose-quality.md`): (a) a fresh strong-map run
+   read for recurrence (grep run 8's stamped n-grams) and a weak-tier
+   (`gpt-oss:120b`) FILL re-attempt against yesterday's failure
+   signature; (b) the **review-contract redesign** for weak tiers —
+   per-beat checklist verdicts (locate and quote each beat) and/or a
+   cross-tier arbitration requirement; design against the next
+   weak-tier run's failures, not speculation (the sharpest input is
+   recorded: reviewer sub-clause literalism + one-sentence quoting on
+   an all-one-model map).
 2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
@@ -787,14 +815,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
   annotation, which per design doc 01 §10 arrives only when a FILL
   quality gap demonstrably calls for it — implement both together in
   M4+ if the gap shows.
-- **Character-arc metadata remains unbuilt** (a POLISH output in design
-  doc 02, deferred to be shaped by its consumer). M4's FILL wrote a
-  micro story well without it. **The deferral's trigger condition has
-  now demonstrably fired** (live run 8 reading: detail-stamping at
-  book scale — decision log 2026-07-11); it joins the author-directed
-  prose-quality effort (next-up #1) as the lever that paces specific
-  aspects of a character per scene instead of all details in all
-  scenes.
+- ~~Character-arc metadata remains unbuilt~~ **Built** (2026-07-11,
+  the prose-quality effort — see "Where we are"): POLISH's `arcs` pass
+  drafts per-entity arcs (begins / pivots anchored to beats / ends per
+  path), the mutation layer holds them stable-once-set, G4 fails
+  dangling references loud, and FILL renders the per-passage arc
+  position. The deferral (design doc 01 §10.3's "when a FILL quality
+  gap demonstrably calls for it") resolved exactly as designed —
+  shaped by its consumer.
 - ~~The HTML player has no codex panel yet~~ **Built** with DRESS
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
@@ -860,6 +888,54 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (prose-quality-at-scale engine — the frontier session
+  next-up #1 called for; plan doc `docs/plans/prose-quality.md`):**
+  Built all five workstreams of the author's design brief (the "live
+  run 8 reading findings" entry below) in one PR. Design decisions
+  worth the record: **(echo)** thresholds are deliberately modest and
+  named constants with rationale (`pipeline/echo.py`): a fact value of
+  ≥ 4 tokens restated verbatim is the stamp, a ≥ 8-token run shared
+  with adjacent prose is a lift; both repairable ApplyErrors, and the
+  prompt framing — not the check — is the real fix. The near-duplicate
+  guard compares a proposed detail against the entity's existing values
+  (≥ 4-token overlap names the existing key), closing the
+  `habit`/`stance_width` accrual the key-level single-assignment guard
+  walked around. **(story-so-far)** summaries are per-passage notes
+  (`Passage.prose_summary`, ≤ 60 words, on-node YAML, never exported)
+  written by a utility pass that rides directly behind each accepted
+  write pass — so the in-flight ledger resumes them free and prompt
+  bytes stay cache-stable; the write context walks ONE deterministic
+  route back to the root (prefer reference-arc predecessors, else
+  lowest passage id), excludes the window hop (its full prose is
+  already shown), caps at 40 entries, and the prompt states the honesty
+  rule: one route among several, WORLD STATE governs what may be
+  asserted. Writing order (reference arc first, then story order)
+  guarantees every route predecessor is already summarized.
+  **(arcs)** realized exactly as 02 contracted ("begins X, pivots at
+  beat Y, ends Z per path"), stored on `Entity.arc` via a stable-
+  once-set mutation (rewind, not overwrite, is how an arc revises);
+  the arcs pass pins entity/beat/path enums via refpin and validates
+  pivot story-order at the mutation layer; FILL consumption uses plain
+  ancestry (the same convention flag certainty uses for grants) — a
+  pivot on a branch-only beat may read slightly early on routes that
+  skirted it, accepted for a pacing channel and documented in code;
+  path `ends` render only once that path's commit is upstream. A new
+  G4 check fails dangling arc references loud (this session's own
+  authoring slip — `beat:the-offer` for `beat:offer` — sailed through
+  validation and motivated it; violating-construction test included).
+  **(voice)** grew `imagery` and `dialogue` (defaults empty so
+  author voice.yaml files load unchanged; required in the proposal so
+  the pass always supplies the palette). **(fixtures)** the keeper e2e
+  fixtures were re-recorded by positional splice (the keeper-craft
+  pattern): 36 → 45 calls, the two new pass responses hand-written in
+  the note register; two recorded micro-details were re-registered to
+  note form (they were 15-word performed sentences — exactly the
+  contract this effort imposes) and the recorded voice gained the two
+  new fields. Deliberately NOT built: the review-contract redesign
+  (per-beat checklist / cross-tier arbitration) — next-up #1(b),
+  design-against-failures; and no mini-ADR — every piece rides
+  contracts 01/02 already state. 461 tests, golden 0/0.
 
 - **2026-07-11 (audit follow-up — the flag-status fix validated live; a
   voice example-name bleed found and fixed):** Re-ran the `gpt-oss:120b`

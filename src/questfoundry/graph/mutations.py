@@ -16,7 +16,7 @@ from questfoundry.models.base import Edge, EdgeKind
 from questfoundry.models.drama import Answer, Consequence, Dilemma, DilemmaRole, Path
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
-from questfoundry.models.world import Entity
+from questfoundry.models.world import Entity, EntityArc
 
 CODEWORD_RE = re.compile(r"^[A-Z]{3,12}$")
 
@@ -211,6 +211,47 @@ def set_passage_prose(g: StoryGraph, passage_id: str, prose: str) -> None:
     if not prose.strip():
         raise MutationError(f"prose for {passage_id} is empty")
     passage.prose = prose
+
+
+def set_entity_arc(g: StoryGraph, entity_id: str, arc: EntityArc) -> None:
+    """POLISH's arcs pass (design doc 02: "begins X, pivots at beat Y,
+    ends Z per path"). Pivots anchor to real beats in story order; ends
+    name explored paths. Stable once set — like a codeword, re-proposing
+    the identical arc is a no-op, changing one is an error (the rewind
+    machinery, not overwrite, is how an arc is revised)."""
+    entity = g.get(entity_id)
+    if not isinstance(entity, Entity):
+        raise MutationError(f"{entity_id!r} is not an entity")
+    if entity.arc is not None:
+        if entity.arc == arc:
+            return
+        raise MutationError(f"{entity_id} already has an arc; arcs are stable once set")
+    order = {b: i for i, b in enumerate(queries.topological_order(g) or [])}
+    positions = []
+    for pivot in arc.pivots:
+        if not isinstance(g.get(pivot.beat), Beat):
+            raise MutationError(f"arc pivot {pivot.beat!r} is not a beat")
+        positions.append(order[pivot.beat])
+    if positions != sorted(positions):
+        raise MutationError(
+            f"{entity_id}: arc pivots must be listed in story order "
+            f"(topological order of their beats)"
+        )
+    for end in arc.ends:
+        if not isinstance(g.get(end.path), Path):
+            raise MutationError(f"arc end {end.path!r} is not a path")
+    entity.arc = arc
+
+
+def set_passage_prose_summary(g: StoryGraph, passage_id: str, summary: str) -> None:
+    """FILL's rolling story-so-far entry: the utility-summarized note a
+    later passage's write context reads instead of this passage's prose."""
+    passage = g.get(passage_id)
+    if not isinstance(passage, Passage):
+        raise MutationError(f"{passage_id!r} is not a passage")
+    if not summary.strip():
+        raise MutationError(f"prose summary for {passage_id} is empty")
+    passage.prose_summary = summary
 
 
 def add_entity_detail(g: StoryGraph, entity_id: str, key: str, value: str) -> None:

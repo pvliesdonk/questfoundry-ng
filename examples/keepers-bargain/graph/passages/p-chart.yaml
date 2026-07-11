@@ -13,3 +13,6 @@ choices:
 - to: passage:p-wide-water
   label: Cap the lamp and go aboard
   grants: [flag:sleeper-waking]
+prose_summary: >-
+  Elias spreads the finished chart: every false depth corrected, the sleeper's hollow
+  drawn plain and unnamed. The truth of the water is now hers on paper.

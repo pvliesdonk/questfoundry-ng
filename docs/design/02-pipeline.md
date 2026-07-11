@@ -260,7 +260,7 @@ central commitment point.
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
 | Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path |
+| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
 
@@ -303,7 +303,7 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 | | |
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
-| Out | **Voice** record; prose per passage (and per variant); universal entity micro-details |
+| Out | **Voice** record; prose per passage (and per variant); universal entity micro-details (note register, length-capped); a rolling story-so-far note per passage (utility-summarized) |
 | Gate G5 | Every passage has prose within its word budget — per-passage since M8: texture passages (residue/false-branch arms) take the short band, endings get headroom, scenes the full band (01 §2) — enforced at apply with 20% slack (models cannot hit exact windows; the exact range stays B5's advisory line); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
 Order matters: FILL locks the Voice first, then picks a **reference
@@ -319,8 +319,20 @@ same word budgets and review bar to every arc.
 
 Per-passage context is rich by design: voice, beat summaries, full entity
 state (base + active overlays), a sliding window of preceding prose,
-character-arc position, active flags, the *shadows* (what didn't happen —
-so prose can carry the weight of it), and convergence lookahead.
+character-arc position (from POLISH's arc metadata: the aspect in play
+now, the turn this scene carries, where the entity is heading),
+the story so far (each already-written passage along one deterministic
+route contributes a utility-summarized note — deep continuity at note
+prices, where a full prose look-back would blow up tokens), active
+flags, the *shadows* (what didn't happen — so prose can carry the weight
+of it), and convergence lookahead. Every block states its role in the
+prompt: facts are constraints, not choreography; the window is
+continuity, not a style template (prose-quality effort — live run 8's
+verbatim-recurrence findings). The apply enforces the deterministic
+floor: an **echo check** rejects prose that restates a rendered entity
+fact or lifts a long verbatim run from adjacent prose, and micro-details
+are held to note form (length caps, no re-keying an established fact
+under a new name).
 
 A passage failing review twice is a structural bug: it goes back to
 POLISH (or GROW), never to a third rewrite. Prose cannot rescue a broken

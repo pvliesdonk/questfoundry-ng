@@ -1,6 +1,6 @@
 """POLISH — compile the frozen beat DAG to passages (design doc 02).
 
-Three passes sharing gate G4:
+Four passes sharing gate G4:
 
 1. *finalize* — DAG additions only (I9 holds throughout): the LLM
    writes a flag-gated residue arm per path for every light-residue
@@ -16,10 +16,13 @@ Three passes sharing gate G4:
 3. *audit* — the prose-feasibility audit: the engine computes each
    passage's possibly-active flags; the LLM marks the flags a passage's
    prose must not address; gate I12 enforces the cap on the rest.
+4. *arcs* — character-arc metadata per entity ("begins X, pivots at
+   beat Y, ends Z per path"), FILL's per-passage arc position: the
+   lever that paces specific aspects of a character per scene (plan:
+   docs/plans/prose-quality.md W5).
 
 M3 scope notes (tracked in docs/STATUS.md): false branches carry no
-cosmetic flags yet; character-arc metadata and the pacing report are
-deferred to M4 with their consumer (FILL).
+cosmetic flags yet; the pacing report stays deferred with scene_type.
 """
 
 from __future__ import annotations
@@ -29,8 +32,10 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
 from questfoundry.models.base import Stage
+from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
+from questfoundry.models.world import ArcPivot, Entity, EntityArc, EntityCategory, PathEnd
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
@@ -516,6 +521,97 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
     return lines or ["all active flags judged relevant"]
 
 
+# -- pass 4: arcs -------------------------------------------------------------
+
+
+class ArcPivotSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    beat: str
+    becomes: str
+
+
+class PathEndSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    path: str
+    state: str
+
+
+class ArcSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    entity: str
+    begins: str
+    pivots: list[ArcPivotSpec] = []
+    ends: list[PathEndSpec] = []
+
+
+class ArcsProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    arcs: list[ArcSpec] = Field(min_length=1)
+
+
+def _arc_entities(g) -> list[Entity]:
+    """The entities worth arcing: retained characters and objects (design
+    brief: pace "specific aspects of a character or object"); locations
+    and factions don't develop, they get overlays."""
+    return [
+        e
+        for e in sorted(g.nodes_of(Entity), key=lambda e: e.id)
+        if e.retained and e.category in (EntityCategory.CHARACTER, EntityCategory.OBJECT)
+    ]
+
+
+def _arcs_context(project: Project) -> dict:
+    g = project.graph
+    order = queries.topological_order(g) or []
+    names = queries.path_names(g)
+    paths = [
+        {
+            "id": p,
+            "question": g.node(queries.dilemma_of_path(g, p)).question,
+            "answer": names[p],
+        }
+        for d in sorted(d.id for d in g.nodes_of(Dilemma))
+        for p in queries.explored_paths(g, d)
+    ]
+    return {
+        "vision": project.vision,
+        "entities": _arc_entities(g),
+        "beats": [g.node(b) for b in order],
+        "paths": paths,
+    }
+
+
+def _arcs_apply(proposal: ArcsProposal, project: Project) -> list[str]:
+    g = project.graph
+    eligible = {e.id for e in _arc_entities(g)}
+    seen: set[str] = set()
+    lines = []
+    for spec in proposal.arcs:
+        entity_id = resolve_entity_ref(g, spec.entity)
+        if entity_id not in eligible:
+            raise ApplyError(
+                f"{entity_id} is not a retained character or object; "
+                f"arc exactly these: {sorted(eligible)}"
+            )
+        if entity_id in seen:
+            raise ApplyError(f"{entity_id} arced twice")
+        seen.add(entity_id)
+        arc = EntityArc(
+            begins=spec.begins,
+            pivots=[ArcPivot(beat=p.beat, becomes=p.becomes) for p in spec.pivots],
+            ends=[PathEnd(path=e.path, state=e.state) for e in spec.ends],
+        )
+        mutations.set_entity_arc(g, entity_id, arc)
+        lines.append(
+            f"{entity_id}: {len(arc.pivots)} pivot(s), {len(arc.ends)} path end(s)"
+        )
+    return lines
+
+
 def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
     """Pin finalize's references: each residue's `dilemma`/`world`/`path`
     to the light-residue convergences' own values, false-branch `before`/
@@ -564,6 +660,36 @@ def passages_proposal_schema(project: Project) -> type[PassagesProposal]:
     return pin(PassagesProposal, "PassagesProposal", {("VariantSpec", "flag"): flags})
 
 
+def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
+    """Pin `arcs[].entity` to the arc-worthy entities (exact ids plus the
+    bare slugs `resolve_entity_ref` also accepts — unambiguous against
+    ALL retained entities, since that is the set the resolver checks),
+    `pivots[].beat` to the real beats, and `ends[].path` to the explored
+    paths."""
+    g = project.graph
+    eligible = [e.id for e in _arc_entities(g)]
+    all_slugs = [i.split(":", 1)[1] for i in entity_ref_ids(g) if ":" in i]
+    slugs = [
+        i.split(":", 1)[1]
+        for i in eligible
+        if all_slugs.count(i.split(":", 1)[1]) == 1
+    ]
+    paths = [
+        p
+        for d in sorted(d.id for d in g.nodes_of(Dilemma))
+        for p in queries.explored_paths(g, d)
+    ]
+    return pin(
+        ArcsProposal,
+        "ArcsProposal",
+        {
+            ("ArcSpec", "entity"): eligible + slugs,
+            ("ArcPivotSpec", "beat"): queries.topological_order(g) or [],
+            ("PathEndSpec", "path"): paths,
+        },
+    )
+
+
 def audit_proposal_schema(project: Project) -> type[AuditProposal]:
     """Pin `audit[].passage` to the passages that have active flags (both
     exact ids and their unambiguous slugs, which the apply also accepts)
@@ -607,6 +733,14 @@ POLISH_STAGE = StageImpl(
             schema=audit_proposal_schema,
             build_context=_audit_context,
             apply=_audit_apply,
+        ),
+        PassSpec(
+            name="arcs",
+            role="writer",
+            template="polish_arcs.j2",
+            schema=arcs_proposal_schema,
+            build_context=_arcs_context,
+            apply=_arcs_apply,
         ),
     ),
     gate=lambda p: run_checks(p.graph, p.vision, Stage.POLISH),

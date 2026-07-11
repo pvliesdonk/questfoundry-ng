@@ -12,3 +12,6 @@ choices:
 - to: passage:p-wide-water
   label: Cap the lamp and go aboard
   grants: [flag:sleeper-waking]
+prose_summary: >-
+  Maren asks Elias what he would do. He will stay or sail by her word but refuses to
+  choose for her; the decision stays hers.

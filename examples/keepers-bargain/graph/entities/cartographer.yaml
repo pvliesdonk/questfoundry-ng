@@ -11,3 +11,14 @@ overlays:
 - when: [flag:lie-between]
   details:
     manner: polite and distant, keeping his soundings to himself
+arc:
+  begins: a hired surveyor, loyal to accurate paper
+  pivots:
+  - beat: beat:offer
+    becomes: has tied his own sailing to Maren's answer; the chart matters less
+      than the keeper
+  ends:
+  - path: path:tell
+    state: keeps her secret as carefully as a sounding
+  - path: path:hide
+    state: sails with a chart he half doubts and a friend he half knows

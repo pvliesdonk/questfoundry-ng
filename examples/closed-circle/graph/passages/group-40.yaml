@@ -1,0 +1,8 @@
+id: passage:group-40
+summary: Beaumont suddenly finds the parlor's intricate rug fascinating, avoiding eye contact
+  with the glaring Inspector at all costs.
+beats:
+- beat:fb-run2-s5-a2
+choices:
+- label: Turn away to serve the demanding guest in the parlor.
+  to: passage:group-42

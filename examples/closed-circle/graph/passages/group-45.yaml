@@ -1,0 +1,17 @@
+id: passage:group-45
+summary: Beaumont steps aside, letting Munroe coat the entire room in baking flour. The powder
+  obliterates real evidence but settles conspicuously over the dead man, creating a ghostly
+  pallor Beaumont struggles to brush away unseen.
+entities:
+- character:beaumont
+- character:det-munroe
+- object:poisoned-tea-set
+beats:
+- beat:bridge-20
+- beat:munroe-commit-encourage--pose-study
+- beat:munroe-encourage-obliterated--pose-study
+choices:
+- label: Watch Munroe accidentally kick a wobbly side table.
+  to: passage:group-49
+- label: Notice Munroe step on a blood-specked handkerchief.
+  to: passage:group-50

@@ -1,0 +1,14 @@
+id: beat:overflow-commit-room--stuff-pantry
+created_by: grow
+summary: Unable to fit another body in the pantry, Beaumont and Arthur haul the crumpet victim
+  upstairs and shove them under Arthur's bed. Now the manor boasts hidden corpses on multiple
+  floors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: commits
+entities:
+- character:beaumont
+- character:arthur
+belongs_to:
+- path:arthur-room

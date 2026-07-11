@@ -1,0 +1,6 @@
+---
+entity: character:cecily
+title: Cecily Sterling
+---
+
+Cecily Sterling approaches the creeping dread of domestic existence with the profound detachment of a spectator watching a mildly amusing, though terribly produced, theatrical farce. She is most frequently observed lounging precariously against doorframes and heavy antique furnishings in expensive silk pajamas, displaying a reckless disregard for structural propriety. Her posture is invariably languid, supported by whatever historic molding is closest to hand, whilst she balances an empty crystal wine glass as though it were a vital appendage. To Cecily, inadequate thermal retention in historic masonry is not a mere architectural failing, but a calculated, deeply personal insult directed at her carefully curated wardrobe. She extracts precisely rolled cigarettes from a slender silver case secreted within her garments, observing the frantic maneuvers of her peers through a haze of absolute boredom. Should the atmospheric conditions dare to inconvenience her, she routinely vocalizes her displeasure by framing the unavoidable environmental discomfort as a deliberate affront to her impeccable taste, fully expecting someone else to immediately rectify the universe's oversight.

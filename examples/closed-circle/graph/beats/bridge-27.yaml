@@ -1,0 +1,9 @@
+id: beat:bridge-27
+created_by: grow
+summary: Recognizing the current hiding place is at max capacity, Beaumont scrambles to find
+  an alternative location to stash the newest casualty.
+beat_class: structural
+purpose: bridge
+entities:
+- character:arthur
+- character:beaumont

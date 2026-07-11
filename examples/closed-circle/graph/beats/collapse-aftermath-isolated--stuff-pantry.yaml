@@ -1,0 +1,11 @@
+id: beat:collapse-aftermath-isolated--stuff-pantry
+created_by: grow
+summary: The group stares at the severed phone cord, realizing they are entirely cut off from
+  the outside world. Without the police coming, the group is now trapped indefinitely in a
+  house where the walk-in pantry holds a bleeding corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: reveals
+belongs_to:
+- path:ignore-phone

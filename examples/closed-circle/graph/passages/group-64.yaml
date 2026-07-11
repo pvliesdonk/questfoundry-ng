@@ -1,0 +1,11 @@
+id: passage:group-64
+summary: Sylvia stubbornly insists the tea was simply brewed with cheap, offensive leaves,
+  refusing to admit she might be seriously ill.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run9-s1-a2
+choices:
+- label: Mop up the mess while ensuring the pose holds.
+  to: passage:group-68

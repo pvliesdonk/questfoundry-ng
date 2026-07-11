@@ -1,0 +1,8 @@
+id: passage:group-30
+summary: Arthur mutters defensively that the lines were supposed to be dead, pacing nervously
+  as the ringing persists.
+beats:
+- beat:fb-run2-s3-a2
+choices:
+- label: Retreat from the groaning roof toward the hallway.
+  to: passage:group-32

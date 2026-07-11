@@ -1,0 +1,20 @@
+id: passage:group-60
+summary: Munroe breaks down the conservatory door wielding a dangerous sharpened icicle. She
+  stomps back into the hallway, demanding answers right beside the pantry door, just as the
+  silver refreshment cart is wheeled in.
+entities:
+- character:det-munroe
+- location:conservatory
+- object:poisoned-tea-set
+beats:
+- beat:bridge-23
+- beat:munroe-distract-escape--stuff-pantry
+choices:
+- label: Agonizingly drink the tea to avoid breaking decorum.
+  grants:
+  - flag:beau-poisoned
+  to: passage:group-65
+- label: Call Sylvia's bluff and serve her the suspect brew.
+  grants:
+  - flag:sylvia-incapacitated
+  to: passage:group-66

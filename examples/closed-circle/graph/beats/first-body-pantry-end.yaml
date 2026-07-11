@@ -1,0 +1,14 @@
+id: beat:first-body-pantry-end
+summary: The pantry door swings open under the weight of the hidden corpse, dumping the bloody
+  victim onto the hallway floor for everyone to see. The polite facade shatters into screams
+  of terror, yet this gruesome revelation is only the beginning of the evening's cascading
+  disasters.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: reveals
+entities:
+- character:sylvia
+- location:the-pantry
+belongs_to:
+- path:stuff-pantry

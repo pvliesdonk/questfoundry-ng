@@ -1,0 +1,85 @@
+style: Claustrophobic, tightly composed line-art with heavy crosshatching and oppressive use
+  of negative space, evoking a darkly farcical, theatrical stage play where characters appear
+  physically boxed in by their surroundings.
+palette: Monochromatic grayscale mimicking vintage ink illustration, accented exclusively
+  by suffocating, sickly highlights of frostbite blue and bruised, vintage burgundy.
+influences:
+- Edward Gorey
+- Charles Addams
+- Vintage Penguin Books mystery covers
+notes: Visual framing should emphasize rigid verticality in the architecture to contrast sharply
+  with the increasingly desperate and unseemly postures of the guests.
+profiles:
+- entity: character:arthur
+  appearance: A sweaty, bumbling figure in visually inadequate, thermally inefficient seasonal
+    tailoring, maintaining a rigidly terrified posture while firmly clutching a brass-reinforced
+    leather briefcase directly against his sternum as a shield.
+  iconography:
+  - Brass-reinforced leather briefcase
+  - Visible beads of sweat
+  - Highly polished, heavily soled oxfords
+- entity: character:beaumont
+  appearance: Standing with a perfectly rigid spine and a wide, lateral fencer's stance, wearing
+    an impeccably tailored velvet smoking jacket with narrow shoulders over a silk waistcoat,
+    featuring a minute twitch in his left eye and flawlessly aligned shirt cuffs.
+  iconography:
+  - Velvet smoking jacket
+  - Mirror-finish patent leather oxfords
+  - Solid-gold half-hunter pocket watch
+  - Meticulously folded emergency linen square
+- entity: character:cecily
+  appearance: Languidly and precariously draped against doorframes or heavy furniture molding
+    in expensive silk pyjamas, projecting perpetual boredom.
+  iconography:
+  - Expensive silk pyjamas
+  - Empty crystal wine glass
+  - Slender silver cigarette case
+- entity: character:det-munroe
+  appearance: Wearing heavily reinforced canvas outerwear indoors alongside aggressive, thick-soled
+    tactical boots, adopting an artificially rigid posture while gripping a heavily armored
+    smartphone with two hands.
+  iconography:
+  - Reinforced canvas trench coat
+  - Military-grade smartphone casing
+  - Thick-soled tactical boots
+  - Culinary baking powders
+- entity: character:sylvia
+  appearance: Maintaining an exacting, perpendicular spinal alignment, draped aggressively
+    in a sharp cashmere shawl and pearls, wearing formal silk gloves indoors while pressing
+    two fingers to her temples in theatrical displeasure.
+  iconography:
+  - Aggressively sharp cashmere shawl
+  - Pearls
+  - Formal silk gloves
+  - Luxury footwear
+- entity: location:conservatory
+  appearance: A structurally degraded, freezing botanical enclosure defined by neglected,
+    highly oxidized wrought-iron plant stands and an abandoned corner potting bench.
+  iconography:
+  - Oxidized wrought-iron plant stands
+  - Abandoned potting bench
+  - Heavy, rust-spotted botanical shears
+- entity: location:the-pantry
+  appearance: A cavernous, freezing, and claustrophobically overcrowded storage room visually
+    dominated by a heavy oak door bearing an antiquated brass latch.
+  iconography:
+  - Heavy oak door
+  - Antiquated weighted brass latch
+  - Dense stacks of standard preserves
+- entity: object:antique-harpoon
+  appearance: A ridiculously oversized nautical weapon, inherently unsteady and prone to gravity.
+  iconography:
+  - Oversized nautical harpoon design
+- entity: object:poisoned-tea-set
+  appearance: A flawless, highly valuable silver tea service resting upon exquisitely thin
+    bone china saucers, marred only by a microscopic rim chip on the third cup.
+  iconography:
+  - Silver tea service
+  - Exquisitely thin bone china saucers
+  - Microscopically chipped third teacup
+- entity: object:the-ledger
+  appearance: A thick, heavy book bound in aged leather, filled with excessively thick vellum
+    pages that resist easy turning.
+  iconography:
+  - Thick aged leather binding
+  - Excessively thick vellum pages

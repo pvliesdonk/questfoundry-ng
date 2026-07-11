@@ -1,0 +1,14 @@
+id: beat:podcast-aftermath-hunted--stuff-pantry
+created_by: grow
+summary: Munroe abandons her investigation to actively hunt Beaumont through the manor. Her
+  violent pursuit forces Beaumont into the hallway, leaving him trapped directly in front
+  of the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: complicates
+entities:
+- character:det-munroe
+- character:beaumont
+belongs_to:
+- path:smash-phone

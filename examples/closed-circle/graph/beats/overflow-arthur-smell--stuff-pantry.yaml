@@ -1,0 +1,14 @@
+id: beat:overflow-arthur-smell--stuff-pantry
+created_by: grow
+summary: Arthur loudly panics about the smell of death ruining the vintage wine collection.
+  His complaints about the odor only serve to remind everyone that there is a rapidly spoiling
+  body hidden right next to the kitchen supplies.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room
+- path:snow-drift

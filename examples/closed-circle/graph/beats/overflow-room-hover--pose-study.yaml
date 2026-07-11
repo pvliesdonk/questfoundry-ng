@@ -1,0 +1,13 @@
+id: beat:overflow-room-hover--pose-study
+created_by: grow
+summary: Arthur refuses to enter his room, hovering nervously in the hallway. His pacing draws
+  the guests' annoyed attention, putting extra pressure on Beaumont to keep everyone calm
+  and oblivious to the dead man resting nearby.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

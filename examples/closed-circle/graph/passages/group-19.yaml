@@ -1,0 +1,8 @@
+id: passage:group-19
+summary: Sylvia dramatically rubs her temples, declaring that the stress of the mounting storm
+  is giving her a terrible migraine.
+beats:
+- beat:fb-run2-s1-a2
+choices:
+- label: Force Arthur to brave the dark pantry for garnish.
+  to: passage:group-22

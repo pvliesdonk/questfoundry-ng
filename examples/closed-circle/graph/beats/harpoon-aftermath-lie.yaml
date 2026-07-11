@@ -1,0 +1,12 @@
+id: beat:harpoon-aftermath-lie
+summary: Beaumont smoothly informs Cecily that he merely spilled a glass of vintage Merlot
+  while trying to pry open a stuck window.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: reveals
+entities:
+- character:beaumont
+- character:cecily
+belongs_to:
+- path:wipe-curtains

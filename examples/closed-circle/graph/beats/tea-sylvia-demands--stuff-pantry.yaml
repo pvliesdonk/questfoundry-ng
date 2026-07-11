@@ -1,0 +1,15 @@
+id: beat:tea-sylvia-demands--stuff-pantry
+created_by: grow
+summary: Sylvia sits haughtily in the drawing room, sharply demanding her afternoon tea from
+  the tampered silver set. She snaps at Beaumont for his slow service, completely unaware
+  of the gruesome cleanup he just finished in the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:sylvia
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

@@ -1,0 +1,20 @@
+id: passage:group-140
+summary: Enraged by the financial revelations, the mob corners Arthur and pushes him directly
+  into the study. A chaotic shootout erupts over the cooked books, and a stray bullet hits
+  the 'napping' guest, proving to everyone that he has been dead for hours.
+entities:
+- character:sylvia
+- character:arthur
+ending:
+  id: e-group-140
+  title: Shattered Illusions
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-14
+- beat:ledger-read-arthur-cornered--pose-study
+- beat:ledger-read-end--pose-study

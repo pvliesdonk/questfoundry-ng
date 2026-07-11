@@ -1,0 +1,14 @@
+id: beat:tea-commit-beau--pose-study
+created_by: grow
+summary: Unwilling to break decorum, Beaumont agonizingly drinks from the nearest cup to prove
+  it is safe. He forces the tea down with a strained smile, relying on the same desperate
+  politeness he used to excuse the dead man's silence in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: commits
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes

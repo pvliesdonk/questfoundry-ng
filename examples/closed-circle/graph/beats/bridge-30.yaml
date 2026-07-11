@@ -1,0 +1,9 @@
+id: beat:bridge-30
+created_by: grow
+summary: The frantic chase abruptly spills back into the dining room, where the controversial
+  accounting book sits unguarded.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- object:the-ledger

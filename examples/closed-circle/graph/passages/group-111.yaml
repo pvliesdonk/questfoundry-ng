@@ -1,0 +1,15 @@
+id: passage:group-111
+summary: A distinct cloud of dry, aged dust puffs violently from the binding as the heavy
+  ledger is disturbed.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s3-a1
+choices:
+- label: Flinch as a camera shutter clicks from the doorway.
+  to: passage:group-114

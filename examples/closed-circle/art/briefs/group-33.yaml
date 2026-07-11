@@ -1,0 +1,16 @@
+passage: passage:group-33
+priority: 13
+caption: Cecily casually mocks Munroe's investigative skills while Beaumont realizes the terrible
+  implications.
+prompt: Tightly composed line-art highlighting extreme claustrophobia. Cecily languidly and
+  precariously drapes against heavy furniture molding in expensive silk pyjamas, projecting
+  perpetual boredom. Munroe stands in artificially rigid posture wearing reinforced canvas
+  outerwear and thick-soled tactical boots, gripping an armored smartphone. Beaumont exhibits
+  a minute twitch in his left eye, his spine rigid in his velvet smoking jacket. A flawless
+  silver tea service sits nearby. Grayscale with bruised burgundy on Cecily's silk and frostbite
+  blue on Munroe's tactical boots.
+entities:
+- character:cecily
+- character:det-munroe
+- object:poisoned-tea-set
+- character:beaumont

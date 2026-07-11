@@ -1,0 +1,11 @@
+id: beat:harpoon-cecily-lights
+summary: Cecily stumbles into the room, threatening to turn on the main overhead lights to
+  admire the rug's intricate pattern.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: complicates
+entities:
+- character:cecily
+belongs_to:
+- path:wipe-curtains

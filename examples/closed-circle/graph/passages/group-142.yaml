@@ -1,0 +1,14 @@
+id: passage:group-142
+summary: Angry sparks pop from the fireplace as the heavy, dusty ledger hits the burning embers.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run22-s1-a2
+choices:
+- label: Brace as the party devolves into an anarchic brawl.
+  to: passage:group-144

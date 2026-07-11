@@ -1,0 +1,7 @@
+id: path:arthur-room
+name: Monsters Under the Bed
+explores: answer:arthur-room
+consequences:
+- id: consequence:arthur-terrified
+  text: Arthur's bedroom becomes a makeshift morgue, leaving him sleep-deprived and increasingly
+    unstable.

@@ -1,0 +1,12 @@
+id: beat:overflow-guests-explore--stuff-pantry
+created_by: grow
+summary: The remaining guests express a desire to explore the hallway to stretch their legs.
+  Beaumont frantically tries to corral them back to the dining room, terrified they will walk
+  too close to the pantry and its bloody occupant.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+belongs_to:
+- path:arthur-room
+- path:snow-drift

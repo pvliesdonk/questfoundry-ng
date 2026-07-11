@@ -1,0 +1,14 @@
+id: beat:podcast-aftermath-hunted--pose-study
+created_by: grow
+summary: Munroe begins actively hunting Beaumont through the manor with lethal intent. As
+  he dodges her attacks, Beaumont must continually steer their chaotic cat-and-mouse game
+  away from the study to protect his newspaper-clad secret.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: complicates
+entities:
+- character:det-munroe
+- character:beaumont
+belongs_to:
+- path:smash-phone

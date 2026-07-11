@@ -1,0 +1,14 @@
+id: beat:tea-beau-cleanup--pose-study
+created_by: grow
+summary: Beaumont cleans up the spilled tea while anxiously wondering if Sylvia will die before
+  the dinner bell. He constantly checks over his shoulder, ensuring the other guests haven't
+  disturbed the stiffly posed corpse in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:beaumont
+- character:sylvia
+belongs_to:
+- path:serve-sylvia

@@ -1,0 +1,13 @@
+id: beat:collapse-aftermath-freezing--pose-study
+created_by: grow
+summary: The broken roof plunges the manor into freezing temperatures, threatening the guests
+  with hypothermia. Beaumont must now ensure the shivering guests do not seek blankets that
+  would disturb the newspaper covering the dead man's face in the study.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: complicates
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

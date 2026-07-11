@@ -1,0 +1,11 @@
+id: beat:collapse-aftermath-isolated--pose-study
+created_by: grow
+summary: The group stares at the severed phone cord, realizing they are entirely cut off from
+  the outside world. Beaumont recognizes that without rescue, he must sustain the illusion
+  that the man in the armchair is merely napping for an indefinite period.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: reveals
+belongs_to:
+- path:ignore-phone

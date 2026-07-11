@@ -1,0 +1,14 @@
+id: beat:ledger-commit-burn--pose-study
+created_by: grow
+summary: Beaumont snatches the ledger from the table and hurls it into the roaring fireplace
+  to protect his secrets. He executes this dramatic move quickly, hoping it will distract
+  everyone from the morbid display in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: commits
+entities:
+- character:beaumont
+- object:the-ledger
+belongs_to:
+- path:burn-it

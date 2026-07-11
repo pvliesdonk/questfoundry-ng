@@ -1,0 +1,8 @@
+id: passage:group-11
+summary: A guest loudly complains about a sudden freezing draft, pulling their evening shawl
+  tight around their shoulders.
+beats:
+- beat:fb-run1-s5-a1
+choices:
+- label: Resort to wiping the harpoon on the velvet curtains.
+  to: passage:group-13

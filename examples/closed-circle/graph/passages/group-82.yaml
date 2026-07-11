@@ -1,0 +1,20 @@
+id: passage:group-82
+summary: A second guest chokes on a poisoned crumpet in the hallway. The sheer bulk of the
+  first victim blocks the pantry door, leaving Beaumont holding a fresh casualty out in the
+  open while guests express a desire to explore.
+entities:
+- character:beaumont
+- location:the-pantry
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-choke--stuff-pantry
+- beat:overflow-door-jammed--stuff-pantry
+- beat:overflow-guests-explore--stuff-pantry
+choices:
+- label: Watch a guest trip backward over a velvet ottoman.
+  to: passage:group-86
+- label: Try to quiet Arthur before he exposes the bloody pantry.
+  to: passage:group-87

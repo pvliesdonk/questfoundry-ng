@@ -1,0 +1,8 @@
+id: passage:group-49
+summary: Munroe accidentally kicks a small side table while marching forward, sending a decorative
+  vase wobbling precariously.
+beats:
+- beat:fb-run5-s1-a1
+choices:
+- label: Clean up the flour footprints near the armchair.
+  to: passage:group-54

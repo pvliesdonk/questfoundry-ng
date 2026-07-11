@@ -1,0 +1,19 @@
+id: passage:group-58
+summary: Beaumont agonizingly drinks the tea to prove it is safe, immediately suffering severe
+  stomach cramps. Mild hallucinations set in, leaving him deliriously insisting the guests
+  let the dead man continue his nap.
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-cramps--pose-study
+- beat:tea-beau-hallucinates--pose-study
+- beat:tea-commit-beau--pose-study
+choices:
+- label: Watch the ornate floral wallpaper begin writhing.
+  to: passage:group-62
+- label: Try to ignore my profoundly erratic behavior.
+  to: passage:group-67

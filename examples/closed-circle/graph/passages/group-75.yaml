@@ -1,0 +1,11 @@
+id: passage:group-75
+summary: Sylvia stubbornly insists her illness is simply the result of cheap, offensive tea
+  leaves, refusing to acknowledge the poison.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run11-s1-a2
+choices:
+- label: Clean the spilled tea and wipe up the bloody mess.
+  to: passage:group-77

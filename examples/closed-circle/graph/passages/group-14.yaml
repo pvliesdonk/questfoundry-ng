@@ -1,0 +1,8 @@
+id: passage:group-14
+summary: Beaumont discreetly wipes a bit of suspicious tackiness from his shoe onto the edge
+  of the hallway rug, praying no one notices the spreading gore.
+beats:
+- beat:fb-run1-s6-a1
+choices:
+- label: Blame the dark stain on a clumsy wine spill.
+  to: passage:group-15

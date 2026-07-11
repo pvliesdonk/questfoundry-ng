@@ -1,0 +1,13 @@
+id: beat:ledger-read-sylvia-rage--pose-study
+created_by: grow
+summary: Sylvia learns she is bankrupt, and her polite criticism pivots to raw, screaming
+  rage. She violently throws her wine glass across the room, narrowly missing the dead guest
+  propped in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:sylvia
+belongs_to:
+- path:let-cecily-read

@@ -1,0 +1,15 @@
+id: beat:overflow-door-jammed--stuff-pantry
+created_by: grow
+summary: Beaumont attempts to hide the second body in the walk-in pantry, but the sheer bulk
+  of the first victim blocks the door. The first corpse makes the room completely unusable
+  for additional storage, leaving Beaumont holding a fresh casualty in the open hallway.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+entities:
+- character:beaumont
+- location:the-pantry
+belongs_to:
+- path:arthur-room
+- path:snow-drift

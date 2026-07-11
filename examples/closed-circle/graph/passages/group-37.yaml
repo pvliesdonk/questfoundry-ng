@@ -1,0 +1,18 @@
+id: passage:group-37
+summary: Cecily loudly mocks Munroe's forensic skills, masking any morbid noises coming from
+  the pantry. However, Beaumont realizes Munroe's chaotic flour-tossing will soon trace the
+  blood drops straight to the walk-in pantry.
+entities:
+- character:cecily
+- character:det-munroe
+- object:poisoned-tea-set
+- character:beaumont
+beats:
+- beat:munroe-beau-realizes--stuff-pantry
+- beat:munroe-cecily-mocks--stuff-pantry
+- beat:munroe-threatens-silverware--stuff-pantry
+choices:
+- label: Project an aura of unbothered grace.
+  to: passage:group-39
+- label: Stare at the parlor rug to avoid her glare.
+  to: passage:group-40

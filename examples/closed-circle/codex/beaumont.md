@@ -1,0 +1,6 @@
+---
+entity: character:beaumont
+title: Beaumont 'Beau' Sterling
+---
+
+Beaumont Sterling is a paragon of aristocratic hospitality, equipped with an impeccably tailored velvet smoking jacket and a left eye that twitches rhythmically whenever his meticulously curated schedule faces disruption. He is a man who firmly categorizes a guest shivering in a drafty corridor as an etiquette failure of the highest order, viewing the unauthorized foraging of domestic linens as a direct usurpation of his hostly authority. His devotion to aesthetic perfection is absolute; he harbors a meticulously folded square of high-absorbency cloth within his jacket for the immediate, clandestine eradication of sudden aesthetic blemishes. When confronted with severe breaches of decorum, such as sudden brawls, Beaumont entirely avoids direct intervention, preferring instead to loudly correct the combatants' posture and grammar. His strict sartorial choices, particularly a deliberately narrow shoulder cut, render wide-armed gestures physically taxing, forcing him into a rigid spinal alignment to maintain an illusion of absolute control. When obstructing a threshold, Beaumont unconsciously adopts the wide, lateral stance of a classical fencer, entirely prepared to execute precisely measured backward steps to ensure his flawlessly polished oxfords never scuff the parquet.

@@ -1,0 +1,23 @@
+id: passage:group-113
+summary: Arthur lunges for his ledger, drawing the suspicious attention of the room. Munroe
+  cracks its wax seal, exposing Beaumont's financial ruin and making the bloody path leading
+  to the locked pantry deeply incriminating.
+entities:
+- character:arthur
+- object:the-ledger
+- character:det-munroe
+- character:beaumont
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:ledger-arthur-panic--stuff-pantry
+- beat:ledger-munroe-intervenes--stuff-pantry
+- beat:ledger-seal-cracks--stuff-pantry
+choices:
+- label: Step back from the dry dust puffing from the book.
+  to: passage:group-115
+- label: Watch a piece of ancient leather flutter to the floor.
+  to: passage:group-116

@@ -1,0 +1,11 @@
+id: beat:harpoon-no-towels
+summary: Beaumont desperately searches the immediate vicinity for a towel, finding nothing
+  but the lavish velvet curtains.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:wipe-curtains

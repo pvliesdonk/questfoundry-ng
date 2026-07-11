@@ -1,0 +1,13 @@
+id: beat:tea-beau-cramps--stuff-pantry
+created_by: grow
+summary: Beaumont suffers severe stomach cramps from the poisoned tea but forces a terrifyingly
+  polite smile. He grips the edge of the table, praying his failing body won't collapse right
+  in front of the bloody pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

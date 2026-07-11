@@ -1,0 +1,8 @@
+id: passage:group-6
+summary: Beaumont awkwardly stretches his arms wide, pretending to show off the corridor's
+  exquisite wallpaper to physically prevent guests from looking past him.
+beats:
+- beat:fb-run1-s3-a1
+choices:
+- label: Hope the blood pool goes unnoticed.
+  to: passage:group-8

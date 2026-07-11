@@ -1,0 +1,7 @@
+id: path:let-cecily-read
+name: Secrets Spilled
+explores: answer:let-cecily-read
+consequences:
+- id: consequence:secrets-revealed
+  text: Every guest's financial ruin is public knowledge, replacing polite facade with open,
+    motive-laden hostility.

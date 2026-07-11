@@ -1,0 +1,13 @@
+id: beat:overflow-room-hover--stuff-pantry
+created_by: grow
+summary: Arthur refuses to enter his room, hovering nervously in the main hallway. His erratic
+  pacing draws annoyed questions, directing everyone's gaze dangerously close to the pantry
+  door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

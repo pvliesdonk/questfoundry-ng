@@ -1,0 +1,13 @@
+id: beat:tea-sylvia-agony--pose-study
+created_by: grow
+summary: Sylvia takes a sip, turns a distinct shade of green, and clutches her stomach in
+  sudden agony. She collapses onto the floor, mere feet away from the first victim whose face
+  is still hidden beneath the daily paper.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:sylvia
+belongs_to:
+- path:serve-sylvia

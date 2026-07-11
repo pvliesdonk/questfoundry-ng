@@ -1,0 +1,20 @@
+id: passage:group-59
+summary: Beaumont serves Sylvia the suspect tea. She takes a sip, turns green, and collapses
+  in sudden agony before violently demanding to be taken to a guest bedroom, removing her
+  critical presence from the study.
+entities:
+- character:beaumont
+- character:sylvia
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-commit-sylvia--pose-study
+- beat:tea-sylvia-agony--pose-study
+- beat:tea-sylvia-bedridden--pose-study
+choices:
+- label: Listen to Sylvia groan about the dreadful drafts.
+  to: passage:group-63
+- label: Hear Sylvia stubbornly blame the cheap tea leaves.
+  to: passage:group-64

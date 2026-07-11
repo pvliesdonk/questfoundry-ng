@@ -1,0 +1,8 @@
+id: passage:group-31
+summary: Inspector Munroe meticulously brushes a speck of flour from his lapel, attempting
+  to maintain a facade of absolute, unwavering authority.
+beats:
+- beat:fb-run3-s3-a1
+choices:
+- label: Let Cecily provoke a shouting match with the podcaster.
+  to: passage:group-33

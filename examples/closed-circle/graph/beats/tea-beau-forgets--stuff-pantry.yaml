@@ -1,0 +1,15 @@
+id: beat:tea-beau-forgets--stuff-pantry
+created_by: grow
+summary: Beaumont nervously stares at the identical cups, unable to remember which holds the
+  lethal dose. The traumatic memory of dragging a bleeding body into the walk-in pantry has
+  completely erased his memory of the poison placement.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

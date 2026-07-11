@@ -1,0 +1,12 @@
+id: beat:first-body-pose-sylvia
+summary: Sylvia walks in, complains the sleeping guest is being rude, and demands Beaumont
+  fetch them a drink to wake them up.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: complicates
+entities:
+- character:sylvia
+- character:beaumont
+belongs_to:
+- path:pose-study

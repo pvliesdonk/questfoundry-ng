@@ -1,0 +1,15 @@
+id: passage:group-101
+summary: Cecily wraps her arms tightly around herself, bitterly cursing the miserable, freezing
+  architecture of the old house.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s1-a1
+choices:
+- label: Herd the shivering guests into the dining room.
+  to: passage:group-104

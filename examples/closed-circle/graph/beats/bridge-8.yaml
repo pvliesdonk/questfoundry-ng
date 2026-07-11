@@ -1,0 +1,9 @@
+id: beat:bridge-8
+created_by: grow
+summary: Someone manages to steer the drunken guest back into the hall, leaving Beaumont alone
+  to frantically manage the spreading mess.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cecily
+- character:beaumont

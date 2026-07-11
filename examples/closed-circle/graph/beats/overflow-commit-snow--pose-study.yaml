@@ -1,0 +1,13 @@
+id: beat:overflow-commit-snow--pose-study
+created_by: grow
+summary: Beaumont pries open a window and chucks the second victim into a snowdrift. He forces
+  a smile and returns to the study, desperate to maintain the illusion that the party is perfectly
+  normal and the guest in the chair is only sleeping.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: commits
+entities:
+- character:beaumont
+belongs_to:
+- path:snow-drift

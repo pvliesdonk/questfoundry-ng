@@ -1,0 +1,15 @@
+passage: passage:group-8
+priority: 8
+caption: Beaumont watches the antique harpoon drip onto the rug as a bored Cecily threatens
+  to expose the scene.
+prompt: Tightly composed line-art with heavy crosshatching. Beaumont stands in a wide, lateral
+  fencer's stance in his narrow-shouldered velvet jacket, his perfectly rigid spine attempting
+  to obscure a ridiculously oversized, unsteady nautical weapon protruding from the shadows.
+  Cecily languidly drapes against a doorframe in expensive silk pyjamas, projecting perpetual
+  boredom. Characters are boxed in by dark, oppressive negative space. Monochromatic grayscale
+  with bruised burgundy highlighting the harpoon and frostbite blue on Beaumont's flawless
+  shirt cuffs.
+entities:
+- character:beaumont
+- object:antique-harpoon
+- character:cecily

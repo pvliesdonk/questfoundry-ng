@@ -1,0 +1,14 @@
+id: passage:group-132
+summary: A profound, suffocating silence descends on the ruined hallway, heavy with dread.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s6-a1
+choices:
+- label: Run into the dining room where the ledger sits unguarded.
+  to: passage:group-133

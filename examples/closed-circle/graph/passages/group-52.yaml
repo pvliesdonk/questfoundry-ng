@@ -1,0 +1,17 @@
+id: passage:group-52
+summary: Beaumont graciously steps aside, allowing Munroe to coat the hallway in a thick layer
+  of baking flour. The white powder effectively covers the victim's blood trail, successfully
+  disguising the path leading to the pantry.
+entities:
+- character:beaumont
+- character:det-munroe
+- object:poisoned-tea-set
+beats:
+- beat:bridge-21
+- beat:munroe-commit-encourage--stuff-pantry
+- beat:munroe-encourage-obliterated--stuff-pantry
+choices:
+- label: Watch Munroe bump a decorative vase.
+  to: passage:group-56
+- label: Wince as Munroe smudges the bloody handkerchief.
+  to: passage:group-57

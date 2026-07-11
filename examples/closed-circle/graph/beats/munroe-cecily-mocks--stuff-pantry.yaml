@@ -1,0 +1,15 @@
+id: beat:munroe-cecily-mocks--stuff-pantry
+created_by: grow
+summary: Cecily pours another glass of wine, loudly mocking Munroe's podcast-derived forensic
+  techniques. The loud argument echoing down the hall successfully covers any morbid noises
+  that might be coming from the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:cecily
+- character:det-munroe
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

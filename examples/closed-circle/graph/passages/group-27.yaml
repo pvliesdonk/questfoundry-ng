@@ -1,0 +1,16 @@
+id: passage:group-27
+summary: The traumatized guests flee the grisly hallway, retreating to the glass-walled conservatory.
+  The howling wind masks sounds near the walk-in pantry, while the ringing landline abruptly
+  startles the anxious group.
+entities:
+- location:the-pantry
+- location:conservatory
+beats:
+- beat:bridge-4
+- beat:collapse-blizzard--stuff-pantry
+- beat:collapse-phone-rings--stuff-pantry
+choices:
+- label: Stare in shock at the ringing telephone.
+  to: passage:group-29
+- label: Pace nervously while the phone keeps ringing.
+  to: passage:group-30

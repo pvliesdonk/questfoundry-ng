@@ -1,0 +1,18 @@
+id: dilemma:munroe-snooping
+question: Munroe is trying to dust the dining room for fingerprints using baking flour; do
+  you encourage her delusion or derail her?
+why_it_matters: Determines if the physical evidence is completely destroyed by incompetence
+  or if Munroe focuses her chaotic energy onto interrogating the guests.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:encourage-dusting
+  text: Let her make a total mess, successfully contaminating whatever real evidence was left.
+- id: answer:distract-conservatory
+  text: Lock her in the freezing conservatory with 'a suspect to interrogate'.
+anchored_to:
+- character:det-munroe
+- location:conservatory
+concurrent:
+- dilemma:poisoned-tea

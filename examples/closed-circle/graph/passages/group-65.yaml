@@ -1,0 +1,19 @@
+id: passage:group-65
+summary: Beaumont drinks the poisoned tea to preserve decorum, immediately suffering severe
+  stomach cramps. In his ensuing delirious hallucinations, he holds an earnest conversation
+  with a coat rack about mopping up the pantry.
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-cramps--stuff-pantry
+- beat:tea-beau-hallucinates--stuff-pantry
+- beat:tea-commit-beau--stuff-pantry
+choices:
+- label: Stare as the wallpaper patterns writhe like snakes.
+  to: passage:group-73
+- label: Unnerve the guests with my profoundly erratic behavior.
+  to: passage:group-76

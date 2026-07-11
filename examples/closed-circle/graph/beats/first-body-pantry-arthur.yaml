@@ -1,0 +1,12 @@
+id: beat:first-body-pantry-arthur
+summary: Arthur is sent to the freezing pantry and returns visibly shaking, traumatized by
+  having to reach over a bloody corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: reveals
+entities:
+- character:arthur
+- location:the-pantry
+belongs_to:
+- path:stuff-pantry

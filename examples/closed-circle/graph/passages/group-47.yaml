@@ -1,0 +1,20 @@
+id: passage:group-47
+summary: Sylvia loudly promises to destroy Beaumont's social standing. Arthur frantically
+  warns against letting her drink the poisoned tea, and Beaumont stares at the set, knowing
+  the walk-in pantry cannot hold a second body.
+entities:
+- character:sylvia
+- character:beaumont
+- character:arthur
+beats:
+- beat:tea-arthur-warns--stuff-pantry
+- beat:tea-sylvia-countdown--stuff-pantry
+choices:
+- label: Trap the amateur podcaster out in the freezing cold.
+  grants:
+  - flag:munroe-interrogation
+  to: passage:group-51
+- label: Encourage Munroe to bury the bloody floor in flour.
+  grants:
+  - flag:flour-contamination
+  to: passage:group-52

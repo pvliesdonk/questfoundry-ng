@@ -1,0 +1,17 @@
+id: passage:group-139
+summary: Freed from their debts, the guests abandon all etiquette and break into an anarchic
+  brawl. The chaotic fight quickly spills into the study, inevitably knocking the newspaper
+  off the deceased guest and shattering the final illusion of the evening.
+ending:
+  id: e-group-139
+  title: Social Collapse
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:ledger-burn-end--pose-study
+- beat:ledger-burn-hostility--pose-study

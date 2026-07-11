@@ -1,0 +1,9 @@
+id: beat:bridge-25
+created_by: grow
+summary: The group steps carefully over the unconscious podcaster to gather around the freshly
+  prepared silver refreshment cart.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- object:poisoned-tea-set

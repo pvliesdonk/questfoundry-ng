@@ -1,5 +1,5 @@
 """M8 depth & scale: the structural simulation validates the presets it
-calibrated (docs/plans/m8-depth-scale.md D3), and the pieces the cadence
+calibrated (design doc 01 §2, mini-ADR A19), and the pieces the cadence
 math rides on — capped collapse, texture word bands, the words-aware
 diamond budget, walk-based B6 — hold under violating constructions."""
 

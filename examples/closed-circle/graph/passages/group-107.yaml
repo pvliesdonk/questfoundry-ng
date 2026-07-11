@@ -1,0 +1,14 @@
+id: passage:group-107
+summary: Beaumont notices a side table's unsteady leg and instinctively considers fixing it,
+  before remembering he has vastly more pressing issues.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s2-a1
+choices:
+- label: See Munroe actively pick at the ledger's wax seal.
+  to: passage:group-109

@@ -1,0 +1,20 @@
+id: passage:group-99
+summary: Arthur's paranoid rambling about whispers from upstairs makes the guests deeply uneasy
+  about the strange noises from the pantry. Suddenly, the landline rings, sending the guilty
+  parties into sheer panic.
+entities:
+- character:arthur
+- character:beaumont
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-29
+- beat:overflow-room-paranoid--stuff-pantry
+choices:
+- label: Cut the phone cord to prevent any police involvement.
+  requires:
+  - flag:arthur-terrified
+  to: passage:group-103-arthur-terrified

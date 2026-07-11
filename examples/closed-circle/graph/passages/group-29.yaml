@@ -1,0 +1,8 @@
+id: passage:group-29
+summary: Everyone stares at the ringing phone, paralyzed by the sudden, jarring intrusion
+  of the outside world into their claustrophobic nightmare.
+beats:
+- beat:fb-run2-s3-a1
+choices:
+- label: Flinch as the glass ceiling cracks overhead.
+  to: passage:group-32

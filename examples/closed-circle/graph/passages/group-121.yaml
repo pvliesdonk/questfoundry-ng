@@ -1,0 +1,15 @@
+id: passage:group-121
+summary: Jagged shards of cheap plastic from the destroyed recording equipment scatter aggressively
+  across the carpet.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s5-a1
+choices:
+- label: Relieve myself that the broadcast cut to dead air.
+  to: passage:group-124

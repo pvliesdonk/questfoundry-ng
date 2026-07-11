@@ -1,0 +1,9 @@
+id: beat:bridge-32
+created_by: grow
+summary: The polite introductions conclude as the guests filter out of the foyer and into
+  the main drawing room.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:sylvia

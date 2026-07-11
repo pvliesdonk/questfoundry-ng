@@ -1,0 +1,14 @@
+id: beat:overflow-arthur-smell--pose-study
+created_by: grow
+summary: Arthur loudly panics about the smell of death ruining the vintage wine collection
+  stored nearby. Beaumont sharply shushes him, pointing out that shouting about corpses will
+  inevitably draw attention to the unbreathing man in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room
+- path:snow-drift

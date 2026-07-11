@@ -1,0 +1,14 @@
+id: beat:tea-commit-beau--stuff-pantry
+created_by: grow
+summary: Unwilling to break decorum, Beaumont agonizingly drinks the tea to prove it is safe.
+  He cannot afford Sylvia's suspicions, knowing an inquisition would eventually lead her to
+  check the kitchen and the locked pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: commits
+entities:
+- character:beaumont
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes

@@ -1,0 +1,23 @@
+premise: An Agatha Christie closed circle murder mystery that escalates Fargo style.
+genre: Mystery/Thriller
+subgenre: Dark Comedy Closed-Circle
+tone: Claustrophobic, darkly farcical, increasingly frantic, and politely ruthless
+themes:
+- Preservation of social facade against the raw desperation of survival
+- Intellectual deduction against chaotic, cascading human incompetence
+- The illusion of control against the inevitability of compounding consequences
+audience: Adult
+content_notes:
+  include:
+  - Polite tea-time conversations contrasting with visceral panic
+  - Compounding bad decisions and clumsy, panicked cover-ups
+  - Reversals of fortune where solving one problem creates two new disasters
+  - A geographically isolated setting that functions as a pressure cooker for tension
+  avoid:
+  - Professional competence from the culprits or flawless criminal execution
+  - Gratuitous gore devoid of narrative irony or dark comedy
+  - Neat, orderly interrogations where suspects act entirely rationally
+  - Deus ex machina rescues or sudden interventions from outside the closed circle
+pov_hint: Third-person limited, clinging to a voice of rigid, polite formality even as the
+  physical reality devolves into bloody, chaotic farce.
+scope: medium

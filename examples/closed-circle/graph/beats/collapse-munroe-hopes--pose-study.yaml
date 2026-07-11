@@ -1,0 +1,14 @@
+id: beat:collapse-munroe-hopes--pose-study
+created_by: grow
+summary: Munroe realizes the ringing phone is her chance to report the highly suspicious "sleeping"
+  man in the study to the authorities. She aggressively demands that someone answer the call
+  despite the fracturing glass ceiling above.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: reveals
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:ignore-phone

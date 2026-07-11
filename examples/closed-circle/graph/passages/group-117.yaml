@@ -1,0 +1,14 @@
+id: passage:group-117
+summary: The arrogant podcaster dramatically lowers their voice to a theatrical, breathy whisper,
+  clearly savoring the authentic ambiance.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s4-a1
+choices:
+- label: Realize she is broadcasting our crimes on the cell network.
+  to: passage:group-119

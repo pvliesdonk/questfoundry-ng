@@ -1,0 +1,16 @@
+id: passage:group-28
+summary: The glass ceiling groans and cracks, inadvertently pushing guests into the study.
+  Munroe demands the ringing phone be answered and pulls out a bag of baking flour to dust
+  for fingerprints near the posed corpse.
+entities:
+- location:conservatory
+- character:det-munroe
+beats:
+- beat:collapse-glass-cracks--pose-study
+- beat:collapse-munroe-hopes--pose-study
+- beat:munroe-flour-intro--pose-study
+choices:
+- label: Watch Munroe brush flour from her lapel.
+  to: passage:group-31
+- label: Listen to Cecily mock Munroe's podcast forensic skills.
+  to: passage:group-33

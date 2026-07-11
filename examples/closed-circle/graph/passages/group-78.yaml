@@ -1,0 +1,11 @@
+id: passage:group-78
+summary: Beaumont sways woozily, his poisoned stomach churning as he realizes he is entirely
+  unequipped to manage a second crisis.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:residue-beau-pantry
+choices:
+- label: Stare at the new body blocking the walk-in pantry.
+  to: passage:group-82

@@ -1,0 +1,12 @@
+id: beat:ledger-read-end--pose-study
+created_by: grow
+summary: The polite facade shatters into open hostility, sparking a chaotic shootout in the
+  dining room. A stray bullet goes cleanly through the newspaper in the study, revealing to
+  everyone that the "napping" guest has actually been dead for hours.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+is_ending: true
+belongs_to:
+- path:let-cecily-read

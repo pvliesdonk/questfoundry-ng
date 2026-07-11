@@ -1,0 +1,24 @@
+id: passage:group-104
+summary: The broken roof plunges the manor into freezing temperatures. Beaumont herds the
+  shivering guests into the dining room, where Cecily breaks the tension by using Arthur's
+  encrypted ledger to fix a wobbly table leg.
+entities:
+- location:conservatory
+- character:beaumont
+- character:cecily
+- character:arthur
+- object:the-ledger
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-0
+- beat:collapse-aftermath-freezing--pose-study
+- beat:ledger-wobbly-table--pose-study
+choices:
+- label: Briefly consider fixing the unsteady table leg.
+  to: passage:group-107
+- label: Watch Arthur lunge for the ledger in a sudden panic.
+  to: passage:group-109

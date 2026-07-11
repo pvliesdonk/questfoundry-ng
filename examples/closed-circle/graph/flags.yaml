@@ -1,0 +1,75 @@
+flags:
+- id: flag:arthur-terrified
+  description: Arthur's bedroom becomes a makeshift morgue, leaving him sleep-deprived and
+    increasingly unstable.
+  source: dilemma
+  path: path:arthur-room
+  codeword: UNHINGED
+  derived_from:
+  - consequence:arthur-terrified
+- id: flag:beau-poisoned
+  description: Beau attempts to maintain hostly decorum while suffering agonizing cramps and
+    mild hallucinations.
+  source: dilemma
+  path: path:beau-tastes
+  codeword: DELIRIUM
+  derived_from:
+  - consequence:beau-poisoned
+- id: flag:body-in-snow
+  description: A second corpse is buried in a snowdrift outside, creating a ticking clock
+    for when the storm clears.
+  source: dilemma
+  path: path:snow-drift
+  codeword: INTERRED
+  derived_from:
+  - consequence:body-in-snow
+- id: flag:flour-contamination
+  description: The dining room is heavily contaminated with baking flour, obliterating any
+    genuine forensic evidence.
+  source: dilemma
+  path: path:encourage-dusting
+  derived_from:
+  - consequence:flour-contamination
+- id: flag:ledger-destroyed
+  description: The ledger is reduced to ashes, destroying the only concrete evidence of the
+    guests' intertwined debts and motives.
+  source: dilemma
+  path: path:burn-it
+  derived_from:
+  - consequence:ledger-destroyed
+- id: flag:munroe-interrogation
+  description: Munroe conducts frantic, freezing interrogations in the structurally unsafe
+    botanical room.
+  source: dilemma
+  path: path:distract-conservatory
+  derived_from:
+  - consequence:munroe-interrogation
+- id: flag:pantry-corpse
+  description: The walk-in pantry is occupied by a bloody victim hidden behind pickled onions,
+    making food retrieval highly traumatic.
+  source: dilemma
+  path: path:stuff-pantry
+  derived_from:
+  - consequence:pantry-corpse
+- id: flag:secrets-revealed
+  description: Every guest's financial ruin is public knowledge, replacing polite facade with
+    open, motive-laden hostility.
+  source: dilemma
+  path: path:let-cecily-read
+  derived_from:
+  - consequence:secrets-revealed
+- id: flag:study-weekend-at-bernies
+  description: The study becomes the stage for a tense, ongoing charade to convince passersby
+    that the dead guest is merely asleep.
+  source: dilemma
+  path: path:pose-study
+  derived_from:
+  - consequence:study-weekend-at-bernies
+- id: flag:sylvia-incapacitated
+  description: Sylvia is bedridden with severe gastric distress, temporarily removing her
+    hyper-critical presence from the manor.
+  source: dilemma
+  path: path:serve-sylvia
+  codeword: INDISPOSED
+  derived_from:
+  - consequence:sylvia-incapacitated

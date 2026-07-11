@@ -1,0 +1,12 @@
+id: beat:ledger-read-end--stuff-pantry
+created_by: grow
+summary: The polite facade shatters into open hostility, sparking a chaotic shootout in the
+  hallway over unpaid debts. The gunfire accidentally shreds the walk-in pantry door, exposing
+  the bloody victim hidden behind the pickled onions to the surviving combatants.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+is_ending: true
+belongs_to:
+- path:let-cecily-read

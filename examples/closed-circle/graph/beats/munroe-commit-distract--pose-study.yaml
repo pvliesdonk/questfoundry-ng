@@ -1,0 +1,15 @@
+id: beat:munroe-commit-distract--pose-study
+created_by: grow
+summary: Beaumont manipulates Munroe into locking herself in the freezing conservatory by
+  claiming the "killer" fled in there. This successfully pulls her away from the study, keeping
+  her amateur gaze far from the dead man's newspaper.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

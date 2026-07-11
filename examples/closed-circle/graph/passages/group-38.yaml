@@ -1,0 +1,18 @@
+id: passage:group-38
+summary: Sylvia sharply demands her afternoon tea from the tampered silver set in the drawing
+  room. Beaumont nervously stares at the identical cups, completely unable to remember which
+  one holds the lethal dose.
+entities:
+- character:det-munroe
+- character:sylvia
+- object:poisoned-tea-set
+- character:beaumont
+beats:
+- beat:bridge-18
+- beat:tea-beau-forgets--pose-study
+- beat:tea-sylvia-demands--pose-study
+choices:
+- label: Realize I forgot the silver sugar tongs.
+  to: passage:group-41
+- label: Endure Sylvia's threat to leave a terrible review.
+  to: passage:group-43

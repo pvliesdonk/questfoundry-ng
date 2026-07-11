@@ -1,0 +1,8 @@
+id: beat:residue-beau-pantry
+created_by: polish
+summary: Beaumont sways woozily, his poisoned stomach churning as he realizes he is entirely
+  unequipped to manage a second crisis.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:beau-poisoned

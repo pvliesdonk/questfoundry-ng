@@ -1,0 +1,9 @@
+id: beat:bridge-29
+created_by: grow
+summary: A sudden incoming call on the manor's landline sends the guilty parties into a sheer
+  panic about police involvement.
+beat_class: structural
+purpose: bridge
+entities:
+- character:arthur
+- character:beaumont

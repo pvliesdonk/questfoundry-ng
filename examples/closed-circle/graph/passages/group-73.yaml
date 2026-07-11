@@ -1,0 +1,11 @@
+id: passage:group-73
+summary: Beaumont hallucinates the ornate floral patterns on the wallpaper writhing like trapped
+  snakes, a grim consequence of his poisoned brew.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:fb-run10-s1-a1
+choices:
+- label: Watch the guests wander dangerously close to the pantry.
+  to: passage:group-76

@@ -1,0 +1,14 @@
+id: beat:munroe-distract-freeze--stuff-pantry
+created_by: grow
+summary: The temperature in the conservatory drops, turning Munroe's true-crime fantasy into
+  a genuine survival situation. The freezing conditions keep her trapped, preventing her from
+  wandering down the warm hallway where the pantry hides its bloody secret.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: complicates
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

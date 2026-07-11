@@ -1,0 +1,12 @@
+id: beat:podcast-aftermath-fury--stuff-pantry
+created_by: grow
+summary: Munroe stares at her destroyed equipment, her true-crime persona breaking into unbridled
+  fury. Her furious screaming echoes down the hall, vibrating against the flimsy pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: reveals
+entities:
+- character:det-munroe
+belongs_to:
+- path:smash-phone

@@ -1,0 +1,13 @@
+id: beat:ledger-read-arthur-cornered--stuff-pantry
+created_by: grow
+summary: Arthur is cornered by enraged guests demanding to know why he cooked their books.
+  The mob chases him down the hallway, trapping him in a dead end directly in front of the
+  walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:arthur
+belongs_to:
+- path:let-cecily-read

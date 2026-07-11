@@ -1,0 +1,19 @@
+id: dilemma:poisoned-tea
+question: Sylvia demands her afternoon tea from the tampered silver tea set; who do you force
+  to drink first?
+why_it_matters: Removes a key player from the board for several scenes as they deal with extreme
+  gastric distress, altering the balance of power.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:serve-sylvia
+  text: Call Sylvia's bluff and serve her the possibly lethal Earl Grey.
+- id: answer:beau-tastes
+  text: Force an agonizingly polite Beau to play royal taster to prove it's safe.
+anchored_to:
+- object:poisoned-tea-set
+- character:sylvia
+- character:beaumont
+serial:
+- dilemma:pantry-overflow

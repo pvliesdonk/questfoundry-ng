@@ -1,0 +1,14 @@
+passage: passage:group-10
+priority: 16
+caption: Beaumont delicately steers a rambling Cecily away from the violently harpooned remains
+  in the study.
+prompt: Darkly farcical line-art. Beaumont stands with a perfectly rigid spine and flawless
+  shirt cuffs, gently but firmly standing near Cecily, who is languidly and precariously draped
+  against a doorframe in expensive silk pyjamas, projecting perpetual boredom. In the claustrophobic
+  background shadows, a ridiculously oversized nautical weapon, inherently unsteady, leans
+  menacingly. Heavy crosshatching and negative space box them in. Grayscale with bruised burgundy
+  on the antique harpoon and frostbite blue on Cecily's pyjamas.
+entities:
+- character:cecily
+- character:beaumont
+- object:antique-harpoon

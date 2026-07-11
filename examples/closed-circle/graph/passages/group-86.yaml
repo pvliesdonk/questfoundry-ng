@@ -1,0 +1,13 @@
+id: passage:group-86
+summary: A guest nearly trips backward over a velvet ottoman while hastily scrambling away
+  from the horrifying hallway.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run13-s1-a1
+choices:
+- label: Scramble to find a new location for the latest casualty.
+  to: passage:group-87

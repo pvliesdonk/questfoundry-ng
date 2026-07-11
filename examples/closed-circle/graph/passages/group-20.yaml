@@ -1,0 +1,8 @@
+id: passage:group-20
+summary: Beaumont meticulously crosses the dead man's stiffening ankles, hoping to create
+  an aura of casual, undisturbed repose.
+beats:
+- beat:fb-run3-s1-a1
+choices:
+- label: Pray the newspaper doesn't slip off his face.
+  to: passage:group-23

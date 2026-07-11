@@ -1,0 +1,15 @@
+id: beat:tea-arthur-warns--pose-study
+created_by: grow
+summary: Arthur whispers frantically that letting Sylvia drink the poisoned cup will guarantee
+  their execution for murder. Beaumont nods tensely, sweating as he realizes a second death
+  will make his armchair-napping charade impossible to maintain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: reveals
+entities:
+- character:arthur
+- character:beaumont
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

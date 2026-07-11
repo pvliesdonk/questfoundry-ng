@@ -1,0 +1,14 @@
+id: passage:group-115
+summary: A cloud of dry, aged dust puffs violently from the heavy ledger's binding.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s3-a1
+choices:
+- label: Get cornered in the hallway by the aggressive podcaster.
+  to: passage:group-118

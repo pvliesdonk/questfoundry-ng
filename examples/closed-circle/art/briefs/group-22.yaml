@@ -1,0 +1,15 @@
+passage: passage:group-22
+priority: 4
+caption: The heavy oak pantry door gives way, spilling its horrifying secret before the traumatized
+  guests.
+prompt: Heavy crosshatching and claustrophobic composition. A cavernous, freezing pantry is
+  partially revealed as a heavy oak door with an antiquated brass latch swings open. Arthur
+  stands rigidly terrified in visually inadequate seasonal tailoring, clutching his briefcase
+  as a shield against his sternum. Sylvia maintains an exacting, perpendicular spinal alignment,
+  formally pressing two fingers to her temples in a sharp cashmere shawl. The characters appear
+  physically boxed in. Monochromatic grayscale with frostbite blue spilling from the freezing
+  pantry and bruised burgundy on the heavy oak door.
+entities:
+- character:sylvia
+- character:arthur
+- location:the-pantry

@@ -1,0 +1,11 @@
+id: beat:first-body-pantry-sylvia
+summary: Sylvia immediately demands a jar of pickled onions for her cocktail, forcing a panicked
+  delay.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: complicates
+entities:
+- character:sylvia
+belongs_to:
+- path:stuff-pantry

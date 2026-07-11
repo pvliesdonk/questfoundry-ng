@@ -1,0 +1,8 @@
+id: passage:group-25
+summary: Everyone stares at the ringing phone, paralyzed by the sudden, jarring intrusion
+  of the outside world.
+beats:
+- beat:fb-run3-s2-a1
+choices:
+- label: Back away as the glass ceiling begins to groan.
+  to: passage:group-28

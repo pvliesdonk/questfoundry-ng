@@ -1,0 +1,8 @@
+id: beat:residue-beau-study
+created_by: polish
+summary: Fighting back intense nausea from the toxic tea, Beaumont watches helplessly as the
+  guests' attention shifts from the suspicious armchair sleeper to the fresh corpse.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:beau-poisoned

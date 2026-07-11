@@ -1,0 +1,13 @@
+id: beat:collapse-glass-cracks--stuff-pantry
+created_by: grow
+summary: The glass ceiling groans and cracks under the accumulated snow. The guests instinctively
+  retreat toward the hallway, bringing them dangerously close to the walk-in pantry and its
+  hidden bloody occupant.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: complicates
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

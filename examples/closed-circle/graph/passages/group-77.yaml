@@ -1,0 +1,21 @@
+id: passage:group-77
+summary: Beaumont cleans up the spilled tea, anxiously wondering if Sylvia will die before
+  dinner. As he wipes the floor, he spots another streak of blood leading to the pantry and
+  quickly scrubs it away.
+entities:
+- character:beaumont
+- character:sylvia
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-cleanup--stuff-pantry
+choices:
+- label: Feel grim relief that Sylvia is too ill to witness this.
+  requires:
+  - flag:sylvia-incapacitated
+  to: passage:group-79
+- label: Calculate if I can drag the body into the pantry unseen.
+  requires:
+  - flag:sylvia-incapacitated
+  to: passage:group-80

@@ -1,0 +1,15 @@
+id: passage:group-134
+summary: The thick pages of the ledger curl and blacken rapidly, emitting a foul, deeply chemical-smelling
+  smoke.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run20-s1-a1
+choices:
+- label: Watch the polite facade shatter into open hostility.
+  to: passage:group-139

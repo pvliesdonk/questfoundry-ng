@@ -1,0 +1,23 @@
+id: dilemma:conservatory-collapse
+question: The blizzard shatters the conservatory roof just as the manor's only phone starts
+  ringing; do you risk the falling glass to answer it?
+why_it_matters: Determines whether the outside world is contacted at all, drastically changing
+  the timeline of the inevitable police arrival.
+role: hard
+residue_weight: light
+ending_salience: high
+answers:
+- id: answer:cecily-answers
+  text: Send a fearless, intoxicated Cecily out to answer it, risking she invites the cops
+    right in.
+- id: answer:ignore-phone
+  text: Cut the cord entirely to ensure total isolation while you finish the cover-up.
+anchored_to:
+- location:conservatory
+- character:cecily
+wraps:
+- dilemma:munroe-snooping
+- dilemma:poisoned-tea
+- dilemma:pantry-overflow
+serial:
+- dilemma:arthur-ledger

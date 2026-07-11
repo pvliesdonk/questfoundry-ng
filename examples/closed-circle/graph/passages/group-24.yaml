@@ -1,0 +1,8 @@
+id: passage:group-24
+summary: Beaumont pauses to catch his breath, leaning his full weight against the pantry door
+  to ensure it remains firmly latched.
+beats:
+- beat:fb-run2-s2-a1
+choices:
+- label: Retreat to the conservatory away from the hall.
+  to: passage:group-27

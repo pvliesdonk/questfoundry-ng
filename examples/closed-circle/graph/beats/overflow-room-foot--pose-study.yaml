@@ -1,0 +1,13 @@
+id: beat:overflow-room-foot--pose-study
+created_by: grow
+summary: The second victim's foot constantly slides out from under the bedspread upstairs,
+  forcing Arthur to run up and kick it back. Meanwhile, Beaumont remains anchored downstairs,
+  defending the newspaper-clad face of the first corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+entities:
+- character:arthur
+belongs_to:
+- path:arthur-room

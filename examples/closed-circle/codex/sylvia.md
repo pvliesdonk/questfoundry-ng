@@ -1,0 +1,6 @@
+---
+entity: character:sylvia
+title: Sylvia Vance
+---
+
+Sylvia Vance perceives the universe strictly as a series of unacceptable deviations from her personal standards. Draped in heavy pearls and an aggressively sharp cashmere shawl—which she wields less as a garment and more as an instrument of territorial expansion—she approaches social interaction as a hostile audit. Her arrival is inevitably telegraphed by the rhythmic, purposeful tapping of luxury footwear, a cadence designed to preemptively critique the posture of anyone within earshot. Sylvia maintains an unwavering adherence to wearing formal silk gloves indoors, regardless of the climate, and expects dining arrangements to feature rigidly, mathematically spaced cruet stands. When confronted with the profound incompetence of her peers, she initiates a slow, theatrical two-finger massage at her temples. She firmly views biological illness as a severe lapse in moral fortitude, believing a sufficiently stern constitution can repel any malady. Consequently, any physiological failures she experiences are immediately and loudly attributed to the substandard sourcing of her host's chosen tea leaves, just as any environmental failing is met with unprompted monologues regarding the catastrophic decline of modern vitality.

@@ -1,0 +1,15 @@
+id: beat:munroe-beau-realizes--stuff-pantry
+created_by: grow
+summary: Beaumont realizes that if Munroe is left unchecked, her forensic flailing will lead
+  her to trace the blood drops straight to the pantry. He must derail her investigation before
+  she opens that door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: reveals
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

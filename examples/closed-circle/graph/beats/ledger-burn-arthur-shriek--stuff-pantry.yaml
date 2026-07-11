@@ -1,0 +1,13 @@
+id: beat:ledger-burn-arthur-shriek--stuff-pantry
+created_by: grow
+summary: Arthur shrieks in horror as his ledger burns, erasing the only record of everyone's
+  debts. The piercing scream echoes toward the kitchen, unnerving those trying to forget the
+  bleeding body stuffed in the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:arthur
+belongs_to:
+- path:burn-it

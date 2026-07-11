@@ -1,0 +1,17 @@
+id: dilemma:pantry-overflow
+question: With the pantry currently occupied by a corpse, where do you hide the second victim
+  who just choked on a poisoned crumpet?
+why_it_matters: Creates an escalating spatial puzzle, turning a new room of the house into
+  a hazardous, off-limits zone.
+role: soft
+residue_weight: heavy
+ending_salience: low
+answers:
+- id: answer:arthur-room
+  text: Shove the body under Arthur's bed and hope the bumbling accountant doesn't look down.
+- id: answer:snow-drift
+  text: Chuck the body out the window into a massive snowdrift and pray it doesn't thaw before
+    Tuesday.
+anchored_to:
+- location:the-pantry
+- character:arthur

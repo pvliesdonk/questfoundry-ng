@@ -1,0 +1,15 @@
+id: beat:munroe-threatens-silverware--pose-study
+created_by: grow
+summary: Munroe aggressively approaches the dining table to dust the antique silverware. Beaumont
+  attempts to steer her back to the study, preferring she focus on the fake napping man rather
+  than the actual poisoned items.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: complicates
+entities:
+- character:det-munroe
+- object:poisoned-tea-set
+belongs_to:
+- path:distract-conservatory
+- path:encourage-dusting

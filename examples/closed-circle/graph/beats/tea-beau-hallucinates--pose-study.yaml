@@ -1,0 +1,13 @@
+id: beat:tea-beau-hallucinates--pose-study
+created_by: grow
+summary: Mild hallucinations set in, causing Beaumont to hold an earnest, polite conversation
+  with a coat rack. His delirium is almost preferable to his grim reality, though it leaves
+  the "napping" man completely unguarded in the corner.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

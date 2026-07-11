@@ -1,0 +1,14 @@
+id: beat:munroe-commit-encourage--stuff-pantry
+created_by: grow
+summary: Beaumont graciously steps aside, allowing Munroe to coat the floor in a thick layer
+  of baking flour. He is relieved that her absurd fingerprinting method is burying the victim's
+  actual blood trail under a layer of white powder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:encourage-dusting

@@ -1,0 +1,22 @@
+id: passage:group-114
+summary: A camera shutter clicks as Munroe corners the group in the study. She aggressively
+  points her smartphone like a microphone, capturing the propped-up corpse in the background
+  while narrating a live podcast episode.
+entities:
+- character:beaumont
+- character:det-munroe
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-16
+- beat:podcast-cornered--pose-study
+- beat:podcast-live-narration--pose-study
+choices:
+- label: Hear the podcaster lower her voice to a breathy whisper.
+  to: passage:group-117
+- label: Smash the smartphone with a heavy brass candlestick.
+  to: passage:group-119

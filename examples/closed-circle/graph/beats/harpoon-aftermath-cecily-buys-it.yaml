@@ -1,0 +1,12 @@
+id: beat:harpoon-aftermath-cecily-buys-it
+summary: Cecily inspects the stain, entirely believing the lie but loudly criticizing Beaumont
+  for wasting perfectly good wine.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: complicates
+entities:
+- character:cecily
+- character:beaumont
+belongs_to:
+- path:wipe-curtains

@@ -1,0 +1,15 @@
+passage: passage:group-53
+priority: 5
+caption: Munroe violently breaches the freezing conservatory door just as the delicate tea
+  service arrives.
+prompt: Oppressive line-art with dense crosshatching. Munroe, clad in heavy reinforced canvas
+  outerwear and thick-soled tactical boots, breaches a doorway with an artificially rigid
+  posture, gripping a heavily armored smartphone with two hands. Beyond her is a structurally
+  degraded, freezing botanical enclosure with neglected, highly oxidized wrought-iron plant
+  stands. In the foreground sits the flawless silver tea service on exquisitely thin bone
+  china. Grayscale with intense frostbite blue highlights on the freezing conservatory elements
+  and bruised burgundy on the tea set.
+entities:
+- character:det-munroe
+- location:conservatory
+- object:poisoned-tea-set

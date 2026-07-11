@@ -1,0 +1,13 @@
+id: beat:munroe-encourage-obliterated--stuff-pantry
+created_by: grow
+summary: The thick dusting of flour completely obliterates any real forensic evidence. The
+  baking powder effectively covers the victim's blood trail, successfully disguising the path
+  that leads straight into the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: reveals
+entities:
+- object:poisoned-tea-set
+belongs_to:
+- path:encourage-dusting

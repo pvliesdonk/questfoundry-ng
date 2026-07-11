@@ -1,0 +1,12 @@
+id: beat:harpoon-resolution-wipe
+summary: Beaumont frantically rubs the gory harpoon tip against the crimson velvet curtains,
+  smearing the blood deeply into the fabric.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:harpoon-cleaning
+  effect: commits
+entities:
+- character:beaumont
+- object:antique-harpoon
+belongs_to:
+- path:wipe-curtains

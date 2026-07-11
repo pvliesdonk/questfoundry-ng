@@ -1,0 +1,13 @@
+id: beat:overflow-commit-snow--stuff-pantry
+created_by: grow
+summary: Because the pantry is already occupied, Beaumont pries open a window and chucks the
+  second victim into a snowdrift. He slams the glass shut, hoping the cold preserves the outside
+  body while dreading the state of the indoor one.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: commits
+entities:
+- character:beaumont
+belongs_to:
+- path:snow-drift

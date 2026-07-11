@@ -1,0 +1,20 @@
+id: passage:group-145
+summary: The polite facade shatters as enraged guests corner Arthur in a dead end directly
+  in front of the walk-in pantry. A chaotic shootout erupts over unpaid debts, accidentally
+  shredding the pantry door and exposing the bloody victim inside.
+entities:
+- character:sylvia
+- character:arthur
+ending:
+  id: e-group-145
+  title: Open Hostility
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-15
+- beat:ledger-read-arthur-cornered--stuff-pantry
+- beat:ledger-read-end--stuff-pantry

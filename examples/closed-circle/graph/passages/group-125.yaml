@@ -1,0 +1,15 @@
+id: passage:group-125
+summary: Jagged shards of plastic from the destroyed phone scatter aggressively across the
+  expensive carpet.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s5-a1
+choices:
+- label: Breathe easier as the broadcast cuts to dead air.
+  to: passage:group-128

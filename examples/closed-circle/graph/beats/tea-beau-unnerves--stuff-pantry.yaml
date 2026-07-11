@@ -1,0 +1,13 @@
+id: beat:tea-beau-unnerves--stuff-pantry
+created_by: grow
+summary: Beaumont's profoundly erratic behavior unnerves the guests, stripping away his remaining
+  authority. The guests stop following his directions, increasingly drawn toward the hallway
+  and the strangely locked pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

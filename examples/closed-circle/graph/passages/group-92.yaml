@@ -1,0 +1,19 @@
+id: passage:group-92
+summary: Beaumont chucks the second victim out a window into a snowdrift since the pantry
+  is full. The blizzard quickly covers the body until the wind exposes a frozen hand, sending
+  panicked guests scrambling dangerously close to the pantry.
+entities:
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-commit-snow--stuff-pantry
+- beat:overflow-snow-covered--stuff-pantry
+- beat:overflow-snow-hand--stuff-pantry
+choices:
+- label: Flinch collectively at the violent gust of wind.
+  to: passage:group-98
+- label: Draw the curtains to keep the snowdrift corpse out of sight.
+  to: passage:group-100

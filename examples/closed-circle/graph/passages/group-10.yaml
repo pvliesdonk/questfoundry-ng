@@ -1,0 +1,17 @@
+id: passage:group-10
+summary: Someone steers the drunken guest back into the hall, leaving Beaumont alone to frantically
+  manage the spreading mess. He searches desperately for a towel but only finds his lavish
+  velvet curtains.
+entities:
+- character:cecily
+- character:beaumont
+- object:antique-harpoon
+beats:
+- beat:bridge-8
+- beat:bridge-9
+- beat:harpoon-no-towels
+choices:
+- label: Ignore a guest complaining about the draft.
+  to: passage:group-11
+- label: Ignore a guest grumbling about the dim lights.
+  to: passage:group-12

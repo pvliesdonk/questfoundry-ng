@@ -1,0 +1,21 @@
+id: passage:group-124
+summary: The broadcast cuts to dead air, stopping the flow of evidence. A furious Munroe drops
+  her true-crime persona and begins actively hunting Beaumont through the manor, forcing him
+  to keep her away from the armchair corpse.
+entities:
+- character:det-munroe
+- character:beaumont
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:podcast-aftermath-dead-air--pose-study
+- beat:podcast-aftermath-fury--pose-study
+- beat:podcast-aftermath-hunted--pose-study
+choices:
+- label: Stand in a suffocating silence thick with dread.
+  to: passage:group-127
+- label: Bolt back into the dining room near the unguarded ledger.
+  to: passage:group-129

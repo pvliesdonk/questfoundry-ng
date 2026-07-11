@@ -1,0 +1,8 @@
+id: beat:residue-sylvia-study
+created_by: polish
+summary: Beaumont shoots a panicked glance at the groaning, incapacitated Sylvia, desperately
+  praying she doesn't demand he drag the new hallway body into the already-occupied study.
+beat_class: structural
+purpose: residue
+requires_flags:
+- flag:sylvia-incapacitated

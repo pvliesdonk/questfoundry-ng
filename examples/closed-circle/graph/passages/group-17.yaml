@@ -1,0 +1,17 @@
+id: passage:group-17
+summary: Beaumont wrestles the victim into an armchair and covers their face with a newspaper.
+  Sylvia enters, complains about the rude sleeper, and forces Beaumont to constantly adjust
+  the sliding corpse to maintain the illusion.
+entities:
+- character:beaumont
+- object:antique-harpoon
+- character:sylvia
+beats:
+- beat:first-body-commit-pose
+- beat:first-body-pose-adjust
+- beat:first-body-pose-sylvia
+choices:
+- label: Cross the dead man's ankles to look natural.
+  to: passage:group-20
+- label: Tuck an unlit pipe into the corpse's rigid hand.
+  to: passage:group-21

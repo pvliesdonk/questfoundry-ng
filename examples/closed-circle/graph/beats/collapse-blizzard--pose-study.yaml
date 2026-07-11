@@ -1,0 +1,13 @@
+id: beat:collapse-blizzard--pose-study
+created_by: grow
+summary: The blizzard intensifies, violently rattling the glass panes of the conservatory.
+  The howling wind creates a draft that flutters the newspaper resting on the propped-up corpse,
+  threatening to expose his dead eyes to the room.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:conservatory-collapse
+  effect: advances
+entities:
+- location:conservatory
+belongs_to:
+- path:ignore-phone

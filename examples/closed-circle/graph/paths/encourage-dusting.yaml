@@ -1,0 +1,7 @@
+id: path:encourage-dusting
+name: Flour Power
+explores: answer:encourage-dusting
+consequences:
+- id: consequence:flour-contamination
+  text: The dining room is heavily contaminated with baking flour, obliterating any genuine
+    forensic evidence.

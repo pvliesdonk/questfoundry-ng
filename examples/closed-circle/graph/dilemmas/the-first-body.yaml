@@ -1,0 +1,22 @@
+id: dilemma:the-first-body
+question: When the first guest accidentally impales themselves on the antique harpoon, how
+  do you handle the scene before Sylvia demands breakfast?
+why_it_matters: Dictates the foundational lie the group must maintain and sets the physical
+  logistics for the rest of the evening.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:stuff-pantry
+  text: Stuff the bleeding victim behind the pickled onions in the walk-in pantry.
+- id: answer:pose-study
+  text: Prop them up in the armchair with a newspaper and loudly pretend they are napping.
+anchored_to:
+- character:beaumont
+- location:the-pantry
+- object:antique-harpoon
+- character:sylvia
+wraps:
+- dilemma:harpoon-cleaning
+serial:
+- dilemma:conservatory-collapse

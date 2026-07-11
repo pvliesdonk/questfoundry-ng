@@ -1,0 +1,13 @@
+passage: passage:group-72
+priority: 18
+caption: Beaumont stands hopelessly before the jammed pantry door, entirely out of places
+  to hide a second victim.
+prompt: Tightly composed, oppressive line-art. Beaumont stands with a perfectly rigid spine
+  and a minute twitch in his left eye, his velvet smoking jacket perfectly tailored, trapped
+  in a narrow hallway. Before him is a cavernous, freezing, and claustrophobically overcrowded
+  storage room visually dominated by a heavy oak door bearing an antiquated brass latch, firmly
+  shut. Heavy crosshatching boxes him in. Grayscale with frostbite blue seeping from under
+  the heavy oak door and bruised burgundy highlighting the antiquated brass latch.
+entities:
+- character:beaumont
+- location:the-pantry

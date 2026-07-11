@@ -1,0 +1,20 @@
+id: passage:group-61
+summary: Guests track flour footprints all over the manor. Munroe slips and knocks herself
+  out, her heavy fall effectively masking the wet sound of the bleeding body shifting behind
+  the pantry door as guests gather around the cart.
+entities:
+- character:det-munroe
+- object:poisoned-tea-set
+beats:
+- beat:bridge-25
+- beat:munroe-encourage-footprints--stuff-pantry
+- beat:munroe-encourage-slip--stuff-pantry
+choices:
+- label: Swallow the toxic tea to prove it is safe.
+  grants:
+  - flag:beau-poisoned
+  to: passage:group-65
+- label: Take the gamble and let Sylvia drink it.
+  grants:
+  - flag:sylvia-incapacitated
+  to: passage:group-66

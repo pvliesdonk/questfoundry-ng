@@ -1,0 +1,7 @@
+id: path:smash-phone
+name: Unplugged Podcast
+explores: answer:smash-phone
+consequences:
+- id: consequence:phone-smashed
+  text: Munroe's smartphone is shattered, preventing external broadcasts but unleashing her
+    unbridled, paranoid wrath.

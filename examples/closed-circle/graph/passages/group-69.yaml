@@ -1,0 +1,11 @@
+id: passage:group-69
+summary: Fighting back intense nausea from the toxic tea, Beaumont watches helplessly as the
+  guests' attention shifts from the suspicious armchair sleeper to a fresh corpse.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:residue-beau-study
+choices:
+- label: Stare in dismay at the new casualty on the floor.
+  to: passage:group-72

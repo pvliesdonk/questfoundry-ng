@@ -1,0 +1,12 @@
+id: beat:overflow-guests-explore--pose-study
+created_by: grow
+summary: The remaining guests express a desire to explore the hallway to stretch their legs.
+  Beaumont enthusiastically encourages this, desperate to get them out of the study and away
+  from the suspiciously motionless man in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: complicates
+belongs_to:
+- path:arthur-room
+- path:snow-drift

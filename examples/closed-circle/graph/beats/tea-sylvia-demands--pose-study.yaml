@@ -1,0 +1,15 @@
+id: beat:tea-sylvia-demands--pose-study
+created_by: grow
+summary: Sylvia sits haughtily in the drawing room, sharply demanding her afternoon tea from
+  the tampered silver set. Her piercing voice cuts through the tension, putting Beaumont on
+  high alert as he defends the nearby study from her scrutiny.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:sylvia
+- object:poisoned-tea-set
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

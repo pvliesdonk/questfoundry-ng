@@ -1,0 +1,13 @@
+id: beat:munroe-encourage-slip--pose-study
+created_by: grow
+summary: Munroe slips on a pile of flour and knocks herself out, temporarily halting her amateur
+  investigation. She lands heavily near the armchair, prompting Beaumont to drag her away
+  before she can wake up and notice the corpse's lack of a pulse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+belongs_to:
+- path:encourage-dusting

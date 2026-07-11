@@ -1,0 +1,9 @@
+id: beat:bridge-17
+created_by: grow
+summary: As the guests step back from Beaumont in horror, an unexpected interloper seizes
+  the moment to interrogate the trapped group.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:det-munroe

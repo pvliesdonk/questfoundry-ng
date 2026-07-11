@@ -1,0 +1,8 @@
+id: passage:group-48
+summary: Beaumont briefly considers tossing his heavy pocket watch into the corner to draw
+  attention away, but realizes it would be ruinously expensive.
+beats:
+- beat:fb-run4-s1-a1
+choices:
+- label: Brace myself as Munroe storms back inside.
+  to: passage:group-53

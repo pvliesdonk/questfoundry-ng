@@ -1,0 +1,20 @@
+id: passage:group-54
+summary: Guests track flour footprints everywhere. Munroe slips on the powder and knocks herself
+  out near the armchair, prompting Beaumont to drag her unconscious body away before she notices
+  the corpse lacks a pulse.
+entities:
+- character:det-munroe
+- object:poisoned-tea-set
+beats:
+- beat:bridge-24
+- beat:munroe-encourage-footprints--pose-study
+- beat:munroe-encourage-slip--pose-study
+choices:
+- label: Suffer through drinking the poisoned cup.
+  grants:
+  - flag:beau-poisoned
+  to: passage:group-58
+- label: Hand Sylvia the poisoned cup and call her bluff.
+  grants:
+  - flag:sylvia-incapacitated
+  to: passage:group-59

@@ -1,0 +1,11 @@
+id: passage:group-80
+summary: Beaumont nervously calculates whether Sylvia's incapacitation makes it easier or
+  harder to drag another body into the pantry without her noticing.
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:residue-sylvia-pantry-fork
+choices:
+- label: Frantically corral the guests away from the hallway.
+  to: passage:group-82

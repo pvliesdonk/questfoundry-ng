@@ -1,0 +1,8 @@
+id: passage:group-26
+summary: Arthur mutters defensively that the lines were supposed to be dead, pacing nervously
+  as the ringing continues.
+beats:
+- beat:fb-run3-s2-a2
+choices:
+- label: Dodge the impending collapse of the glass roof.
+  to: passage:group-28

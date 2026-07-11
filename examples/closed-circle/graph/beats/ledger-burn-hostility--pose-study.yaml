@@ -1,0 +1,11 @@
+id: beat:ledger-burn-hostility--pose-study
+created_by: grow
+summary: Freed from the proof of their debts, the guests drop their polite facades and turn
+  openly hostile. Beaumont can no longer enforce drawing-room etiquette, meaning guests begin
+  ignoring his demands to keep quiet around the "sleeping" man.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+belongs_to:
+- path:burn-it

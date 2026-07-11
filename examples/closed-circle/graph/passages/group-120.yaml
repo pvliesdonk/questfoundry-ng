@@ -1,0 +1,14 @@
+id: passage:group-120
+summary: The podcaster drops her voice into a theatrical whisper, entirely savoring the tension
+  of the moment.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s4-a1
+choices:
+- label: Realize her loyal subscribers are watching the blood trail.
+  to: passage:group-123

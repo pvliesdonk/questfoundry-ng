@@ -1,0 +1,16 @@
+id: passage:group-13
+summary: The blood pool expands dangerously. Beaumont frantically rubs the gory harpoon tip
+  against the crimson velvet curtains, leaving a suspiciously dark, sticky stain that smells
+  strongly of iron.
+entities:
+- object:antique-harpoon
+- character:beaumont
+beats:
+- beat:harpoon-aftermath-sticky
+- beat:harpoon-resolution-wipe
+- beat:harpoon-stain-spreads
+choices:
+- label: Discretely wipe the sticky blood from my shoe.
+  to: passage:group-14
+- label: Lie to Cecily about spilling vintage Merlot.
+  to: passage:group-15

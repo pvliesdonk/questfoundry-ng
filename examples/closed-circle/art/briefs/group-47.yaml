@@ -1,0 +1,15 @@
+passage: passage:group-47
+priority: 19
+caption: Sylvia loudly threatens Beaumont's social standing while Arthur panics over the impending
+  poisoning.
+prompt: Darkly farcical, claustrophobic line-art. Sylvia maintains an exacting, perpendicular
+  spinal alignment, aggressively draped in a sharp cashmere shawl, pressing two fingers to
+  her temples in displeasure. Beaumont stands with a perfectly rigid spine and wide lateral
+  fencer's stance in his velvet smoking jacket. Arthur is a sweaty, bumbling figure in visually
+  inadequate tailoring, terrified and firmly clutching a brass-reinforced leather briefcase
+  against his sternum. Grayscale with bruised burgundy on Sylvia's shawl and frostbite blue
+  on Arthur's briefcase.
+entities:
+- character:sylvia
+- character:beaumont
+- character:arthur

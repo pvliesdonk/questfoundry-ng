@@ -1,0 +1,8 @@
+id: passage:group-21
+summary: Beaumont awkwardly tucks an unlit pipe into the corpse's rigid hand, hoping the prop
+  distracts guests from the man's extreme pallor.
+beats:
+- beat:fb-run3-s1-a2
+choices:
+- label: Watch in horror as the charade falls apart.
+  to: passage:group-23

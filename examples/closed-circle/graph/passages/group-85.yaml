@@ -1,0 +1,19 @@
+id: passage:group-85
+summary: Beaumont pries open a window and chucks the second victim into a snowdrift. The blizzard
+  initially covers the body, but the wind soon exposes a frozen, grasping hand outside the
+  window, terrifying the guests.
+entities:
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-commit-snow--pose-study
+- beat:overflow-snow-covered--pose-study
+- beat:overflow-snow-hand--pose-study
+choices:
+- label: Flinch as a violent gust of wind rattles the panes.
+  to: passage:group-90
+- label: Constantly draw the curtains to hide the body outside.
+  to: passage:group-94

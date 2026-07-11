@@ -1,0 +1,9 @@
+id: beat:bridge-31
+created_by: grow
+summary: Beaumont manages to dodge past his attacker and bolts for the dining room, arriving
+  right beside the controversial financial records.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- object:the-ledger

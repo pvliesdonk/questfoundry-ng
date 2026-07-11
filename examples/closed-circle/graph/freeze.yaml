@@ -1,0 +1,224 @@
+beats:
+- beat:bridge-0
+- beat:bridge-1
+- beat:bridge-10
+- beat:bridge-11
+- beat:bridge-12
+- beat:bridge-13
+- beat:bridge-14
+- beat:bridge-15
+- beat:bridge-16
+- beat:bridge-17
+- beat:bridge-18
+- beat:bridge-19
+- beat:bridge-2
+- beat:bridge-20
+- beat:bridge-21
+- beat:bridge-22
+- beat:bridge-23
+- beat:bridge-24
+- beat:bridge-25
+- beat:bridge-26
+- beat:bridge-27
+- beat:bridge-28
+- beat:bridge-29
+- beat:bridge-3
+- beat:bridge-30
+- beat:bridge-31
+- beat:bridge-32
+- beat:bridge-4
+- beat:bridge-5
+- beat:bridge-6
+- beat:bridge-7
+- beat:bridge-8
+- beat:bridge-9
+- beat:collapse-aftermath-freezing--pose-study
+- beat:collapse-aftermath-freezing--stuff-pantry
+- beat:collapse-aftermath-isolated--pose-study
+- beat:collapse-aftermath-isolated--stuff-pantry
+- beat:collapse-aftermath-shatter--pose-study
+- beat:collapse-aftermath-shatter--stuff-pantry
+- beat:collapse-blizzard--pose-study
+- beat:collapse-blizzard--stuff-pantry
+- beat:collapse-glass-cracks--pose-study
+- beat:collapse-glass-cracks--stuff-pantry
+- beat:collapse-munroe-hopes--pose-study
+- beat:collapse-munroe-hopes--stuff-pantry
+- beat:collapse-phone-rings--pose-study
+- beat:collapse-phone-rings--stuff-pantry
+- beat:collapse-resolution-cut--pose-study
+- beat:collapse-resolution-cut--stuff-pantry
+- beat:first-body-beau-blocks
+- beat:first-body-blood-pool
+- beat:first-body-commit-pantry
+- beat:first-body-commit-pose
+- beat:first-body-discovery
+- beat:first-body-pantry-arthur
+- beat:first-body-pantry-end
+- beat:first-body-pantry-sylvia
+- beat:first-body-pose-adjust
+- beat:first-body-pose-end
+- beat:first-body-pose-sylvia
+- beat:first-body-sylvia-complains
+- beat:harpoon-aftermath-cecily-buys-it
+- beat:harpoon-aftermath-lie
+- beat:harpoon-aftermath-sticky
+- beat:harpoon-blood-drip
+- beat:harpoon-cecily-lights
+- beat:harpoon-no-towels
+- beat:harpoon-resolution-wipe
+- beat:harpoon-stain-spreads
+- beat:ledger-arthur-panic--pose-study
+- beat:ledger-arthur-panic--stuff-pantry
+- beat:ledger-burn-arthur-shriek--pose-study
+- beat:ledger-burn-arthur-shriek--stuff-pantry
+- beat:ledger-burn-end--pose-study
+- beat:ledger-burn-end--stuff-pantry
+- beat:ledger-burn-hostility--pose-study
+- beat:ledger-burn-hostility--stuff-pantry
+- beat:ledger-commit-burn--pose-study
+- beat:ledger-commit-burn--stuff-pantry
+- beat:ledger-commit-read--pose-study
+- beat:ledger-commit-read--stuff-pantry
+- beat:ledger-munroe-intervenes--pose-study
+- beat:ledger-munroe-intervenes--stuff-pantry
+- beat:ledger-read-arthur-cornered--pose-study
+- beat:ledger-read-arthur-cornered--stuff-pantry
+- beat:ledger-read-end--pose-study
+- beat:ledger-read-end--stuff-pantry
+- beat:ledger-read-sylvia-rage--pose-study
+- beat:ledger-read-sylvia-rage--stuff-pantry
+- beat:ledger-seal-cracks--pose-study
+- beat:ledger-seal-cracks--stuff-pantry
+- beat:ledger-wobbly-table--pose-study
+- beat:ledger-wobbly-table--stuff-pantry
+- beat:munroe-beau-realizes--pose-study
+- beat:munroe-beau-realizes--stuff-pantry
+- beat:munroe-cecily-mocks--pose-study
+- beat:munroe-cecily-mocks--stuff-pantry
+- beat:munroe-commit-distract--pose-study
+- beat:munroe-commit-distract--stuff-pantry
+- beat:munroe-commit-encourage--pose-study
+- beat:munroe-commit-encourage--stuff-pantry
+- beat:munroe-distract-escape--pose-study
+- beat:munroe-distract-escape--stuff-pantry
+- beat:munroe-distract-fern--pose-study
+- beat:munroe-distract-fern--stuff-pantry
+- beat:munroe-distract-freeze--pose-study
+- beat:munroe-distract-freeze--stuff-pantry
+- beat:munroe-encourage-footprints--pose-study
+- beat:munroe-encourage-footprints--stuff-pantry
+- beat:munroe-encourage-obliterated--pose-study
+- beat:munroe-encourage-obliterated--stuff-pantry
+- beat:munroe-encourage-slip--pose-study
+- beat:munroe-encourage-slip--stuff-pantry
+- beat:munroe-flour-intro--pose-study
+- beat:munroe-flour-intro--stuff-pantry
+- beat:munroe-threatens-silverware--pose-study
+- beat:munroe-threatens-silverware--stuff-pantry
+- beat:overflow-arthur-smell--pose-study
+- beat:overflow-arthur-smell--stuff-pantry
+- beat:overflow-choke--pose-study
+- beat:overflow-choke--stuff-pantry
+- beat:overflow-commit-room--pose-study
+- beat:overflow-commit-room--stuff-pantry
+- beat:overflow-commit-snow--pose-study
+- beat:overflow-commit-snow--stuff-pantry
+- beat:overflow-door-jammed--pose-study
+- beat:overflow-door-jammed--stuff-pantry
+- beat:overflow-guests-explore--pose-study
+- beat:overflow-guests-explore--stuff-pantry
+- beat:overflow-room-foot--pose-study
+- beat:overflow-room-foot--stuff-pantry
+- beat:overflow-room-hover--pose-study
+- beat:overflow-room-hover--stuff-pantry
+- beat:overflow-room-paranoid--pose-study
+- beat:overflow-room-paranoid--stuff-pantry
+- beat:overflow-snow-covered--pose-study
+- beat:overflow-snow-covered--stuff-pantry
+- beat:overflow-snow-curtains--pose-study
+- beat:overflow-snow-curtains--stuff-pantry
+- beat:overflow-snow-hand--pose-study
+- beat:overflow-snow-hand--stuff-pantry
+- beat:podcast-aftermath-dead-air--pose-study
+- beat:podcast-aftermath-dead-air--stuff-pantry
+- beat:podcast-aftermath-fury--pose-study
+- beat:podcast-aftermath-fury--stuff-pantry
+- beat:podcast-aftermath-hunted--pose-study
+- beat:podcast-aftermath-hunted--stuff-pantry
+- beat:podcast-arthur-realizes--pose-study
+- beat:podcast-arthur-realizes--stuff-pantry
+- beat:podcast-cornered--pose-study
+- beat:podcast-cornered--stuff-pantry
+- beat:podcast-demands-confession--pose-study
+- beat:podcast-demands-confession--stuff-pantry
+- beat:podcast-live-narration--pose-study
+- beat:podcast-live-narration--stuff-pantry
+- beat:podcast-resolution-smash--pose-study
+- beat:podcast-resolution-smash--stuff-pantry
+- beat:setup-crash
+- beat:setup-sylvia-demands
+- beat:setup-welcome
+- beat:tea-arthur-warns--pose-study
+- beat:tea-arthur-warns--stuff-pantry
+- beat:tea-beau-cleanup--pose-study
+- beat:tea-beau-cleanup--stuff-pantry
+- beat:tea-beau-cramps--pose-study
+- beat:tea-beau-cramps--stuff-pantry
+- beat:tea-beau-forgets--pose-study
+- beat:tea-beau-forgets--stuff-pantry
+- beat:tea-beau-hallucinates--pose-study
+- beat:tea-beau-hallucinates--stuff-pantry
+- beat:tea-beau-unnerves--pose-study
+- beat:tea-beau-unnerves--stuff-pantry
+- beat:tea-commit-beau--pose-study
+- beat:tea-commit-beau--stuff-pantry
+- beat:tea-commit-sylvia--pose-study
+- beat:tea-commit-sylvia--stuff-pantry
+- beat:tea-sylvia-agony--pose-study
+- beat:tea-sylvia-agony--stuff-pantry
+- beat:tea-sylvia-bedridden--pose-study
+- beat:tea-sylvia-bedridden--stuff-pantry
+- beat:tea-sylvia-countdown--pose-study
+- beat:tea-sylvia-countdown--stuff-pantry
+- beat:tea-sylvia-demands--pose-study
+- beat:tea-sylvia-demands--stuff-pantry
+forks:
+  dilemma:arthur-ledger:
+  - beat:ledger-commit-burn--pose-study
+  - beat:ledger-commit-burn--stuff-pantry
+  - beat:ledger-commit-read--pose-study
+  - beat:ledger-commit-read--stuff-pantry
+  dilemma:conservatory-collapse:
+  - beat:collapse-resolution-cut--pose-study
+  - beat:collapse-resolution-cut--stuff-pantry
+  dilemma:harpoon-cleaning:
+  - beat:harpoon-resolution-wipe
+  dilemma:munroe-snooping:
+  - beat:munroe-commit-distract--pose-study
+  - beat:munroe-commit-distract--stuff-pantry
+  - beat:munroe-commit-encourage--pose-study
+  - beat:munroe-commit-encourage--stuff-pantry
+  dilemma:pantry-overflow:
+  - beat:overflow-commit-room--pose-study
+  - beat:overflow-commit-room--stuff-pantry
+  - beat:overflow-commit-snow--pose-study
+  - beat:overflow-commit-snow--stuff-pantry
+  dilemma:podcast-recording:
+  - beat:podcast-resolution-smash--pose-study
+  - beat:podcast-resolution-smash--stuff-pantry
+  dilemma:poisoned-tea:
+  - beat:tea-commit-beau--pose-study
+  - beat:tea-commit-beau--stuff-pantry
+  - beat:tea-commit-sylvia--pose-study
+  - beat:tea-commit-sylvia--stuff-pantry
+  dilemma:the-first-body:
+  - beat:first-body-commit-pantry
+  - beat:first-body-commit-pose
+convergences:
+  dilemma:pantry-overflow:
+  - beat:collapse-resolution-cut--pose-study
+  - beat:collapse-resolution-cut--stuff-pantry
+  dilemma:poisoned-tea:
+  - beat:overflow-choke--pose-study
+  - beat:overflow-choke--stuff-pantry

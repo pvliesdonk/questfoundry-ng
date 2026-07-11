@@ -1,0 +1,9 @@
+id: beat:bridge-19
+created_by: grow
+summary: Beaumont prepares to block the podcaster's path, but a loud complaint from the drawing
+  room forces him to pivot his attention.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- character:sylvia

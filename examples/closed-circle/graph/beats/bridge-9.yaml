@@ -1,0 +1,8 @@
+id: beat:bridge-9
+created_by: grow
+summary: As Beaumont hesitates to ruin his expensive drapery, precious seconds tick by unabated.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- object:antique-harpoon

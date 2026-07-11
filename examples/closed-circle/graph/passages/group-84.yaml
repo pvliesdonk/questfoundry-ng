@@ -1,0 +1,20 @@
+id: passage:group-84
+summary: Beaumont and Arthur haul the crumpet victim upstairs and shove them under Arthur's
+  bed. Arthur refuses to stay in his room, forcing Beaumont to constantly run upstairs to
+  hide the corpse's slipping foot while guarding the study.
+entities:
+- character:beaumont
+- character:arthur
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:overflow-commit-room--pose-study
+- beat:overflow-room-foot--pose-study
+- beat:overflow-room-hover--pose-study
+choices:
+- label: Murmur nervously with the surviving guests.
+  to: passage:group-88
+- label: Notice Arthur edging toward the heavy brass fire poker.
+  to: passage:group-89

@@ -1,0 +1,15 @@
+id: beat:munroe-commit-distract--stuff-pantry
+created_by: grow
+summary: Beaumont manipulates Munroe into locking herself in the freezing conservatory by
+  claiming the "killer" fled in there. This diverts her investigation in the exact opposite
+  direction of the walk-in pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

@@ -1,0 +1,14 @@
+id: beat:podcast-live-narration--pose-study
+created_by: grow
+summary: She loudly narrates a live podcast episode, accurately describing Beaumont's incredibly
+  suspicious behavior. Her narration explicitly questions why the host refuses to let anyone
+  check on the man "napping" in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: complicates
+entities:
+- character:det-munroe
+- character:beaumont
+belongs_to:
+- path:smash-phone

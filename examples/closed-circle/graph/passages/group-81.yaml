@@ -1,0 +1,13 @@
+id: passage:group-81
+summary: A guest nearly trips backward over a velvet ottoman while frantically scrambling
+  away from the increasingly gruesome hallway scene.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run12-s1-a1
+choices:
+- label: Try to silence Arthur's loud complaints about the smell.
+  to: passage:group-83

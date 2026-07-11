@@ -1,0 +1,7 @@
+id: intersection:doorway-drip
+rationale: While Beaumont desperately blocks the study doorway with his body to hide the impaled
+  first victim, he realizes the murder weapon is actively dripping blood onto his favorite
+  Persian rug just inside.
+members:
+- beat:first-body-beau-blocks
+- beat:harpoon-blood-drip

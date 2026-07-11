@@ -1,0 +1,9 @@
+id: beat:bridge-12
+created_by: grow
+summary: The dramatic recitation continues down the list of names until it reaches the wealthiest
+  woman in the room.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cecily
+- character:sylvia

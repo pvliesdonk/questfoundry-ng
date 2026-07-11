@@ -1,0 +1,13 @@
+id: passage:group-96
+summary: The surviving guests huddle in the corners, eyeing each other with undisguised suspicion
+  and fear.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run16-s1-a1
+choices:
+- label: Listen to Arthur ramble about the whispering upstairs victim.
+  to: passage:group-99

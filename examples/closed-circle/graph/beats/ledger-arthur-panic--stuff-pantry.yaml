@@ -1,0 +1,15 @@
+id: beat:ledger-arthur-panic--stuff-pantry
+created_by: grow
+summary: Arthur panics and lunges for the table, drawing everyone's highly suspicious attention
+  to the black book. His frantic behavior heightens the paranoia of a group already deeply
+  stressed about the corpse shoved behind the pantry goods.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:arthur
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

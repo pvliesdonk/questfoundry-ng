@@ -1,0 +1,9 @@
+id: beat:bridge-28
+created_by: grow
+summary: The shrill ring of the manor's landline pierces the tension, threatening to connect
+  the hysteria to the outside world.
+beat_class: structural
+purpose: bridge
+entities:
+- character:arthur
+- character:beaumont

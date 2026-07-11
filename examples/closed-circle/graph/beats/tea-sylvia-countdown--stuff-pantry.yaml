@@ -1,0 +1,15 @@
+id: beat:tea-sylvia-countdown--stuff-pantry
+created_by: grow
+summary: Sylvia accuses Beaumont of being a terrible host, loudly promising to destroy his
+  social standing with terrible reviews. Beaumont ignores her threats, entirely preoccupied
+  with the physical evidence bleeding out from under the pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: complicates
+entities:
+- character:sylvia
+- character:beaumont
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

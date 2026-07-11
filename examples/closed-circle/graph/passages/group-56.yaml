@@ -1,0 +1,8 @@
+id: passage:group-56
+summary: Munroe carelessly kicks a small side table while marching forward, sending a decorative
+  vase wobbling precariously.
+beats:
+- beat:fb-run7-s1-a1
+choices:
+- label: Deliberately scuff up the flour to hide the blood.
+  to: passage:group-61

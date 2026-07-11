@@ -1,0 +1,9 @@
+id: beat:bridge-21
+created_by: grow
+summary: Munroe aggressively coats the hallway tiles in a thick, billowing cloud of white
+  baking powder.
+beat_class: structural
+purpose: bridge
+entities:
+- character:beaumont
+- character:det-munroe

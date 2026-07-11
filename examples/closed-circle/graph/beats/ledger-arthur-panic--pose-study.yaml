@@ -1,0 +1,15 @@
+id: beat:ledger-arthur-panic--pose-study
+created_by: grow
+summary: Arthur panics and lunges for the table, drawing everyone's highly suspicious attention
+  to the black book. The sudden movement startles the guests, and Beaumont worries the commotion
+  will knock the newspaper off the propped-up dead man.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: complicates
+entities:
+- character:arthur
+- object:the-ledger
+belongs_to:
+- path:burn-it
+- path:let-cecily-read

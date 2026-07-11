@@ -1,0 +1,14 @@
+id: passage:group-106
+summary: Arthur paces frantically back and forth, vigorously rubbing his hands together to
+  stay warm.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s1-a2
+choices:
+- label: Watch Cecily slide the ledger under the wobbly table leg.
+  to: passage:group-108

@@ -1,0 +1,9 @@
+id: beat:bridge-7
+created_by: grow
+summary: Cecily eventually wanders off in search of another drink, leaving Beaumont alone
+  with the casualty and a ticking clock.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cecily
+- character:beaumont

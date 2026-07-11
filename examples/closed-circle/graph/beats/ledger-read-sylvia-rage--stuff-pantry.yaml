@@ -1,0 +1,13 @@
+id: beat:ledger-read-sylvia-rage--stuff-pantry
+created_by: grow
+summary: Sylvia learns she is bankrupt, and her polite criticism pivots to raw, screaming
+  rage. She storms into the hallway demanding better treatment, threatening to tear the house
+  apart looking for the manor's food reserves in the pantry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:arthur-ledger
+  effect: reveals
+entities:
+- character:sylvia
+belongs_to:
+- path:let-cecily-read

@@ -1,0 +1,8 @@
+id: passage:group-50
+summary: Munroe steps squarely onto a dropped, blood-specked handkerchief, inadvertently smudging
+  key evidence under his heavy boot.
+beats:
+- beat:fb-run5-s1-a2
+choices:
+- label: Sweep the white powder away from the motionless shoes.
+  to: passage:group-54

@@ -1,0 +1,14 @@
+id: beat:munroe-commit-encourage--pose-study
+created_by: grow
+summary: Beaumont graciously steps aside, allowing Munroe to coat the entire dining room and
+  study in baking flour. He hopes the flour obscures any real evidence without causing the
+  "napping" guest to sneeze.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:encourage-dusting

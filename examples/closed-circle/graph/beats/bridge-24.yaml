@@ -1,0 +1,9 @@
+id: beat:bridge-24
+created_by: grow
+summary: Beaumont drags the unconscious podcaster out of sight just as the afternoon tea cart
+  is rolled into the room to soothe the frayed nerves of the remaining guests.
+beat_class: structural
+purpose: bridge
+entities:
+- character:det-munroe
+- object:poisoned-tea-set

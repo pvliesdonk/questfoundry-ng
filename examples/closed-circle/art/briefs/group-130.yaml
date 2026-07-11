@@ -1,0 +1,15 @@
+passage: passage:group-130
+priority: 11
+caption: Beaumont ruthlessly sacrifices Arthur's financial records to the flames to protect
+  his own deadly secrets.
+prompt: Darkly farcical line-art with dense crosshatching. Beaumont, holding a wide fencer's
+  stance with flawlessly aligned shirt cuffs in his velvet smoking jacket, forcefully handles
+  a thick, heavy book bound in aged leather with excessively thick vellum pages. Arthur is
+  a sweaty, bumbling figure in visually inadequate tailoring, maintaining a rigidly terrified
+  posture, clutching his brass-reinforced briefcase as a shield against his sternum. Boxed
+  in by oppressive negative space. Grayscale with bruised burgundy highlights on the heavy
+  ledger and frostbite blue on Arthur's sweat.
+entities:
+- character:beaumont
+- object:the-ledger
+- character:arthur

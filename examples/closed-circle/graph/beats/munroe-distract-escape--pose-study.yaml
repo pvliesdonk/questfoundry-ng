@@ -1,0 +1,14 @@
+id: beat:munroe-distract-escape--pose-study
+created_by: grow
+summary: Munroe breaks down the conservatory door, freezing, furious, and wielding a highly
+  dangerous sharpened icicle. She storms into the study, completely uncaring if her rage disturbs
+  the ostensibly resting guest in the armchair.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

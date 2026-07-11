@@ -1,0 +1,9 @@
+id: beat:bridge-4
+created_by: grow
+summary: The traumatized guests flee the grisly hallway, retreating as far away as possible
+  to the glass-walled conservatory.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-pantry
+- location:conservatory

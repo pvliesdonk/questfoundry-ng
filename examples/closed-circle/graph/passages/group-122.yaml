@@ -1,0 +1,15 @@
+id: passage:group-122
+summary: The ruined recording device lets out a final, pathetic electronic whine before dying
+  completely.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run18-s5-a2
+choices:
+- label: Dodge Munroe as she breaks into an unbridled fury.
+  to: passage:group-124

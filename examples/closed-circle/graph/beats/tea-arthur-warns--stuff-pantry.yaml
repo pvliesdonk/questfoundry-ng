@@ -1,0 +1,15 @@
+id: beat:tea-arthur-warns--stuff-pantry
+created_by: grow
+summary: Arthur whispers frantically that letting Sylvia drink the poisoned cup will guarantee
+  their execution. Beaumont stares at the tea set, knowing the walk-in pantry has absolutely
+  no room for a second body.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: reveals
+entities:
+- character:arthur
+- character:beaumont
+belongs_to:
+- path:beau-tastes
+- path:serve-sylvia

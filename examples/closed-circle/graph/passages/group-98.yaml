@@ -1,0 +1,13 @@
+id: passage:group-98
+summary: A sudden, violent gust of wind heavily rattles the icy windowpanes, forcing everyone
+  to flinch simultaneously.
+irrelevant_flags:
+- flag:beau-poisoned
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run17-s1-a1
+choices:
+- label: Continuously close the curtains while passing the pantry.
+  to: passage:group-100

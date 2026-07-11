@@ -1,0 +1,8 @@
+id: passage:group-36
+summary: Beaumont suddenly finds the study's intricate rug deeply fascinating, desperate to
+  avoid making any eye contact with the glaring Inspector.
+beats:
+- beat:fb-run3-s4-a2
+choices:
+- label: Pivot to answer a loud complaint from the drawing room.
+  to: passage:group-38

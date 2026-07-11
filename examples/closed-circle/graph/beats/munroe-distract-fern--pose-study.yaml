@@ -1,0 +1,14 @@
+id: beat:munroe-distract-fern--pose-study
+created_by: grow
+summary: Munroe can be seen through the glass doors, shivering violently while frantically
+  interrogating a potted fern. Beaumont uses her bizarre behavior as an excuse to keep everyone
+  facing the windows rather than looking at the dead man behind them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:munroe-snooping
+  effect: advances
+entities:
+- character:det-munroe
+- location:conservatory
+belongs_to:
+- path:distract-conservatory

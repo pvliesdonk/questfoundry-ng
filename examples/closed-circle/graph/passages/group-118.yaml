@@ -1,0 +1,22 @@
+id: passage:group-118
+summary: Munroe corners the group in the hallway, aggressively thrusting her smartphone forward.
+  Oblivious to the pantry just behind her, she loudly live-streams a detailed narration of
+  the bizarre streaks of wet red fluid on the floor.
+entities:
+- character:beaumont
+- character:det-munroe
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-17
+- beat:podcast-cornered--stuff-pantry
+- beat:podcast-live-narration--stuff-pantry
+choices:
+- label: Listen to the podcaster savor the authentic ambiance.
+  to: passage:group-120
+- label: Violently smash her smartphone to stop the live stream.
+  to: passage:group-123

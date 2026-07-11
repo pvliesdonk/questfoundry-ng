@@ -1,0 +1,14 @@
+id: beat:podcast-resolution-smash--pose-study
+created_by: grow
+summary: Beaumont abruptly snatches the smartphone and smashes it with a heavy brass candlestick.
+  He then adjusts his collar, apologizing for the noise while desperately hoping the outburst
+  didn't dislodge the newspaper from the dead man's face.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:podcast-recording
+  effect: commits
+entities:
+- character:beaumont
+- character:det-munroe
+belongs_to:
+- path:smash-phone

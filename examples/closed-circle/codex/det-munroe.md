@@ -1,0 +1,6 @@
+---
+entity: character:det-munroe
+title: Sarah Munroe
+---
+
+Sarah Munroe operates under the entirely fictional, fiercely guarded assumption that she is the sole authority figure in any given room. Clad in a severely reinforced canvas trench coat utterly unsuited for indoor wear, she traverses delicate floorboards in aggressively thick-soled tactical boots, striking the ground with maximum percussive force to artificially assert her investigative dominance. Munroe rarely communicates in standard conversational tones, preferring a breathless, artificially lowered theatrical whisper designed for a phantom audio audience—an affectation she erroneously believes excuses the profound rudeness of public eavesdropping. She wields her mobile device, encased in a military-grade armored shell, with a severe two-handed grip, utilizing it as a physical extension of her interrogative authority. Should this device be forcefully confiscated, she maintains a rigid, paralytic phantom grip in the empty air for several agonizing seconds. Furthermore, Munroe possesses a deeply flawed understanding of forensic science, necessitating that she constantly carry common household baking ingredients upon her person under the tragic delusion that culinary powders serve as adequate substitutes for professional dusting agents.

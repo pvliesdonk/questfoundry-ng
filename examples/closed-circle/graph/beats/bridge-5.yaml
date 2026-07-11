@@ -1,0 +1,9 @@
+id: beat:bridge-5
+created_by: grow
+summary: Unable to refuse a guest's direct request without raising suspicion, the group elects
+  their most spineless member to fetch the garnish.
+beat_class: structural
+purpose: bridge
+entities:
+- character:sylvia
+- character:arthur

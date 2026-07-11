@@ -1,0 +1,8 @@
+id: passage:group-4
+summary: The guests pause to admire a garish, overly expensive vase pointed out by Sylvia,
+  entirely oblivious to the impending disaster.
+beats:
+- beat:fb-run1-s2-a1
+choices:
+- label: Block her path to the crime scene.
+  to: passage:group-5

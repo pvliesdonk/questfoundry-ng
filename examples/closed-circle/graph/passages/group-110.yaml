@@ -1,0 +1,14 @@
+id: passage:group-110
+summary: Beaumont notices an unsteady table leg and briefly considers fixing it, before realizing
+  the absurdity of caring about furniture right now.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s2-a1
+choices:
+- label: Let Munroe crack the seal on the forensic evidence.
+  to: passage:group-113

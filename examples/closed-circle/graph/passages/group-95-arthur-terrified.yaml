@@ -1,0 +1,21 @@
+id: passage:group-95-arthur-terrified
+summary: Beaumont severs the phone cord just as the ceiling shatters, cutting them off from
+  the outside world while Arthur cowers in terror, blabbering about the whispers from the
+  body hidden upstairs.
+entities:
+- character:beaumont
+- location:conservatory
+irrelevant_flags:
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:collapse-aftermath-isolated--pose-study
+- beat:collapse-aftermath-shatter--pose-study
+- beat:collapse-resolution-cut--pose-study
+choices:
+- label: Listen to Cecily curse the miserable freezing architecture.
+  to: passage:group-101
+- label: Watch Arthur pace frantically to ward off the chill.
+  to: passage:group-102

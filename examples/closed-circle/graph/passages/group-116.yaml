@@ -1,0 +1,14 @@
+id: passage:group-116
+summary: A brittle piece of ancient leather from the ledger flakes off onto the floor.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run19-s3-a2
+choices:
+- label: Listen to Munroe narrate her live podcast episode.
+  to: passage:group-118

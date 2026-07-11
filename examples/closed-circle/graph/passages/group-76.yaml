@@ -1,0 +1,15 @@
+id: passage:group-76
+summary: Beaumont's erratic behavior unnerves the guests, stripping away his authority and
+  allowing them to increasingly wander toward the hallway and the mysteriously locked pantry.
+entities:
+- character:beaumont
+irrelevant_flags:
+- flag:flour-contamination
+- flag:munroe-interrogation
+beats:
+- beat:tea-beau-unnerves--stuff-pantry
+choices:
+- label: Sway woozily and realize I am entirely unequipped.
+  requires:
+  - flag:beau-poisoned
+  to: passage:group-78

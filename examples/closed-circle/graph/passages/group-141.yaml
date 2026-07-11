@@ -1,0 +1,15 @@
+id: passage:group-141
+summary: The thick pages of the ledger curl and blacken, emitting foul, chemical-smelling
+  smoke into the room.
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:fb-run22-s1-a1
+choices:
+- label: Watch the guests abandon polite manners entirely.
+  to: passage:group-144

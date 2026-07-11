@@ -1,0 +1,12 @@
+id: beat:first-body-beau-blocks
+summary: Beaumont desperately blocks the doorway with his body, attempting to maintain the
+  illusion of a perfect party.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:the-first-body
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:pose-study
+- path:stuff-pantry

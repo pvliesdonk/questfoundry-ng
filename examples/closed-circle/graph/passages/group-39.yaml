@@ -1,0 +1,8 @@
+id: passage:group-39
+summary: Beaumont clenches his jaw, fighting to maintain an air of unbothered aristocratic
+  grace under the intense pressure of the evening.
+beats:
+- beat:fb-run2-s5-a1
+choices:
+- label: Respond to Sylvia's demands for afternoon tea.
+  to: passage:group-42

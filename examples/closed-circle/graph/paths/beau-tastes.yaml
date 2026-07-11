@@ -1,0 +1,7 @@
+id: path:beau-tastes
+name: The Polite Taster
+explores: answer:beau-tastes
+consequences:
+- id: consequence:beau-poisoned
+  text: Beau attempts to maintain hostly decorum while suffering agonizing cramps and mild
+    hallucinations.

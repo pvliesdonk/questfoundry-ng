@@ -1,0 +1,17 @@
+id: passage:group-144
+summary: The guests abandon polite manners entirely and brawl wildly over the remaining expensive
+  alcohol. Someone is violently thrown against the pantry door, bursting it open and dumping
+  the bloody victim into the midst of the chaos.
+ending:
+  id: e-group-144
+  title: Total Anarchy
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:beau-poisoned
+- flag:body-in-snow
+- flag:flour-contamination
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:ledger-burn-end--stuff-pantry
+- beat:ledger-burn-hostility--stuff-pantry

@@ -1,0 +1,13 @@
+id: beat:tea-beau-cramps--pose-study
+created_by: grow
+summary: Beaumont immediately suffers severe stomach cramps but forces a terrifyingly polite
+  smile. He doubles over in agony while still fiercely insisting that the guests let the man
+  in the armchair continue his nap.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:poisoned-tea
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:beau-tastes

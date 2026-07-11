@@ -1,0 +1,8 @@
+id: passage:group-18
+summary: Sylvia loudly complains about the sudden dust in the air, batting it away with a
+  delicate, gloved hand.
+beats:
+- beat:fb-run2-s1-a1
+choices:
+- label: Send spineless Arthur to fetch her pickled onions.
+  to: passage:group-22

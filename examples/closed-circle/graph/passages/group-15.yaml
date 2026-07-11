@@ -1,0 +1,20 @@
+id: passage:group-15
+summary: Beaumont smoothly lies to Cecily, claiming the dark stain is spilled vintage Merlot.
+  She believes him but criticizes the waste, wandering off and leaving Beaumont alone with
+  a ticking clock.
+entities:
+- character:beaumont
+- character:cecily
+beats:
+- beat:bridge-7
+- beat:harpoon-aftermath-cecily-buys-it
+- beat:harpoon-aftermath-lie
+choices:
+- label: Drag the bleeding victim into the walk-in pantry.
+  grants:
+  - flag:pantry-corpse
+  to: passage:group-16
+- label: Prop the victim in an armchair and cover their face.
+  grants:
+  - flag:study-weekend-at-bernies
+  to: passage:group-17

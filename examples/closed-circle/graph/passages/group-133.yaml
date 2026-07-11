@@ -1,0 +1,22 @@
+id: passage:group-133
+summary: Beaumont dodges his attacker and bolts for the dining room, arriving right beside
+  the controversial financial records.
+entities:
+- character:beaumont
+- object:the-ledger
+irrelevant_flags:
+- flag:arthur-terrified
+- flag:body-in-snow
+- flag:munroe-interrogation
+- flag:sylvia-incapacitated
+beats:
+- beat:bridge-31
+choices:
+- label: Snatch the ledger and hurl it into the fireplace.
+  grants:
+  - flag:ledger-destroyed
+  to: passage:group-137
+- label: Watch Cecily enthusiastically read everyone's debts aloud.
+  grants:
+  - flag:secrets-revealed
+  to: passage:group-138

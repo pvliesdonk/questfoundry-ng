@@ -1,0 +1,13 @@
+id: beat:overflow-snow-curtains--stuff-pantry
+created_by: grow
+summary: Beaumont is forced to continuously draw the curtains to prevent the guests from noticing
+  the corpse in the snowdrift. Managing the windows keeps him constantly moving back and forth
+  past the highly suspicious pantry door.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:pantry-overflow
+  effect: advances
+entities:
+- character:beaumont
+belongs_to:
+- path:snow-drift

@@ -136,6 +136,26 @@ BaseModel`.
   from the proposal model; responses are parsed and validated before the
   pipeline sees them. Free-text generation exists only *inside* schema
   fields (prose is a `str` field of a `PassageProse` proposal).
+- **Native enforcement is provider-optional; validation is not** (A20).
+  The adapter derives the JSON schema once per call and offers it to the
+  provider alongside the prompt-embedded copy; a provider may enforce it
+  natively (Ollama passes it as `format` — grammar-constrained decoding,
+  which small local models need) or ignore it (Anthropic/OpenAI/Gemini
+  do today, each for a documented reason in its module). Acceptance is
+  always the adapter's Pydantic validation + retry, so the contract is
+  provider-independent; only the failure *rate* differs. A retry carries
+  a correction brief — the failing field paths, what was wrong, and the
+  values seen — not a raw exception. All help is conditional on failure:
+  a strong model never sees any of it. A lint test keeps every proposal
+  schema inside the grammar-safe JSON-Schema subset.
+- **Local models' context is a managed budget.** The Ollama provider owns
+  `num_ctx` explicitly (project.yaml `llm:` keys: `host`, `num_ctx`,
+  `temperature`, `keep_alive`, `think`) and fails loud when a call's
+  `prompt_eval_count` lands near the window — Ollama truncates oversized
+  prompts silently, which would otherwise be quiet wrongness. Cloud-tier
+  Ollama models (`*:cloud`, via `OLLAMA_API_KEY`) run through the same
+  provider; they are documented as not supporting `format`, and the
+  provider degrades to prompt-only enforcement if a host rejects it.
 - **The id contract is stated once, adapter-side.** The JSON instruction
   accompanying every schema requires node references to be the full
   `kind:slug` id exactly as rendered in the prompt. Engine-side
@@ -254,6 +274,7 @@ interface before that.
 | A17 | A research digest is reused while *fresh* (its recorded corpus fingerprint + story inputs match current values — the standing queries, or a premise hash where none existed, since DREAM's research is premise-grounded); `prepare_rerun` preserves the target stage's own digest through the rewind; forcing re-retrieval = deleting the file | Always re-retrieving on rerun; `--keep research` replaying the digest file itself | Always-re-retrieve makes "author-editable artifact" vacuous — the digest is consumed by the *same* stage's later passes, so an edit only matters on rerun, and re-retrieval would clobber it (the predecessor snapshot never contains the target's digest). Replaying the file would break "ordinary `--keep`-able pass" — keeps replay *proposals* through apply. Freshness is checked in `skip_if`, which the runner dispatches before keep/resume replay; a corpus or vision edit re-retrieves, an unchanged world reuses for free — the vision.yaml never-restored precedent, extended |
 | A18 | `qf illustrate` is a post-DRESS *command*, idempotent by file presence (`art/images/<slug>.png` exists → skip; `--force` re-renders), with `image-generation-mcp` consumed as a library (`ImageService` + `register_provider`, no fastmcp code) and all orchestration engine-side: prompt assembly from art direction + entity visual fragments, sample-first gate, `--budget`/`--priority` filtering, ledger entries, one LLM reformulation on a typed content-policy refusal, and PNG normalization at the single write site (providers return what they like — Gemini hands back JPEG) | A DRESS pipeline pass; wrapping the library's MCP server; a content-addressed image store | Cloud providers expose no seeds, so rendered bytes can never join checkpoint byte-stability or A16 fingerprint replay — generation must sit beside `qf export`, outside stage semantics. The library deliberately owns no cache/budget/ledger, so the heritage lessons (consistency fragments, sample-first cost gate, the refusal the original swallowed) live in the engine. Slug-named files keep the presence-keyed skip and the export plumbing that has keyed on slugs since M5; content addressing's free dedup wasn't worth breaking that |
 | A19 | The scale table is words-primary: each scope preset anchors on `words_total`; passage/arc-beat bands, scaffold depths (`ScaffoldShape`), the collapse cap, and per-passage word bands (texture/scene/ending) are derived quantities recalibrated by structural simulation (`tests/scale.py`) through the real weave and collapse | Playthrough-words primary; passage-count primary (the status quo); calibrating bands against our own generated stories | The author holds, prints, and pays for total prose — and cost scales with it; the feel of size is B6's job (a playthrough walk, words per offered choice). Passages are a collapse artifact, redefined once already. Simulating through the engine breaks the calibration circularity: the live run confirms, it does not define |
+| A20 | Native structured output is a provider-local, conditional assist: the adapter offers each call's JSON schema to the provider (one derivation feeds both the prompt-embedded copy and the pass-through), Ollama consumes it as `format`, the cloud providers deliberately ignore it, and Pydantic validation + retry-with-a-correction-brief remain the sole acceptance path for every provider | Adopting native modes everywhere (Anthropic's is documented incompatible with streaming and extended thinking, both load-bearing here; OpenAI strict forbids optional-with-default fields and minItems, which the proposals use; Gemini can reject deep schemas); a discuss-then-serialize two-pass adapter (legacy's shape) | Grammar constraint is load-bearing for local models and merely nice for frontier ones, so enforcement belongs at the provider seam where each backend pays only its own costs. Micromanagement tuned for weak models actively hurts strong ones (the legacy lesson) — so every assist here engages only on failure: constrained decoding changes no prompt bytes, and the correction brief appears only on a retry. Flipping a cloud provider later is a provider-local change |
 
 ## 10. Craft-corpus research (M6)
 

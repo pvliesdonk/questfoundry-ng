@@ -1,0 +1,89 @@
+"""Every proposal schema must stay inside the JSON-Schema subset that
+grammar-constrained decoding (the Ollama provider's `format`) and the
+cloud providers' native structured-output modes handle. The adapter's
+Pydantic validation is the contract either way, but a schema feature a
+constrained decoder mishandles would over-constrain or fail on exactly
+one provider — this lint catches that at commit time, not live.
+"""
+
+from __future__ import annotations
+
+import importlib
+import pkgutil
+
+from pydantic import BaseModel
+
+import questfoundry.pipeline.stages as stages_pkg
+
+# JSON-Schema keywords pydantic v2 emits for the shapes the proposals
+# use, all of them handled by llama.cpp's schema-to-grammar conversion.
+# Growing this set is fine when the keyword is grammar-safe; anything
+# else (pattern, oneOf, not, if/then, patternProperties, ...) needs a
+# schema redesign, not an allowlist edit.
+ALLOWED_KEYWORDS = {
+    "title",
+    "description",
+    "type",
+    "properties",
+    "required",
+    "additionalProperties",
+    "items",
+    "enum",
+    "const",
+    "anyOf",
+    "$defs",
+    "$ref",
+    "default",
+    "minItems",
+    "maxItems",
+    "minLength",
+    "maxLength",
+    "minimum",
+    "maximum",
+    "exclusiveMinimum",
+    "exclusiveMaximum",
+}
+
+
+def _proposal_models() -> list[type[BaseModel]]:
+    modules = [
+        importlib.import_module(f"{stages_pkg.__name__}.{info.name}")
+        for info in pkgutil.iter_modules(stages_pkg.__path__)
+    ]
+    modules.append(importlib.import_module("questfoundry.pipeline.research"))
+    models = []
+    for mod in modules:
+        for obj in vars(mod).values():
+            if (
+                isinstance(obj, type)
+                and issubclass(obj, BaseModel)
+                and obj is not BaseModel
+                and obj.__module__ == mod.__name__
+            ):
+                models.append(obj)
+    assert len(models) >= 30, "walker lost the stage modules"
+    return models
+
+
+def _check(schema: object, where: str, bad: list[str]) -> None:
+    if not isinstance(schema, dict):
+        return
+    for key, value in schema.items():
+        if key not in ALLOWED_KEYWORDS:
+            bad.append(f"{where}: unsupported keyword {key!r}")
+            continue
+        if key in ("properties", "$defs"):
+            for name, sub in value.items():
+                _check(sub, f"{where}.{key}.{name}", bad)
+        elif key in ("items", "additionalProperties"):
+            _check(value, f"{where}.{key}", bad)
+        elif key == "anyOf":
+            for i, sub in enumerate(value):
+                _check(sub, f"{where}.anyOf[{i}]", bad)
+
+
+def test_proposal_schemas_stay_inside_the_constrained_decoding_subset() -> None:
+    bad: list[str] = []
+    for model in _proposal_models():
+        _check(model.model_json_schema(), model.__name__, bad)
+    assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)

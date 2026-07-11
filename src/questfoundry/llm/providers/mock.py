@@ -22,14 +22,20 @@ class MockProvider:
         self._record_with = record_with
         self._cursor = 0
 
-    def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+    def generate(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None = None
+    ) -> LLMResult:
         if self._record_with is not None:
-            return self._record(system=system, prompt=prompt, model=model, max_tokens=max_tokens)
+            return self._record(
+                system=system, prompt=prompt, model=model, max_tokens=max_tokens, schema=schema
+            )
         return self._replay(model)
 
-    def _record(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+    def _record(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None
+    ) -> LLMResult:
         result = self._record_with.generate(
-            system=system, prompt=prompt, model=model, max_tokens=max_tokens
+            system=system, prompt=prompt, model=model, max_tokens=max_tokens, schema=schema
         )
         calls_dir = self._fixtures_dir / "calls"
         calls_dir.mkdir(parents=True, exist_ok=True)

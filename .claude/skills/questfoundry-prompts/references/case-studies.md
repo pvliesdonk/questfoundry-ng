@@ -1,10 +1,17 @@
 # Case studies — real fixes, and what surface each belonged to
 
 Each of these came from watching a real run (mostly the Ollama `gpt-oss:120b`
-cloud tier — the deliberately-weak experiment tier that surfaces prompt gaps a
-frontier model glides past). They are the template for diagnosis: **reproduce →
-inspect the graph → attribute fault → pick the surface → restate, don't reinvent
-→ verify.** Provenance lives in `docs/STATUS.md`'s decision log.
+cloud tier — a deliberately-weaker model used as a **microscope**: it surfaces the
+prompt gaps a frontier model silently infers past). They are the template for
+diagnosis: **reproduce → inspect the graph → attribute fault → pick the surface →
+restate, don't reinvent → verify.** Provenance lives in `docs/STATUS.md`'s decision
+log.
+
+Read them the right way: the point of each fix is **not** "make gpt-oss pass" — it
+is to make the prompt *say what it always meant*. Every one of these was intent the
+prompt had left to inference; stating it explicitly improves the output on any
+model (and a frontier model, freed from guessing, tends to get more consistent
+too). The weak tier only told us *where* to look.
 
 ## 1. Dangling id references → the schema, not the prompt (issue #40, generalized)
 
@@ -75,9 +82,11 @@ never simple past), read the first sentence back first (where the wrong tense
 slips in). It restates an existing binding constraint — strong models already hold
 it, so their output doesn't change.
 
-**Lesson.** For a weak tier, elevate a buried binding field to an explicit
-directive, and name the *specific* edge case it trips on. Don't add a new rule;
-make the existing one impossible to miss.
+**Lesson.** When a binding constraint is honored only by inference (tense was one
+compact field), elevate it to an explicit directive and name the *specific* edge
+case it trips on. Don't add a new rule — make the existing intent impossible to
+miss. That helps any model; the weak tier is only what exposed that the field was
+being inferred rather than stated.
 
 ## 5. Asserting `possible` state as fact → writer fault, WORLD STATE directive
 

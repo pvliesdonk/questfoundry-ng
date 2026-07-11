@@ -1,16 +1,19 @@
 ---
 name: questfoundry-prompts
 description: >-
-  Write, tune, and debug the LLM prompts and their JSON-schema contracts for
-  the QuestFoundry NG story pipeline (the eight stages DREAM→SHIP). Use this
-  skill whenever you touch anything under `src/questfoundry/pipeline/prompts/*.j2`,
-  add or change a proposal schema or the reference-pinning in `pipeline/refpin.py`,
-  edit a stage's review rules, or diagnose why a model — especially a weaker or
-  local tier (gpt-oss, qwen, an Ollama model) — fails, loops, or exhausts repairs
-  at a stage. Reach for it even when the ask sounds like "the writer keeps
-  breaking tense", "SEED triage won't stop inventing ids", "the review is too
-  strict", "make FILL work on a cheaper model", or "add a new pass/prompt" —
-  anything about how this pipeline talks to its models.
+  Write, tune, and debug the LLM prompts and their JSON-schema contracts for the
+  QuestFoundry NG story pipeline (DREAM→SHIP) so they express their intent
+  explicitly and robustly for ANY model — not only whichever tier happens to be
+  smart enough to infer what you meant. Use this skill whenever you touch
+  `src/questfoundry/pipeline/prompts/*.j2`, add or change a proposal schema or the
+  reference-pinning in `pipeline/refpin.py`, edit a stage's review rules, add a
+  pass, or diagnose why a model fails, loops, or exhausts repairs at a stage. A
+  failure on a weaker/local tier (gpt-oss, qwen, an Ollama model) is an especially
+  sharp diagnostic — it exposes where a prompt is under-specified — but the goal is
+  prompt quality for every tier. Reach for it for "the writer keeps breaking
+  tense", "SEED triage invents ids", "the review is too strict", "make this prompt
+  robust", or "add a new pass" — anything about how this pipeline talks to its
+  models.
 ---
 
 # Tuning QuestFoundry NG pipeline prompts
@@ -26,6 +29,32 @@ surface owns each rule.
 Read `docs/design/02-pipeline.md` for stage contracts and `AGENTS.md` for the
 iron rules before changing behavior. This skill is *how to write the words*; the
 design docs are *what the words must achieve*.
+
+## The goal: a prompt that doesn't depend on the model being clever
+
+Tune prompts to **express their intent explicitly** — clear task, stated register,
+enforced references — so they produce the right thing on *any* model, not only
+whichever tier is smart enough to guess what you meant. A prompt that "works" only
+because a frontier model infers the unstated intent is under-specified: it is
+fragile (a provider swap or an off day breaks it), inconsistent (the strong model
+fills the gap differently across runs), and hard to debug. Making the intent
+explicit is simply good prompt engineering — it *also* happens to let a weaker
+model follow, but that is a consequence, not the target.
+
+This reframes what a weak-tier failure **is**. It is not "the cheap model is bad,"
+and the fix is not "make it pass on gpt-oss." A weaker model is a **microscope for
+under-specification** — it can't paper over a gap the way a frontier model does, so
+it shows you exactly where the prompt left intent to inference. Fix that gap and the
+prompt is better for *every* tier — the strong model's output usually gets more
+consistent too. Use the weak tier to *find* the problem; judge success by whether
+the prompt now says what it means, not by whether one model happened to pass.
+
+One caveat, so this doesn't tip into over-engineering: **expressing intent is not
+spoon-feeding.** Clarity, specificity, stated register, and enforced schemas help
+every model. Worked exemplars, step-by-step scaffolding, and verbose hand-holding
+help a weak model but tax a strong one — those belong on the *failure* path (A20),
+never in the base prompt. The line: make the **intent** explicit for all; keep
+**crutches** conditional on failure.
 
 ## The two surfaces — put each rule where it can be enforced
 
@@ -198,10 +227,11 @@ diagnosing *why*. When a stage fails or loops on a model:
    - The proposal was structurally valid but the *engine* rejected it → it may be
      an **engine** bug, not a prompt one (the finalize false-branch fix was an
      apply-ordering bug, not model error — always consider this).
-4. **Make the change a restatement, not a new rule.** Firm up an existing
-   contract for the weaker tier; don't invent obligations a strong model already
-   meets. Explain *why* in the prompt — smart models generalize from the reason,
-   not from ALL-CAPS.
+4. **Make the change a restatement, not a new rule.** Make an existing contract's
+   *intent* explicit — the thing the prompt already meant but left to inference;
+   don't invent a new obligation a strong model already meets. Explain *why* in
+   the prompt — smart models generalize from the reason, not from ALL-CAPS, and a
+   reason is what makes the fix hold across models rather than patching one.
 5. **Verify.**
    - `uv run pytest -q` and `uv run ruff check src tests` — green.
    - `uv run qf validate examples/keepers-bargain` — 0/0 (the golden is the oracle).
@@ -237,11 +267,12 @@ diagnosing *why*. When a stage fails or loops on a model:
 ## Optional: measure a change instead of eyeballing it
 
 For a subjective writing change, live re-runs plus the golden gate are usually
-enough. If you want a rigorous before/after (e.g. "did this actually make the
-weak tier better, or just this one story?"), the `skill-creator` eval harness can
-benchmark two prompt versions across several premises with a human-review viewer
-— useful when a prompt change is contentious or you're choosing between two
-framings. Ask for it; it's heavier than most tuning warrants.
+enough. If you want a rigorous before/after (e.g. "did this make the prompt more
+robust, or did it just fix this one story on this one model?"), the `skill-creator`
+eval harness can benchmark two prompt versions across several premises — and ideally
+more than one model tier — with a human-review viewer. That cross-model spread is
+the real test of the goal here: a good change helps everywhere, not just where it
+was found. Ask for it; it's heavier than most tuning warrants.
 
 When a *prompt* can't fix a failure because the weak model is simply
 inconsistent (passes a rule on some samples, fails on others), the prompt is not

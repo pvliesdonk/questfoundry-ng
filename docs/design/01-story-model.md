@@ -92,9 +92,13 @@ locked column is an allowance, not a floor: BRAINSTORM overgenerates by
 up to that many dilemmas and triage locks the surplus (B1).
 
 **Voice** — a singleton record created by FILL before any prose: POV,
-tense, register, rhythm rules, banned patterns. The operational descendant
-of the vision ("gritty noir" becomes "second person, present tense, short
-declaratives, no semicolons").
+tense, register, rhythm rules, an imagery palette (where the voice's
+images come from and their limits), dialogue rules, banned patterns. The
+operational descendant of the vision ("gritty noir" becomes "second
+person, present tense, short declaratives, no semicolons"). The palette
+fields exist because a thin voice makes the writer lean on whatever
+styled text sits in its prompt — rendered facts, adjacent prose — and
+book-scale repetition follows (live run 8; the prose-quality effort).
 
 ## 3. World layer
 
@@ -227,11 +231,21 @@ what changes, and what it now costs — mood *named*, never performed. FILL
 writes the page from the brief in a Voice that does not exist until after
 POLISH; imagery spent in a summary is a style anchor smuggled past the
 Voice (the same bias-vector family as the removed canonical answer) and
-competes with the prose it is supposed to specify. Every stage that
-writes summaries (SEED, GROW's contextualize and bridge passes, POLISH's
-residue and passage passes) carries this register as a prompt contract;
-it is taste, so no gate checks it — the fence is the framing, telling the
-model who consumes its words.
+competes with the prose it is supposed to specify. The rule generalizes
+past summaries: **everything that is not prose should not be prose**
+(prose-quality effort, 2026-07-11) — micro-details, character-arc
+metadata, and story-so-far notes are notes for later writers, and a
+styled value stored in one is a phrase every later prompt will render
+and every later passage will be tempted to perform (live run 8 read the
+result at book scale: one detail restated verbatim in 25 of 148
+passages). Every stage that writes summaries or notes (SEED, GROW's
+contextualize and bridge passes, POLISH's residue, passage, and arcs
+passes, FILL's micro-details and story-so-far summaries) carries this
+register as a prompt contract. Register itself is taste, so no gate
+grades it — the fence is the framing — but FILL enforces the deterministic
+floor at apply: note-length caps on micro-details and story-so-far
+entries, and an echo check that rejects prose restating a rendered fact
+or a run lifted from adjacent prose verbatim.
 
 ### The beat DAG
 

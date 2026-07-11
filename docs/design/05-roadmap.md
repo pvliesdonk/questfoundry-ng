@@ -196,9 +196,30 @@ review/edit/continue (design doc 02 §3). `qf simulate --random N`
 false-branch diamonds now occur in every generated story, and
 `--all-arcs` never walks them.
 
+Run resilience lands here too: a transient transport failure
+(provider disconnect, 5xx — live run 8 died four times on transport
+drops and a 503) should auto-resume the interrupted stage with bounded
+backoff instead of exiting. The Gemini provider now streams and
+retries transport drops and 5xx server errors per call, which absorbs
+most transience; a sustained failure still exits, and the A16
+in-flight ledger already makes the stage-level retry free — today a
+human re-invokes `qf run`.
+
+And progress reporting: a deep-scope FILL is ~300 calls over an hour+,
+and today the only in-stage signals are buffered console lines (block-
+buffered when piped, so even a log tail goes blind) and counting cache
+files by hand (live run 8). `qf run` should emit a flushed, one-line
+heartbeat per pass (pass m/n, attempt, running spend from the ledger),
+and `qf status` should read live run state — current stage/pass and
+spend — from the checkpoint, in-flight ledger, and cost ledger it
+already has.
+
 **Exit:** `qf run` pauses at a checkpoint, the author edits an
 artifact, the run resumes and revalidates; `qf export twee` lints; a
-random-walk simulation covers detours the arc walk misses.
+random-walk simulation covers detours the arc walk misses; a killed
+provider connection costs a log line, not a dead run — and a long
+stage shows its pulse: per-pass heartbeats in the run log, live
+stage/pass/spend in `qf status`.
 
 ## Later / explicitly deferred
 

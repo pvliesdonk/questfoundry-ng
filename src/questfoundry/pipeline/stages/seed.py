@@ -36,6 +36,7 @@ from questfoundry.models.structure import (
     TemporalHint,
 )
 from questfoundry.models.world import Entity
+from questfoundry.pipeline import weave
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -550,6 +551,23 @@ def _order_apply(proposal: OrderProposal, project: Project) -> list[str]:
     }
     for rel in proposal.relations:
         mutations.add_dilemma_relation(project.graph, kind_map[rel.kind], rel.a, rel.b)
+    # Relations can be pairwise-acyclic yet jointly unsatisfiable: the
+    # story must END at a branched hard dilemma's resolution, so a serial
+    # chain extending past every hard resolve leaves no feasible climax
+    # (live run 8 wedged GROW exactly this way — serial(hard A, hard B)
+    # plus serial(hard B, locked chain)). Probe the weave here, where a
+    # repair round can fix it; GROW's WeaveError is unrepairable.
+    try:
+        weave.plan(project.graph)
+    except weave.WeaveError as e:
+        raise ApplyError(
+            f"these relations leave no valid interleaving ({e}). The story "
+            "must end at a branched HARD dilemma's resolution — nothing may "
+            "be forced after every hard dilemma resolves. Drop or rethink "
+            "the relation(s) that chain material after the last hard commit "
+            "(a locked storyline serial-after a hard dilemma is the usual "
+            "culprit; use wraps or concurrent instead)"
+        ) from e
     return [f"relations: {', '.join(f'{r.a} {r.kind} {r.b}' for r in proposal.relations)}"]
 
 

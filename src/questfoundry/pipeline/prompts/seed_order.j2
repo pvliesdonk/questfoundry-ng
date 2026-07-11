@@ -12,5 +12,8 @@ RELATIONS (emit one entry per meaningful pair):
 - "serial": A fully resolves before B introduces. Serial subplots never interact.
 - "concurrent": both active at once, interleaved, neither nesting the other.
 
-Do not create cycles (if A wraps B, B cannot wrap or precede A).
+Do not create cycles (if A wraps B, B cannot wrap or precede A). The story
+ENDS at a branched hard dilemma's resolution: never chain anything serial
+after every hard dilemma — a subplot that must outlast a hard resolution
+should be wrapped by it (or concurrent), not serial after it.
 {% include "_shared.j2" %}

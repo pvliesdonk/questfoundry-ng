@@ -6,6 +6,8 @@ unrepairable gate."""
 
 from __future__ import annotations
 
+import copy
+
 import pytest
 
 from questfoundry.graph import queries
@@ -19,16 +21,19 @@ from questfoundry.pipeline.stages.seed import (
     DilemmaScaffold,
     LockedScaffold,
     LockSpec,
+    OrderProposal,
     PathScaffold,
     PathSpec,
+    RelationSpec,
     ScaffoldProposal,
     TriageProposal,
+    _order_apply,
     _scaffold_apply,
     _triage_apply,
 )
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
-from tests.conftest import make_dilemma
+from tests.conftest import make_dilemma, make_locked_chain, make_y_scaffold
 
 
 def _spec(slug: str, is_ending: bool = False) -> BeatSpec:
@@ -194,6 +199,47 @@ def test_triage_locked_allowance_enforced(tmp_path):
     )
     with pytest.raises(ApplyError, match="at most 1 locked"):
         _triage_apply(proposal, project)
+
+
+# -- order relations (weave feasibility; live run 8) --------------------------
+
+
+def test_order_relations_that_wedge_the_weave_are_repairable(tmp_path):
+    """Pairwise-acyclic relations can leave no feasible climax: live run 8
+    chained serial(hard A, hard B) + serial(hard B, locked chain), so the
+    locked storyline had to follow the only possible climax's resolution —
+    and nothing may follow the endings. The order apply probes the weave
+    so this dies in a repair round, not at GROW's unrepairable gate."""
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "fb", role=DilemmaRole.HARD)
+    d2, p2a, p2b = make_dilemma(g, "al", role=DilemmaRole.HARD)
+    dl, lpath, _ = make_dilemma(g, "cc", explore=1)
+    make_y_scaffold(g, "fb", d1, p1a, p1b)
+    make_y_scaffold(g, "al", d2, p2a, p2b)
+    make_locked_chain(g, "cc", dl, lpath)
+    vision = Vision(premise="t", genre="t", tone="t", scope="medium")
+    project = Project(root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=g)
+    bad = OrderProposal(
+        relations=[
+            RelationSpec(kind="serial", a=d1, b=d2),
+            RelationSpec(kind="serial", a=d2, b=dl),
+        ]
+    )
+    # probe on a copy: the runner restores the graph on failed applies
+    scratch = Project(
+        root=tmp_path, name="t", stage=Stage.SEED, vision=vision, graph=copy.deepcopy(g)
+    )
+    with pytest.raises(ApplyError, match="no valid interleaving"):
+        _order_apply(bad, scratch)
+
+    good = OrderProposal(
+        relations=[
+            RelationSpec(kind="serial", a=d1, b=d2),
+            RelationSpec(kind="wraps", a=d2, b=dl),
+        ]
+    )
+    lines = _order_apply(good, project)
+    assert any("wraps" in line for line in lines)
 
 
 # -- locked scaffolds ---------------------------------------------------------

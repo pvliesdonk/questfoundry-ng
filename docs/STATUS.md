@@ -471,6 +471,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
+- **Transient transport failures kill the run** (author call, live
+  run 8): a provider disconnect exits `qf run` even though the A16
+  ledger makes resumption free — run 8 needed four manual re-invokes.
+  Mitigated in-run: the Gemini provider streams and retries transport
+  drops and 5xx server errors per call (3 attempts, linear backoff;
+  4xx stays fatal), which absorbs most transience; a sustained failure
+  still exits the run.
+  Stage-level auto-resume owned by M10 (roadmap §M10, run resilience).
+- **Long runs report no progress** (author call, live run 8): a
+  deep-scope FILL is ~300 calls with no in-stage signal — console
+  output block-buffers when piped, so monitoring fell back to counting
+  cache files. `qf run` gets a flushed per-pass heartbeat (pass m/n,
+  spend); `qf status` learns to read live run state from the artifacts
+  it already has. Owned by M10 (roadmap §M10).
+
 - ~~A Gemini provider is unbuilt~~ **Built and validated** (PR #18):
   `llm/providers/gemini.py` over the google-genai SDK, wired into the
   CLI (`llm.provider: gemini`; the SDK reads `GEMINI_API_KEY` itself).

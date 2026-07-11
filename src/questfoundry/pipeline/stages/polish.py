@@ -153,9 +153,55 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
 
 def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     g = project.graph
+    # Residue arms and cadence false branches are both additions to the
+    # *frozen* pre-finalize topology, so both validate against the pristine
+    # structure the model was shown (and the schema pinned against). Snapshot
+    # the long runs and convergence needs now, and splice the false branches
+    # BEFORE residue: residue splicing shortens the runs it neighbours, so a
+    # beat inside a long run at proposal time can fall out of one once
+    # residue lands — and its diamond would be wrongly rejected against a
+    # structure the model never saw (live gpt-oss:120b cloud, 2026-07-11: a
+    # cadence diamond at a bridge beat that residue at the adjacent
+    # convergence broke out of its run). The two never target the same
+    # region — false branches sit in choice-free runs, residue at
+    # convergence rejoins — so the order is a consistency choice, not a
+    # semantic one.
     needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
-    covered: set[tuple[str, str, str]] = set()
+    long_run_beats = {b for run in _long_runs(project) for b in run}
     lines = []
+    for spec in proposal.false_branches:
+        if spec.before not in long_run_beats or spec.after not in long_run_beats:
+            raise ApplyError(
+                f"false branch at {spec.before} -> {spec.after} is not inside a long linear run"
+            )
+        try:
+            chains = [
+                [
+                    Beat(
+                        id=b.id,
+                        created_by=Stage.POLISH,
+                        summary=b.summary,
+                        beat_class=BeatClass.STRUCTURAL,
+                        purpose=StructuralPurpose.FALSE_BRANCH,
+                        entities=[resolve_entity_ref(g, e) for e in b.entities],
+                    )
+                    for b in ([arm] if arm.followup is None else [arm, arm.followup])
+                ]
+                for arm in spec.arms
+            ]
+        except ValidationError as e:
+            raise ApplyError(f"invalid false-branch arm: {e}") from e
+        if len(chains) == 1:
+            pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
+            lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
+        else:
+            pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
+            lines.append(
+                f"diamond {chains[0][0].id} / {chains[1][0].id} "
+                f"between {spec.before} -> {spec.after}"
+            )
+
+    covered: set[tuple[str, str, str]] = set()
     for spec in proposal.residue:
         need = needs.get((spec.dilemma, spec.world))
         if need is None:
@@ -221,38 +267,6 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             f"story must remember whichever side was chosen; missing {labels}"
         )
 
-    long_run_beats = {b for run in _long_runs(project) for b in run}
-    for spec in proposal.false_branches:
-        if spec.before not in long_run_beats or spec.after not in long_run_beats:
-            raise ApplyError(
-                f"false branch at {spec.before} -> {spec.after} is not inside a long linear run"
-            )
-        try:
-            chains = [
-                [
-                    Beat(
-                        id=b.id,
-                        created_by=Stage.POLISH,
-                        summary=b.summary,
-                        beat_class=BeatClass.STRUCTURAL,
-                        purpose=StructuralPurpose.FALSE_BRANCH,
-                        entities=[resolve_entity_ref(g, e) for e in b.entities],
-                    )
-                    for b in ([arm] if arm.followup is None else [arm, arm.followup])
-                ]
-                for arm in spec.arms
-            ]
-        except ValidationError as e:
-            raise ApplyError(f"invalid false-branch arm: {e}") from e
-        if len(chains) == 1:
-            pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
-            lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
-        else:
-            pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
-            lines.append(
-                f"diamond {chains[0][0].id} / {chains[1][0].id} "
-                f"between {spec.before} -> {spec.after}"
-            )
     return lines or ["nothing inserted"]
 
 

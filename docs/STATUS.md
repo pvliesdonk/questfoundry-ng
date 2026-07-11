@@ -861,6 +861,52 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-11 (audit follow-up — the flag-status fix validated live; a
+  voice example-name bleed found and fixed):** Re-ran the `gpt-oss:120b`
+  cloud DRESS chase (fresh micro premise, canal lockkeeper register, all
+  three roles on the weak tier) to measure the audit's `_flag_status` fix
+  against yesterday's failure signature. **Result: the Rule-4
+  possible-state failure class did not recur** — zero occurrences; the
+  first passage (which carries possible flags) cleared in two attempts
+  with a legitimate micro-detail, and every structural stage
+  (DREAM→POLISH: refpin enums, finalize ordering, cadence diamonds,
+  residue arms) ran clean on the weak tier. The run instead died one bug
+  deeper, on a prompt defect of exactly the audited class: `fill_voice.j2`'s
+  pov example — `"third person limited (Maren)"` — planted a concrete
+  name while the voice pass was shown **no cast**, and the model copied
+  the example's name over the real protagonist ("Marin Voss"). Cascade:
+  the first passage's accepted prose says "Maren", the next writer used
+  "Marin" (matching the cast), review failed it for name-mismatch/POV,
+  the writer flip-flopped, and the same-tier arbiter finally
+  hallucinated a "beat absent" verdict against prose containing the beat
+  nearly verbatim (an all-one-model map gives arbitration no tier
+  escalation — a structural limit worth remembering). Fixes: the voice
+  context renders the retained characters with canonical spellings
+  ("any name the voice uses must match one of them exactly"), the pov
+  bullet demands the exact cast spelling with the bleedable example name
+  removed (a test pins the template source clean of concrete pov example
+  names), and the review's Rule 2 gained the texture-beat clause — a beat
+  whose only content IS scenery is fulfilled by any wording delivering
+  the impression (attempt 1 was genuinely failed for paraphrasing
+  "quiet reminder of the tunnel's age"). 434 tests. **Re-run outcome
+  (same session): the voice fix works** — the voice came back
+  `third person limited (Marin Voss)`, exact cast spelling, and the name
+  cascade is gone. FILL then failed on the residual class, now isolated
+  cleanly: the *writer* is compliant (two successive attempts contained
+  every beat's content, including the disputed "including her own
+  obligations" clause — once nearly verbatim, once as "they bind her in
+  equal measure"), but the utility reviewer quoted a single sentence and
+  declared content absent that sat in the adjacent sentence — and the
+  same-model arbiter upheld it verbatim. With the deterministic causes
+  removed (Rule-4 flag statuses, voice name), the weak-tier blocker is
+  now precisely **reviewer sub-clause literalism + one-sentence
+  quoting**, unfixable by another rule tweak on a map whose arbiter is
+  the same weak model. Stopped at diminishing returns (the author's
+  precedent from yesterday's chase); this failure signature is the
+  sharpest input yet to next-up #1's review-contract design (beat
+  checklist framing, echo check at apply, or a cross-tier arbitration
+  requirement).
+
 - **2026-07-11 (prompt-engineering audit — author-directed: "a full audit
   of all prompts against best practices; perfectly clear in intent and
   expectation, with the full context they need — never inferred"):** Every

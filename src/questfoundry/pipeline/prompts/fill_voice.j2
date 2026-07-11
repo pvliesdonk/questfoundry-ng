@@ -14,6 +14,12 @@ THE STORY'S SHAPE:
 {% endfor %}
 Endings: {{ endings | join(" / ") }}.
 
+THE CAST (these spellings are canonical — any name the voice uses must match
+one of them exactly):
+{% for e in cast %}
+- {{ e.name }}{% if e.pronouns %} ({{ e.pronouns }}){% endif %}: {{ e.concept }}
+{% endfor %}
+
 {% if research %}
 CRAFT NOTES — voices and craft material from the author's corpus. Advisory, and
 for the style exemplars among them a hard rule: they are a contrasting spread, a
@@ -24,7 +30,10 @@ or imitate a note's wording.
 {{ research }}
 {% endif %}
 Decide:
-- pov: whose head, how close ("third person limited (Maren)", "second person").
+- pov: whose head, how close — "second person", or "third person limited (NAME)"
+  with NAME being the viewpoint character's name spelled exactly as the cast
+  lists it. Never coin or vary a name here: every passage and its review will
+  be held to this string verbatim.
 - tense: past or present.
 - diction: the register in a phrase ("spare, salt-worn, literary").
 - rhythm: one line of sentence-rhythm rules.

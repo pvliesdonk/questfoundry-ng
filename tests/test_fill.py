@@ -248,6 +248,26 @@ def test_gate_requires_voice(golden_fill):
     assert any("no voice record" in i.message for i in issues)
 
 
+def test_voice_prompt_shows_the_cast_and_plants_no_example_name(golden_fill):
+    """The pov decision names a viewpoint character, so the prompt must show
+    the cast's exact spellings — and must not carry a concrete example name
+    for it: a live gpt-oss:120b run copied the example's "(Maren)" over the
+    real protagonist "Marin", and every later passage failed review on the
+    name mismatch (prompt audit follow-up, 2026-07-11)."""
+    from questfoundry.pipeline import runner
+    from questfoundry.pipeline.stages.fill import _voice_context
+
+    context = _voice_context(golden_fill)
+    assert [e.name for e in context["cast"]] == ["Elias Wren", "Maren Voss", "The Sleeper"]
+    rendered = runner._environment().get_template("fill_voice.j2").render(
+        **context, notes="", repair_errors=[], research=""
+    )
+    assert "THE CAST" in rendered
+    assert "Maren" in rendered  # from the cast list, the only legitimate source
+    source = (runner.PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8")
+    assert "limited (NAME)" in source and "(Maren)" not in source
+
+
 def _diamond_graph(reverse_wiring: bool):
     """A fork into two prose-bearing passages converging on a fourth,
     wired through the mutation layer in either order."""

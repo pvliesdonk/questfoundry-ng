@@ -7,8 +7,10 @@
 > lessons are already NG law (typed `kind:slug` ids — mini-ADR A11;
 > enums for finite sets; actionable repair errors); the prompt-register
 > conventions are reference input for the prose-quality effort (see
-> `docs/STATUS.md`, next up). Consult this file when the NG docs are
-> silent (see [`docs/heritage/README.md`](README.md)).
+> `docs/STATUS.md`, next up). The "See Also" documents at the bottom
+> are legacy siblings **not carried over** — those links do not resolve
+> here. Consult this file when the NG docs are silent (see
+> [`docs/heritage/README.md`](README.md)).
 
 # Semantic Conventions
 

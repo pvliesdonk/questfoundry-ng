@@ -474,16 +474,23 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-1. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
+1. **Prose quality at scale** (author-directed, 2026-07-11 — the
+   live run 8 reading findings; sequencing vs M9 at the author's
+   call): the echo check at FILL apply, write-prompt input-role
+   framing, the everything-not-prose-is-not-prose register rule for
+   micro-details (and a richer Voice), a utility-summarized rolling
+   story-so-far in the write context, and **character-arc metadata**
+   (deferral trigger met — see the decision log). Frontier session.
+2. **M9 — retrieval refinement** (roadmap §M9): the reserved exemplar
    mechanism + standing-query shape rework, both from live run 7's
    findings (exemplar leak in the decision log; standing-query
    boilerplate in the open items).
-2. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage
+3. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage
    with the Twee lint, real interactive checkpoint review behind
    `qf run --yes`, `qf simulate --random N`, and the run-experience
    items live run 8 earned it: stage-level auto-resume and per-pass
    progress reporting.
-3. **Embed a curated craft-corpus subset in the repo** (author call,
+4. **Embed a curated craft-corpus subset in the repo** (author call,
    live run 8 — see open items): stop hand-staging vault exports for
    corpus-grounded runs.
 
@@ -599,11 +606,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
   M4+ if the gap shows.
 - **Character-arc metadata remains unbuilt** (a POLISH output in design
   doc 02, deferred to be shaped by its consumer). M4's FILL wrote a
-  micro story well without it — entities+overlays+shadows+window proved
-  sufficient context at this scale. Per the annotation discipline
-  (design doc 01 §10), add it when a FILL quality gap at `short`+
-  scope demonstrably calls for it, and update doc 02 if it never earns
-  its keep.
+  micro story well without it. **The deferral's trigger condition has
+  now demonstrably fired** (live run 8 reading: detail-stamping at
+  book scale — decision log 2026-07-11); it joins the author-directed
+  prose-quality effort (next-up #1) as the lever that paces specific
+  aspects of a character per scene instead of all details in all
+  scenes.
 - ~~The HTML player has no codex panel yet~~ **Built** with DRESS
   (PR #20): a `<details>` codex panel, server-rendered, omitted when no
   entries exist.
@@ -669,6 +677,47 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (live run 8 reading findings — stylistic repetition;
+  the author's design direction for the prose-quality effort):**
+  Reading "Closed Circle" at book scale surfaced the first
+  quality gap only a 49k-word read could: **verbatim recurring
+  descriptions** — Beaumont takes "the wide lateral stance of a
+  classical fencer" in 25 of 148 passages, near word-for-word; his eye
+  twitch in 12; the velvet smoking jacket in 16. Diagnosis (traced,
+  not guessed): the entity micro-detail machinery works as built and
+  stamps the prose — FILL discovers a vivid detail once, every later
+  write context renders it verbatim whenever the entity is on stage,
+  the writer performs the phrase already sitting in its prompt, the
+  window doubles the exposure, and the review *rewards* it (each
+  passage is judged in isolation, where repetition reads as the
+  consistency the rules check). The key-level single-assignment guard
+  also let near-duplicate details accrue under different keys
+  (`habit` vs `stance_width`, both the fencer stance), and details
+  were stored as performed sentences — the pre-voiced-summary bias
+  vector, now in the entity layer. The author's direction, recorded
+  as the design brief for the effort: (1) the deterministic echo
+  check at FILL apply (long verbatim n-gram overlap with rendered
+  detail values or window prose, repairable) is approved — modest
+  expectations, cannot hurt; (2) most of the fix is **prompt
+  engineering: tell the writer how to interpret each context block
+  and what to do with it** (facts are constraints, not choreography;
+  the window is continuity, not a style template); (3) the rule of
+  thumb, generalizing the summary-register lesson: **everything that
+  is not prose should not be prose** — micro-details and every other
+  LLM-written non-prose field carry the brief register; relatedly,
+  a too-thin Voice record may itself cause copying (a writer short on
+  style guidance leans on whatever styled text is at hand); (4) a
+  deeper look-back helps only to a point and blows up tokens — a
+  **rolling story-so-far summary by a utility-tier summarizer** is
+  worth building instead; (5) **high hopes for character-arc
+  metadata** (the POLISH output deferred under 01 §10): it turns each
+  scene's focus onto pacing *specific aspects* of a character or
+  object instead of pushing all details into all scenes — the
+  deferral's trigger condition ("a FILL quality gap at short+ scope
+  demonstrably calls for it") has now demonstrably fired. Sequencing
+  relative to M9 is the author's call; the effort is frontier-tier
+  (prompt framing and the arc-metadata contract are bias-sensitive).
 
 - **2026-07-11 (M8 exit: live run 8 — "Closed Circle"):** From the
   author's seed "an Agatha Christie closed circle murder mystery that

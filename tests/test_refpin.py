@@ -74,6 +74,19 @@ def test_pin_default_preserved_for_optional_field():
     assert schema.model_validate({"ref": "r"}).tags == []  # default survives the re-type
 
 
+class _Optional(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    maybe: str | None = None
+
+
+def test_pin_refuses_non_str_field_instead_of_silently_dropping_optional():
+    # a `str | None` ref field would lose its `| None` if pinned blindly;
+    # pin fails loud so the next author pins it deliberately
+    with pytest.raises(TypeError, match="only str / list"):
+        pin(_Optional, "_Optional", {("_Optional", "maybe"): ["a", "b"]})
+
+
 # -- the entity-id helpers ----------------------------------------------------
 
 

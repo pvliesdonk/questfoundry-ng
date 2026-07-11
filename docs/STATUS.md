@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: clean `--to seed`, then a full `--to dress` run; pending: preserve the resulting story as an example, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: clean `--to seed`; a full `--to dress` cloud run is validating the generalization end-to-end (in progress at last check); pending: complete it and preserve the resulting story as an example, then M9
 
 ## Where we are
 
@@ -620,10 +620,15 @@ PR #5) and this agent/doc infrastructure (PR #6).
      the re-run passed SEED first attempt (`locked: dilemma:hand-locket`,
      valid and prefixed). `qwen3.5:397b` cloud is paywalled (403
      subscription), so `gpt-oss:120b` stood in — the same family that
-     first exposed #40. **Still pending:** carry that cloud run onward
-     through GROW→DRESS to earn a preserved example like the live runs;
-     the local `qwen3.5`-class confirmation still wants a run when a
-     daemon host is reachable.
+     first exposed #40. Continuing the run then hit the *identical*
+     dangling-reference class one stage deeper (POLISH finalize named an
+     invented `world`), which motivated pinning the whole class
+     pipeline-wide (decision log; `pipeline/refpin.py`). **In progress:** a
+     fresh full `--to dress` run on `gpt-oss:120b` cloud is validating the
+     generalization end-to-end (SEED cleared, reached GROW at last check) —
+     when it finishes, record the result here and preserve the story as a
+     cloud-tier example. The local `qwen3.5`-class confirmation still wants
+     a run when a daemon host is reachable.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -837,8 +842,11 @@ PR #5) and this agent/doc infrastructure (PR #6).
   violating-construction test on the golden (incl. the exact live
   `world='share-legend'` finalize failure, now rejected), a GROW
   pre-weave intersection test, and the grammar-subset lint extended to the
-  dynamic builders. 428 tests, ruff clean, golden 0/0. Live: a full
-  `--to dress` on `gpt-oss:120b` cloud (record in open item 5).
+  dynamic builders. 428 tests, ruff clean, golden 0/0. Live validation: a
+  full `--to dress` run on `gpt-oss:120b` cloud is *in progress* (SEED
+  cleared first — the previously-failing triage plus the newly-pinned
+  scaffold/order — and it reached GROW); the completed record and any
+  further gaps it surfaces land in open item 5 once it finishes.
 
 - **2026-07-11 (Ollama cloud tier — #40 re-confirmed live + its sibling
   `locked[].dilemma` pinned):** From this hosted environment (supplies

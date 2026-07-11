@@ -90,8 +90,19 @@ def pin(
         ids = resolvers.get((model.__name__, fname))
         if not ids:
             continue
+        origin = get_origin(f.annotation)
+        # Only plain `str` / `list[str]` reference fields are pinnable. A
+        # future `str | None` would land here as a Union and silently lose
+        # its `| None` (the enum would force a value) — fail loud instead so
+        # whoever adds that field pins it deliberately (e.g. include "" in
+        # the ids, as intersection `location` does).
+        if not (f.annotation is str or (origin is list and get_args(f.annotation) == (str,))):
+            raise TypeError(
+                f"cannot pin {model.__name__}.{fname}: only str / list[str] reference "
+                f"fields are pinnable, got {f.annotation!r}"
+            )
         lit = enum_type(ids)
-        typ = list[lit] if get_origin(f.annotation) is list else lit  # type: ignore[valid-type]
+        typ = list[lit] if origin is list else lit  # type: ignore[valid-type]
         overrides[fname] = (typ, f)
     result = model if not overrides else create_model(name, __base__=model, **overrides)
     cache[model] = result

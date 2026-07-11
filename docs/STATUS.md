@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built (author-directed, unplanned) — live validation pending in the author's Ollama environment; next: M9, retrieval refinement
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live (author-directed, unplanned) — A20 mechanism confirmed on local + cloud tiers, blocker to a full local story is two provider-agnostic prompt gaps (weak-model id kebab-case; all-but-top-tier SEED triage referential integrity); next: M9, retrieval refinement
 
 ## Where we are
 
@@ -526,34 +526,53 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
-- **Ollama backend live validation is pending** (built 2026-07-11,
-  untested against a real daemon — this cloud session cannot reach the
-  author's Ollama environment). **Hand-off checklist for a Claude Code
-  session in that environment** (run on this branch, commit findings
-  back into this item):
-  1. `uv sync --group dev && uv run pytest -q` (hermetic suite green
-     there too).
-  2. Scaffold a scratch micro project; set `llm.provider: ollama`, map
-     roles to what the hardware carries (author's intent: gpt-oss:120b
-     or a qwen3.5-series as architect/writer, a small model as
-     utility), set `llm.num_ctx` to what fits VRAM. Run
-     `qf run --to seed` and note repair/retry counts from the ledger —
-     that number is the whole experiment (prompts are the suspect if
-     it's high, per the decision log, not the model).
-  3. **Verify the cloud-tier `format` question**: run one stage with a
-     `*:cloud` model (`ollama signin` or `OLLAMA_API_KEY`). The docs
-     say cloud lacks structured-output support; we *expect* `format`
-     to be silently ignored (call succeeds, schema still satisfied via
-     the prompt); if the host instead rejects it, the provider's
-     one-shot unconstrained fallback should absorb it — record which
-     world we're in here and delete the provider fallback if it proves
-     dead code.
-  4. Force `OllamaContextError`: set `llm.num_ctx` far below a real
-     prompt (e.g. 2048) and confirm the run dies loud with the
-     raise-num_ctx message, not quiet truncation.
-  5. Record model names, per-stage wall time, and ledger token counts
-     here; if a full `qf run --to dress` passes gates on a local
-     model, preserve the story as an example like the live runs do.
+- ~~**Ollama backend live validation is pending**~~ **Validated live**
+  (2026-07-11, on `athena.int.liesdonk.nl:11434` — RTX 4060/8GB + 128GB;
+  daemon logged in to ollama.com; the decision-log entry below is the
+  record). **The A20 mechanism is confirmed on both tiers; the blocker
+  to a full local story is two provider-agnostic prompt gaps, not the
+  backend.** Checklist results:
+  1. `uv run pytest -q` → **403 passed** on this host; `ollama>=0.6` SDK
+     present, lazy import works.
+  2. Three model maps ran `--to seed` on one shared micro premise (a
+     canal lockkeeper + a stranger's coat). **DREAM→SEED completed on
+     none of them** — and that is the experiment's result, per the
+     "prompts are the suspect if repair burn is high" contract:
+     - `llama3.1:8b` (GPU): failed BRAINSTORM `populate`, exhausted
+       repairs — emitted **underscore slugs** (`location:canal_town`);
+       `format` grammar enforces the `kind:slug` colon but not
+       kebab-case *within* the slug (GBNF ignores string `pattern`), and
+       the 8B never corrected. Model-tier weakness.
+     - `qwen3.5:35b-a3b` (CPU, 11m40s): **passed** BRAINSTORM (kebab
+       clean, 2 attempts) but failed SEED `triage` — `explores` named an
+       answer *slug* it invented, not an existing answer *id*.
+     - `gpt-oss:120b-cloud` (~84s): **passed** BRAINSTORM (kebab clean, 1
+       attempt), failed SEED `triage` the **identical** way.
+     Two unrelated strong families (one local, one cloud) converge on
+     the same triage dangling-reference; Gemini-pro/Claude-opus cleared
+     it in runs 7/8 → a **model-capability threshold on an
+     under-specified prompt**, exactly the class A11's enum discipline
+     governs. → filed as issue #40 (pin `explores` to an enum of real
+     answer ids; fixes every provider and lets Ollama's grammar enforce
+     it for free).
+  3. **Cloud `format` question — answered:** `gpt-oss:120b-cloud`
+     **accepts** `format` cleanly (valid JSON, no ResponseError; a raw
+     `_generate_once` probe and a full BRAINSTORM run both confirm) — we
+     are in the "call succeeds, schema satisfied" world, the
+     reject→unconstrained fallback is **not triggered**. `qwen3.5:cloud`
+     is paywalled (403 "requires a subscription" — a *subscription* 403,
+     not a `format` rejection; the fallback guard correctly ignores it),
+     so its handling was untestable. **Fallback verdict: unexercised,
+     NOT proven dead** (only one accessible cloud family) — **kept** as
+     cheap insurance; revisit if a cloud family that rejects `format`
+     turns up. Left it in place; did not delete.
+  4. `OllamaContextError`: `num_ctx=2048` + an over-long prompt raised
+     the exact "raise llm.num_ctx" message — fail-loud, no silent
+     truncation. ✅
+  5. No `--to dress` completed on a local model (triage gap above), so
+     no story is preserved as an example yet. Reopen when the triage
+     prompt is hardened — a local `qwen3.5`-class run should then reach
+     DRESS and earn an example like the live runs.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -736,6 +755,41 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (Ollama backend — live validation on a real daemon;
+  closes #41):** Ran the STATUS hand-off checklist against
+  `athena.int.liesdonk.nl:11434` (RTX 4060/8GB + 128GB, daemon logged in
+  to ollama.com) from a Claude Code session with `OLLAMA_HOST` reach.
+  **The A20 mechanism is validated; the blocker to a full local story is
+  prompt legibility, not the backend — exactly the thesis the design
+  discussion predicted.** Suite green (403). Cloud `format` question
+  answered: `gpt-oss:120b-cloud` **accepts** `format` cleanly (raw
+  `_generate_once` probe + a full BRAINSTORM run agree; no ResponseError)
+  — the hoped-for "call succeeds, schema satisfied" world; the
+  reject→unconstrained fallback stayed unexercised. `qwen3.5:cloud` is
+  paywalled (a *subscription* 403, which the fallback guard correctly
+  ignores since the message has no "format"), so a rejecting cloud family
+  was never observed — **fallback kept as insurance, not deleted, not
+  proven dead**. `OllamaContextError` fires fail-loud at `num_ctx=2048`.
+  The seed experiment ran three model maps on one shared micro premise
+  and **none completed DREAM→SEED** — the repair-burn *is* the result:
+  `llama3.1:8b` exhausted repairs at BRAINSTORM `populate` emitting
+  underscore slugs (`format` grammar enforces the `kind:slug` colon but
+  not kebab-case *within* the slug — GBNF drops string `pattern`), a
+  model-tier weakness; `qwen3.5:35b-a3b` (local, 11m40s on CPU) and
+  `gpt-oss:120b-cloud` (~84s) both **passed** BRAINSTORM with clean
+  kebab-case and then failed SEED `triage` the **identical** way —
+  `explores` naming an invented answer slug, not an existing answer id.
+  Two unrelated strong families converging on one failure that
+  Gemini-pro/Claude-opus clear (runs 7–8) is a model-capability threshold
+  on an under-specified prompt, not model-tier noise; the fix (pin
+  `explores` to an enum of real answer ids, class A11) resolves it for
+  every provider and lets Ollama's grammar enforce it for free — **filed
+  as #40**. No `--to dress` completed on a local model, so no example is
+  preserved yet; a hardened triage prompt should let a `qwen3.5`-class
+  local run reach DRESS and earn one. Net: the local-model gate failures
+  diagnose NG's prompts, precisely as the backend's design entry claimed
+  they would.
 
 - **2026-07-11 (Ollama backend — native structured output at the
   provider seam; the design discussion is the record):** Author-directed

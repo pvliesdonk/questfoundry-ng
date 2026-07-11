@@ -5,9 +5,32 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete (depth & scale: live run 8, "Closed Circle", every exit criterion met) — next: M9, retrieval refinement
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built (author-directed, unplanned) — live validation pending in the author's Ollama environment; next: M9, retrieval refinement
 
 ## Where we are
+
+**An Ollama backend is built** (author-directed, unplanned addition;
+the decision-log entry below records the design discussion):
+`llm.provider: ollama` runs local *and* Ollama-cloud models through the
+same provider seam as the other three families. The adapter now derives
+each call's JSON schema once and offers it to the provider (mini-ADR
+A20): Ollama consumes it as `format` (grammar-constrained decoding —
+what makes small local models emit schema-shaped JSON), the cloud
+providers deliberately ignore it, and Pydantic validation + retry stays
+the sole acceptance path everywhere. The retry itself was upgraded for
+every provider: a correction brief (failing field paths, what was
+wrong, values seen) instead of a raw exception dump — the legacy
+retry-with-feedback lesson, engaged only on failure so strong models
+never pay for it. The provider owns the local-model traps: explicit
+`num_ctx` (project.yaml: `host`, `num_ctx`, `temperature`,
+`keep_alive`, `think`), fail-loud truncation detection via
+`prompt_eval_count`, streaming collection, `OLLAMA_API_KEY` for the
+cloud tier, and a one-shot unconstrained fallback if a host *rejects*
+`format` (cloud is documented to lack structured-output support and
+expected to ignore it — verification is an open item). A lint test
+holds every proposal schema inside the grammar-safe subset (all ~50
+already were). **Not yet validated live** — see the open item with the
+hand-off checklist for the Ollama-environment session. 403 tests.
 
 **M8 is complete** (PR #37 carried the run's engine findings; the
 example PR carries the exit record). The exit run — live run 8,
@@ -496,6 +519,35 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
+- **Ollama backend live validation is pending** (built 2026-07-11,
+  untested against a real daemon — this cloud session cannot reach the
+  author's Ollama environment). **Hand-off checklist for a Claude Code
+  session in that environment** (run on this branch, commit findings
+  back into this item):
+  1. `uv sync --group dev && uv run pytest -q` (hermetic suite green
+     there too).
+  2. Scaffold a scratch micro project; set `llm.provider: ollama`, map
+     roles to what the hardware carries (author's intent: gpt-oss:120b
+     or a qwen3.5-series as architect/writer, a small model as
+     utility), set `llm.num_ctx` to what fits VRAM. Run
+     `qf run --to seed` and note repair/retry counts from the ledger —
+     that number is the whole experiment (prompts are the suspect if
+     it's high, per the decision log, not the model).
+  3. **Verify the cloud-tier `format` question**: run one stage with a
+     `*:cloud` model (`ollama signin` or `OLLAMA_API_KEY`). The docs
+     say cloud lacks structured-output support; we *expect* `format`
+     to be silently ignored (call succeeds, schema still satisfied via
+     the prompt); if the host instead rejects it, the provider's
+     one-shot unconstrained fallback should absorb it — record which
+     world we're in here and delete the provider fallback if it proves
+     dead code.
+  4. Force `OllamaContextError`: set `llm.num_ctx` far below a real
+     prompt (e.g. 2048) and confirm the run dies loud with the
+     raise-num_ctx message, not quiet truncation.
+  5. Record model names, per-stage wall time, and ledger token counts
+     here; if a full `qf run --to dress` passes gates on a local
+     model, preserve the story as an example like the live runs do.
+
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
   depend on an out-of-repo export (`/home/user/corpus/
@@ -677,6 +729,42 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (Ollama backend — native structured output at the
+  provider seam; the design discussion is the record):** Author-directed
+  unplanned addition, designed in discussion before any code. The core
+  decision is mini-ADR A20: the adapter derives each call's JSON schema
+  once and *offers* it to the provider — Ollama consumes it as `format`
+  (grammar-constrained decoding), Anthropic/OpenAI/Gemini deliberately
+  ignore it (each for a documented, provider-specific cost: streaming +
+  extended-thinking incompatibility; strict-mode schema-subset
+  conflicts; deep-schema rejection risk), and Pydantic validation +
+  retry remain the sole acceptance path for every provider. Governing
+  principle, from the author's read of the legacy engine: **help must
+  be conditional on failure** — micromanagement tuned for weak models
+  actively hurts smarter ones, so constrained decoding changes no
+  prompt bytes and the new correction-brief retry (field paths, what
+  went wrong, values seen — legacy's retry-with-feedback lesson)
+  appears only when validation actually fails. Rejected: flipping all
+  providers to native modes (costs above, zero observed retry burn on
+  frontier models), and legacy's discuss→serialize two-pass shape
+  (4B-era scaffolding NG shouldn't bake in). Context that framed it,
+  worth keeping: **the legacy engine is a failed attempt at
+  maintainability, not at efficiency** — it ran this pipeline's
+  equivalent on small local models (legacy #552: qwen3:4b through the
+  full pipeline at 8.0/10 prose, with weaknesses exactly where
+  origination and arc judgment live), at the price of hand-tuned
+  prompts and repair loops threaded through everything; NG's blunt
+  prompts haven't made that investment, so **local-model gate failures
+  diagnose NG's prompts, not the model tier** — the same read from the
+  opposite direction as legacy #551 independently wanting character-arc
+  metadata for small models while NG's deferral trigger fired at
+  frontier scale. Single provider per project stands (no per-role
+  provider map; the author's target is one reasonably strong family —
+  gpt-oss:120b / qwen3.5-class — plus Ollama's cloud tier
+  (`glm-5.2:cloud`, `deepseek-v4-pro:cloud`, `qwen3.5:397b-cloud`) as a
+  new experimentation line through the same seam). 4B is a non-goal;
+  ~70B+ is the experiment. Live validation is the open item above.
 
 - **2026-07-11 (live run 8 reading findings — stylistic repetition;
   the author's design direction for the prose-quality effort):**

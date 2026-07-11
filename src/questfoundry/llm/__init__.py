@@ -10,6 +10,7 @@ from questfoundry.llm.providers import (
     AnthropicProvider,
     GeminiProvider,
     MockProvider,
+    OllamaProvider,
     OpenAIProvider,
 )
 
@@ -20,6 +21,7 @@ __all__ = [
     "LLMAdapter",
     "LLMResult",
     "MockProvider",
+    "OllamaProvider",
     "OpenAIProvider",
     "ModelRole",
     "Provider",

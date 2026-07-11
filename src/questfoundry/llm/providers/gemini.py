@@ -36,7 +36,13 @@ class GeminiProvider:
             self._client = genai.Client(api_key=self._api_key)
         return self._client
 
-    def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+    def generate(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None = None
+    ) -> LLMResult:
+        # `schema` deliberately unused: response_schema supports a subset of
+        # JSON Schema and can reject large/deep schemas outright — exactly
+        # the shape of the big proposals. The prompt-embedded schema +
+        # adapter validation carry the contract.
         import httpx
         from google.genai import errors
 

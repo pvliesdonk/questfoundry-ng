@@ -83,6 +83,7 @@ def _adapter_for(project):
         GeminiProvider,
         LLMAdapter,
         MockProvider,
+        OllamaProvider,
         OpenAIProvider,
     )
 
@@ -108,10 +109,21 @@ def _adapter_for(project):
     elif provider_name == "gemini":
         provider = GeminiProvider()
         cache_dir = project.root / "cache" / "llm"
+    elif provider_name == "ollama":
+        # host=None follows OLLAMA_HOST (default localhost); cloud models
+        # need OLLAMA_API_KEY (and host https://ollama.com when daemon-less).
+        provider = OllamaProvider(
+            host=project.llm.get("host"),
+            num_ctx=int(project.llm.get("num_ctx", 32768)),
+            temperature=project.llm.get("temperature"),
+            keep_alive=project.llm.get("keep_alive"),
+            think=project.llm.get("think"),
+        )
+        cache_dir = project.root / "cache" / "llm"
     else:
         console.print(
             f"[red]unknown llm.provider {provider_name!r}; "
-            "use 'anthropic', 'openai', 'gemini', or 'mock'[/red]"
+            "use 'anthropic', 'openai', 'gemini', 'ollama', or 'mock'[/red]"
         )
         raise typer.Exit(2)
     return LLMAdapter(

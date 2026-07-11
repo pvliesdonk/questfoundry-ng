@@ -42,7 +42,13 @@ class LLMResult:
 
 
 class Provider(Protocol):
-    def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult: ...
+    # `schema` is the proposal's JSON Schema, offered so a provider can
+    # enforce it natively (constrained decoding). Providers are free to
+    # ignore it — acceptance is always the adapter's Pydantic validation,
+    # so enforcement differs per provider but the contract never does.
+    def generate(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None = None
+    ) -> LLMResult: ...
 
 
 class AdapterError(Exception):
@@ -98,6 +104,42 @@ def _extract_json(text: str) -> str:
     return stripped[start:]
 
 
+def _repair_feedback(exc: Exception) -> str:
+    """Render a failed attempt as a correction brief: what went wrong,
+    where, and what was expected — never a raw exception dump. Only the
+    retry path sees this, so it costs nothing when the first attempt is
+    valid; weaker models need the specifics to actually correct."""
+    if isinstance(exc, ValidationError):
+        errors = exc.errors()
+        lines = []
+        for err in errors[:12]:
+            loc = ".".join(str(p) for p in err["loc"]) or "<root>"
+            got = repr(err.get("input"))
+            if len(got) > 120:
+                got = got[:120] + "…"
+            lines.append(f"- at `{loc}`: {err['msg']} (got: {got})")
+        if len(errors) > 12:
+            lines.append(f"- …and {len(errors) - 12} more problem(s) like the above")
+        return (
+            "Your previous response was invalid JSON for the schema. Problems found:\n"
+            + "\n".join(lines)
+            + "\nKeep the same content, corrected so every listed field satisfies the "
+            "JSON Schema above (exact field names, types, and required fields). "
+            "Return ONLY corrected JSON."
+        )
+    if isinstance(exc, json.JSONDecodeError):
+        start = max(exc.pos - 60, 0)
+        snippet = exc.doc[start : exc.pos + 60]
+        return (
+            "Your previous response was invalid: not parseable as JSON. "
+            f"Parse error at line {exc.lineno} column {exc.colno}: {exc.msg}, near:\n"
+            f"…{snippet}…\n"
+            "Expected one JSON object matching the schema above — no prose, no markdown "
+            "fences. Return ONLY corrected JSON."
+        )
+    return f"Your previous response was invalid: {exc}. Return ONLY corrected JSON."
+
+
 class LLMAdapter:
     def __init__(
         self,
@@ -133,7 +175,11 @@ class LLMAdapter:
                 f"unknown model role {role!r}; configured roles: {sorted(self._model_map)}"
             ) from None
 
-        full_prompt = f"{prompt}\n\n{_JSON_INSTRUCTION}\n{json.dumps(schema.model_json_schema())}"
+        # One derivation serves both channels: embedded in the prompt (the
+        # id contract rides along; grounds every provider) and offered to
+        # the provider for native enforcement. There is no second schema.
+        schema_dict = schema.model_json_schema()
+        full_prompt = f"{prompt}\n\n{_JSON_INSTRUCTION}\n{json.dumps(schema_dict)}"
 
         key = None
         if self._cache_dir is not None:
@@ -149,7 +195,11 @@ class LLMAdapter:
         attempt_prompt = full_prompt
         for attempt in range(max_retries + 1):
             response = self._provider.generate(
-                system=system, prompt=attempt_prompt, model=model, max_tokens=self._max_tokens
+                system=system,
+                prompt=attempt_prompt,
+                model=model,
+                max_tokens=self._max_tokens,
+                schema=schema_dict,
             )
             last_text = response.text
             try:
@@ -157,10 +207,7 @@ class LLMAdapter:
                 result = schema.model_validate(parsed)
             except (json.JSONDecodeError, ValidationError) as exc:
                 last_error = exc
-                attempt_prompt = (
-                    f"{full_prompt}\n\nYour previous response was invalid: {exc}. "
-                    "Return ONLY corrected JSON."
-                )
+                attempt_prompt = f"{full_prompt}\n\n{_repair_feedback(exc)}"
                 continue
 
             if key is not None:

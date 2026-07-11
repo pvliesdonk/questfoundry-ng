@@ -28,7 +28,13 @@ class AnthropicProvider:
             self._client = anthropic.Anthropic(api_key=self._api_key)
         return self._client
 
-    def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+    def generate(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None = None
+    ) -> LLMResult:
+        # `schema` deliberately unused: the API's native structured output
+        # is documented incompatible with streaming (required here, see
+        # below) and with extended thinking. The prompt-embedded schema +
+        # adapter validation carry the contract.
         client = self._client_instance()
         # The SDK rejects non-streaming requests whose max_tokens implies a
         # >10-minute worst case; stream and collect the final message instead.

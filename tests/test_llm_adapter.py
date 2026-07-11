@@ -29,10 +29,18 @@ class FakeProvider:
         self._responses = list(responses)
         self.calls: list[dict] = []
 
-    def generate(self, *, system: str, prompt: str, model: str, max_tokens: int) -> LLMResult:
+    def generate(
+        self, *, system: str, prompt: str, model: str, max_tokens: int, schema: dict | None = None
+    ) -> LLMResult:
         idx = len(self.calls)
         self.calls.append(
-            {"system": system, "prompt": prompt, "model": model, "max_tokens": max_tokens}
+            {
+                "system": system,
+                "prompt": prompt,
+                "model": model,
+                "max_tokens": max_tokens,
+                "schema": schema,
+            }
         )
         return self._responses[idx]
 
@@ -64,6 +72,54 @@ def test_happy_path(tmp_path: Path) -> None:
     assert entry["cached"] is False
     assert entry["retries"] == 0
     assert "ts" in entry
+
+
+def test_schema_offered_to_provider() -> None:
+    """The provider is offered the same JSON Schema the prompt embeds —
+    one derivation, two channels (constrained decoding is provider-local)."""
+    provider = FakeProvider(
+        [
+            LLMResult(
+                text=json.dumps({"value": "x", "count": 1}), model="model-u", usage=Usage(1, 1)
+            )
+        ]
+    )
+    adapter = LLMAdapter(provider, MODEL_MAP)
+
+    adapter.complete(system="sys", prompt="do it", schema=Answer, role="utility")
+
+    assert provider.calls[0]["schema"] == Answer.model_json_schema()
+    assert json.dumps(Answer.model_json_schema()) in provider.calls[0]["prompt"]
+
+
+def test_validation_retry_feedback_names_field_and_value(tmp_path: Path) -> None:
+    """Schema-invalid (but parseable) output retries with a correction
+    brief: the failing field path, what was wrong, and the value seen —
+    not a raw exception dump."""
+    provider = FakeProvider(
+        [
+            LLMResult(
+                text=json.dumps({"value": "x", "count": "not-a-number"}),
+                model="model-u",
+                usage=Usage(1, 1),
+            ),
+            LLMResult(
+                text=json.dumps({"value": "x", "count": 2}), model="model-u", usage=Usage(1, 1)
+            ),
+        ]
+    )
+    adapter = LLMAdapter(provider, MODEL_MAP)
+
+    result = adapter.complete(
+        system="sys", prompt="do it", schema=Answer, role="utility", max_retries=1
+    )
+
+    assert result == Answer(value="x", count=2)
+    retry_prompt = provider.calls[1]["prompt"]
+    assert "Your previous response was invalid" in retry_prompt
+    assert "`count`" in retry_prompt
+    assert "'not-a-number'" in retry_prompt
+    assert "Return ONLY corrected JSON" in retry_prompt
 
 
 def test_retry_then_succeed(tmp_path: Path) -> None:

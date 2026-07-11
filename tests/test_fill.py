@@ -64,6 +64,37 @@ def test_flag_status_certain_possible_foreclosed(golden_fill):
     assert _flag_status(g, "passage:p-arrival", flag) == "possible"
 
 
+def test_flag_status_gate_forecloses_the_rival_path(golden_fill):
+    """A gated residue passage sits at a convergence — both commits are
+    upstream, so ancestry alone reads the rival path's flag as possible.
+    But only holders of the gate's path arrive: the rival is settled, and
+    calling it possible ordered the writer (and the review's rule 4) to
+    stay neutral about a fact the passage exists to carry (prompt audit,
+    2026-07-11)."""
+    g = golden_fill.graph
+    # p-unspoken is gated on flag:lie-between (path:hide); the tell path's
+    # flag cannot hold there
+    assert _flag_status(g, "passage:p-unspoken", g.node("flag:elias-knows")) == "foreclosed"
+    # p-counsel is the tell-side arm (gated on flag:elias-knows)
+    assert _flag_status(g, "passage:p-counsel", g.node("flag:lie-between")) == "foreclosed"
+
+
+def test_flag_status_choice_gate_makes_a_variant_certain(golden_fill):
+    """A variant passage's gate lives on its choice edges, not its
+    (shared) beats: every way in requires the flag, so it is certain
+    there — and the same dilemma's rival path is foreclosed. Simulated by
+    moving p-unspoken's gate from its beat onto its incoming choices."""
+    from questfoundry.models.base import EdgeKind
+
+    g = golden_fill.graph
+    g.node("beat:unspoken").requires_flags = []
+    for e in g.edges:
+        if e.kind == EdgeKind.CHOICE and e.dst == "passage:p-unspoken":
+            e.payload["requires"] = ["flag:lie-between"]
+    assert _flag_status(g, "passage:p-unspoken", g.node("flag:lie-between")) == "certain"
+    assert _flag_status(g, "passage:p-unspoken", g.node("flag:elias-knows")) == "foreclosed"
+
+
 def test_word_budget_is_enforced_at_apply(golden_fill):
     apply = _write_apply_for("passage:p-arrival")
     with pytest.raises(ApplyError, match="budget"):

@@ -101,9 +101,14 @@ is "when you don't know, don't assert" in narrative form), and the craft corpus
 is the ground-truth grounding.
 
 ### Zero-shot (guide: `techniques/zeroshot`) — qf's default
-Instruction-tuned models do these tasks with no exemplars. qf prompts are
-zero-shot by design, which suits its "blunt prompt, help only on failure" stance
-(mini-ADR A20).
+Instruction-tuned models do these tasks with no exemplars, and qf prompts carry
+none. But be honest about *why* they're spare: they are largely **uninvested** —
+written to state intent directly, and they work because a strong model infers the
+rest, not because they were tuned for that (STATUS: "NG's blunt prompts haven't
+made that investment"). So "zero-shot" here is the starting condition, not a
+finished optimization — and it is why a weak tier's failures diagnose the prompt.
+The genuinely deliberate part is A20's rule for *when you invest*: add help on the
+failure path, not the base (see Reflexion).
 
 ### Few-shot exemplars (guide: `techniques/fewshot`) — qf mostly AVOIDS, on purpose
 Few-shot steers format by showing input/output pairs. qf deliberately does **not**

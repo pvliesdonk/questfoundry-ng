@@ -110,16 +110,21 @@ it is the *why* behind these rules.
 8. **Ground, then constrain.** Lead each pass with the `VISION` line (genre,
    tone, themes) so proposals cohere, then give the numbered, budgeted tasks.
    Context first, task second.
-9. **Help conditionally, on failure only.** Strong models are *hurt* by
-   micromanagement; weak models need it. So the base prompt stays blunt
-   (zero-shot, no worked exemplars, no "think step by step"), and the help
-   arrives only when validation fails: `_shared.j2` renders `repair_errors` as a
-   correction brief on the next attempt. This is the guide's **Reflexion** loop
-   (Actor → Evaluator → verbal self-reflection) and its own advice that help be
-   conditional; qf deliberately avoids few-shot exemplars (a bias vector under
-   the strictly-equal-answers rule) and chain-of-thought (single-pass structured
-   output — A20). Don't bake weak-model scaffolding into the base prompt where a
-   strong model pays for it. See `references/prompt-engineering-guide.md`.
+9. **Help conditionally, on failure only (A20).** Be honest about the starting
+   point: the base prompts today are *blunt and largely uninvested* — they state
+   the intent directly and work because a strong model is smart enough to infer
+   the rest, **not** because they were tuned for strong models. That is exactly
+   why a weak tier exposes them — a gate failure on a cheap model usually
+   diagnoses the prompt, not the model (STATUS: "NG's blunt prompts haven't made
+   that investment"). When you *do* invest, put the help on the *failure* path,
+   not the base: `_shared.j2` renders `repair_errors` as a correction brief on the
+   next attempt — the guide's **Reflexion** loop (Actor → Evaluator → verbal
+   self-reflection). Micromanagement baked into the base prompt taxes strong
+   models for a weak model's benefit, so keep it out of there. Two avoidances
+   *are* deliberate design, not mere thrift: no few-shot exemplars (an exemplar
+   answer is a bias vector under the strictly-equal-answers iron rule) and no
+   chain-of-thought / discuss-then-serialize (single-pass structured output —
+   A20). See `references/prompt-engineering-guide.md`.
 
 ## Anatomy of a stage prompt
 

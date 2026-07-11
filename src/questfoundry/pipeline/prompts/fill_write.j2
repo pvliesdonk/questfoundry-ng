@@ -8,6 +8,14 @@ VOICE (binding):
 - Banned: {{ voice.banned | join("; ") }}
 - Notes: {{ voice.notes }}
 
+TENSE IS ABSOLUTE: narrate in {{ voice.tense }} tense, every verb, start to
+finish — the review checks this verb by verb and it is the most common failure.
+Events that happened before this moment are still told in {{ voice.tense }}: a
+present-tense voice renders a prior event in the present perfect or simple
+present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
+your first sentence back before anything else — that is where the wrong tense
+slips in.
+
 PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
 summary: {{ passage.summary }}
 Realize these beats, in order, as one continuous scene. The summaries are your

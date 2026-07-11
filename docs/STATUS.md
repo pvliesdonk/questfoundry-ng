@@ -888,8 +888,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
   names), and the review's Rule 2 gained the texture-beat clause — a beat
   whose only content IS scenery is fulfilled by any wording delivering
   the impression (attempt 1 was genuinely failed for paraphrasing
-  "quiet reminder of the tunnel's age"). 434 tests. The re-run with
-  these fixes is the pending validation; its outcome updates this entry.
+  "quiet reminder of the tunnel's age"). 434 tests. **Re-run outcome
+  (same session): the voice fix works** — the voice came back
+  `third person limited (Marin Voss)`, exact cast spelling, and the name
+  cascade is gone. FILL then failed on the residual class, now isolated
+  cleanly: the *writer* is compliant (two successive attempts contained
+  every beat's content, including the disputed "including her own
+  obligations" clause — once nearly verbatim, once as "they bind her in
+  equal measure"), but the utility reviewer quoted a single sentence and
+  declared content absent that sat in the adjacent sentence — and the
+  same-model arbiter upheld it verbatim. With the deterministic causes
+  removed (Rule-4 flag statuses, voice name), the weak-tier blocker is
+  now precisely **reviewer sub-clause literalism + one-sentence
+  quoting**, unfixable by another rule tweak on a map whose arbiter is
+  the same weak model. Stopped at diminishing returns (the author's
+  precedent from yesterday's chase); this failure signature is the
+  sharpest input yet to next-up #1's review-contract design (beat
+  checklist framing, echo check at apply, or a cross-tier arbitration
+  requirement).
 
 - **2026-07-11 (prompt-engineering audit — author-directed: "a full audit
   of all prompts against best practices; perfectly clear in intent and

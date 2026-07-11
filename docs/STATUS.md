@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live — A20 confirmed on both tiers; the triage referential-integrity gap (#40) is fixed (`explores` pinned to an enum of real answer ids); pending: a local-model `--to seed` re-run to confirm, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live — A20 confirmed on both tiers; the triage referential-integrity gap (#40) is fixed (`explores` pinned to an enum of real answer ids) AND its sibling (`locked[].dilemma` pinned to a dilemma-id enum), both **re-confirmed live** on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY` — a clean `--to seed`; pending: carry that local/cloud run onward to DRESS to earn an example, then M9
 
 ## Where we are
 
@@ -40,8 +40,16 @@ constraint in the schema, the correction brief names the valid ids on a
 miss, and under grammar-constrained decoding a dangling reference is
 unrepresentable at decode time. First dynamically-built proposal schema
 (the FILL computed-passes seam, extended to schemas); the pattern's
-generalization to other id-reference fields stays a deliberate
-prompt-quality-effort decision, not creep. 409 tests.
+generalization to other id-reference fields was **realized for
+triage's one sibling** (2026-07-11): a live `gpt-oss:120b` cloud
+`--to seed` re-run — reached via `OLLAMA_API_KEY`, the exact model that
+first exposed #40 — cleared the `explores` enum on the first attempt and
+then failed triage the *identical* way on `locked[].dilemma` (an
+unprefixed dilemma slug), so `triage_proposal_schema` now pins that
+field to a dilemma-id enum too. A clean re-run followed: SEED passed
+first attempt with `locked: dilemma:hand-locket` prefixed and valid. The
+further generalization to id-reference fields in *other* passes stays a
+deliberate prompt-quality-effort decision, not creep. 412 tests.
 
 **M8 is complete** (PR #37 carried the run's engine findings; the
 example PR carries the exit record). The exit run — live run 8,
@@ -581,11 +589,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
   4. `OllamaContextError`: `num_ctx=2048` + an over-long prompt raised
      the exact "raise llm.num_ctx" message — fail-loud, no silent
      truncation. ✅
-  5. No `--to dress` completed on a local model (triage gap above), so
-     no story is preserved as an example yet. The triage gap is now
-     fixed (#40, the `explores` enum) — **re-run the `qwen3.5`-class
-     local `--to seed` that failed** to confirm, and carry on to DRESS
-     to earn the example like the live runs.
+  5. ~~No `--to dress` completed on a local model (triage gap above)~~
+     **SEED now completes on a cloud model.** Re-confirmed 2026-07-11
+     from this hosted environment (which supplies `OLLAMA_API_KEY` for
+     the cloud tier but no local daemon): a fresh micro premise ran
+     `--to seed` on `gpt-oss:120b` cloud. The `explores` enum (#40)
+     cleared on the first attempt — then triage failed the *identical*
+     dangling-reference way on `locked[].dilemma` (the model named
+     `ice-watcher`, not `dilemma:ice-watcher`). Pinned that sibling to a
+     dilemma-id enum (`triage_proposal_schema` now takes `dilemma_ids`);
+     the re-run passed SEED first attempt (`locked: dilemma:hand-locket`,
+     valid and prefixed). `qwen3.5:397b` cloud is paywalled (403
+     subscription), so `gpt-oss:120b` stood in — the same family that
+     first exposed #40. **Still pending:** carry that cloud run onward
+     through GROW→DRESS to earn a preserved example like the live runs;
+     the local `qwen3.5`-class confirmation still wants a run when a
+     daemon host is reachable.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -768,6 +787,32 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (Ollama cloud tier — #40 re-confirmed live + its sibling
+  `locked[].dilemma` pinned):** From this hosted environment (supplies
+  `OLLAMA_API_KEY` for the cloud tier via `host: https://ollama.com`, no
+  local daemon), re-ran the pending #40 confirmation on a fresh micro
+  premise (canal lockkeeper + a stranger's coat). `qwen3.5:397b` cloud is
+  paywalled (403 subscription — same guard-ignored case as
+  `qwen3.5:cloud` before), so `gpt-oss:120b` — the exact family that
+  first exposed #40 — stood in. First `--to seed`: the `explores` enum
+  cleared on attempt 1 (the #40 fix works as built), and triage then
+  failed the **identical** dangling-reference way one field over, on
+  `locked[].dilemma` (the model named `ice-watcher`, dropping the
+  `dilemma:` prefix). This is #40's own "generalization to other
+  id-reference fields" deferral firing on its nearest sibling, so I took
+  it: `triage_proposal_schema` now also pins `locked[].dilemma` to an
+  enum of the real dilemma ids (graph order — dilemmas carry no
+  strict-equality marker, unlike answers, so ordering is free). Same
+  three-part discipline as #40: schema-level constraint for every
+  provider, the correction brief names valid ids on a miss, and under
+  grammar-constrained decoding (A20) the dangling reference is
+  unrepresentable at decode time. The apply-time guard stays (defense in
+  depth). The re-run passed SEED first attempt (`locked:
+  dilemma:hand-locket`, valid + prefixed). Three violating-construction
+  tests added (reject dangling, accept real, stage wires the enum),
+  mirroring the #40 trio; 412 tests, ruff clean, golden green. Onward to
+  GROW→DRESS to earn a cloud-tier example is the remaining open item.
 
 - **2026-07-11 (Ollama backend — live validation on a real daemon;
   closes #41):** Ran the STATUS hand-off checklist against

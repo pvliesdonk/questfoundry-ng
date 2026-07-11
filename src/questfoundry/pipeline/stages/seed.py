@@ -85,28 +85,38 @@ class TriageProposal(BaseModel):
     paths: list[PathSpec] = Field(min_length=2)
 
 
-def triage_proposal_schema(answer_ids: list[str]) -> type[TriageProposal]:
-    """Pin `explores` to an enum of the real answer ids (issue #40).
+def triage_proposal_schema(
+    answer_ids: list[str], dilemma_ids: list[str] | None = None
+) -> type[TriageProposal]:
+    """Pin triage's two id-reference fields to enums of the real ids:
+    `explores` to the answer ids (issue #40) and `locked[].dilemma` to
+    the dilemma ids (its sibling, generalized here).
 
     Two unrelated strong model families invented readable-but-dangling
     answer slugs at triage and exhausted repairs (Ollama live validation,
-    2026-07-11) — an under-specified prompt, not model noise. The enum
-    states the constraint in the schema for every provider, the
-    correction brief names the valid ids on a miss, and under
-    grammar-constrained decoding (A20) a dangling reference becomes
-    unrepresentable at decode time. The enum keeps graph order: answers
-    are strictly equal (iron rule 3), and an ordered list a model could
-    read as ranked must at least not be *our* ranking.
+    2026-07-11) — an under-specified prompt, not model noise. #40 pinned
+    `explores`; a later live `gpt-oss:120b-cloud` run then failed the
+    identical way on `locked[].dilemma` (naming an unprefixed dilemma
+    slug), so the same discipline covers it. The enum states the
+    constraint in the schema for every provider, the correction brief
+    names the valid ids on a miss, and under grammar-constrained decoding
+    (A20) a dangling reference becomes unrepresentable at decode time.
+    `explores` keeps graph order because answers are strictly equal (iron
+    rule 3) and an ordered list a model could read as ranked must at
+    least not be *our* ranking; dilemma ordering carries no such marker.
     """
-    if not answer_ids:
+    overrides: dict = {}
+    if answer_ids:
+        explores_t = Literal[tuple(answer_ids)]  # type: ignore[valid-type]
+        path_spec = create_model("PathSpec", __base__=PathSpec, explores=(explores_t, ...))
+        overrides["paths"] = (list[path_spec], Field(min_length=2))  # type: ignore[valid-type]
+    if dilemma_ids:
+        dilemma_t = Literal[tuple(dilemma_ids)]  # type: ignore[valid-type]
+        lock_spec = create_model("LockSpec", __base__=LockSpec, dilemma=(dilemma_t, ...))
+        overrides["locked"] = (list[lock_spec], [])  # type: ignore[valid-type]
+    if not overrides:
         return TriageProposal
-    explores_t = Literal[tuple(answer_ids)]  # type: ignore[valid-type]
-    path_spec = create_model("PathSpec", __base__=PathSpec, explores=(explores_t, ...))
-    return create_model(
-        "TriageProposal",
-        __base__=TriageProposal,
-        paths=(list[path_spec], Field(min_length=2)),  # type: ignore[valid-type]
-    )
+    return create_model("TriageProposal", __base__=TriageProposal, **overrides)
 
 
 def _triage_context(project: Project) -> dict:
@@ -616,17 +626,19 @@ _ORDER_PASS = PassSpec(
 
 def _seed_passes(project: Project) -> tuple[PassSpec, ...]:
     # Triage's schema is built per project: `explores` is an enum of the
-    # answer ids BRAINSTORM actually created (graph order). Computed at
-    # stage start, so kept-pass replay and ledger resume revalidate a
-    # recorded proposal against the same enum they were accepted under.
+    # answer ids and `locked[].dilemma` an enum of the dilemma ids
+    # BRAINSTORM actually created (graph order). Computed at stage start,
+    # so kept-pass replay and ledger resume revalidate a recorded proposal
+    # against the same enums they were accepted under.
     g = project.graph
+    dilemma_ids = [d.id for d in g.nodes_of(Dilemma)]
     answer_ids = [a for d in g.nodes_of(Dilemma) for a in queries.answers_of(g, d.id)]
     return (
         PassSpec(
             name="triage",
             role="architect",
             template="seed_triage.j2",
-            schema=triage_proposal_schema(answer_ids),
+            schema=triage_proposal_schema(answer_ids, dilemma_ids),
             build_context=_triage_context,
             apply=_triage_apply,
         ),

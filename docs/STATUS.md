@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live (author-directed, unplanned) — A20 mechanism confirmed on local + cloud tiers, blocker to a full local story is two provider-agnostic prompt gaps (weak-model id kebab-case; all-but-top-tier SEED triage referential integrity); next: M9, retrieval refinement
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live — A20 confirmed on both tiers; the triage referential-integrity gap (#40) is fixed (`explores` pinned to an enum of real answer ids); pending: a local-model `--to seed` re-run to confirm, then M9
 
 ## Where we are
 
@@ -29,8 +29,19 @@ cloud tier, and a one-shot unconstrained fallback if a host *rejects*
 `format` (cloud is documented to lack structured-output support and
 expected to ignore it — verification is an open item). A lint test
 holds every proposal schema inside the grammar-safe subset (all ~50
-already were). **Not yet validated live** — see the open item with the
-hand-off checklist for the Ollama-environment session. 403 tests.
+already were). **Validated live** (PR #42; the open item below has the
+per-step results): A20 confirmed on both tiers — `gpt-oss:120b-cloud`
+*accepts* `format` — and the run surfaced the SEED triage
+dangling-reference gap as issue #40. **#40 is now fixed**: triage's
+proposal schema is built per project with `explores` pinned to an enum
+of the real answer ids (graph order — answers are strictly equal, the
+enum must not read as a ranking), so every provider sees the referential
+constraint in the schema, the correction brief names the valid ids on a
+miss, and under grammar-constrained decoding a dangling reference is
+unrepresentable at decode time. First dynamically-built proposal schema
+(the FILL computed-passes seam, extended to schemas); the pattern's
+generalization to other id-reference fields stays a deliberate
+prompt-quality-effort decision, not creep. 409 tests.
 
 **M8 is complete** (PR #37 carried the run's engine findings; the
 example PR carries the exit record). The exit run — live run 8,
@@ -554,7 +565,8 @@ PR #5) and this agent/doc infrastructure (PR #6).
      under-specified prompt**, exactly the class A11's enum discipline
      governs. → filed as issue #40 (pin `explores` to an enum of real
      answer ids; fixes every provider and lets Ollama's grammar enforce
-     it for free).
+     it for free). **Built** (same day): `triage_proposal_schema` pins
+     the enum per project at pass-build time — see "Where we are".
   3. **Cloud `format` question — answered:** `gpt-oss:120b-cloud`
      **accepts** `format` cleanly (valid JSON, no ResponseError; a raw
      `_generate_once` probe and a full BRAINSTORM run both confirm) — we
@@ -570,9 +582,10 @@ PR #5) and this agent/doc infrastructure (PR #6).
      the exact "raise llm.num_ctx" message — fail-loud, no silent
      truncation. ✅
   5. No `--to dress` completed on a local model (triage gap above), so
-     no story is preserved as an example yet. Reopen when the triage
-     prompt is hardened — a local `qwen3.5`-class run should then reach
-     DRESS and earn an example like the live runs.
+     no story is preserved as an example yet. The triage gap is now
+     fixed (#40, the `explores` enum) — **re-run the `qwen3.5`-class
+     local `--to seed` that failed** to confirm, and carry on to DRESS
+     to earn the example like the live runs.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs

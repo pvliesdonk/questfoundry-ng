@@ -87,3 +87,15 @@ def test_proposal_schemas_stay_inside_the_constrained_decoding_subset() -> None:
     for model in _proposal_models():
         _check(model.model_json_schema(), model.__name__, bad)
     assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)
+
+
+def test_dynamic_triage_schema_stays_inside_the_subset() -> None:
+    """Dynamically built schemas (SEED triage's per-project answer enum,
+    issue #40) face the same grammar; the walker only sees module-level
+    classes, so exercise the builder explicitly."""
+    from questfoundry.pipeline.stages.seed import triage_proposal_schema
+
+    schema = triage_proposal_schema(["answer:one-a", "answer:one-b"])
+    bad: list[str] = []
+    _check(schema.model_json_schema(), schema.__name__, bad)
+    assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)

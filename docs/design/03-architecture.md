@@ -162,7 +162,15 @@ BaseModel`.
   canonicalization is limited to provably unambiguous forms (restoring a
   dropped kind prefix is parsing); fuzzy matching such as display-name
   resolution is out — it converts loud repair failures into quiet wrong
-  answers. Repair errors always name the expected ids.
+  answers. Repair errors always name the expected ids. Where a
+  reference field's valid set is known at pass-build time, the proposal
+  schema pins it to an **enum of the real ids** (SEED triage's
+  `explores`, after two strong model families invented dangling answer
+  slugs — Ollama live validation, 2026-07-11): the constraint becomes
+  schema-stated for every provider, and unrepresentable at decode time
+  under grammar-constrained `format`. Enum order is the graph's, never
+  a ranking. Stages build such schemas per project through the same
+  computed-passes seam FILL uses.
 - **Model roles, not model names.** Stages request a role — `architect`
   (SEED/GROW judgment), `writer` (FILL prose), `utility` (labels,
   summaries) — mapped to concrete provider/model in project config.

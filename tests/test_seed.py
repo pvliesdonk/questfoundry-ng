@@ -14,8 +14,9 @@ from questfoundry.graph import queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import Stage
 from questfoundry.models.concept import Vision
-from questfoundry.models.drama import DilemmaRole
+from questfoundry.models.drama import Dilemma, DilemmaRole
 from questfoundry.pipeline.stages.seed import (
+    SEED_STAGE,
     BeatSpec,
     ConsequenceSpec,
     DilemmaScaffold,
@@ -30,6 +31,7 @@ from questfoundry.pipeline.stages.seed import (
     _order_apply,
     _scaffold_apply,
     _triage_apply,
+    triage_proposal_schema,
 )
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
@@ -133,6 +135,75 @@ def _triage_project(tmp_path, *, extra_soft: int = 1) -> Project:
 
 def _branch_both(slug: str) -> list[PathSpec]:
     return [_path(f"{slug}-{s}", f"answer:{slug}-{s}") for s in ("a", "b")]
+
+
+# -- triage schema: `explores` pinned to real answer ids (issue #40) ---------
+# Two unrelated strong model families invented dangling answer slugs at
+# triage and exhausted repairs (Ollama live validation, 2026-07-11); the
+# enum makes the reference constraint schema-level for every provider.
+
+
+def _answer_ids(project: Project) -> list[str]:
+    g = project.graph
+    return [a for d in g.nodes_of(Dilemma) for a in queries.answers_of(g, d.id)]
+
+
+def _path_payload(slug: str, answer: str) -> dict:
+    return {
+        "id": f"path:{slug}",
+        "explores": answer,
+        "consequences": [{"id": f"consequence:{slug}", "text": "t"}],
+    }
+
+
+def test_triage_schema_rejects_dangling_explores(tmp_path):
+    project = _triage_project(tmp_path)
+    schema = triage_proposal_schema(_answer_ids(project))
+
+    with pytest.raises(Exception) as exc:
+        schema.model_validate(
+            {"paths": [_path_payload("a", "answer:main-a"), _path_payload("b", "answer:open-gate")]}
+        )
+    # the correction brief inherits this message: the valid ids are named
+    assert "answer:main-a" in str(exc.value)
+    assert "answer:open-gate" in str(exc.value)
+
+
+def test_triage_schema_accepts_real_answer_ids(tmp_path):
+    project = _triage_project(tmp_path)
+    schema = triage_proposal_schema(_answer_ids(project))
+
+    proposal = schema.model_validate(
+        {"paths": [_path_payload("a", "answer:main-a"), _path_payload("b", "answer:main-b")]}
+    )
+    assert isinstance(proposal, TriageProposal)  # apply-compatible via inheritance
+    assert proposal.paths[1].explores == "answer:main-b"
+
+
+def test_triage_schema_enum_keeps_graph_order(tmp_path):
+    """Answers are strictly equal (iron rule 3): the enum's order is the
+    graph's, never a ranking we impose."""
+    project = _triage_project(tmp_path)
+    ids = _answer_ids(project)
+    schema = triage_proposal_schema(ids)
+
+    defs = schema.model_json_schema()["$defs"]
+    assert defs["PathSpec"]["properties"]["explores"]["enum"] == ids
+
+
+def test_triage_schema_without_answers_falls_back_to_base(tmp_path):
+    assert triage_proposal_schema([]) is TriageProposal
+
+
+def test_seed_stage_wires_dynamic_triage_schema(tmp_path):
+    project = _triage_project(tmp_path)
+    triage_spec = SEED_STAGE.passes(project)[0]
+
+    assert triage_spec.name == "triage"
+    with pytest.raises(Exception, match="answer:main-a"):
+        triage_spec.schema.model_validate(
+            {"paths": [_path_payload("a", "answer:invented"), _path_payload("b", "answer:main-b")]}
+        )
 
 
 def test_triage_locked_disposition_applies(tmp_path):

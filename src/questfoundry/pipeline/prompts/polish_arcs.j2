@@ -1,0 +1,38 @@
+Draft character-arc metadata: how each entity below CHANGES across the story.
+The prose writer (a later stage) reads this per passage as "who this entity is
+right now, and where they are heading" — it is what lets a scene foreground ONE
+aspect of a character instead of restating every known fact. It is never shown
+to the player.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+ENTITIES TO ARC:
+{% for e in entities %}
+- {{ e.name }} ({{ e.id }}): {{ e.concept }}{% if e.base %} | facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}{% endif %}
+{% endfor %}
+
+THE STORY, beat by beat (story order; a beat that exists only on one branch
+turns the arc only for readers who pass through it):
+{% for b in beats %}
+- {{ b.id }}: {{ b.summary }}
+{% endfor %}
+
+EXPLORED PATHS (where arcs may land differently):
+{% for p in paths %}
+- {{ p.id }} — "{{ p.question }}" answered: {{ p.answer }}
+{% endfor %}
+
+For each entity worth arcing, propose {"entity": id, "begins": ..., "pivots":
+[{"beat": id, "becomes": ...}, ...], "ends": [{"path": id, "state": ...}, ...]}:
+- begins: who/what they are when the story opens — the ASPECT in play, one line.
+- pivots: 1-4 turns, each anchored to the beat that turns it, in story order.
+  From that beat on, the entity reads as "becomes". Anchor a pivot to the beat
+  where the change HAPPENS, not where it is first useful.
+- ends: for each explored path whose choice lands this entity somewhere
+  different, where it lands. Omit paths that don't touch the entity.
+- Arc every entity listed above whose inner state moves; a static entity
+  (a pure instrument or backdrop) may be omitted, but arc at least one.
+Every begins/becomes/state is a NOTE in plain declarative present tense — an
+aspect and its direction ("grief held at arm's length", "the ledger becomes
+evidence"), never prose, never imagery to reuse.
+{% include "_shared.j2" %}

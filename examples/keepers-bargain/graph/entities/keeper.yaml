@@ -11,3 +11,14 @@ overlays:
 - when: [flag:sleeper-waking]
   details:
     manner: free-handed and haunted, forever glancing at the wake
+arc:
+  begins: keeper by inheritance; the bargain is habit, never yet a choice
+  pivots:
+  - beat: beat:returned-boat
+    becomes: knows her mother sailed and the coast paid; the watch is now a question
+      she must answer
+  ends:
+  - path: path:keep
+    state: chooses the watch with open eyes; the light is hers, not her family's
+  - path: path:break
+    state: chooses herself and carries the coast's price to sea

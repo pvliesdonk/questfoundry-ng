@@ -83,3 +83,61 @@ def test_freeze_records_forks_and_convergence():
     assert record.forks[d] == ["beat:one-commit-a", "beat:one-commit-b"]
     assert d not in record.convergences  # posts are endings; paths never rejoin
     assert queries.commit_beats(g, pa) == ["beat:one-commit-a"]
+
+
+# -- entity arcs (plan: docs/plans/prose-quality.md W5) ------------------------
+
+
+def _golden():
+    from questfoundry.project import load_project
+    from tests.conftest import GOLDEN
+
+    return load_project(GOLDEN)
+
+
+def test_set_entity_arc_validates_references_and_order():
+    import pytest
+
+    from questfoundry.graph.mutations import MutationError, set_entity_arc
+    from questfoundry.models.world import ArcPivot, EntityArc, PathEnd
+
+    g = _golden().graph
+    with pytest.raises(MutationError, match="not a beat"):
+        set_entity_arc(
+            g,
+            "character:sleeper",
+            EntityArc(begins="asleep", pivots=[ArcPivot(beat="beat:no-such", becomes="x")]),
+        )
+    with pytest.raises(MutationError, match="not a path"):
+        set_entity_arc(
+            g,
+            "character:sleeper",
+            EntityArc(begins="asleep", ends=[PathEnd(path="path:no-such", state="x")]),
+        )
+    with pytest.raises(MutationError, match="story order"):
+        set_entity_arc(
+            g,
+            "character:sleeper",
+            EntityArc(
+                begins="asleep",
+                pivots=[
+                    ArcPivot(beat="beat:offer", becomes="later"),
+                    ArcPivot(beat="beat:storm-glass", becomes="earlier"),
+                ],
+            ),
+        )
+    assert g.node("character:sleeper").arc is None  # nothing landed
+
+
+def test_set_entity_arc_is_stable_once_set():
+    import pytest
+
+    from questfoundry.graph.mutations import MutationError, set_entity_arc
+    from questfoundry.models.world import EntityArc
+
+    g = _golden().graph
+    arc = EntityArc(begins="asleep, patient")
+    set_entity_arc(g, "character:sleeper", arc)
+    set_entity_arc(g, "character:sleeper", EntityArc(begins="asleep, patient"))  # no-op
+    with pytest.raises(MutationError, match="stable once set"):
+        set_entity_arc(g, "character:sleeper", EntityArc(begins="different"))

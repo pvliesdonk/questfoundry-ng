@@ -21,3 +21,7 @@ choices:
 - to: passage:p-unspoken
   label: Walk the gallery alone before answering
   requires: [flag:lie-between]
+prose_summary: >-
+  The sea pulls back and the lamp gutters. The bar gives up her mother's boat: her
+  mother sailed, and the coast paid. Elias offers Maren the dawn sailing; she must
+  answer by morning.

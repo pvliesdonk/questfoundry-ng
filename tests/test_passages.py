@@ -650,3 +650,56 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
         ]
     )
     _audit_apply(proposal, project)  # normalized, no ApplyError
+
+
+# -- arcs pass (plan: docs/plans/prose-quality.md W5) --------------------------
+
+
+def test_arcs_apply_stores_arcs_and_rejects_duplicates(golden):
+    from questfoundry.pipeline.stages.polish import (
+        ArcSpec,
+        ArcsProposal,
+        _arcs_apply,
+    )
+
+    g = golden.graph
+    # golden's keeper and cartographer already carry hand-authored arcs;
+    # the sleeper is the remaining arc-worthy character
+    proposal = ArcsProposal(
+        arcs=[
+            ArcSpec(
+                entity="sleeper",  # bare-slug affordance resolves
+                begins="asleep, patient as tide",
+                pivots=[{"beat": "beat:tremor", "becomes": "stirring; the light's hold slips"}],
+                ends=[{"path": "path:break", "state": "awake and following"}],
+            )
+        ]
+    )
+    lines = _arcs_apply(proposal, golden)
+    assert lines == ["character:sleeper: 1 pivot(s), 1 path end(s)"]
+    assert g.node("character:sleeper").arc.pivots[0].beat == "beat:tremor"
+
+    # a duplicate inside one proposal is caught before the mutation layer
+    # (id and slug forms are the same entity)
+    from questfoundry.project import load_project
+    from tests.conftest import GOLDEN
+
+    fresh = load_project(GOLDEN)
+    fresh.graph.node("character:sleeper").arc = None
+    twice = ArcsProposal(
+        arcs=[
+            ArcSpec(entity="character:sleeper", begins="x"),
+            ArcSpec(entity="sleeper", begins="y"),
+        ]
+    )
+    with pytest.raises(ApplyError, match="arced twice"):
+        _arcs_apply(twice, fresh)
+
+
+def test_arcs_apply_rejects_locations(golden):
+    from questfoundry.pipeline.stages.polish import ArcSpec, ArcsProposal, _arcs_apply
+
+    with pytest.raises(ApplyError, match="not a retained character or object"):
+        _arcs_apply(
+            ArcsProposal(arcs=[ArcSpec(entity="location:lighthouse", begins="x")]), golden
+        )

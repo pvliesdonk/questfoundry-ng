@@ -136,3 +136,34 @@ def test_seed_order_template_has_no_craft_include():
 def test_dress_codewords_template_has_no_craft_include():
     source = (PROMPTS_DIR / "dress_codewords.j2").read_text(encoding="utf-8")
     assert "_craft.j2" not in source
+
+
+# ---------------------------------------------------------------------------
+# fill_write.j2 — input-role framing + the voice palette (plan: docs/plans/
+# prose-quality.md W2/W3). The framing phrases are load-bearing prompt
+# contract, so pin them: facts are constraints, the window is continuity,
+# micro-details are notes.
+# ---------------------------------------------------------------------------
+
+
+def test_fill_write_states_the_input_roles(golden):
+    env = runner._environment()
+    # p-tremor borders written prose on both sides, so every framed
+    # block renders
+    context = _write_context_for("passage:p-tremor")(golden)
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "CONSTRAINTS, not choreography" in rendered
+    assert "continuity, not a style template" in rendered
+    assert "note form" in rendered
+
+
+def test_fill_write_renders_the_voice_palette_only_when_set(golden):
+    env = runner._environment()
+    context = _write_context_for("passage:p-arrival")(golden)
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "- Imagery: tide, weather" in rendered
+    assert "- Dialogue: brief and unornamented" in rendered
+    golden.voice.imagery = ""
+    golden.voice.dialogue = ""
+    rendered = _render(env, "fill_write.j2", "", **_write_context_for("passage:p-arrival")(golden))
+    assert "- Imagery:" not in rendered and "- Dialogue:" not in rendered

@@ -232,14 +232,23 @@ def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch
     assert review(proposal, golden_fill, adapter) == ["confirmed: still broken"]
 
 
-def test_fill_pass_list_is_voice_plus_one_write_per_passage(golden_fill):
+def test_fill_pass_list_is_voice_plus_write_and_summarize_per_passage(golden_fill):
     passes = _passes(golden_fill)
     assert passes[0].name == "voice"
     assert passes[0].skip_if is not None
     assert passes[0].skip_if(golden_fill)  # golden already carries a voice
-    write_passes = [p for p in passes[1:]]
-    assert len(write_passes) == 9
+    write_passes = [p for p in passes[1:] if p.name.startswith("write:")]
+    summarize_passes = [p for p in passes[1:] if p.name.startswith("summarize:")]
+    assert len(write_passes) == 9 and len(summarize_passes) == 9
     assert all(p.review is not None for p in write_passes)
+    # each summary rides right behind its write pass, at utility tier
+    names = [p.name for p in passes[1:]]
+    assert all(
+        names[i + 1] == "summarize:" + n.split(":", 1)[1]
+        for i, n in enumerate(names)
+        if n.startswith("write:")
+    )
+    assert all(p.role == "utility" and p.review is None for p in summarize_passes)
 
 
 def test_gate_requires_voice(golden_fill):
@@ -351,3 +360,210 @@ def test_micro_detail_entity_resolves_ids_and_slugs_only(golden_fill):
         _resolve_entity(g, g.node("character:keeper").name)
     with pytest.raises(ApplyError, match="use one of"):
         _resolve_entity(g, "Nobody Anyone Knows")
+
+
+# -- echo checks (plan: docs/plans/prose-quality.md W1) ------------------------
+
+
+def _padded(prose: str, words: int = 200) -> str:
+    return prose + " " + "filler " * words
+
+
+def test_fact_echo_fails_apply(golden_fill):
+    """Live run 8's stamp: a rendered fact performed verbatim. Elias's
+    base appearance is on stage in p-arrival; restating it fails the
+    apply with the constraints-not-choreography framing."""
+    apply = _write_apply_for("passage:p-arrival")
+    fact = golden_fill.graph.node("character:cartographer").base["appearance"]
+    with pytest.raises(ApplyError, match="restates an established fact"):
+        apply(WriteProposal(prose=_padded(f"He arrives, all {fact}, smiling.")), golden_fill)
+
+
+def test_fact_echo_allows_fresh_wording(golden_fill):
+    apply = _write_apply_for("passage:p-arrival")
+    apply(
+        WriteProposal(prose=_padded("His cuffs carry old ink; the beard is going grey.")),
+        golden_fill,
+    )
+
+
+def test_window_echo_fails_apply(golden_fill):
+    """A run lifted verbatim from adjacent prose: the window is
+    continuity, not a style template."""
+    apply = _write_apply_for("passage:p-tremor")
+    lifted = "She waits for slack tide, when the water holds its breath"
+    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+        apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+
+
+def test_micro_detail_value_word_cap(golden_fill):
+    apply = _write_apply_for("passage:p-arrival")
+    performed = "he settles into the wide lateral stance of a classical fencer once more"
+    with pytest.raises(ApplyError, match="note form"):
+        apply(
+            WriteProposal(
+                prose=_padded("A quiet scene."),
+                micro_details=[
+                    {"entity": "character:cartographer", "key": "stance", "value": performed}
+                ],
+            ),
+            golden_fill,
+        )
+
+
+def test_micro_detail_near_duplicate_names_the_existing_key(golden_fill):
+    """The fencer-stance accrual: the same fact under a new key is
+    rejected naming the key that already carries it."""
+    apply = _write_apply_for("passage:p-arrival")
+    with pytest.raises(ApplyError, match="'appearance'"):
+        apply(
+            WriteProposal(
+                prose=_padded("A quiet scene."),
+                micro_details=[
+                    {
+                        "entity": "character:cartographer",
+                        "key": "grooming",
+                        "value": "a tidy beard going salt-and-pepper",
+                    }
+                ],
+            ),
+            golden_fill,
+        )
+
+
+def test_micro_detail_fresh_fact_is_accepted(golden_fill):
+    apply = _write_apply_for("passage:p-arrival")
+    lines = apply(
+        WriteProposal(
+            prose=_padded("A quiet scene."),
+            micro_details=[
+                {
+                    "entity": "character:cartographer",
+                    "key": "habit",
+                    "value": "hums off-key over charts",
+                }
+            ],
+        ),
+        golden_fill,
+    )
+    assert any("habit" in line for line in lines)
+
+
+# -- rolling story-so-far (plan: docs/plans/prose-quality.md W4) ---------------
+
+
+def test_summary_apply_enforces_the_cap_and_stores(golden_fill):
+    from questfoundry.pipeline.stages.fill import (
+        SUMMARY_MAX_WORDS,
+        SummaryProposal,
+        _summary_apply_for,
+    )
+
+    apply = _summary_apply_for("passage:p-arrival")
+    with pytest.raises(ApplyError, match="cap"):
+        apply(SummaryProposal(summary="w " * (SUMMARY_MAX_WORDS + 1)), golden_fill)
+    apply(SummaryProposal(summary="Elias lands; the soundings are wrong."), golden_fill)
+    assert (
+        golden_fill.graph.node("passage:p-arrival").prose_summary
+        == "Elias lands; the soundings are wrong."
+    )
+
+
+def test_story_so_far_is_route_notes_minus_the_window(golden_fill):
+    """p-tremor's direct predecessors are the window (full prose shown);
+    the story-so-far carries the route's earlier passages as notes."""
+    from questfoundry.pipeline.stages.fill import _story_so_far
+
+    entries, elided = _story_so_far(golden_fill, "passage:p-tremor")
+    assert elided == 0
+    assert entries == [golden_fill.graph.node("passage:p-arrival").prose_summary]
+    # an ending passage sees the whole route
+    entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
+    assert golden_fill.graph.node("passage:p-arrival").prose_summary in entries
+    assert len(entries) >= 2
+
+
+def test_story_route_is_deterministic_and_prefers_the_reference_arc(golden_fill):
+    from questfoundry.graph import queries
+    from questfoundry.models.base import EdgeKind
+    from questfoundry.pipeline.stages.fill import _story_route
+
+    route = _story_route(golden_fill, "passage:p-long-watch")
+    assert route == _story_route(golden_fill, "passage:p-long-watch")
+    view = queries.arc_view(golden_fill.graph, reference_selection(golden_fill))
+    for p in route:
+        beats = set(queries.beats_of_passage(golden_fill.graph, p))
+        # every hop with a reference-arc alternative takes it
+        assert beats <= view or not any(
+            set(queries.beats_of_passage(golden_fill.graph, q)) <= view
+            for q in {e.src for e in golden_fill.graph.in_edges(p, EdgeKind.CHOICE)}
+        )
+
+
+def test_prose_summary_round_trips(tmp_path, golden_fill):
+    from questfoundry.project import save_project
+
+    golden_fill.root = tmp_path / "golden"
+    save_project(golden_fill)
+    reloaded = load_project(golden_fill.root)
+    assert (
+        reloaded.graph.node("passage:p-tremor").prose_summary
+        == golden_fill.graph.node("passage:p-tremor").prose_summary
+    )
+    assert reloaded.graph.node("passage:p-tremor").prose_summary
+
+
+# -- arc positions (plan: docs/plans/prose-quality.md W5) ----------------------
+
+
+def test_arc_positions_track_now_turn_heading_and_ends(golden_fill):
+    """Maren's golden arc pivots at beat:returned-boat (in p-tremor):
+    before it she is at `begins` and heading toward the pivot; the
+    pivot's own passage carries the turn; downstream of a commit the
+    path's landing appears."""
+    from questfoundry.pipeline.stages.fill import _arc_positions
+
+    g = golden_fill.graph
+
+    def keeper(passage_id):
+        return next(
+            a for a in _arc_positions(g, passage_id) if a["entity"].id == "character:keeper"
+        )
+
+    before = keeper("passage:p-arrival")
+    assert before["now"].startswith("keeper by inheritance")
+    assert before["turn"] is None
+    assert before["heading"] is not None and "question" in before["heading"]
+    assert before["ends"] == []
+
+    at = keeper("passage:p-tremor")
+    assert at["turn"] is not None and "question" in at["turn"]
+
+    after = keeper("passage:p-long-watch")
+    assert after["now"] == at["turn"]  # the pivot has passed
+    assert after["turn"] is None and after["heading"] is None
+    assert after["ends"] == [
+        "chooses the watch with open eyes; the light is hers, not her family's"
+    ]
+
+
+def test_arc_positions_skip_unarced_entities(golden_fill):
+    from questfoundry.pipeline.stages.fill import _arc_positions
+
+    entries = _arc_positions(golden_fill.graph, "passage:p-tremor")
+    ids = {a["entity"].id for a in entries}
+    assert "character:sleeper" not in ids  # no arc in the golden fixture
+    assert "character:keeper" in ids and "character:cartographer" in ids
+
+
+def test_write_context_and_prompt_carry_the_arc_position(golden_fill):
+    from questfoundry.pipeline import runner
+
+    ctx = _write_context_for("passage:p-tremor")(golden_fill)
+    assert any(a["entity"].id == "character:keeper" for a in ctx["arcs"])
+    env = runner._environment()
+    rendered = env.get_template("fill_write.j2").render(
+        **ctx, notes="", repair_errors=[], research=""
+    )
+    assert "ARC POSITION" in rendered
+    assert "THIS SCENE TURNS IT" in rendered

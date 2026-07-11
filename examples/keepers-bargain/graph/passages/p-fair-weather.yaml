@@ -5,3 +5,6 @@ beats: [beat:hide-commit, beat:hide-payoff]
 choices:
 - to: passage:p-tremor
   label: Let the weather take the blame and the days pass
+prose_summary: >-
+  Maren blames the instruments and burns the page. Elias accepts it and grows distant;
+  the lie now sits between them.

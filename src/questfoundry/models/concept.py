@@ -195,6 +195,12 @@ class Voice(BaseModel):
     tense: str
     diction: str  # the design docs' "register"; renamed (pydantic shadow)
     rhythm: str = ""
+    # A thin voice makes the writer lean on whatever styled text sits in
+    # its prompt (live run 8: rendered facts performed verbatim); the
+    # imagery palette and dialogue rules give it somewhere else to reach.
+    # Defaults stay empty so author-provided voice.yaml files load unchanged.
+    imagery: str = ""
+    dialogue: str = ""
     banned: list[str] = []
     notes: str = ""
 

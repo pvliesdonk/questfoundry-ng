@@ -407,3 +407,28 @@ def test_golden_story_passes_all_gates(golden):
     # band-clean under the words-primary scale table (M8): the golden
     # fixture anchors micro's floor
     assert issues == []
+
+
+def test_g4_arc_references_fail_loud():
+    """A dangling arc reference silently corrupts FILL's arc positions
+    downstream — the gate catches it (this session's own authoring slip:
+    `beat:the-offer` for `beat:offer` sailed through validation)."""
+    from questfoundry.graph.validate import Severity, run_checks
+    from questfoundry.models.base import Stage
+    from questfoundry.models.world import ArcPivot, EntityArc, PathEnd
+    from questfoundry.project import load_project
+    from tests.conftest import GOLDEN
+
+    project = load_project(GOLDEN)
+    project.graph.node("character:sleeper").arc = EntityArc(
+        begins="asleep",
+        pivots=[ArcPivot(beat="beat:the-offer", becomes="waking")],
+        ends=[PathEnd(path="path:no-such", state="gone")],
+    )
+    issues = [
+        i
+        for i in run_checks(project.graph, project.vision, Stage.POLISH)
+        if i.severity == Severity.ERROR and i.check == "G4"
+    ]
+    assert any("beat:the-offer" in i.message for i in issues)
+    assert any("path:no-such" in i.message for i in issues)

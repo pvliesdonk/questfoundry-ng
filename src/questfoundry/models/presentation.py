@@ -36,3 +36,7 @@ class Passage(Node):
     # (omitted from prose); the remainder must stay within the I12 cap.
     irrelevant_flags: list[str] = []
     prose: str = ""  # markdown; written by FILL through the mutation layer
+    # FILL's rolling story-so-far entry (utility-summarized, brief
+    # register): a note for the writers of later passages, never
+    # player-facing — exports must not ship it.
+    prose_summary: str = ""

@@ -196,7 +196,7 @@ def test_pipeline_reaches_polish(polished):
     assert all(r.success for r in reports), [r.error or r.issues for r in reports]
     assert project.stage == Stage.POLISH
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    assert len(ledger) == 10  # 7 through GROW + finalize + passages + audit
+    assert len(ledger) == 11  # 7 through GROW + finalize + passages + audit + arcs
 
 
 def test_polish_builds_the_passage_layer(polished):
@@ -268,7 +268,8 @@ def test_pipeline_reaches_fill_through_one_review_round(filled):
     # the first-written passage failed review once and was rewritten
     assert by_name["write:p-wrong-depths"].attempts == 2
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    assert len(ledger) == 29  # 10 through POLISH + voice + 8x(write+review) + 1 revision pair
+    # 11 through POLISH + voice + 8x(write+review+summarize) + 1 revision pair
+    assert len(ledger) == 38
 
 
 def test_fill_wrote_every_passage_within_budget(filled):
@@ -348,7 +349,8 @@ def test_crashed_fill_resumes_from_the_ledger(tmp_path, monkeypatch):
     reports = run_pipeline(project, Stage.POLISH, IMPLS, LLMAdapter(provider, models))
     assert all(r.success for r in reports)
 
-    # die right after the third FILL pass lands (voice + two writes) —
+    # die right after the third FILL pass lands (voice + a write + its
+    # summary) —
     # ledger writes mark pass boundaries, so this is a clean pass death
     real_record = runner_module._record_inflight
     landed = {"n": 0}
@@ -411,7 +413,7 @@ def test_pipeline_reaches_dress_through_one_review_round(dressed):
     assert by_name["codewords"].attempts == 1
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
     # 29 through FILL + direction + briefs + 2x(codex propose + review) + codewords
-    assert len(ledger) == 36
+    assert len(ledger) == 45
 
 
 def test_dress_populates_enrichment(dressed):

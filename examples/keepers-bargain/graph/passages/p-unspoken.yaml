@@ -12,3 +12,6 @@ choices:
 - to: passage:p-wide-water
   label: Cap the lamp and go aboard
   grants: [flag:sleeper-waking]
+prose_summary: >-
+  Maren walks the gallery alone while Elias packs, none the wiser. The lie keeps its
+  counsel; she weighs the dawn sailing by herself.

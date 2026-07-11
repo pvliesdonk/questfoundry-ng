@@ -5,3 +5,6 @@ beats: [beat:tell-commit, beat:tell-payoff]
 choices:
 - to: passage:p-tremor
   label: Stand the watch together until the sea turns
+prose_summary: >-
+  Maren tells Elias the truth in the lamp room: the light keeps the sleeper asleep. He
+  chooses to stay and learns the watch.

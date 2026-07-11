@@ -1,12 +1,23 @@
 Write the prose for ONE passage. {{ words_min }}-{{ words_max }} words of finished,
 publishable markdown paragraphs (no headings, no lists). This is the passage the
-player reads; everything below is context, none of it may leak as jargon.
+player reads. Everything below is context; each block says what it is FOR and
+what you may do with it — none of it may leak as jargon, and none of it is
+material to copy: the only prose in this prompt is prose the reader has
+already read.
 
-VOICE (binding):
+VOICE (binding — this owns how everything sounds):
 - POV: {{ voice.pov }} | tense: {{ voice.tense }} | diction: {{ voice.diction }}
 - Rhythm: {{ voice.rhythm }}
+{% if voice.imagery %}
+- Imagery: {{ voice.imagery }}
+{% endif %}
+{% if voice.dialogue %}
+- Dialogue: {{ voice.dialogue }}
+{% endif %}
 - Banned: {{ voice.banned | join("; ") }}
 - Notes: {{ voice.notes }}
+When you need a description, reach for the voice's imagery palette — never for
+the wording of a fact or a phrase from an earlier passage.
 
 TENSE IS ABSOLUTE: narrate in {{ voice.tense }} tense, every verb, start to
 finish — the review checks this verb by verb and it is the most common failure.
@@ -25,7 +36,11 @@ wording behind — the VOICE above, not the summary, owns how anything sounds:
 - {{ b.summary }}
 {% endfor %}
 
-CAST IN SCENE:
+CAST IN SCENE — facts are CONSTRAINTS, not choreography. Every fact below is
+already established: the scene must not contradict it, and the reader already
+knows it. Never restate a fact's wording (this is checked and rejected). Spend
+words on a fact only when this scene turns on it, and then in fresh words;
+otherwise it stays background — a fact honored silently is honored best:
 {% for e in entities %}
 - {{ e.name }} ({{ e.id }}){% if e.pronouns %} — PRONOUNS: {{ e.pronouns }}, exactly{% endif %}: {{ e.concept }}{% if e.base %} | facts: {% for k, v in e.base.items() %}{{ k }}: {{ v }}; {% endfor %}{% endif %}
 {% if e.overlays %}
@@ -34,6 +49,14 @@ CAST IN SCENE:
 {% endfor %}
 {% endif %}
 {% endfor %}
+
+{% if arcs %}
+ARC POSITION (who each of these is RIGHT NOW — the one aspect this scene may
+foreground; every established fact outside it stays background):
+{% for a in arcs %}
+- {{ a.entity.name }}: {{ a.now }}{% if a.turn %} — THIS SCENE TURNS IT: {{ a.turn }}{% endif %}{% if a.heading %} (heading toward: {{ a.heading }} — do not arrive early){% endif %}{% for s in a.ends %} | this route has committed: {{ s }}{% endfor %}
+{% endfor %}
+{% endif %}
 
 WORLD STATE AT THIS PASSAGE — only CERTAIN facts may be stated as true:
 {% for f in flags %}
@@ -53,15 +76,31 @@ THE ROADS NOT TAKEN (shadows — let their weight color the prose, never name th
 - {{ s.dilemma.question }} {% for a in s.answers %}[{{ a.text }}{% if not a.explored %} — never explored{% endif %}] {% endfor %}
 {% endfor %}
 
+{% if story_so_far %}
+THE STORY SO FAR (one route to this passage, in notes — context, not material:
+the reader lived these events, so the prose may lean on them without retelling
+them. Other routes exist, and an event particular to this one may not have
+happened for every reader — WORLD STATE above governs what you may assert):
+{% if story_elided %}
+- (… {{ story_elided }} earlier passages elided)
+{% endif %}
+{% for s in story_so_far %}
+- {{ s }}
+{% endfor %}
+{% endif %}
+
 {% if window %}
-WHAT THE READER JUST READ (continue from it seamlessly):
+WHAT THE READER JUST READ (continuity, not a style template): continue from it
+seamlessly — its events happened, its objects and weather persist. Do not
+reuse its imagery or repeat its phrasing; the reader just read those words,
+and a lifted run is rejected:
 {% for w in window %}
 --- from {{ w.passage.id }} (arrived via "{{ w.label }}"):
 {{ w.passage.prose }}
 {% endfor %}
 {% endif %}
 {% if lookahead %}
-WHAT AWAITS (already written — land so it follows naturally):
+WHAT AWAITS (already written — land so it follows naturally, without echoing it):
 {% for w in lookahead %}
 --- toward {{ w.passage.id }} (via "{{ w.label }}"):
 {{ w.passage.prose }}
@@ -80,7 +119,9 @@ This is an ending: land it completely.
 You may also report up to 2 micro_details, each {"entity": an entity id from
 the cast above, "key": a fact name, "value": the fact}: small universal facts
 about an entity discovered while writing (a habit, an object) — true on every
-playthrough, never path-dependent. Omit freely. Keys are single-assignment: an
+playthrough, never path-dependent. A detail is a NOTE for later writers, not
+prose: at most 12 words, in note form ("stance: wide, fencer-like"), never a
+sentence copied from your passage. Omit freely. Keys are single-assignment: an
 entity's listed facts are settled — never re-key one (no second "tell",
 "habit", …); record a genuinely new observation under an unused key, or report
 nothing.

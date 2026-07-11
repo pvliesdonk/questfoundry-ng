@@ -32,6 +32,7 @@ from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
+from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -334,13 +335,19 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             skip_if=_voice_skip,
         )
     ]
+    # The retained entity set is fixed for all of FILL, so pin
+    # `micro_details[].entity` to it once and share across write passes
+    # (pipeline/refpin.py).
+    write_schema = pin(
+        WriteProposal, "WriteProposal", {("MicroDetail", "entity"): entity_ref_ids(project.graph)}
+    )
     for passage_id in writing_order(project):
         specs.append(
             PassSpec(
                 name=f"write:{passage_id.split(':', 1)[1]}",
                 role="writer",
                 template="fill_write.j2",
-                schema=WriteProposal,
+                schema=write_schema,
                 build_context=_write_context_for(passage_id),
                 apply=_write_apply_for(passage_id),
                 review=_review_for(passage_id),

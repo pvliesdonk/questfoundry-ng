@@ -24,7 +24,7 @@ deferred to M4 with their consumer (FILL).
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
@@ -32,6 +32,7 @@ from questfoundry.models.base import Stage
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
 from questfoundry.pipeline import passages as pc
+from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -501,6 +502,70 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
     return lines or ["all active flags judged relevant"]
 
 
+def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
+    """Pin finalize's references: each residue's `dilemma`/`world`/`path`
+    to the light-residue convergences' own values, false-branch `before`/
+    `after` to the long-linear-run beats, and every `entities` ref to the
+    entity ids. The apply still enforces the joint (dilemma, world, path)
+    constraint the independent enums cannot express (pipeline/refpin.py).
+
+    A false branch splices only into a long linear run, so when there is
+    none the list must be empty — an empty `before`/`after` enum can't
+    express "no items", so forbid the list outright (`max_length=0`). This
+    is the reference discipline's list cousin: a reference *list* whose
+    valid target set is empty must itself be empty. Without it a model
+    (live gpt-oss:120b cloud, 2026-07-11) proposed a cadence diamond where
+    none was structurally possible and exhausted repairs."""
+    needs = _light_needs(project)
+    entities = entity_ref_ids(project.graph)
+    long_beats = [b for run in _long_runs(project) for b in run]
+    schema = pin(
+        FinalizeProposal,
+        "FinalizeProposal",
+        {
+            ("ResidueSpec", "dilemma"): list(dict.fromkeys(n.dilemma for n in needs)),
+            ("ResidueSpec", "world"): list(dict.fromkeys(n.world for n in needs)),
+            ("ResidueSpec", "path"): list(dict.fromkeys(p for n in needs for p in n.path_flags)),
+            ("ResidueSpec", "entities"): entities,
+            ("FollowupSpec", "entities"): entities,
+            ("ForkSpec", "entities"): entities,
+            ("ArmSpec", "entities"): entities,
+            ("FalseBranchSpec", "before"): long_beats,
+            ("FalseBranchSpec", "after"): long_beats,
+        },
+    )
+    if not long_beats:
+        schema = create_model(
+            "FinalizeProposal",
+            __base__=schema,
+            false_branches=(list[FalseBranchSpec], Field(default=[], max_length=0)),
+        )
+    return schema
+
+
+def passages_proposal_schema(project: Project) -> type[PassagesProposal]:
+    """Pin `variants[].flag` to the heavy-residue per-path gate flags."""
+    needs = _variant_needs(project.graph)
+    flags = list(dict.fromkeys(fl for group in needs.values() for fl in group))
+    return pin(PassagesProposal, "PassagesProposal", {("VariantSpec", "flag"): flags})
+
+
+def audit_proposal_schema(project: Project) -> type[AuditProposal]:
+    """Pin `audit[].passage` to the passages that have active flags (both
+    exact ids and their unambiguous slugs, which the apply also accepts)
+    and `irrelevant[]` to the flags active in those passages. Resolved
+    after the passages pass mints the passages (PassSpec.schema_for)."""
+    audited = _audited_passages(project)
+    ids = sorted(p.id for p, _ in audited)
+    passage_refs = ids + [i.split(":", 1)[1] for i in ids]
+    flags = list(dict.fromkeys(f for _, fl in audited for f in fl))
+    return pin(
+        AuditProposal,
+        "AuditProposal",
+        {("AuditEntry", "passage"): passage_refs, ("AuditEntry", "irrelevant"): flags},
+    )
+
+
 POLISH_STAGE = StageImpl(
     stage=Stage.POLISH,
     passes=(
@@ -508,7 +573,7 @@ POLISH_STAGE = StageImpl(
             name="finalize",
             role="writer",
             template="polish_finalize.j2",
-            schema=FinalizeProposal,
+            schema=finalize_proposal_schema,
             build_context=_finalize_context,
             apply=_finalize_apply,
             skip_if=_finalize_skip,
@@ -517,7 +582,7 @@ POLISH_STAGE = StageImpl(
             name="passages",
             role="writer",
             template="polish_passages.j2",
-            schema=PassagesProposal,
+            schema=passages_proposal_schema,
             build_context=_passages_context,
             apply=_passages_apply,
         ),
@@ -525,7 +590,7 @@ POLISH_STAGE = StageImpl(
             name="audit",
             role="architect",
             template="polish_audit.j2",
-            schema=AuditProposal,
+            schema=audit_proposal_schema,
             build_context=_audit_context,
             apply=_audit_apply,
         ),

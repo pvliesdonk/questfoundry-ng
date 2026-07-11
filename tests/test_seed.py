@@ -195,6 +195,59 @@ def test_triage_schema_without_answers_falls_back_to_base(tmp_path):
     assert triage_proposal_schema([]) is TriageProposal
 
 
+# -- triage schema: `locked[].dilemma` pinned to real dilemma ids ------------
+# `explores`'s sibling. A live gpt-oss:120b-cloud --to seed run (Ollama
+# cloud validation, 2026-07-11) cleared the #40 explores enum, then failed
+# triage the identical way on `locked[].dilemma` (an unprefixed dilemma
+# slug). Same discipline: pin the reference to the real dilemma ids.
+
+
+def _dilemma_ids(project: Project) -> list[str]:
+    return [d.id for d in project.graph.nodes_of(Dilemma)]
+
+
+def test_triage_schema_rejects_dangling_locked_dilemma(tmp_path):
+    project = _triage_project(tmp_path)
+    schema = triage_proposal_schema(_answer_ids(project), _dilemma_ids(project))
+
+    with pytest.raises(Exception) as exc:
+        schema.model_validate(
+            {
+                "locked": [{"dilemma": "herring0", "reason": "red herring"}],
+                "paths": [_path_payload("a", "answer:main-a"), _path_payload("b", "answer:main-b")],
+            }
+        )
+    # the correction brief inherits this message: the valid ids are named
+    assert "dilemma:herring0" in str(exc.value)
+
+
+def test_triage_schema_accepts_real_locked_dilemma(tmp_path):
+    project = _triage_project(tmp_path)
+    schema = triage_proposal_schema(_answer_ids(project), _dilemma_ids(project))
+
+    proposal = schema.model_validate(
+        {
+            "locked": [{"dilemma": "dilemma:herring0", "reason": "red herring"}],
+            "paths": [_path_payload("a", "answer:main-a"), _path_payload("b", "answer:main-b")],
+        }
+    )
+    assert isinstance(proposal, TriageProposal)  # apply-compatible via inheritance
+    assert proposal.locked[0].dilemma == "dilemma:herring0"
+
+
+def test_seed_stage_wires_dynamic_locked_enum(tmp_path):
+    project = _triage_project(tmp_path)
+    triage_spec = SEED_STAGE.passes(project)[0]
+
+    with pytest.raises(Exception, match="dilemma:herring0"):
+        triage_spec.schema.model_validate(
+            {
+                "locked": [{"dilemma": "herring0", "reason": "red herring"}],
+                "paths": [_path_payload("a", "answer:main-a"), _path_payload("b", "answer:main-b")],
+            }
+        )
+
+
 def test_seed_stage_wires_dynamic_triage_schema(tmp_path):
     project = _triage_project(tmp_path)
     triage_spec = SEED_STAGE.passes(project)[0]

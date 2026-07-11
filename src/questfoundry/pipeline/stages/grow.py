@@ -46,6 +46,7 @@ from questfoundry.models.structure import (
     StructuralPurpose,
 )
 from questfoundry.pipeline import weave
+from questfoundry.pipeline.refpin import entity_ref_ids, pin, retained_entity_ids
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -540,6 +541,52 @@ def _grow_gate(project: Project) -> list[Issue]:
     return issues
 
 
+def _shared_beats(g) -> list[str]:
+    """Beats every player sees — a branched dilemma's pre-commit beats and
+    a locked storyline's whole chain — the only beats an intersection may
+    group (mirrors `_intersections_apply`'s `shared` set, in shape order)."""
+    return [
+        b
+        for shape in weave.shapes(g)[0]
+        for b in (next(iter(shape.chains.values())) if shape.locked else shape.pre)
+    ]
+
+
+def intersections_proposal_schema(project: Project) -> type[IntersectionProposal]:
+    """Pin `members` to the shared/lockable beats and `location` to the
+    entity ids (plus "" — no anchor, its default); closes the previously
+    unchecked `location` dangling-reference hole (pipeline/refpin.py)."""
+    g = project.graph
+    # `location` is stored raw (`IntersectionGroup.location`), so pin it to
+    # exact entity ids — plus "" (its default: no anchoring place).
+    return pin(
+        IntersectionProposal,
+        "IntersectionProposal",
+        {
+            ("IntersectionSpec", "members"): _shared_beats(g),
+            ("IntersectionSpec", "location"): retained_entity_ids(g) + [""],
+        },
+    )
+
+
+def contextualize_proposal_schema(project: Project) -> type[ContextualizeProposal]:
+    """Pin `rewrites[].beat` to the per-world clone / de-ended tail beats
+    the weave produced (resolved after weave rewires the graph)."""
+    targets = [t["beat"].id for t in _contextualize_targets(project)]
+    return pin(
+        ContextualizeProposal, "ContextualizeProposal", {("RewriteSpec", "beat"): targets}
+    )
+
+
+def bridge_proposal_schema(project: Project) -> type[BridgeProposal]:
+    """Pin `bridges[].entities` to the entity ids."""
+    return pin(
+        BridgeProposal,
+        "BridgeProposal",
+        {("BridgeSpec", "entities"): entity_ref_ids(project.graph)},
+    )
+
+
 GROW_STAGE = StageImpl(
     stage=Stage.GROW,
     passes=(
@@ -547,7 +594,7 @@ GROW_STAGE = StageImpl(
             name="intersections",
             role="architect",
             template="grow_intersections.j2",
-            schema=IntersectionProposal,
+            schema=intersections_proposal_schema,
             build_context=_intersections_context,
             apply=_intersections_apply,
         ),
@@ -563,7 +610,7 @@ GROW_STAGE = StageImpl(
             name="contextualize",
             role="writer",
             template="grow_contextualize.j2",
-            schema=ContextualizeProposal,
+            schema=contextualize_proposal_schema,
             build_context=_contextualize_context,
             apply=_contextualize_apply,
             skip_if=_contextualize_skip,
@@ -572,7 +619,7 @@ GROW_STAGE = StageImpl(
             name="bridge",
             role="writer",
             template="grow_bridge.j2",
-            schema=BridgeProposal,
+            schema=bridge_proposal_schema,
             build_context=_bridge_context,
             apply=_bridge_apply,
             skip_if=_bridge_skip,

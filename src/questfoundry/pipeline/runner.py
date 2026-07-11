@@ -77,7 +77,7 @@ def _run_kept_pass(
     decides what that means: `--keep` fails the stage loud (the author
     demanded that proposal), resume degrades to a live run."""
     try:
-        proposal = spec.schema.model_validate(proposal_data)
+        proposal = spec.schema_for(project).model_validate(proposal_data)
     except Exception as exc:  # pydantic.ValidationError, kept generic on purpose
         return f"{label} proposal for pass {spec.name!r} no longer matches its schema: {exc}"
     backup = _backup(project)
@@ -151,7 +151,7 @@ def _run_pass(
         proposal = adapter.complete(
             system=SYSTEM_PROMPT.format(role=spec.role),
             prompt=rendered,
-            schema=spec.schema,
+            schema=spec.schema_for(project),
             role=spec.role,
         )
         backup = _backup(project)

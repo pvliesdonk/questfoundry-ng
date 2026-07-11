@@ -5,7 +5,7 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live — A20 confirmed on both tiers; the triage referential-integrity gap (#40) is fixed (`explores` pinned to an enum of real answer ids); pending: a local-model `--to seed` re-run to confirm, then M9
+> Last updated: 2026-07-11 · M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. The full DRESS is blocked by a *non-reference* POLISH finalize gap (the experiment tier over-proposes a cadence false-branch that residue invalidates — a prompt/model-capability matter for next-up #1, not the pinning class); no cloud-tier example preserved yet, then M9
 
 ## Where we are
 
@@ -40,8 +40,35 @@ constraint in the schema, the correction brief names the valid ids on a
 miss, and under grammar-constrained decoding a dangling reference is
 unrepresentable at decode time. First dynamically-built proposal schema
 (the FILL computed-passes seam, extended to schemas); the pattern's
-generalization to other id-reference fields stays a deliberate
-prompt-quality-effort decision, not creep. 409 tests.
+generalization to other id-reference fields is now **realized across the
+whole pipeline** (2026-07-11): a live `gpt-oss:120b` cloud `--to seed`
+re-run — reached via `OLLAMA_API_KEY`, the exact model that first exposed
+#40 — cleared the `explores` enum on the first attempt and then failed
+triage the *identical* way on `locked[].dilemma` (an unprefixed dilemma
+slug); rather than patch that one sibling, the discipline was lifted into
+a shared helper (`pipeline/refpin.py`) and applied to **every** reference
+field in every stage. `pin(model, name, resolvers)` recursively rebuilds a
+proposal model — nested specs and all — pinning each leaf str/list[str]
+reference field to a `Literal` enum of the real ids (`FieldInfo`,
+`min_length`, defaults preserved; single-value enums render as grammar-safe
+`const`). Coverage: SEED (triage `cut_entities`/`explores`/`locked`,
+scaffold dispositions+paths+`entities`+hints, order relations), GROW
+(intersection `members` **and the previously *unchecked* `location`**,
+contextualize `beat`, bridge `entities`), POLISH (finalize
+`dilemma`/`world`/`path`/`entities` + false-branch `before`/`after`,
+passages variant `flag`, audit `passage`/`irrelevant`), FILL
+(`micro_details.entity`), DRESS (all four passes). A field validated by
+`resolve_entity_ref` pins to ids **+ unambiguous bare slugs** (preserving
+that affordance); a field validated by exact membership pins to exact ids
+only (`retained_entity_ids`) so the enum never admits a value the apply
+rejects. Schemas that depend on an earlier same-stage pass's writes (SEED
+scaffold needs triage's dispositions; POLISH audit needs the passages
+pass) pass a *callable* schema the runner resolves at pass-run time
+(`PassSpec.schema_for`). The apply-layer guards all stay — the enums narrow
+the space; the guards still enforce joint constraints an independent enum
+can't (finalize's (dilemma, world, path) triple). Two BRAINSTORM refs stay
+**deliberately unpinned**: `anchored_to` references entities coined in the
+same proposal (no pass-build-time set). 428 tests.
 
 **M8 is complete** (PR #37 carried the run's engine findings; the
 example PR carries the exit record). The exit run — live run 8,
@@ -581,11 +608,45 @@ PR #5) and this agent/doc infrastructure (PR #6).
   4. `OllamaContextError`: `num_ctx=2048` + an over-long prompt raised
      the exact "raise llm.num_ctx" message — fail-loud, no silent
      truncation. ✅
-  5. No `--to dress` completed on a local model (triage gap above), so
-     no story is preserved as an example yet. The triage gap is now
-     fixed (#40, the `explores` enum) — **re-run the `qwen3.5`-class
-     local `--to seed` that failed** to confirm, and carry on to DRESS
-     to earn the example like the live runs.
+  5. ~~No `--to dress` completed on a local model (triage gap above)~~
+     **SEED now completes on a cloud model.** Re-confirmed 2026-07-11
+     from this hosted environment (which supplies `OLLAMA_API_KEY` for
+     the cloud tier but no local daemon): a fresh micro premise ran
+     `--to seed` on `gpt-oss:120b` cloud. The `explores` enum (#40)
+     cleared on the first attempt — then triage failed the *identical*
+     dangling-reference way on `locked[].dilemma` (the model named
+     `ice-watcher`, not `dilemma:ice-watcher`). Pinned that sibling to a
+     dilemma-id enum (`triage_proposal_schema` now takes `dilemma_ids`);
+     the re-run passed SEED first attempt (`locked: dilemma:hand-locket`,
+     valid and prefixed). `qwen3.5:397b` cloud is paywalled (403
+     subscription), so `gpt-oss:120b` stood in — the same family that
+     first exposed #40. Continuing the run then hit the *identical*
+     dangling-reference class one stage deeper (POLISH finalize named an
+     invented `world`), which motivated pinning the whole class
+     pipeline-wide (decision log; `pipeline/refpin.py`). **Reference-pinning
+     is validated live through GROW:** a fresh `--to dress` run cleared
+     every reference-heavy stage on `gpt-oss:120b` cloud — DREAM,
+     BRAINSTORM, SEED (triage/scaffold/order all first-attempt), and GROW
+     (intersections, weave, flag derivation, bridges). **The full DRESS is
+     blocked by a *non-reference* gap at POLISH finalize**, so no cloud-tier
+     example is preserved yet: the model proposed an optional cadence
+     false-branch at `bridge:gap-6`, a beat that is in a long linear run at
+     finalize-start (so the pinned `before`/`after` enum accepts it) but is
+     broken out of one once residue beats are spliced in the same apply (so
+     `_finalize_apply` rejects it — the enum is the tightest *computable*
+     over-approximation, since the apply-valid set depends on same-proposal
+     residue). Strong models (Gemini/Opus, runs 7–8) don't over-propose
+     here; `gpt-oss:120b` does and exhausts repairs. This is a
+     model-capability / prompt-quality matter for the experiment tier
+     (next-up #1), **not** the dangling-reference class this effort fixed —
+     deliberately left to that effort rather than piled into the pinning
+     PR. Companion fix that *did* land (correct + safe, though inert for
+     this story, which has long runs): finalize now forbids `false_branches`
+     outright when there is no long linear run to hold one (`max_length=0`)
+     — the reference discipline's list cousin. Still pending: a
+     prose/prompt pass that lets `gpt-oss:120b` clear POLISH→DRESS and earn
+     a cloud-tier example; the local `qwen3.5`-class confirmation still
+     wants a run when a daemon host is reachable.
 
 - **The craft corpus should live (curated) in the repo** (author
   call, 2026-07-11, during live run 8 setup): corpus-grounded runs
@@ -768,6 +829,72 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (reference-pinning generalized pipeline-wide —
+  author-directed: "we want all of this class over all stages fixed"):**
+  The #40 → `locked[].dilemma` re-confirmation (entry below) showed the
+  dangling-reference class recurs field by field as model capability drops,
+  so instead of patching siblings one at a time the discipline became a
+  shared helper (`pipeline/refpin.py`) applied to every reference field in
+  every stage. An Explore-agent audit catalogued the class across all
+  proposal schemas — ~25 pinnable reference fields plus two correctly
+  *unpinnable* ones (BRAINSTORM `anchored_to`, which references entities
+  coined in the same proposal), and flagged one latent hole: GROW
+  intersection `location` was a semantic entity reference with **no
+  validation anywhere** — now pinned, closing it. Design decisions worth
+  keeping: (1) one recursive `pin(model, name, resolvers)` rebuilds nested
+  specs and preserves every `FieldInfo` (min_length, defaults), so a stage
+  is a one-liner and `$defs` stay minimal; (2) the exact-vs-slug split —
+  `resolve_entity_ref` fields pin to ids **+ unambiguous slugs**
+  (`entity_ref_ids`), exact-membership fields to exact ids only
+  (`retained_entity_ids`), so a grammar-constrained model can never emit a
+  schema-valid value the apply then rejects; (3) `PassSpec.schema` may now
+  be a **callable** resolved at pass-run time (`schema_for`), because a
+  pass's enums can depend on an earlier same-stage pass's graph writes
+  (SEED scaffold ⇐ triage dispositions, POLISH audit ⇐ the passages pass) —
+  the runner builds the pass list once, before those writes exist; (4) the
+  apply guards stay as defense in depth and to enforce joint constraints
+  (finalize's (dilemma, world, path) triple) the independent enums can't
+  express. Tests: a `pin` unit suite (scalar/list/nested/const/empty/
+  constraint-preservation), the exact-vs-slug helpers, a per-stage
+  violating-construction test on the golden (incl. the exact live
+  `world='share-legend'` finalize failure, now rejected), a GROW
+  pre-weave intersection test, and the grammar-subset lint extended to the
+  dynamic builders. 430 tests, ruff clean, golden 0/0. Live validation:
+  a full `--to dress` run on `gpt-oss:120b` cloud cleared every
+  reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW, all first-attempt) —
+  the pinning holds live where it matters. It then wedged at POLISH
+  finalize on a *non-reference* gap (a cadence false-branch the model
+  proposed at a beat residue later breaks out of its long run; strong
+  models don't over-propose there), so no cloud example is preserved yet.
+  That gap belongs to the prompt-quality effort (next-up #1), not this
+  class; the full record is in open item 5.
+
+- **2026-07-11 (Ollama cloud tier — #40 re-confirmed live + its sibling
+  `locked[].dilemma` pinned):** From this hosted environment (supplies
+  `OLLAMA_API_KEY` for the cloud tier via `host: https://ollama.com`, no
+  local daemon), re-ran the pending #40 confirmation on a fresh micro
+  premise (canal lockkeeper + a stranger's coat). `qwen3.5:397b` cloud is
+  paywalled (403 subscription — same guard-ignored case as
+  `qwen3.5:cloud` before), so `gpt-oss:120b` — the exact family that
+  first exposed #40 — stood in. First `--to seed`: the `explores` enum
+  cleared on attempt 1 (the #40 fix works as built), and triage then
+  failed the **identical** dangling-reference way one field over, on
+  `locked[].dilemma` (the model named `ice-watcher`, dropping the
+  `dilemma:` prefix). This is #40's own "generalization to other
+  id-reference fields" deferral firing on its nearest sibling, so I took
+  it: `triage_proposal_schema` now also pins `locked[].dilemma` to an
+  enum of the real dilemma ids (graph order — dilemmas carry no
+  strict-equality marker, unlike answers, so ordering is free). Same
+  three-part discipline as #40: schema-level constraint for every
+  provider, the correction brief names valid ids on a miss, and under
+  grammar-constrained decoding (A20) the dangling reference is
+  unrepresentable at decode time. The apply-time guard stays (defense in
+  depth). The re-run passed SEED first attempt (`locked:
+  dilemma:hand-locket`, valid + prefixed). Three violating-construction
+  tests added (reject dangling, accept real, stage wires the enum),
+  mirroring the #40 trio; 412 tests, ruff clean, golden green. Onward to
+  GROW→DRESS to earn a cloud-tier example is the remaining open item.
 
 - **2026-07-11 (Ollama backend — live validation on a real daemon;
   closes #41):** Ran the STATUS hand-off checklist against

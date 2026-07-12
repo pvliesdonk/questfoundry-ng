@@ -114,6 +114,22 @@ class StageImpl:
     gate: Callable[[Project], list[Issue]]
 
 
+@dataclass(frozen=True)
+class PassProgress:
+    """One heartbeat event from the runner (roadmap §M10 progress
+    reporting): emitted when a pass starts and again when it resolves,
+    so a long stage shows a pulse without the caller polling. `status`
+    is "start" for a live pass about to call the LLM, then one of
+    "done" / "skipped" / "kept" / "resumed" / "failed" at resolution."""
+
+    stage: Stage
+    name: str
+    index: int  # 1-based position in the stage's pass list
+    total: int
+    status: str
+    attempts: int = 0
+
+
 @dataclass
 class PassReport:
     name: str

@@ -68,7 +68,14 @@ def run(
         console.print(f"[red]bad stage name in project.yaml steering: {e}[/red]")
         raise typer.Exit(2) from e
     try:
-        reports = run_pipeline(project, target, IMPLS, adapter, notes_by_stage=notes)
+        reports = run_pipeline(
+            project,
+            target,
+            IMPLS,
+            adapter,
+            notes_by_stage=notes,
+            progress=_heartbeat(project.root / "reports" / "ledger.jsonl"),
+        )
     except RunnerError as e:
         console.print(f"[red]{e}[/red]")
         raise typer.Exit(1) from e
@@ -132,6 +139,53 @@ def _adapter_for(project):
         cache_dir=cache_dir,
         ledger_path=project.root / "reports" / "ledger.jsonl",
     )
+
+
+def _ledger_totals(ledger_path: FSPath) -> dict:
+    """Aggregate the spend ledger: call counts and token totals. Token
+    counts are the honest unit — the ledger records no prices, and a
+    price table here would rot (design doc 03 §5)."""
+    from questfoundry.llm import ledger
+
+    entries = ledger.read(ledger_path)
+    return {
+        "calls": len(entries),
+        "cached": sum(1 for e in entries if e.get("cached")),
+        "input_tokens": sum(e.get("input_tokens", 0) for e in entries),
+        "output_tokens": sum(e.get("output_tokens", 0) for e in entries),
+        "last_ts": entries[-1].get("ts") if entries else None,
+    }
+
+
+def _tokens(n: int) -> str:
+    return f"{n / 1000:.1f}k" if n >= 10_000 else str(n)
+
+
+def _heartbeat(ledger_path: FSPath):
+    """A flushed one-line-per-pass heartbeat on stderr (roadmap §M10):
+    stdout stays the report stream, and stderr writes are unbuffered, so
+    a piped or logged run still shows its pulse pass by pass."""
+    import sys
+
+    def emit(ev) -> None:
+        if ev.status == "start":
+            line = f"{ev.stage.value} [{ev.index}/{ev.total}] {ev.name} ..."
+        else:
+            attempts = f" attempts={ev.attempts}" if ev.attempts > 1 else ""
+            t = _ledger_totals(ledger_path)
+            spend = (
+                f" | {t['calls']} calls ({t['cached']} cached), "
+                f"{_tokens(t['input_tokens'])} in / {_tokens(t['output_tokens'])} out"
+                if t["calls"]
+                else ""
+            )
+            line = (
+                f"{ev.stage.value} [{ev.index}/{ev.total}] "
+                f"{ev.name} {ev.status}{attempts}{spend}"
+            )
+        print(line, file=sys.stderr, flush=True)
+
+    return emit
 
 
 def _print_reports(reports) -> bool:
@@ -212,6 +266,7 @@ def rerun(
         adapter,
         notes=project.steering.get(target.value, ""),
         keep={name: recorded[name] for name in keep},
+        progress=_heartbeat(project.root / "reports" / "ledger.jsonl"),
     )
     if not _print_reports([report]):
         raise typer.Exit(1)
@@ -511,7 +566,8 @@ def simulate(
 
 @app.command()
 def status(directory: FSPath = typer.Argument(FSPath("."))) -> None:
-    """Show a project's stage and node counts."""
+    """Show a project's stage, node counts, LLM spend, and any
+    interrupted in-flight run (roadmap §M10 progress reporting)."""
     project = load_project(directory)
     g = project.graph
     table = Table(title=f"{project.name} — stage: {project.stage.value}")
@@ -525,6 +581,46 @@ def status(directory: FSPath = typer.Argument(FSPath("."))) -> None:
     table.add_row("arcs (computed)", str(len(queries.arc_selections(g))))
     table.add_row("topology frozen", "yes" if g.frozen else "no")
     console.print(table)
+
+    t = _ledger_totals(project.root / "reports" / "ledger.jsonl")
+    if t["calls"]:
+        console.print(
+            f"llm spend: {t['calls']} calls ({t['cached']} cached), "
+            f"{_tokens(t['input_tokens'])} in / {_tokens(t['output_tokens'])} out"
+            + (f" — last call {t['last_ts']}" if t["last_ts"] else "")
+        )
+
+    # An inflight/<stage>/ directory is an interrupted run: the ledger
+    # is consumed at the gate-passing checkpoint (mini-ADR A16), so its
+    # presence means the stage started and never checkpointed. Re-running
+    # `qf run` resumes the journaled passes without new LLM calls.
+    inflight_root = project.root / "inflight"
+    if inflight_root.is_dir():
+        from datetime import UTC, datetime
+
+        for stage_dir in sorted(p for p in inflight_root.iterdir() if p.is_dir()):
+            proposals = sorted(
+                (stage_dir / "proposals").glob("*.json"), key=lambda p: p.stat().st_mtime
+            )
+            if proposals:
+                import json as jsonlib
+
+                last = proposals[-1]
+                try:
+                    last_name = jsonlib.loads(last.read_text(encoding="utf-8"))["pass"]
+                except (ValueError, KeyError, TypeError, OSError):
+                    # torn ledger entry (crash mid-write): best-effort name
+                    last_name = last.stem.replace("__", ":")
+                last_ts = datetime.fromtimestamp(last.stat().st_mtime, tz=UTC).isoformat(
+                    timespec="seconds"
+                )
+                detail = f"{len(proposals)} pass(es) journaled, last {last_name!r} at {last_ts}"
+            else:
+                detail = "no passes journaled yet"
+            console.print(
+                f"[yellow]in-flight: {stage_dir.name} — {detail}; "
+                "re-run qf run to resume free[/yellow]"
+            )
 
 
 @app.command()

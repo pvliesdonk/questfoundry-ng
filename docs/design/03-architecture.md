@@ -317,6 +317,14 @@ Roadmap milestone M6 owns it; contract details in
   02 §1 bias vector (exemplars belong at the voice pass as a
   contrasting spread; live run 7 hit this). A first-class reserved
   exemplar mechanism is future work (STATUS next-up).
+- **A curated corpus ships in the repo.** `corpus/interactive-fiction/`
+  vendors the eight non-exemplar clusters of the author's IF-craft
+  corpus (55 notes; see `corpus/README.md` for scope and provenance),
+  so corpus-grounded runs and retrieval tests are reproducible without
+  vault access (author call, 2026-07-12). The style-exemplars cluster
+  stays out of the repo until M9's reserved exemplar mechanism exists
+  to consume it safely. The engine remains corpus-agnostic — this is a
+  default corpus, not a privileged one.
 - **Determinism rules.** Search results feed prompt bytes, so retrieval
   runs once per stage (inside the research pass's apply — replay
   re-retrieves identically), and the persisted `research/<stage>.md` is

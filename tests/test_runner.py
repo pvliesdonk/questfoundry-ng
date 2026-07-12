@@ -340,3 +340,74 @@ def test_run_pipeline_missing_impl_raises_with_stage_name(tmp_path, monkeypatch)
 
     with pytest.raises(runner.RunnerError, match="brainstorm"):
         runner.run_pipeline(project, Stage.BRAINSTORM, {Stage.DREAM: dream_impl}, adapter)
+
+
+def test_progress_events_trace_the_stage(tmp_path, monkeypatch):
+    """The heartbeat seam (roadmap §M10): one event at pass start, one at
+    resolution, with 1-based index over the full pass list — skipped
+    passes included, so m/n never jumps."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    noop = PassSpec(
+        name="noop",
+        role="utility",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=lambda proposal, project: [],
+        skip_if=lambda project: "nothing to do",
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(noop, _vision_pass()), gate=lambda project: [])
+    adapter = FakeAdapter([VisionProposal(audience="teens")])
+    events = []
+
+    report = runner.run_stage(project, impl, adapter, progress=events.append)
+
+    assert report.success
+    assert [(e.index, e.total, e.name, e.status) for e in events] == [
+        (1, 2, "noop", "skipped"),
+        (2, 2, "vision", "start"),
+        (2, 2, "vision", "done"),
+    ]
+    assert events[-1].attempts == 1
+    assert all(e.stage == Stage.DREAM for e in events)
+
+
+def test_progress_reports_failed_pass(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+
+    def bad_apply(proposal, project):
+        raise ApplyError("nope")
+
+    bad = PassSpec(
+        name="bad",
+        role="utility",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=bad_apply,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(bad,), gate=lambda project: [])
+    adapter = FakeAdapter([VisionProposal(audience="x")])
+    events = []
+
+    report = runner.run_stage(project, impl, adapter, max_repairs=0, progress=events.append)
+
+    assert not report.success
+    assert [e.status for e in events] == ["start", "failed"]
+
+
+def test_progress_reports_kept_pass(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    impl = StageImpl(stage=Stage.DREAM, passes=(_vision_pass(),), gate=lambda project: [])
+    adapter = FakeAdapter([])  # a kept pass must not reach the adapter
+    events = []
+
+    report = runner.run_stage(
+        project, impl, adapter, keep={"vision": {"audience": "teens"}}, progress=events.append
+    )
+
+    assert report.success
+    assert [(e.name, e.status) for e in events] == [("vision", "kept")]

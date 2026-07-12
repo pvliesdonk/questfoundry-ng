@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import shutil
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -29,7 +30,13 @@ from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from questfoundry.graph.mutations import MutationError
 from questfoundry.models.base import Stage
 from questfoundry.pipeline.research import corpus_fingerprint, corpus_root, digest_body
-from questfoundry.pipeline.types import ApplyError, PassReport, StageImpl, StageReport
+from questfoundry.pipeline.types import (
+    ApplyError,
+    PassProgress,
+    PassReport,
+    StageImpl,
+    StageReport,
+)
 from questfoundry.project.io import Project, save_project
 
 PROMPTS_DIR = Path(__file__).parent / "prompts"
@@ -326,6 +333,7 @@ def run_stage(
     notes: str = "",
     max_repairs: int = 2,
     keep: dict[str, dict] | None = None,
+    progress: Callable[[PassProgress], None] | None = None,
 ) -> StageReport:
     _require_predecessor(project, impl)
     env = _environment()
@@ -334,26 +342,50 @@ def run_stage(
     )
 
     passes = impl.passes(project) if callable(impl.passes) else impl.passes
+    total = len(passes)
+
+    def emit(index: int, name: str, status: str, attempts: int = 0) -> None:
+        if progress is not None:
+            progress(
+                PassProgress(
+                    stage=impl.stage,
+                    name=name,
+                    index=index,
+                    total=total,
+                    status=status,
+                    attempts=attempts,
+                )
+            )
+
     pass_reports: list[PassReport] = []
-    for spec in passes:
+    for index, spec in enumerate(passes, start=1):
         if spec.skip_if is not None and (reason := spec.skip_if(project)):
             pass_reports.append(
                 PassReport(name=spec.name, attempts=0, applied=[f"skipped: {reason}"])
             )
+            emit(index, spec.name, "skipped")
             continue
         if keep and spec.name in keep:
             result = _run_kept_pass(project, spec, keep[spec.name])
+            status = "kept"
         elif spec.name in resume:
             result = _run_kept_pass(project, spec, resume[spec.name], label="resumed")
+            status = "resumed"
             if isinstance(result, str):
                 stale_note = result
+                emit(index, spec.name, "start")
                 result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
+                status = "done"
                 if isinstance(result, PassReport):
                     result.applied.insert(0, f"stale in-flight proposal discarded ({stale_note})")
         else:
+            emit(index, spec.name, "start")
             result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
+            status = "done"
         if isinstance(result, str):
+            emit(index, spec.name, "failed")
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)
+        emit(index, spec.name, status, attempts=result.attempts)
         pass_reports.append(result)
         if result.proposal is not None:
             _record_inflight(project.root, impl.stage, result)
@@ -427,6 +459,7 @@ def run_pipeline(
     *,
     notes_by_stage: dict[Stage, str] | None = None,
     max_repairs: int = 2,
+    progress: Callable[[PassProgress], None] | None = None,
 ) -> list[StageReport]:
     notes_by_stage = notes_by_stage or {}
     stages = [s for s in Stage if project.stage.order < s.order <= to.order]
@@ -439,7 +472,12 @@ def run_pipeline(
                 f"no implementation registered for stage {stage.value!r} (not built yet)"
             )
         report = run_stage(
-            project, impl, adapter, notes=notes_by_stage.get(stage, ""), max_repairs=max_repairs
+            project,
+            impl,
+            adapter,
+            notes=notes_by_stage.get(stage, ""),
+            max_repairs=max_repairs,
+            progress=progress,
         )
         reports.append(report)
         if not report.success:

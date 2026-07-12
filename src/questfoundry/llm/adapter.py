@@ -104,26 +104,38 @@ def _extract_json(text: str) -> str:
     return stripped[start:]
 
 
+def format_validation_error(exc: ValidationError, *, limit: int = 12) -> str:
+    """Render a pydantic ValidationError as an actionable field-by-field
+    brief — never the raw multi-line dump, which buries the field and
+    message under pydantic internals (`type=string_too_short`, `input_type`).
+    Each part names the field, what is wrong, and what was seen (heritage
+    semantic-conventions §Error Messages: reason + subject). The single
+    renderer for the whole codebase: the adapter's schema-retry brief and
+    every apply-layer 'invalid X' error share it, so the two never drift
+    (`pipeline.types` re-exports it for the apply layer)."""
+    errors = exc.errors()
+    parts = []
+    for err in errors[:limit]:
+        loc = ".".join(str(p) for p in err["loc"]) or "<root>"
+        got = repr(err.get("input"))
+        if len(got) > 120:
+            got = got[:120] + "…"
+        parts.append(f"`{loc}`: {err['msg']} (got {got})")
+    if len(errors) > limit:
+        parts.append(f"…and {len(errors) - limit} more like these")
+    return "; ".join(parts)
+
+
 def _repair_feedback(exc: Exception) -> str:
     """Render a failed attempt as a correction brief: what went wrong,
     where, and what was expected — never a raw exception dump. Only the
     retry path sees this, so it costs nothing when the first attempt is
     valid; weaker models need the specifics to actually correct."""
     if isinstance(exc, ValidationError):
-        errors = exc.errors()
-        lines = []
-        for err in errors[:12]:
-            loc = ".".join(str(p) for p in err["loc"]) or "<root>"
-            got = repr(err.get("input"))
-            if len(got) > 120:
-                got = got[:120] + "…"
-            lines.append(f"- at `{loc}`: {err['msg']} (got: {got})")
-        if len(errors) > 12:
-            lines.append(f"- …and {len(errors) - 12} more problem(s) like the above")
         return (
-            "Your previous response was invalid JSON for the schema. Problems found:\n"
-            + "\n".join(lines)
-            + "\nKeep the same content, corrected so every listed field satisfies the "
+            "Your previous response was invalid JSON for the schema. Problems found: "
+            + format_validation_error(exc)
+            + ". Keep the same content, corrected so every listed field satisfies the "
             "JSON Schema above (exact field names, types, and required fields). "
             "Return ONLY corrected JSON."
         )

@@ -128,6 +128,13 @@ def _voice_context(project: Project) -> dict:
 # ("you"/"I"/…) is not a name — only a proper name must resolve to the cast.
 _POV_PAREN_RE = re.compile(r"\(([^)]+)\)")
 _POV_PRONOUNS = {"you", "i", "we", "he", "she", "they", "me", "us"}
+# Common connective tokens in names ("The Sleeper", "Ada of the Marsh") that
+# must not, alone, make two different names look like a match.
+_NAME_STOPWORDS = {"the", "a", "an", "of", "de", "van", "von"}
+
+
+def _name_tokens(text: str) -> set[str]:
+    return {t for t in re.findall(r"[a-z0-9']+", text.lower()) if t not in _NAME_STOPWORDS}
 
 
 def _check_pov_names_the_cast(pov: str, project: Project) -> None:
@@ -147,11 +154,14 @@ def _check_pov_names_the_cast(pov: str, project: Project) -> None:
         for e in project.graph.nodes_of(Entity)
         if e.retained and e.category == EntityCategory.CHARACTER and e.name
     ]
-    # The cast stores full names ("Maren Voss"); the pov may name the short
-    # form ("Maren"). Accept when the named token is part of a cast name (or
-    # vice versa); reject a name that matches none (the Maren-over-Marin bug).
-    named_l = named.lower()
-    if not any(named_l in n.lower() or n.lower() in named_l for n in names):
+    # Match on whole name tokens, not raw substrings: the cast stores full
+    # names ("Maren Voss") and the pov may use the short form ("Maren"), so a
+    # shared token is enough — but "Maren" must not match "Marin Voss" (the
+    # bug), and a short cast name like "Ann" must not match a coined "Anna"
+    # (the mirror bug: substring containment would, token equality does not).
+    named_tokens = _name_tokens(named)
+    cast_tokens = [_name_tokens(n) for n in names]
+    if named_tokens and not any(named_tokens & toks for toks in cast_tokens):
         raise ApplyError(
             f"the POV names {named!r}, who is not a character in this story; a "
             "limited POV must name its viewpoint character with the exact cast "

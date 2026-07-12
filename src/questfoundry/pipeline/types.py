@@ -13,11 +13,14 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 
 from questfoundry.graph.validate import Issue, Severity
+from questfoundry.llm.adapter import format_validation_error
 from questfoundry.models.base import Stage
 from questfoundry.project.io import Project
+
+__all__ = ["format_validation_error"]  # re-exported for the apply layer
 
 ModelRole = Literal["architect", "writer", "utility"]
 
@@ -25,28 +28,6 @@ ModelRole = Literal["architect", "writer", "utility"]
 class ApplyError(Exception):
     """A proposal could not be applied. The message is human/model-readable
     and is fed back to the model verbatim for a repair attempt."""
-
-
-def format_validation_error(exc: ValidationError) -> str:
-    """Render a pydantic ValidationError as an actionable field-by-field
-    brief for a model to repair against — never the raw multi-line dump,
-    which buries the field and message under pydantic internals
-    (`type=string_too_short`, `input_type`). Each part names the field,
-    what is wrong, and what was seen (heritage semantic-conventions
-    §Error Messages: reason + subject). Used at apply-layer sites that
-    build a domain model from proposal fields; the adapter renders schema
-    ValidationErrors the same way on its retry path."""
-    errors = exc.errors()
-    parts = []
-    for err in errors[:12]:
-        loc = ".".join(str(p) for p in err["loc"]) or "<root>"
-        got = repr(err.get("input"))
-        if len(got) > 120:
-            got = got[:120] + "…"
-        parts.append(f"{loc}: {err['msg']} (got {got})")
-    if len(errors) > 12:
-        parts.append(f"…and {len(errors) - 12} more like these")
-    return "; ".join(parts)
 
 
 def resolve_entity_ref(g: Any, ref: str) -> str:

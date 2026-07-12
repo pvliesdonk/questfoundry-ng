@@ -939,6 +939,34 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (pipeline-wide prompt-quality sweep — "FILL was a
+  symptom", author-directed):** After the FILL fixes landed, the author's
+  point: the same blunt-prompt disease runs through every stage. Five
+  parallel graders swept all pipeline prompts + context + apply against
+  the `AGENTS.md` rule. **The pattern is confirmed pipeline-wide**: a rule
+  is stated but the enabling data is withheld from the context, or the
+  rule is not enforced at apply — trusting the model to reconstruct what a
+  strong tier can and a weak one can't. High-severity fixes landed:
+  `polish_finalize.j2` states coined beat ids must be fresh/unique (the
+  prompt-side twin of the engine fix); `grow_contextualize.j2` renders the
+  entities its "keep the same entities" rule required but withheld;
+  `dress_codex_review.j2` gets `fill_review`'s three-part rule-matching;
+  `brainstorm.j2` states the output dilemma count plainly; FILL's voice
+  pass now validates the pov's named character against the cast (the
+  Maren/Marin bug, enforced with token — not substring — matching);
+  `dream.py` bounds themes to 2-4; and the Class 1 raw-`ValidationError`
+  dumps route through one shared `format_validation_error` (owned by the
+  adapter, re-exported to the apply layer, so the two never drift — a
+  review caught that duplicating it was the very failure the sweep is
+  about). Full graded inventory + the deferred medium apply-guards in
+  `docs/plans/error-message-audit.md`. **The live medium Gemini run that
+  was meant to validate these + finish the recurrence read hit the
+  project's Gemini spend cap (`RESOURCE_EXHAUSTED`) mid-FILL** — a billing
+  limit, not a code failure — so the scaled recurrence verdict and live
+  validation of the prompt fixes both remain open (next-up #1). It did
+  clear POLISH finalize cleanly on Gemini and wrote several FILL passages
+  before the cap. 490 tests.
+
 - **2026-07-12 (#1a live validation → the prompt-quality reckoning,
   author-directed):** The prose-quality live validation ran two fresh
   stories — `thaw-between` (medium, Gemini strong map, grounded on the

@@ -287,9 +287,39 @@ def test_voice_pov_name_is_validated_against_the_cast(golden_fill):
 
     # golden cast: "Elias Wren", "Maren Voss", "The Sleeper"
     _check_pov_names_the_cast("third person limited (Maren)", golden_fill)  # short form OK
+    _check_pov_names_the_cast("third person limited (Elias Wren)", golden_fill)  # full name OK
     _check_pov_names_the_cast("second person ('you')", golden_fill)  # pronoun — not checked
     with pytest.raises(ApplyError, match="not a character"):
         _check_pov_names_the_cast("third person limited (Nadia)", golden_fill)
+    # token matching, not substring: a coined name must not pass merely because
+    # a real name is a substring of it (the mirror of the Maren/Marin bug).
+    with pytest.raises(ApplyError, match="not a character"):
+        _check_pov_names_the_cast("third person limited (Marenda)", golden_fill)
+
+
+def test_pov_name_check_token_match_avoids_short_name_false_positive(tmp_path):
+    """A short cast name ('Ada') must not validate a coined 'Adam' for a
+    different character — substring containment would, token equality does
+    not (the review's short-name mirror bug)."""
+    from questfoundry.graph import mutations
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage
+    from questfoundry.models.concept import Vision
+    from questfoundry.models.world import Entity
+    from questfoundry.pipeline import ApplyError
+    from questfoundry.pipeline.stages.fill import _check_pov_names_the_cast
+    from questfoundry.project.io import Project
+
+    g = StoryGraph()
+    # category is derived from the id's kind prefix (character:…)
+    mutations.add_entity(
+        g, Entity(id="character:ada", created_by=Stage.BRAINSTORM, name="Ada", concept="c")
+    )
+    vision = Vision(premise="p", genre="g", tone="t")
+    project = Project(root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g)
+    _check_pov_names_the_cast("third person limited (Ada)", project)  # the real character
+    with pytest.raises(ApplyError, match="not a character"):
+        _check_pov_names_the_cast("third person limited (Adam)", project)
 
 
 def _diamond_graph(reverse_wiring: bool):

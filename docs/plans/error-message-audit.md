@@ -111,9 +111,10 @@ Fixes applied this pass are checked below; the rest are tracked here.
       show the match; figurative language named as taste). Prompt-source test.
 - [x] `fill_write.j2` non-POV-character rendering (POINT OF VIEW IS LIMITED;
       externalize non-narrator interiority). Prompt-source test.
-- [ ] **Class 1 (raw-exception dumps)** graded acceptable-but-improvable:
-      the interpolated `{e}` is a pydantic `ValidationError` (semi-structured,
-      names the field/constraint), not a bare KeyError. Lower priority than
-      Class 2; render via a correction-brief helper when touched next.
+- [x] **Class 1 (raw-exception dumps) fixed sitewide**: all eight
+      `f"invalid X: {e}"` sites now route the `ValidationError` through one
+      shared `format_validation_error` (owned by `llm/adapter.py`,
+      re-exported by `pipeline/types.py`, so the adapter's schema-retry
+      brief and the apply-layer errors share one renderer and never drift).
 - [ ] Live validation of the two prompt fixes (a completing FILL run on both
       tiers; the runs that surfaced the failures died before completing).

@@ -364,9 +364,10 @@ only passes marginal prose, which the deterministic echo/word-budget
 checks still guard; a wrong halt was the failure this contract removed.)
 The **producer** receives every finding on a rework (full fidelity,
 labeled) and decides how to act: a `fail` is blocking, a `warn` or
-low-confidence finding is weighed, not mandated. Review rounds are still anchored on the previous rounds'
-findings (persistence is signal; all-new complaints each round are
-usually taste), and a second rework escalates once to an architect-tier
+low-confidence finding is weighed, not mandated. Review rounds are still
+anchored on the previous rounds' findings (persistence is signal; all-new
+complaints each round are usually taste), and a second rework escalates
+once to an architect-tier
 arbitration emitting the same schema — a genuinely stronger judge on a
 mixed model map. One extra frontier call on the rare contested passage
 buys the halt its meaning.

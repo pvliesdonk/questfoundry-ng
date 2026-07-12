@@ -506,3 +506,21 @@ Changed:
 4. **Budgets are first-class.** Scope presets bind hard numbers (dilemma
    counts, beats per path, passage ranges) that gates check, making cost a
    contract instead of an emergent property.
+5. **Character-arc metadata is spine-indexed, not path-indexed.** The
+   original (`docs/heritage/story-graph-ontology.md`, "Character Arc
+   Metadata") stores one pivot **per path** plus per-path `arc_line` and
+   `arc_type` records, dual-indexed with a must-agree constraint. NG's
+   `EntityArc` is `begins` + an **ordered list of pivots anchored to
+   beats** + `ends` per path: a turn every reader experiences (a shared
+   spine beat) is stated once instead of repeated per path, multiple
+   turns along one route are expressible, and a per-path turn is still
+   expressible by anchoring a pivot to a path-exclusive beat — FILL
+   activates a pivot only when its beat is upstream of the passage, so a
+   reader's route turns on exactly the pivots it passed. The redundant
+   dual index (and its consistency rule) is dropped for the same reason
+   arcs are computed rather than stored. `arc_line` is derived
+   (begins → pivots → ends), never stored; `arc_type` is implicit in the
+   entity's category. Deliberately narrower than the original for now:
+   only characters and objects are arc-worthy — the original also arcs
+   locations ("atmosphere") and factions ("relationship"); widen if a
+   run shows prose pacing needs it (the §10.3 trigger discipline).

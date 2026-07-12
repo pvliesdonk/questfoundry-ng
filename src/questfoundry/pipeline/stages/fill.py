@@ -501,12 +501,22 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
 
 
 def _write_apply_for(
-    passage_id: str, prior_facts: dict[tuple[str, str], str | None] | None = None
+    passage_id: str,
+    prior_facts: dict[tuple[str, str], str | None] | None = None,
+    last_draft: dict | None = None,
 ):
     prior_facts = {} if prior_facts is None else prior_facts
 
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         g = project.graph
+        # Stash this draft for the next rework round BEFORE any check can
+        # raise, so an apply-stage rejection (word budget, echo) shows the
+        # writer what it wrote just as a review rejection does — otherwise the
+        # writer re-derives blind and re-lands the same too-short/echoing draft
+        # (live gpt-oss:120b: group-9 exhausted repairs 6 words under the band).
+        # Harmless on success: the box is only read on a rework of this passage.
+        if last_draft is not None:
+            last_draft["prose"] = proposal.prose
         passage = g.node(passage_id)
         assert isinstance(passage, Passage)
         beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
@@ -620,9 +630,7 @@ def _micro_review(g, proposal: WriteProposal, prior_facts: dict) -> list[dict]:
 
 
 def _review_for(
-    passage_id: str,
-    prior_facts: dict[tuple[str, str], str | None] | None = None,
-    last_draft: dict | None = None,
+    passage_id: str, prior_facts: dict[tuple[str, str], str | None] | None = None
 ):
     prior_facts = {} if prior_facts is None else prior_facts
     # each round is anchored on what earlier rounds flagged: an amnesiac
@@ -681,12 +689,9 @@ def _review_for(
                 return []
             issues = final_issues
         prior.extend(issues)
-        # this draft is rejected — hand it to the next rework round so the
-        # writer revises it rather than re-deriving blind (the adapter keeps
-        # no history). Only the rework path stashes; on accept there is no
-        # next attempt.
-        if last_draft is not None:
-            last_draft["prose"] = proposal.prose
+        # note: the rejected draft is stashed by _write_apply_for (which runs
+        # before this review), so it reaches the next rework round for both
+        # apply- and review-stage rejections.
         return issues
 
     return review
@@ -729,8 +734,8 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 template="fill_write.j2",
                 schema=write_schema,
                 build_context=_write_context_for(passage_id, last_draft),
-                apply=_write_apply_for(passage_id, prior_facts),
-                review=_review_for(passage_id, prior_facts, last_draft),
+                apply=_write_apply_for(passage_id, prior_facts, last_draft),
+                review=_review_for(passage_id, prior_facts),
             )
         )
         # the rolling story-so-far entry rides right behind the accepted

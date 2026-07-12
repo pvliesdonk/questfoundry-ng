@@ -570,12 +570,15 @@ def test_write_proposal_carries_per_finding_revision_notes():
 
 def test_rejected_draft_reaches_the_next_write_prompt(golden_fill):
     """The adapter is stateless — each rework is a fresh call with no memory of
-    the prior attempt — so a failing review stashes the rejected draft into a
-    shared box the next write render surfaces (rework-convergence lever)."""
+    the prior attempt — so apply stashes the attempted draft into a shared box
+    the next write render surfaces. It stashes BEFORE any check raises, so an
+    apply-stage rejection (the word-budget miss that halted group-9) feeds the
+    draft forward just as a review rejection does."""
     from questfoundry.pipeline import runner
 
     env = runner._environment()
     last_draft: dict = {"prose": None}
+    apply = _write_apply_for("passage:p-arrival", {}, last_draft)
     ctx = _write_context_for("passage:p-arrival", last_draft)(golden_fill)
 
     # round 1: no previous draft yet
@@ -584,22 +587,18 @@ def test_rejected_draft_reaches_the_next_write_prompt(golden_fill):
     )
     assert "PREVIOUS DRAFT WAS REJECTED" not in r1
 
-    rejected = "A rejected opening about the arrival on the rock. " + "filler " * 200
-    review = _review_for("passage:p-arrival", {}, last_draft)
-
-    class Fail:
-        def complete(self, *, system, prompt, schema, role):
-            return _verdict(_finding("beat gap"))
-
-    review(WriteProposal(prose=rejected), golden_fill, Fail())
-    assert last_draft["prose"] == rejected
+    # a too-short draft fails apply on the word budget — and is still stashed
+    too_short = "A rejected two-line draft about the arrival on the cold rock."
+    with pytest.raises(ApplyError, match="budget"):
+        apply(WriteProposal(prose=too_short), golden_fill)
+    assert last_draft["prose"] == too_short
 
     # round 2: the same context (holding the live box) now surfaces the draft
     r2 = env.get_template("fill_write.j2").render(
         **ctx, notes="", repair_errors=["a finding"], research=""
     )
     assert "PREVIOUS DRAFT WAS REJECTED" in r2
-    assert "A rejected opening about the arrival on the rock." in r2
+    assert too_short in r2
 
 
 def test_review_renders_the_writers_revision_notes(golden_fill):

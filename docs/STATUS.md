@@ -991,10 +991,18 @@ PR #5) and this agent/doc infrastructure (PR #6).
   change it made per finding, and `fill_review.j2` has the reviewer **verify
   each claim against the prose** (a claimed-but-absent fix is itself a defect).
   `revision_notes` are reviewer-facing only — not applied, so replay stays
-  deterministic. 509 tests, ruff clean, golden 0/0. **Open**: gpt-oss:120b
-  rerun to confirm FILL now converges past group-1 into DRESS codex review.
-  Deferred: beat over-choreography (a GROW/POLISH granularity question) — only
-  if the writer levers prove insufficient.
+  deterministic. **Validated live (gpt-oss:120b): FILL went from dying at
+  group-1 to reaching pass 21/22** — every review-based rework converged
+  (group-1 cleared, group-2 reworked-and-passed). It then died at `write:group-9`
+  on a *mechanical* word-budget apply failure (114 words vs a 150-550 band),
+  which exposed that the rejected draft was fed forward only on *review*
+  rejections, not *apply* ones. Fixed in the same PR: the draft is now stashed
+  in `_write_apply_for` **before any check raises**, so an apply-stage rejection
+  (word budget, echo) shows the writer its draft to expand/edit rather than
+  re-derive blind. 509 tests, ruff clean, golden 0/0. **Open**: rerun to confirm
+  group-9 now converges into DRESS codex review. Deferred: beat
+  over-choreography (a GROW/POLISH granularity question) — only if the writer
+  levers prove insufficient.
 
 - **2026-07-12 (micro-detail system redesigned — it fired too often for
   *adding*, author-directed):** The live gpt-oss:120b run's FILL death

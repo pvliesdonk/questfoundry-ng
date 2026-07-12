@@ -520,7 +520,12 @@ Changed:
    dual index (and its consistency rule) is dropped for the same reason
    arcs are computed rather than stored. `arc_line` is derived
    (begins → pivots → ends), never stored; `arc_type` is implicit in the
-   entity's category. Deliberately narrower than the original for now:
-   only characters and objects are arc-worthy — the original also arcs
-   locations ("atmosphere") and factions ("relationship"); widen if a
-   run shows prose pacing needs it (the §10.3 trigger discipline).
+   entity's category. Arc-worthiness matches the original: **every
+   retained entity is arc-eligible** (author doctrine, 2026-07-12: a
+   character without an arc is an extra, a location a backdrop, an
+   object a mcguffin, a faction a link — any of them can be given
+   choices). The arcs pass decides which entities to arc; leaving one
+   unarced deliberately declares it scenery. The category flavors
+   (character transforms, a location's atmosphere shifts, an object's
+   significance moves, a faction's relationship moves) are prompt
+   guidance, not schema.

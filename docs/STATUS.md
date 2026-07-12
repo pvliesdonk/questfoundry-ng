@@ -609,15 +609,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
-- **Arc-worthiness scope is narrower than the heritage ontology**
-  (author decision pending, 2026-07-11 — see the arc-shape decision-log
-  entry): NG arcs characters and objects; the original also arcs
-  locations ("atmosphere") and factions ("relationship"), and stores an
-  explicit per-path `arc_line`/`arc_type` NG derives instead. Widening
-  is cheap (`_arc_entities` + prompt guidance) if a run shows the prose
-  needs paced atmosphere/relationship development; storing `arc_line`
-  would reintroduce a redundancy NG deliberately dropped — take that
-  one only with a demonstrated gap.
+- ~~Arc-worthiness scope is narrower than the heritage ontology~~
+  **Settled by the author** (2026-07-12, decision log): every retained
+  entity is arc-eligible — a character without an arc is an extra, a
+  location a backdrop, an object a mcguffin, a faction a link.
+  `_arc_entities` widened, prompt carries the doctrine and the
+  per-category flavors, golden lighthouse carries an atmosphere arc.
+  Still derived, never stored: `arc_line`/`arc_type` (unchanged — take
+  storage only with a demonstrated gap).
 
 - ~~**Ollama backend live validation is pending**~~ **Validated live**
   (2026-07-11, on `athena.int.liesdonk.nl:11434` — RTX 4060/8GB + 128GB;
@@ -898,6 +897,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-12 (arc-worthiness settled by the author):** "A character
+  without an arc is an extra, a location without an arc is a backdrop,
+  an object without an arc is a mcguffin, a relation without an arc is
+  a link — all of those can be given *choices*." Every retained entity
+  is now arc-eligible (`_arc_entities` drops the category filter),
+  matching the heritage ontology's scope; the polish_arcs prompt
+  carries the doctrine — leaving an entity unarced deliberately
+  declares it scenery — and the per-category flavors (transformation /
+  atmosphere / significance / relationship) as guidance, not schema.
+  01 §10 departure 5 updated (the pivot-shape departure stands; the
+  narrower-scope clause is gone). Golden story: the Stilt Light gains
+  an atmosphere arc pivoting at `beat:tremor`, so a location arc is
+  exercised through FILL's arc-position rendering. e2e fixtures
+  untouched — the recorded arcs proposal stays valid under a widened
+  enum.
 
 - **2026-07-11 (arc shape vs the heritage ontology — author challenge,
   post-merge of #49):** The author didn't recognize the built

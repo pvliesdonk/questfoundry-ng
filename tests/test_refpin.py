@@ -201,13 +201,14 @@ def test_fill_write_pins_micro_detail_entity_with_slug_affordance(golden):
 
 def test_polish_arcs_pins_entities_beats_and_paths(golden):
     """The arcs pass (plan: docs/plans/prose-quality.md W5): `entity` is
-    pinned to arc-worthy entities (characters/objects + unambiguous
-    slugs), `pivots[].beat` to real beats, `ends[].path` to explored
-    paths — a location or an invented beat is unrepresentable."""
+    pinned to every retained entity (author doctrine 2026-07-12: all
+    four categories are arc-eligible — unarced means scenery), plus
+    unambiguous slugs; `pivots[].beat` to real beats, `ends[].path` to
+    explored paths — an invented reference is unrepresentable."""
     defs = polish.arcs_proposal_schema(golden).model_json_schema()["$defs"]
     entity_enum = set(defs["ArcSpec"]["properties"]["entity"]["enum"])
     assert "character:keeper" in entity_enum and "keeper" in entity_enum
-    assert "location:lighthouse" not in entity_enum and "lighthouse" not in entity_enum
+    assert "location:lighthouse" in entity_enum and "lighthouse" in entity_enum
     assert "beat:returned-boat" in set(defs["ArcPivotSpec"]["properties"]["beat"]["enum"])
     assert set(defs["PathEndSpec"]["properties"]["path"]["enum"]) == {
         "path:tell",

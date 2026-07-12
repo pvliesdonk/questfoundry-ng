@@ -26,7 +26,7 @@ out-of-repo exports; (2) **M10's progress reporting is pulled forward**
 runner emits `PassProgress` events through a CLI-agnostic callback
 seam, `qf run`/`qf rerun` print a flushed per-pass heartbeat on stderr
 (pass m/n, attempts, running ledger totals), and `qf status` shows
-spend and any interrupted stage's in-flight ledger state. 465 tests.
+spend and any interrupted stage's in-flight ledger state. 467 tests.
 
 **The prose-quality-at-scale engine is built** (2026-07-11, the frontier
 session next-up #1 called for; plan doc

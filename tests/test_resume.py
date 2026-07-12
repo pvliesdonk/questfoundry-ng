@@ -304,3 +304,21 @@ def test_colon_pass_names_round_trip_in_the_ledger(tmp_path, monkeypatch):
     assert report.success
     assert report.passes[0].name == "write:the-lamp"
     assert report.passes[0].applied == ["resumed: added character:ada"]
+
+
+def test_progress_reports_resumed_pass(tmp_path, monkeypatch):
+    """A resumed pass emits a single "resumed" event — no "start", since
+    no LLM call happens; the live passes around it heartbeat normally."""
+    project = _crash_mid_stage(tmp_path, monkeypatch)
+    project = load_project(tmp_path)
+    adapter = FakeAdapter([EntityProposal(name="bea")])
+    events = []
+
+    report = runner.run_stage(project, _two_pass_impl(), adapter, progress=events.append)
+
+    assert report.success
+    assert [(e.name, e.status) for e in events] == [
+        ("first", "resumed"),
+        ("second", "start"),
+        ("second", "done"),
+    ]

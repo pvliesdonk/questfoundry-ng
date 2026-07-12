@@ -603,8 +603,14 @@ def status(directory: FSPath = typer.Argument(FSPath("."))) -> None:
                 (stage_dir / "proposals").glob("*.json"), key=lambda p: p.stat().st_mtime
             )
             if proposals:
+                import json as jsonlib
+
                 last = proposals[-1]
-                last_name = last.stem.replace("__", ":")
+                try:
+                    last_name = jsonlib.loads(last.read_text(encoding="utf-8"))["pass"]
+                except (ValueError, KeyError, TypeError, OSError):
+                    # torn ledger entry (crash mid-write): best-effort name
+                    last_name = last.stem.replace("__", ":")
                 last_ts = datetime.fromtimestamp(last.stat().st_mtime, tz=UTC).isoformat(
                     timespec="seconds"
                 )

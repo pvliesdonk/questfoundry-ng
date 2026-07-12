@@ -396,3 +396,18 @@ def test_progress_reports_failed_pass(tmp_path, monkeypatch):
 
     assert not report.success
     assert [e.status for e in events] == ["start", "failed"]
+
+
+def test_progress_reports_kept_pass(tmp_path, monkeypatch):
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    impl = StageImpl(stage=Stage.DREAM, passes=(_vision_pass(),), gate=lambda project: [])
+    adapter = FakeAdapter([])  # a kept pass must not reach the adapter
+    events = []
+
+    report = runner.run_stage(
+        project, impl, adapter, keep={"vision": {"audience": "teens"}}, progress=events.append
+    )
+
+    assert report.success
+    assert [(e.name, e.status) for e in events] == [("vision", "kept")]

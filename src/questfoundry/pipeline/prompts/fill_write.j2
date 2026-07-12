@@ -139,11 +139,24 @@ fencer-like"), never a sentence copied from your passage. Its shape is
 {"entity": an entity id from the cast above, "key": a fact name, "value": the
 fact}. If nothing genuinely new surfaced, add nothing.
 {% if repair_errors %}
+{% if previous_draft and previous_draft.prose %}
+YOUR PREVIOUS DRAFT WAS REJECTED (do not repeat it — revise it so every finding
+below is resolved; a fresh draft that reintroduces the same problem will fail
+again):
+---
+{{ previous_draft.prose }}
+---
+{% endif %}
 The rejection list below may carry reviewer FINDINGS, each labeled
 [rule · ASSESSMENT · confidence]. A FINDING marked FAIL is blocking — resolve
 each one. A FINDING marked WARN, or one of low confidence, is the reviewer's
 concern to weigh and decide, not a mandate — do not over-correct. Any rejection
 without that label (a word-budget miss, a lifted phrase) is a hard requirement:
 fix it.
+For EVERY finding below, add one `revision_notes` entry: {"finding": quote or
+name the finding, "how_addressed": the exact change you made to THIS draft to
+resolve it}. Write the note only for a change your prose actually delivers — the
+reviewer checks each note against the text, so a claimed fix you did not make is
+worse than none. Resolve the finding in the prose first; the note reports it.
 {% endif %}
 {% include "_shared.j2" %}

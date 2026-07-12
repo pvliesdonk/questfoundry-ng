@@ -187,6 +187,15 @@ class MicroDetail(BaseModel):
     value: str
 
 
+class RevisionResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # the finding this entry answers (quote or name it), and the specific
+    # change made to resolve it. On a rework the writer fills one per finding.
+    finding: str
+    how_addressed: str
+
+
 class WriteProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -197,6 +206,12 @@ class WriteProposal(BaseModel):
     # standing "up to 2" invitation made a capable model coin a re-observation
     # of the story's central object every scene and hard-fail the prose.
     micro_details: list[MicroDetail] = Field(default=[], max_length=1)
+    # empty on the first attempt; on a rework the writer responds to each
+    # finding here (author-directed, 2026-07-12; validated on gpt-oss:120b:
+    # forcing the per-finding response lifts the group-1 beat fix from 2/4 to
+    # 4/4 under multi-finding load). Reviewer-facing only — not applied, so
+    # replay stays deterministic.
+    revision_notes: list[RevisionResponse] = []
 
 
 # The prose review's clause set (docs/plans/review-contract.md): the `rule`
@@ -394,7 +409,7 @@ def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
     return seen
 
 
-def _write_context_for(passage_id: str):
+def _write_context_for(passage_id: str, last_draft: dict | None = None):
     def build(project: Project) -> dict:
         g = project.graph
         passage = g.node(passage_id)
@@ -435,6 +450,11 @@ def _write_context_for(passage_id: str):
             ],
             "words_min": lo,
             "words_max": hi,
+            # a mutable box the review fills with the rejected draft, so the
+            # next rework round shows the writer what it already tried (the
+            # adapter is stateless — a fresh call each round has no memory of
+            # its prior attempt, which is how it re-derives a losing draft).
+            "previous_draft": last_draft,
         }
 
     return build
@@ -481,12 +501,22 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
 
 
 def _write_apply_for(
-    passage_id: str, prior_facts: dict[tuple[str, str], str | None] | None = None
+    passage_id: str,
+    prior_facts: dict[tuple[str, str], str | None] | None = None,
+    last_draft: dict | None = None,
 ):
     prior_facts = {} if prior_facts is None else prior_facts
 
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         g = project.graph
+        # Stash this draft for the next rework round BEFORE any check can
+        # raise, so an apply-stage rejection (word budget, echo) shows the
+        # writer what it wrote just as a review rejection does — otherwise the
+        # writer re-derives blind and re-lands the same too-short/echoing draft
+        # (live gpt-oss:120b: group-9 exhausted repairs 6 words under the band).
+        # Harmless on success: the box is only read on a rework of this passage.
+        if last_draft is not None:
+            last_draft["prose"] = proposal.prose
         passage = g.node(passage_id)
         assert isinstance(passage, Passage)
         beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
@@ -619,6 +649,7 @@ def _review_for(
             **context,
             prose=proposal.prose,
             micro_review=micro_review,
+            revision_notes=proposal.revision_notes,
             prior_issues=list(prior),
             arbitration=None,
         )
@@ -643,6 +674,7 @@ def _review_for(
                 **context,
                 prose=proposal.prose,
                 micro_review=micro_review,
+                revision_notes=proposal.revision_notes,
                 prior_issues=list(prior),
                 arbitration=[render_finding(f) for f in verdict.findings],
             )
@@ -657,6 +689,9 @@ def _review_for(
                 return []
             issues = final_issues
         prior.extend(issues)
+        # note: the rejected draft is stashed by _write_apply_for (which runs
+        # before this review), so it reaches the next rework round for both
+        # apply- and review-stage rejections.
         return issues
 
     return review
@@ -689,14 +724,17 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
         # compare the proposed value against the fact it replaces (PR #59
         # review findings); shared per passage, repopulated each apply round.
         prior_facts: dict[tuple[str, str], str | None] = {}
+        # carries the rejected draft from the review of one round into the
+        # write prompt of the next, per passage (rework-convergence lever).
+        last_draft: dict = {"prose": None}
         specs.append(
             PassSpec(
                 name=f"write:{slug}",
                 role="writer",
                 template="fill_write.j2",
                 schema=write_schema,
-                build_context=_write_context_for(passage_id),
-                apply=_write_apply_for(passage_id, prior_facts),
+                build_context=_write_context_for(passage_id, last_draft),
+                apply=_write_apply_for(passage_id, prior_facts, last_draft),
                 review=_review_for(passage_id, prior_facts),
             )
         )

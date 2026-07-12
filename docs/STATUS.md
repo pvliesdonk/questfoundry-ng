@@ -969,6 +969,41 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (rework convergence — writer sees its rejected draft + must
+  respond per finding; the adapter is stateless, author-directed):** The
+  micro-detail validation run cleared the old blocker but died at
+  `write:group-1` on `beat_infidelity` — the writer never rendered "steps back
+  *toward* the locked log" across two rounds. Diagnosed empirically (exact
+  group-1 prompt, `gpt-oss:120b`, N=4): the recovery_action is explicit enough
+  that a single clean finding is fixed every time, but under the *real*
+  multi-finding load (beat + 2× state_dishonesty, as round-2 carried) the plain
+  baseline fixes the beat only **2/4** and never both findings, while forcing a
+  **per-finding response lifts it to 4/4**. Root cause named: the LLM adapter
+  is **stateless** — `complete()` is one `provider.generate(user_prompt)` per
+  call with no assistant history, and across rework rounds the runner re-renders
+  a fresh prompt carrying only the accumulated findings; the writer never sees
+  its prior draft or its reasoning tokens (gpt-oss's thinking is generated then
+  discarded). So it re-derives blind and re-lands a losing draft. Two writer
+  levers built (FILL-local, no runner change): (1) a per-passage box carries the
+  **rejected draft** from the review of one round into the write prompt of the
+  next ("revise it, don't repeat it"); (2) `WriteProposal.revision_notes`
+  (list of `{finding, how_addressed}`) — on a rework the writer states the
+  change it made per finding, and `fill_review.j2` has the reviewer **verify
+  each claim against the prose** (a claimed-but-absent fix is itself a defect).
+  `revision_notes` are reviewer-facing only — not applied, so replay stays
+  deterministic. **Validated live (gpt-oss:120b): FILL went from dying at
+  group-1 to reaching pass 21/22** — every review-based rework converged
+  (group-1 cleared, group-2 reworked-and-passed). It then died at `write:group-9`
+  on a *mechanical* word-budget apply failure (114 words vs a 150-550 band),
+  which exposed that the rejected draft was fed forward only on *review*
+  rejections, not *apply* ones. Fixed in the same PR: the draft is now stashed
+  in `_write_apply_for` **before any check raises**, so an apply-stage rejection
+  (word budget, echo) shows the writer its draft to expand/edit rather than
+  re-derive blind. 509 tests, ruff clean, golden 0/0. **Open**: rerun to confirm
+  group-9 now converges into DRESS codex review. Deferred: beat
+  over-choreography (a GROW/POLISH granularity question) — only if the writer
+  levers prove insufficient.
+
 - **2026-07-12 (micro-detail system redesigned — it fired too often for
   *adding*, author-directed):** The live gpt-oss:120b run's FILL death
   (`write:group-3`, `object:old-lens already has 'material'`) was *not* a weak

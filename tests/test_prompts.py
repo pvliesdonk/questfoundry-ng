@@ -155,6 +155,24 @@ def test_fill_review_has_the_micro_detail_rule():
     assert "CONTRADICTS an established fact" in source
 
 
+def test_fill_write_requires_per_finding_notes_and_shows_prior_draft():
+    """Rework-convergence lever (validated on gpt-oss:120b): on a repair the
+    write prompt shows the rejected draft (the adapter is stateless) and
+    requires a revision_notes entry per finding."""
+    source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
+    assert "PREVIOUS DRAFT WAS REJECTED" in source
+    assert "revision_notes" in source
+    assert "For EVERY finding" in source
+
+
+def test_fill_review_verifies_the_writers_revision_notes():
+    """The reviewer must check the writer's per-finding account against the
+    prose — a claimed fix absent from the text is itself a defect."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "WRITER'S ACCOUNT OF THIS REVISION" in source
+    assert "Verify each claim against" in source
+
+
 def test_fill_write_states_pov_externalization():
     """The prompt-quality fix (live: both tiers narrated a non-viewpoint
     character's plotting interiority, failing the POV rule): the write

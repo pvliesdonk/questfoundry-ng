@@ -376,6 +376,21 @@ once to an architect-tier arbitration emitting the same schema — a
 genuinely stronger judge on a mixed model map. One extra frontier call on
 the rare contested passage buys the halt its meaning.
 
+Two writer-side levers make the rework *converge* rather than re-roll (the
+LLM adapter is stateless — each attempt is a fresh call with no memory of
+its prior draft, so a naive rework re-derives a losing draft under
+multi-finding load). On a rework the write prompt (1) shows the writer its
+**rejected prior draft** ("revise it, don't repeat it" — stashed at apply
+time, so it covers a mechanical apply rejection like a word-budget miss as
+well as a review rejection), and (2) requires a per-finding **`revision_notes`**
+entry — the writer must state, for each
+finding, the exact change it made; the reviewer then verifies each claim
+against the prose (a claimed fix the prose doesn't deliver is itself a
+defect). `revision_notes` are reviewer-facing only — never applied, so
+replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
+account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
+halted a live run.)
+
 ### DRESS — art and codex
 
 | | |

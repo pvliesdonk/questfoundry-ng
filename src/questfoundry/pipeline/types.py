@@ -16,8 +16,11 @@ from typing import Any, Literal
 from pydantic import BaseModel
 
 from questfoundry.graph.validate import Issue, Severity
+from questfoundry.llm.adapter import format_validation_error
 from questfoundry.models.base import Stage
 from questfoundry.project.io import Project
+
+__all__ = ["format_validation_error"]  # re-exported for the apply layer
 
 ModelRole = Literal["architect", "writer", "utility"]
 

@@ -188,3 +188,40 @@ def test_fill_write_renders_the_voice_palette_only_when_set(golden):
     golden.voice.dialogue = ""
     rendered = _render(env, "fill_write.j2", "", **_write_context_for("passage:p-arrival")(golden))
     assert "- Imagery:" not in rendered and "- Dialogue:" not in rendered
+
+
+# ---------------------------------------------------------------------------
+# Pipeline-wide prompt-quality sweep (2026-07-12): each landed fix makes a
+# checkable promise in the template source.
+# ---------------------------------------------------------------------------
+
+
+def test_finalize_states_coined_ids_must_be_fresh():
+    """POLISH F1 (the live finalize collision root cause): the model must be
+    told its coined beat ids are NEW and must be unique."""
+    source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
+    assert "names a NEW beat" in source
+    assert "colliding id is rejected" in source
+
+
+def test_contextualize_renders_the_entities_it_requires():
+    """GROW HIGH: the rule 'keep the exact entities' now has the entities in
+    context, not withheld."""
+    source = (PROMPTS_DIR / "grow_contextualize.j2").read_text(encoding="utf-8")
+    assert "t.beat.entities" in source
+    assert "exact entities listed with it above" in source
+
+
+def test_codex_review_forces_rule_text_matching():
+    """DRESS F2: the codex reviewer gets the same three-part discipline as
+    fill_review (quote the rule wording, show the match, drop if no match)."""
+    source = (PROMPTS_DIR / "dress_codex_review.j2").read_text(encoding="utf-8")
+    assert "quote that rule's own wording" in source
+    assert "Naming a rule number is not enough" in source
+
+
+def test_brainstorm_states_the_output_count_plainly():
+    """BRAINSTORM H2: the output total is stated as a generate-now constraint,
+    not conflated with the post-triage branched count."""
+    source = (PROMPTS_DIR / "brainstorm.j2").read_text(encoding="utf-8")
+    assert "Output exactly" in source and "this total, not fewer" in source

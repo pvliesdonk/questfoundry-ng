@@ -32,6 +32,11 @@ Emit exactly one residue entry per path per convergence above. Each entry:
 convergence names a world, echo it as "world" exactly (a nested story rejoins
 once per world — each world needs its own arms, colored by that world's
 truth); when it names none, omit "world".
+EVERY id here (arm, followup, fork) names a NEW beat the engine will create:
+coin a fresh, unique "beat:slug" that no existing beat uses — never reuse or
+lightly vary the rejoin or arrival beat ids shown above, and keep every id in
+this proposal distinct from the others. A colliding id is rejected. Derive the
+slug from the path or dilemma so it stays distinct, e.g. "beat:hand-locket-aftermath".
 {% endif %}
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}
@@ -58,9 +63,11 @@ flavor genuinely needs a breath more room.
 {% endfor %}
 {% endfor %}
 Each entry: {"before": beat id, "after": its successor in the same run,
-"arms": [{"id", "summary", "entities", "followup": {"id", "summary",
-"entities"} or omit}] — 2 arms for a diamond, 1 for a sidetrack}. Move a
-site along its run only to avoid an ending's approach or a point of no
-return's immediate aftermath.
+"arms": [{"id": "beat:slug", "summary", "entities", "followup": {"id":
+"beat:slug", "summary", "entities"} or omit}] — 2 arms for a diamond, 1 for a
+sidetrack}. Every arm and followup "id" names a NEW beat: coin a fresh, unique
+"beat:slug" no existing beat uses (a colliding id is rejected). Move a site
+along its run only to avoid an ending's approach or a point of no return's
+immediate aftermath.
 {% endif %}
 {% include "_shared.j2" %}

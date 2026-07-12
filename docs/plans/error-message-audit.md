@@ -50,6 +50,49 @@ every raise site directly against the rubric, fix the deficient ones,
 and add a violating-construction test where a message change guards a
 real failure. Batch by file; keep messages terse and in-style.
 
+## Pipeline-wide prompt sweep (2026-07-12, author-directed: "FILL was a symptom")
+
+Five parallel graders swept every stage's prompts + context + apply against
+the rubric. The dominant defect is one shape: **a rule is stated but the
+enabling data is withheld from the context, or the rule is not enforced at
+apply** — the model is trusted to reconstruct what a strong tier can and a
+weak tier can't. Findings by stage (H/M/L severity):
+
+- **DREAM/BRAINSTORM**: [H] `brainstorm.j2` dilemma-count conflates output
+  vs post-triage count → a literal reader emits too few, passes the gate,
+  starves triage of locked candidates (silent wrong output). [H]
+  `brainstorm.py` raw ValidationError dump — **fixed** (Class 1). [M]
+  `brainstorm.j2` VISION block unframed, "Avoid" not imperative. [M]
+  `dream.j2` "2-4 themes" not schema-enforced. [M] `add_dilemma` anchor
+  error lacks recovery_action. [L] `research.j2` requires a `reason` the
+  engine discards.
+- **SEED**: [H] `seed_triage.j2` forbids orphaning a dilemma's anchor but
+  withholds the `ANCHORED_TO` bindings (the model can't obey a rule whose
+  data it can't see). [L] `seed_order.j2` cycle violation gets the
+  feasibility error's message (mis-attribution).
+- **GROW**: [H] `grow_contextualize.j2` demands "keep the same entities"
+  but never renders the beat's entities (siblings `grow_bridge`/
+  `grow_intersections` do). [M] `grow_intersections.j2` "every member from
+  a different dilemma" not enforced at apply. [L] contextualize doesn't
+  surface which clones are per-world siblings, though it demands they differ.
+- **POLISH**: [H] `polish_finalize.j2` never says coined beat ids must be
+  fresh/unique — the prompt-side root cause of the live finalize collision.
+  [M] false-branch arm id shows no `beat:slug` format. [M] `polish_audit.j2`
+  "a granted/paid-off flag is never irrelevant" is trust-only. [M]
+  `polish_passages.j2` doesn't require passage/variant ids distinct. [L]
+  arcs "in story order" unenforced; cadence "fill each run's count"
+  overstates an advisory budget.
+- **DRESS/voice**: [H] `fill_voice.j2` pov `NAME` never validated against
+  the cast (the Maren/Marin bug — prompt-fixed, not enforced; cheapest
+  finite-set check in the pipeline). [H] `dress_codex_review.j2` lacks the
+  `fill_review` three-part discipline (quote the rule wording + show the
+  match + drop-if-no-match) on its first-line reviewer — the open
+  laundering surface. [M] `dress_briefs.j2` opening-prose excerpt has no
+  input-role label / no-copy ban. [L] `set_flag_codeword` reuse error
+  lacks a recovery_action; `fill_summary.j2` re-implements `_summary_brief`.
+
+Fixes applied this pass are checked below; the rest are tracked here.
+
 ## Status
 - [x] `mutations.add_beat` duplicate-id → actionable `MutationError`
       (+ finalize residue/false-branch repairability; tests). First fix.
@@ -68,9 +111,10 @@ real failure. Batch by file; keep messages terse and in-style.
       show the match; figurative language named as taste). Prompt-source test.
 - [x] `fill_write.j2` non-POV-character rendering (POINT OF VIEW IS LIMITED;
       externalize non-narrator interiority). Prompt-source test.
-- [ ] **Class 1 (raw-exception dumps)** graded acceptable-but-improvable:
-      the interpolated `{e}` is a pydantic `ValidationError` (semi-structured,
-      names the field/constraint), not a bare KeyError. Lower priority than
-      Class 2; render via a correction-brief helper when touched next.
+- [x] **Class 1 (raw-exception dumps) fixed sitewide**: all eight
+      `f"invalid X: {e}"` sites now route the `ValidationError` through one
+      shared `format_validation_error` (owned by `llm/adapter.py`,
+      re-exported by `pipeline/types.py`, so the adapter's schema-retry
+      brief and the apply-layer errors share one renderer and never drift).
 - [ ] Live validation of the two prompt fixes (a completing FILL run on both
       tiers; the runs that surfaced the failures died before completing).

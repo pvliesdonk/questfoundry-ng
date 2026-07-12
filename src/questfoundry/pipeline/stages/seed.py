@@ -38,7 +38,13 @@ from questfoundry.models.structure import (
 from questfoundry.models.world import Entity
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.refpin import entity_ref_ids, pin, retained_entity_ids
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
+from questfoundry.pipeline.types import (
+    ApplyError,
+    PassSpec,
+    StageImpl,
+    format_validation_error,
+    resolve_entity_ref,
+)
 from questfoundry.project.io import Project
 
 # -- pass 1: triage ---------------------------------------------------------
@@ -205,7 +211,7 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
                 ],
             )
     except ValidationError as e:
-        raise ApplyError(f"invalid node in proposal: {e}") from e
+        raise ApplyError(f"invalid node in proposal: {format_validation_error(e)}") from e
     return [
         f"cut: {[c.id for c in proposal.cut_entities] or 'nothing'}",
         f"paths: {', '.join(p.id for p in proposal.paths)}",
@@ -323,7 +329,7 @@ def _make_beat(
             flexibility=spec.flexibility,
         )
     except ValidationError as e:
-        raise ApplyError(f"invalid beat {spec.id}: {e}") from e
+        raise ApplyError(f"invalid beat {spec.id}: {format_validation_error(e)}") from e
 
 
 def _chain(g, beat_ids: list[str]) -> None:

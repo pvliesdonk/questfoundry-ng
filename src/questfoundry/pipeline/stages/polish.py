@@ -38,7 +38,13 @@ from questfoundry.models.structure import Beat, BeatClass, StateFlag, Structural
 from questfoundry.models.world import ArcPivot, Entity, EntityArc, PathEnd
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
+from questfoundry.pipeline.types import (
+    ApplyError,
+    PassSpec,
+    StageImpl,
+    format_validation_error,
+    resolve_entity_ref,
+)
 from questfoundry.project.io import Project
 
 # -- pass 1: finalize ---------------------------------------------------------
@@ -195,7 +201,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 for arm in spec.arms
             ]
         except ValidationError as e:
-            raise ApplyError(f"invalid false-branch arm: {e}") from e
+            raise ApplyError(f"invalid false-branch arm: {format_validation_error(e)}") from e
         try:
             if len(chains) == 1:
                 pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
@@ -253,7 +259,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                     for b in ([head] if head.followup is None else [head, head.followup])
                 ]
             except ValidationError as e:
-                raise ApplyError(f"invalid residue beat {spec.id}: {e}") from e
+                raise ApplyError(
+                    f"invalid residue beat {spec.id}: {format_validation_error(e)}"
+                ) from e
 
         chain = gated_chain(spec)
         try:
@@ -407,7 +415,7 @@ def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
                     ),
                 )
             except ValidationError as e:
-                raise ApplyError(f"invalid passage {pid}: {e}") from e
+                raise ApplyError(f"invalid passage {pid}: {format_validation_error(e)}") from e
 
         if ending and not spec.ending_title.strip():
             raise ApplyError(f"group {i} contains an ending beat; ending_title is required")

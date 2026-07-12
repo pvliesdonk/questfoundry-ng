@@ -663,6 +663,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   finishes"; every billed call must serve a stated need, on the smallest
   run that answers it, and exploration/reproduction goes on **Ollama**
   (unbilled). Codified in `AGENTS.md` §"Live-run budget discipline".
+
 - **Unexplored: subagents as an unbilled Claude for pipeline calls**
   (author idea, 2026-07-12: "in theory your own subagents are identical —
   you can experiment"). A dev-session's own Claude Code subagents may be a

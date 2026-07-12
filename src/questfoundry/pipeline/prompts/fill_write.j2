@@ -137,4 +137,12 @@ sentence copied from your passage. Omit freely. Keys are single-assignment: an
 entity's listed facts are settled — never re-key one (no second "tell",
 "habit", …); record a genuinely new observation under an unused key, or report
 nothing.
+{% if repair_errors %}
+The rejection list below may carry reviewer FINDINGS, each labeled
+[rule · ASSESSMENT · confidence]. A FINDING marked FAIL is blocking — resolve
+each one. A FINDING marked WARN, or one of low confidence, is the reviewer's
+concern to weigh and decide, not a mandate — do not over-correct. Any rejection
+without that label (a word-budget miss, a lifted phrase) is a hard requirement:
+fix it.
+{% endif %}
 {% include "_shared.j2" %}

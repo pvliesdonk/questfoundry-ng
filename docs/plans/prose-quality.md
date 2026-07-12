@@ -167,7 +167,9 @@ context: "character-arc position"). Design:
   The spec replaces it with a structured multi-axis finding schema (rule /
   assessment / confidence / quote / reason / recovery_action) shared by all
   reviews; the engine gates only proceed-vs-rework; the producer gets the
-  full-fidelity findings and decides. Locked for review before implementation.
+  full-fidelity findings and decides. **BUILT 2026-07-12** (`pipeline/review.py`,
+  adopted by fill_review + dress_codex_review); weak-tier live validation
+  is the one open item.
 - **Live validation**: a fresh `medium` run on a strong map, read for
   recurrence (grep the top n-grams of run 8's stamps), plus a
   weak-tier (`gpt-oss:120b`) FILL attempt to measure the register +

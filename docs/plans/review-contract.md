@@ -2,9 +2,11 @@
 
 > Author-directed, 2026-07-12. This is the #1b review-contract redesign
 > contracted in `docs/plans/prose-quality.md`, promoted to its own spec
-> because it is **pipeline-wide**, not FILL-specific. Status: **spec for
-> review — not yet built.** Lock the contract here first, implement once
-> across all review passes, then validate on gpt-oss.
+> because it is **pipeline-wide**, not FILL-specific. Status: **BUILT**
+> (author signed off on the spec 2026-07-12; implemented the same day —
+> shared `pipeline/review.py`, adopted by `fill_review` + `dress_codex_review`).
+> The design below is the record; live gpt-oss validation of the weak-tier
+> behavior change is the one open item (see Validation), tracked in STATUS.
 
 ## The problem — a class, not a prose bug
 

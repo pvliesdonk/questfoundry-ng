@@ -35,6 +35,7 @@ from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
+from questfoundry.pipeline.review import build_verdict_schema, evaluate_review, render_finding
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -193,11 +194,21 @@ class WriteProposal(BaseModel):
     micro_details: list[MicroDetail] = []
 
 
-class ReviewVerdict(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    verdict: Literal["pass", "fail"]
-    issues: list[str] = []
+# The prose review's clause set (docs/plans/review-contract.md): the `rule`
+# axis of every finding is pinned to exactly these, so a reviewer cannot cite
+# a rule the contract does not carry (the live "fabricated a rule number"
+# failure). One envelope, this stage's clauses.
+FILL_REVIEW_RULES = (
+    "voice_pov",
+    "voice_tense",
+    "banned_pattern",
+    "beat_infidelity",
+    "continuity",
+    "state_dishonesty",
+    "leakage",
+    "pronoun",
+)
+FILL_REVIEW_SCHEMA = build_verdict_schema("FillReview", FILL_REVIEW_RULES)
 
 
 def _gate_certain_flags(g, passage_id: str) -> set[str]:
@@ -579,12 +590,14 @@ def _review_for(passage_id: str):
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
             prompt=rendered,
-            schema=ReviewVerdict,
+            schema=FILL_REVIEW_SCHEMA,
             role="utility",
         )
-        if verdict.verdict != "fail":
+        # the engine gates the loop on confident objective defects only; a
+        # warn or a low-confidence finding never halts (review-contract).
+        issues = evaluate_review(verdict.findings)
+        if not issues:
             return []
-        issues = verdict.issues or ["review failed without stating an issue"]
         if prior:
             # second strike halts the stage — but every halt so far has
             # been the cheap reviewer sampling taste, not structure. One
@@ -594,17 +607,18 @@ def _review_for(passage_id: str):
                 **context,
                 prose=proposal.prose,
                 prior_issues=list(prior),
-                arbitration=issues,
+                arbitration=[render_finding(f) for f in verdict.findings],
             )
             final = adapter.complete(
                 system=REVIEW_SYSTEM,
                 prompt=arb,
-                schema=ReviewVerdict,
+                schema=FILL_REVIEW_SCHEMA,
                 role="architect",
             )
-            if final.verdict != "fail":
+            final_issues = evaluate_review(final.findings)
+            if not final_issues:
                 return []
-            issues = final.issues or issues
+            issues = final_issues
         prior.extend(issues)
         return issues
 

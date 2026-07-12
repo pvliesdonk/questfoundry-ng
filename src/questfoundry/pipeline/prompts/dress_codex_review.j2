@@ -1,46 +1,55 @@
 {% if arbitration %}
-ARBITRATION. A first-line reviewer failed these entries twice; its earlier rounds
-are under PREVIOUSLY FLAGGED (the writer revised for those) and its newest
-objections are:
+ARBITRATION. A first-line reviewer failed these entries twice; its earlier
+rounds are under PREVIOUSLY FLAGGED (the writer revised for those) and its
+newest findings are:
 {% for i in arbitration %}
 - {{ i }}
 {% endfor %}
 You are the senior arbiter and your verdict is final. First-line reviewers here
 have repeatedly upheld objections by quoting the conditional-material list
-instead of the entry; uphold an objection ONLY if a sentence of the ENTRY'S OWN
-TEXT asserts a conditional as fact. If you fail, the stage halts — be certain.
+instead of the entry; record a blocking finding (assessment "fail", confidence
+"high" or "medium") ONLY if a sentence of the ENTRY'S OWN TEXT asserts a
+conditional as fact — otherwise mark it "warn" or leave it out. A blocking
+finding halts the stage, so be certain.
 {% endif %}
-Review the codex entries below for spoiler safety. Verdict "pass" or "fail"; on
-fail, list concrete, actionable issues (each one sentence). Each issue must (a)
-name the rule number, (b) quote that rule's own wording from the list below, and
-(c) quote the offending sentence of the ENTRY'S OWN TEXT (never the conditional
-list's) and show how it breaks THAT rule — for rule 1, name which CONDITIONAL
-item the sentence states as fact. Naming a rule number is not enough: if the
-entry text you quote does not violate the wording you quote (touching a theme,
-or posing a fate as an open question, is not assertion), you are reaching — drop
-the issue.
+Review the codex entries below for spoiler safety and report every objection as
+a structured FINDING. You report evidence; the engine decides the outcome from
+your findings and the codex author decides how to act — so grade each axis
+honestly rather than reaching for a verdict.
 
-REQUIRED (this is correct, in-world register — never fail an entry for having it):
-- a diegetic, encyclopedia voice (these are meant to read like almanac entries, not
-  like prose, and may restate the entity's established facts freely and in any order)
+Each finding names one RULE (below). Set `assessment` to "fail" for an
+objective defect or "warn" for a concern. Quote the offending sentence of the
+ENTRY'S OWN TEXT (never the conditional list's); for conditional_stated_as_fact,
+name in `reason` which CONDITIONAL item the sentence states as fact.
 
-FAIL ONLY for one of these three objective defects:
-1. States, as fact, something listed below as CONDITIONAL for that entity.
-   Assertion means the entry's own sentence claims it happened or is true.
-   Touching the same theme, describing the entity's relation to an open
-   question, or explicitly posing the question ("whether X or Y, the paper
-   does not answer") is NOT assertion — leaving fates open is exactly what
-   a spoiler-safe entry does.
-2. Names story machinery: a node id (e.g. "flag:x", "beat:x"), or the words "flag",
-   "beat", "path", or "arc" used mechanically. Ordinary English uses of those words
-   (a "footpath", "her heart beats") are not leakage.
-3. Names an ending title{% if ending_titles %}: {{ ending_titles | join(", ") }}{% else %} (none exist yet — skip){% endif %}.
+REQUIRED (this is correct, in-world register — never fault an entry for having
+it): a diegetic, encyclopedia voice. These read like almanac entries, not
+prose, and may restate the entity's established facts freely and in any order.
 
-MATTERS OF DEGREE ARE NOT FAILURES. Register, prose quality, and how much of the base
-facts an entry restates are taste, not a rule. If your sentence needs "risks",
-"potential", "could", or "attempts to", it is not an objective defect — do not list it.
+The rules — all three are objective defects when present:
 
-CONDITIONAL MATERIAL BY ENTITY (rule 1):
+- conditional_stated_as_fact — the entry states, as fact, something listed
+  below as CONDITIONAL for that entity. Assertion means the entry's own
+  sentence claims it happened or is true. Touching the same theme, describing
+  the entity's relation to an open question, or explicitly posing the question
+  ("whether X or Y, the paper does not answer") is NOT assertion — leaving
+  fates open is exactly what a spoiler-safe entry does.
+- machinery_leakage — the entry names story machinery: a node id (e.g.
+  "flag:x", "beat:x"), or the words "flag", "beat", "path", or "arc" used
+  mechanically. Ordinary English uses ("a footpath", "her heart beats") are not
+  leakage.
+- ending_title_named — the entry names an ending title{% if ending_titles %}: {{ ending_titles | join(", ") }}{% else %} (none exist yet — skip){% endif %}.
+
+TASTE IS A WARN, NEVER A FAIL. Register, prose quality, and how much of the base
+facts an entry restates are matters of degree, not a rule — grade them "warn" at
+most. If your `reason` needs "risks", "potential", "could", or "attempts to", it
+is not a high-confidence defect; grade it "warn" or lower the confidence, do not
+force it to block.
+
+Set `confidence` to how sure you are the named rule is broken as written by the
+quoted sentence: "high" when it plainly is, "low" when you are reaching.
+
+CONDITIONAL MATERIAL BY ENTITY (conditional_stated_as_fact):
 {% for e in entities %}
 - {{ e.entity.id }}:
 {% if not e.overlays and not e.consequences %}  (none){% endif %}
@@ -59,11 +68,17 @@ PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
 {% endfor %}
 Judge persistence first: does any previously named defect remain in the revised
 entries? A round that finds only brand-new complaints is judging taste — if
-nothing above persists and no entry sentence outright violates a rule, pass.
+nothing above persists and no entry sentence outright violates a rule, do not
+manufacture a fresh blocking finding.
 {% endif %}
 THE ENTRIES:
 {% for entry in entries %}
 --- {{ entry.entity }}: {{ entry.title }}
 {{ entry.body }}
 {% endfor %}
-Respond {"verdict": "pass"} or {"verdict": "fail", "issues": ["..."]}.
+Report a `findings` list. Each finding is
+{"rule": one of the rule names above, "assessment": "fail" or "warn",
+"confidence": "high" | "medium" | "low", "quote": the exact offending sentence
+of the entry, "reason": how it breaks THAT rule (for conditional_stated_as_fact,
+which conditional item it asserts), "recovery_action": the specific fix the
+author should make}. An empty list means the entries are spoiler-safe.

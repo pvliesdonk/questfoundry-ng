@@ -149,6 +149,13 @@ prompt-bounded; enumerable ones can be made unrepresentable.
       `test_graph_error_from_apply_is_repairable_not_a_crash`.
 - [x] `fill_review.j2` structural rule-matching (quote the rule's wording +
       show the match; figurative language named as taste). Prompt-source test.
+      **Superseded 2026-07-12** by the review-contract redesign
+      (`docs/plans/review-contract.md`, BUILT): the "(a)(b)(c)" free-text
+      discipline is now schema fields — `rule` is a per-review enum (a
+      fabricated rule number is unrepresentable), `quote`/`reason`/
+      `recovery_action` are required, and taste is capped at `warn`. The
+      same schema replaced the never-audited `dress_codex_review.j2`
+      first-line reviewer (the open laundering surface named in the sweep).
 - [x] `fill_write.j2` non-POV-character rendering (POINT OF VIEW IS LIMITED;
       externalize non-narrator interiority). Prompt-source test.
 - [x] **Class 1 (raw-exception dumps) fixed sitewide**: all eight

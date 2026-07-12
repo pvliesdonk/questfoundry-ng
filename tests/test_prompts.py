@@ -117,15 +117,20 @@ def test_dress_codex_review_template_has_no_craft_include_or_research_reference(
     assert "research" not in source
 
 
-def test_fill_review_forces_rule_text_matching_not_just_a_number():
-    """The prompt-quality fix (live: a reviewer cited "Rule 1" — POV/tense —
-    to reject a simile): naming a rule number is not enough; the reviewer
-    must quote the rule's wording and show the text breaks THAT rule, and
-    figurative language is named as taste, not a rule violation."""
+def test_fill_review_asks_for_the_structured_finding_schema():
+    """The review-contract redesign (docs/plans/review-contract.md): the
+    reviewer reports structured FINDINGS (rule / assessment / confidence /
+    quote / reason / recovery_action), not a binary verdict + free-text
+    issues. Taste is a warn, never a fail — figurative language cannot block."""
     source = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
-    assert "quote that rule's own wording" in source
-    assert "Naming a rule number is not enough" in source
+    assert "findings" in source
+    for axis in ('"rule"', '"assessment"', '"confidence"', '"recovery_action"'):
+        assert axis in source
+    assert "TASTE IS A WARN, NEVER A FAIL" in source
     assert "simile" in source  # figurative language named as taste, not a rule
+    # every stage rule name is offered to the reviewer as an enumerable clause
+    for rule in ("voice_pov", "beat_infidelity", "state_dishonesty", "leakage"):
+        assert rule in source
 
 
 def test_fill_write_states_pov_externalization():
@@ -212,12 +217,28 @@ def test_contextualize_renders_the_entities_it_requires():
     assert "exact entities listed with it above" in source
 
 
-def test_codex_review_forces_rule_text_matching():
-    """DRESS F2: the codex reviewer gets the same three-part discipline as
-    fill_review (quote the rule wording, show the match, drop if no match)."""
+def test_codex_review_asks_for_the_structured_finding_schema():
+    """The review-contract redesign: the codex reviewer shares FILL's
+    structured-finding envelope (its own rule enum), so spoiler safety is
+    reported as findings, not a binary verdict + free-text issues."""
     source = (PROMPTS_DIR / "dress_codex_review.j2").read_text(encoding="utf-8")
-    assert "quote that rule's own wording" in source
-    assert "Naming a rule number is not enough" in source
+    assert "findings" in source
+    for axis in ('"rule"', '"assessment"', '"confidence"', '"recovery_action"'):
+        assert axis in source
+    assert "TASTE IS A WARN, NEVER A FAIL" in source
+    for rule in ("conditional_stated_as_fact", "machinery_leakage", "ending_title_named"):
+        assert rule in source
+
+
+def test_producers_frame_how_to_weigh_review_findings():
+    """The review-contract redesign puts judgment with the producer: on a
+    rework the write/codex prompt must tell the writer FAIL findings are
+    blocking while WARN / low-confidence ones are weighed, not mandated."""
+    for name in ("fill_write.j2", "dress_codex.j2"):
+        source = (PROMPTS_DIR / name).read_text(encoding="utf-8")
+        assert "marked FAIL is blocking" in source
+        assert "weigh and decide, not a mandate" in source
+        assert "do not over-correct" in source
 
 
 def test_brainstorm_states_the_output_count_plainly():

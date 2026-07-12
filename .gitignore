@@ -225,4 +225,3 @@ inflight/
 # Scratch live-validation runs (throwaway A/B experiments, never preserved
 # as examples; a real exit-run example is added deliberately by name).
 examples/weir-coat/
-examples/thaw-between/

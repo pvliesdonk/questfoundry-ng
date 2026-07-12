@@ -1,0 +1,31 @@
+id: passage:group-7
+summary: Elara refuses to part with the Lens, securing it atop the lantern; the flame brightens,
+  the barrier holds, and the coastguard's distant shouts echo as the cartographer lands.
+entities:
+- character:keeper
+- object:old-lens
+- character:cartographer
+- faction:coastguard
+- location:greyrock
+prose_summary: Elara places the Great Lens on lantern crown, swears to guard the sea, and
+  the Lens binds the tide, creating a barrier that presses the sea’s weight onto her shoulders.
+  At dawn she lowers the Lens into its cradle as the cartographer arrives, Marek vanishes,
+  and suspicion lingers. Night, cartographer walks toward the cliff and Elara bears heavy
+  oath.
+beats:
+- beat:bridge-0
+- beat:bridge-1
+- commit:lens-keep
+- post:lens-burden
+- post:lens-stability
+choices:
+- label: Leave with the ship, abandoning the light
+  grants:
+  - flag:departure
+  - flag:light-fades
+  to: passage:group-8
+- label: Remain and guard the eternal beacon
+  grants:
+  - flag:bound-to-greyrock
+  - flag:light-continues
+  to: passage:group-9

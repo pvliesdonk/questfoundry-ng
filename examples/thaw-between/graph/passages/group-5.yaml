@@ -1,0 +1,26 @@
+id: passage:group-5
+summary: Marek Sable offers a vessel for escape, yet the Coastal Authority's envoys press
+  for the logbook, leading to scrutiny of the Great Lens secret.
+entities:
+- character:keeper
+- character:cartographer
+- faction:coastguard
+- object:old-lens
+prose_summary: Marek stands by lantern, tells Elara a vessel waits at the cove to escape her.
+  Envoys seize the iron‑bound logbook, uncover a hidden note about the Great Lens, and record
+  that the lens can bind the tide for the Authority. Elara receives supplies, holds the logbook,
+  and must decide to use the lens, costing a scar on the lighthouse stone.
+beats:
+- locked:log-aftermath-1
+- pre:light-press
+choices:
+- label: Give the Great Lens to Marek
+  grants:
+  - flag:lens-removed
+  - flag:marek-promise
+  to: passage:group-6
+- label: Refuse and keep the Lens secured
+  grants:
+  - flag:escape-vanishes
+  - flag:lens-retained
+  to: passage:group-7

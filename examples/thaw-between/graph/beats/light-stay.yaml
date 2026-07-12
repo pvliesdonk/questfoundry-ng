@@ -1,0 +1,13 @@
+id: commit:light-stay
+created_by: seed
+summary: Elara steels herself, pouring oil to the flame, refusing to abandon the tower.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: commits
+entities:
+- character:keeper
+- location:greyrock
+- object:old-lens
+belongs_to:
+- path:stay

@@ -1,0 +1,13 @@
+id: commit:lens-keep
+created_by: seed
+summary: Elara refuses, securing the Great Lens atop the lantern, vowing to guard the sleeping
+  sea.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: commits
+entities:
+- character:keeper
+- object:old-lens
+belongs_to:
+- path:keep

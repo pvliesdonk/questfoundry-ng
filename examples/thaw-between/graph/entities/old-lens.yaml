@@ -1,0 +1,27 @@
+id: object:old-lens
+name: The Great Lens
+concept: The massive glass that concentrates the light, rumored to hold a fragment of the
+  sea's dreaming power.
+base:
+  material: sea-glass, etched with runes
+  condition: pristine yet heavy
+  present: 'true'
+  weight: heavily burdened
+  status: sunk
+arc:
+  begins: pristine sea‑glass lens etched with runes, containing a fragment of the sea’s dreaming
+    power
+  pivots:
+  - beat: pre:lens-sense
+    becomes: whispers of a fragile barrier that could shatter if removed
+  - beat: commit:lens-give
+    becomes: hoisted aboard Marek’s ship, removed from the lighthouse
+  - beat: commit:lens-keep
+    becomes: secured atop the lantern, anchoring the sea’s sleep
+  - beat: post:lens-uncertainty
+    becomes: sails into fog, future purpose uncertain
+  ends:
+  - path: path:give
+    state: now aboard Marek’s vessel, its future purpose unknown
+  - path: path:keep
+    state: remains in the lighthouse, its weight pressing on the keeper, barrier holds

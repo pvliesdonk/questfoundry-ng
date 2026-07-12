@@ -1,0 +1,44 @@
+style: Ink‑wash line work with heavy chiaroscuro, emphasizing stark contrast between dim mist
+  and the sharp glow of lighthouse flame.
+palette: Mutes of cold slate gray, deep navy, and fog‑white, punctuated by the dim amber of
+  lantern fire.
+influences:
+- Gustave Doré
+- H.P. Lovecraft illustration
+- Maritime Gothic woodcuts
+profiles:
+- entity: character:cartographer
+  appearance: A tall figure swathed in a coat darkened by ink smears, eyes the color of storm
+    clouds, bearing an inquisitive stance.
+  iconography:
+  - ink‑stained coat
+  - storm‑cloud eyes
+  - maps and scrolls
+- entity: character:keeper
+  appearance: A woman with weather‑worn skin and grey hair bound in a simple braid, dressed
+    in practical keeper garb and moving with methodical calm.
+  iconography:
+  - weather‑worn skin
+  - grey braid
+  - lighthouse lantern tools
+- entity: faction:coastguard
+  appearance: Uniformed personnel in pragmatic, unadorned attire, appearing with the periodic
+    supply ships that service the lighthouse network.
+  iconography:
+  - pragmatic uniforms
+  - supply ship
+  - bureaucratic ledger
+- entity: location:greyrock
+  appearance: A craggy sea‑stack shrouded in endless mist and buffeted by relentless wind,
+    the lighthouse clings to its narrow face, creating a claustrophobic silhouette.
+  iconography:
+  - mist‑wrapped stone
+  - lighthouse on a cliff
+  - howling wind
+- entity: object:old-lens
+  appearance: A massive disc of sea‑glass, pristine yet weighty, its surface etched with faint
+    runes that hint at a buried dreaming power.
+  iconography:
+  - sea‑glass disc
+  - rune etchings
+  - burdened weight

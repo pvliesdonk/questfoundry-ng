@@ -1,0 +1,22 @@
+id: passage:group-9
+summary: Elara pours oil into the flame, refusing to abandon the tower; the beam steadies,
+  carving shadows across Greyrock for decades.
+entities:
+- character:keeper
+- location:greyrock
+- object:old-lens
+ending:
+  id: e-group-9
+  title: The Lighthouse Endures
+irrelevant_flags:
+- flag:lens-removed
+- flag:marek-promise
+prose_summary: Elara pours oil, refuses to leave the tower, and keeps the lantern lit using
+  the Great Lens; the amber beam steadies the mist and holds a barrier. Decades pass, storms
+  batter the stone, and she endures while her freedom stays bound. Generations thank her,
+  and the lighthouse continues.
+beats:
+- beat:bridge-4
+- commit:light-stay
+- post:stay-flame
+- post:stay-legacy

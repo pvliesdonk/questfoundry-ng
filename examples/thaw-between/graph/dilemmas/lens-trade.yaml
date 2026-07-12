@@ -1,0 +1,17 @@
+id: dilemma:lens-trade
+question: Do you give the Great Lens to Marek as a bargaining chip for safe passage, or keep
+  it as the last anchor keeping the sea asleep?
+why_it_matters: Losing the lens could doom the lighthouse's light and awaken the terror; keeping
+  it may doom Elara's chance for a new life.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:give
+  text: Hand the lens to Marek, trusting his promise to protect the coast.
+- id: answer:keep
+  text: Refuse, retaining the lens as the sole safeguard against the sea's sleep.
+anchored_to:
+- character:keeper
+- character:cartographer
+- object:old-lens

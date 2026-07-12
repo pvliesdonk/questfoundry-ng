@@ -1,0 +1,14 @@
+passage: passage:group-6
+priority: 2
+caption: Elara hands the Great Lens to Marek, and the lighthouse’s beacon begins to wane as
+  a stale fog rolls in.
+prompt: Ink‑wash illustration of the lighthouse interior on Greyrock, mist pressing against
+  the stone walls. The keeper, a weather‑worn woman, passes the glowing old‑lens to Marek,
+  the tall cartographer in a dark coat smeared with ink. The lighthouse beam flickers and
+  dims, while a cold amber glow highlights the rune‑etched glass against the deep navy shadows
+  of the room.
+entities:
+- location:greyrock
+- character:keeper
+- character:cartographer
+- object:old-lens

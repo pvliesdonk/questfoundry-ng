@@ -1,0 +1,9 @@
+id: path:keep
+name: Keep the Great Lens
+explores: answer:keep
+consequences:
+- id: consequence:lens-retained
+  text: The Great Lens remains in the lighthouse, preserving the barrier that keeps the sea
+    asleep.
+- id: consequence:escape-vanishes
+  text: Elara's chance for a new life fades as the lens anchors her to Greyrock.

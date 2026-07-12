@@ -1,0 +1,40 @@
+beats:
+- beat:bridge-0
+- beat:bridge-1
+- beat:bridge-2
+- beat:bridge-3
+- beat:bridge-4
+- beat:bridge-5
+- beat:bridge-6
+- commit:lens-give
+- commit:lens-keep
+- commit:light-go
+- commit:light-stay
+- locked:log-aftermath-1
+- locked:log-lead-1
+- locked:log-lead-2
+- locked:log-resolution
+- post:go-extinguish
+- post:go-fate
+- post:lens-burden
+- post:lens-stability
+- post:lens-uncertainty
+- post:lens-weakening
+- post:stay-flame
+- post:stay-legacy
+- pre:lens-offer
+- pre:lens-sense
+- pre:light-loom
+- pre:light-press
+- setup:legacy
+- setup:mist
+forks:
+  dilemma:light-or-escape:
+  - commit:light-go
+  - commit:light-stay
+  dilemma:logbook-bargain:
+  - locked:log-resolution
+  dilemma:lens-trade:
+  - commit:lens-give
+  - commit:lens-keep
+convergences: {}

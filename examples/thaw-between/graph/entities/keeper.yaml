@@ -1,0 +1,30 @@
+id: character:keeper
+name: Elara Wren
+concept: The lighthouse keeper who has tended the flame for decades, feeling the weight of
+  generations.
+pronouns: she/her
+base:
+  appearance: weather-worn skin, grey hair tied in a braid
+  manner: quiet, methodical
+arc:
+  begins: weathered keeper tending the lighthouse flame, burdened by generations
+  pivots:
+  - beat: locked:log-resolution
+    becomes: trades logbook for provisions, linking her to the Coastguard
+  - beat: commit:lens-give
+    becomes: releases the Great Lens to Marek, trusting his escape
+  - beat: commit:lens-keep
+    becomes: secures the Great Lens atop the lantern, shouldering its burden
+  - beat: commit:light-go
+    becomes: abandons the lighthouse, extinguishing the flame
+  ends:
+  - path: path:give
+    state: has handed the Great Lens to Marek, light wanes but supplies flow
+  - path: path:keep
+    state: guards the Great Lens, beam stabilizes yet burden intensifies
+  - path: path:go
+    state: has fled with Marek, lighthouse extinguished, ancient terror unleashed
+  - path: path:stay
+    state: remains at the lighthouse, flame steadied, legend bound
+  - path: path:surrender
+    state: maintains provision flow under Coastguard scrutiny

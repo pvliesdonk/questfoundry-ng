@@ -616,6 +616,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
+> **New top priority (2026-07-12): the prose reads too complex for a
+> gamebook.** The pipeline now completes a weak-tier run **end to end**
+> (FILL → DRESS; decision log below, and the preserved sample
+> `examples/thaw-between/`), so *quality*, not completion, is the frontier.
+> The LLM prose — and maybe the coined Voice — skews to high reading
+> complexity: artful, but poor for a reader navigating choices. Research
+> reading-level metrics + gamebook/CYOA norms + what the vendored
+> interactive-fiction craft corpus says; then pick a lever — a readability
+> target on the Voice pass, a write-prompt accessibility directive, or a
+> **graded readability finding** (the `word_budget` shape: a finding whose
+> confidence scales with how far complexity is out of band) — and consider a
+> literary-vs-accessible **Vision knob**. **NB — item 1 below ("a completing
+> FILL run") is now ACHIEVED:** the compounding review/rework chain
+> (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
+> included.
+
 1. **A completing FILL run — the recurrence read is still open, and the
    prompt fixes need live validation** (2026-07-12 decision log has the
    findings): #1a ran but both stories died at FILL review-exhaustion, so

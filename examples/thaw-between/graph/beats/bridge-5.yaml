@@ -1,0 +1,10 @@
+id: beat:bridge-5
+created_by: grow
+summary: The lantern's sputter grows colder, night settles over the stone, prompting the keeper
+  to count his dwindling stores.
+beat_class: structural
+purpose: bridge
+entities:
+- location:greyrock
+- object:old-lens
+- character:keeper

@@ -1,0 +1,10 @@
+id: beat:bridge-3
+created_by: grow
+summary: The lighthouse's dimming glow fades into the sea‑mist, and the cartographer's lone
+  vessel drifts back toward the wavering tower.
+beat_class: structural
+purpose: bridge
+entities:
+- location:greyrock
+- object:old-lens
+- character:cartographer

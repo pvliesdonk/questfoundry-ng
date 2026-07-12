@@ -1,0 +1,10 @@
+id: beat:bridge-4
+created_by: grow
+summary: Years bleed into one another as the steady flame carves shadows across Greyrock,
+  while the keeper watches the light age.
+beat_class: structural
+purpose: bridge
+entities:
+- location:greyrock
+- object:old-lens
+- character:keeper

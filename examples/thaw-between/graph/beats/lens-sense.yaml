@@ -1,0 +1,13 @@
+id: pre:lens-sense
+created_by: seed
+summary: The Great Lens trembles, whispering of a fragile barrier that could shatter if removed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: reveals
+entities:
+- object:old-lens
+- character:keeper
+belongs_to:
+- path:give
+- path:keep

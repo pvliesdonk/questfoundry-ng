@@ -1,0 +1,7 @@
+id: beat:echo-whisper
+created_by: polish
+summary: A low chant echoing from the tunnel hints at a hidden passage
+beat_class: structural
+purpose: false_branch
+entities:
+- character:cartographer

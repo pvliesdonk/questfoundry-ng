@@ -1,0 +1,13 @@
+id: passage:group-4
+summary: Silence presses in, bearing the weight of unspoken vows.
+entities:
+- character:keeper
+prose_summary: Elara holds the weather‑worn logbook. Marek presents the rune‑etched sea‑glass
+  lens, promising it will protect the coast if carried across the shoals. Elara accepts the
+  Coastguard’s promise, lifts the logbook toward Marek, committing to deliver the lens and
+  bear the duty’s weight.
+beats:
+- beat:echo-silence
+choices:
+- label: Press onward despite the silence
+  to: passage:group-5

@@ -1,0 +1,13 @@
+id: commit:lens-give
+created_by: seed
+summary: Elara hands the Great Lens to Marek, watching it glint as it is hoisted aboard.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: commits
+entities:
+- character:keeper
+- character:cartographer
+- object:old-lens
+belongs_to:
+- path:give

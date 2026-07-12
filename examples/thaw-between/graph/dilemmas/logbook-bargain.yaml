@@ -1,0 +1,19 @@
+id: dilemma:logbook-bargain
+question: Do you hand over the lighthouse's logbook to the Coastguard for essential provisions,
+  or conceal it and risk starvation?
+why_it_matters: Surrendering gives food but may hand over knowledge that could reveal the
+  sea's secret; hiding preserves the secret but may lead to death.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:surrender
+  text: Give the logbook to the Coastguard, ensuring a steady flow of food and medicine.
+- id: answer:conceal
+  text: Hide the logbook, refusing to trade the lighthouse's secrets for fleeting supplies.
+anchored_to:
+- character:keeper
+- faction:coastguard
+- location:greyrock
+serial:
+- dilemma:lens-trade

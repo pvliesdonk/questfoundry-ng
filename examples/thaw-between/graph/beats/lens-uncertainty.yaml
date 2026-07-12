@@ -1,0 +1,11 @@
+id: post:lens-uncertainty
+created_by: seed
+summary: Marek sails into the fog, the lens safe for now, but its future purpose remains unknown.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: advances
+entities:
+- character:cartographer
+belongs_to:
+- path:give

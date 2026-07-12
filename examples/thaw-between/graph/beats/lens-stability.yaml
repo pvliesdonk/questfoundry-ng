@@ -1,0 +1,13 @@
+id: post:lens-stability
+created_by: seed
+summary: The flame burns brighter, the barrier holding, though the weight of the lens presses
+  upon Elara's shoulders.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: advances
+entities:
+- character:keeper
+- object:old-lens
+belongs_to:
+- path:keep

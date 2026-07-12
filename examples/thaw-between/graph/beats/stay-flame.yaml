@@ -1,0 +1,13 @@
+id: post:stay-flame
+created_by: seed
+summary: The flame steadies, its beam cutting through the mist, holding back the restless
+  tide.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: advances
+entities:
+- location:greyrock
+- object:old-lens
+belongs_to:
+- path:stay

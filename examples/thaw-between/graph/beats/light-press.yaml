@@ -1,0 +1,15 @@
+id: pre:light-press
+created_by: seed
+summary: Marek Sable offers a vessel, promising escape, while the Coastal Authority's envoys
+  demand the logbook.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: complicates
+entities:
+- character:keeper
+- character:cartographer
+- faction:coastguard
+belongs_to:
+- path:go
+- path:stay

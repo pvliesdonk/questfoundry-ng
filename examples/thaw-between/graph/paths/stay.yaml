@@ -1,0 +1,8 @@
+id: path:stay
+name: Stay at the Light
+explores: answer:stay
+consequences:
+- id: consequence:light-continues
+  text: The lighthouse flame burns on, keeping the sea's ancient terror dormant.
+- id: consequence:bound-to-greyrock
+  text: Elara remains bound to Greyrock, her freedom sacrificed to duty.

@@ -1,0 +1,15 @@
+id: passage:group-1
+summary: A faint luminescent sigil glows on the stone wall, then fades as Elara steps back
+  toward the locked log.
+entities:
+- object:old-lens
+prose_summary: Elara eyes a glimmering rune on basalt; the sigil flashes, then fades as the
+  lighthouse light gutters. She turns the rusted key on the iron‑bound logbook, sealing the
+  rune. The lighthouse pulse matches her heartbeat; the stone sighs. She hesitates, hears
+  the logbook’s whisper, and decides to remain the beacon’s guard, leaving shaken.
+beats:
+- beat:shadow-gleam
+- beat:shadow-return
+choices:
+- label: Step back toward the locked logbook
+  to: passage:group-2

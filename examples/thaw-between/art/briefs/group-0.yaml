@@ -1,0 +1,13 @@
+passage: passage:group-0
+priority: 1
+caption: Elara, the lighthouse keeper, gazes at the massive sea‑glass lens as the mist‑enshrouded
+  tower’s lantern sputters.
+prompt: Ink‑wash line work of the craggy Greyrock sea‑stack shrouded in dim mist, the lighthouse
+  clinging to its narrow face. In the foreground, the keeper—a weather‑worn woman with grey
+  braid and storm‑cloud eyes—stands before the massive old‑lens, a disc of sea‑glass etched
+  with faint runes. The lantern emits a weak amber flame, its light trembling against heavy
+  chiaroscuro of slate gray stone and fog‑white mist.
+entities:
+- location:greyrock
+- character:keeper
+- object:old-lens

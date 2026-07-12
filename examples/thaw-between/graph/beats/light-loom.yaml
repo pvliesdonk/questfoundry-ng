@@ -1,0 +1,14 @@
+id: pre:light-loom
+created_by: seed
+summary: The lantern's glow sputters as the tide beneath the stack rises, hinting at a deeper
+  unrest.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: reveals
+entities:
+- location:greyrock
+- object:old-lens
+belongs_to:
+- path:go
+- path:stay

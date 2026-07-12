@@ -1,0 +1,28 @@
+id: character:cartographer
+name: Marek Sable
+concept: A cartographer from the mainland, charting the dangerous shoals, offering Elara a
+  passage away.
+pronouns: he/him
+base:
+  appearance: tall, ink-stained coat, eyes like storm clouds
+  manner: curious, earnest
+arc:
+  begins: curious cartographer seeking safe passage through the shoals
+  pivots:
+  - beat: pre:lens-offer
+    becomes: advocates taking the Great Lens to aid coastal safety and his escape
+  - beat: commit:lens-give
+    becomes: receives the Great Lens, bearing its weight and responsibility
+  - beat: commit:lens-keep
+    becomes: remains without the Great Lens, his hope for escape diminished
+  - beat: commit:light-go
+    becomes: prepares to flee with Elara aboard his vessel
+  ends:
+  - path: path:give
+    state: carries the Great Lens aboard, its power pressing on him
+  - path: path:keep
+    state: leaves without the Great Lens, suspicion from the Coastguard lingers
+  - path: path:go
+    state: is consumed by the sea terror as his ship is swallowed
+  - path: path:stay
+    state: remains at Greyrock, watching the lighthouse, bound to its duty

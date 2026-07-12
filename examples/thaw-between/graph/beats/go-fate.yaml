@@ -1,0 +1,15 @@
+id: post:go-fate
+created_by: seed
+summary: The sea's ancient terror stirs, crashing against the hull as the vessel is swallowed;
+  Elara's oath shatters with the sinking light.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: complicates
+entities:
+- character:keeper
+- object:old-lens
+- location:greyrock
+is_ending: true
+belongs_to:
+- path:go

@@ -1,0 +1,12 @@
+id: post:lens-weakening
+created_by: seed
+summary: The lighthouse's beam flickers, its power waning without the glass.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: complicates
+entities:
+- location:greyrock
+- object:old-lens
+belongs_to:
+- path:give

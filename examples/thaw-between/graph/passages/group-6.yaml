@@ -1,0 +1,30 @@
+id: passage:group-6
+summary: Elara hands the Great Lens to Marek; the lighthouse's beam wanes, a stale fog settles,
+  and Marek departs into the mist with the lens.
+entities:
+- character:keeper
+- character:cartographer
+- object:old-lens
+- location:greyrock
+prose_summary: Elara gives the Great Lens to Marek; Marek places the rune‑etched sea‑glass
+  on the deck, causing the lighthouse beam to flicker and the beacon to dim, extinguishing
+  Greyrock’s glow. The cartographer’s vessel drifts away as the lantern fades. Marek enters
+  the fog, the ship proceeds, the Lens rests silent in the hold, and the keeper appears on
+  the cliff.
+beats:
+- beat:bridge-2
+- beat:bridge-3
+- commit:lens-give
+- post:lens-uncertainty
+- post:lens-weakening
+choices:
+- label: Board Marek's ship and set sail
+  grants:
+  - flag:departure
+  - flag:light-fades
+  to: passage:group-8
+- label: Stay at the lighthouse and tend the flame
+  grants:
+  - flag:bound-to-greyrock
+  - flag:light-continues
+  to: passage:group-9

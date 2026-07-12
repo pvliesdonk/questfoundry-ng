@@ -1,0 +1,51 @@
+flags:
+- id: flag:bound-to-greyrock
+  description: Elara remains bound to Greyrock, her freedom sacrificed to duty.
+  source: dilemma
+  path: path:stay
+  derived_from:
+  - consequence:bound-to-greyrock
+- id: flag:departure
+  description: Elara departs the rock aboard Marek's vessel, abandoning her oath.
+  source: dilemma
+  path: path:go
+  derived_from:
+  - consequence:departure
+- id: flag:escape-vanishes
+  description: Elara's chance for a new life fades as the lens anchors her to Greyrock.
+  source: dilemma
+  path: path:keep
+  derived_from:
+  - consequence:escape-vanishes
+- id: flag:lens-removed
+  description: The Great Lens is taken aboard Marek's ship, weakening the lighthouse's power.
+  source: dilemma
+  path: path:give
+  derived_from:
+  - consequence:lens-removed
+- id: flag:lens-retained
+  description: The Great Lens remains in the lighthouse, preserving the barrier that keeps
+    the sea asleep.
+  source: dilemma
+  path: path:keep
+  derived_from:
+  - consequence:lens-retained
+- id: flag:light-continues
+  description: The lighthouse flame burns on, keeping the sea's ancient terror dormant.
+  source: dilemma
+  path: path:stay
+  derived_from:
+  - consequence:light-continues
+- id: flag:light-fades
+  description: The light extinguishes, stirring the sleeping horror beneath the waves.
+  source: dilemma
+  path: path:go
+  derived_from:
+  - consequence:light-fades
+- id: flag:marek-promise
+  description: Marek vows to protect the coast using the lens, though his intentions remain
+    uncertain.
+  source: dilemma
+  path: path:give
+  derived_from:
+  - consequence:marek-promise

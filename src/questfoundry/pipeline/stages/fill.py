@@ -20,6 +20,7 @@ the runner's ordinary repair contract.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict
@@ -123,7 +124,43 @@ def _voice_context(project: Project) -> dict:
     }
 
 
+# A limited POV names its viewpoint character in parentheses. A pronoun
+# ("you"/"I"/…) is not a name — only a proper name must resolve to the cast.
+_POV_PAREN_RE = re.compile(r"\(([^)]+)\)")
+_POV_PRONOUNS = {"you", "i", "we", "he", "she", "they", "me", "us"}
+
+
+def _check_pov_names_the_cast(pov: str, project: Project) -> None:
+    """The pov string names the viewpoint character, and every later passage
+    and its review are held to it verbatim — so a wrong name poisons the
+    whole stage (live gpt-oss:120b: the prompt example's "Maren" copied over
+    the real "Marin", every passage failed review). The cast is a finite set
+    in context; validate the coined name against it rather than trusting it."""
+    match = _POV_PAREN_RE.search(pov)
+    if not match:
+        return
+    named = match.group(1).strip().strip("'\"")
+    if not named[:1].isupper() or named.lower() in _POV_PRONOUNS:
+        return  # a pronoun / 'you' — not a character name
+    names = [
+        e.name
+        for e in project.graph.nodes_of(Entity)
+        if e.retained and e.category == EntityCategory.CHARACTER and e.name
+    ]
+    # The cast stores full names ("Maren Voss"); the pov may name the short
+    # form ("Maren"). Accept when the named token is part of a cast name (or
+    # vice versa); reject a name that matches none (the Maren-over-Marin bug).
+    named_l = named.lower()
+    if not any(named_l in n.lower() or n.lower() in named_l for n in names):
+        raise ApplyError(
+            f"the POV names {named!r}, who is not a character in this story; a "
+            "limited POV must name its viewpoint character with the exact cast "
+            f"spelling — use one of: {sorted(names)}."
+        )
+
+
 def _voice_apply(proposal: VoiceProposal, project: Project) -> list[str]:
+    _check_pov_names_the_cast(proposal.pov, project)
     project.voice = Voice(**proposal.model_dump())
     return [f"voice: {proposal.pov}; {proposal.tense}; {proposal.diction}"]
 

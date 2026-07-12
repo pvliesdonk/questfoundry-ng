@@ -11,13 +11,13 @@ VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("
 BEATS TO REWRITE:
 {% for t in targets %}
 {% if t.kind == "clone" %}
-- {{ t.beat.id }} (in the world of {{ t.world }}): {{ t.beat.summary }}
+- {{ t.beat.id }} (in the world of {{ t.world }}){% if t.beat.entities %} — entities: {{ t.beat.entities | join(", ") }}{% endif %}: {{ t.beat.summary }}
 {% for f in t.facts %}
   true here: {{ f.dilemma.question }} -> "{{ f.answer }}" ({{ f.consequences | join("; ") }});
   committed when: {{ f.committed_at }}
 {% endfor %}
 {% else %}
-- {{ t.beat.id }} (no longer the ending): {{ t.beat.summary }}
+- {{ t.beat.id }} (no longer the ending){% if t.beat.entities %} — entities: {{ t.beat.entities | join(", ") }}{% endif %}: {{ t.beat.summary }}
 {% for q in t.open_questions %}
   still unresolved after this beat: {{ q }}
 {% endfor %}
@@ -26,8 +26,9 @@ BEATS TO REWRITE:
 
 REQUIREMENTS:
 - Rewrite every beat listed, exactly once, keyed by its full beat id.
-- Keep each beat's dramatic function: the same moment, the same stakes, the same
-  entities — recolored by what is true in its world. Do not add or remove events.
+- Keep each beat's dramatic function: the same moment, the same stakes, and the
+  exact entities listed with it above — recolored by what is true in its world.
+  Reference that same set; add no new entity and drop none. Do not add or remove events.
 - Per-world copies of the same moment must genuinely differ: what the characters
   know, fear, and have lost differs between worlds, and the summary must show it.
 - De-ended tails: resolve their own arc's immediate action, but end open — the

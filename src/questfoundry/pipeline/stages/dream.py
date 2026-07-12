@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from questfoundry.graph.validate import run_checks
 from questfoundry.models.base import Stage
@@ -17,7 +17,7 @@ class DreamProposal(BaseModel):
     genre: str
     subgenre: str = ""
     tone: str
-    themes: list[str]
+    themes: list[str] = Field(min_length=2, max_length=4)  # the prompt's "2-4", enforced
     audience: str = ""
     content_include: list[str] = []
     content_avoid: list[str] = []

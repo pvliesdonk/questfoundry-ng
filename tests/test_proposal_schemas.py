@@ -130,3 +130,18 @@ def test_every_stage_reference_pinned_schema_stays_inside_the_subset() -> None:
     for schema in schemas:
         _check(schema.model_json_schema(), schema.__name__, bad)
     assert not bad, "schemas outside the grammar-safe subset:\n" + "\n".join(bad)
+
+
+def test_dream_themes_count_is_enforced() -> None:
+    """The prompt-quality sweep: dream.j2 asks for 2-4 themes; the schema
+    now enforces the bound instead of trusting the prose."""
+    import pytest
+    from pydantic import ValidationError
+
+    from questfoundry.pipeline.stages.dream import DreamProposal
+
+    DreamProposal(genre="g", tone="t", themes=["a", "b"])  # 2 — ok
+    DreamProposal(genre="g", tone="t", themes=["a", "b", "c", "d"])  # 4 — ok
+    for bad in (["only-one"], ["a", "b", "c", "d", "e"]):
+        with pytest.raises(ValidationError):
+            DreamProposal(genre="g", tone="t", themes=bad)

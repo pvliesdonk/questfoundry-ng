@@ -277,6 +277,21 @@ def test_voice_prompt_shows_the_cast_and_plants_no_example_name(golden_fill):
     assert "limited (NAME)" in source and "(Maren)" not in source
 
 
+def test_voice_pov_name_is_validated_against_the_cast(golden_fill):
+    """The prompt-quality sweep: the pov name is now enforced, not merely
+    trusted (the Maren-over-Marin bug). A limited POV naming a non-cast
+    character is a repairable ApplyError; the short form of a real cast name
+    passes, and a pronoun POV is not name-checked."""
+    from questfoundry.pipeline import ApplyError
+    from questfoundry.pipeline.stages.fill import _check_pov_names_the_cast
+
+    # golden cast: "Elias Wren", "Maren Voss", "The Sleeper"
+    _check_pov_names_the_cast("third person limited (Maren)", golden_fill)  # short form OK
+    _check_pov_names_the_cast("second person ('you')", golden_fill)  # pronoun — not checked
+    with pytest.raises(ApplyError, match="not a character"):
+        _check_pov_names_the_cast("third person limited (Nadia)", golden_fill)
+
+
 def _diamond_graph(reverse_wiring: bool):
     """A fork into two prose-bearing passages converging on a fourth,
     wired through the mutation layer in either order."""

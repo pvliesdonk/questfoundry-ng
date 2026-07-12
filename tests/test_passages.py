@@ -538,6 +538,27 @@ def test_finalize_splices_false_branches_against_pristine_topology(vision, tmp_p
     assert isinstance(g.node("beat:detour"), Beat)
 
 
+def test_finalize_false_branch_id_collision_is_repairable(vision, tmp_path):
+    """The exact asymmetry the PR fixes: the false-branch splice once let a
+    colliding new-beat id escape as an uncaught KeyError and crash the run
+    (the residue path caught it, this one did not). Through _finalize_apply
+    it is now a repairable ApplyError carrying false-branch location
+    context, not a crash."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    proposal = FinalizeProposal(
+        false_branches=[
+            # arm reuses an existing beat id (run[0]) — the collision
+            FalseBranchSpec(before=run[0], after=run[1], arms=[ArmSpec(id=run[0], summary="s")])
+        ]
+    )
+    with pytest.raises(ApplyError, match="false branch"):
+        _finalize_apply(proposal, project)
+
+
 def test_llm_beat_entities_must_be_ids(vision, tmp_path):
     """Validation run (2026-07-09): a diamond arm carrying display names
     ('Wren') sailed through every gate until DRESS's brief check collided

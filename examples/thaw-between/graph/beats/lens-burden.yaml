@@ -1,0 +1,13 @@
+id: post:lens-burden
+created_by: seed
+summary: Marek departs empty‑handed, and whispers of the Coastguard's suspicion linger in
+  the wind.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: complicates
+entities:
+- character:cartographer
+- faction:coastguard
+belongs_to:
+- path:keep

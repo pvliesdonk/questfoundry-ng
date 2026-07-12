@@ -1,0 +1,8 @@
+id: path:go
+name: Flee with Marek
+explores: answer:go
+consequences:
+- id: consequence:light-fades
+  text: The light extinguishes, stirring the sleeping horror beneath the waves.
+- id: consequence:departure
+  text: Elara departs the rock aboard Marek's vessel, abandoning her oath.

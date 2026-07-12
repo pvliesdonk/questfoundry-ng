@@ -1,0 +1,8 @@
+id: setup:legacy
+created_by: seed
+summary: Elara Wren watches the Great Lens pulse, feeling generations of duty bearing down.
+beat_class: structural
+purpose: setup
+entities:
+- character:keeper
+- object:old-lens

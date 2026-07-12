@@ -1,0 +1,7 @@
+id: intersection:offer-press
+location: character:keeper
+rationale: The cartographer's plea about the lens coincides with Marek's escape offer and
+  the Coastguard's demand, centered on the keeper.
+members:
+- pre:lens-offer
+- pre:light-press

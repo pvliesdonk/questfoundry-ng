@@ -1,0 +1,12 @@
+id: locked:log-resolution
+created_by: seed
+summary: Elara hands the logbook to the Coastguard, securing a steady flow of food and medicine.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:logbook-bargain
+  effect: commits
+entities:
+- character:keeper
+- faction:coastguard
+belongs_to:
+- path:surrender

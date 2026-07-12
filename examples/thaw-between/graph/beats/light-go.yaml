@@ -1,0 +1,14 @@
+id: commit:light-go
+created_by: seed
+summary: Elara climbs the sheer cliff, leaps onto Marek's weather-worn ship, and lets the
+  flame gutter out.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: commits
+entities:
+- character:keeper
+- character:cartographer
+- location:greyrock
+belongs_to:
+- path:go

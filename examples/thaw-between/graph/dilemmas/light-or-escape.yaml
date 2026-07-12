@@ -1,0 +1,20 @@
+id: dilemma:light-or-escape
+question: Do you extinguish the lighthouse's flame and flee with Marek, risking the ancient
+  terror beneath, or stay and keep the sea asleep at the cost of your own freedom?
+why_it_matters: Choosing freedom may unleash the sleeping horror, endangering the coast; staying
+  seals her fate but preserves countless lives.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:stay
+  text: Remain at the lighthouse, tending the flame despite the yearning for escape.
+- id: answer:go
+  text: Climb down the cliff and board Marek's vessel, letting the light fade.
+anchored_to:
+- character:keeper
+- character:cartographer
+- location:greyrock
+wraps:
+- dilemma:logbook-bargain
+- dilemma:lens-trade

@@ -1,0 +1,11 @@
+id: locked:log-lead-1
+created_by: seed
+summary: Supplies dwindle; the cold gnaws at the stone walls of the lighthouse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:logbook-bargain
+  effect: complicates
+entities:
+- character:keeper
+belongs_to:
+- path:surrender

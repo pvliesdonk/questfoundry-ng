@@ -1,0 +1,7 @@
+id: setup:mist
+created_by: seed
+summary: A perpetual grey mist clings to Greyrock, muffling the sea's roar.
+beat_class: structural
+purpose: setup
+entities:
+- location:greyrock

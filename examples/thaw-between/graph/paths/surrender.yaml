@@ -1,0 +1,9 @@
+id: path:surrender
+name: Surrender the Logbook
+explores: answer:surrender
+consequences:
+- id: consequence:supplies-secured
+  text: The Coastal Authority receives the logbook and supplies Elara with steady food and
+    medicine.
+- id: consequence:secret-at-risk
+  text: The secret of the sea's dreaming power becomes vulnerable to exploitation.

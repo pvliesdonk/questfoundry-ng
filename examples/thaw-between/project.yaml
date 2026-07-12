@@ -1,0 +1,11 @@
+name: Thaw Between
+stage: dress
+llm:
+  provider: ollama
+  host: https://ollama.com
+  num_ctx: 32768
+  models:
+    architect: gpt-oss:120b-cloud
+    writer: gpt-oss:120b-cloud
+    utility: gpt-oss:120b-cloud
+print_seed: 1

@@ -1,0 +1,10 @@
+id: beat:bridge-6
+created_by: grow
+summary: The perpetual grey mist rolls in, and the keeper lifts his eyes to the pulsing lens,
+  feeling the weight of generations.
+beat_class: structural
+purpose: bridge
+entities:
+- location:greyrock
+- character:keeper
+- object:old-lens

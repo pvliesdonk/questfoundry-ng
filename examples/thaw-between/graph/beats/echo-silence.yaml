@@ -1,0 +1,7 @@
+id: beat:echo-silence
+created_by: polish
+summary: Silence swallows the air, pressing the weight of unspoken vows
+beat_class: structural
+purpose: false_branch
+entities:
+- character:keeper

@@ -1,0 +1,14 @@
+id: locked:log-aftermath-1
+created_by: seed
+summary: The authorities study the records, uncovering the Great Lens secret, while Elara
+  watches the supplies arrive with wary eyes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:logbook-bargain
+  effect: complicates
+entities:
+- character:keeper
+- faction:coastguard
+- object:old-lens
+belongs_to:
+- path:surrender

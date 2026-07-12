@@ -1,0 +1,13 @@
+id: passage:group-3
+summary: A low chant reverberates from the tunnel, suggesting a hidden passage.
+entities:
+- character:cartographer
+prose_summary: Elara follows a low chant in a tidal tunnel, feels a pressure from an unseen
+  doorway, and holds a lantern. Marek spreads ink‑stained charts, urges the great glowing
+  lens to guide his brig, and points to the rune‑etched lens. Elara touches basalt, learns
+  her choices bind to the lingering light, and learns a hidden mouth leads to a safe shore.
+beats:
+- beat:echo-whisper
+choices:
+- label: Follow the echo into the tunnel
+  to: passage:group-5

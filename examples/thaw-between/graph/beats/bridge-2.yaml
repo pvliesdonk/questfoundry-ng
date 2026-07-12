@@ -1,0 +1,10 @@
+id: beat:bridge-2
+created_by: grow
+summary: A stale fog clings to Greyrock, granting the cartographer a moment’s pause before
+  the keeper's silhouette appears on the cliff below.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cartographer
+- character:keeper
+- location:greyrock

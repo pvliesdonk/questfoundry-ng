@@ -1,0 +1,11 @@
+id: post:go-extinguish
+created_by: seed
+summary: The lighthouse's beacon dies, and a low moan rises from the abyss below.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:light-or-escape
+  effect: reveals
+entities:
+- location:greyrock
+belongs_to:
+- path:go

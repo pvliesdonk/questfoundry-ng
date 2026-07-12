@@ -1,0 +1,24 @@
+id: passage:group-2
+summary: With supplies low, the Coastal Authority demands the lighthouse logbook for provisions,
+  while the Great Lens trembles, hinting at its fragile power.
+entities:
+- character:keeper
+- faction:coastguard
+- object:old-lens
+- character:cartographer
+prose_summary: Wind hammers lighthouse stones; cold seeps basalt walls, supplies of pork and
+  oil shrink. Coastguard patrol arrives; officer demands iron‑bound logbook for rations, Elara
+  places the tome on stone slab, sealing pact. Marek enters lantern room, lens hums, warns
+  barrier may shatter if lifted. Marek argues safety depends on lens, proposes moving it,
+  urging Elara to trust light.
+beats:
+- locked:log-lead-1
+- locked:log-lead-2
+- locked:log-resolution
+- pre:lens-offer
+- pre:lens-sense
+choices:
+- label: Listen for the hidden passage's chant
+  to: passage:group-3
+- label: Hold fast in the oppressive silence
+  to: passage:group-4

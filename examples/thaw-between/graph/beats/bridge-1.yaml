@@ -1,0 +1,10 @@
+id: beat:bridge-1
+created_by: grow
+summary: Dawn seeps through the lighthouse, and the keeper lowers the lens as the cartographer
+  slips ashore, the coastguard's distant shouts echoing across the tide.
+beat_class: structural
+purpose: bridge
+entities:
+- character:keeper
+- character:cartographer
+- faction:coastguard

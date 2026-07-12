@@ -1,0 +1,10 @@
+id: beat:bridge-0
+created_by: grow
+summary: Night deepens over Greyrock as the wind carries the cartographer's footsteps toward
+  the cliff's edge, the coastguard's watch fading behind him.
+beat_class: structural
+purpose: bridge
+entities:
+- character:cartographer
+- character:keeper
+- location:greyrock

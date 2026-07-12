@@ -1,0 +1,21 @@
+id: passage:group-8
+summary: Elara leaps onto Marek's ship as the flame gutters, the beacon dies, and the ancient
+  sea rises to claim them.
+entities:
+- character:keeper
+- character:cartographer
+- location:greyrock
+- object:old-lens
+ending:
+  id: e-group-8
+  title: A Light Drowned
+irrelevant_flags:
+- flag:marek-promise
+prose_summary: Elara climbs the cliff to the tower, the lantern dies and the great lens stops
+  shining. The tower moans as an ancient ocean terror attacks Marek's brig, splintering hull
+  and flooding deck. Elara grasps the rail as the tower collapses, the lens sinks, her oath
+  breaks, and the sea claims the tower.
+beats:
+- commit:light-go
+- post:go-extinguish
+- post:go-fate

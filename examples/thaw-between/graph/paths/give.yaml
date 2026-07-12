@@ -1,0 +1,8 @@
+id: path:give
+name: Give the Great Lens
+explores: answer:give
+consequences:
+- id: consequence:lens-removed
+  text: The Great Lens is taken aboard Marek's ship, weakening the lighthouse's power.
+- id: consequence:marek-promise
+  text: Marek vows to protect the coast using the lens, though his intentions remain uncertain.

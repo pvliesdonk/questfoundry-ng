@@ -1,0 +1,15 @@
+id: location:greyrock
+name: Greyrock
+concept: A craggy sea stack where the lighthouse stands, lapped by perpetual mist.
+base:
+  climate: endless fog and wind
+  atmosphere: claustrophobic, the ocean's breath
+arc:
+  begins: craggy sea stack shrouded in perpetual mist, claustrophobic and wind‑battered
+  pivots:
+  - beat: beat:bridge-3
+    becomes: light fades, mist thickens, sense of abandonment grows
+  - beat: beat:bridge-0
+    becomes: night deepens, wind howls, footsteps echo on stone
+  - beat: beat:bridge-4
+    becomes: ageing flame casts long shadows, the rock feels weary

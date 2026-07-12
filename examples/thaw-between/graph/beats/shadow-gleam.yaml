@@ -1,0 +1,7 @@
+id: beat:shadow-gleam
+created_by: polish
+summary: The protagonist notices a faint luminescent sigil on the stone wall
+beat_class: structural
+purpose: false_branch
+entities:
+- object:old-lens

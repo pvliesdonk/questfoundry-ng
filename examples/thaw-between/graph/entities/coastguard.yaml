@@ -1,0 +1,22 @@
+id: faction:coastguard
+name: The Coastal Authority
+concept: The regional power that maintains the lighthouse network, demanding records and tribute.
+base:
+  reputation: bureaucratic, pragmatic
+  presence: periodic supply ships
+arc:
+  begins: bureaucratic coastguard demanding records and tribute
+  pivots:
+  - beat: locked:log-lead-2
+    becomes: presses for the lighthouse logbook, asserting control
+  - beat: locked:log-resolution
+    becomes: acquires the logbook, providing steady supplies
+  - beat: locked:log-aftermath-1
+    becomes: discovers the Great Lens secret, gaining leverage
+  ends:
+  - path: path:surrender
+    state: holds the logbook, regulates supplies and maintains authority
+  - path: path:keep
+    state: knows of the Great Lens but cannot claim it, watches the keeper
+  - path: path:give
+    state: loses access to the Great Lens, their leverage diminishes

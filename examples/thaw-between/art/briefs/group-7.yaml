@@ -1,0 +1,15 @@
+passage: passage:group-7
+priority: 3
+caption: Refusing to part with the Lens, Elara crowns the lantern with it, igniting a bright
+  flame as distant coastguard shouts echo.
+prompt: Ink‑wash scene on the mist‑swollen Greyrock where the keeper firmly places the great
+  old‑lens atop the lantern’s crown, causing the amber flame to blaze brightly. The tall cartographer
+  watches nearby, while distant coastguard figures in pragmatic uniforms stand on the cliffs,
+  their shouts carried by the fog. Stark chiaroscuro emphasizes the sharp glow of the lantern
+  against the slate gray stone and fog‑white mist.
+entities:
+- location:greyrock
+- character:keeper
+- character:cartographer
+- object:old-lens
+- faction:coastguard

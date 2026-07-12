@@ -1,0 +1,13 @@
+id: locked:log-lead-2
+created_by: seed
+summary: Coastal Authority patrols the cliffs, demanding the lighthouse's logbook in exchange
+  for provisions.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:logbook-bargain
+  effect: reveals
+entities:
+- faction:coastguard
+- character:keeper
+belongs_to:
+- path:surrender

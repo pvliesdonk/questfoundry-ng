@@ -1,0 +1,22 @@
+id: passage:group-0
+summary: Greyrock's perpetual mist shrouds the lighthouse as Elara feels the weight of generations
+  while the lantern flickers and supplies dwindle.
+entities:
+- location:greyrock
+- character:keeper
+- object:old-lens
+prose_summary: Elara looks at sea‑glass lens; lantern sputters and fades. Tide rises into
+  stone stack cracks; lens pulses fragile rhythm. Night falls, stone walls chill. She examines
+  ledgers, tallies dwindling supplies. Sigil on wall glows faintly. She decides to study the
+  rune or catalog the stores, each decision determines her survival.
+beats:
+- beat:bridge-5
+- beat:bridge-6
+- pre:light-loom
+- setup:legacy
+- setup:mist
+choices:
+- label: Inspect the glowing sigil on the wall
+  to: passage:group-1
+- label: Turn attention to the dwindling supplies
+  to: passage:group-2

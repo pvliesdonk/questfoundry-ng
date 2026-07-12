@@ -1,0 +1,14 @@
+id: pre:lens-offer
+created_by: seed
+summary: Marek argues that the coast's safety depends on the lens, yet his ship could carry
+  it to safer waters.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lens-trade
+  effect: complicates
+entities:
+- character:cartographer
+- character:keeper
+belongs_to:
+- path:give
+- path:keep

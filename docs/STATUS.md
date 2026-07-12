@@ -961,6 +961,31 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (full gpt-oss:120b run → a new failure class:
+  model-coined constraints enforced downstream):** A full weak-tier run
+  (unbilled, per the budget discipline) to see where we stand after the
+  sweep. **The whole structural pipeline now clears on pure gpt-oss** —
+  DREAM→POLISH including finalize *and* arcs, the exact passes that killed
+  the earlier all-gpt-oss run on this premise (the residue beat-id
+  collision): the fresh-id prompt + the `GraphError` engine fix cleared it
+  in one attempt. The review contract also behaves — the reviewer quotes
+  rule + prose + match, no fabrication. **FILL then exposed a new *class*
+  of failure**, distinct from the sweep's withheld-data class: a model
+  coins a value in one pass that a later pass enforces literally, and a
+  weak model coins an over-broad/unsatisfiable one that traps the writer.
+  Live instance: the voice pass coined `banned: ["similes using 'as' or
+  'like'", "direct metaphor", …]`; `fill_review` matches banned patterns
+  verbatim, so the ban on "as" outlawed ordinary prose and the vague
+  "direct metaphor" was unactionable — every passage failed review. It
+  only surfaced *because* the review-fix made the reviewer honest (the
+  failure moved up-chain from "reviewer fabricates" to "voice coins a bad
+  rule the honest reviewer enforces"). Fixed: `fill_voice.j2` forbids
+  common-word and vague bans and states the verbatim enforcement. The
+  class + the other coined-constraint sites to audit (POLISH arcs, DRESS
+  direction, flag descriptions, micro-details) are recorded in
+  `docs/plans/error-message-audit.md`. A gpt-oss re-run is validating the
+  voice fix (in progress). 486 tests.
+
 - **2026-07-12 (pipeline-wide prompt-quality sweep — "FILL was a
   symptom", author-directed):** After the FILL fixes landed, the author's
   point: the same blunt-prompt disease runs through every stage. Five

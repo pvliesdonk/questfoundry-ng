@@ -37,7 +37,6 @@ from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.review import (
     ReviewFinding,
-    ReviewVerdict,
     build_verdict_schema,
     evaluate_review,
     render_finding,
@@ -687,71 +686,69 @@ def _review_for(
     def review(proposal: WriteProposal, project: Project, adapter: Any) -> list[str]:
         from questfoundry.pipeline import runner
 
-        # the engine's own mechanical finding (word budget) joins the reviewer's
-        # findings in one list — a confident mechanical defect overrides an LLM
-        # `approved`, but a near-miss is a low-confidence finding that does not
-        # force a rework (author-directed, 2026-07-12).
+        # the engine's own mechanical finding (word budget) rides the same
+        # findings list as the reviewer's — a confident mechanical defect blocks
+        # even when the LLM approves the prose, but a near-miss is a
+        # low-confidence finding that does not force a rework (author-directed,
+        # 2026-07-12).
         wb = _word_budget_finding(project, passage_id, proposal.prose)
+        wb_blocks = (
+            wb is not None and wb.assessment == "fail" and wb.confidence in ("high", "medium")
+        )
 
-        def gate(v: Any) -> list[str]:
-            findings = list(v.findings)
-            verdict_value = v.verdict
-            if wb is not None:
-                findings.append(wb)
-                if wb.assessment == "fail" and wb.confidence in ("high", "medium"):
-                    verdict_value = "needs_work"
-            return evaluate_review(ReviewVerdict(verdict=verdict_value, findings=findings))
+        def rendered_findings(v: Any) -> list[str]:
+            # full fidelity for the writer (and the arbiter): the reviewer's
+            # findings plus the mechanical word_budget finding, if any.
+            return [render_finding(f) for f in [*v.findings, *([wb] if wb is not None else [])]]
 
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         micro_review = _micro_review(project.graph, proposal, prior_facts)
-        rendered = env.get_template("fill_review.j2").render(
-            **context,
-            prose=proposal.prose,
-            micro_review=micro_review,
-            revision_notes=proposal.revision_notes,
-            prior_issues=list(prior),
-            arbitration=None,
-        )
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
-            prompt=rendered,
-            schema=FILL_REVIEW_SCHEMA,
-            role="utility",
-        )
-        # approved auto-accepts; a needs_work verdict gates on confident
-        # objective defects only — a warn or low-confidence finding never
-        # halts (review-contract). The word-budget finding rides the same gate.
-        issues = gate(verdict)
-        if not issues:
-            return []
-        if prior:
-            # second strike halts the stage — but every halt so far has
-            # been the cheap reviewer sampling taste, not structure. One
-            # architect-tier arbitration breaks the tie (tiering policy:
-            # escalate rather than improvise); its verdict is final.
-            arb = env.get_template("fill_review.j2").render(
+            prompt=env.get_template("fill_review.j2").render(
                 **context,
                 prose=proposal.prose,
                 micro_review=micro_review,
                 revision_notes=proposal.revision_notes,
                 prior_issues=list(prior),
-                arbitration=[render_finding(f) for f in verdict.findings],
-            )
+                arbitration=None,
+            ),
+            schema=FILL_REVIEW_SCHEMA,
+            role="utility",
+        )
+        # approved auto-accepts and a needs_work verdict gates on confident
+        # objective defects only (review-contract); accept iff neither the
+        # reviewer's findings nor a confident word_budget finding block.
+        if not evaluate_review(verdict) and not wb_blocks:
+            return []
+        active = verdict
+        # a persistent *reviewer* dispute escalates once to an architect arbiter,
+        # shown the full finding set it rules on (word_budget included). A
+        # word_budget-only block is deterministic — an arbiter cannot overturn it
+        # — so it does not spend the frontier call (tiering policy: escalate only
+        # what a stronger judge can actually change).
+        if prior and evaluate_review(verdict):
             final = adapter.complete(
                 system=REVIEW_SYSTEM,
-                prompt=arb,
+                prompt=env.get_template("fill_review.j2").render(
+                    **context,
+                    prose=proposal.prose,
+                    micro_review=micro_review,
+                    revision_notes=proposal.revision_notes,
+                    prior_issues=list(prior),
+                    arbitration=rendered_findings(verdict),
+                ),
                 schema=FILL_REVIEW_SCHEMA,
                 role="architect",
             )
-            final_issues = gate(final)
-            if not final_issues:
+            if not evaluate_review(final) and not wb_blocks:
                 return []
-            issues = final_issues
+            active = final
+        # rework: hand the writer every finding, full fidelity (the rejected
+        # draft itself is stashed by _write_apply_for, which runs before review).
+        issues = rendered_findings(active)
         prior.extend(issues)
-        # note: the rejected draft is stashed by _write_apply_for (which runs
-        # before this review), so it reaches the next rework round for both
-        # apply- and review-stage rejections.
         return issues
 
     return review

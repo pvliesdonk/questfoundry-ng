@@ -279,6 +279,75 @@ def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch
     assert "confirmed: still broken" in review(proposal, golden_fill, adapter)[0]
 
 
+def test_word_budget_only_block_reworks_without_spending_arbitration(golden_fill, monkeypatch):
+    """A word_budget-only block is deterministic — an architect cannot overturn
+    it — so a second strike must NOT spend the frontier arbitration call
+    (PR #61 review)."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class Scripted:
+        def __init__(self, script):
+            self.script = list(script)
+            self.roles: list[str] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            self.roles.append(role)
+            return self.script.pop(0)
+
+    env = Environment(loader=DictLoader({"fill_review.j2": "r"}))
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    review = _review_for("passage:p-arrival")
+    too_short = WriteProposal(prose="w " * 5)  # far under the band → confident word_budget fail
+    # the LLM approves both rounds; only the mechanical word budget blocks
+    adapter = Scripted([_verdict(), _verdict()])  # two utility calls, NO architect scripted
+    assert any("word_budget" in i for i in review(too_short, golden_fill, adapter))
+    assert any("word_budget" in i for i in review(too_short, golden_fill, adapter))  # 2nd strike
+    assert adapter.roles == ["utility", "utility"]  # no architect call was spent
+
+
+def test_arbitration_render_includes_the_word_budget_finding(golden_fill, monkeypatch):
+    """When a persistent reviewer dispute DOES escalate, the architect is shown
+    the full finding set it rules on — word_budget included, not just the LLM's
+    own findings (PR #61 review)."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class Scripted:
+        def __init__(self, script):
+            self.script = list(script)
+            self.prompts: list[tuple[str, str]] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            expected_role, verdict = self.script.pop(0)
+            assert role == expected_role
+            self.prompts.append((role, prompt))
+            return verdict
+
+    env = Environment(
+        loader=DictLoader(
+            {"fill_review.j2": "{% if arbitration %}ARB[{{ arbitration | join(';') }}]{% endif %}r"}
+        )
+    )
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    review = _review_for("passage:p-arrival")
+    too_short = WriteProposal(prose="w " * 5)
+    adapter = Scripted(
+        [
+            ("utility", _verdict(_finding("real defect"))),
+            ("utility", _verdict(_finding("still disputed"))),
+            ("architect", _verdict()),  # architect clears the prose dispute...
+        ]
+    )
+    review(too_short, golden_fill, adapter)
+    out = review(too_short, golden_fill, adapter)  # second strike escalates
+    assert adapter.prompts[-1][0] == "architect"
+    assert "word_budget" in adapter.prompts[-1][1]  # arbiter is shown the finding
+    assert any("word_budget" in i for i in out)  # ...but the mechanical miss still blocks
+
+
 def test_fill_pass_list_is_voice_plus_write_and_summarize_per_passage(golden_fill):
     passes = _passes(golden_fill)
     assert passes[0].name == "voice"

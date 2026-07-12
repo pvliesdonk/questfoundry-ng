@@ -12,10 +12,14 @@ instead of the entry; record a blocking finding (assessment "fail", confidence
 conditional as fact — otherwise mark it "warn" or leave it out. A blocking
 finding halts the stage, so be certain.
 {% endif %}
-Review the codex entries below for spoiler safety and report every objection as
-a structured FINDING. You report evidence; the engine decides the outcome from
-your findings and the codex author decides how to act — so grade each axis
-honestly rather than reaching for a verdict.
+Review the codex entries below for spoiler safety. State a top-level `verdict`
+and report every objection as a structured FINDING. `verdict` is "approved"
+when the entries are spoiler-safe (it auto-accepts) or "needs_work" when you
+have any finding worth raising. A "needs_work" verdict does NOT itself halt the
+author: the engine reworks only on a FAIL finding at high or medium confidence
+and otherwise accepts anyway, and the author weighs the rest — so grade each
+axis honestly rather than reaching to block. You report evidence; the engine
+decides.
 
 Each finding names one RULE (below). Set `assessment` to "fail" for an
 objective defect or "warn" for a concern. Quote the offending sentence of the
@@ -76,9 +80,11 @@ THE ENTRIES:
 --- {{ entry.entity }}: {{ entry.title }}
 {{ entry.body }}
 {% endfor %}
-Report a `findings` list. Each finding is
-{"rule": one of the rule names above, "assessment": "fail" or "warn",
-"confidence": "high" | "medium" | "low", "quote": the exact offending sentence
-of the entry, "reason": how it breaks THAT rule (for conditional_stated_as_fact,
-which conditional item it asserts), "recovery_action": the specific fix the
-author should make}. An empty list means the entries are spoiler-safe.
+Report a `verdict` ("approved" or "needs_work") and a `findings` list. Each
+finding is {"rule": one of the rule names above, "assessment": "fail" or
+"warn", "confidence": "high" | "medium" | "low", "quote": the exact offending
+sentence of the entry, "reason": how it breaks THAT rule (for
+conditional_stated_as_fact, which conditional item it asserts),
+"recovery_action": the specific fix the author should make}. Use "approved"
+with an empty list when the entries are spoiler-safe; use "needs_work" and list
+your findings otherwise.

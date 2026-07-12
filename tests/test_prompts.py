@@ -126,6 +126,8 @@ def test_fill_review_asks_for_the_structured_finding_schema():
     assert "findings" in source
     for axis in ('"rule"', '"assessment"', '"confidence"', '"recovery_action"'):
         assert axis in source
+    # the top-level verdict: approved auto-accepts, needs_work defers to engine
+    assert '"approved"' in source and '"needs_work"' in source
     assert "TASTE IS A WARN, NEVER A FAIL" in source
     assert "simile" in source  # figurative language named as taste, not a rule
     # every stage rule name is offered to the reviewer as an enumerable clause
@@ -225,6 +227,7 @@ def test_codex_review_asks_for_the_structured_finding_schema():
     assert "findings" in source
     for axis in ('"rule"', '"assessment"', '"confidence"', '"recovery_action"'):
         assert axis in source
+    assert '"approved"' in source and '"needs_work"' in source
     assert "TASTE IS A WARN, NEVER A FAIL" in source
     for rule in ("conditional_stated_as_fact", "machinery_leakage", "ending_title_named"):
         assert rule in source

@@ -593,9 +593,10 @@ def _review_for(passage_id: str):
             schema=FILL_REVIEW_SCHEMA,
             role="utility",
         )
-        # the engine gates the loop on confident objective defects only; a
-        # warn or a low-confidence finding never halts (review-contract).
-        issues = evaluate_review(verdict.findings)
+        # approved auto-accepts; a needs_work verdict gates on confident
+        # objective defects only — a warn or low-confidence finding never
+        # halts (review-contract).
+        issues = evaluate_review(verdict)
         if not issues:
             return []
         if prior:
@@ -615,7 +616,7 @@ def _review_for(passage_id: str):
                 schema=FILL_REVIEW_SCHEMA,
                 role="architect",
             )
-            final_issues = evaluate_review(final.findings)
+            final_issues = evaluate_review(final)
             if not final_issues:
                 return []
             issues = final_issues

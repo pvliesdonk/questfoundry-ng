@@ -31,6 +31,10 @@ def _f(
     )
 
 
+def _needs_work(*findings: ReviewFinding) -> ReviewVerdict:
+    return ReviewVerdict(verdict="needs_work", findings=list(findings))
+
+
 # -- schema ------------------------------------------------------------------
 
 
@@ -55,57 +59,71 @@ def test_quote_defaults_empty_for_absence_defects():
 
 def test_build_verdict_schema_pins_rule_to_the_review_clause_set():
     schema = build_verdict_schema("FillReview", ("voice_pov", "leakage"))
-    ok = schema.model_validate({"findings": [{
+    ok = schema.model_validate({"verdict": "needs_work", "findings": [{
         "rule": "leakage", "assessment": "fail", "confidence": "high",
         "quote": "flag:x", "reason": "names machinery", "recovery_action": "drop it",
     }]})
     assert ok.findings[0].rule == "leakage"
     with pytest.raises(ValidationError):
-        schema.model_validate({"findings": [{
+        schema.model_validate({"verdict": "needs_work", "findings": [{
             "rule": "banned_pattern",  # not in this review's clause set
             "assessment": "fail", "confidence": "high",
             "quote": "x", "reason": "y", "recovery_action": "z",
         }]})
 
 
-def test_verdict_defaults_to_no_findings():
-    assert ReviewVerdict().findings == []
+def test_verdict_is_required():
+    # the reviewer must state an outcome — an empty review is a deliberate
+    # "approved", never a lazy default
+    with pytest.raises(ValidationError):
+        ReviewVerdict(findings=[])
+    with pytest.raises(ValidationError):
+        ReviewVerdict(verdict="clean")  # not a valid verdict value
 
 
 # -- gate --------------------------------------------------------------------
 
 
-def test_empty_verdict_accepts():
-    assert needs_rework([]) is False
-    assert evaluate_review([]) == []
+def test_approved_auto_accepts_even_with_findings():
+    # the top-level approval short-circuits; a wrong accept is the safe
+    # asymmetry (deterministic checks still guard structure)
+    v = ReviewVerdict(verdict="approved", findings=[_f("fail", "high")])
+    assert needs_rework(v) is False
+    assert evaluate_review(v) == []
 
 
-def test_warn_only_accepts():
-    findings = [_f("warn", "high"), _f("warn", "low")]
-    assert needs_rework(findings) is False
-    assert evaluate_review(findings) == []
+def test_approved_empty_accepts():
+    v = ReviewVerdict(verdict="approved", findings=[])
+    assert needs_rework(v) is False
+    assert evaluate_review(v) == []
 
 
-def test_low_confidence_fail_only_accepts():
-    findings = [_f("fail", "low")]
-    assert needs_rework(findings) is False
-    assert evaluate_review(findings) == []
+def test_needs_work_with_warns_only_is_approved_by_the_engine():
+    v = _needs_work(_f("warn", "high"), _f("warn", "low"))
+    assert needs_rework(v) is False
+    assert evaluate_review(v) == []
+
+
+def test_needs_work_with_low_confidence_fail_only_is_approved():
+    v = _needs_work(_f("fail", "low"))
+    assert needs_rework(v) is False
+    assert evaluate_review(v) == []
 
 
 @pytest.mark.parametrize("confidence", ["high", "medium"])
-def test_a_confident_fail_reworks(confidence):
-    assert needs_rework([_f("fail", confidence)]) is True
+def test_needs_work_with_a_confident_fail_reworks(confidence):
+    assert needs_rework(_needs_work(_f("fail", confidence))) is True
 
 
 def test_rework_returns_every_finding_full_fidelity():
     # one blocking fail forces the rework; the producer still receives the
     # warns and the low-confidence fail — the engine gates, it does not curate
-    findings = [
+    v = _needs_work(
         _f("fail", "high", rule="voice_pov"),
         _f("warn", "medium", rule="leakage"),
         _f("fail", "low", rule="continuity"),
-    ]
-    rendered = evaluate_review(findings)
+    )
+    rendered = evaluate_review(v)
     assert len(rendered) == 3
     assert any("voice_pov" in r for r in rendered)
     assert any("leakage" in r and "WARN" in r for r in rendered)

@@ -38,7 +38,10 @@ def _finding(
 
 
 def _verdict(*findings: ReviewFinding) -> ReviewVerdict:
-    return ReviewVerdict(findings=list(findings))
+    # empty = a clean "approved"; any finding = "needs_work" (the engine still
+    # decides whether it blocks)
+    verdict = "needs_work" if findings else "approved"
+    return ReviewVerdict(verdict=verdict, findings=list(findings))
 
 
 @pytest.fixture()
@@ -184,6 +187,9 @@ def test_review_hook_translates_verdicts(golden_fill, monkeypatch):
     assert review(proposal, golden_fill, FakeAdapter(warn)) == []
     low = _verdict(_finding("reach", confidence="low"))
     assert review(proposal, golden_fill, FakeAdapter(low)) == []
+    # an explicit "approved" auto-accepts even if a fail finding slipped in
+    approved = ReviewVerdict(verdict="approved", findings=[_finding("ignored")])
+    assert review(proposal, golden_fill, FakeAdapter(approved)) == []
     # a high-confidence fail reworks; the returned string is the rendered
     # finding (labels + quote + recovery), carrying the reviewer's reason
     bad = review(proposal, golden_fill, FakeAdapter(_verdict(_finding("voice drift"))))

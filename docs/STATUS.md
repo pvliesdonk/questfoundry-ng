@@ -969,6 +969,31 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (review-contract live-validated + a top-level `verdict`
+  refinement; a new FILL blocker surfaced):** An unbilled gpt-oss:120b run
+  (Ollama cloud, scratch `examples/thaw-between/`) validated the contract on
+  the weak tier: **six FILL prose reviews accepted first-try with well-formed
+  structured verdicts — no fabricated rule, no false-positive halt** (the
+  failure this redesign targeted). The voice-ban footgun is also gone live
+  (the coined `banned` list was all literally-matchable). Author refinement
+  off the run: the empty-review signal `{"findings": []}` is semantically thin
+  — a considered "clean" and a lazy default look identical — so `ReviewVerdict`
+  gained a required top-level **`verdict` (`approved` / `needs_work`)**.
+  `approved` auto-accepts; `needs_work` defers to the engine, which reworks
+  only on a confident `fail` and otherwise approves anyway ("a needs-work can
+  still be approved by the engine"). This does not restore the removed binary
+  verdict: the reviewer can affirm a clean read but still cannot *block* on its
+  own say-so (a block needs `needs_work` + a `fail` at `medium`+ confidence).
+  The asymmetry makes it safe (a wrong `approved` only accepts marginal prose;
+  the danger was a wrong halt). 500 tests, ruff clean, golden 0/0. **New open
+  item**: FILL still died before DRESS — but on an *unrelated* cause, the
+  micro-detail single-assignment guard (`object:old-lens already has
+  'material'`) exhausting repairs when the weak writer kept re-observing an
+  established fact. The message is already exemplary (reason + subject +
+  recovery_action), so it is a weak-tier fixation, not a message defect — a
+  prose-quality follow-up, and it means **DRESS codex review is still
+  unexercised live**.
+
 - **2026-07-12 (review-contract redesign BUILT — signed off, implemented,
   pushed):** The author marked the spec PR ready and signed off ("start
   implementing"). The pipeline-wide structured-finding contract is now live:

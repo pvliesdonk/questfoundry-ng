@@ -205,14 +205,15 @@ most transience; a sustained failure still exits, and the A16
 in-flight ledger already makes the stage-level retry free — today a
 human re-invokes `qf run`.
 
-And progress reporting: a deep-scope FILL is ~300 calls over an hour+,
-and today the only in-stage signals are buffered console lines (block-
-buffered when piped, so even a log tail goes blind) and counting cache
-files by hand (live run 8). `qf run` should emit a flushed, one-line
-heartbeat per pass (pass m/n, attempt, running spend from the ledger),
-and `qf status` should read live run state — current stage/pass and
-spend — from the checkpoint, in-flight ledger, and cost ledger it
-already has.
+Progress reporting is **built, pulled forward** (author call,
+2026-07-12 — the pain was live, not hypothetical: a deep-scope FILL is
+~300 calls over an hour+, and the only in-stage signals were buffered
+console lines and counting cache files by hand, live run 8). `qf run`
+emits a flushed one-line heartbeat per pass on stderr (pass m/n,
+attempts, running spend from the ledger — token counts, the ledger
+records no prices), and `qf status` reads live run state — spend
+totals and any interrupted stage's journaled passes — from the cost
+ledger and A16 in-flight ledger it already has.
 
 **Exit:** `qf run` pauses at a checkpoint, the author edits an
 artifact, the run resumes and revalidates; `qf export twee` lints; a

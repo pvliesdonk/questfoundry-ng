@@ -5,9 +5,28 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-11 · **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation and the review-contract redesign remain). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log). Then M9
+> Last updated: 2026-07-12 · **The prose-quality live-validation
+> predecessors are done** (author-directed): the curated craft corpus
+> is vendored in-repo (`corpus/interactive-fiction/`, 55 notes, eight
+> non-exemplar clusters) and M10's progress reporting is pulled forward
+> (`qf run` per-pass stderr heartbeat, `qf status` spend + in-flight
+> state). Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation and the review-contract redesign remain). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
 
 ## Where we are
+
+**The live-validation predecessors are done** (2026-07-12,
+author-directed; the decision log below has the design record). Two
+items cleared before next-up #1a runs: (1) the **curated craft corpus
+is vendored** at `corpus/interactive-fiction/` — the eight non-exemplar
+clusters, 55 notes byte-faithful from the author's vault,
+`corpus/README.md` for scope/provenance, `style-exemplars` excluded
+until M9 — so corpus-grounded runs stop depending on hand-staged
+out-of-repo exports; (2) **M10's progress reporting is pulled forward**
+(explicit author call, not scope drift; the rest of M10 stays put): the
+runner emits `PassProgress` events through a CLI-agnostic callback
+seam, `qf run`/`qf rerun` print a flushed per-pass heartbeat on stderr
+(pass m/n, attempts, running ledger totals), and `qf status` shows
+spend and any interrupted stage's in-flight ledger state. 465 tests.
 
 **The prose-quality-at-scale engine is built** (2026-07-11, the frontier
 session next-up #1 called for; plan doc
@@ -600,12 +619,9 @@ PR #5) and this agent/doc infrastructure (PR #6).
    boilerplate in the open items).
 3. **M10 — SHIP & the author loop** (roadmap §M10): the SHIP stage
    with the Twee lint, real interactive checkpoint review behind
-   `qf run --yes`, `qf simulate --random N`, and the run-experience
-   items live run 8 earned it: stage-level auto-resume and per-pass
-   progress reporting.
-4. **Embed a curated craft-corpus subset in the repo** (author call,
-   live run 8 — see open items): stop hand-staging vault exports for
-   corpus-grounded runs.
+   `qf run --yes`, `qf simulate --random N`, and stage-level
+   auto-resume (per-pass progress reporting was pulled forward and is
+   built — 2026-07-12, decision log).
 
 ## Known deferrals / open items
 
@@ -716,15 +732,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
      `qwen3.5`-class confirmation still wants a run when a daemon host is
      reachable.
 
-- **The craft corpus should live (curated) in the repo** (author
-  call, 2026-07-11, during live run 8 setup): corpus-grounded runs
-  depend on an out-of-repo export (`/home/user/corpus/
-  interactive-fiction`) that runs 7 and 8 each had to re-stage by
-  hand — run 8's came from the author's vault repo. Embed a curated
-  subset indefinitely (scoped to the eight non-exemplar clusters;
-  the exemplar mechanism is M9's), so corpus runs and future
-  retrieval tests are reproducible without vault access. Curation
-  and licensing are the author's pass.
+- ~~The craft corpus should live (curated) in the repo~~ **Vendored**
+  (2026-07-12, author-directed — see "Where we are" and the decision
+  log): `corpus/interactive-fiction/` carries the eight non-exemplar
+  clusters (55 notes, byte-faithful from the author's vault;
+  `corpus/README.md` records scope, provenance, and the
+  fingerprint-as-input contract). `style-exemplars` stays out until
+  M9's reserved exemplar mechanism exists to consume it. Curation
+  (adding/trimming notes) remains the author's ongoing pass.
 
 - **Transient transport failures kill the run** (author call, live
   run 8): a provider disconnect exits `qf run` even though the A16
@@ -734,12 +749,13 @@ PR #5) and this agent/doc infrastructure (PR #6).
   4xx stays fatal), which absorbs most transience; a sustained failure
   still exits the run.
   Stage-level auto-resume owned by M10 (roadmap §M10, run resilience).
-- **Long runs report no progress** (author call, live run 8): a
-  deep-scope FILL is ~300 calls with no in-stage signal — console
-  output block-buffers when piped, so monitoring fell back to counting
-  cache files. `qf run` gets a flushed per-pass heartbeat (pass m/n,
-  spend); `qf status` learns to read live run state from the artifacts
-  it already has. Owned by M10 (roadmap §M10).
+- ~~Long runs report no progress~~ **Built, pulled forward from M10**
+  (2026-07-12, author call — decision log): `qf run`/`qf rerun` emit a
+  flushed one-line heartbeat per pass on stderr (pass m/n, attempts,
+  running ledger totals — the stderr choice is what survives piping),
+  and `qf status` reads spend from the cost ledger and interrupted-run
+  state from the A16 in-flight ledger. Live proof on the next long
+  run; stage-level auto-resume stays with M10.
 
 - ~~A Gemini provider is unbuilt~~ **Built and validated** (PR #18):
   `llm/providers/gemini.py` over the google-genai SDK, wired into the
@@ -897,6 +913,33 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-12 (the #1a predecessors, author-directed: corpus vendored
+  + M10 progress reporting pulled forward):** Two items the author
+  called before the prose-quality live validation runs. (1) **The
+  curated craft corpus now lives in the repo**: the eight non-exemplar
+  clusters (55 notes) copied from the author's vault to
+  `corpus/interactive-fiction/`, byte-faithful with frontmatter;
+  `corpus/README.md` records scope, provenance, and the
+  fingerprint-as-input contract; `style-exemplars` stays out until
+  M9's reserved exemplar mechanism can consume it (03 §10 gained the
+  bullet). Closes the open item below — runs stop hand-staging vault
+  exports. (2) **M10's progress reporting is built early** (scope
+  discipline note: an explicit author pull-forward, not drift; the
+  rest of M10 stays put). Design: the runner grew a `progress`
+  callback seam (`PassProgress` in `pipeline/types.py` — stage, pass
+  name, 1-based m/n over the full pass list including skips, status
+  start/done/skipped/kept/resumed/failed, attempts) so the engine
+  stays CLI-agnostic; `qf run`/`qf rerun` wire it to a one-line
+  heartbeat on **stderr** with explicit flush (stdout stays the
+  report stream; stderr is what survives piping — the live run 8
+  block-buffering complaint), each resolution line carrying running
+  ledger totals; `qf status` now prints spend (calls, cached, tokens
+  in/out — tokens, not dollars: the ledger records no prices and a
+  CLI price table would rot) and detects an interrupted run from the
+  A16 `inflight/<stage>/` ledger (journaled pass count, last pass,
+  "re-run to resume free"). Tests: runner event-sequence + failure
+  tests, `qf status` live-state CLI tests (`tests/test_status.py`).
 
 - **2026-07-12 (arc-worthiness settled by the author):** "A character
   without an arc is an extra, a location without an arc is a backdrop,

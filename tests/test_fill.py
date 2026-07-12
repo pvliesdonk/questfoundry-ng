@@ -523,6 +523,39 @@ def test_micro_detail_same_key_updates_the_fact(golden_fill):
     assert any("appearance" in line for line in lines)
 
 
+def test_review_sees_entity_facts_and_the_prior_value_of_an_update(golden_fill):
+    """The `micro_detail` rule can only judge a contradiction if the reviewer
+    is shown (a) the entity's other established facts and (b), for a same-key
+    update, the prior value apply overwrote — captured through the shared
+    prior_facts box (PR #59 review findings: facts weren't rendered and the
+    prior was gone by review time). Uses the real fill_review.j2 template."""
+    prior_facts: dict = {}
+    apply = _write_apply_for("passage:p-arrival", prior_facts)
+    review = _review_for("passage:p-arrival", prior_facts)
+    e = "character:cartographer"
+    old_appearance = golden_fill.graph.node(e).base["appearance"]
+    other_key = next(k for k in golden_fill.graph.node(e).base if k != "appearance")
+    proposal = WriteProposal(
+        prose=_padded("A quiet scene."),
+        micro_details=[{"entity": e, "key": "appearance", "value": "weathered, salt-grey"}],
+    )
+    # apply overwrites base and stashes the prior value into the shared box
+    apply(proposal, golden_fill)
+
+    class Capture:
+        def complete(self, *, system, prompt, schema, role):
+            self.prompt = prompt
+            return schema(verdict="approved", findings=[])
+
+    cap = Capture()
+    assert review(proposal, golden_fill, cap) == []
+    # the prior value (overwritten in the graph) still reaches the reviewer,
+    # alongside the entity's other facts and the proposed value
+    assert old_appearance in cap.prompt
+    assert "weathered, salt-grey" in cap.prompt
+    assert other_key in cap.prompt
+
+
 def test_micro_detail_fresh_fact_is_accepted(golden_fill):
     apply = _write_apply_for("passage:p-arrival")
     lines = apply(

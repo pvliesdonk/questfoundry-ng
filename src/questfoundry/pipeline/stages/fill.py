@@ -480,7 +480,11 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
                 )
 
 
-def _write_apply_for(passage_id: str):
+def _write_apply_for(
+    passage_id: str, prior_facts: dict[tuple[str, str], str | None] | None = None
+):
+    prior_facts = {} if prior_facts is None else prior_facts
+
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         g = project.graph
         passage = g.node(passage_id)
@@ -509,6 +513,7 @@ def _write_apply_for(passage_id: str):
         # A same-key value UPDATES the fact (a sharper version); whether an
         # update is a legitimate refinement or a contradiction, and whether an
         # add genuinely adds, is the reviewer's `micro_detail` rule to judge.
+        prior_facts.clear()
         for d in proposal.micro_details:
             entity_id = _resolve_entity(project.graph, d.entity)
             words = len(d.value.split())
@@ -518,6 +523,11 @@ def _write_apply_for(passage_id: str):
                     f"{echo.DETAIL_VALUE_MAX_WORDS}, not note form): {entity_id}.{d.key}"
                 )
                 continue
+            # capture the value this update overwrites (None if a new key) so
+            # the reviewer can compare proposed-vs-prior — apply mutates in
+            # place, so the prior is otherwise gone by review time.
+            entity = project.graph.node(entity_id)
+            prior_facts[(entity_id, d.key)] = entity.base.get(d.key)
             mutations.add_entity_detail(project.graph, entity_id, d.key, d.value)
             lines.append(f"micro-detail: {entity_id}.{d.key} = {d.value}")
         return lines
@@ -563,7 +573,36 @@ def _summary_apply_for(passage_id: str):
     return apply
 
 
-def _review_for(passage_id: str):
+def _micro_review(g, proposal: WriteProposal, prior_facts: dict) -> list[dict]:
+    """What the reviewer needs to judge each proposed micro-detail: the
+    proposed value, the value it replaces (from `prior_facts`, captured before
+    apply overwrote it — None for a new key), and the entity's OTHER
+    established facts to check a contradiction against. Over-long details were
+    dropped at apply, so they carry no review."""
+    out = []
+    for d in proposal.micro_details:
+        if len(d.value.split()) > echo.DETAIL_VALUE_MAX_WORDS:
+            continue
+        entity_id = _resolve_entity(g, d.entity)
+        entity = g.node(entity_id)
+        prior = prior_facts.get((entity_id, d.key))
+        out.append(
+            {
+                "entity": entity_id,
+                "key": d.key,
+                "value": d.value,
+                "prior": prior,
+                "is_update": prior is not None,
+                "facts": {k: v for k, v in entity.base.items() if k != d.key},
+            }
+        )
+    return out
+
+
+def _review_for(
+    passage_id: str, prior_facts: dict[tuple[str, str], str | None] | None = None
+):
+    prior_facts = {} if prior_facts is None else prior_facts
     # each round is anchored on what earlier rounds flagged: an amnesiac
     # reviewer samples fresh objections every round and never converges
     # (validation run, 2026-07-09) — persistence is signal, novelty is
@@ -575,10 +614,11 @@ def _review_for(passage_id: str):
 
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
+        micro_review = _micro_review(project.graph, proposal, prior_facts)
         rendered = env.get_template("fill_review.j2").render(
             **context,
             prose=proposal.prose,
-            micro_details=proposal.micro_details,
+            micro_review=micro_review,
             prior_issues=list(prior),
             arbitration=None,
         )
@@ -602,7 +642,7 @@ def _review_for(passage_id: str):
             arb = env.get_template("fill_review.j2").render(
                 **context,
                 prose=proposal.prose,
-                micro_details=proposal.micro_details,
+                micro_review=micro_review,
                 prior_issues=list(prior),
                 arbitration=[render_finding(f) for f in verdict.findings],
             )
@@ -642,6 +682,13 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
     )
     for passage_id in writing_order(project):
         slug = passage_id.split(":", 1)[1]
+        # A micro-detail may UPDATE a fact, so apply overwrites base before the
+        # review runs (mutations are the sole replay path — they cannot move
+        # into review). This box carries the pre-apply value of each touched
+        # key from apply to review, so the reviewer's `micro_detail` rule can
+        # compare the proposed value against the fact it replaces (PR #59
+        # review findings); shared per passage, repopulated each apply round.
+        prior_facts: dict[tuple[str, str], str | None] = {}
         specs.append(
             PassSpec(
                 name=f"write:{slug}",
@@ -649,8 +696,8 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 template="fill_write.j2",
                 schema=write_schema,
                 build_context=_write_context_for(passage_id),
-                apply=_write_apply_for(passage_id),
-                review=_review_for(passage_id),
+                apply=_write_apply_for(passage_id, prior_facts),
+                review=_review_for(passage_id, prior_facts),
             )
         )
         # the rolling story-so-far entry rides right behind the accepted

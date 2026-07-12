@@ -989,8 +989,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
   cap, and an over-long value is *dropped*, not repaired. `add_entity_detail`
   allows same-key updates; the schema caps at one. 503 tests, ruff clean,
   golden 0/0. Rides the review-contract machinery (#57/#58) — no new plumbing.
-  **Open**: a gpt-oss:120b rerun to confirm FILL now clears past group-3 and
-  finally exercises DRESS codex review.
+  **Live validation (gpt-oss:120b, unbilled): the micro-detail blocker is
+  gone** — FILL cleared the old `write:group-3` re-key death; group-0 wrote
+  clean with no collision. Two review-wiring bugs the redesign's own reviewer
+  caught (PR #59 review) were fixed in the same PR: `fill_review.j2` never
+  rendered the entity's base facts, and apply overwrote a same-key update's
+  prior value before review read it — so the `micro_detail` rule had nothing
+  to compare against. Fixed by threading a per-passage `prior_facts` box from
+  apply to review and rendering each proposal as *proposed vs prior + the
+  entity's other facts* (`_micro_review`); a review-context test now guards it.
+  504 tests. **New blocker (separate, not micro-detail)**: FILL now dies at
+  `write:group-1` on a **beat_infidelity** review call — the reviewer read
+  "stepped back … the logbook loomed behind her" as movement *away* when the
+  beat wants *toward* (a plausible over-literal spatial reading). That is a
+  review-quality question on the *beat* rule, not the micro-detail system;
+  DRESS codex review still unexercised live.
 
 - **2026-07-12 (review-contract live-validated + a top-level `verdict`
   refinement; a new FILL blocker surfaced):** An unbilled gpt-oss:120b run

@@ -47,7 +47,13 @@ from questfoundry.models.structure import (
 )
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.refpin import entity_ref_ids, pin, retained_entity_ids
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
+from questfoundry.pipeline.types import (
+    ApplyError,
+    PassSpec,
+    StageImpl,
+    format_validation_error,
+    resolve_entity_ref,
+)
 from questfoundry.project.io import Project
 
 MAX_CANDIDATES_SHOWN = 8
@@ -119,7 +125,7 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
                 rationale=spec.rationale,
             )
         except ValidationError as e:
-            raise ApplyError(f"invalid intersection {spec.id}: {e}") from e
+            raise ApplyError(f"invalid intersection {spec.id}: {format_validation_error(e)}") from e
 
     # Intersections are advisory enrichment, like temporal hints (design
     # doc 02 §2): the model proposes them before seeing the full ordering
@@ -518,7 +524,7 @@ def _bridge_apply(proposal: BridgeProposal, project: Project) -> list[str]:
                 entities=[resolve_entity_ref(g, e) for e in spec.entities],
             )
         except ValidationError as e:
-            raise ApplyError(f"invalid bridge beat {spec.id}: {e}") from e
+            raise ApplyError(f"invalid bridge beat {spec.id}: {format_validation_error(e)}") from e
         mutations.add_beat(g, bridge, [])
         for dst in targets:
             mutations.remove_ordering(g, src, dst)

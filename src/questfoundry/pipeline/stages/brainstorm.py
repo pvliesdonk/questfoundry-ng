@@ -15,7 +15,7 @@ from questfoundry.models.drama import (
     ResidueWeight,
 )
 from questfoundry.models.world import Entity
-from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
+from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, format_validation_error
 from questfoundry.project.io import Project
 
 
@@ -94,7 +94,7 @@ def _apply(proposal: BrainstormProposal, project: Project) -> list[str]:
                 spec.anchored_to,
             )
     except ValidationError as e:
-        raise ApplyError(f"invalid node in proposal: {e}") from e
+        raise ApplyError(f"invalid node in proposal: {format_validation_error(e)}") from e
     return [
         f"cast: {len(proposal.entities)} entities",
         f"dilemmas: {', '.join(d.id for d in proposal.dilemmas)}",

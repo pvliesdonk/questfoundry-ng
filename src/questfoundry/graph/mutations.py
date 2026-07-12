@@ -272,19 +272,17 @@ def set_passage_prose_summary(g: StoryGraph, passage_id: str, summary: str) -> N
 
 
 def add_entity_detail(g: StoryGraph, entity_id: str, key: str, value: str) -> None:
-    """A universal micro-detail discovered while writing: appended to the
-    entity's base state, true on every arc (design doc 01 §3). Never
-    overwrites an existing fact."""
+    """A universal micro-detail written into the entity's base state, true on
+    every arc (design doc 01 §3). Adds a new fact, or UPDATES an existing one
+    with a sharper version — a re-used key overwrites (author-directed
+    redesign, 2026-07-12). Whether an update is a legitimate refinement or a
+    contradiction is the FILL reviewer's `micro_detail` rule to judge; the
+    single-assignment hard guard was removed because it turned a capable
+    writer's natural re-observation of a recurring entity into a prose-blocking
+    failure."""
     entity = g.get(entity_id)
     if not isinstance(entity, Entity):
         raise MutationError(f"{entity_id!r} is not an entity")
-    if key in entity.base and entity.base[key] != value:
-        raise MutationError(
-            f"{entity_id} already has {key!r} = {entity.base[key]!r}; "
-            "micro-details never overwrite established facts — keep the "
-            "existing fact and record the new observation under an unused "
-            "key, or drop it"
-        )
     entity.base[key] = value
 
 

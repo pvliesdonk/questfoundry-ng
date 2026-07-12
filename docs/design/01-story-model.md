@@ -106,9 +106,16 @@ book-scale repetition follows (live run 8; the prose-quality effort).
 namespace (`character:keeper`, `location:lighthouse`). Each entity has:
 
 - **Base state** — facts true on every playthrough: name, concept,
-  appearance, personality. FILL may append universal micro-details
-  discovered while writing (the keeper hums when nervous) — once
-  discovered, true everywhere.
+  appearance, personality. FILL may append a universal micro-detail
+  discovered while writing (the keeper hums when nervous), or update a
+  listed fact with a sharper version (re-using its key) — once written,
+  true everywhere. Adding is the *exception*, at most one per passage: the
+  writer is told most passages add none, so it does not manufacture a
+  re-observation of a recurring entity every scene. Whether a detail
+  genuinely adds and does not contradict an established fact is the FILL
+  reviewer's `micro_detail` rule — not a blunt apply guard (author-directed
+  redesign, 2026-07-12; the old single-assignment hard guard turned a
+  capable writer's natural re-observation into a prose-blocking failure).
 - **Overlays** — conditional state activated by state flags: `when:
   [bargain_broken] → demeanor: haunted, speech: clipped`. Overlays are
   embedded on the entity (an entity is one node, always); multiple active

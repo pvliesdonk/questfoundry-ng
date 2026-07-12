@@ -128,15 +128,16 @@ The passage ends where these choices can naturally follow: {{ choices | join(" /
 This is an ending: land it completely.
 {% endif %}
 
-You may also report up to 2 micro_details, each {"entity": an entity id from
-the cast above, "key": a fact name, "value": the fact}: small universal facts
-about an entity discovered while writing (a habit, an object) — true on every
-playthrough, never path-dependent. A detail is a NOTE for later writers, not
-prose: at most 12 words, in note form ("stance: wide, fencer-like"), never a
-sentence copied from your passage. Omit freely. Keys are single-assignment: an
-entity's listed facts are settled — never re-key one (no second "tell",
-"habit", …); record a genuinely new observation under an unused key, or report
-nothing.
+You are not expected to add a micro_detail — most passages add none. Add AT
+MOST ONE, and only if this scene genuinely surfaced something a later writer
+would need: a new universal fact about an entity (true on every playthrough,
+never path-dependent), or a sharper version of one already listed above (reuse
+its key — that is an UPDATE, not a duplicate). Never contradict an established
+fact; never restate one just to fill the slot. A detail is a NOTE for later
+writers, not prose: at most 12 words, in note form ("stance: wide,
+fencer-like"), never a sentence copied from your passage. Its shape is
+{"entity": an entity id from the cast above, "key": a fact name, "value": the
+fact}. If nothing genuinely new surfaced, add nothing.
 {% if repair_errors %}
 The rejection list below may carry reviewer FINDINGS, each labeled
 [rule · ASSESSMENT · confidence]. A FINDING marked FAIL is blocking — resolve

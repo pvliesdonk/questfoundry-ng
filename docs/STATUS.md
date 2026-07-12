@@ -969,6 +969,42 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (micro-detail system redesigned — it fired too often for
+  *adding*, author-directed):** The live gpt-oss:120b run's FILL death
+  (`write:group-3`, `object:old-lens already has 'material'`) was *not* a weak
+  model — gpt-oss:120b saw old-lens's keys in its prompt and re-keyed anyway,
+  because the micro-detail feature *solicited* a detail every scene ("up to 2")
+  and a well-specified recurring hero-object (The Great Lens) has no genuinely
+  new universal fact to offer by scene 4, so the model filled the invitation
+  with a re-observation the single-assignment guard then hard-failed — killing
+  the *required* prose over an *optional* annotation. Author call: the feature
+  is still good, but (1) **at most one** detail, framed as the exception ("you
+  are not expected to add — most passages add none"), so the model stops
+  feeling obliged; (2) a detail may **update/extend** a listed fact (re-use its
+  key) as long as it does not contradict — the single-assignment *hard* guard
+  is removed; (3) the "does it genuinely add / does it conflict" judgment moves
+  to the **reviewer** (a new `micro_detail` rule on the FILL review contract:
+  contradiction → `fail`, gratuitous restatement → `warn`). Apply now never
+  blocks prose on a micro-detail: the only apply check is the note-form length
+  cap, and an over-long value is *dropped*, not repaired. `add_entity_detail`
+  allows same-key updates; the schema caps at one. 503 tests, ruff clean,
+  golden 0/0. Rides the review-contract machinery (#57/#58) — no new plumbing.
+  **Live validation (gpt-oss:120b, unbilled): the micro-detail blocker is
+  gone** — FILL cleared the old `write:group-3` re-key death; group-0 wrote
+  clean with no collision. Two review-wiring bugs the redesign's own reviewer
+  caught (PR #59 review) were fixed in the same PR: `fill_review.j2` never
+  rendered the entity's base facts, and apply overwrote a same-key update's
+  prior value before review read it — so the `micro_detail` rule had nothing
+  to compare against. Fixed by threading a per-passage `prior_facts` box from
+  apply to review and rendering each proposal as *proposed vs prior + the
+  entity's other facts* (`_micro_review`); a review-context test now guards it.
+  504 tests. **New blocker (separate, not micro-detail)**: FILL now dies at
+  `write:group-1` on a **beat_infidelity** review call — the reviewer read
+  "stepped back … the logbook loomed behind her" as movement *away* when the
+  beat wants *toward* (a plausible over-literal spatial reading). That is a
+  review-quality question on the *beat* rule, not the micro-detail system;
+  DRESS codex review still unexercised live.
+
 - **2026-07-12 (review-contract live-validated + a top-level `verdict`
   refinement; a new FILL blocker surfaced):** An unbilled gpt-oss:120b run
   (Ollama cloud, scratch `examples/thaw-between/`) validated the contract on

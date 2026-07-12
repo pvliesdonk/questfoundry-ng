@@ -65,17 +65,22 @@ check:
   tokens is conservative: names and stock collocations don't reach it,
   a lifted sentence does.
 - **Micro-detail register cap** — a proposed detail value over 12
-  words is prose, not a fact: rejected with the register rule in the
-  message.
-- **Near-duplicate guard** — a proposed detail value sharing a
-  ≥ 4-token run with an existing fact of the same entity is the same
-  fact under a new key: rejected naming the existing key (closes the
-  `habit`/`stance_width` accrual).
+  words is prose, not a fact. **Revised 2026-07-12** (micro-detail
+  redesign): an over-long value is now *dropped*, not repaired — an
+  optional annotation never blocks the required prose.
+- ~~**Near-duplicate guard**~~ — **removed 2026-07-12** (micro-detail
+  redesign). The single-assignment / near-duplicate *hard* guard turned a
+  capable writer's natural re-observation of a recurring hero-object into a
+  prose-blocking failure (live gpt-oss:120b, `write:group-3`). A re-used
+  key is now an *update*; whether a detail genuinely adds and does not
+  contradict is the FILL reviewer's `micro_detail` rule, not an apply guard.
+  The `habit`/`stance_width` accrual it guarded is now bounded by *adding
+  being the exception* (at most one, "you are not expected to add") plus the
+  reviewer's gratuitous-restatement `warn`.
 
-All four are `ApplyError`s — the ordinary repair loop, ≤ 2 rounds.
-Thresholds are constants in `echo.py` with the rationale beside them;
-they are expectations-modest by design (the author's framing) and the
-prompt work below is the real fix.
+The fact/window echo checks remain `ApplyError`s (the ordinary repair loop,
+≤ 2 rounds); micro-details no longer raise. Thresholds are constants in
+`echo.py` with the rationale beside them.
 
 ### W2 — Input-role framing in the write prompt
 

@@ -340,9 +340,14 @@ prompt: facts are constraints, not choreography; the window is
 continuity, not a style template (prose-quality effort — live run 8's
 verbatim-recurrence findings). The apply enforces the deterministic
 floor: an **echo check** rejects prose that restates a rendered entity
-fact or lifts a long verbatim run from adjacent prose, and micro-details
-are held to note form (length caps, no re-keying an established fact
-under a new name).
+fact or lifts a long verbatim run from adjacent prose. A **micro-detail**
+is optional enrichment — at most one per passage, framed as the exception
+so the writer never invents a re-observation to fill the slot. It may add
+a new universal fact or *update* a listed one (re-using its key); the only
+apply check is the note-form length cap, and an over-long value is dropped,
+never a repair that blocks the required prose. Whether a detail genuinely
+adds and does not contradict an established fact is the reviewer's
+`micro_detail` rule (below), not a blunt guard.
 
 A passage failing review twice is a structural bug: it goes back to
 POLISH (or GROW), never to a third rewrite. Prose cannot rescue a broken

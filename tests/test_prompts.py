@@ -135,6 +135,26 @@ def test_fill_review_asks_for_the_structured_finding_schema():
         assert rule in source
 
 
+def test_fill_write_frames_micro_detail_as_exceptional_and_updatable():
+    """The micro-detail redesign (author-directed, 2026-07-12): the write
+    prompt must defuse the 'obliged to add something' reflex — at most one,
+    only on a genuine addition, and a re-used key is an update, not a
+    forbidden duplicate."""
+    source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
+    assert "not expected to add a micro_detail" in source
+    assert "AT MOST ONE" in source
+    assert "UPDATE, not a duplicate" in source
+
+
+def test_fill_review_has_the_micro_detail_rule():
+    """The redesign moves the 'does it add / does it conflict' judgment to the
+    reviewer: a contradiction of an established fact is a defect, a gratuitous
+    restatement a concern."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "micro_detail" in source
+    assert "CONTRADICTS an established fact" in source
+
+
 def test_fill_write_states_pov_externalization():
     """The prompt-quality fix (live: both tiers narrated a non-viewpoint
     character's plotting interiority, failing the POV rule): the write

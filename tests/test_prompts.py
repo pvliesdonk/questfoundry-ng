@@ -225,3 +225,14 @@ def test_brainstorm_states_the_output_count_plainly():
     not conflated with the post-triage branched count."""
     source = (PROMPTS_DIR / "brainstorm.j2").read_text(encoding="utf-8")
     assert "Output exactly" in source and "this total, not fewer" in source
+
+
+def test_voice_banned_field_forbids_word_and_vague_bans():
+    """The model-coined-constraint class (live gpt-oss:120b): the voice's
+    banned patterns are enforced literally by fill_review, so the voice
+    prompt must forbid coining a common-word ban ("as"/"like") or a vague
+    label ("direct metaphor") that traps every passage."""
+    source = (PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8")
+    assert "enforces these VERBATIM" in source
+    assert "ban a common word" in source
+    assert "not a simile" in source  # the "as" example

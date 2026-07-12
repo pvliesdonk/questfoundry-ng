@@ -93,6 +93,46 @@ weak tier can't. Findings by stage (H/M/L severity):
 
 Fixes applied this pass are checked below; the rest are tracked here.
 
+## A distinct class: model-coined constraints enforced downstream (2026-07-12)
+
+Surfaced by the full `gpt-oss:120b` run: a **new failure shape**, separate
+from the sweep's withheld-data/unenforced-rule class. Here a model **coins
+a value in one pass that a later pass enforces literally or structurally**,
+and a weak model coins an *over-broad, vague, or unsatisfiable* one that
+traps the downstream writer — the constraint becomes a footgun the pipeline
+then faithfully enforces.
+
+The live instance: FILL's **voice pass** let the model coin
+`banned: ["similes using 'as' or 'like'", "direct metaphor", …]`.
+`fill_review.j2` matches banned patterns **literally**, so the ban on the
+word "as" outlawed ordinary prose ("as the river rose" is not a simile) and
+the vague "direct metaphor" was unactionable; every passage failed review
+in two rounds. Note this only surfaced *because* the review-contract fix
+made the reviewer honest — the failure moved up the chain from "reviewer
+fabricates" to "voice coins a bad rule the honest reviewer enforces."
+
+**The fix pattern for the class:** at the *coining* pass, state what makes
+a good vs bad constraint and *why it is enforced downstream* (so the model
+feels the cost of an over-broad one); where the coined value is enumerable,
+guard it structurally at apply. Free-text constraints (banned patterns) are
+prompt-bounded; enumerable ones can be made unrepresentable.
+
+**Audit list — every place a model coins a value a later pass enforces:**
+- [x] voice `banned` → `fill_review` (literal) — **fixed** (`fill_voice.j2`
+      forbids common-word and vague bans, states the verbatim enforcement).
+- [x] voice `pov` name → `fill_review` (literal) — already guarded (the
+      cast-name check, the Maren/Marin fix).
+- [ ] micro-details / entity facts → the echo check (a coined fact ≥4
+      tokens becomes a no-restate constraint) — partly bounded (≤12-word
+      register cap); review whether an awkward coined fact over-constrains.
+- [ ] POLISH `arcs` (begins/pivots/ends) → FILL renders ARC POSITION the
+      writer must honor — could an over-specified arc over-constrain a scene?
+- [ ] DRESS art `direction` → briefs/codex must not invent beyond it —
+      an over-broad direction constrains both.
+- [ ] flag `description` → `fill_review` Rule 4 (state honesty) tests it.
+- [x] codewords → gate-tested; already structurally guarded (format +
+      uniqueness + grant-before-test).
+
 ## Status
 - [x] `mutations.add_beat` duplicate-id → actionable `MutationError`
       (+ finalize residue/false-branch repairability; tests). First fix.

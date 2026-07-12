@@ -35,7 +35,13 @@ from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
-from questfoundry.pipeline.review import build_verdict_schema, evaluate_review, render_finding
+from questfoundry.pipeline.review import (
+    ReviewFinding,
+    ReviewVerdict,
+    build_verdict_schema,
+    evaluate_review,
+    render_finding,
+)
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
 from questfoundry.project.io import Project
 
@@ -519,20 +525,13 @@ def _write_apply_for(
             last_draft["prose"] = proposal.prose
         passage = g.node(passage_id)
         assert isinstance(passage, Passage)
-        beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
-        lo, hi = project.vision.preset.words_for(
-            texture=bool(beats) and all(b.is_texture for b in beats),
-            ending=passage.ending is not None,
-        )
         count = len(proposal.prose.split())
-        # models cannot hit exact word windows: the band catches runaway
-        # or skimpy prose, the review pass owns quality — repair only
-        # beyond 20% slack; the exact preset range stays the prompt's
-        # target and B5's advisory line
-        if not lo * 0.8 <= count <= hi * 1.2:
-            raise ApplyError(
-                f"prose for {passage_id} is {count} words; the budget is {lo}-{hi}"
-            )
+        # The word budget is no longer a hard apply gate: it is a graded review
+        # finding (`_word_budget_finding`), because a near-miss with good prose
+        # and a real reason ("this ending's voice is terse") beats a forced
+        # rework or padding — the reviewer's confidence scales with distance,
+        # so only a large miss blocks (author-directed, 2026-07-12). Runaway or
+        # skimpy prose is still caught, just as a finding the engine weighs.
         _check_echoes(g, passage_id, proposal.prose)
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
@@ -603,6 +602,52 @@ def _summary_apply_for(passage_id: str):
     return apply
 
 
+# The word budget is a *graded* finding, not a binary gate (author-directed,
+# 2026-07-12): confidence scales with how far the prose is outside the band, so
+# a near-miss with a real reason is the writer's call, not a forced rework.
+# Bands: inside [lo, hi] is clean; the 20% slack margin is a low warn (was
+# silently accepted before); beyond the slack, the miss fails, low/medium/high
+# by distance beyond the slack edge. Thresholds are one tunable knob.
+_WB_WARN, _WB_MEDIUM = 0.15, 0.40
+
+
+def _word_budget_finding(project: Project, passage_id: str, prose: str) -> ReviewFinding | None:
+    g = project.graph
+    passage = g.node(passage_id)
+    beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
+    lo, hi = project.vision.preset.words_for(
+        texture=bool(beats) and all(b.is_texture for b in beats),
+        ending=passage.ending is not None,
+    )
+    count = len(prose.split())
+    if lo <= count <= hi:
+        return None
+    slack_lo, slack_hi = lo * 0.8, hi * 1.2
+    if count < lo:
+        recovery = (
+            f"reach at least {lo} words by deepening a beat the draft rushed "
+            "(name which beat you expand and what you add — do not pad)"
+        )
+        reason = f"the prose is {count} words, under the {lo}-{hi} target"
+        beyond = (slack_lo - count) / slack_lo if count < slack_lo else 0.0
+    else:
+        recovery = f"tighten to at most {hi} words; cut the least load-bearing lines"
+        reason = f"the prose is {count} words, over the {lo}-{hi} target"
+        beyond = (count - slack_hi) / slack_hi if count > slack_hi else 0.0
+    if beyond <= 0.0:  # inside the slack margin: a weighable concern, not a block
+        assessment, confidence = "warn", "low"
+    elif beyond <= _WB_WARN:
+        assessment, confidence = "fail", "low"
+    elif beyond <= _WB_MEDIUM:
+        assessment, confidence = "fail", "medium"
+    else:
+        assessment, confidence = "fail", "high"
+    return ReviewFinding(
+        rule="word_budget", assessment=assessment, confidence=confidence,
+        quote="", reason=reason, recovery_action=recovery,
+    )
+
+
 def _micro_review(g, proposal: WriteProposal, prior_facts: dict) -> list[dict]:
     """What the reviewer needs to judge each proposed micro-detail: the
     proposed value, the value it replaces (from `prior_facts`, captured before
@@ -642,6 +687,21 @@ def _review_for(
     def review(proposal: WriteProposal, project: Project, adapter: Any) -> list[str]:
         from questfoundry.pipeline import runner
 
+        # the engine's own mechanical finding (word budget) joins the reviewer's
+        # findings in one list — a confident mechanical defect overrides an LLM
+        # `approved`, but a near-miss is a low-confidence finding that does not
+        # force a rework (author-directed, 2026-07-12).
+        wb = _word_budget_finding(project, passage_id, proposal.prose)
+
+        def gate(v: Any) -> list[str]:
+            findings = list(v.findings)
+            verdict_value = v.verdict
+            if wb is not None:
+                findings.append(wb)
+                if wb.assessment == "fail" and wb.confidence in ("high", "medium"):
+                    verdict_value = "needs_work"
+            return evaluate_review(ReviewVerdict(verdict=verdict_value, findings=findings))
+
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         micro_review = _micro_review(project.graph, proposal, prior_facts)
@@ -661,8 +721,8 @@ def _review_for(
         )
         # approved auto-accepts; a needs_work verdict gates on confident
         # objective defects only — a warn or low-confidence finding never
-        # halts (review-contract).
-        issues = evaluate_review(verdict)
+        # halts (review-contract). The word-budget finding rides the same gate.
+        issues = gate(verdict)
         if not issues:
             return []
         if prior:
@@ -684,7 +744,7 @@ def _review_for(
                 schema=FILL_REVIEW_SCHEMA,
                 role="architect",
             )
-            final_issues = evaluate_review(final)
+            final_issues = gate(final)
             if not final_issues:
                 return []
             issues = final_issues

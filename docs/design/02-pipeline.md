@@ -314,7 +314,7 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details (note register, length-capped); a rolling story-so-far note per passage (utility-summarized) |
-| Gate G5 | Every passage has prose within its word budget — per-passage since M8: texture passages (residue/false-branch arms) take the short band, endings get headroom, scenes the full band (01 §2) — enforced at apply with 20% slack (models cannot hit exact windows; the exact range stays B5's advisory line); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
+| Gate G5 | Every passage has prose within its word budget — per-passage since M8: texture passages (residue/false-branch arms) take the short band, endings get headroom, scenes the full band (01 §2) — enforced as a **graded review finding** (`word_budget`), not a hard apply gate: confidence scales with distance outside the band, so a near-miss with good prose and a real reason is a low-confidence finding the engine weighs rather than a forced rework, while a large miss blocks (author-directed 2026-07-12; models cannot hit exact windows and the review owns quality); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
 Order matters: FILL locks the Voice first, then picks a **reference
 arc** — one arbitrary complete playthrough, chosen by seeded selection
@@ -340,7 +340,11 @@ prompt: facts are constraints, not choreography; the window is
 continuity, not a style template (prose-quality effort — live run 8's
 verbatim-recurrence findings). The apply enforces the deterministic
 floor: an **echo check** rejects prose that restates a rendered entity
-fact or lifts a long verbatim run from adjacent prose. A **micro-detail**
+fact or lifts a long verbatim run from adjacent prose. The **word budget**
+is no longer an apply gate — it is a graded `word_budget` review finding
+(above): a near-miss is a low-confidence finding the engine weighs, a large
+miss blocks, so good-but-terse prose is not force-reworked into padding. A
+**micro-detail**
 is optional enrichment — at most one per passage, framed as the exception
 so the writer never invents a re-observation to fill the slot. It may add
 a new universal fact or *update* a listed one (re-using its key); the only

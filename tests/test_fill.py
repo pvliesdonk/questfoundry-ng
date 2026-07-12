@@ -116,27 +116,46 @@ def test_flag_status_choice_gate_makes_a_variant_certain(golden_fill):
     assert _flag_status(g, "passage:p-unspoken", g.node("flag:elias-knows")) == "foreclosed"
 
 
-def test_word_budget_is_enforced_at_apply(golden_fill):
-    apply = _write_apply_for("passage:p-arrival")
-    with pytest.raises(ApplyError, match="budget"):
-        apply(WriteProposal(prose="far too short"), golden_fill)
+def _arrival_band(golden_fill):
+    from questfoundry.graph import queries
+
+    g = golden_fill.graph
+    pg = g.node("passage:p-arrival")
+    beats = [g.node(b) for b in queries.beats_of_passage(g, "passage:p-arrival")]
+    return golden_fill.vision.preset.words_for(
+        texture=bool(beats) and all(b.is_texture for b in beats), ending=pg.ending is not None
+    )
 
 
-def test_word_budget_has_slack_at_the_bounds(golden_fill):
-    """Live medium run (2026-07-09): the writer repeatedly landed past
-    the cap (553, then 613 on a climax ending against 550) and exhausted
-    repairs — models cannot hit exact word windows, and the band exists
-    to catch runaway or skimpy prose, not near-misses; the review pass
-    owns quality. Apply repairs only beyond 20% slack; the exact range
-    stays the prompt's target and B5's advisory line."""
-    lo, hi = golden_fill.vision.preset.words_per_passage
+def test_word_budget_is_no_longer_a_hard_apply_gate(golden_fill):
+    """Author-directed (2026-07-12): the word budget is a graded review
+    finding, not a binary ApplyError — a near-miss with good prose beats a
+    forced rework or padding. Apply stores even a too-short draft."""
     apply = _write_apply_for("passage:p-arrival")
-    apply(WriteProposal(prose="w " * (hi + hi // 10)), golden_fill)  # 10% over: accepted
-    with pytest.raises(ApplyError, match="budget"):
-        apply(WriteProposal(prose="w " * (hi + 3 * hi // 10)), golden_fill)  # 30% over
-    apply(WriteProposal(prose="w " * (lo - lo // 10)), golden_fill)  # 10% short: accepted
-    with pytest.raises(ApplyError, match="budget"):
-        apply(WriteProposal(prose="w " * (lo - 3 * lo // 10)), golden_fill)  # 30% short
+    lines = apply(WriteProposal(prose="far too short"), golden_fill)
+    assert any("p-arrival" in ln for ln in lines)
+
+
+def test_word_budget_finding_grades_by_distance(golden_fill):
+    """Confidence scales with how far outside the band the prose is: in-band is
+    clean, the slack margin a non-blocking warn, a near-miss a low fail
+    (accepted), a large miss a high fail (blocks)."""
+    from questfoundry.pipeline.review import ReviewVerdict, needs_rework
+    from questfoundry.pipeline.stages.fill import _word_budget_finding
+
+    lo, hi = _arrival_band(golden_fill)
+
+    def wb(n):
+        return _word_budget_finding(golden_fill, "passage:p-arrival", "w " * n)
+
+    assert wb((lo + hi) // 2) is None  # in band
+    assert wb(int(lo * 0.9)).assessment == "warn"  # slack margin: weighable
+    near = wb(int(lo * 0.8) - max(1, int(lo * 0.8 * 0.05)))  # ~5% beyond slack (group-9)
+    assert near.rule == "word_budget" and near.assessment == "fail" and near.confidence == "low"
+    assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[near])) is False
+    far = wb(lo // 4)  # far short
+    assert far.assessment == "fail" and far.confidence == "high"
+    assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[far])) is True
 
 
 def test_write_context_carries_the_contract(golden_fill):
@@ -258,6 +277,75 @@ def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch
     )
     assert "real defect" in review(proposal, golden_fill, adapter)[0]
     assert "confirmed: still broken" in review(proposal, golden_fill, adapter)[0]
+
+
+def test_word_budget_only_block_reworks_without_spending_arbitration(golden_fill, monkeypatch):
+    """A word_budget-only block is deterministic — an architect cannot overturn
+    it — so a second strike must NOT spend the frontier arbitration call
+    (PR #61 review)."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class Scripted:
+        def __init__(self, script):
+            self.script = list(script)
+            self.roles: list[str] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            self.roles.append(role)
+            return self.script.pop(0)
+
+    env = Environment(loader=DictLoader({"fill_review.j2": "r"}))
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    review = _review_for("passage:p-arrival")
+    too_short = WriteProposal(prose="w " * 5)  # far under the band → confident word_budget fail
+    # the LLM approves both rounds; only the mechanical word budget blocks
+    adapter = Scripted([_verdict(), _verdict()])  # two utility calls, NO architect scripted
+    assert any("word_budget" in i for i in review(too_short, golden_fill, adapter))
+    assert any("word_budget" in i for i in review(too_short, golden_fill, adapter))  # 2nd strike
+    assert adapter.roles == ["utility", "utility"]  # no architect call was spent
+
+
+def test_arbitration_render_includes_the_word_budget_finding(golden_fill, monkeypatch):
+    """When a persistent reviewer dispute DOES escalate, the architect is shown
+    the full finding set it rules on — word_budget included, not just the LLM's
+    own findings (PR #61 review)."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class Scripted:
+        def __init__(self, script):
+            self.script = list(script)
+            self.prompts: list[tuple[str, str]] = []
+
+        def complete(self, *, system, prompt, schema, role):
+            expected_role, verdict = self.script.pop(0)
+            assert role == expected_role
+            self.prompts.append((role, prompt))
+            return verdict
+
+    env = Environment(
+        loader=DictLoader(
+            {"fill_review.j2": "{% if arbitration %}ARB[{{ arbitration | join(';') }}]{% endif %}r"}
+        )
+    )
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    review = _review_for("passage:p-arrival")
+    too_short = WriteProposal(prose="w " * 5)
+    adapter = Scripted(
+        [
+            ("utility", _verdict(_finding("real defect"))),
+            ("utility", _verdict(_finding("still disputed"))),
+            ("architect", _verdict()),  # architect clears the prose dispute...
+        ]
+    )
+    review(too_short, golden_fill, adapter)
+    out = review(too_short, golden_fill, adapter)  # second strike escalates
+    assert adapter.prompts[-1][0] == "architect"
+    assert "word_budget" in adapter.prompts[-1][1]  # arbiter is shown the finding
+    assert any("word_budget" in i for i in out)  # ...but the mechanical miss still blocks
 
 
 def test_fill_pass_list_is_voice_plus_write_and_summarize_per_passage(golden_fill):
@@ -571,9 +659,10 @@ def test_write_proposal_carries_per_finding_revision_notes():
 def test_rejected_draft_reaches_the_next_write_prompt(golden_fill):
     """The adapter is stateless — each rework is a fresh call with no memory of
     the prior attempt — so apply stashes the attempted draft into a shared box
-    the next write render surfaces. It stashes BEFORE any check raises, so an
-    apply-stage rejection (the word-budget miss that halted group-9) feeds the
-    draft forward just as a review rejection does."""
+    the next write render surfaces. It stashes as its FIRST statement, so the
+    draft reaches the next round whether the rework was triggered by an apply
+    check or a review finding (e.g. the word-budget finding that halted
+    group-9)."""
     from questfoundry.pipeline import runner
 
     env = runner._environment()
@@ -587,18 +676,18 @@ def test_rejected_draft_reaches_the_next_write_prompt(golden_fill):
     )
     assert "PREVIOUS DRAFT WAS REJECTED" not in r1
 
-    # a too-short draft fails apply on the word budget — and is still stashed
-    too_short = "A rejected two-line draft about the arrival on the cold rock."
-    with pytest.raises(ApplyError, match="budget"):
-        apply(WriteProposal(prose=too_short), golden_fill)
-    assert last_draft["prose"] == too_short
+    # applying a draft stashes it (the word budget no longer raises here; it is
+    # a review finding), so a later rework surfaces it
+    draft = "A rejected two-line draft about the arrival on the cold rock."
+    apply(WriteProposal(prose=draft), golden_fill)
+    assert last_draft["prose"] == draft
 
     # round 2: the same context (holding the live box) now surfaces the draft
     r2 = env.get_template("fill_write.j2").render(
         **ctx, notes="", repair_errors=["a finding"], research=""
     )
     assert "PREVIOUS DRAFT WAS REJECTED" in r2
-    assert too_short in r2
+    assert draft in r2
 
 
 def test_review_renders_the_writers_revision_notes(golden_fill):

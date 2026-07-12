@@ -155,14 +155,18 @@ def test_fill_review_has_the_micro_detail_rule():
     assert "CONTRADICTS an established fact" in source
 
 
-def test_fill_write_requires_per_finding_notes_and_shows_prior_draft():
+def test_fill_write_requires_per_item_notes_and_shows_prior_draft():
     """Rework-convergence lever (validated on gpt-oss:120b): on a repair the
     write prompt shows the rejected draft (the adapter is stateless) and
-    requires a revision_notes entry per finding."""
+    requires a revision_notes entry for EVERY rejection item — a reviewer
+    finding OR a mechanical requirement (the word-budget account that lifts a
+    stuck ending from ~114 to ~200 words: treat mechanical == reviewed)."""
     source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
     assert "PREVIOUS DRAFT WAS REJECTED" in source
     assert "revision_notes" in source
-    assert "For EVERY finding" in source
+    assert "For EVERY item in the list" in source
+    # the word-budget miss must force a planned expansion, not blind re-derivation
+    assert "name WHICH beat or moment you expand" in source
 
 
 def test_fill_review_verifies_the_writers_revision_notes():

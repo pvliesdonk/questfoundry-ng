@@ -162,14 +162,15 @@ def test_words_for_bands():
     assert preset.words_for(texture=False, ending=True) == (200, 650)
 
 
-def test_fill_enforces_the_texture_band(tmp_path):
+def test_fill_flags_a_texture_arm_written_at_narrative_weight(tmp_path):
     """A residue arm written at narrative weight is the false-choice tax
-    in word form (measured: live runs wrote arms at ~0.95x narrative);
-    FILL's apply rejects it repairably."""
-    import pytest
-
-    from questfoundry.pipeline.stages.fill import _write_apply_for
-    from questfoundry.pipeline.types import ApplyError
+    in word form (measured: live runs wrote arms at ~0.95x narrative). The
+    word budget is now a graded review finding, not a hard apply gate
+    (author-directed 2026-07-12): a 500-word residue arm against the 200-316
+    texture band is a blocking `word_budget` finding; a texture-sized draft
+    yields none."""
+    from questfoundry.pipeline.review import ReviewVerdict, needs_rework
+    from questfoundry.pipeline.stages.fill import _word_budget_finding
     from questfoundry.project.io import Project
 
     g = StoryGraph()
@@ -186,12 +187,11 @@ def test_fill_enforces_the_texture_band(tmp_path):
     )
     vision = Vision(premise="t", genre="t", tone="t", scope="medium")
     project = Project(root=tmp_path, name="t", stage=Stage.FILL, vision=vision, graph=g)
-    from questfoundry.pipeline.stages.fill import WriteProposal
 
-    apply = _write_apply_for("passage:p-arm")
-    with pytest.raises(ApplyError, match="budget is 200-316"):
-        apply(WriteProposal(prose="w " * 500), project)
-    apply(WriteProposal(prose="w " * 250), project)  # texture-sized: applies
+    over = _word_budget_finding(project, "passage:p-arm", "w " * 500)
+    assert over is not None and over.rule == "word_budget" and over.assessment == "fail"
+    assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[over])) is True
+    assert _word_budget_finding(project, "passage:p-arm", "w " * 250) is None  # texture-sized
 
 
 # -- B6 walk semantics / B7 --------------------------------------------------------

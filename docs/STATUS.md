@@ -969,6 +969,43 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (word budget → a graded review finding, not a hard apply gate;
+  author-directed):** The rework-convergence run reached pass 21/22 but the
+  *ending* (group-9) failed the word budget: gpt-oss:120b writes its 4-beat
+  ending in ~114–119 words vs a 120 floor, consistently. Two things drove the
+  fix. **(1) We asked the writer why** (we never had — the adapter discards its
+  reasoning): forced to explain + plan the expansion, it cleared the floor 3/3
+  (~200 words), and named the real cause — *"the voice demands long sentences
+  AND short jolts while staying strictly in past tense; expanding without
+  slipping tense or filler is hard."* So the "explain your fix" lever
+  generalizes to mechanical repairs. **(2) The author's architecture call**:
+  fold the mechanical check into the **same findings list** the reviewer
+  produces, with **confidence graded by distance from target** — because "not
+  making the target with really good reasons is better than bad prose or a
+  forced failure." Implemented: the word-budget check moved out of
+  `_write_apply_for` (no longer a hard `ApplyError`) into
+  `_word_budget_finding`, a `word_budget` finding merged into the review's
+  findings and gated by the same `evaluate_review` (a confident mechanical
+  defect overrides an LLM `approved`; a near-miss is a low-confidence finding
+  the engine accepts). Confidence bands: inside → clean; slack margin → warn;
+  beyond slack low/medium/high by distance (one tunable knob). The write prompt
+  now frames every rejection uniformly (finding OR label-less mechanical) and,
+  for a length finding, makes the writer name which beat to deepen (not pad).
+  511 tests, ruff clean, golden 0/0. **VALIDATED (gpt-oss:120b, unbilled): the
+  first complete weak-tier FILL → DRESS run.** group-9 cleared in 3 attempts —
+  the writer *expanded* the ending from ~114 to **169 words** (in band; the
+  rejected-draft feedback + per-finding accounting made it converge rather than
+  re-roll short, and the graded finding made converging safe instead of a hard
+  fail). **`fill: ok`**, then **`dress: ok`** — direction, briefs, and for the
+  first time ever the **codex pass and its review ran live and clean** (5
+  entries), the one stage never exercised on a weak tier across this whole
+  effort. The compounding chain that got here: review contract (#57) → verdict
+  (#58) → micro-detail redesign cleared group-3 (#59) → rework convergence
+  cleared group-1/2 (#60) → word-budget-as-finding cleared the group-9 ending
+  (#61). Still deferred: beat over-choreography (never needed — the levers
+  carried it). Remaining before a preserved cloud example: SHIP (M10) and a
+  read of the produced prose quality at length.
+
 - **2026-07-12 (rework convergence — writer sees its rejected draft + must
   respond per finding; the adapter is stateless, author-directed):** The
   micro-detail validation run cleared the old blocker but died at

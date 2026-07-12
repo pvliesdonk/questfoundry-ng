@@ -969,6 +969,33 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (rework convergence — writer sees its rejected draft + must
+  respond per finding; the adapter is stateless, author-directed):** The
+  micro-detail validation run cleared the old blocker but died at
+  `write:group-1` on `beat_infidelity` — the writer never rendered "steps back
+  *toward* the locked log" across two rounds. Diagnosed empirically (exact
+  group-1 prompt, `gpt-oss:120b`, N=4): the recovery_action is explicit enough
+  that a single clean finding is fixed every time, but under the *real*
+  multi-finding load (beat + 2× state_dishonesty, as round-2 carried) the plain
+  baseline fixes the beat only **2/4** and never both findings, while forcing a
+  **per-finding response lifts it to 4/4**. Root cause named: the LLM adapter
+  is **stateless** — `complete()` is one `provider.generate(user_prompt)` per
+  call with no assistant history, and across rework rounds the runner re-renders
+  a fresh prompt carrying only the accumulated findings; the writer never sees
+  its prior draft or its reasoning tokens (gpt-oss's thinking is generated then
+  discarded). So it re-derives blind and re-lands a losing draft. Two writer
+  levers built (FILL-local, no runner change): (1) a per-passage box carries the
+  **rejected draft** from the review of one round into the write prompt of the
+  next ("revise it, don't repeat it"); (2) `WriteProposal.revision_notes`
+  (list of `{finding, how_addressed}`) — on a rework the writer states the
+  change it made per finding, and `fill_review.j2` has the reviewer **verify
+  each claim against the prose** (a claimed-but-absent fix is itself a defect).
+  `revision_notes` are reviewer-facing only — not applied, so replay stays
+  deterministic. 509 tests, ruff clean, golden 0/0. **Open**: gpt-oss:120b
+  rerun to confirm FILL now converges past group-1 into DRESS codex review.
+  Deferred: beat over-choreography (a GROW/POLISH granularity question) — only
+  if the writer levers prove insufficient.
+
 - **2026-07-12 (micro-detail system redesigned — it fired too often for
   *adding*, author-directed):** The live gpt-oss:120b run's FILL death
   (`write:group-3`, `object:old-lens already has 'material'`) was *not* a weak

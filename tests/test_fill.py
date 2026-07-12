@@ -556,6 +556,74 @@ def test_review_sees_entity_facts_and_the_prior_value_of_an_update(golden_fill):
     assert other_key in cap.prompt
 
 
+def test_write_proposal_carries_per_finding_revision_notes():
+    """The rework-convergence lever: on a rework the writer responds to each
+    finding; empty on the first attempt."""
+    p = WriteProposal(
+        prose="x",
+        revision_notes=[{"finding": "beat_infidelity", "how_addressed": "added 'toward'"}],
+    )
+    assert p.revision_notes[0].finding == "beat_infidelity"
+    assert p.revision_notes[0].how_addressed == "added 'toward'"
+    assert WriteProposal(prose="x").revision_notes == []
+
+
+def test_rejected_draft_reaches_the_next_write_prompt(golden_fill):
+    """The adapter is stateless — each rework is a fresh call with no memory of
+    the prior attempt — so a failing review stashes the rejected draft into a
+    shared box the next write render surfaces (rework-convergence lever)."""
+    from questfoundry.pipeline import runner
+
+    env = runner._environment()
+    last_draft: dict = {"prose": None}
+    ctx = _write_context_for("passage:p-arrival", last_draft)(golden_fill)
+
+    # round 1: no previous draft yet
+    r1 = env.get_template("fill_write.j2").render(
+        **ctx, notes="", repair_errors=["a finding"], research=""
+    )
+    assert "PREVIOUS DRAFT WAS REJECTED" not in r1
+
+    rejected = "A rejected opening about the arrival on the rock. " + "filler " * 200
+    review = _review_for("passage:p-arrival", {}, last_draft)
+
+    class Fail:
+        def complete(self, *, system, prompt, schema, role):
+            return _verdict(_finding("beat gap"))
+
+    review(WriteProposal(prose=rejected), golden_fill, Fail())
+    assert last_draft["prose"] == rejected
+
+    # round 2: the same context (holding the live box) now surfaces the draft
+    r2 = env.get_template("fill_write.j2").render(
+        **ctx, notes="", repair_errors=["a finding"], research=""
+    )
+    assert "PREVIOUS DRAFT WAS REJECTED" in r2
+    assert "A rejected opening about the arrival on the rock." in r2
+
+
+def test_review_renders_the_writers_revision_notes(golden_fill):
+    """The reviewer receives the writer's per-finding account to verify against
+    the prose (uses the real fill_review.j2 template)."""
+    review = _review_for("passage:p-arrival")
+    proposal = WriteProposal(
+        prose="x " * 200,
+        revision_notes=[
+            {"finding": "beat_infidelity", "how_addressed": "she now steps toward the log"}
+        ],
+    )
+
+    class Capture:
+        def complete(self, *, system, prompt, schema, role):
+            self.prompt = prompt
+            return schema(verdict="approved", findings=[])
+
+    cap = Capture()
+    review(proposal, golden_fill, cap)
+    assert "she now steps toward the log" in cap.prompt
+    assert "WRITER'S ACCOUNT OF THIS REVISION" in cap.prompt
+
+
 def test_micro_detail_fresh_fact_is_accepted(golden_fill):
     apply = _write_apply_for("passage:p-arrival")
     lines = apply(

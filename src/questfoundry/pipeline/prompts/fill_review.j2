@@ -128,6 +128,15 @@ finds only brand-new complaints is judging taste, not defects — if nothing
 above persists and no new text outright violates a named rule, do not
 manufacture a fresh blocking finding.
 {% endif %}
+{% if revision_notes %}
+THE WRITER'S ACCOUNT OF THIS REVISION — how it says it addressed each finding:
+{% for r in revision_notes %}
+- {{ r.finding }} → {{ r.how_addressed }}
+{% endfor %}
+Verify each claim against THE PROSE below. A claim the prose does not actually
+deliver is itself a defect — flag the still-unresolved finding. A finding the
+writer genuinely resolved must NOT be re-flagged.
+{% endif %}
 THE PROSE:
 ---
 {{ prose }}

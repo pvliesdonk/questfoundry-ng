@@ -158,12 +158,16 @@ context: "character-arc position"). Design:
 
 ### Follow-up (contracted here, not built in the first PR)
 
-- **Review-contract redesign** for weak tiers: the sharpest live
-  finding (reviewer sub-clause literalism + one-sentence quoting,
-  same-model arbitration) suggests a per-beat checklist verdict
-  (reviewer must locate each beat and quote it, or state which beat is
-  absent) and/or a cross-tier arbitration requirement. Bias-sensitive;
-  design against the next weak-tier run's failures, not speculation.
+- **Review-contract redesign** for weak tiers — **promoted to its own
+  spec, [`docs/plans/review-contract.md`](review-contract.md)** (2026-07-12),
+  because the failure is a *class* over every review pass, not prose-only.
+  The gpt-oss run drove it concrete: the binary `pass/fail` + free-text
+  `issues` verdict false-positive-halts the producer, in three successive
+  shapes (rule fabrication → voice-ban footgun → Rule-2 over-literalism).
+  The spec replaces it with a structured multi-axis finding schema (rule /
+  assessment / confidence / quote / reason / recovery_action) shared by all
+  reviews; the engine gates only proceed-vs-rework; the producer gets the
+  full-fidelity findings and decides. Locked for review before implementation.
 - **Live validation**: a fresh `medium` run on a strong map, read for
   recurrence (grep the top n-grams of run 8's stamps), plus a
   weak-tier (`gpt-oss:120b`) FILL attempt to measure the register +

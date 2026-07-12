@@ -4,6 +4,7 @@ budgets, and the review hook riding the runner's repair loop."""
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
@@ -468,39 +469,58 @@ def test_window_echo_fails_apply(golden_fill):
         apply(WriteProposal(prose=_padded(lifted)), golden_fill)
 
 
-def test_micro_detail_value_word_cap(golden_fill):
+def test_micro_detail_capped_at_one(golden_fill):
+    """At most one micro-detail per passage (author-directed redesign): the
+    standing 'up to 2' invitation made a capable writer coin a re-observation
+    of the story's central entity every scene."""
+    with pytest.raises(ValidationError):
+        WriteProposal(
+            prose=_padded("A quiet scene."),
+            micro_details=[
+                {"entity": "character:cartographer", "key": "a", "value": "one"},
+                {"entity": "character:cartographer", "key": "b", "value": "two"},
+            ],
+        )
+
+
+def test_micro_detail_over_long_value_is_dropped_not_fatal(golden_fill):
+    """A micro-detail is optional enrichment (author-directed redesign): an
+    over-long value is prose, not a note, so it is DROPPED — never a repair
+    that blocks the required prose. The passage still applies without it."""
     apply = _write_apply_for("passage:p-arrival")
     performed = "he settles into the wide lateral stance of a classical fencer once more"
-    with pytest.raises(ApplyError, match="note form"):
-        apply(
-            WriteProposal(
-                prose=_padded("A quiet scene."),
-                micro_details=[
-                    {"entity": "character:cartographer", "key": "stance", "value": performed}
-                ],
-            ),
-            golden_fill,
-        )
+    lines = apply(
+        WriteProposal(
+            prose=_padded("A quiet scene."),
+            micro_details=[
+                {"entity": "character:cartographer", "key": "stance", "value": performed}
+            ],
+        ),
+        golden_fill,
+    )
+    assert any("dropped" in line for line in lines)
+    assert "stance" not in golden_fill.graph.node("character:cartographer").base
 
 
-def test_micro_detail_near_duplicate_names_the_existing_key(golden_fill):
-    """The fencer-stance accrual: the same fact under a new key is
-    rejected naming the key that already carries it."""
+def test_micro_detail_same_key_updates_the_fact(golden_fill):
+    """A re-used key is an UPDATE (a sharper version), not a hard failure —
+    the single-assignment guard was removed because it turned a capable
+    writer's natural re-observation of a recurring entity into a
+    prose-blocking failure; the reviewer now judges refinement vs
+    contradiction."""
     apply = _write_apply_for("passage:p-arrival")
-    with pytest.raises(ApplyError, match="'appearance'"):
-        apply(
-            WriteProposal(
-                prose=_padded("A quiet scene."),
-                micro_details=[
-                    {
-                        "entity": "character:cartographer",
-                        "key": "grooming",
-                        "value": "a tidy beard going salt-and-pepper",
-                    }
-                ],
-            ),
-            golden_fill,
-        )
+    e = "character:cartographer"
+    before = golden_fill.graph.node(e).base["appearance"]
+    lines = apply(
+        WriteProposal(
+            prose=_padded("A quiet scene."),
+            micro_details=[{"entity": e, "key": "appearance", "value": "weathered, salt-grey"}],
+        ),
+        golden_fill,
+    )
+    assert golden_fill.graph.node(e).base["appearance"] == "weathered, salt-grey"
+    assert before != "weathered, salt-grey"
+    assert any("appearance" in line for line in lines)
 
 
 def test_micro_detail_fresh_fact_is_accepted(golden_fill):

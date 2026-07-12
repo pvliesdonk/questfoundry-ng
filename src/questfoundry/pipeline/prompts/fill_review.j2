@@ -84,6 +84,21 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   - {{ e.name }}: {{ e.pronouns }}
 {% endfor %}
 {% endif %}
+{% if micro_details %}
+- micro_detail — the writer proposed a universal fact about an entity (adding a
+  new one, or UPDATING a listed one by re-using its key). Judge only the
+  proposed detail(s) below against that entity's facts above:
+{% for d in micro_details %}
+  - {{ d.entity }}.{{ d.key }} = {{ d.value }}
+{% endfor %}
+  A proposed detail is a `fail` (assessment "fail") ONLY when it CONTRADICTS an
+  established fact of that entity — asserts something that cannot both be true
+  with a listed fact. A detail that merely restates a listed fact without
+  adding anything, or that reads as scene-specific rather than universal, is a
+  `warn` (the writer weighs whether to drop it). A genuine new fact, or a
+  sharper version of a listed one (an update), is fine — no finding. Quote the
+  detail's value; name the fact it contradicts or duplicates in `reason`.
+{% endif %}
 
 TASTE IS A WARN, NEVER A FAIL. Register, rhythm, metaphor and simile quality,
 imagery, figurative language, cliché, sentimentality, and "too literary / too

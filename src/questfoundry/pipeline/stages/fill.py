@@ -23,7 +23,7 @@ from __future__ import annotations
 import re
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import Issue, Severity, run_checks
@@ -191,7 +191,12 @@ class WriteProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     prose: str
-    micro_details: list[MicroDetail] = []
+    # at most one, and only on a genuine new fact or a sharper version of a
+    # listed one — the write prompt frames adding as the exception, not an
+    # obligation (author-directed micro-detail redesign, 2026-07-12): a
+    # standing "up to 2" invitation made a capable model coin a re-observation
+    # of the story's central object every scene and hard-fail the prose.
+    micro_details: list[MicroDetail] = Field(default=[], max_length=1)
 
 
 # The prose review's clause set (docs/plans/review-contract.md): the `rule`
@@ -207,6 +212,10 @@ FILL_REVIEW_RULES = (
     "state_dishonesty",
     "leakage",
     "pronoun",
+    # the writer may add or update a micro-detail; the reviewer judges whether
+    # it holds — a contradiction of an established fact is a defect, a
+    # gratuitous restatement a concern (author-directed, 2026-07-12).
+    "micro_detail",
 )
 FILL_REVIEW_SCHEMA = build_verdict_schema("FillReview", FILL_REVIEW_RULES)
 
@@ -471,33 +480,6 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
                 )
 
 
-def _check_detail_register(g, entity_id: str, detail: MicroDetail, pending: dict) -> None:
-    """Micro-details carry the brief register (plan W3): a fact in note
-    form, never a sentence of the prose — and never an established fact
-    under a new key (the guard the fencer stance walked around)."""
-    words = len(detail.value.split())
-    if words > echo.DETAIL_VALUE_MAX_WORDS:
-        raise ApplyError(
-            f"micro-detail {entity_id}.{detail.key} is {words} words of prose; "
-            f"record a fact in note form (<= {echo.DETAIL_VALUE_MAX_WORDS} words), "
-            "not a sentence of the passage"
-        )
-    entity = g.node(entity_id)
-    known = dict(entity.base)
-    for o in entity.overlays:
-        known.update(o.details)
-    known.update(pending.get(entity_id, {}))
-    for key, value in known.items():
-        if key == detail.key:
-            continue
-        if echo.longest_shared_run(detail.value, value, echo.FACT_ECHO_TOKENS):
-            raise ApplyError(
-                f"micro-detail {entity_id}.{detail.key} restates the established "
-                f"fact {key!r} = {value!r}; the observation is already recorded — "
-                "report a genuinely new one or none"
-            )
-
-
 def _write_apply_for(passage_id: str):
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         g = project.graph
@@ -518,15 +500,24 @@ def _write_apply_for(passage_id: str):
                 f"prose for {passage_id} is {count} words; the budget is {lo}-{hi}"
             )
         _check_echoes(g, passage_id, proposal.prose)
-        pending: dict[str, dict[str, str]] = {}
-        for d in proposal.micro_details:
-            entity_id = _resolve_entity(g, d.entity)
-            _check_detail_register(g, entity_id, d, pending)
-            pending.setdefault(entity_id, {})[d.key] = d.value
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
+        # A micro-detail is optional enrichment, never a blocker (author-
+        # directed redesign, 2026-07-12): the only apply check is the note-form
+        # length cap, and an over-long one is DROPPED, not repaired — a
+        # too-long value is prose, and we simply do not store prose as a fact.
+        # A same-key value UPDATES the fact (a sharper version); whether an
+        # update is a legitimate refinement or a contradiction, and whether an
+        # add genuinely adds, is the reviewer's `micro_detail` rule to judge.
         for d in proposal.micro_details:
             entity_id = _resolve_entity(project.graph, d.entity)
+            words = len(d.value.split())
+            if words > echo.DETAIL_VALUE_MAX_WORDS:
+                lines.append(
+                    f"micro-detail dropped ({words} words > "
+                    f"{echo.DETAIL_VALUE_MAX_WORDS}, not note form): {entity_id}.{d.key}"
+                )
+                continue
             mutations.add_entity_detail(project.graph, entity_id, d.key, d.value)
             lines.append(f"micro-detail: {entity_id}.{d.key} = {d.value}")
         return lines
@@ -585,7 +576,11 @@ def _review_for(passage_id: str):
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
         rendered = env.get_template("fill_review.j2").render(
-            **context, prose=proposal.prose, prior_issues=list(prior), arbitration=None
+            **context,
+            prose=proposal.prose,
+            micro_details=proposal.micro_details,
+            prior_issues=list(prior),
+            arbitration=None,
         )
         verdict = adapter.complete(
             system=REVIEW_SYSTEM,
@@ -607,6 +602,7 @@ def _review_for(passage_id: str):
             arb = env.get_template("fill_review.j2").render(
                 **context,
                 prose=proposal.prose,
+                micro_details=proposal.micro_details,
                 prior_issues=list(prior),
                 arbitration=[render_finding(f) for f in verdict.findings],
             )

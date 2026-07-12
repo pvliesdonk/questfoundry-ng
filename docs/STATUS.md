@@ -969,6 +969,29 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-12 (micro-detail system redesigned — it fired too often for
+  *adding*, author-directed):** The live gpt-oss:120b run's FILL death
+  (`write:group-3`, `object:old-lens already has 'material'`) was *not* a weak
+  model — gpt-oss:120b saw old-lens's keys in its prompt and re-keyed anyway,
+  because the micro-detail feature *solicited* a detail every scene ("up to 2")
+  and a well-specified recurring hero-object (The Great Lens) has no genuinely
+  new universal fact to offer by scene 4, so the model filled the invitation
+  with a re-observation the single-assignment guard then hard-failed — killing
+  the *required* prose over an *optional* annotation. Author call: the feature
+  is still good, but (1) **at most one** detail, framed as the exception ("you
+  are not expected to add — most passages add none"), so the model stops
+  feeling obliged; (2) a detail may **update/extend** a listed fact (re-use its
+  key) as long as it does not contradict — the single-assignment *hard* guard
+  is removed; (3) the "does it genuinely add / does it conflict" judgment moves
+  to the **reviewer** (a new `micro_detail` rule on the FILL review contract:
+  contradiction → `fail`, gratuitous restatement → `warn`). Apply now never
+  blocks prose on a micro-detail: the only apply check is the note-form length
+  cap, and an over-long value is *dropped*, not repaired. `add_entity_detail`
+  allows same-key updates; the schema caps at one. 503 tests, ruff clean,
+  golden 0/0. Rides the review-contract machinery (#57/#58) — no new plumbing.
+  **Open**: a gpt-oss:120b rerun to confirm FILL now clears past group-3 and
+  finally exercises DRESS codex review.
+
 - **2026-07-12 (review-contract live-validated + a top-level `verdict`
   refinement; a new FILL blocker surfaced):** An unbilled gpt-oss:120b run
   (Ollama cloud, scratch `examples/thaw-between/`) validated the contract on

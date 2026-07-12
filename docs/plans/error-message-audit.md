@@ -122,9 +122,13 @@ prompt-bounded; enumerable ones can be made unrepresentable.
       forbids common-word and vague bans, states the verbatim enforcement).
 - [x] voice `pov` name → `fill_review` (literal) — already guarded (the
       cast-name check, the Maren/Marin fix).
-- [ ] micro-details / entity facts → the echo check (a coined fact ≥4
-      tokens becomes a no-restate constraint) — partly bounded (≤12-word
-      register cap); review whether an awkward coined fact over-constrains.
+- [x] micro-details / entity facts → **redesigned 2026-07-12** (STATUS
+      decision log). The single-assignment hard guard made a coined fact a
+      prose-blocking constraint (live: gpt-oss:120b re-keyed a hero-object it
+      saw in its prompt, `write:group-3` exhausted repairs). Now: at most one
+      detail, adding framed as the exception; a re-used key is an *update*;
+      the "adds / conflicts" judgment is the reviewer's `micro_detail` rule;
+      apply never blocks prose on a detail (over-long ones are dropped).
 - [ ] POLISH `arcs` (begins/pivots/ends) → FILL renders ARC POSITION the
       writer must honor — could an over-specified arc over-constrain a scene?
 - [ ] DRESS art `direction` → briefs/codex must not invent beyond it —

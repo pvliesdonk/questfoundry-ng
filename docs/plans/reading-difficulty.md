@@ -37,7 +37,7 @@ accessible (FKGL 4–5). Two findings fall out of the spread:
 2. **The number is driven by the coined Voice and the model tier, so a blanket
    "write simpler" directive is the wrong tool.** It would drag the already-in-band
    Opus runs down and flatten a `literary` audience the Vision explicitly asked
-   for (`thaw-between`'s audience string is *"Adult readers who appreciate
+   for (`thaw-between`'s audience string is *"Adult readers (18+) who appreciate
    literary, morally ambiguous interactive fiction"*; its `voice.yaml` diction is
    *"salt-worn, literary, bleak"*). The lever must be **audience-relative and
    graded**, biting only when prose drifts out of the band its own Vision set —

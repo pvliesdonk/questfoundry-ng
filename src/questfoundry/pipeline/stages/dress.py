@@ -343,9 +343,10 @@ def _codex_review_for():
         verdict = adapter.complete(
             system=REVIEW_SYSTEM, prompt=rendered(None), schema=CODEX_REVIEW_SCHEMA, role="utility"
         )
-        # engine gates on confident objective defects only (review-contract);
-        # a warn or a low-confidence finding never halts the stage.
-        issues = evaluate_review(verdict.findings)
+        # approved auto-accepts; a needs_work verdict gates on confident
+        # objective defects only (review-contract) — a warn or low-confidence
+        # finding never halts the stage.
+        issues = evaluate_review(verdict)
         if not issues:
             return []
         if prior:
@@ -355,7 +356,7 @@ def _codex_review_for():
                 schema=CODEX_REVIEW_SCHEMA,
                 role="architect",
             )
-            final_issues = evaluate_review(final.findings)
+            final_issues = evaluate_review(final)
             if not final_issues:
                 return []
             issues = final_issues

@@ -527,6 +527,7 @@ def test_dress_review_closures_are_fresh_per_passes_resolution(golden):
 
     def _fail(reason):
         return ReviewVerdict(
+            verdict="needs_work",
             findings=[
                 ReviewFinding(
                     rule="conditional_stated_as_fact",
@@ -536,7 +537,7 @@ def test_dress_review_closures_are_fresh_per_passes_resolution(golden):
                     reason=reason,
                     recovery_action="pose it as an open question",
                 )
-            ]
+            ],
         )
 
     class ScriptedAdapter:

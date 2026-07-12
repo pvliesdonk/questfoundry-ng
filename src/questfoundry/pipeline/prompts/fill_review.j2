@@ -12,10 +12,13 @@ text outright violates a named rule as written — otherwise mark it "warn" or
 leave it out. A blocking finding halts the stage as structurally broken, so be
 certain.
 {% endif %}
-Review one passage of prose against its contract and report every objection as
-a structured FINDING. You report evidence; the engine decides the outcome from
-your findings and the writer decides how to act — so grade each axis honestly
-rather than reaching for a verdict.
+Review one passage of prose against its contract. State a top-level `verdict`
+and report every objection as a structured FINDING. `verdict` is "approved"
+when the prose is clean (it auto-accepts) or "needs_work" when you have any
+finding worth raising. A "needs_work" verdict does NOT itself halt the writer:
+the engine reworks only on a FAIL finding at high or medium confidence and
+otherwise accepts anyway, and the writer weighs the rest — so grade each axis
+honestly rather than reaching to block. You report evidence; the engine decides.
 
 Each finding names one RULE (below). Set `assessment` to "fail" for an
 objective defect — something a second reviewer would independently flag the
@@ -112,9 +115,10 @@ THE PROSE:
 ---
 {{ prose }}
 ---
-Report a `findings` list. Each finding is
-{"rule": one of the rule names above, "assessment": "fail" or "warn",
-"confidence": "high" | "medium" | "low", "quote": the exact offending text
-("" only when the defect is a missing beat), "reason": how the quoted text
+Report a `verdict` ("approved" or "needs_work") and a `findings` list. Each
+finding is {"rule": one of the rule names above, "assessment": "fail" or
+"warn", "confidence": "high" | "medium" | "low", "quote": the exact offending
+text ("" only when the defect is a missing beat), "reason": how the quoted text
 breaks THAT rule, in the rule's own terms, "recovery_action": the specific fix
-the writer should make}. An empty list means the passage is clean.
+the writer should make}. Use "approved" with an empty list when the passage is
+clean; use "needs_work" and list your findings otherwise.

@@ -349,6 +349,7 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
 
     def _fail(reason):
         return ReviewVerdict(
+            verdict="needs_work",
             findings=[
                 ReviewFinding(
                     rule="conditional_stated_as_fact",
@@ -358,7 +359,7 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
                     reason=reason,
                     recovery_action="pose it as an open question",
                 )
-            ]
+            ],
         )
 
     class ScriptedAdapter:
@@ -385,9 +386,10 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
     monkeypatch.setattr(runner, "_environment", lambda: env)
     proposal = CodexProposal(entries=[CodexItem(entity="entity:x", title="t", body="b")])
 
-    # a warn-only verdict accepts without a rework
+    # a needs_work verdict carrying only a warn is approved by the engine
     review = _codex_review_for()
     warn = ReviewVerdict(
+        verdict="needs_work",
         findings=[
             ReviewFinding(
                 rule="machinery_leakage",
@@ -397,7 +399,7 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
                 reason="taste",
                 recovery_action="consider",
             )
-        ]
+        ],
     )
     assert review(proposal, golden, ScriptedAdapter([("utility", warn)])) == []
 
@@ -407,7 +409,7 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
         [
             ("utility", _fail("real defect")),
             ("utility", _fail("fresh taste")),
-            ("architect", ReviewVerdict(findings=[])),
+            ("architect", ReviewVerdict(verdict="approved", findings=[])),
         ]
     )
     assert "real defect" in review(proposal, golden, adapter)[0]

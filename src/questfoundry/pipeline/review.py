@@ -9,22 +9,28 @@ future one) speaks it identically.
 
 Division of labor (the spec's crux):
 
-- The **reviewer** emits a `ReviewVerdict{findings}` and nothing else; it
-  reports evidence, it does not declare the outcome.
-- The **engine** owns exactly one coarse decision, *proceed vs rework*
-  (`needs_rework`), computed mechanically from the findings. It does not
-  filter, drop, or reformat — it only gates the runner's repair loop.
+- The **reviewer** emits a `ReviewVerdict{verdict, findings}`: a top-level
+  `verdict` (`approved` / `needs_work`) plus the evidence. `approved` is a
+  positive attestation — it auto-accepts; `needs_work` hands the decision to
+  the engine. The reviewer thus affirms a clean read but cannot *block* on its
+  own say-so (that would restore the false-positive halt this redesign removed).
+- The **engine** owns the one coarse decision on a `needs_work` verdict —
+  *proceed vs rework* (`needs_rework`), computed mechanically from the
+  findings. It does not filter, drop, or reformat — it only gates the runner's
+  repair loop. A `needs_work` verdict with no confident objective defect is
+  approved by the engine anyway (the author's rule: "a needs-work can still be
+  approved by the engine").
 - The **producer** receives the *full-fidelity* findings on a rework, each
   rendered with its labels, and decides how to revise: a `fail` is blocking,
   a `warn` or a low-confidence finding is the reviewer's concern to weigh.
 
-The false-positive protection is therefore not the engine silently dropping a
-weak reviewer's objection; it is (a) the engine only *looping* on confident
-objective defects and (b) the producer *seeing every finding with its
-confidence label* and exercising judgment. A weak reviewer cannot force a
-rework without stamping a finding `fail` + at least `medium` confidence and
-writing a coherent `recovery_action` — each required field makes a fabricated
-match costlier to sustain.
+The asymmetry that makes the top-level `approved` safe: a wrong `approved` only
+accepts marginal prose (the deterministic echo / word-budget checks still
+guard structure), whereas the danger this redesign targeted was a wrong *block*
+— and a block still requires a `needs_work` verdict AND a `fail` finding at
+`medium`+ confidence with a coherent `recovery_action`. Each required field
+makes a fabricated halt costlier to sustain; the affirmation makes an empty
+review a deliberate act, not a lazy default.
 """
 
 from __future__ import annotations
@@ -33,6 +39,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, create_model
 
+# The reviewer's top-level attestation (heritage `recommendation`, restricted
+# to the two outcomes a single review can reach). `approved` auto-accepts;
+# `needs_work` defers the proceed/rework call to the engine.
+Verdict = Literal["approved", "needs_work"]
 # heritage `validation_result` (semantic-conventions.md §"Separate the Axes"),
 # restricted to what a finding can be: a defect or a concern.
 Assessment = Literal["fail", "warn"]
@@ -66,6 +76,9 @@ class ReviewFinding(BaseModel):
 class ReviewVerdict(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    # required: the reviewer must state an outcome, so an empty review is a
+    # deliberate `approved`, never a lazy default.
+    verdict: Verdict
     findings: list[ReviewFinding] = []
 
 
@@ -88,13 +101,16 @@ def build_verdict_schema(name: str, rules: tuple[str, ...]) -> type[BaseModel]:
     )
 
 
-def needs_rework(findings: list[ReviewFinding]) -> bool:
-    """The engine's one decision: another rework, or good enough? True iff
-    some finding is an objective defect the reviewer is at least moderately
-    sure of."""
+def needs_rework(verdict: ReviewVerdict) -> bool:
+    """The engine's one decision: another rework, or good enough? An
+    `approved` verdict auto-accepts. A `needs_work` verdict reworks iff some
+    finding is an objective defect the reviewer is at least moderately sure of
+    — otherwise the engine approves it anyway."""
+    if verdict.verdict == "approved":
+        return False
     return any(
         f.assessment == "fail" and f.confidence in _BLOCKING_CONFIDENCE
-        for f in findings
+        for f in verdict.findings
     )
 
 
@@ -108,12 +124,13 @@ def render_finding(f: ReviewFinding) -> str:
     return f"{head}{quote} — {f.reason} Fix: {f.recovery_action}"
 
 
-def evaluate_review(findings: list[ReviewFinding]) -> list[str]:
+def evaluate_review(verdict: ReviewVerdict) -> list[str]:
     """The shared review gate. `PassSpec.review`'s contract is `-> list[str]`
-    (empty = accept), so this returns `[]` when nothing blocks and the full
-    rendered finding list when a rework is due. Every finding reaches the
-    producer on a rework — full fidelity, not just the blockers — because the
-    engine gates the loop, it does not curate the evidence."""
-    if not needs_rework(findings):
+    (empty = accept), so this returns `[]` when nothing blocks (an `approved`
+    verdict, or a `needs_work` with no confident defect) and the full rendered
+    finding list when a rework is due. Every finding reaches the producer on a
+    rework — full fidelity, not just the blockers — because the engine gates
+    the loop, it does not curate the evidence."""
+    if not needs_rework(verdict):
         return []
-    return [render_finding(f) for f in findings]
+    return [render_finding(f) for f in verdict.findings]

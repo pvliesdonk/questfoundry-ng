@@ -295,6 +295,31 @@ def test_residue_diamond_rejects_an_empty_branch(vision):
         pc.insert_residue_diamond(g, [arm], [], "path:sub-a", need.rejoin)
 
 
+def test_residue_beat_id_collision_is_repairable(vision):
+    """A residue arm whose new beat reuses an existing beat id raises a
+    repairable MutationError, not the store's bare KeyError. Before the
+    mutation-boundary fix this KeyError escaped the runner's repair loop:
+    the residue path caught it, but the symmetric false-branch path did
+    not, so a colliding false-branch id crashed the run. This is the
+    weak-tier failure (gpt-oss:120b named a residue beat after an existing
+    commit beat) — now a named, recoverable error, not an id-decode crash."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    mutations.freeze_topology(g)
+    taken = sorted(b.id for b in g.nodes_of(Beat))[0]  # collide with a real beat id
+    clash = Beat(
+        id=taken,
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"][0]],
+    )
+    with pytest.raises(mutations.MutationError, match="already used"):
+        pc.insert_residue_chain(g, [clash], "path:sub-a", need.rejoin)
+
+
 def test_multi_flag_path_residue_covers_via_any_flag(vision):
     """A path with two consequences derives two flags (live run 7). The
     residue arm gates on one; G4 must accept any of the path's flags —
@@ -511,6 +536,27 @@ def test_finalize_splices_false_branches_against_pristine_topology(vision, tmp_p
     assert order and order[0] == "false"  # the diamond lands before residue shortens the run
     assert order.count("residue") == 2  # both arms still applied
     assert isinstance(g.node("beat:detour"), Beat)
+
+
+def test_finalize_false_branch_id_collision_is_repairable(vision, tmp_path):
+    """The exact asymmetry the PR fixes: the false-branch splice once let a
+    colliding new-beat id escape as an uncaught KeyError and crash the run
+    (the residue path caught it, this one did not). Through _finalize_apply
+    it is now a repairable ApplyError carrying false-branch location
+    context, not a crash."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    proposal = FinalizeProposal(
+        false_branches=[
+            # arm reuses an existing beat id (run[0]) — the collision
+            FalseBranchSpec(before=run[0], after=run[1], arms=[ArmSpec(id=run[0], summary="s")])
+        ]
+    )
+    with pytest.raises(ApplyError, match="false branch"):
+        _finalize_apply(proposal, project)
 
 
 def test_llm_beat_entities_must_be_ids(vision, tmp_path):

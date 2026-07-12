@@ -27,6 +27,16 @@ present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
 your first sentence back before anything else — that is where the wrong tense
 slips in.
 
+POINT OF VIEW IS LIMITED: the POV above fixes whose mind the reader is inside.
+Only that narrator's thoughts, intentions, and feelings may be stated directly.
+Every other character reaches the reader only through what the narrator can
+observe — their actions, their speech, their expression. When a beat or an ARC
+POSITION below describes another character's plan or state ("she intends to…",
+"he has decided…"), that is a brief for what they DO in this scene, not a
+licence to enter their mind: render it as observable behavior. Stating a
+non-narrator character's interiority is the most common POV break and fails
+review (rule 1).
+
 PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
 summary: {{ passage.summary }}
 Realize these beats, in order, as one continuous scene. The summaries are your
@@ -52,7 +62,9 @@ otherwise it stays background — a fact honored silently is honored best:
 
 {% if arcs %}
 ARC POSITION (who each of these is RIGHT NOW — the one aspect this scene may
-foreground; every established fact outside it stays background):
+foreground; every established fact outside it stays background). For anyone but
+the narrator this is what the scene must SHOW through their behavior, never
+state as their thoughts (see POINT OF VIEW above):
 {% for a in arcs %}
 - {{ a.entity.name }}: {{ a.now }}{% if a.turn %} — THIS SCENE TURNS IT: {{ a.turn }}{% endif %}{% if a.heading %} (heading toward: {{ a.heading }} — do not arrive early){% endif %}{% for s in a.ends %} | this route has committed: {{ s }}{% endfor %}
 {% endfor %}

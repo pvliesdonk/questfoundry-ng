@@ -33,6 +33,16 @@ Key properties:
 - **Repair, then escalate.** Invalid proposals go back to the model with
   the concrete validation errors, at most twice. Still invalid → the stage
   halts with a human-readable report. Never silently drop or auto-mangle.
+  Every error the model repairs against must be **actionable**, not a raw
+  diagnostic: reason + subject + a recovery_action (the specific corrective
+  — *pick a fresh id*, *use one of these values*), phrased as an
+  instruction (heritage `semantic-conventions.md` §Error Messages). A raw
+  exception fed back (`duplicate node id 'X'`) is a bug in the feedback,
+  which a weak tier cannot recover from — so store rejections raise
+  `GraphError` (a duplicate/missing reference), the runner catches it as
+  repairable alongside `ApplyError`/`MutationError`, and no model-reachable
+  graph write can escape as an uncaught crash. See `AGENTS.md` §"Prompt and
+  error-message quality".
 - **Deterministic where possible.** Anything computable — DAG assembly
   bookkeeping, flag derivation, passage collapse boundaries, arc
   enumeration, all validation — is code, not model. The LLM is reserved

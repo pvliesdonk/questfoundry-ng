@@ -196,11 +196,20 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             ]
         except ValidationError as e:
             raise ApplyError(f"invalid false-branch arm: {e}") from e
+        try:
+            if len(chains) == 1:
+                pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
+            else:
+                pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
+        except (mutations.MutationError, KeyError) as e:
+            # Symmetric with the residue path below: a new false-branch beat id
+            # colliding with an existing beat raised a bare KeyError that
+            # escaped the repair loop entirely (only the residue path caught
+            # it). Make it repairable with context.
+            raise ApplyError(f"false branch {spec.before} -> {spec.after}: {e}") from e
         if len(chains) == 1:
-            pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
             lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
         else:
-            pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
             lines.append(
                 f"diamond {chains[0][0].id} / {chains[1][0].id} "
                 f"between {spec.before} -> {spec.after}"
@@ -254,7 +263,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 pc.insert_residue_diamond(
                     g, chain, gated_chain(spec.fork), spec.path, need.rejoin
                 )
-        except KeyError as e:  # duplicate beat id (e.g. one slug reused across worlds)
+        except (mutations.MutationError, KeyError) as e:  # duplicate beat id / bad splice
             raise ApplyError(f"residue {spec.id}: {e}") from e
         covered.add((spec.dilemma, spec.world, spec.path))
         arm = " -> ".join(b.id for b in chain)

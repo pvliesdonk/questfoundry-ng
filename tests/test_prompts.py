@@ -117,6 +117,27 @@ def test_dress_codex_review_template_has_no_craft_include_or_research_reference(
     assert "research" not in source
 
 
+def test_fill_review_forces_rule_text_matching_not_just_a_number():
+    """The prompt-quality fix (live: a reviewer cited "Rule 1" — POV/tense —
+    to reject a simile): naming a rule number is not enough; the reviewer
+    must quote the rule's wording and show the text breaks THAT rule, and
+    figurative language is named as taste, not a rule violation."""
+    source = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
+    assert "quote that rule's own wording" in source
+    assert "Naming a rule number is not enough" in source
+    assert "simile" in source  # figurative language named as taste, not a rule
+
+
+def test_fill_write_states_pov_externalization():
+    """The prompt-quality fix (live: both tiers narrated a non-viewpoint
+    character's plotting interiority, failing the POV rule): the write
+    prompt must instruct that only the narrator's interiority may be
+    stated and others are rendered through observable behavior."""
+    source = (PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8")
+    assert "POINT OF VIEW IS LIMITED" in source
+    assert "observable behavior" in source
+
+
 # ---------------------------------------------------------------------------
 # Deliberate exclusions named in the M6 contract (design doc 02 §1):
 # review-shaped and mechanical passes never see craft notes either.

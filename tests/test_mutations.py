@@ -141,3 +141,34 @@ def test_set_entity_arc_is_stable_once_set():
     set_entity_arc(g, "character:sleeper", EntityArc(begins="asleep, patient"))  # no-op
     with pytest.raises(MutationError, match="stable once set"):
         set_entity_arc(g, "character:sleeper", EntityArc(begins="different"))
+
+
+def test_add_beat_duplicate_id_is_actionable_mutation_error():
+    """A new beat reusing an existing id must raise a repairable
+    MutationError (not the store's bare KeyError, which the runner never
+    catches), and the message must tell the model how to recover — pick a
+    fresh id — not merely that the id is taken (weak-tier live run:
+    gpt-oss:120b reused a commit-beat id for a residue beat and could not
+    recover from a bare "duplicate node id" message across repairs)."""
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    mutations.add_beat(g, narrative_beat("dup", d), [pa])
+    with pytest.raises(MutationError, match="already used") as exc:
+        mutations.add_beat(g, narrative_beat("dup", d), [pb])
+    assert "fresh, unique id" in str(exc.value)  # recovery_action, not just reason
+
+
+def test_duplicate_edge_raises_graph_error():
+    """A repeated relation raises the store's GraphError (a KeyError
+    subclass the runner catches as repairable), with a recovery_action —
+    not a bare, uncaught KeyError."""
+    from questfoundry.graph.store import GraphError
+
+    g = StoryGraph()
+    d, pa, _ = make_dilemma(g, "one")
+    mutations.add_beat(g, narrative_beat("a", d), [pa])
+    mutations.add_beat(g, narrative_beat("b", d), [pa])
+    mutations.add_ordering(g, "beat:a", "beat:b")
+    with pytest.raises(GraphError, match="already exists") as exc:
+        mutations.add_ordering(g, "beat:a", "beat:b")
+    assert "do not" in str(exc.value)  # recovery_action, not just a diagnostic

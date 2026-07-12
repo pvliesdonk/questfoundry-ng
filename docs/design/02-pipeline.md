@@ -361,10 +361,10 @@ accept anyway. The reviewer can thus affirm a clean read but cannot *halt*
 the stage on taste or a low-confidence guess: a block needs `needs_work`
 and a confident `fail`. (The asymmetry is deliberate — a wrong `approved`
 only passes marginal prose, which the deterministic echo/word-budget
-checks still guard; a wrong halt was the failure this contract removed.) The **producer** receives
-every finding on a rework (full fidelity, labeled) and decides how to
-act: a `fail` is blocking, a `warn` or low-confidence finding is weighed,
-not mandated. Review rounds are still anchored on the previous rounds'
+checks still guard; a wrong halt was the failure this contract removed.)
+The **producer** receives every finding on a rework (full fidelity,
+labeled) and decides how to act: a `fail` is blocking, a `warn` or
+low-confidence finding is weighed, not mandated. Review rounds are still anchored on the previous rounds'
 findings (persistence is signal; all-new complaints each round are
 usually taste), and a second rework escalates once to an architect-tier
 arbitration emitting the same schema — a genuinely stronger judge on a

@@ -622,21 +622,26 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > `examples/thaw-between/`), so *quality*, not completion, is the frontier.
 > The LLM prose — and maybe the coined Voice — skews to high reading
 > complexity: artful, but poor for a reader navigating choices. **The
-> assessment is now done** ([`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md),
-> 2026-07-12; decision log below): measured across the preserved stories,
-> difficulty is **two independent axes** — micro-readability (FKGL/sentence
-> length) and structural legibility (paragraph white-space, run-on density) —
-> and `thaw-between` is an **outlier bad on both** (FKGL 9.5 *and* 1.1
-> paragraphs/passage — one wall of text each — vs the hand-authored golden's
-> 4.0), while the Opus-driven LLM runs are already accessible (FKGL 4–5). The
-> corpus is authoritative here (audience_targeting FKGL bands, prose_patterns
-> white-space rule, quality-bar 6). Recommended lever: a **graded
-> `readability` finding** (the `word_budget` shape) that is *structural-first*
-> (the wall-of-text catch is register-independent and catches `thaw-between`
-> alone) and audience-relative, plus a `fill_voice.j2` screen-reading
-> directive and a typed `reading_register` **Vision knob**. Build gated on
-> the author picking the lever scope + register default (plan's *Open
-> decisions*). **NB — item 1 below ("a completing FILL run") is now
+> assessment is done, and its v1 thesis was corrected by an author read**
+> ([`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) is now v2;
+> decision log below). v1 measured FKGL and recommended a graded-readability
+> finding; the author's ranking of the stories (**keepers + closed-circle
+> best; cartographers + bubblegum near-unreadable**) **inverted** it — FKGL is
+> *anti-correlated* (best story `closed-circle` = grade 18, worst
+> `cartographers` = grade 2.5), and even the hand-authored golden reads
+> "pretentious." The real fault is **over-stylization**: relentless,
+> unmodulated prose (bubblegum's wall-to-wall aphorism) and fragmentation +
+> coined-compound overload (cartographers: 42% tiny sentences, 4× compound
+> density). The readable stories have a plain baseline, grammatical flow, and
+> modulation (ornate ≠ unreadable — `closed-circle` is both). Corrected lever:
+> **generative first** — a `fill_voice.j2` restraint/modulation directive + a
+> `fill_write.j2` "plain baseline, clarity over atmosphere" rule (corpus-
+> grounded: prose_patterns:52) — with a deterministic `overwriting` finding on
+> the signals that *did* track the author (fragmentation ratio, novelty
+> density), and **FKGL dropped from the lever entirely**. Also flagged: the
+> pipeline has **no clean target-register exemplar** (the golden over-writes
+> too). Build gated on the author confirming the diagnosis + exemplar approach
+> (plan's *Open decisions*). **NB — item 1 below ("a completing FILL run") is now
 > ACHIEVED:** the compounding review/rework chain (#57→#58→#59→#60→#61)
 > carried `gpt-oss:120b` through DRESS, codex review included.
 
@@ -993,38 +998,43 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
-- **2026-07-12 (reading-difficulty assessment — the top-priority "prose reads
-  too complex" ask, researched; plan doc
-  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)):**
-  Measured FKGL/FRE, words/sentence, paragraphs/passage, and run-on density
-  across every preserved story. Result reframed the problem in two ways.
-  (1) **Difficulty is two independent axes** — *micro-readability*
-  (vocabulary + sentence length, FKGL/FRE) and *structural legibility*
-  (paragraph white-space + run-on density) — not one dial. (2) The triggering
-  sample `thaw-between` (weak tier, `gpt-oss:120b`) is an **outlier bad on
-  both**: FKGL 9.5 *and* **1.1 paragraphs/passage** (every passage one
-  unbroken wall of text) against the hand-authored golden's 4.0; meanwhile the
-  Opus-driven LLM runs (`bubblegum-alibi`, `lamplighters-debt-craft`) are
-  already accessible at FKGL 4–5. So the pipeline is not uniformly
-  over-complex — a blanket "write simpler" directive would drag in-band prose
-  down and flatten a `literary` audience the Vision explicitly asked for. The
-  corpus is authoritative on the target (audience_targeting's FKGL bands,
-  prose_patterns' "white space is structural" rule, quality-bar 6 "reading
-  level matches audience"), so the design cites it rather than deriving.
-  **Root cause:** no readability signal exists anywhere in the pipeline — the
-  Voice pass coins diction/rhythm with no screen-reading floor, and FILL's
-  write/review enforce word band + voice fidelity but nothing on paragraphing
-  or sentence complexity, so a wall-of-text passage passes clean.
-  **Recommended lever:** a graded `readability` `ReviewFinding` mirroring
-  `_word_budget_finding` (fill.py) — *structural-first* (the wall-of-text
-  catch is register-independent and fixes `thaw-between` alone), audience-
-  relative, graded so in-band prose never sees it fire — plus a `fill_voice.j2`
-  screen-reading directive and a typed `reading_register` **Vision knob**
-  (enum, refpin-style, defaulted from `audience` at DREAM). Build is **gated
-  on the author** picking the lever scope (structural-only PR-1 vs. all three)
-  and the register default (accessible-first vs. honor the audience string) —
-  the plan's *Open decisions*. No billed calls spent; recommended validation
-  is a targeted Ollama FILL re-run of the wall-of-text passages.
+- **2026-07-12 (reading-difficulty assessment — v1 thesis WRONG, corrected by
+  an author read; plan doc
+  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) is now v2):**
+  v1 measured FKGL/paragraph-density, called the prose too *complex*, and
+  recommended a graded-FKGL readability finding + a literary↔accessible Vision
+  knob. The author read the stories and **inverted it**: *"none of the examples
+  is particularly okay… keepers + closed-circle best; cartographers + bubblegum
+  near unreadable,"* and the hand-authored golden itself "reads difficult and
+  pretentious." Checked against the metrics, **FKGL is anti-correlated with the
+  author's judgment**: best story `closed-circle` = FKGL 18.4 (graduate), worst
+  `cartographers` = FKGL 2.5 (early reader). A graded-FKGL finding would have
+  flagged the best prose and passed the worst. **The real fault is
+  over-stylization, not reading level:** (1) relentless, unmodulated prose —
+  every sentence strains for effect, no plain connective baseline (`bubblegum`
+  is wall-to-wall aphorism; the golden's "pretentious" is the mild form); (2)
+  fragmentation + novelty overload — `cartographers` runs 42% ≤6-word sentences
+  and ~21 coined compounds/1k words (4× the others), a strobe of fragments with
+  a fresh metaphor per phrase and no plain prose to rest on. The **readable**
+  stories share a clear grammatical spine + connective flow, modulation (plain
+  valleys between heightened peaks), story-advancing concreteness, and ornament
+  used with restraint — `closed-circle` proves ornate ≠ unreadable. Corpus
+  backs the corrected target (clarity over atmosphere: prose_patterns:52; "paint
+  a picture without overwriting": exposition:74; Clarity/Comprehension bar).
+  **Root cause:** the Voice pass invites maximalism (no restraint/modulation
+  ask — `thaw-between`'s rhythm asks for a "longer, layered" sentence every
+  other line), the write pass sets no ceiling on figuration frequency, no pass
+  rewards modulation/clarity, and the golden over-writes too so the pipeline has
+  **no clean target-register exemplar** to imitate. **Corrected lever:**
+  generative-first — `fill_voice.j2` restraint/modulation directive +
+  `fill_write.j2` plain-baseline/clarity rule — plus a deterministic
+  `overwriting` finding on the signals that *tracked* the author (fragmentation
+  ratio, novelty density), **FKGL dropped from the lever**, and a companion task
+  to establish a real target-register exemplar (human-read validation, not a
+  metric). Gated on the author confirming the diagnosis + exemplar approach
+  (plan's *Open decisions*). No billed calls spent. **Lesson (AGENTS.md prompt-
+  quality spirit): a metric that looks objective can be anti-correlated with the
+  actual goal — read the artifact, don't trust the number.**
 
 - **2026-07-12 (word budget → a graded review finding, not a hard apply gate;
   author-directed):** The rework-convergence run reached pass 21/22 but the

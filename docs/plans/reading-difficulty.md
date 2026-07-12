@@ -1,166 +1,176 @@
 # Reading Difficulty — Assessment & Proposed Lever
 
-> Status: **assessment** (2026-07-12). Answers next-up #1's research ask
-> ("the prose reads too complex for a gamebook"): measure the problem, map it
-> to the vendored craft corpus and gamebook/CYOA norms, name the root cause,
-> recommend one lever. The build is gated on the author picking the lever and
-> the register default (see *Open decisions*).
+> Status: **assessment, v2** (2026-07-12). Answers next-up #1 ("the prose reads
+> too complex for a gamebook"). **v1 was wrong and is corrected here** — an
+> author read of the preserved stories inverted its central claim (decision log,
+> 2026-07-12). This version records what the correction taught: the fault is
+> *over-stylization*, not high reading level, and grade-level metrics are
+> **anti-correlated** with the author's readability judgment. Build is gated on
+> the author (see *Open decisions*).
 
-## The problem, measured
+## What v1 got wrong (recorded so it is not repeated)
 
-Flesch–Kincaid Grade Level (FKGL), Flesch Reading Ease (FRE), mean words per
-sentence, mean **paragraphs per passage**, and two run-on proxies (sentences
-over 30 words; sentences with ≥ 3 commas) across the preserved stories:
+v1 measured Flesch–Kincaid (FKGL) and paragraph density, concluded the prose
+skewed too *complex*, and recommended a **graded FKGL readability finding** with a
+literary-vs-accessible Vision knob. The author's read of the actual stories
+broke this: *"none of the examples is particularly okay… keepers-bargain and
+closed-circle are the best; cartographers-debt and bubblegum are near
+unreadable."* Ranking that against the metrics:
 
-| Story | Author | FKGL | FRE | W/sent | paras/passage | >30w sents | ≥3-comma sents |
-|---|---|---|---|---|---|---|---|
-| `thaw-between` | LLM (`gpt-oss:120b`) | **9.5** | 64 | 20.9 | **1.1** | 33 | 35 |
-| `keepers-bargain` | hand (golden) | 7.5 | 78 | 20.3 | **4.0** | 32 | 28 |
-| `bubblegum-alibi` | LLM (Opus/Haiku) | 4.8 | 84 | 13.3 | 8.6 | 100 | 90 |
-| `lamplighters-debt-craft` | LLM (Opus/Haiku) | 4.3 | 90 | 14.5 | 6.5 | 149 | 115 |
+| Story | Author's read | FKGL | short (≤6-word) sentences | coined compounds / 1k words |
+|---|---|---|---|---|
+| `keepers-bargain` (hand golden) | best (but still "pretentious") | 7.5 | 22% | 5.5 |
+| `closed-circle` | best | **18.4** | 1% | 5.6 |
+| `cartographers-debt` | near unreadable | **2.5** | 42% | **21.2** |
+| `bubblegum-alibi` | near unreadable | 4.8 | 45% | 6.2 |
 
-`thaw-between` is the sample that motivated the concern, and it is an
-**outlier**, not the pipeline's norm: the two Opus-driven LLM stories are already
-accessible (FKGL 4–5). Two findings fall out of the spread:
+**FKGL is inverted.** The author's *best* story scores grade 18 (graduate); the
+*worst* scores grade 2.5 (early reader). A graded-FKGL finding would have flagged
+the best prose and passed the worst — the exact opposite of the goal. Sentence
+length and vocabulary are not the disease; a rich, long-sentence register
+(`closed-circle`, `keepers`) reads *well* when it is controlled. v1 also over-
+credited the golden as "the intended register" purely because it is hand-authored
+— the author's verdict is that it too "reads difficult and pretentious." So this
+is **systemic over-writing across the whole generative path, including the hand-
+authored fixture**, not an outlier to catch.
 
-1. **Difficulty is two independent axes, not one.**
-   - *Micro-readability* — vocabulary and sentence length (FKGL/FRE).
-   - *Structural legibility* — how the prose lays out for a reader navigating
-     choices on a screen: paragraph white-space and run-on density.
+## What actually makes the prose hard (from reading it)
 
-   `thaw-between` is bad on **both**. Its single most objective defect is
-   structural: **1.1 paragraphs per passage** — every passage is one
-   unbroken wall of text — against the hand-authored golden's 4.0. Its FKGL
-   (9.5) is high but, taken alone, sits inside the corpus's *Adult (literary)*
-   band; the wall-of-text is what makes it read as punishing.
+Reading the four side by side, the axis that tracks the author's judgment is
+**stylistic control / modulation**, not complexity. Two failure modes, sometimes
+combined:
 
-2. **The number is driven by the coined Voice and the model tier, so a blanket
-   "write simpler" directive is the wrong tool.** It would drag the already-in-band
-   Opus runs down and flatten a `literary` audience the Vision explicitly asked
-   for (`thaw-between`'s audience string is *"Adult readers (18+) who appreciate
-   literary, morally ambiguous interactive fiction"*; its `voice.yaml` diction is
-   *"salt-worn, literary, bleak"*). The lever must be **audience-relative and
-   graded**, biting only when prose drifts out of the band its own Vision set —
-   exactly the `word_budget` shape.
+1. **Relentless, unmodulated stylization — every sentence strains for effect.**
+   `bubblegum-alibi` is wall-to-wall hard-boiled aphorism ("That lands like a
+   compliment. It costs me a breath." / "The dark came early, and a room can hold
+   a lot of terrible things in twenty-two extra seconds nobody accounted for.").
+   There is no plain connective prose to rest on, so the voice becomes exhausting
+   monotony — Provost's "drone," in staccato. The "pretentious" quality the
+   author names in the golden is the milder form: prose continuously reaching for
+   the literary rather than earning it at intervals.
 
-## What the corpus says (authoritative — not first-principles)
+2. **Fragmentation and novelty-overload — the reader can't find footing.**
+   `cartographers-debt` is a strobe of fragments (42% of sentences ≤ 6 words) with
+   a coined compound or fresh metaphor jammed into nearly every phrase — 21
+   hyphen-compounds per 1k words, ~4× the others ("the compass rose wetting its
+   throat," "Oath-murmurs thread their teeth," "brine-lamps," "eel sheen"). Every
+   noun is invented, every image is peak intensity, nothing is plain, so no scene
+   assembles in the reader's head. It reads as a prose-poem in a made-up dialect.
 
-The vendored corpus speaks to this directly; the design does not have to derive it.
+By contrast the **readable** stories share what the unreadable ones lack:
 
-- **`audience-and-access/audience_targeting.md` § Reading Level Metrics** gives
-  FKGL bands per audience — the target table this lever would enforce:
+- **A clear grammatical spine and connective flow** — complete sentences that
+  carry the reader clause to clause (`keepers`: *"The boat comes in on the neap
+  tide, low in the water with chart cases and a man who introduces himself before
+  his feet have found the ladder."*). `closed-circle` has essentially **no**
+  fragments (1%).
+- **Modulation** — plain valleys between heightened peaks, not every line maxed.
+- **Concreteness that advances the story**, not atmosphere that stalls it
+  (`keepers`' wrong soundings and the blank line in the ledger *move* the scene;
+  `cartographers`' images only decorate).
+- **Ornament with restraint and purpose** — `closed-circle` is very ornate and
+  still reads well because the overwriting is deliberate and controlled. Ornate ≠
+  unreadable; *relentless* is unreadable.
 
-  | Audience | FKGL |
-  |---|---|
-  | Early Readers | 1–2 |
-  | Middle Grade | 3–6 |
-  | Young Adult | 7–10 |
-  | Adult (accessible) | 8–10 |
-  | Adult (literary) | 10–14+ |
+## The corpus agrees (target is clarity/control, not simplicity)
 
-  …plus per-audience sentence-length guidance (MG 10–20 words, ER 5–10) and the
-  standing caution: *"Don't obsess — metrics are guides… Story first; never
-  sacrifice story for score."* (Argues for a graded finding, not a hard gate.)
+- `prose-and-language/prose_patterns.md:52` — *"Don't sacrifice clarity for
+  atmospheric tone — dream-like prose can leave readers lost."* This is exactly
+  `cartographers`' failure.
+- `prose-and-language/exposition_techniques.md:74` — *"Find the balance that
+  paints a picture without overwriting or killing pacing."*
+- `prose_patterns.md` § Cadence / Provost — *"Monotony kills rhythm… vary short,
+  medium, and long."* Both bad stories are monotonous in one register (staccato).
+- `prose_patterns.md` § Specificity — *specific nouns over piling on modifiers*
+  (the corpus's answer to compound/adjective overload).
+- Quality bars: **Clarity / Comprehension** (`quality_standards_if.md`) — *can a
+  player summarize what happened?* — is the bar these stories miss, not a reading-
+  level bar.
 
-- **`prose-and-language/prose_patterns.md`** is emphatic on structural legibility
-  and is the corpus's answer to the wall-of-text: *"Optimal Paragraph Length:
-  Rarely more than 3–4 sentences. White space is your friend… **Dense literary
-  prose that works in print can feel oppressive on screen. White space is
-  structural, not decorative.**"* Also: vary sentence length (monotony kills
-  rhythm), story-passage density 100–200 words.
+FKGL/FRE stay **out** of the lever. At most they are a sanity floor for a
+genuinely childish target audience; they do not measure the defect here and must
+never gate against a controlled literary register.
 
-- **`craft-foundations/quality_standards_if.md` § Bar 6 (Accessibility)** makes
-  *"Reading level: prose matches target audience capability"* a named quality
-  bar — the corpus already frames this as a check the work should pass.
+## Root cause — the pipeline rewards maximalism
 
-## Root cause — where difficulty enters the pipeline
+- **The Voice pass (`fill_voice.j2`)** invites a maximal register and never asks
+  for restraint or modulation. `thaw-between`'s coined `rhythm` literally asks for
+  *"a longer, layered"* sentence every other line; nothing establishes a plain
+  baseline, a fragment ceiling, or "clarity outranks atmosphere."
+- **The FILL write pass (`fill_write.j2`)** tells the writer to reach for the
+  voice's imagery palette "when you need a description" but sets no ceiling on
+  *how often* — so a writer with a rich palette applies it every sentence. Nothing
+  values a plain, load-bearing sentence.
+- **No pass rewards modulation, flow, or clarity**, and the review has no axis for
+  over-stylization — so relentlessly mannered prose passes clean.
+- **The golden fixture over-writes too**, so the pipeline has *no clean in-repo
+  exemplar of the target register* to imitate — it is learning from its own
+  over-written outputs.
 
-There is **no readability signal anywhere in the pipeline today.** Two entry points:
+## Recommended lever (corrected)
 
-- **The Voice pass (`fill_voice.j2`)** coins `diction` / `rhythm` freely from the
-  Vision's tone and audience. Nothing tells it the prose will be read on screen,
-  mid-choice — so it optimizes for literary texture (`thaw-between`'s rhythm rule
-  literally asks for *"a longer, layered"* sentence every other line) with no
-  white-space or sentence-variation floor.
-- **The FILL write pass (`fill_write.j2`)** enforces a word band and voice
-  fidelity, but nothing about paragraphing or sentence complexity. The review
-  (`fill_review.j2`) has no readability rule. So a wall-of-text passage passes
-  clean.
+Primary lever is **generative and prompt-side** (restraint + modulation), because
+the defect is a register the pipeline is *choosing*, not a metric it is missing.
+Deterministic guardrails ride the proven `word_budget` shape but on the **right**
+signals — never FKGL.
 
-The `word_budget` finding (`fill.py:_word_budget_finding`, and its integration in
-`_review_for`) is the proven precedent: a **graded, engine-injected
-`ReviewFinding`** whose `confidence` scales with distance out of band, riding the
-same findings list the reviewer produces — blocks when confidently out of band,
-weighed-not-mandated on a near-miss.
+1. **Voice-pass restraint & modulation directive (`fill_voice.j2`).** Before any
+   prose exists, require the coined voice to commit to: a **plain, complete-
+   sentence baseline** that carries the scene; heightened style and figuration
+   **reserved for selected peaks**, not every line; a **clear grammatical spine**
+   (subject–verb, connective flow — not a strobe of fragments); *clarity outranks
+   atmosphere* (corpus prose_patterns:52). Reframe `rhythm`/`imagery` so they can't
+   be read as "maximize every sentence."
 
-## Recommended lever
+2. **Write-prompt modulation rule (`fill_write.j2`).** State that most sentences
+   should be plain and load-bearing; the imagery palette is for *occasional*
+   emphasis, not continuous decoration; do not coin a new compound or fresh
+   metaphor in every clause; a scene must be *summarizable* after reading (the
+   Clarity/Comprehension bar). Show the good/bad contrast (modulated vs relentless)
+   the way the corpus notes do.
 
-**A graded `readability` finding, audience-relative, mirroring `word_budget`** —
-plus the two supports that make it land. Preferred because it (a) reuses a shape
-already validated in the codebase, (b) leaves in-band prose untouched (the Opus
-runs never see it fire), and (c) is deterministic and citable — the reviewer
-never has to *judge* reading level, the engine measures it.
+3. **A graded `overwriting` finding at FILL apply** (beside `_word_budget_finding`
+   in `fill.py`), on signals that *tracked the author's ranking*, graded warn→fail
+   by distance out of band:
+   - **Fragmentation ratio** — share of very short (≤ ~6-word) sentences. Both
+     unreadable stories run 42–45%; the readable ones 1–22%. An out-of-band ratio
+     is the staccato-monotony catch.
+   - **Novelty/figuration density** — coined-compound (and, if cheaply
+     detectable, fresh-metaphor) rate per 100 words. `cartographers` is a 4×
+     outlier; a ceiling catches the "no plain prose to rest on" failure.
+   Recovery actions are actionable ("this passage is 44% fragments — join the
+   staccato lines into 2–3 flowing sentences"; "you coined N compounds in this
+   paragraph — keep one, say the rest plainly"), per the AGENTS.md error rule.
 
-1. **A structured Vision register field (the knob).** Replace reliance on the
-   free-text `audience` string with a typed `reading_register` on `Vision`
-   (`early` | `middle_grade` | `young_adult` | `accessible` | `literary`),
-   defaulting from `audience` at DREAM but author-overridable. It maps to a target
-   FKGL band and sentence-length ceiling straight from the corpus table above.
-   This is the *"literary-vs-accessible Vision knob"* next-up #1 asks to consider —
-   made concrete and finite (an enum, refpin-style), not a second free-text field.
-
-2. **A graded `readability` finding at FILL apply** (`fill.py`, beside
-   `_word_budget_finding`). Deterministic per passage; `confidence` scales with
-   distance beyond the band's slack, `assessment` warn→fail like `word_budget`.
-   It measures **three signals, structural-first** (structural legibility is the
-   universal, tier-independent defect; FKGL is register-relative):
-   - **Paragraph count / white-space** — a texture/scene passage collapsed to
-     1 paragraph is a confident FAIL regardless of register (the corpus rule is
-     absolute for screen IF). *This alone catches `thaw-between`.*
-   - **Run-on density** — share of sentences over the register's word ceiling or
-     with ≥ 3 comma-joined clauses; graded.
-   - **FKGL vs the register band** — graded, and only *above* the band (literary
-     Visions are never punished for being rich; the floor is legibility, not dumbing down).
-
-   Recovery actions are actionable per the AGENTS.md error-message rule ("break
-   this 6-sentence block into 2–3 paragraphs at the natural beats"; "split the
-   run-on at *X*"), not a bare score.
-
-3. **A Voice-pass directive (`fill_voice.j2`).** Ground the coined voice in the
-   screen-reading norms *before* prose exists: state that passages are read on
-   screen mid-choice, that white space is structural (3–4 sentences/paragraph),
-   and that `rhythm` must include short/fragment sentences for variation — so the
-   voice the pipeline invents doesn't fight the readability finding downstream.
-   Register-scaled from the same knob.
-
-Deterministic FKGL/paragraph measurement is ~15 lines (demonstrated during this
-assessment); **no new dependency** (avoid `textstat`), consistent with the repo's
-hand-rolled-check posture (`echo.py`).
+4. **Establish a real target-register exemplar (companion task).** Because even the
+   golden reads as over-written, the pipeline has no north star. Either the author
+   supplies/blesses a short passage in the target register, or we rewrite a golden
+   passage to model *modulated, clear* prose — so voice/write prompts can point at
+   it and reviews can calibrate against it. Validation is a **human read**, not a
+   metric.
 
 ## Open decisions (author)
 
-1. **Scope of the first lever.** Ship all three (register field + finding +
-   voice directive), or start with the finding's **structural** signal only (the
-   wall-of-text catch — highest-value, register-independent, no schema change) and
-   defer the FKGL band + Vision knob to a follow-up? *Recommendation: structural
-   finding + voice directive first (no Vision schema change, fixes the actual
-   `thaw-between` defect), FKGL band + `reading_register` knob as PR-2.*
-2. **Register default.** Should DREAM default `reading_register` to `accessible`
-   (gamebook-legibility-first — the corpus's screen-reading argument), letting a
-   Vision opt *up* to `literary`? Or honor the audience string as-is? This is the
-   literary-vs-accessible product call.
-3. **Gate vs finding-only.** Keep it a FILL-review finding (repairable, no new
-   gate), or also surface an advisory **B-check** at G5 (like B5 word budget) so
-   `qf validate` reports out-of-band prose on hand-authored stories too?
+1. **Is the diagnosis right?** Confirm the axis is control/modulation/clarity (not
+   reading level), so FKGL stays out of the lever entirely.
+2. **Prompt-only first, or prompt + guardrail finding?** Recommendation: land the
+   Voice + write-prompt restraint directives first (they attack the root cause and
+   touch no schema), add the deterministic `overwriting` finding once its bands are
+   calibrated on more stories. FKGL is dropped either way.
+3. **Target-register exemplar.** Do you want to supply/bless a passage in the
+   target register, or should I draft a rewrite of one golden passage (plain,
+   modulated) for you to react to? This sets the north star everything calibrates
+   against.
+4. **Is "modulation intensity" a Vision knob at all?** The old literary↔accessible
+   framing was wrong (best story is the most literary). If any knob, it governs
+   *maximalism/restraint*, not vocabulary grade — worth deciding whether that is a
+   knob or just the always-on default.
 
 ## Scope guards / not doing
 
-- Not adding a runtime "simplified mode" toggle or per-reader text-complexity
-  setting (corpus `accessibility_guidelines.md` lists it as a *player* feature; it
-  is a SHIP/export concern, out of scope for the generation lever).
-- Not touching the already-accessible behavior of strong-tier runs — the finding
-  is graded precisely so it does not fire on in-band prose.
-- No billed API calls to validate: the recommended validation is a targeted FILL
-  re-run of `thaw-between`'s wall-of-text passages on **Ollama** (`gpt-oss:120b`,
-  unbilled), confirming the finding fires and the paragraph split repairs cleanly —
-  per the live-run budget discipline.
+- **No FKGL/FRE gate.** It is anti-correlated with the goal here.
+- Not adding a runtime "simplified mode" — a SHIP/export player feature, out of
+  scope for the generation lever.
+- No billed API calls to validate: a targeted Ollama (`gpt-oss:120b`) FILL re-run
+  of a `cartographers`/`bubblegum` passage, read by a human for control/modulation,
+  is the check — per live-run budget discipline.

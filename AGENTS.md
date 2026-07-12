@@ -101,6 +101,34 @@ examples/keepers-bargain/   # hand-authored golden story (must always pass)
 7. **LLM output is typed proposals only** (M1+). The engine validates
    and applies; models never mutate the graph directly.
 
+## Prompt and error-message quality (always diagnose this first)
+
+The recurring bottleneck in this project is **blunt prompts and error
+messages that happen to work because the model is smart enough to
+reconstruct the intent** — until a weaker tier isn't, and the failure
+looks like a model limit when it is a prompt defect. So:
+
+- **When a pass fails (repair exhaustion, a bad proposal, a review that
+  fabricates or misapplies a rule), the prompt or the message is the
+  first suspect, not the model.** Assume the prompt is blunt until you
+  have shown it is correct and complete; do not conclude "weak model"
+  until the prompt provably forces the right behavior.
+- **Every model-facing error must be actionable** (heritage
+  `semantic-conventions.md` §Error Messages): state the *reason*, the
+  *subject/location*, and the *recovery_action* — the specific corrective
+  the model should take (pick a fresh id, use one of these values, move
+  X to Y) — phrased as an instruction, not a diagnostic string. A raw
+  exception fed back to the model (`duplicate node id 'X'`) is a bug in
+  the feedback, not just a weak model that couldn't recover from it.
+- **Prompts encode intent explicitly; they do not rely on inference.**
+  A rule the reviewer must apply should be structurally enforced (quote
+  the rule, quote the offending text, show the match), not merely stated
+  and trusted. If a smart model is silently correcting for a loose
+  prompt, the prompt is still wrong — a cheaper tier will expose it.
+- Distinguish **model-facing/repairable** errors (need a recovery_action)
+  from **engine-internal invariant failures** (signal a code bug, not a
+  model action) — only the former are prompt-quality surface.
+
 ## Documentation contract
 
 A PR that changes behavior must leave the documentation true. Concretely,

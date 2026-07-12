@@ -101,6 +101,14 @@ def build_verdict_schema(name: str, rules: tuple[str, ...]) -> type[BaseModel]:
     )
 
 
+def is_blocking(finding: ReviewFinding) -> bool:
+    """A single finding forces a rework: an objective defect the reviewer is at
+    least moderately sure of. The one place the blocking threshold lives — an
+    engine-injected mechanical finding (FILL's word_budget) checks the same
+    predicate, so the knob never drifts between call sites."""
+    return finding.assessment == "fail" and finding.confidence in _BLOCKING_CONFIDENCE
+
+
 def needs_rework(verdict: ReviewVerdict) -> bool:
     """The engine's one decision: another rework, or good enough? An
     `approved` verdict auto-accepts. A `needs_work` verdict reworks iff some
@@ -108,10 +116,7 @@ def needs_rework(verdict: ReviewVerdict) -> bool:
     — otherwise the engine approves it anyway."""
     if verdict.verdict == "approved":
         return False
-    return any(
-        f.assessment == "fail" and f.confidence in _BLOCKING_CONFIDENCE
-        for f in verdict.findings
-    )
+    return any(is_blocking(f) for f in verdict.findings)
 
 
 def render_finding(f: ReviewFinding) -> str:

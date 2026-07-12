@@ -39,6 +39,7 @@ from questfoundry.pipeline.review import (
     ReviewFinding,
     build_verdict_schema,
     evaluate_review,
+    is_blocking,
     render_finding,
 )
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
@@ -692,9 +693,7 @@ def _review_for(
         # low-confidence finding that does not force a rework (author-directed,
         # 2026-07-12).
         wb = _word_budget_finding(project, passage_id, proposal.prose)
-        wb_blocks = (
-            wb is not None and wb.assessment == "fail" and wb.confidence in ("high", "medium")
-        )
+        wb_blocks = wb is not None and is_blocking(wb)
 
         def rendered_findings(v: Any) -> list[str]:
             # full fidelity for the writer (and the arbiter): the reviewer's

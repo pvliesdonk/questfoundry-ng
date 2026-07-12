@@ -621,16 +621,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > (FILL → DRESS; decision log below, and the preserved sample
 > `examples/thaw-between/`), so *quality*, not completion, is the frontier.
 > The LLM prose — and maybe the coined Voice — skews to high reading
-> complexity: artful, but poor for a reader navigating choices. Research
-> reading-level metrics + gamebook/CYOA norms + what the vendored
-> interactive-fiction craft corpus says; then pick a lever — a readability
-> target on the Voice pass, a write-prompt accessibility directive, or a
-> **graded readability finding** (the `word_budget` shape: a finding whose
-> confidence scales with how far complexity is out of band) — and consider a
-> literary-vs-accessible **Vision knob**. **NB — item 1 below ("a completing
-> FILL run") is now ACHIEVED:** the compounding review/rework chain
-> (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
-> included.
+> complexity: artful, but poor for a reader navigating choices. **The
+> assessment is now done** ([`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md),
+> 2026-07-12; decision log below): measured across the preserved stories,
+> difficulty is **two independent axes** — micro-readability (FKGL/sentence
+> length) and structural legibility (paragraph white-space, run-on density) —
+> and `thaw-between` is an **outlier bad on both** (FKGL 9.5 *and* 1.1
+> paragraphs/passage — one wall of text each — vs the hand-authored golden's
+> 4.0), while the Opus-driven LLM runs are already accessible (FKGL 4–5). The
+> corpus is authoritative here (audience_targeting FKGL bands, prose_patterns
+> white-space rule, quality-bar 6). Recommended lever: a **graded
+> `readability` finding** (the `word_budget` shape) that is *structural-first*
+> (the wall-of-text catch is register-independent and catches `thaw-between`
+> alone) and audience-relative, plus a `fill_voice.j2` screen-reading
+> directive and a typed `reading_register` **Vision knob**. Build gated on
+> the author picking the lever scope + register default (plan's *Open
+> decisions*). **NB — item 1 below ("a completing FILL run") is now
+> ACHIEVED:** the compounding review/rework chain (#57→#58→#59→#60→#61)
+> carried `gpt-oss:120b` through DRESS, codex review included.
 
 1. **A completing FILL run — the recurrence read is still open, and the
    prompt fixes need live validation** (2026-07-12 decision log has the
@@ -984,6 +992,39 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-12 (reading-difficulty assessment — the top-priority "prose reads
+  too complex" ask, researched; plan doc
+  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)):**
+  Measured FKGL/FRE, words/sentence, paragraphs/passage, and run-on density
+  across every preserved story. Result reframed the problem in two ways.
+  (1) **Difficulty is two independent axes** — *micro-readability*
+  (vocabulary + sentence length, FKGL/FRE) and *structural legibility*
+  (paragraph white-space + run-on density) — not one dial. (2) The triggering
+  sample `thaw-between` (weak tier, `gpt-oss:120b`) is an **outlier bad on
+  both**: FKGL 9.5 *and* **1.1 paragraphs/passage** (every passage one
+  unbroken wall of text) against the hand-authored golden's 4.0; meanwhile the
+  Opus-driven LLM runs (`bubblegum-alibi`, `lamplighters-debt-craft`) are
+  already accessible at FKGL 4–5. So the pipeline is not uniformly
+  over-complex — a blanket "write simpler" directive would drag in-band prose
+  down and flatten a `literary` audience the Vision explicitly asked for. The
+  corpus is authoritative on the target (audience_targeting's FKGL bands,
+  prose_patterns' "white space is structural" rule, quality-bar 6 "reading
+  level matches audience"), so the design cites it rather than deriving.
+  **Root cause:** no readability signal exists anywhere in the pipeline — the
+  Voice pass coins diction/rhythm with no screen-reading floor, and FILL's
+  write/review enforce word band + voice fidelity but nothing on paragraphing
+  or sentence complexity, so a wall-of-text passage passes clean.
+  **Recommended lever:** a graded `readability` `ReviewFinding` mirroring
+  `_word_budget_finding` (fill.py) — *structural-first* (the wall-of-text
+  catch is register-independent and fixes `thaw-between` alone), audience-
+  relative, graded so in-band prose never sees it fire — plus a `fill_voice.j2`
+  screen-reading directive and a typed `reading_register` **Vision knob**
+  (enum, refpin-style, defaulted from `audience` at DREAM). Build is **gated
+  on the author** picking the lever scope (structural-only PR-1 vs. all three)
+  and the register default (accessible-first vs. honor the audience string) —
+  the plan's *Open decisions*. No billed calls spent; recommended validation
+  is a targeted Ollama FILL re-run of the wall-of-text passages.
 
 - **2026-07-12 (word budget → a graded review finding, not a hard apply gate;
   author-directed):** The rework-convergence run reached pass 21/22 but the

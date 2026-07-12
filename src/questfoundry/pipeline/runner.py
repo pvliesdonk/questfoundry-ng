@@ -28,6 +28,7 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from questfoundry.graph.mutations import MutationError
+from questfoundry.graph.store import GraphError
 from questfoundry.models.base import Stage
 from questfoundry.pipeline.research import corpus_fingerprint, corpus_root, digest_body
 from questfoundry.pipeline.types import (
@@ -90,7 +91,7 @@ def _run_kept_pass(
     backup = _backup(project)
     try:
         applied = spec.apply(proposal, project)
-    except (ApplyError, MutationError) as exc:
+    except (ApplyError, MutationError, GraphError) as exc:
         _restore(project, backup)
         return f"{label} proposal for pass {spec.name!r} no longer applies: {exc}"
     return PassReport(
@@ -164,7 +165,7 @@ def _run_pass(
         backup = _backup(project)
         try:
             applied = spec.apply(proposal, project)
-        except (ApplyError, MutationError) as exc:
+        except (ApplyError, MutationError, GraphError) as exc:
             _restore(project, backup)
             repair_errors.append(str(exc))
             repairs_used += 1

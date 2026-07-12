@@ -411,3 +411,33 @@ def test_progress_reports_kept_pass(tmp_path, monkeypatch):
 
     assert report.success
     assert [(e.name, e.status) for e in events] == [("vision", "kept")]
+
+
+def test_graph_error_from_apply_is_repairable_not_a_crash(tmp_path, monkeypatch):
+    """A store GraphError (duplicate id, missing edge endpoint, duplicate
+    edge) must reach the repair loop like ApplyError/MutationError, not
+    escape as an uncaught KeyError and crash the run — the false-branch
+    id-collision class, generalized to every model-reachable graph write."""
+    from questfoundry.graph.store import GraphError
+
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+
+    def bad_apply(proposal, project):
+        raise GraphError("id 'beat:x' is already used; coin a different one.")
+
+    bad = PassSpec(
+        name="bad",
+        role="utility",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=bad_apply,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(bad,), gate=lambda project: [])
+    adapter = FakeAdapter([VisionProposal(audience="x"), VisionProposal(audience="x")])
+
+    report = runner.run_stage(project, impl, adapter, max_repairs=0)
+
+    assert not report.success  # reported, not raised
+    assert "exhausted repairs" in report.error

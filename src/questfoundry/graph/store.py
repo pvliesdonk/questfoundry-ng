@@ -22,6 +22,20 @@ from questfoundry.models.base import Edge, EdgeKind, Node
 N = TypeVar("N", bound=Node)
 
 
+class GraphError(KeyError):
+    """A store write rejected a bad reference — a duplicate id, a missing
+    edge endpoint, a repeated edge. These come from proposal content
+    (a model coined a colliding id, named a nonexistent node, repeated a
+    relation), so they must reach the runner's repair loop, not escape as
+    an uncaught crash. Subclasses KeyError so existing `except KeyError`
+    converters (mutations.add_beat) still catch it, while the runner can
+    catch GraphError specifically without swallowing unrelated KeyErrors
+    (a real dict-lookup bug in apply code must still surface). Messages
+    carry a recovery_action (heritage semantic-conventions §Error
+    Messages), since a model that produced the bad reference is the one
+    told to fix it."""
+
+
 class FreezeRecord(BaseModel):
     """Topology fingerprint taken at the end of GROW (invariant I9).
 
@@ -92,15 +106,24 @@ class StoryGraph:
 
     def _add_node(self, node: Node) -> None:
         if node.id in self._nodes:
-            raise KeyError(f"duplicate node id {node.id!r}")
+            raise GraphError(
+                f"id {node.id!r} is already used by an existing node; a new node "
+                "needs a fresh, unique id — coin a different one no node has yet."
+            )
         self._nodes[node.id] = node
 
     def _add_edge(self, edge: Edge) -> None:
         for endpoint in (edge.src, edge.dst):
             if endpoint not in self._nodes:
-                raise KeyError(f"edge {edge.key()} references missing node {endpoint!r}")
+                raise GraphError(
+                    f"{endpoint!r} is not a known node, so the {edge.kind.value} "
+                    f"edge {edge.key()} cannot be made; reference an existing node id."
+                )
         if self.has_edge(edge.kind, edge.src, edge.dst):
-            raise KeyError(f"duplicate edge {edge.key()}")
+            raise GraphError(
+                f"a {edge.kind.value} edge {edge.key()} already exists; do not "
+                "repeat a relation that is already in place."
+            )
         self._edges.append(edge)
         self._out[(edge.src, edge.kind)].append(edge)
         self._in[(edge.dst, edge.kind)].append(edge)

@@ -295,6 +295,31 @@ def test_residue_diamond_rejects_an_empty_branch(vision):
         pc.insert_residue_diamond(g, [arm], [], "path:sub-a", need.rejoin)
 
 
+def test_residue_beat_id_collision_is_repairable(vision):
+    """A residue arm whose new beat reuses an existing beat id raises a
+    repairable MutationError, not the store's bare KeyError. Before the
+    mutation-boundary fix this KeyError escaped the runner's repair loop:
+    the residue path caught it, but the symmetric false-branch path did
+    not, so a colliding false-branch id crashed the run. This is the
+    weak-tier failure (gpt-oss:120b named a residue beat after an existing
+    commit beat) — now a named, recoverable error, not an id-decode crash."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    mutations.freeze_topology(g)
+    taken = sorted(b.id for b in g.nodes_of(Beat))[0]  # collide with a real beat id
+    clash = Beat(
+        id=taken,
+        created_by=Stage.POLISH,
+        summary="s",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.RESIDUE,
+        requires_flags=[need.path_flags["path:sub-a"][0]],
+    )
+    with pytest.raises(mutations.MutationError, match="already used"):
+        pc.insert_residue_chain(g, [clash], "path:sub-a", need.rejoin)
+
+
 def test_multi_flag_path_residue_covers_via_any_flag(vision):
     """A path with two consequences derives two flags (live run 7). The
     residue arm gates on one; G4 must accept any of the path's flags —

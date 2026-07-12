@@ -112,7 +112,24 @@ def add_beat(g: StoryGraph, beat: Beat, belongs_to: list[str]) -> None:
             raise MutationError(
                 f"beat {beat.id}: cross-dilemma dual belongs_to ({d1} vs {d2}) is forbidden"
             )
-    g._add_node(beat)
+    try:
+        g._add_node(beat)
+    except KeyError as e:
+        # The store raises a bare KeyError on a duplicate id; every other
+        # guard here raises MutationError, and only MutationError/ApplyError
+        # are caught as repairable by the runner. Convert it — and make the
+        # message actionable (heritage semantic-conventions §Error Messages:
+        # a recovery_action, not just a reason), because a model that coined
+        # the colliding id needs to be told to pick a fresh one, not just
+        # that this one is taken (weak-tier live run, gpt-oss:120b: a residue
+        # beat reusing a commit-beat id, unrecoverable across repairs on a
+        # bare "duplicate node id" message).
+        raise MutationError(
+            f"beat id {beat.id!r} is already used by an existing beat; a new "
+            "beat needs a fresh, unique id. Choose an id no existing beat has "
+            "(a more specific slug) and keep every new id in this proposal "
+            "distinct from the others."
+        ) from e
     for path_id in belongs_to:
         g._add_edge(Edge(kind=EdgeKind.BELONGS_TO, src=beat.id, dst=path_id))
 

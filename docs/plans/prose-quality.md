@@ -143,7 +143,10 @@ context: "character-arc position"). Design:
   graph).
 - A fourth POLISH pass **arcs** (writer role, after audit, per 02's
   phase-2 order): proposes arcs for the entities worth arcing —
-  retained characters and objects; `entity`, `pivots[].beat`, and
+  every retained entity (author doctrine 2026-07-12: unarced means
+  scenery — an extra, a backdrop, a mcguffin, a link; originally
+  built characters+objects only, widened same day); `entity`,
+  `pivots[].beat`, and
   `ends[].path` are refpin-pinned enums; apply checks pivots are in
   topological order and requires at least one arc.
 - FILL's write context renders **ARC POSITION** per on-stage arced

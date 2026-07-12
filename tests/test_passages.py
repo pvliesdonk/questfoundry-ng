@@ -696,10 +696,26 @@ def test_arcs_apply_stores_arcs_and_rejects_duplicates(golden):
         _arcs_apply(twice, fresh)
 
 
-def test_arcs_apply_rejects_locations(golden):
+def test_arcs_apply_accepts_every_retained_category(golden):
+    """Author doctrine (2026-07-12): a location without an arc is a
+    backdrop, an object a mcguffin, a faction a link — all four
+    categories are arc-eligible. A cut entity still is not."""
     from questfoundry.pipeline.stages.polish import ArcSpec, ArcsProposal, _arcs_apply
 
-    with pytest.raises(ApplyError, match="not a retained character or object"):
-        _arcs_apply(
-            ArcsProposal(arcs=[ArcSpec(entity="location:lighthouse", begins="x")]), golden
-        )
+    golden.graph.node("location:lighthouse").arc = None  # golden ships one; re-arc fresh
+    lines = _arcs_apply(
+        ArcsProposal(
+            arcs=[
+                ArcSpec(
+                    entity="location:lighthouse",
+                    begins="a working shelter; the bargain is invisible in it",
+                )
+            ]
+        ),
+        golden,
+    )
+    assert lines == ["location:lighthouse: 0 pivot(s), 0 path end(s)"]
+
+    golden.graph.node("character:sleeper").retained = False
+    with pytest.raises(ApplyError, match="not a retained entity"):
+        _arcs_apply(ArcsProposal(arcs=[ArcSpec(entity="character:sleeper", begins="x")]), golden)

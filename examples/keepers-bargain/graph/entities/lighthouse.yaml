@@ -3,3 +3,13 @@ name: The Stilt Light
 concept: A lighthouse on iron stilts over the shoals, lamp fed by whale-oil and habit.
 base:
   appearance: rust-streaked legs, a lamp room of brass and salt-bloom
+arc:
+  begins: a working shelter; the bargain invisible in its routine of brass and oil
+  pivots:
+  - beat: beat:tremor
+    becomes: the machinery of the bargain laid bare; every fitting now reads as a rampart
+  ends:
+  - path: path:keep
+    state: a chosen post; the lamp burns as a promise kept
+  - path: path:break
+    state: a dark tower abandoned to the sea it held back

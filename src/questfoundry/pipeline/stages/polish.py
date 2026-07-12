@@ -35,7 +35,7 @@ from questfoundry.models.base import Stage
 from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
-from questfoundry.models.world import ArcPivot, Entity, EntityArc, EntityCategory, PathEnd
+from questfoundry.models.world import ArcPivot, Entity, EntityArc, PathEnd
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl, resolve_entity_ref
@@ -554,14 +554,12 @@ class ArcsProposal(BaseModel):
 
 
 def _arc_entities(g) -> list[Entity]:
-    """The entities worth arcing: retained characters and objects (design
-    brief: pace "specific aspects of a character or object"); locations
-    and factions don't develop, they get overlays."""
-    return [
-        e
-        for e in sorted(g.nodes_of(Entity), key=lambda e: e.id)
-        if e.retained and e.category in (EntityCategory.CHARACTER, EntityCategory.OBJECT)
-    ]
+    """Every retained entity is arc-eligible (author doctrine,
+    2026-07-12): a character without an arc is an extra, a location a
+    backdrop, an object a mcguffin, a faction a link — all of them can
+    be given choices. The LLM decides which to arc; leaving one unarced
+    declares it scenery."""
+    return [e for e in sorted(g.nodes_of(Entity), key=lambda e: e.id) if e.retained]
 
 
 def _arcs_context(project: Project) -> dict:
@@ -594,8 +592,7 @@ def _arcs_apply(proposal: ArcsProposal, project: Project) -> list[str]:
         entity_id = resolve_entity_ref(g, spec.entity)
         if entity_id not in eligible:
             raise ApplyError(
-                f"{entity_id} is not a retained character or object; "
-                f"arc exactly these: {sorted(eligible)}"
+                f"{entity_id} is not a retained entity; arc exactly these: {sorted(eligible)}"
             )
         if entity_id in seen:
             raise ApplyError(f"{entity_id} arced twice")
@@ -661,11 +658,9 @@ def passages_proposal_schema(project: Project) -> type[PassagesProposal]:
 
 
 def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
-    """Pin `arcs[].entity` to the arc-worthy entities (exact ids plus the
-    bare slugs `resolve_entity_ref` also accepts — unambiguous against
-    ALL retained entities, since that is the set the resolver checks),
-    `pivots[].beat` to the real beats, and `ends[].path` to the explored
-    paths."""
+    """Pin `arcs[].entity` to the retained entities (exact ids plus the
+    bare slugs `resolve_entity_ref` also accepts), `pivots[].beat` to
+    the real beats, and `ends[].path` to the explored paths."""
     g = project.graph
     eligible = [e.id for e in _arc_entities(g)]
     all_slugs = [i.split(":", 1)[1] for i in entity_ref_ids(g) if ":" in i]

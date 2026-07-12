@@ -213,6 +213,40 @@ changing an invariant, a gate, a design doc, or anything in the iron
 rules, stop and flag it for a frontier session (note it in
 `docs/STATUS.md` under open items) instead of improvising.
 
+## Live-run budget discipline (billed API calls are scarce)
+
+The pipeline's own LLM calls run against **pay-per-credit API keys**
+(Anthropic, Gemini, OpenAI) with hard project spend caps — the Claude
+Max / OpenAI *subscriptions* are not available to the pipeline. Treat
+those keys as a scarce, exhaustible resource. **Ollama (local models and
+the cloud tier via `OLLAMA_API_KEY`) is not billed per credit — it is the
+default for any exploratory or iterative run.**
+
+- **Never run a whole pipeline "just to see if it finishes."** That is no
+  longer acceptable behaviour. A full `--to fill`/`--to dress` on a billed
+  provider is the most expensive thing in the repo and produces almost no
+  targeted signal per dollar.
+- **Every billed (Anthropic/Gemini/OpenAI) call must serve a stated need.**
+  Before spending, write down: the *question* the run answers, the
+  *smallest* run that answers it, the *signal* you expect, and *why the
+  weak tier can't answer it*. If you can't fill those in, don't spend.
+- **Reach for the cheapest path that answers the question:** a single
+  stage (`qf run <stage>`), a `qf rerun <stage>` of just the failing pass,
+  a `micro`/`short` scope, or a replay from a checkpoint — not a fresh
+  end-to-end run. The A16 ledger and per-stage checkpoints exist so you
+  never re-buy completed work.
+- **Do exploration and reproduction on Ollama** (`gpt-oss:120b` cloud, or
+  a local model). Reserve a billed strong model for the *one* step that
+  genuinely needs strong-tier quality and has been shown to fail on the
+  weak tier — and run only that step.
+- **A capped/failed billed run is a stop, not a retry.** If a provider
+  returns `RESOURCE_EXHAUSTED` / a spend-cap error, record it and stop;
+  do not thrash re-invoking it.
+
+(These are two different knobs, as in the section above: this governs the
+*pipeline's runtime* spend during development; the model-economics tiers
+govern which model does the *development work*.)
+
 ## Scope discipline
 
 Milestones are vertical slices (`docs/design/05-roadmap.md`). Build the

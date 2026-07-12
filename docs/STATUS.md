@@ -620,9 +620,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
    discriminate — need ~100), and (b) the two prompt-quality fixes
    (`fill_review.j2` rule-text matching, `fill_write.j2` POV
    externalization) are *designed against* the live failures but not yet
-   validated. A completing run on both a strong (Gemini) and weak
-   (`gpt-oss:120b`) map delivers both. Note the review loop's brittleness:
-   even Gemini exhausted two rounds on one hard passage (group-13).
+   validated. **Do this within the new budget discipline** (open items,
+   `AGENTS.md` §"Live-run budget discipline"): validate on **Ollama**
+   (`gpt-oss:120b`, unbilled) first — a targeted FILL of just the
+   passages that failed, resumed from a checkpoint, not a fresh
+   end-to-end run — and spend a billed strong-map call only on the one
+   thing the weak tier provably can't answer. Note the review loop's
+   brittleness: even Gemini exhausted two rounds on one hard passage
+   (group-13).
 2. **Review-contract redesign — now grounded** (`docs/plans/prose-quality.md`
    follow-up; the #1a failures are concrete, not speculative): the weak
    reviewer **fabricates rule numbers** (cited "Rule 1" POV/tense to
@@ -649,6 +654,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
    built — 2026-07-12, decision log).
 
 ## Known deferrals / open items
+
+- **Live-run budget discipline is now a working norm** (author call,
+  2026-07-12, after a session that exhausted the token budget on repeated
+  full pipeline runs): billed API keys (Anthropic/Gemini/OpenAI) are
+  scarce and spend-capped — the Claude Max / OpenAI subscriptions are not
+  available to the pipeline. Never run a whole pipeline "just to see if it
+  finishes"; every billed call must serve a stated need, on the smallest
+  run that answers it, and exploration/reproduction goes on **Ollama**
+  (unbilled). Codified in `AGENTS.md` §"Live-run budget discipline".
+- **Unexplored: subagents as an unbilled Claude for pipeline calls**
+  (author idea, 2026-07-12: "in theory your own subagents are identical —
+  you can experiment"). A dev-session's own Claude Code subagents may be a
+  way to drive the pipeline's LLM calls without a pay-per-credit key. Not
+  attempted this session (would itself cost tokens); worth a *targeted*
+  spike — can a provider adapter route `complete()` through a subagent,
+  and does it preserve schema-validation + determinism? Design it small.
 
 - ~~Arc-worthiness scope is narrower than the heritage ontology~~
   **Settled by the author** (2026-07-12, decision log): every retained

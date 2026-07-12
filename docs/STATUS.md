@@ -609,6 +609,16 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
+- **Arc-worthiness scope is narrower than the heritage ontology**
+  (author decision pending, 2026-07-11 — see the arc-shape decision-log
+  entry): NG arcs characters and objects; the original also arcs
+  locations ("atmosphere") and factions ("relationship"), and stores an
+  explicit per-path `arc_line`/`arc_type` NG derives instead. Widening
+  is cheap (`_arc_entities` + prompt guidance) if a run shows the prose
+  needs paced atmosphere/relationship development; storing `arc_line`
+  would reintroduce a redundancy NG deliberately dropped — take that
+  one only with a demonstrated gap.
+
 - ~~**Ollama backend live validation is pending**~~ **Validated live**
   (2026-07-11, on `athena.int.liesdonk.nl:11434` — RTX 4060/8GB + 128GB;
   daemon logged in to ollama.com; the decision-log entry below is the
@@ -888,6 +898,29 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-11 (arc shape vs the heritage ontology — author challenge,
+  post-merge of #49):** The author didn't recognize the built
+  character-arc shape against `docs/heritage/`. Verified: the effort's
+  design consulted heritage's `semantic-conventions.md` (the file
+  next-up #1 named as reference input) but **not**
+  `story-graph-ontology.md` §"Character Arc Metadata", which specifies
+  the original's richer form — one pivot per path, per-path `arc_line` +
+  `arc_type` (character→transformation, location→atmosphere,
+  object→significance, faction→relationship), dual-indexed with a
+  must-agree constraint. Comparison: NG's shape agrees on everything
+  structural (entity-node annotation, POLISH-created, FILL-consumed
+  pre/at/post-pivot, never exported, begins + per-path ends) and
+  diverges on pivot indexing (NG: one ordered beat-anchored list —
+  strictly more expressive: shared-spine turns stated once, multiple
+  turns per route, per-path turns via path-exclusive beats; no dual
+  index to keep consistent), on stored `arc_line`/`arc_type` (NG
+  derives them), and on arc-worthiness (NG: characters+objects only;
+  the original also arcs locations and factions). The divergence was
+  real but **unrecorded** — that is the bug (undocumented divergence,
+  AGENTS.md). Recorded now as 01 §10 departure 5. Left open for the
+  author: widen arc-worthiness to locations/factions, and whether
+  `arc_line`/`arc_type` earn storage (see open items).
 
 - **2026-07-11 (prose-quality-at-scale engine — the frontier session
   next-up #1 called for; plan doc `docs/plans/prose-quality.md`):**

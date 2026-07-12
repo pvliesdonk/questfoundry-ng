@@ -965,7 +965,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   limit, not a code failure — so the scaled recurrence verdict and live
   validation of the prompt fixes both remain open (next-up #1). It did
   clear POLISH finalize cleanly on Gemini and wrote several FILL passages
-  before the cap. 490 tests.
+  before the cap. 485 tests.
 
 - **2026-07-12 (#1a live validation → the prompt-quality reckoning,
   author-directed):** The prose-quality live validation ran two fresh

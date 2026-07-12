@@ -6,8 +6,8 @@ from __future__ import annotations
 import pytest
 
 from questfoundry.models.concept import Voice
+from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
-    ReviewVerdict,
     WriteProposal,
     _fill_gate,
     _flag_status,
@@ -22,6 +22,23 @@ from questfoundry.pipeline.types import ApplyError
 from questfoundry.project import load_project
 from questfoundry.project.io import Project
 from tests.conftest import GOLDEN
+
+
+def _finding(
+    reason: str, *, assessment: str = "fail", confidence: str = "high"
+) -> ReviewFinding:
+    return ReviewFinding(
+        rule="beat_infidelity",
+        assessment=assessment,
+        confidence=confidence,
+        quote="the offending line",
+        reason=reason,
+        recovery_action="rewrite it",
+    )
+
+
+def _verdict(*findings: ReviewFinding) -> ReviewVerdict:
+    return ReviewVerdict(findings=list(findings))
 
 
 @pytest.fixture()
@@ -160,21 +177,24 @@ def test_review_hook_translates_verdicts(golden_fill, monkeypatch):
     monkeypatch.setattr(runner, "_environment", lambda: env)
     review = _review_for("passage:p-arrival")
     proposal = WriteProposal(prose="x " * 200)
-    ok = review(proposal, golden_fill, FakeAdapter(ReviewVerdict(verdict="pass")))
-    assert ok == []
-    bad = review(
-        proposal,
-        golden_fill,
-        FakeAdapter(ReviewVerdict(verdict="fail", issues=["voice drift"])),
-    )
-    assert bad == ["voice drift"]
-    # round two is anchored: the earlier round's issues reach the prompt,
+    # an empty findings list accepts; so does a warn-only or a low-confidence
+    # verdict — the engine loops only on confident objective defects
+    assert review(proposal, golden_fill, FakeAdapter(_verdict())) == []
+    warn = _verdict(_finding("taste", assessment="warn"))
+    assert review(proposal, golden_fill, FakeAdapter(warn)) == []
+    low = _verdict(_finding("reach", confidence="low"))
+    assert review(proposal, golden_fill, FakeAdapter(low)) == []
+    # a high-confidence fail reworks; the returned string is the rendered
+    # finding (labels + quote + recovery), carrying the reviewer's reason
+    bad = review(proposal, golden_fill, FakeAdapter(_verdict(_finding("voice drift"))))
+    assert len(bad) == 1 and "voice drift" in bad[0] and "FAIL" in bad[0]
+    # round two is anchored: the earlier round's finding reaches the prompt,
     # so persistence — not fresh taste — is what the reviewer judges
     # (validation run, 2026-07-09: an amnesiac reviewer found brand-new
     # complaints every round and never converged)
-    adapter = FakeAdapter(ReviewVerdict(verdict="pass"))
+    adapter = FakeAdapter(_verdict())
     review(proposal, golden_fill, adapter)
-    assert "prior[voice drift]" in adapter.seen
+    assert "voice drift" in adapter.seen
 
 
 def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch):
@@ -209,27 +229,28 @@ def test_double_fail_escalates_to_architect_arbitration(golden_fill, monkeypatch
     review = _review_for("passage:p-arrival")
     adapter = ScriptedAdapter(
         [
-            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
-            ("utility", ReviewVerdict(verdict="fail", issues=["fresh taste"])),
-            ("architect", ReviewVerdict(verdict="pass")),
+            ("utility", _verdict(_finding("real defect"))),
+            ("utility", _verdict(_finding("fresh taste"))),
+            ("architect", _verdict()),
         ]
     )
-    assert review(proposal, golden_fill, adapter) == ["real defect"]
+    assert "real defect" in review(proposal, golden_fill, adapter)[0]
     assert review(proposal, golden_fill, adapter) == []
     assert adapter.prompts[-1][0] == "architect"
-    assert "ARB[fresh taste]" in adapter.prompts[-1][1]
+    # the arbiter sees the second-strike finding, rendered
+    assert "ARB[" in adapter.prompts[-1][1] and "fresh taste" in adapter.prompts[-1][1]
 
-    # arbitration upholds: the halt is real and carries the arbiter's issues
+    # arbitration upholds: the halt is real and carries the arbiter's finding
     review = _review_for("passage:p-arrival")
     adapter = ScriptedAdapter(
         [
-            ("utility", ReviewVerdict(verdict="fail", issues=["real defect"])),
-            ("utility", ReviewVerdict(verdict="fail", issues=["still broken"])),
-            ("architect", ReviewVerdict(verdict="fail", issues=["confirmed: still broken"])),
+            ("utility", _verdict(_finding("real defect"))),
+            ("utility", _verdict(_finding("still broken"))),
+            ("architect", _verdict(_finding("confirmed: still broken"))),
         ]
     )
-    assert review(proposal, golden_fill, adapter) == ["real defect"]
-    assert review(proposal, golden_fill, adapter) == ["confirmed: still broken"]
+    assert "real defect" in review(proposal, golden_fill, adapter)[0]
+    assert "confirmed: still broken" in review(proposal, golden_fill, adapter)[0]
 
 
 def test_fill_pass_list_is_voice_plus_write_and_summarize_per_passage(golden_fill):

@@ -1,114 +1,120 @@
 {% if arbitration %}
 ARBITRATION. A first-line reviewer failed this passage twice; its earlier
 rounds are under PREVIOUSLY FLAGGED (the writer revised for those) and its
-newest objections are:
+newest findings are:
 {% for i in arbitration %}
 - {{ i }}
 {% endfor %}
 You are the senior arbiter and your verdict is final. First-line reviewers
-here have repeatedly laundered taste through the rules; uphold an objection
-ONLY if the quoted text outright violates a numbered rule as written. If you
-fail this passage the stage halts as structurally broken — be certain.
+here have repeatedly laundered taste through the rules; record a blocking
+finding (assessment "fail", confidence "high" or "medium") ONLY if the quoted
+text outright violates a named rule as written — otherwise mark it "warn" or
+leave it out. A blocking finding halts the stage as structurally broken, so be
+certain.
 {% endif %}
-Review one passage of prose against its contract. Verdict "pass" or "fail"; on
-fail, list concrete, actionable issues (each one sentence).
+Review one passage of prose against its contract and report every objection as
+a structured FINDING. You report evidence; the engine decides the outcome from
+your findings and the writer decides how to act — so grade each axis honestly
+rather than reaching for a verdict.
 
-FAIL ONLY FOR OBJECTIVE DEFECTS — things a second reviewer would independently
-flag the same way:
-1. Voice contract broken. The contract REQUIRES this point of view and tense —
-   prose written in them is correct; fail only if the prose departs from them:
-   - required POV: {{ voice.pov }}
-   - required tense: {{ voice.tense }}
-   A POV departure means the narrating character is rendered in the wrong
-   person, or the narration leaves what they can perceive. Other characters
-   are naturally he/she/they in ANY pov, and sentences that don't mention
-   the narrator (a scene opening on someone else's action) are not
-   departures.
+Each finding names one RULE (below). Set `assessment` to "fail" for an
+objective defect — something a second reviewer would independently flag the
+same way — or "warn" for a concern or a matter of taste. The rules:
+
+- voice_pov / voice_tense — the contract REQUIRES this point of view and
+  tense; prose written in them is correct, so a defect exists only if the
+  prose DEPARTS from them:
+    required POV: {{ voice.pov }}
+    required tense: {{ voice.tense }}
+  A POV departure means the narrating character is rendered in the wrong
+  person, or the narration leaves what they can perceive. Other characters are
+  naturally he/she/they in ANY pov, and a sentence that does not mention the
+  narrator (a scene opening on someone else's action) is not a departure.
 {% if voice.banned %}
-   These patterns are BANNED — fail if any of them appears:
-   - {{ voice.banned | join("
-   - ") }}
-   Banned patterns match LITERALLY: a banned rhetorical question must be a
-   question in the text; a ban aimed at the reader is not violated by words
-   one character speaks to another — dialogue is never reader-address.
+- banned_pattern — these patterns are BANNED; a defect exists if any appears
+  in the text:
+  - {{ voice.banned | join("
+  - ") }}
+  Banned patterns match LITERALLY: a banned rhetorical question must be a
+  question in the text; a ban aimed at the reader is not violated by words one
+  character speaks to another — dialogue is never reader-address.
 {% endif %}
-2. Beat infidelity — a required beat is missing, out of order, or contradicted:
+- beat_infidelity — a required beat is missing, out of order, or contradicted:
 {% for b in beats %}
-   - {{ b.summary }}
+  - {{ b.summary }}
 {% endfor %}
-   Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
-   what stays ambiguous, whose eyes we feel it through — is the writer's
-   craft, not fidelity; fail only when a listed thing doesn't happen,
-   happens out of order, or is contradicted. The scenery a beat names — the
-   time of day, the weather, the light, an incidental object — is rendering,
-   not event: a beat that says "morning light reveals the cracks" is
-   fulfilled by any prose in which the cracks are revealed; the writer owes
-   the crack, not the morning. A beat whose only content IS scenery — a
-   texture beat: a noticing, a mood, a breath between scenes — is fulfilled
-   by prose that delivers the same impression in any wording; never demand
-   the summary's phrasing. Quote the ACTION or OUTCOME you claim is
-   absent, never a dropped adjective or a swapped image.
-3. Continuity — a factual contradiction with the adjacent prose{% if not window and not lookahead %} (none written yet — skip){% endif %}.
+  Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
+  what stays ambiguous, whose eyes we feel it through — is craft, not fidelity.
+  The scenery a beat names (time of day, weather, light, an incidental object)
+  is rendering: a beat "morning light reveals the cracks" is fulfilled by any
+  prose in which the cracks are revealed — the writer owes the crack, not the
+  morning. A texture beat (a noticing, a mood, a breath between scenes) is
+  fulfilled by prose that delivers the same impression in any wording; never
+  demand the summary's phrasing. For a MISSING beat, leave `quote` empty and
+  name the absent event in `reason`; otherwise quote the action or outcome you
+  claim is wrong, never a dropped adjective or a swapped image.
+- continuity — a factual contradiction with the adjacent prose{% if not window and not lookahead %} (none written yet — skip){% endif %}:
 {% if window %}
 {% for w in window %}
-   preceding ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
+  preceding ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
 {% endfor %}
 {% endif %}
 {% if lookahead %}
 {% for w in lookahead %}
-   following ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
+  following ({{ w.passage.id }}): {{ w.passage.prose[:300] }}...
 {% endfor %}
 {% endif %}
-4. State dishonesty — asserts as true something marked merely possible:
+- state_dishonesty — asserts as true something marked merely possible:
 {% for f in flags %}
-   - {{ f.flag.description }} ({{ f.status }})
+  - {{ f.flag.description }} ({{ f.status }})
 {% endfor %}
-5. Leakage — the prose names the machinery itself: ids like flag:x / beat:x,
-   or the words "flag", "dilemma", "beat", "path", "arc" used mechanically.
-   In-world objects and events that flags merely describe are story, not
-   leakage — and ordinary English uses of those words ("her heart beats",
-   "the garden path") are just words.
+- leakage — the prose names the machinery itself: ids like flag:x / beat:x, or
+  the words "flag", "dilemma", "beat", "path", "arc" used mechanically.
+  In-world objects and events that flags merely describe are story, not
+  leakage — and ordinary English uses of those words ("her heart beats", "the
+  garden path") are just words.
 {% if entities | selectattr("pronouns") | list %}
-6. Pronoun contradiction — a character is referred to with pronouns other
-   than their stated ones (fail only on an actual wrong pronoun in the text,
-   quoted; a name used instead of a pronoun is fine):
+- pronoun — a character is referred to with pronouns other than their stated
+  ones (a defect only on an actual wrong pronoun in the text, quoted; a name
+  used instead of a pronoun is fine):
 {% for e in entities if e.pronouns %}
-   - {{ e.name }}: {{ e.pronouns }}
+  - {{ e.name }}: {{ e.pronouns }}
 {% endfor %}
 {% endif %}
 
-MATTERS OF DEGREE ARE NOT FAILURES. Register, rhythm, metaphor and simile
-quality, imagery, figurative language, cliché, sentimentality, and "too
-literary / too spare" judgments are taste; a writer cannot converge on taste
-under a two-round limit. A simile or an image is not a rule violation unless it
-literally matches a BANNED pattern under rule 1 — no rule forbids figurative
-language as such. Do not relabel taste as a rule: a weak metaphor is not "state
-dishonesty" (rule 4 is only about the listed state facts), and a word you
-associate with the mechanics is not "leakage" (rule 5 requires the machinery
-itself). If the prose is honest, complete, and inside the voice's hard rules,
-pass it — even prose you would have written differently.
+TASTE IS A WARN, NEVER A FAIL. Register, rhythm, metaphor and simile quality,
+imagery, figurative language, cliché, sentimentality, and "too literary / too
+spare" are matters of degree — a writer cannot converge on taste under a
+two-round limit, so the strongest you may grade any of them is "warn". A simile
+or an image is never a voice_pov or voice_tense defect (no rule forbids
+figurative language as such) and a word you merely associate with the mechanics
+is not leakage (that rule needs the machinery itself). Do not relabel taste as
+a rule to make it block: if the quoted text does not violate the rule you name,
+the finding is a "warn" at most.
 
-Each issue must (a) name the rule number, (b) quote that rule's own wording
-from the list above, and (c) quote the offending text and state how it breaks
-THAT rule. Naming a rule number is not enough: if the text you quote does not
-violate the wording you quote, you are reaching for a rule to license a
-preference (a simile or image filed under rule 1's POV/tense; a disliked word
-filed under rule 5's leakage) — drop the issue. If your sentence needs "risks",
-"potential", "could be", or "attempts to", it is not an objective defect — do
-not list it.
+Set `confidence` to how sure you are the named rule is broken as written by the
+quoted text: "high" when it plainly is, "low" when you are reaching. If your
+`reason` needs "risks", "potential", "could be", or "attempts to", it is not a
+high-confidence defect — grade it "warn" or lower the confidence, do not force
+it to block.
 
 {% if prior_issues %}
 PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
 {% for i in prior_issues %}
 - {{ i }}
 {% endfor %}
-Judge persistence first: does any previously named defect remain? A round
-that finds only brand-new complaints is judging taste, not defects — if
-nothing above persists and no new text outright violates a numbered rule,
-pass the revision.
+Judge persistence first: does any previously named defect remain? A round that
+finds only brand-new complaints is judging taste, not defects — if nothing
+above persists and no new text outright violates a named rule, do not
+manufacture a fresh blocking finding.
 {% endif %}
 THE PROSE:
 ---
 {{ prose }}
 ---
-Respond {"verdict": "pass"} or {"verdict": "fail", "issues": ["..."]}.
+Report a `findings` list. Each finding is
+{"rule": one of the rule names above, "assessment": "fail" or "warn",
+"confidence": "high" | "medium" | "low", "quote": the exact offending text
+("" only when the defect is a missing beat), "reason": how the quoted text
+breaks THAT rule, in the rule's own terms, "recovery_action": the specific fix
+the writer should make}. An empty list means the passage is clean.

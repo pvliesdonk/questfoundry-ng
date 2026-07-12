@@ -21,7 +21,7 @@
 > real run worked** (structure clean). Before it: the prose-quality
 > live-validation predecessors — corpus vendored
 > (`corpus/interactive-fiction/`, 55 notes) and M10 progress reporting
-> pulled forward. Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation remains, and the review-contract redesign is now spec'd and locked for review at [`docs/plans/review-contract.md`](plans/review-contract.md), implementation a follow-up). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
+> pulled forward. Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation remains, and the **review-contract redesign is now BUILT** — a pipeline-wide structured-finding contract ([`docs/plans/review-contract.md`](plans/review-contract.md), `pipeline/review.py`) shared by FILL prose + DRESS codex review: the engine gates only proceed-vs-rework on confident objective defects, the producer weighs the full-fidelity findings). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
 
 ## Where we are
 
@@ -67,10 +67,10 @@ committed. The golden story models the shape (arcs for both leads,
 story-so-far notes on all nine passages); the keeper e2e fixtures were
 re-recorded with the two new passes spliced in (45 calls). Remaining
 from the plan: live validation (strong-map recurrence read + a weak-tier
-FILL re-attempt) and the review-contract redesign for weak tiers — the
-latter now spec'd and locked for review at
-[`docs/plans/review-contract.md`](plans/review-contract.md) (a
-pipeline-wide redesign, not FILL-only), implementation a follow-up.
+FILL re-attempt). The review-contract redesign for weak tiers is now
+**BUILT** ([`docs/plans/review-contract.md`](plans/review-contract.md),
+`pipeline/review.py`): a pipeline-wide structured-finding contract, not
+FILL-only — its own weak-tier live validation is the one open item.
 461 tests.
 
 **Every prompt is audited** (2026-07-11, author-directed: "crystal-clear
@@ -631,19 +631,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
    thing the weak tier provably can't answer. Note the review loop's
    brittleness: even Gemini exhausted two rounds on one hard passage
    (group-13).
-2. **Review-contract redesign — spec'd, awaiting sign-off**
-   (`docs/plans/review-contract.md`, locked for review 2026-07-12; the
-   #1a failures are concrete, not speculative). The full `gpt-oss:120b`
-   run drove it from sketch to spec: the binary `pass/fail` + free-text
-   `issues` verdict false-positive-halts the producer in three successive
-   shapes (rule fabrication → voice-ban footgun → Rule-2 over-literalism),
-   and the class holds over **every** review pass, not prose only. The
-   spec replaces the verdict with a structured multi-axis finding schema
-   (rule / assessment / confidence / quote / reason / recovery_action)
-   shared by all reviews; the engine gates only proceed-vs-rework; the
-   producer receives full-fidelity findings and decides. Implementation is
-   a follow-up (new `pipeline/review.py`, adopted by `fill_review` +
-   `dress_codex_review`), held until the contract is signed off.
+2. **Review-contract redesign — BUILT; live validation is what's left**
+   (`docs/plans/review-contract.md`, signed off + implemented 2026-07-12;
+   `pipeline/review.py`). The full `gpt-oss:120b` run drove it: the binary
+   `pass/fail` + free-text `issues` verdict false-positive-halts the
+   producer in three successive shapes (rule fabrication → voice-ban
+   footgun → Rule-2 over-literalism), a class over **every** review pass,
+   not prose only. Now a structured multi-axis finding schema (rule /
+   assessment / confidence / quote / reason / recovery_action) shared by
+   FILL prose + DRESS codex review; the engine gates only proceed-vs-rework
+   on confident objective defects; the producer receives full-fidelity
+   findings and decides (a `warn`/low-confidence finding is weighed, not
+   mandated). **Open**: a gpt-oss:120b run to confirm the weak tier stops
+   false-positive-halting FILL and, for the first time, exercises DRESS
+   codex review under the contract (unbilled — budget discipline permits a
+   full run here).
 3. **Finish the error-message audit** (`docs/plans/error-message-audit.md`):
    Class 2 (store `KeyError` crash class) is fixed; Class 1 (raw-exception
    dumps, `f"invalid X: {e}"`) is graded acceptable-but-improvable and
@@ -966,6 +968,33 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-12 (review-contract redesign BUILT — signed off, implemented,
+  pushed):** The author marked the spec PR ready and signed off ("start
+  implementing"). The pipeline-wide structured-finding contract is now live:
+  a new `pipeline/review.py` owns `ReviewFinding` / `ReviewVerdict`, the
+  per-review `rule` enum builder (`build_verdict_schema`), the engine gate
+  (`needs_rework` = any `fail` at `high`/`medium` confidence), and the
+  producer-facing renderer. Adopted by **FILL prose** (`fill.py`,
+  `fill_review.j2`) and **DRESS codex** (`dress.py`, `dress_codex_review.j2`);
+  both templates now ask for the structured verdict instead of `pass/fail` +
+  free-text issues, and the producer prompts (`fill_write.j2`,
+  `dress_codex.j2`) gain the "weigh warns, don't over-correct" framing. The
+  crux, per the author's correction: the engine gates only proceed-vs-rework
+  on confident objective defects; the producer receives every finding
+  (full fidelity, labeled `[rule · ASSESSMENT · confidence]`) and decides —
+  a `warn` or low-confidence finding is weighed, not mandated. Cross-tier
+  arbitration on a second rework is unchanged in shape (same schema, stronger
+  judge). `PassSpec.review` keeps its `-> list[str]` contract, so the runner
+  is untouched; the e2e keeper review fixtures (013 FILL, 041 DRESS, + 9
+  passes) re-recorded to the finding schema, preserving the one-rework flow.
+  New `tests/test_review.py` covers schema/enum/gate/renderer; the two
+  prompt-source rule-matching tests were replaced with structured-verdict +
+  "weigh warns" guards. 499 tests, ruff clean, golden `qf validate` 0/0.
+  **Open**: unbilled gpt-oss:120b live validation (stop the FILL
+  false-positive halt; first exercise of DRESS codex review under the
+  contract). Supersedes the audit's `fill_review` three-part-matching
+  prompt approach (`docs/plans/error-message-audit.md`).
 
 - **2026-07-12 (full gpt-oss:120b run → a new failure class:
   model-coined constraints enforced downstream):** A full weak-tier run

@@ -521,8 +521,23 @@ def test_every_impl_has_research_first_static_and_callable(golden):
 
 
 def test_dress_review_closures_are_fresh_per_passes_resolution(golden):
+    from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
     from questfoundry.pipeline.stages import IMPLS
-    from questfoundry.pipeline.stages.dress import CodexItem, CodexProposal, ReviewVerdict
+    from questfoundry.pipeline.stages.dress import CodexItem, CodexProposal
+
+    def _fail(reason):
+        return ReviewVerdict(
+            findings=[
+                ReviewFinding(
+                    rule="conditional_stated_as_fact",
+                    assessment="fail",
+                    confidence="high",
+                    quote="the entry sentence",
+                    reason=reason,
+                    recovery_action="pose it as an open question",
+                )
+            ]
+        )
 
     class ScriptedAdapter:
         def __init__(self, script):
@@ -541,16 +556,16 @@ def test_dress_review_closures_are_fresh_per_passes_resolution(golden):
     proposal = CodexProposal(entries=[CodexItem(entity="entity:x", title="t", body="b")])
 
     # codex_first's closure remembers this failure ...
-    adapter1 = ScriptedAdapter([ReviewVerdict(verdict="fail", issues=["real defect"])])
-    assert codex_first.review(proposal, golden, adapter1) == ["real defect"]
+    adapter1 = ScriptedAdapter([_fail("real defect")])
+    assert "real defect" in codex_first.review(proposal, golden, adapter1)[0]
 
     # ... but codex_second is a brand-new closure (fresh `prior`): a single
     # failure resolves without arbitration, proving it did not inherit
     # codex_first's state. If the closures shared state this would try to
     # pop a second (architect) response from adapter2's one-item script
     # and raise IndexError instead.
-    adapter2 = ScriptedAdapter([ReviewVerdict(verdict="fail", issues=["a different issue"])])
-    assert codex_second.review(proposal, golden, adapter2) == ["a different issue"]
+    adapter2 = ScriptedAdapter([_fail("a different issue")])
+    assert "a different issue" in codex_second.review(proposal, golden, adapter2)[0]
 
 
 def test_with_research_preserves_fill_work_queue_after_the_head(golden):

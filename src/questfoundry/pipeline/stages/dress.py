@@ -22,7 +22,7 @@ stored on flags via `mutations.set_flag_codeword`, not a structural edit.
 
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
@@ -40,6 +40,7 @@ from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
 from questfoundry.pipeline.refpin import pin, retained_entity_ids
+from questfoundry.pipeline.review import build_verdict_schema, evaluate_review, render_finding
 from questfoundry.pipeline.types import ApplyError, PassSpec, StageImpl
 from questfoundry.project.io import Project
 
@@ -49,12 +50,14 @@ REVIEW_SYSTEM = (
     "rules and respond only in the requested JSON format."
 )
 
-
-class ReviewVerdict(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    verdict: Literal["pass", "fail"]
-    issues: list[str] = []
+# The codex review's clause set (docs/plans/review-contract.md): spoiler
+# safety has exactly these three defects. Shared envelope, this review's rules.
+CODEX_REVIEW_RULES = (
+    "conditional_stated_as_fact",
+    "machinery_leakage",
+    "ending_title_named",
+)
+CODEX_REVIEW_SCHEMA = build_verdict_schema("CodexReview", CODEX_REVIEW_RULES)
 
 
 # -- pass 1: direction ---------------------------------------------------------
@@ -338,21 +341,24 @@ def _codex_review_for():
             )
 
         verdict = adapter.complete(
-            system=REVIEW_SYSTEM, prompt=rendered(None), schema=ReviewVerdict, role="utility"
+            system=REVIEW_SYSTEM, prompt=rendered(None), schema=CODEX_REVIEW_SCHEMA, role="utility"
         )
-        if verdict.verdict != "fail":
+        # engine gates on confident objective defects only (review-contract);
+        # a warn or a low-confidence finding never halts the stage.
+        issues = evaluate_review(verdict.findings)
+        if not issues:
             return []
-        issues = verdict.issues or ["review failed without stating an issue"]
         if prior:
             final = adapter.complete(
                 system=REVIEW_SYSTEM,
-                prompt=rendered(issues),
-                schema=ReviewVerdict,
+                prompt=rendered([render_finding(f) for f in verdict.findings]),
+                schema=CODEX_REVIEW_SCHEMA,
                 role="architect",
             )
-            if final.verdict != "fail":
+            final_issues = evaluate_review(final.findings)
+            if not final_issues:
                 return []
-            issues = final.issues or issues
+            issues = final_issues
         prior.extend(issues)
         return issues
 

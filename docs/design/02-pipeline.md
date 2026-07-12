@@ -348,13 +348,23 @@ A passage failing review twice is a structural bug: it goes back to
 POLISH (or GROW), never to a third rewrite. Prose cannot rescue a broken
 structure (Principle 4). Because that halt is expensive and the utility
 reviewer has repeatedly laundered taste through the objective rules
-(review-legibility lessons), the verdict that triggers it is not the
-utility reviewer's alone: review rounds are anchored on the previous
-rounds' issues (persistence is signal; all-new complaints each round
-are usually taste), and a second failure escalates once to an
-architect-tier arbitration whose strict verdict — uphold only outright
-rule violations — is final. One extra frontier call on the rare
-contested passage buys the halt its meaning.
+(review-legibility lessons), the review runs a **structured finding
+contract** shared by every review pass (`pipeline/review.py`): the
+reviewer never declares a verdict — it emits findings, each carrying a
+`rule` (an enum of that review's clause set), an `assessment`
+(`fail` = objective defect, `warn` = concern/taste), a `confidence`, the
+offending `quote`, a `reason`, and a `recovery_action`. The **engine**
+makes one mechanical decision — rework iff some finding is a `fail` the
+reviewer is at least moderately sure of — so a weak reviewer cannot halt
+the stage on taste or a low-confidence guess. The **producer** receives
+every finding on a rework (full fidelity, labeled) and decides how to
+act: a `fail` is blocking, a `warn` or low-confidence finding is weighed,
+not mandated. Review rounds are still anchored on the previous rounds'
+findings (persistence is signal; all-new complaints each round are
+usually taste), and a second rework escalates once to an architect-tier
+arbitration emitting the same schema — a genuinely stronger judge on a
+mixed model map. One extra frontier call on the rare contested passage
+buys the halt its meaning.
 
 ### DRESS — art and codex
 

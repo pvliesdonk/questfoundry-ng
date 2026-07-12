@@ -991,10 +991,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
   beyond slack low/medium/high by distance (one tunable knob). The write prompt
   now frames every rejection uniformly (finding OR label-less mechanical) and,
   for a length finding, makes the writer name which beat to deepen (not pad).
-  509 tests, ruff clean, golden 0/0. **Open**: gpt-oss:120b rerun — group-9's
-  ~114-word ending should now pass as a low-confidence `word_budget` finding,
-  finally carrying FILL into DRESS codex review. Still deferred: beat
-  over-choreography.
+  511 tests, ruff clean, golden 0/0. **VALIDATED (gpt-oss:120b, unbilled): the
+  first complete weak-tier FILL → DRESS run.** group-9 cleared in 3 attempts —
+  the writer *expanded* the ending from ~114 to **169 words** (in band; the
+  rejected-draft feedback + per-finding accounting made it converge rather than
+  re-roll short, and the graded finding made converging safe instead of a hard
+  fail). **`fill: ok`**, then **`dress: ok`** — direction, briefs, and for the
+  first time ever the **codex pass and its review ran live and clean** (5
+  entries), the one stage never exercised on a weak tier across this whole
+  effort. The compounding chain that got here: review contract (#57) → verdict
+  (#58) → micro-detail redesign cleared group-3 (#59) → rework convergence
+  cleared group-1/2 (#60) → word-budget-as-finding cleared the group-9 ending
+  (#61). Still deferred: beat over-choreography (never needed — the levers
+  carried it). Remaining before a preserved cloud example: SHIP (M10) and a
+  read of the produced prose quality at length.
 
 - **2026-07-12 (rework convergence — writer sees its rejected draft + must
   respond per finding; the adapter is stateless, author-directed):** The

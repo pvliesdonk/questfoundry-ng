@@ -49,6 +49,7 @@ from questfoundry.models.structure import (
     BeatClass,
     FlagSource,
     IntersectionGroup,
+    NarrationScope,
     SceneType,
     StateFlag,
     StructuralPurpose,
@@ -446,6 +447,7 @@ class BeatScene(BaseModel):
 
     beat: str
     scene_type: SceneType
+    narration_scope: NarrationScope
 
 
 class AnnotateProposal(BaseModel):
@@ -486,16 +488,20 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
     missing = expected - seen
     if missing:
         raise ApplyError(
-            "every beat needs a scene_type — the writer paces the whole story from "
-            f"them; missing {sorted(missing)}"
+            "every beat needs a scene_type and narration_scope — the writer paces "
+            f"and frames the whole story from them; missing {sorted(missing)}"
         )
     counts = {SceneType.SCENE: 0, SceneType.SEQUEL: 0, SceneType.MICRO_BEAT: 0}
+    scopes = {NarrationScope.LIMITED: 0, NarrationScope.WIDE: 0}
     for spec in proposal.annotations:
         mutations.set_beat_scene_type(g, spec.beat, spec.scene_type)
+        mutations.set_beat_narration_scope(g, spec.beat, spec.narration_scope)
         counts[spec.scene_type] += 1
+        scopes[spec.narration_scope] += 1
     return [
         f"annotated {len(seen)} beats: {counts[SceneType.SCENE]} scene, "
-        f"{counts[SceneType.SEQUEL]} sequel, {counts[SceneType.MICRO_BEAT]} micro_beat"
+        f"{counts[SceneType.SEQUEL]} sequel, {counts[SceneType.MICRO_BEAT]} micro_beat; "
+        f"{scopes[NarrationScope.LIMITED]} limited, {scopes[NarrationScope.WIDE]} wide"
     ]
 
 

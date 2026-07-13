@@ -6,14 +6,14 @@
 > the way you'd want to find it.
 >
 > Last updated: 2026-07-13 · **The epilogue/POV collapse-feasibility bug is
-> diagnosed and its fix is a settled build contract**
-> ([`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md);
-> decision log + the resolved kickoff in "Next up"): a narrow per-beat
-> `narration_scope ∈ {limited, wide}` annotation (GROW `annotate` pass,
-> settled-at-freeze like `scene_type`) + a case-A prompt fix separating "no
+> fixed** ([`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md),
+> now BUILT; decision log + the resolved kickoff in "Next up"): a narrow per-beat
+> `narration_scope ∈ {limited, wide}` annotation (GROW `annotate` pass emits it
+> beside `scene_type`, settled-at-freeze) + a case-A prompt fix separating "no
 > other minds" from psychic-distance widening + the reviewer's POV rule keyed
 > to scope — **no forced passage split** (per-beat register modulation, POLISH
-> untouched). Build not yet started. Before it: **`scene_type` structural
+> untouched). 557 tests, ruff clean, golden 0/0. **Live validation on Ollama
+> remains** (the noir re-run + a real medium). Before it: **`scene_type` structural
 > prose-intensity modulation is built** (PR #65) **plus its two guardrails**
 > (follow-up, PR #66): the **B8 pacing report** and the **`overwriting`**
 > compound-density finding.
@@ -48,6 +48,43 @@
 > pulled forward. Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation remains, and the **review-contract redesign is now BUILT** — a pipeline-wide structured-finding contract ([`docs/plans/review-contract.md`](plans/review-contract.md), `pipeline/review.py`) shared by FILL prose + DRESS codex review: the engine gates only proceed-vs-rework on confident objective defects, the producer weighs the full-fidelity findings). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
 
 ## Where we are
+
+**`narration_scope` (POV/coda) is built** (2026-07-13; plan
+[`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md), now BUILT;
+decision log below). The `scene_type` live validation surfaced a finale a
+single limited POV could not write (world-scope epilogue beats: an auction
+elsewhere, the protagonist's posthumous reputation). The fix, mirroring
+`scene_type`'s machinery:
+
+- **Model** (`models/structure.py`): `NarrationScope{limited, wide}` +
+  `Beat.narration_scope`; `effective_narration_scope()` (annotation wins →
+  `epilogue`→`wide` → else `limited`; `wide` is always the marked exception);
+  `set_beat_narration_scope` mutation, settled-at-freeze like
+  `set_beat_scene_type`.
+- **GROW `annotate`** (`stages/grow.py`, `grow_annotate.j2`): the existing pass
+  now emits `scene_type` **and** `narration_scope` per beat in one call
+  (`BeatScene` widened, apply requires both, `vision.pov_hint` rendered). No new
+  pass, no LLM cost delta.
+- **FILL consumption**: `_write_context_for` carries a per-beat `beat_scope`
+  map; `fill_write.j2`'s POV block is split into **two rules** — *no other minds*
+  (the real limited rule, still enforced) vs. *distance may widen* (the case-A
+  fix: a limited narrator may report a world fact) — plus a per-beat directive
+  licensing a `wide` beat as a **coda**; `fill_review.j2` keys its `voice_pov`
+  rule to scope, so a wide coda is not a departure and world-summary under limited
+  POV is authorized. **No band change** — length stays `scene_type`-owned.
+- **SEED** (`seed_scaffold.j2`): renders `pov_hint` (a real context gap — it was
+  unrendered anywhere in SEED) and steers toward perceivable-consequence beats,
+  a world-scope wrap-up written as a brief coda.
+- **No forced passage split** (author's call): FILL modulates register per beat
+  *within* a passage, so POLISH collapse is untouched. Docs: 01 §Beat annotations
+  + §10.3, 02 GROW Out / FILL context.
+
+Advisory throughout — no new gating invariant; the keeper is an intimate limited
+story with no world-coda, so it stays all-`limited` (fallback) and the `wide`
+path is covered by unit + fallback tests. 557 tests, ruff clean, golden 0/0.
+**Open**: live validation on `gpt-oss:120b` (the noir re-run + a real medium; a
+human read of whether the finale writes clean and the coda reads as a deliberate
+detached wrap).
 
 **`scene_type` structural modulation is built** (2026-07-13, PR #65; plan
 [`docs/plans/scene-type-modulation.md`](plans/scene-type-modulation.md),
@@ -688,8 +725,9 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-> **DESIGN DECIDED → PLANNED (2026-07-13):** the epilogue/POV
-> collapse-feasibility problem below is now a settled build contract,
+> **BUILT (2026-07-13):** the epilogue/POV collapse-feasibility problem below is
+> resolved — see "`narration_scope` (POV/coda) is built" at the top of "Where we
+> are". The contract
 > [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md)
 > (decision log has the record). Resolution: a narrow per-beat
 > `narration_scope ∈ {limited, wide}` annotation folded into GROW's existing
@@ -702,8 +740,9 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > so POLISH collapse is untouched). Author calls: 1.a mechanism, 3.a scope, and
 > decision 2 resolved *no split* on the author's narrative argument (a passage
 > may run one paragraph wide, the next limited; a forced boundary would insert a
-> spurious single-option page-turn). Build not yet started. Original kickoff
-> framing (now answered) preserved below.
+> spurious single-option page-turn). **Built and green offline (557 tests, ruff,
+> golden 0/0); live validation on `gpt-oss:120b` is the one open follow-up.**
+> Original kickoff framing (now answered) preserved below.
 >
 > **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): the
 > epilogue/POV collapse-feasibility problem.** Surfaced by the live
@@ -914,9 +953,12 @@ PR #5) and this agent/doc infrastructure (PR #6).
   FILL reads for per-passage word band + per-beat intensity; §10.3's wording is
   updated to match, and a "Beat annotations" subsection was added to 01. The G4
   pacing report (02 §3) is now buildable on that signal but stays deferred as a
-  follow-up (see Next up). **`exit_mood` remains deferred** — it is not the
-  intensity lever; add it only when a demonstrated need appears (the same YAGNI
-  discipline).
+  follow-up (see Next up). A **second** annotation, `narration_scope`
+  (limited/wide), was then built on the same trigger (the epilogue/POV
+  collapse-feasibility gap that same live validation surfaced —
+  `docs/plans/pov-narration-scope.md`): the same *annotate* pass writes it beside
+  `scene_type`. **`exit_mood` remains deferred** — it is not the intensity lever;
+  add it only when a demonstrated need appears (the same YAGNI discipline).
 
 - **Live-run budget discipline is now a working norm** (author call,
   2026-07-12, after a session that exhausted the token budget on repeated
@@ -1251,11 +1293,18 @@ PR #5) and this agent/doc infrastructure (PR #6).
   insert a spurious single-option page-turn between a climax and its coda — so FILL
   modulates register *per beat within a passage* (the `scene_type` pattern) and **POLISH
   collapse is untouched**. Scope stays orthogonal to length (`scene_type`/`passage_intensity`
-  keep the word band). The case-A prompt fix ships regardless (a correctness fix). Build
-  not started; the frontier deliverable this session is the contract. Fixture note:
-  FILL prompt changes need no re-record (call-order replay), only the GROW `annotate`
-  recorded call + snapshots widen. **Follow-up:** live validation on `gpt-oss:120b` (the
-  noir re-run + a real *medium* — guard against the `scope:`-line operator slip).
+  keep the word band). The case-A prompt fix ships regardless (a correctness fix).
+  **Built the same session** (plan → all six checkpoints, contract
+  [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md) marked BUILT):
+  model + mutation, the widened `annotate` pass (one call still, `scene_type` +
+  `narration_scope`), the FILL two-rule POV rewrite + per-beat scope directive +
+  scope-keyed reviewer, the SEED `pov_hint`/brief-coda steer, golden left all-`limited`
+  (an intimate story with no coda — `wide` covered by unit + fallback tests), docs
+  (01 §Beat annotations/§10.3, 02 GROW/FILL). Fixture note held exactly: FILL prompt
+  changes needed no re-record (call-order replay), only the GROW `annotate` recorded
+  call (007.json) widened with `narration_scope` per beat. 557 tests, ruff clean,
+  golden 0/0. **Open follow-up:** live validation on `gpt-oss:120b` (the noir re-run +
+  a real *medium* — guard against the `scope:`-line operator slip).
 
 - **2026-07-13 (reading-difficulty fix #1 — over-stylization is per-paragraph
   style saturation; prompt reframe, author-directed):** The author greenlit the

@@ -1,11 +1,13 @@
 # `narration_scope` — POV/Coda Feasibility — Build Contract
 
-> Status: **PLANNED** (2026-07-13, author-directed). Resolves the
-> epilogue/POV collapse-feasibility bug surfaced by the `scene_type` live
-> validation (STATUS "Next up" kickoff, 2026-07-13). Frontier-authored
-> (POV / freeze / story-model semantics); mid-tier implementable against this
-> spec. Sibling of [`scene-type-modulation.md`](scene-type-modulation.md) —
-> same annotation machinery, same GROW-pre-freeze placement.
+> Status: **BUILT** (2026-07-13) — checkpoints 1–6 landed (model, GROW annotate,
+> FILL consumption, SEED context, golden/fixtures, docs). **Live validation on
+> Ollama remains** (the noir re-run + a real medium — see Risks/follow-ups).
+> Resolves the epilogue/POV collapse-feasibility bug surfaced by the `scene_type`
+> live validation (STATUS "Next up" kickoff, 2026-07-13). Frontier-authored
+> (POV / freeze / story-model semantics). Sibling of
+> [`scene-type-modulation.md`](scene-type-modulation.md) — same annotation
+> machinery, same GROW-pre-freeze placement.
 
 ## The bug (one paragraph)
 

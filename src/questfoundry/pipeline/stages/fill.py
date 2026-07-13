@@ -31,7 +31,12 @@ from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import Voice
 from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
-from questfoundry.models.structure import StateFlag, effective_scene_type, passage_intensity
+from questfoundry.models.structure import (
+    StateFlag,
+    effective_narration_scope,
+    effective_scene_type,
+    passage_intensity,
+)
 from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
@@ -450,6 +455,10 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             # concrete per beat by scene_type)
             "intensity": intensity.value,
             "beat_scene": {b.id: effective_scene_type(b).value for b in beats},
+            # per-beat POV/coda register — most beats limited (inside the Voice's
+            # POV), a wide beat is a detached coda the writer may narrate beyond the
+            # viewpoint character's horizon (design doc 01 §Beat annotations)
+            "beat_scope": {b.id: effective_narration_scope(b).value for b in beats},
             "entities": entities,
             "arcs": _arc_positions(g, passage.id),
             "flags": flags,

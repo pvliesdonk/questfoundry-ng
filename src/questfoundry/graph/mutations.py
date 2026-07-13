@@ -19,6 +19,7 @@ from questfoundry.models.structure import (
     Beat,
     BeatClass,
     IntersectionGroup,
+    NarrationScope,
     SceneType,
     StateFlag,
 )
@@ -361,6 +362,20 @@ def set_beat_scene_type(g: StoryGraph, beat_id: str, scene_type: SceneType) -> N
     if g.frozen and beat_id in g.frozen.beats:
         raise MutationError(f"beat {beat_id} is frozen; scene_type is settled at the freeze")
     beat.scene_type = scene_type
+
+
+def set_beat_narration_scope(g: StoryGraph, beat_id: str, scope: NarrationScope) -> None:
+    """GROW's annotate write path: a beat's POV/coda register (limited vs
+    wide). Like ``scene_type``, ``narration_scope`` is intrinsic beat content
+    settled at the freeze — POLISH never restates whether a beat is a coda —
+    so a frozen beat is rejected. Pre-freeze it is settable (repair may
+    re-run the pass)."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if g.frozen and beat_id in g.frozen.beats:
+        raise MutationError(f"beat {beat_id} is frozen; narration_scope is settled at the freeze")
+    beat.narration_scope = scope
 
 
 def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:

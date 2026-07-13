@@ -263,6 +263,24 @@ the beat*, not topology (§10.3 governs which the model keeps):
   justifies the words) and modulates prose per beat — style belongs to the
   story, not to every paragraph. Advisory, not gated: an unannotated beat
   falls back, never fails. (`exit_mood` remains deferred — §10.3.)
+- **`narration_scope` ∈ {limited, wide}** — the per-beat POV/coda signal. The
+  Voice fixes one point of view for the whole book (§2); *scope* is where a beat
+  may step outside it. A *limited* beat is narrated inside that viewpoint — no
+  mind but the narrator's, though psychic distance may still widen to report a
+  world fact the narrator could plausibly know (reporting the world is not a POV
+  break; entering another mind is). A *wide* beat is a sanctioned **coda**,
+  licensed to narrate beyond the viewpoint character's horizon — world aftermath
+  once the dilemmas resolve, or a character's fate after they exit (their legend,
+  the wake of their death). Like `scene_type`, GROW's *annotate* pass writes it
+  per beat **before the freeze**, settled at the freeze; the fallback is
+  `epilogue` → `wide`, every other beat → `limited` (`wide` is always the marked
+  exception, never the default). FILL renders each beat's scope and modulates
+  register *within* a passage — a limited scene may close into a wide coda
+  paragraph — so a passage is never split for register alone (a split would insert
+  a spurious single-option page-turn); the reviewer keys its POV rule to scope, so
+  a wide coda is not flagged as a departure. Advisory, not gated. Resolves the
+  epilogue/POV collapse-feasibility gap the `scene_type` live validation surfaced
+  (`docs/plans/pov-narration-scope.md`).
 
 Whatever its class, a beat's summary is a **brief for the prose writer,
 never the prose**: plain declarative present tense stating who does what,
@@ -541,12 +559,16 @@ Changed:
    atmospheric_detail, path_theme, path_mood...). NG deferred all of them
    under YAGNI — annotations are cheap to add and expensive to maintain
    coherently — and adds one only when a FILL quality gap demonstrably
-   calls for it. **`scene_type` (scene/sequel/micro_beat) is now built:**
-   the reading-difficulty / over-stylization gap was exactly that trigger
-   (`docs/plans/scene-type-modulation.md`). It is the intrinsic
-   prose-intensity signal GROW's *annotate* pass writes per beat (see
-   "Beat annotations" below) and FILL reads to modulate prose across the
-   story. `exit_mood` remains deferred; the rest stay trimmed.
+   calls for it. Two are now built, each on a demonstrated gap.
+   **`scene_type` (scene/sequel/micro_beat)** answered the reading-difficulty /
+   over-stylization gap (`docs/plans/scene-type-modulation.md`): the intrinsic
+   prose-intensity signal GROW's *annotate* pass writes per beat (see "Beat
+   annotations" above) and FILL reads to modulate prose across the story.
+   **`narration_scope` (limited/wide)** answered the epilogue/POV
+   collapse-feasibility gap that same live validation surfaced
+   (`docs/plans/pov-narration-scope.md`): the per-beat POV/coda signal the same
+   *annotate* pass writes alongside `scene_type`. `exit_mood` remains deferred;
+   the rest stay trimmed.
 4. **Budgets are first-class.** Scope presets bind hard numbers (dilemma
    counts, beats per path, passage ranges) that gates check, making cost a
    contract instead of an emergent property.

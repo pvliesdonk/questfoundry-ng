@@ -132,27 +132,57 @@ pass — the computed list is exhaustive over `collapse_groups(...)`.
   mini-ADR — record the decompose-for-weak-tiers decision (A2x). STATUS decision
   log + a "Next up" pointer to this plan.
 
+## Enumeration: the finalize dependency (runner pass-expansion)
+
+POLISH's collapse groups depend on **finalize** (pass 1 — it adds
+residue/false-branch/bridge beats → new groups), but the runner materializes a
+stage's pass list **once at stage start** (`runner.py:345`), before finalize runs.
+So the per-group `summary:<group>` passes cannot be enumerated up front (unlike
+FILL's, whose passages already exist when FILL starts).
+
+**Resolved (author decision #1, 2026-07-13): runner dynamic pass-expansion.** A
+`PassSpec` gains an optional `expand(project) -> list[PassSpec]`; after a pass
+completes (run **or** skipped — finalize may `skip_if` there is nothing to add),
+the runner splices its expansion into the pass list right after it. Finalize
+carries the expansion that, reading the *post-finalize* graph, returns the
+`summary:<group>` + `labels:<group>` passes; `audit` stays last. Determinism/resume
+hold: on resume finalize replays (kept/resumed) and re-expands deterministically
+from the reproduced graph, so the expanded pass names match the ledger. The
+progress `total` grows after finalize (a cosmetic heartbeat change).
+
+## Label granularity (resolved)
+
+Labels stay **one per group-edge**, engine-fanned across the destination's variant
+passages (today's behavior — `labeled[(a,b)]` reused for every `dst_id` in
+`ids_of_group[b]`). The `labels:<source>` unit is therefore **per source group**:
+one call writes the labels for all of that group's out-edges (siblings must be
+distinct). Distinct-per-variant-destination labels are a feature-add this fix does
+not make.
+
 ## Build order
 
-1. **Prerequisite:** add `Passage.variant_flag` + the create-mutation that sets it;
-   have the current single-pass apply persist it (keeps everything green as a
-   standalone step). + a persistence test.
-2. `polish.py`: replace the single `passages` pass with the computed
-   `summary:<group>` + `labels:<source>` pass families (per-item schema, minimal
-   context, per-item apply). Wire POLISH's `passes` to the computed list. + unit tests.
-3. Re-record the keeper e2e per-item calls; refresh snapshots;
+1. **Prerequisite (done):** `Passage.variant_flag`, set when POLISH creates a
+   variant, persisted for the later wiring pass. + a persistence test.
+2. **Runner:** add `PassSpec.expand` + splice-after-complete (incl. skipped) to
+   `run_stage`; determinism-preserving. + a runner expansion test. Keeps every
+   stage green (no stage uses `expand` yet).
+3. **POLISH:** replace the single `passages` pass with finalize-expanded
+   `summary:<group>` (per group) + `labels:<source-group>` (per source group)
+   passes — per-item schema, minimal context, per-item apply; the wiring apply
+   reads `dest.variant_flag`. + unit tests.
+4. Re-record the keeper e2e per-item calls; refresh snapshots;
    `pytest`/`ruff`/golden green.
-3. Docs (02, 03 mini-ADR, STATUS).
-4. (Follow-up, unbilled) a live medium `--to polish` on `gpt-oss:120b-cloud` to
-   confirm the pass now completes where it truncated before — the acceptance test.
+5. Docs (01 §6 done; 02 §POLISH, 03 §9 mini-ADR A2x, STATUS + a "Next up" pointer).
+6. (Follow-up, unbilled) a live medium `--to polish` on `gpt-oss:120b-cloud` to
+   confirm the pass completes where it truncated before — the acceptance test.
 
 ## Risks / follow-ups
 
-- **Cross-batch summary coherence:** passage summaries are brief and beat-derived,
-  so per-batch context is enough; if a live run shows tonal drift across batches, a
-  small "story premise + voice-of-the-whole" header in each batch context is the
-  fix (cheap, no restructure).
-- **Labels at long scope:** if the single labels pass ever overflows at long, batch
-  it identically (the seam is already there). Deferred until measured.
+- **Per-group summary coherence:** passage summaries are brief and beat-derived, so
+  a group's own beats are enough context; if a live run shows tonal drift, a small
+  "premise + voice-of-the-whole" header per call is the fix (cheap, no restructure).
+- **Runner blast radius:** `expand` is additive (opt-in per PassSpec), so no existing
+  stage changes behavior; the risk is the resume/ledger path, covered by the runner
+  test (expand reproduces the same pass names on replay).
 - **Not a `num_ctx` change:** this fix leaves `num_ctx` alone; a separate, optional
-  config bump for long scope remains available but is not this plan.
+  config bump for long scope remains available but is out of scope here.

@@ -415,7 +415,12 @@ after soft convergence.
 
 **Variant passage** — a flag-gated sibling serving the same structural
 moment when residue is heavy (`variant_of` edge to its base). A variant is
-a full passage — different prose, not conditional text spliced into one.
+a full passage — different prose, not conditional text spliced into one. A
+variant persists the flag it is gated on (the world-state it presents) on the
+`Passage` node itself (`variant_flag`), not only via the `variant_of` edge, so
+choice-wiring can recover which variant carries which gate when POLISH creates
+passages and wires choices in separate passes
+(`docs/plans/passages-chunking.md`).
 
 **False branch** — POLISH-added cosmetic forks for the feel of agency:
 *diamond* (two choices, same destination) or *sidetrack* (a short detour

@@ -16,6 +16,7 @@ from questfoundry.models.structure import (
     BeatClass,
     FlagSource,
     IntersectionGroup,
+    SceneType,
     StateFlag,
     StructuralPurpose,
 )
@@ -23,11 +24,14 @@ from questfoundry.models.world import Entity
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import (
+    AnnotateProposal,
+    BeatScene,
     BridgeProposal,
     BridgeSpec,
     IntersectionProposal,
     IntersectionSpec,
     WeaveChoice,
+    _annotate_apply,
     _bridge_apply,
     _bridge_skip,
     _derive_flags,
@@ -35,6 +39,7 @@ from questfoundry.pipeline.stages.grow import (
     _intersections_apply,
     _spread,
     _weave_apply,
+    annotate_proposal_schema,
     intersections_proposal_schema,
 )
 from questfoundry.pipeline.stages.polish import _finalize_context
@@ -317,3 +322,61 @@ def test_spread_keeps_ends_and_order():
     assert len(spread) == 8
     assert spread[0] == 0 and spread[-1] == 63
     assert spread == sorted(spread)
+
+
+# -- annotate (scene_type) ----------------------------------------------------
+
+
+def _annotate_all(project, scene_type=SceneType.SCENE) -> AnnotateProposal:
+    beats = queries.topological_order(project.graph) or []
+    return AnnotateProposal(
+        annotations=[BeatScene(beat=b, scene_type=scene_type) for b in beats]
+    )
+
+
+def test_annotate_apply_sets_scene_type_on_every_beat(project):
+    lines = _annotate_apply(_annotate_all(project, SceneType.SEQUEL), project)
+    beats = queries.topological_order(project.graph)
+    assert beats
+    assert all(project.graph.node(b).scene_type == SceneType.SEQUEL for b in beats)
+    assert "annotated" in lines[0] and "sequel" in lines[0]
+
+
+def test_annotate_requires_full_coverage(project):
+    beats = queries.topological_order(project.graph)
+    partial = AnnotateProposal(
+        annotations=[BeatScene(beat=b, scene_type=SceneType.SCENE) for b in beats[:-1]]
+    )
+    with pytest.raises(ApplyError, match="missing"):
+        _annotate_apply(partial, project)
+    # a failed apply set nothing (the loop validates before mutating)
+    assert project.graph.node(beats[0]).scene_type is None
+
+
+def test_annotate_rejects_unknown_beat(project):
+    proposal = AnnotateProposal(
+        annotations=[BeatScene(beat="beat:invented", scene_type=SceneType.SCENE)]
+    )
+    with pytest.raises(ApplyError, match="not a beat to annotate"):
+        _annotate_apply(proposal, project)
+
+
+def test_annotate_rejects_duplicate_beat(project):
+    beats = queries.topological_order(project.graph)
+    proposal = AnnotateProposal(
+        annotations=[BeatScene(beat=b, scene_type=SceneType.SCENE) for b in beats]
+        + [BeatScene(beat=beats[0], scene_type=SceneType.SCENE)]
+    )
+    with pytest.raises(ApplyError, match="annotated twice"):
+        _annotate_apply(proposal, project)
+
+
+def test_annotate_schema_pins_beats(project):
+    schema = annotate_proposal_schema(project)
+    beats = queries.topological_order(project.graph)
+    enum = schema.model_json_schema()["$defs"]["BeatScene"]["properties"]["beat"]["enum"]
+    assert set(enum) == set(beats)
+    with pytest.raises(ValidationError):  # a beat outside the story is unrepresentable
+        schema.model_validate(
+            {"annotations": [{"beat": "beat:invented", "scene_type": "scene"}]}
+        )

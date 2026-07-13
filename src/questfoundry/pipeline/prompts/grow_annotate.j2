@@ -1,0 +1,40 @@
+Tag every beat with its prose-intensity type, so the writer later knows where the
+prose should rise and where it should stay plain. This is the story's MODULATION:
+most beats are quiet and load-bearing; only a few are charged. A story where every
+beat runs hot is exhausting to read — a plain baseline is what makes the peaks land.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+Assign each beat exactly one SCENE TYPE (Swain's beat rhythm):
+
+- scene — ACTIVE CONFLICT. A character pursues a goal against an obstacle and the
+  situation turns. This is where the prose may rise and run longer. A beat that
+  COMMITS or COMPLICATES a dilemma is almost always a scene; so is any
+  confrontation, decision, discovery that forces action, or reversal.
+- sequel — REACTIVE PROCESSING. The decompression between scenes: a character
+  absorbs what just happened, feels it, weighs it, and decides what to do next.
+  Plain, shorter prose. A quiet ADVANCES or REVEALS beat is usually a sequel.
+- micro_beat — PURE TRANSITION. A brief connective moment that carries the reader
+  from one place or time to the next. The shortest, lowest-key prose.
+
+Anchors for structural beats that carry no dilemma impact:
+- a SETUP beat orients the reader in the world before any dilemma opens -> sequel
+  by default (plain, establishing), unless it stages an active moment of its own,
+  then scene.
+- an EPILOGUE beat winds the story down -> sequel.
+
+Choosing the type sets the writer's word band and intensity, so choose for
+MODULATION across the whole story: a plain baseline of sequels and micro-beats
+with scenes reserved for the charged turns. Do NOT label everything a scene — that
+is the exact failure this pass exists to prevent.
+
+BEATS (in story order):
+{% for r in beats %}
+- {{ r.beat.id }} [{{ r.beat.beat_class.value }}{% if r.beat.purpose %}/{{ r.beat.purpose.value }}{% endif %}{% if r.effects %}; {{ r.effects | join(", ") }}{% endif %}{% if r.beat.is_ending %}; ENDING{% endif %}]: {{ r.beat.summary }}
+{% endfor %}
+
+REQUIREMENTS:
+- Annotate every beat listed above, exactly once, keyed by its full beat id.
+- Assign exactly one of: scene, sequel, micro_beat.
+{% include "_craft.j2" %}
+{% include "_shared.j2" %}

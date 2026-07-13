@@ -1,0 +1,15 @@
+id: beat:keep-figurine
+summary: Elliot clutches the jade figurine to his chest, refusing Lydia’s promise, the cold
+  metal biting into his palm.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: commits
+entities:
+- character:detective
+- object:jade-figurine
+- location:harbor
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:retain

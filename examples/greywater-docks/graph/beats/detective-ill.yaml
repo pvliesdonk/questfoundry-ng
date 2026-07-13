@@ -1,0 +1,9 @@
+id: beat:detective-ill
+summary: Detective Elliot March coughs in his dim office, the terminal diagnosis a ticking
+  clock on his weary shoulders.
+beat_class: structural
+purpose: setup
+entities:
+- character:detective
+scene_type: micro_beat
+narration_scope: limited

@@ -1,0 +1,16 @@
+id: beat:syndicate-shadow
+summary: A pair of Crimson Syndicate thugs linger in the shadows, eyes flickering toward the
+  jade, the danger tightening like a noose.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: complicates
+entities:
+- faction:crimson-syndicate
+- object:jade-figurine
+- location:harbor
+scene_type: micro_beat
+narration_scope: limited
+belongs_to:
+- path:give-vane
+- path:retain

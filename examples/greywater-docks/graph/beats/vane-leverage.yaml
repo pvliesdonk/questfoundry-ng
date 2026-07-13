@@ -1,0 +1,14 @@
+id: beat:vane-leverage
+summary: Lydia’s smile widens; the jade glints, granting her a silent leverage over the city’s
+  trade guilds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: reveals
+entities:
+- character:woman
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-vane

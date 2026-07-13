@@ -1,0 +1,14 @@
+id: beat:shatter-figurine
+summary: Elliot lifts a wrench, slams it into the jade dragon, shattering it into glittering
+  shards that sink into the dark water.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-bargain
+  effect: commits
+entities:
+- character:detective
+- object:jade-figurine
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:destroy

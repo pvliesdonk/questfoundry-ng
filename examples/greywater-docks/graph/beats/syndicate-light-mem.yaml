@@ -1,0 +1,12 @@
+id: beat:syndicate-light-mem
+created_by: polish
+summary: The jade shards glint dull in the gutter, a cold reminder that the syndicate's hand
+  now grasps the city's pulse.
+beat_class: structural
+purpose: residue
+entities:
+- character:detective
+- faction:crimson-syndicate
+- object:jade-figurine
+requires_flags:
+- flag:medicine-obtained

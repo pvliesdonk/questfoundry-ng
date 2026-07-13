@@ -1,0 +1,13 @@
+id: beat:city-continues
+summary: The dock clears, the shattered jade forgotten; the city’s undercurrents shift, but
+  life in Greywater Docks rolls on, indifferent to the broken myth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-bargain
+  effect: advances
+entities:
+- location:harbor
+scene_type: sequel
+narration_scope: wide
+belongs_to:
+- path:destroy

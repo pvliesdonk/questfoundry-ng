@@ -1,0 +1,14 @@
+id: beat:syndicate-interest
+summary: The Crimson Syndicate notices the jade’s absence, their eyes narrowing as they plot
+  a raid on Elliot’s safe house.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: complicates
+entities:
+- faction:crimson-syndicate
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:retain

@@ -1,0 +1,20 @@
+id: dilemma:trust-vane
+question: Do you give the Jade Dragon to Lydia Vane, trusting her promise to pay and keep
+  it safe?
+why_it_matters: Handing it over could secure the money for her care but may empower a liar
+  to weaponize the city’s trade, while refusing could cost your last chance at redemption.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:give-vane
+  text: Hand the figurine to Lydia, hoping her intimacy with the underworld will keep it out
+    of worse hands.
+- id: answer:retain
+  text: Keep the figurine for yourself, refusing to trust her motives.
+anchored_to:
+- character:detective
+- character:woman
+- object:jade-figurine
+wraps:
+- dilemma:syndicate-medicine

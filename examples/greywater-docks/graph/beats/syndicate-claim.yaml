@@ -1,0 +1,14 @@
+id: beat:syndicate-claim
+summary: Syndicate couriers slip away with the jade shard, their influence over the trade
+  guilds tightening like a vice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: complicates
+entities:
+- faction:crimson-syndicate
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:accept-fix

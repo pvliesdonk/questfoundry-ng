@@ -1,0 +1,30 @@
+id: passage:p-standoff
+summary: Lydia’s car screeches into the dock as Crimson Syndicate gunmen emerge; the emissary
+  offers experimental medicine for the jade, while Elliot’s cough worsens and the rain hammers
+  the rails, foreshadowing a blood‑soaked showdown.
+entities:
+- character:woman
+- faction:crimson-syndicate
+- object:jade-figurine
+- location:harbor
+- character:detective
+prose_summary: Elliot watches rain; Lydia Vane arrives in car, exits onto dock; three Crimson
+  Syndicate gunmen aim rifles at crate holding jade; driver hides car; emissary places sealed
+  glass vial, offers medicine for a share of jade; Elliot coughs, feels deadline pressure;
+  Elliot realizes releasing jade will cause citywide bloodshed.
+beats:
+- beat:convergence
+- beat:illness-worsening
+- beat:syndicate-approach
+- beat:tension
+choices:
+- label: Refuse the Syndicate’s medicine.
+  grants:
+  - flag:death-imminent
+  - flag:integrity-kept
+  to: passage:p-refuse-medicine
+- label: Trade a shard of jade for the serum.
+  grants:
+  - flag:medicine-obtained
+  - flag:syndicate-pact
+  to: passage:p-trade-medicine

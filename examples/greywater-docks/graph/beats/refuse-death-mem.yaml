@@ -1,0 +1,10 @@
+id: beat:refuse-death-mem
+created_by: polish
+summary: His breath hitches in the stale rain, each gasp a thin echo of promises broken as
+  the illness closes in.
+beat_class: structural
+purpose: residue
+entities:
+- character:detective
+requires_flags:
+- flag:death-imminent

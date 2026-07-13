@@ -1,0 +1,14 @@
+id: beat:decline-consequences
+summary: The emissary leaves, his gaze cold; the disease tightens its grip, darkness edging
+  Elliot’s vision.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: complicates
+entities:
+- character:detective
+- faction:crimson-syndicate
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:refuse

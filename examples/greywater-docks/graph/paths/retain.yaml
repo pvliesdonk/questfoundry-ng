@@ -1,0 +1,8 @@
+id: path:retain
+name: Hold the Figurine
+explores: answer:retain
+consequences:
+- id: consequence:jade-held
+  text: Elliot keeps the Jade Dragon, attracting the attention of the Crimson Syndicate.
+- id: consequence:no-cash
+  text: He goes without payment, jeopardizing his ability to afford treatment.

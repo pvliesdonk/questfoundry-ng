@@ -1,0 +1,9 @@
+id: bridge:gap-0
+created_by: grow
+summary: The rain‑slick harbor fades into the dim glow of Elliot March’s office, the city’s
+  damp night bleeding into the stale air of his cramped desk.
+beat_class: structural
+purpose: bridge
+entities:
+- location:harbor
+- character:detective

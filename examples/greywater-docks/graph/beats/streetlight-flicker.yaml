@@ -1,0 +1,9 @@
+id: beat:streetlight-flicker
+created_by: polish
+summary: A weak streetlight sputters, casting a fleeting halo over the rain‑slicked alley,
+  recalling lost glories.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:detective
+- location:harbor

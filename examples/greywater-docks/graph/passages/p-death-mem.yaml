@@ -1,0 +1,13 @@
+id: passage:p-death-mem
+summary: Elliot’s breath falters as the illness closes in, each gasp a thin echo of broken
+  promises.
+entities:
+- character:detective
+prose_summary: Elliot stands on the rain‑slick dock, coughs heavily, holds the jade dragon,
+  watches the sputtering lantern, attempts to speak and whispers "Not today", and senses his
+  fever tightening and his impending collapse.
+beats:
+- beat:refuse-death-mem
+choices:
+- label: Succumb to the rain and collapse.
+  to: passage:p-finale

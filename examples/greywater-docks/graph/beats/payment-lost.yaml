@@ -1,0 +1,14 @@
+id: beat:payment-lost
+summary: Lydia departs empty‑handed; the promised payment evaporates, leaving Elliot’s treatment
+  funds unrecoverable.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: reveals
+entities:
+- character:detective
+- character:woman
+scene_type: micro_beat
+narration_scope: limited
+belongs_to:
+- path:retain

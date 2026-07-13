@@ -1,0 +1,12 @@
+id: beat:medicine-administered
+summary: He injects the serum; a warm surge pushes the disease back, buying him precious months.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: advances
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:accept-fix

@@ -1,0 +1,10 @@
+id: bridge:gap-2
+created_by: grow
+summary: A cough echoing from the office drifts out into the night, carried on the wind to
+  the pier where Lydia Vane steps onto the wet planks, jade glinting in her hand.
+beat_class: structural
+purpose: bridge
+entities:
+- character:detective
+- character:woman
+- location:harbor

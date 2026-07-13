@@ -1,0 +1,7 @@
+id: intersection:convergence-medicine
+location: location:harbor
+rationale: Lydia’s arrival and the syndicate emissary’s trade offer can happen simultaneously
+  on the rain‑slick dock.
+members:
+- beat:convergence
+- beat:syndicate-approach

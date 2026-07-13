@@ -1,0 +1,15 @@
+id: beat:trade-for-medicine
+summary: Elliot hands a fragment of the jade figurine to the syndicate, sealing a pact over
+  the cracked dock wood.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: commits
+entities:
+- character:detective
+- faction:crimson-syndicate
+- object:jade-figurine
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:accept-fix

@@ -1,0 +1,10 @@
+id: bridge:gap-3
+created_by: grow
+summary: The serum’s warmth steadies Elliot’s breath as the night deepens, while elsewhere
+  silent couriers slip the jade shard into the Syndicate’s shadowed carriage.
+beat_class: structural
+purpose: bridge
+entities:
+- character:detective
+- faction:crimson-syndicate
+- object:jade-figurine

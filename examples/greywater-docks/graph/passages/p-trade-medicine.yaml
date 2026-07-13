@@ -1,0 +1,21 @@
+id: passage:p-trade-medicine
+summary: Elliot trades a jade fragment for the serum, injects it and feels the disease recede,
+  while couriers slip the shard to the Syndicate’s carriage.
+entities:
+- character:detective
+- faction:crimson-syndicate
+- object:jade-figurine
+prose_summary: 'Elliot arrives dock, slides jade fragment to Syndicate emissary; emissary
+  takes shard, injects glowing serum from glass vial, curing Elliot’s disease. Couriers deliver
+  sealed crate, load jade into waiting carriage, and depart. Pact seals: Syndicate obtains
+  a share of the jade, increasing its control over trade guilds. Elliot gains months of health.'
+beats:
+- beat:medicine-administered
+- beat:syndicate-claim
+- beat:trade-for-medicine
+- bridge:gap-3
+choices:
+- label: Feel the serum’s warmth as the Syndicate gains the jade.
+  requires:
+  - flag:medicine-obtained
+  to: passage:p-syndicate-light

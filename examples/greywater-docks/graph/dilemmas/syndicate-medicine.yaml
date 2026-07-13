@@ -1,0 +1,16 @@
+id: dilemma:syndicate-medicine
+question: Do you barter a portion of the Jade Dragon’s value with the Crimson Syndicate to
+  secure a rare experimental medicine?
+why_it_matters: Accepting may extend your dwindling days but binds you to criminals; refusing
+  preserves integrity but leaves you to die without cure.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:accept-fix
+  text: Trade a share of the figurine for the medicine, sealing a pact with the Syndicate.
+- id: answer:refuse
+  text: Reject the Syndicate’s offer, choosing a possibly quicker death over moral compromise.
+anchored_to:
+- character:detective
+- faction:crimson-syndicate

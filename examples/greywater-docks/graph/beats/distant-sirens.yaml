@@ -1,0 +1,7 @@
+id: beat:distant-sirens
+created_by: polish
+summary: A wail of distant sirens slices through the storm, echoing the city's hidden panic.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:detective

@@ -1,0 +1,10 @@
+id: bridge:gap-5
+created_by: grow
+summary: Lydia’s smile lingers on the dock while the jade’s cold sparkle fades, and back in
+  the office Elliot slides a thick envelope into his coat, his cure now within reach.
+beat_class: structural
+purpose: bridge
+entities:
+- character:woman
+- object:jade-figurine
+- character:detective

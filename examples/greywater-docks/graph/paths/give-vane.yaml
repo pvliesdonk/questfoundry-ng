@@ -1,0 +1,9 @@
+id: path:give-vane
+name: Trust Lydia
+explores: answer:give-vane
+consequences:
+- id: consequence:jade-in-lydia
+  text: The Jade Dragon is in Lydia Vane's possession, giving her leverage over the city's
+    trade guilds.
+- id: consequence:cash-received
+  text: Elliot receives the promised payment, enough to buy his experimental medicine.

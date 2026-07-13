@@ -1,0 +1,15 @@
+id: beat:ending-vane
+summary: Days later, Lydia’s newfound power ignites a gang war; Elliot watches from his window
+  as the city burns, his name fading into the rain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: advances
+entities:
+- character:detective
+- character:woman
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-vane

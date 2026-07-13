@@ -1,0 +1,23 @@
+id: passage:p-intro
+summary: Rain drenches Greywater’s neon streets and seeps into Elliot March’s cramped office
+  where he feels the weight of a terminal diagnosis, just as Lydia Vane appears on the pier
+  with a jade dragon and a quick‑cash proposal.
+entities:
+- location:harbor
+- character:detective
+- character:woman
+- object:jade-figurine
+prose_summary: He enters office, sees terminal diagnosis notice, feels tears. Lydia Vane appears
+  at pier, offers Jade Dragon figurine for cash, promising to keep it from worse hands; he
+  trembles, cigar burns.
+beats:
+- beat:city-wet
+- beat:detective-ill
+- beat:vane-proposal
+- bridge:gap-0
+- bridge:gap-2
+choices:
+- label: Follow the flickering streetlight down the alley.
+  to: passage:p-alley-flicker
+- label: Listen to the distant sirens.
+  to: passage:p-sirens

@@ -1,0 +1,16 @@
+id: beat:convergence
+summary: Lydia’s sleek car screeches into the dock, and Crimson Syndicate gunmen emerge from
+  the shadows; both sides converge on the jade’s crate.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-bargain
+  effect: reveals
+entities:
+- character:woman
+- faction:crimson-syndicate
+- object:jade-figurine
+- location:harbor
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:destroy

@@ -1,0 +1,16 @@
+id: beat:vane-proposal
+summary: Lydia Vane steps onto the rain‑slick pier, offering the Jade Dragon for a quick cash
+  payment, promising to keep it hidden from worse hands.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: reveals
+entities:
+- character:woman
+- object:jade-figurine
+- location:harbor
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-vane
+- path:retain

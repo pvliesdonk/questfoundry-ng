@@ -1,0 +1,9 @@
+id: bridge:gap-1
+created_by: grow
+summary: Elliot’s final gasp is swallowed by the pounding surf, and the tide pulls the blood‑stained
+  dock clean as the harbor resumes its indifferent rhythm.
+beat_class: structural
+purpose: bridge
+entities:
+- character:detective
+- location:harbor

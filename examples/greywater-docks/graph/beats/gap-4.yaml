@@ -1,0 +1,11 @@
+id: bridge:gap-4
+created_by: grow
+summary: Word of the missing jade spreads through the Syndicate’s circles, even as Lydia departs
+  the pier empty‑handed, leaving Elliot’s promised payment on the wind.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:crimson-syndicate
+- object:jade-figurine
+- character:detective
+- character:woman

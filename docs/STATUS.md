@@ -1327,8 +1327,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
   completion + no-regression + the case-A/psychic-distance clarity are validated live;
   the `wide` license itself is proven only by unit tests so far. Exercising `wide`
   live needs a premise that *structurally* demands a coda — a **death ending** or a
-  **time-skip epilogue** (the original "posthumous reputation" shape) — pending an
-  author go-ahead.
+  **time-skip epilogue** (the original "posthumous reputation" shape).
+  **`wide` is now proven live** (preserved as [`examples/greywater-docks`](../examples/greywater-docks)):
+  a death-ending noir micro (dying PI, "the city goes on without him") ran clean
+  through FILL. **SEED** (softened steer) generated a genuine out-of-horizon coda beat
+  (`beat:city-continues` — "life in Greywater Docks rolls on, indifferent to the broken
+  myth"); **GROW annotate** tagged it `wide` on its own (a *narrative* beat, not the
+  fallback — 24 `limited`, 1 `wide`); **FILL** wrote the finale passage `p-finale` in one
+  pass — the *exact* collapse shape that broke "Black Bird" (climax `scene` beats +
+  world-coda in one limited-POV finale) — narrating Elliot's death in limited POV then
+  stepping back to a detached `wide` coda beyond the dead detective, no POV break, first
+  try, and the reviewer did not flag it. The full chain (softened SEED → coda beat →
+  annotate picks `wide` → FILL writes limited-then-wide → reviewer accepts) is validated
+  end-to-end. Cleaner than `rain-and-jade` too (no supernatural drift). **The
+  narration_scope effort is now fully live-validated.**
 
 - **2026-07-13 (epilogue/POV collapse-feasibility — design decided, author-directed):**
   The noir finale failure (STATUS "Next up" kickoff) was diagnosed and resolved into a

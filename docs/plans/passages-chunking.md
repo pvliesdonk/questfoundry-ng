@@ -141,7 +141,7 @@ pass — the computed list is exhaustive over `collapse_groups(...)`.
 
 POLISH's collapse groups depend on **finalize** (pass 1 — it adds
 residue/false-branch/bridge beats → new groups), but the runner materializes a
-stage's pass list **once at stage start** (`runner.py:345`), before finalize runs.
+stage's pass list **once at stage start** (`runner.py:349`), before finalize runs.
 So the per-group `summary:<group>` passes cannot be enumerated up front (unlike
 FILL's, whose passages already exist when FILL starts).
 

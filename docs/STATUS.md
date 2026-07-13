@@ -731,7 +731,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > `num_ctx` at medium scope (the `AdapterError` the noir-medium run hit). Fix
 > (author decision B, then the greedy-context reframe): decompose into
 > independent minimal-context calls — `summary:<group>` per collapse group +
-> `labels:<source-group>` per source group — no batching. **Landed so far:** the
+> `labels:<group>` per source group — no batching. **Landed so far:** the
 > `variant_flag` persistence prerequisite (so wiring can recover a variant's gate
 > once creation/wiring split); the runner `PassSpec.expand` mechanism (finalize
 > expands into the per-group passes, since collapse groups aren't known until

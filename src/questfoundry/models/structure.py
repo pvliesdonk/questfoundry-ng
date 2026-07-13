@@ -52,6 +52,21 @@ class StructuralPurpose(StrEnum):
     FALSE_BRANCH = "false_branch"
 
 
+class SceneType(StrEnum):
+    """Swain's beat rhythm — the intrinsic prose-intensity signal a beat
+    carries into FILL (design doc 01 §10.3). A *scene* is active conflict
+    (goal, obstacle, turn) and earns heightened prose and a fuller word
+    band; a *sequel* is the reactive processing between scenes and stays
+    plain and shorter; a *micro_beat* is a pure transition, brief and
+    low-key. Populated at GROW pre-freeze as an intrinsic beat property
+    (why the beat exists), settled at the freeze like ``summary``; a beat
+    left unset falls back by purpose (``effective_scene_type``)."""
+
+    SCENE = "scene"
+    SEQUEL = "sequel"
+    MICRO_BEAT = "micro_beat"
+
+
 class Beat(Node):
     """A concrete story moment — the atomic unit from SEED onward.
 
@@ -69,6 +84,9 @@ class Beat(Node):
     is_ending: bool = False
     temporal_hints: list[TemporalHint] = []  # SEED -> GROW interleave guidance
     flexibility: str = ""  # SEED -> GROW intersection invitation
+    # GROW's annotate pass writes this pre-freeze; None means "not
+    # annotated" and the effective value is derived (effective_scene_type).
+    scene_type: SceneType | None = None
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:
@@ -92,8 +110,49 @@ class Beat(Node):
     def is_texture(self) -> bool:
         """Texture beats — residue and false-branch arms — are a breath
         of flavor beside the story's forward motion; a passage made only
-        of them writes toward the short word band (ScopePreset.words_for)."""
+        of them writes toward the short word band (ScopePreset.words_for).
+        ``effective_scene_type`` subsumes this for FILL (both texture
+        purposes map to ``micro_beat``); ``is_texture`` stays the
+        convenience predicate, consistent with it by construction."""
         return self.purpose in (StructuralPurpose.RESIDUE, StructuralPurpose.FALSE_BRANCH)
+
+
+# Prose-intensity ranking for aggregating a passage's beats (FILL's
+# ScopePreset.words_for / _passage_intensity). SceneType is a StrEnum, so a
+# bare max() over its members orders them lexicographically
+# ("micro_beat" < "scene" < "sequel") and would let a sequel outrank a
+# scene — every aggregation goes through this map's key.
+_INTENSITY_RANK: dict[SceneType, int] = {
+    SceneType.SCENE: 2,
+    SceneType.SEQUEL: 1,
+    SceneType.MICRO_BEAT: 0,
+}
+
+
+def intensity_rank(scene_type: SceneType) -> int:
+    """Sort key for prose intensity (SCENE > SEQUEL > MICRO_BEAT). Use
+    with ``max(..., key=...)`` — never a bare ``max()`` over the enum."""
+    return _INTENSITY_RANK[scene_type]
+
+
+def effective_scene_type(beat: Beat) -> SceneType:
+    """A beat's prose intensity, resolving the fallback for beats no
+    annotate pass reached. GROW's LLM annotation wins; else a structural
+    transition/texture beat (bridge added post-annotate, residue and
+    false-branch added at POLISH) is short by construction -> micro_beat;
+    else — an unannotated narrative/setup/epilogue beat, only on partial
+    coverage — default to scene (heritage R-4b.1: conservative, never
+    starves prose). Consistent with ``Beat.is_texture`` by construction:
+    every texture purpose maps to micro_beat."""
+    if beat.scene_type is not None:
+        return beat.scene_type
+    if beat.purpose in (
+        StructuralPurpose.BRIDGE,
+        StructuralPurpose.RESIDUE,
+        StructuralPurpose.FALSE_BRANCH,
+    ):
+        return SceneType.MICRO_BEAT
+    return SceneType.SCENE
 
 
 class FlagSource(StrEnum):

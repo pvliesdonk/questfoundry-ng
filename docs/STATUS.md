@@ -1266,6 +1266,29 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-13 (don't blame the weak model — a standing agent rule + two POLISH
+  prompt fixes it forced):** During the narration_scope live runs two POLISH passes
+  crashed on the weak tier, and the session reflexively wrote them off as "known
+  weak-tier difficulty" — exactly the misjudgment AGENTS.md §"Prompt and error-message
+  quality" warns against (author correction). Codified as a new lead rule in that
+  section: *the agent will feel the urge to blame a weak model and will almost always
+  be wrong; red-flag phrases ("weak-tier", "the model isn't strong enough") may not be
+  written until the prompt and the error message have been read and shown correct.*
+  Applying it produced two real defects, not model limits: (1) **finalize
+  residue-duplicate** — the model emitted a second residue arm for a path and
+  repair-exhausted; the rule *was* in the prompt, but the ApplyError's recovery_action
+  offered only `followup` (a longer arm), never `fork` (two textures) — so a model that
+  duplicated because it wanted two flavors was told the wrong tool. **Fixed:** the
+  message now names both recovery paths and "drop the duplicate", and the finalize
+  prompt preempts ("never two entries for one path — use followup/fork"). (2) **passages
+  `AdapterError` at medium** — the *passages* pass generates the **whole** passage layer
+  in a single call (apply requires every group covered at once); at medium scale
+  (90-160 passages) that output overruns `num_ctx 32768` and truncates into invalid
+  JSON. A genuine **scale/output-structure limit** (fix: chunk the pass, or raise
+  num_ctx), diagnosed — not dismissed as model weakness; a real fix is a follow-up. A
+  **death-ending noir micro** was also launched (the premise structurally forces an
+  out-of-horizon coda) to finally exercise `wide` live.
+
 - **2026-07-13 (narration_scope live validation — micro clean, `wide` not yet exercised;
   unbilled `gpt-oss:120b-cloud`):** After PR #68 merged, a fresh **noir micro**
   ("Rain and Jade", the Maltese-Falcon premise — preserved as

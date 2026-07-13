@@ -242,8 +242,12 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
         flag = flags[0]  # any of the path's flags marks the choice; first is deterministic
         if (spec.dilemma, spec.world, spec.path) in covered:
             raise ApplyError(
-                f"residue {spec.id}: {spec.path} already has a residue arm at this "
-                "convergence; one arm per path — use followup for a longer arm"
+                f"residue {spec.id}: path {spec.path} already has a residue arm at "
+                "this convergence — emit exactly one arm entry per path. Drop this "
+                "duplicate; then, on that path's single arm, if you meant a longer "
+                "arm add a `followup` beat, or if you meant two textures of the same "
+                "choice add a `fork` (a second branch behind the same gate). Never a "
+                "second arm entry for the same path."
             )
         def gated_chain(head, flag=flag, spec=spec):
             try:

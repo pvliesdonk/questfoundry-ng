@@ -108,6 +108,14 @@ messages that happen to work because the model is smart enough to
 reconstruct the intent** — until a weaker tier isn't, and the failure
 looks like a model limit when it is a prompt defect. So:
 
+- **You (the agent reading this) will feel the urge to blame a weak model
+  for a failed pass — and you will almost always be wrong.** This is the
+  single most reliable failure of judgment in this repo. Name the urge and
+  distrust it: "known weak-tier difficulty", "the model isn't strong
+  enough", "a bigger model would handle it" are red-flag phrases you may
+  not write until you have *read the prompt and the error message and shown
+  they are already correct and complete*. Absent that proof, the honest
+  diagnosis is always *prompt defect, not yet fixed* — never *weak model*.
 - **When a pass fails (repair exhaustion, a bad proposal, a review that
   fabricates or misapplies a rule), the prompt or the message is the
   first suspect, not the model.** Assume the prompt is blunt until you

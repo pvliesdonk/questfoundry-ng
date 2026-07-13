@@ -42,6 +42,16 @@ clean limited-POV prose with no head-hopping.
 - **B7** total words 2381 vs the `micro` floor 2400 (19 short) — the expected
   "modulation shortens sequels/micros" scale signal; advisory.
 
+The two advisory warnings `qf validate` reports are:
+
+- **[G1]** `location:harbor-district` anchors no dilemma — a BRAINSTORM/triage
+  warning that a coined location never became load-bearing; advisory, not
+  blocking.
+- **[B7]** the total-words shortfall above.
+
+(The supernatural drift is a manual content-adherence observation, not a gate
+warning.)
+
 ## Regenerating exports
 
 Exports are not committed (regenerate on demand):

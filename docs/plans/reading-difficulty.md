@@ -5,8 +5,15 @@
 > author read of the preserved stories inverted its central claim (decision log,
 > 2026-07-12). This version records what the correction taught: the fault is
 > *over-stylization*, not high reading level, and grade-level metrics are
-> **anti-correlated** with the author's readability judgment. Build is gated on
-> the author (see *Open decisions*).
+> **anti-correlated** with the author's readability judgment.
+>
+> **Update 2026-07-13 — fix #1 built.** The author greenlit the fix and sharpened
+> the cause (*"the writer applied the style to every paragraph; it should apply to
+> the whole story"*). Recommended-lever steps 1–2 (Voice restraint directive +
+> write-prompt plain-baseline/clarity rule) landed as a prompt reframe; FKGL stays
+> out per this assessment. Remaining: Ollama live validation, the author's
+> real-gamebook exemplars (step 4, in flight), and the deterministic `overwriting`
+> guardrail (step 3) once the exemplars calibrate its bands.
 
 ## What v1 got wrong (recorded so it is not repeated)
 

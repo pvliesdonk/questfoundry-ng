@@ -240,6 +240,31 @@ def test_fill_write_renders_the_voice_palette_only_when_set(golden):
 
 
 # ---------------------------------------------------------------------------
+# Reading-difficulty fix (2026-07-13): the defect is over-stylization — the
+# writer applying the voice to every paragraph instead of the whole story
+# (docs/plans/reading-difficulty.md). Both producers frame style as a
+# story-level property applied with restraint, never a per-paragraph quota.
+# ---------------------------------------------------------------------------
+
+
+def test_fill_write_frames_style_as_story_level_with_a_plain_baseline():
+    source = (PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8")
+    assert "STYLE BELONGS TO THE STORY, NOT TO THIS PARAGRAPH" in source
+    assert "OVER-WRITTEN" in source
+    # names the concrete failure modes the assessment measured
+    assert "coin a new compound in every clause" in source
+    assert "strobe of short fragments" in source
+    assert "Clarity outranks atmosphere" in source
+
+
+def test_fill_voice_asks_for_restraint_and_a_plain_baseline():
+    source = (PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8")
+    assert "THE VOICE CHARACTERIZES THE WHOLE STORY, NOT EVERY PARAGRAPH" in source
+    assert "PLAIN baseline" in source
+    assert "Clarity always outranks atmosphere" in source
+
+
+# ---------------------------------------------------------------------------
 # Pipeline-wide prompt-quality sweep (2026-07-12): each landed fix makes a
 # checkable promise in the template source.
 # ---------------------------------------------------------------------------

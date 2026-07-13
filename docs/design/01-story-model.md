@@ -99,6 +99,19 @@ person, present tense, short declaratives, no semicolons"). The palette
 fields exist because a thin voice makes the writer lean on whatever
 styled text sits in its prompt — rendered facts, adjacent prose — and
 book-scale repetition follows (live run 8; the prose-quality effort).
+The voice characterizes the **whole story, not every paragraph**: within
+any passage most prose is plain and load-bearing, and the voice's
+distinctive qualities surface only at the moments that earn them
+(reading-difficulty effort, 2026-07-13). The failure it guards against
+is *over-stylization* — the writer applying the full voice to every
+sentence until the prose reads airless — which an author read of the
+generated stories found is what "too complex for a gamebook" actually
+means (grade-level metrics are anti-correlated: the most readable sample
+scored the *highest* Flesch–Kincaid, the least readable the lowest; see
+`docs/plans/reading-difficulty.md`). Both the voice pass and the FILL
+write prompt frame the voice as a story-level property applied with
+restraint, never a per-paragraph quota. As with register generally,
+style intensity is taste — no gate grades it, the fence is the framing.
 
 ## 3. World layer
 

@@ -633,17 +633,26 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > unmodulated prose (bubblegum's wall-to-wall aphorism) and fragmentation +
 > coined-compound overload (cartographers: 42% tiny sentences, 4× compound
 > density). The readable stories have a plain baseline, grammatical flow, and
-> modulation (ornate ≠ unreadable — `closed-circle` is both). Corrected lever:
-> **generative first** — a `fill_voice.j2` restraint/modulation directive + a
-> `fill_write.j2` "plain baseline, clarity over atmosphere" rule (corpus-
-> grounded: prose_patterns:52) — with a deterministic `overwriting` finding on
-> the signals that *did* track the author (fragmentation ratio, novelty
-> density), and **FKGL dropped from the lever entirely**. Also flagged: the
-> pipeline has **no clean target-register exemplar** (the golden over-writes
-> too). Build gated on the author confirming the diagnosis + exemplar approach
-> (plan's *Open decisions*). **NB — item 1 below ("a completing FILL run") is now
-> ACHIEVED:** the compounding review/rework chain (#57→#58→#59→#60→#61)
-> carried `gpt-oss:120b` through DRESS, codex review included.
+> modulation (ornate ≠ unreadable — `closed-circle` is both). **The first fix
+> is now BUILT** (2026-07-13, author-directed — the author's sharpening: *"the
+> writer tried to apply the style to every paragraph, while it should apply to
+> the whole story"*; decision log below): the generative lever landed as a
+> prompt reframe — `fill_voice.j2` now frames the voice as characterizing the
+> **whole story, not every paragraph** (plain baseline, restraint, clarity over
+> atmosphere; `rhythm`/`imagery` reworded so they can't read as a per-sentence
+> quota), and `fill_write.j2` gained a **"STYLE BELONGS TO THE STORY, NOT TO
+> THIS PARAGRAPH"** directive (most prose plain and load-bearing; heightened
+> register at a few charged moments; names the two measured failure modes —
+> compound-per-clause, fragment-strobe — and states clarity outranks
+> atmosphere). Design doc 01 §2 records the principle (style intensity is taste,
+> the fence is the framing). 515 tests. **Still open (follow-ups):** live
+> validation on Ollama; the author's **real-gamebook exemplars** (in flight) to
+> calibrate against; and the deterministic `overwriting` guardrail finding
+> (fragmentation ratio + novelty density — the signals that tracked the author;
+> FKGL stays out) once the exemplars set its bands. **NB — item 1 below ("a
+> completing FILL run") is now ACHIEVED:** the compounding review/rework chain
+> (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
+> included.
 
 1. **A completing FILL run — the recurrence read is still open, and the
    prompt fixes need live validation** (2026-07-12 decision log has the
@@ -997,6 +1006,37 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-13 (reading-difficulty fix #1 — over-stylization is per-paragraph
+  style saturation; prompt reframe, author-directed):** The author greenlit the
+  fix and sharpened the root cause: *"the writer tried to apply the style to
+  every paragraph, while it should apply to the whole story."* That is exactly
+  what the assessment measured — the readable stories keep a plain, load-bearing
+  baseline and surface style at a few charged moments; the unreadable ones max
+  every sentence. The lever is generative (the fence is framing — style
+  intensity is taste, not a gate; design doc 01 §2), so it landed as a
+  two-prompt reframe, no schema/engine change: (1) `fill_voice.j2` gained a
+  **"THE VOICE CHARACTERIZES THE WHOLE STORY, NOT EVERY PARAGRAPH"** principle
+  (plain baseline, restraint, clarity over atmosphere) and reworded `rhythm`
+  (a default to depart from, not a maximal pattern) and `imagery` (spent at a
+  few moments, "never a coat of paint for every sentence"); (2) `fill_write.j2`
+  gained a **"STYLE BELONGS TO THE STORY, NOT TO THIS PARAGRAPH"** directive —
+  most prose plain and load-bearing with a clear grammatical spine, the
+  heightened register at only a few charged moments (opening image / the turn /
+  last line), and it names the two failure modes the assessment found
+  (a fresh metaphor or coined compound *per clause*; a *strobe of short
+  fragments*) plus "clarity outranks atmosphere." Design doc 01 §2 records the
+  principle and the FKGL-inversion finding. Deliberately **not** touched: the
+  review — adding an over-stylization *rule* would reopen the false-positive-halt
+  class the review-contract redesign fixed (the review keeps "TASTE IS A WARN,
+  NEVER A FAIL," with figurative language named as taste). Tests: two new
+  prompt-source assertions; 515 pass, ruff clean, golden 0/0. The FILL e2e
+  fixtures did **not** need re-recording — MockProvider replays in call order,
+  not by prompt hash, so wording changes don't shift the sequence. **Follow-ups:**
+  Ollama live validation; the author's real-gamebook exemplars (in flight) as
+  the target-register north star; and the deterministic `overwriting` guardrail
+  (fragmentation + novelty density; FKGL stays out) once the exemplars set its
+  bands.
 
 - **2026-07-12 (reading-difficulty assessment — v1 thesis WRONG, corrected by
   an author read; plan doc

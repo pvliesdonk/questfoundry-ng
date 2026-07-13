@@ -725,6 +725,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
+> **IN PROGRESS (2026-07-13, PR #70): POLISH `passages`-pass decomposition** —
+> plan [`docs/plans/passages-chunking.md`](plans/passages-chunking.md). The
+> passages pass emits the whole passage layer in one LLM call and overruns
+> `num_ctx` at medium scope (the `AdapterError` the noir-medium run hit). Fix
+> (author decision B, then the greedy-context reframe): decompose into
+> independent minimal-context calls — `summary:<group>` per collapse group +
+> `labels:<source-group>` per source group — no batching. **Landed so far:** the
+> `variant_flag` persistence prerequisite (so wiring can recover a variant's gate
+> once creation/wiring split); the runner `PassSpec.expand` mechanism (finalize
+> expands into the per-group passes, since collapse groups aren't known until
+> finalize runs — author decision #1); 01 §6 + the finalized plan. **Remaining:**
+> the POLISH split itself (finalize's `expand`, the `summary`/`labels` schemas +
+> prompts + applies reading `dest.variant_flag`), the keeper e2e re-record, 02/03
+> docs, and a live medium `--to polish` on `gpt-oss:120b-cloud` as the acceptance
+> test.
+
 > **BUILT (2026-07-13):** the epilogue/POV collapse-feasibility problem below is
 > resolved — see "`narration_scope` (POV/coda) is built" at the top of "Where we
 > are". The contract

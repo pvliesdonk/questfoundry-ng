@@ -849,3 +849,51 @@ def test_write_context_and_prompt_carry_the_arc_position(golden_fill):
     )
     assert "ARC POSITION" in rendered
     assert "THIS SCENE TURNS IT" in rendered
+
+
+# -- overwriting guardrail (coined-compound density) --------------------------
+
+
+def _prose(total_words: int, compounds: int) -> str:
+    """`compounds` hyphen-compounds among `total_words` words — a density
+    the overwriting finding measures (density = 1000 * compounds / total)."""
+    return " ".join(["salt-worn"] * compounds + ["grey"] * (total_words - compounds))
+
+
+def test_overwriting_finding_grades_by_density():
+    from questfoundry.pipeline.review import ReviewVerdict, needs_rework
+    from questfoundry.pipeline.stages.fill import _overwriting_finding
+
+    assert _overwriting_finding(_prose(240, 0)) is None  # plain: no finding
+    warn = _overwriting_finding(_prose(300, 3))  # ~10/1k: past warn, under fail
+    assert warn.rule == "overwriting" and warn.assessment == "warn"
+    assert not needs_rework(ReviewVerdict(verdict="needs_work", findings=[warn]))
+    flood = _overwriting_finding(_prose(200, 6))  # ~30/1k: egregious
+    assert flood.assessment == "fail" and flood.confidence == "high"
+    assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[flood]))
+    assert "plain words" in flood.recovery_action
+
+
+def test_overwriting_finding_ignores_a_tiny_sample():
+    from questfoundry.pipeline.stages.fill import _overwriting_finding
+
+    # two compounds in a handful of words is not a density (the min-words floor)
+    assert _overwriting_finding("salt-worn brine-lamp grey sea") is None
+
+
+def test_overwriting_blocks_a_compound_flood_even_when_approved(golden_fill, monkeypatch):
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+
+    class FakeAdapter:
+        def complete(self, *, system, prompt, schema, role):
+            return _verdict()  # the LLM approves — an empty-findings verdict
+
+    env = Environment(loader=DictLoader({"fill_review.j2": "review {{ passage.id }}"}))
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    review = _review_for("passage:p-arrival")
+    # ~30/1k compounds in 200 words: inside p-arrival's 150-450 band, so the block
+    # is purely the overwriting guardrail, not word_budget
+    issues = review(WriteProposal(prose=_prose(200, 6)), golden_fill, FakeAdapter())
+    assert issues and any("overwriting" in i for i in issues)

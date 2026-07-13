@@ -1,8 +1,10 @@
 # `scene_type` Structural Modulation — Build Contract
 
-> Status: **BUILT** (2026-07-13, PR #65) — checkpoints 1–5 landed; follow-ups
-> (G4 pacing report, `overwriting` guardrail, live validation, scale
-> recalibration) remain, tracked in STATUS "Next up". Original hand-off spec in
+> Status: **BUILT** (2026-07-13, PR #65) — checkpoints 1–5 landed. The two
+> guardrails followed in PR #66 (the **B8 pacing report** and the graded
+> **`overwriting`** compound-density finding); **live validation** on Ollama and
+> the **scale recalibration** remain, tracked in STATUS "Next up". Original
+> hand-off spec in
 > [`reading-difficulty.md`](reading-difficulty.md) § "Hand-off spec — the
 > `scene_type` modulation build" is the parent; this is the sharpened,
 > decisions-resolved contract a build session follows. Frontier-authored;
@@ -262,11 +264,13 @@ The payoff. Three changes:
   reads slightly high. **Do not touch the scale table in this PR** (no data yet);
   after the first modulated live run, re-check `words_total`/`passages` bands and
   teach the sim a scene:sequel mix. Recorded as the calibration follow-up.
-- **G4 pacing report** (parent step 4): advisory "no > N consecutive
-  same-intensity passages," now buildable because the signal exists.
-- **`overwriting` guardrail** (parent step 5): the *modulation-variance* metric
-  (plain baseline + a few peaks across passages) + compound-density > 15/1k as the
-  one clean aggregate red flag. Calibrated by the exemplars in the parent plan.
+- ~~**G4 pacing report**~~ **BUILT** (PR #66): advisory **B8**, beat-level (not
+  the "passages" wording — `passage_intensity` is a max), a run of > 3 same
+  `scene_type` beats along a playthrough warns.
+- ~~**`overwriting` guardrail**~~ **BUILT** (PR #66): the compound-density red
+  flag (`_overwriting_finding`, warn ~8/1k, fail ~15/1k) is the aggregate signal;
+  the *modulation-variance* half is B8 itself (beat runs, not a per-corpus mean).
+  Fragmentation stays ungated.
 - **The "arc" naming overload** (author-agreed 2026-07-13): "arc" means both
   *computed story arcs* (playthroughs, iron rule 2) and *character-arc metadata*
   (`Entity.arc`). Worth a rename for clarity — **separate cleanup**, not this
@@ -285,5 +289,5 @@ The payoff. Three changes:
 4. Golden-story annotation; re-record e2e fixtures; full `pytest`/`ruff`/golden
    `validate` green.
 5. Docs (01, 02, STATUS).
-6. (Follow-up PRs) G4 pacing report; `overwriting` guardrail; live validation;
-   arc rename.
+6. (Follow-up PR #66) G4 pacing report (B8) + `overwriting` guardrail — both
+   BUILT. Still open: live validation; arc rename.

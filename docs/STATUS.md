@@ -6,14 +6,17 @@
 > the way you'd want to find it.
 >
 > Last updated: 2026-07-13 · **`scene_type` structural prose-intensity
-> modulation is built** (PR #65) **plus its G4 pacing report** (follow-up).
+> modulation is built** (PR #65) **plus its two guardrails** (follow-up,
+> PR #66): the **B8 pacing report** and the **`overwriting`** compound-density
+> finding.
 > A beat now carries an intrinsic `scene_type` (Swain scene/sequel/micro_beat)
 > that GROW's new *annotate* pass writes pre-freeze and FILL reads to
 > modulate prose across the story (per-passage word band + per-beat
-> intensity directive); the deferral in 01 §10.3 is resolved. The pacing
-> report followed as advisory **B8** (beat-level, `check_b8_pacing`). 540
-> tests. Follow-ups still open: the `overwriting` guardrail, live
-> validation on Ollama, and the scale recalibration. Before it: **#1a live validation ran and reframed
+> intensity directive); the deferral in 01 §10.3 is resolved. Both
+> guardrails followed: advisory **B8** (beat-level, `check_b8_pacing`) and
+> the graded **`overwriting`** compound-density FILL finding
+> (`_overwriting_finding`). 543 tests. Follow-ups still open: live
+> validation on Ollama and the scale recalibration. Before it: **#1a live validation ran and reframed
 > the work as prompt quality** (author-directed; decision log has the full
 > record): both fresh stories died at FILL review-exhaustion, so the
 > scaled recurrence read is still open (13 passages can't discriminate)
@@ -686,13 +689,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > is a max, so passages read scene-heavy (the golden runs 4 scene passages
 > but only 3 scene beats) — beats are the rhythm the reader feels and what
 > heritage measured (02 G4 updated). Skips unannotated graphs (all-scene
-> fallback is missing data, not flat pacing). **Remaining follow-ups**
-> (deferred by design, in order): (1) the **`overwriting` guardrail** — the
-> modulation-variance metric (plain baseline + a few peaks across
-> passages) with compound-density > 15/1k as the one clean aggregate red
-> flag (calibration in `reading-difficulty.md`); (2) **live validation on
+> fallback is missing data, not flat pacing). **The `overwriting` guardrail
+> is now also BUILT** (same branch): a graded FILL finding
+> (`fill.py _overwriting_finding`) beside `_word_budget_finding` — coined
+> hyphen-compound density per passage, warn past ~8/1k, fail (blocks) past
+> ~15/1k by distance, the one modulation red flag that survived the
+> genre-diverse study with zero false positives (exemplars 1.7-3.0/1k,
+> worst-read 21.2). Fragmentation is deliberately **not** gated (it
+> false-positives on good noir); the modulation-variance half is the B8
+> pacing report. Register-flat — 15/1k has headroom over even the literary
+> golden (max passage 13.6/1k → non-blocking warn), and the keeper e2e is
+> 0/1k. **Remaining follow-ups** (in order): (1) **live validation on
 > Ollama** (`gpt-oss:120b`, unbilled) — a targeted FILL re-run read by a
-> human for whether prose now modulates; (3) the **scale recalibration**
+> human for whether prose now modulates, and whether the guardrails fire
+> where they should; (2) the **scale recalibration**
 > (measure-after: modulation shortens sequels, so `words_total`/`passages`
 > and `tests/scale.py` may read slightly high). Historical hand-off spec:
 > [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)

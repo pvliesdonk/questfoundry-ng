@@ -32,6 +32,12 @@ class Passage(Node):
     summary: str
     entities: list[str] = []
     ending: Ending | None = None
+    # Heavy-residue variant: the flag that gates this variant passage (the
+    # world-state it presents). Set when POLISH creates the variant; None on
+    # every non-variant passage. Persisted so choice-wiring can recover which
+    # variant carries which gate once passage-creation and edge-wiring are
+    # separate passes (design doc 01 §6; docs/plans/passages-chunking.md).
+    variant_flag: str | None = None
     # POLISH feasibility audit: flags declared irrelevant to this passage
     # (omitted from prose); the remainder must stay within the I12 cap.
     irrelevant_flags: list[str] = []

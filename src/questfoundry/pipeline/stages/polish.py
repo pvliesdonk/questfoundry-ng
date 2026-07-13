@@ -408,13 +408,22 @@ def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
         ending = pc.ending_beat(g, group)
         entities = pc.group_entities(g, group)
 
-        def build(pid: str, summary: str, *, entities=entities, spec=spec, ending=ending):
+        def build(
+            pid: str,
+            summary: str,
+            *,
+            variant_flag=None,
+            entities=entities,
+            spec=spec,
+            ending=ending,
+        ):
             try:
                 return Passage(
                     id=pid,
                     created_by=Stage.POLISH,
                     summary=summary,
                     entities=entities,
+                    variant_flag=variant_flag,
                     ending=(
                         Ending(id=_ending_id(pid), title=spec.ending_title) if ending else None
                     ),
@@ -432,7 +441,7 @@ def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
                 )
             members: list[tuple[str, list[str]]] = []
             for v in spec.variants:
-                mutations.add_passage(g, build(v.id, v.summary), group)
+                mutations.add_passage(g, build(v.id, v.summary, variant_flag=v.flag), group)
                 members.append((v.id, [v.flag]))
             base = members[0][0]
             for vid, _ in members[1:]:

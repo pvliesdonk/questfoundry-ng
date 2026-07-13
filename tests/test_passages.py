@@ -159,6 +159,16 @@ def test_heavy_residue_creates_gated_variants(vision, tmp_path):
         if e.kind == EdgeKind.CHOICE and e.dst in holders
     )
     assert gates == [("flag:sub-a",), ("flag:sub-b",)]
+    # each variant persists its gating flag on the passage (so choice-wiring
+    # can recover it once creation and wiring are separate passes)
+    assert {g.node(va).variant_flag, g.node(vb).variant_flag} == {"flag:sub-a", "flag:sub-b"}
+    # and each variant's persisted flag matches the gate on its incoming choice
+    for e in g.edges:
+        if e.kind == EdgeKind.CHOICE and e.dst in holders:
+            assert e.payload["requires"] == [g.node(e.dst).variant_flag]
+    # a non-variant passage carries no variant_flag
+    non_variant = next(p for p in g.nodes_of(Passage) if p.id not in holders)
+    assert non_variant.variant_flag is None
 
     proposal = AuditProposal(
         audit=[

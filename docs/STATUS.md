@@ -621,16 +621,29 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > (FILL → DRESS; decision log below, and the preserved sample
 > `examples/thaw-between/`), so *quality*, not completion, is the frontier.
 > The LLM prose — and maybe the coined Voice — skews to high reading
-> complexity: artful, but poor for a reader navigating choices. Research
-> reading-level metrics + gamebook/CYOA norms + what the vendored
-> interactive-fiction craft corpus says; then pick a lever — a readability
-> target on the Voice pass, a write-prompt accessibility directive, or a
-> **graded readability finding** (the `word_budget` shape: a finding whose
-> confidence scales with how far complexity is out of band) — and consider a
-> literary-vs-accessible **Vision knob**. **NB — item 1 below ("a completing
-> FILL run") is now ACHIEVED:** the compounding review/rework chain
-> (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
-> included.
+> complexity: artful, but poor for a reader navigating choices. **The
+> assessment is done, and its v1 thesis was corrected by an author read**
+> ([`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) is now v2;
+> decision log below). v1 measured FKGL and recommended a graded-readability
+> finding; the author's ranking of the stories (**keepers + closed-circle
+> best; cartographers + bubblegum near-unreadable**) **inverted** it — FKGL is
+> *anti-correlated* (best story `closed-circle` = grade 18, worst
+> `cartographers` = grade 2.5), and even the hand-authored golden reads
+> "pretentious." The real fault is **over-stylization**: relentless,
+> unmodulated prose (bubblegum's wall-to-wall aphorism) and fragmentation +
+> coined-compound overload (cartographers: 42% tiny sentences, 4× compound
+> density). The readable stories have a plain baseline, grammatical flow, and
+> modulation (ornate ≠ unreadable — `closed-circle` is both). Corrected lever:
+> **generative first** — a `fill_voice.j2` restraint/modulation directive + a
+> `fill_write.j2` "plain baseline, clarity over atmosphere" rule (corpus-
+> grounded: prose_patterns:52) — with a deterministic `overwriting` finding on
+> the signals that *did* track the author (fragmentation ratio, novelty
+> density), and **FKGL dropped from the lever entirely**. Also flagged: the
+> pipeline has **no clean target-register exemplar** (the golden over-writes
+> too). Build gated on the author confirming the diagnosis + exemplar approach
+> (plan's *Open decisions*). **NB — item 1 below ("a completing FILL run") is now
+> ACHIEVED:** the compounding review/rework chain (#57→#58→#59→#60→#61)
+> carried `gpt-oss:120b` through DRESS, codex review included.
 
 1. **A completing FILL run — the recurrence read is still open, and the
    prompt fixes need live validation** (2026-07-12 decision log has the
@@ -984,6 +997,44 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-12 (reading-difficulty assessment — v1 thesis WRONG, corrected by
+  an author read; plan doc
+  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) is now v2):**
+  v1 measured FKGL/paragraph-density, called the prose too *complex*, and
+  recommended a graded-FKGL readability finding + a literary↔accessible Vision
+  knob. The author read the stories and **inverted it**: *"none of the examples
+  is particularly okay… keepers + closed-circle best; cartographers + bubblegum
+  near unreadable,"* and the hand-authored golden itself "reads difficult and
+  pretentious." Checked against the metrics, **FKGL is anti-correlated with the
+  author's judgment**: best story `closed-circle` = FKGL 18.4 (graduate), worst
+  `cartographers` = FKGL 2.5 (early reader). A graded-FKGL finding would have
+  flagged the best prose and passed the worst. **The real fault is
+  over-stylization, not reading level:** (1) relentless, unmodulated prose —
+  every sentence strains for effect, no plain connective baseline (`bubblegum`
+  is wall-to-wall aphorism; the golden's "pretentious" is the mild form); (2)
+  fragmentation + novelty overload — `cartographers` runs 42% ≤6-word sentences
+  and ~21 coined compounds/1k words (4× the others), a strobe of fragments with
+  a fresh metaphor per phrase and no plain prose to rest on. The **readable**
+  stories share a clear grammatical spine + connective flow, modulation (plain
+  valleys between heightened peaks), story-advancing concreteness, and ornament
+  used with restraint — `closed-circle` proves ornate ≠ unreadable. Corpus
+  backs the corrected target (clarity over atmosphere: prose_patterns:52; "paint
+  a picture without overwriting": exposition:74; Clarity/Comprehension bar).
+  **Root cause:** the Voice pass invites maximalism (no restraint/modulation
+  ask — `thaw-between`'s rhythm asks for a "longer, layered" sentence every
+  other line), the write pass sets no ceiling on figuration frequency, no pass
+  rewards modulation/clarity, and the golden over-writes too so the pipeline has
+  **no clean target-register exemplar** to imitate. **Corrected lever:**
+  generative-first — `fill_voice.j2` restraint/modulation directive +
+  `fill_write.j2` plain-baseline/clarity rule — plus a deterministic
+  `overwriting` finding on the signals that *tracked* the author (fragmentation
+  ratio, novelty density), **FKGL dropped from the lever**, and a companion task
+  to establish a real target-register exemplar (human-read validation, not a
+  metric). Gated on the author confirming the diagnosis + exemplar approach
+  (plan's *Open decisions*). No billed calls spent. **Lesson (AGENTS.md prompt-
+  quality spirit): a metric that looks objective can be anti-correlated with the
+  actual goal — read the artifact, don't trust the number.**
 
 - **2026-07-12 (word budget → a graded review finding, not a hard apply gate;
   author-directed):** The rework-convergence run reached pass 21/22 but the

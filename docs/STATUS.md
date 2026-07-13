@@ -655,11 +655,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > star and the first calibration for the `overwriting` finding. **A second
 > exemplar confirms it** (*Pirates of the Splintered Isles*, ~157k words): FKGL
 > 5.9, compound density **3.0/1k**, fragmentation 20% — two independent published
-> gamebooks now replicate the profile (novelty density ≤3/1k, moderate
-> fragmentation), tightening the guardrail bands (compound warn ≳8/fail ≳15 per
-> 1k; fragmentation warn ≳38%/fail ≳50%). **Still open (follow-ups):** live
-> validation on Ollama, and building the deterministic `overwriting` guardrail
-> (FKGL stays out — settled by both exemplars scoring in the "bad" FKGL band). **NB — item 1 below ("a
+> gamebooks now replicate the profile. **Two author cautions then refined the
+> picture (2026-07-13):** (a) both exemplars are the **same genre** (fantasy-
+> adventure), so the acceptable-band ceiling is genre-provisional — a literary
+> register may legitimately sit higher (`keepers` 5.5 > the fantasy targets ≤3);
+> only *FKGL-is-noise* and *the egregious extreme* (21/1k) generalize, so the
+> guardrail is **not** built yet, pending a different-genre exemplar (author
+> sourcing one); (b) **over-stylization compounds across stages** — verified in
+> the graph: `bubblegum`'s *beat summaries* are already stylized prose ("the gym's
+> chatter tightens into a hush… pastel streamers"), so FILL inherits an
+> over-styled brief and amplifies it. **A second, upstream vector** is now
+> identified: the summary-writing passes (GROW/POLISH/notes) should write plain
+> briefs; this PR fixes only the FILL half. **Still open (follow-ups):** the
+> upstream note/summary plain-brief reframe; a different-genre exemplar; then the
+> deterministic `overwriting` guardrail; live validation on Ollama. **NB — item 1 below ("a
 > completing FILL run") is now ACHIEVED:** the compounding review/rework chain
 > (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
 > included.

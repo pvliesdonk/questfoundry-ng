@@ -113,6 +113,22 @@ never gate against a controlled literary register.
 - **The golden fixture over-writes too**, so the pipeline has *no clean in-repo
   exemplar of the target register* to imitate — it is learning from its own
   over-written outputs.
+- **Over-stylization compounds across stages — it does not begin at FILL**
+  (author observation, 2026-07-13, verified against the graph). The beats and
+  passage summaries arrive at FILL *already* written as stylized prose, and the
+  writer then performs that register and amplifies it. `bubblegum-alibi`'s own
+  beat summaries are the proof: *"In the ashless world where the ledger is gone…"*,
+  *"The gym's chatter tightens into a hush as the crowd pulls itself into a ragged
+  circle, pastel streamers…"* — atmospheric literary prose where a brief should be
+  a plain functional statement of events/stakes. So `fill_write.j2`'s "the
+  summaries are your brief, not your style — leave their wording behind" is fighting
+  a summary that is *itself* over-styled. The register-as-a-note-contract already
+  in the pipeline (design doc 01 §2, and the echo check) governs note *length* and
+  verbatim *repetition* but not note *style*. **This is a second, upstream vector:**
+  the summary-writing passes (GROW weave/contextualize/bridge, POLISH passages, and
+  the story-so-far/arc notes) should write **plain briefs**, applying the
+  whole-story-not-every-note discipline — otherwise FILL inherits the stylization no
+  matter how well its own prompt is framed. The current PR fixes only the FILL half.
 
 ## Recommended lever (corrected)
 
@@ -217,6 +233,20 @@ samples (refine as more arrive): **compound density** — warn ≳ 8/1k, fail �
 (targets 1.7–3.0, all acceptable ≤ 6.2, worst 21.2); **fragmentation** — warn
 ≳ 38%, fail ≳ 50% (targets 20–28%, worst 45%). Human read remains the acceptance
 test; these only bound the egregious cases the metrics catch cleanly.
+
+**Caveat — same genre, so the bands are provisional** (author, 2026-07-13). Both
+exemplars are the same *kind* of gamebook (fantasy-adventure, plain functional
+register). What generalizes safely: **FKGL is out** (also supported cross-genre —
+the literary `closed-circle` is "good" at FKGL 18.4), and **the egregious extreme
+is a defect in any register** (`cartographers`' 21.2 compounds/1k is not a genre
+choice). What does *not* yet generalize: the **acceptable ceiling**. A legitimately
+literary register (a gothic-horror gamebook, say) may sit higher on compound
+density and sentence length and still read well — `keepers` (good, more literary)
+already runs 5.5 vs the fantasy targets' ≤ 3.0. So the bands must **not** be fixed
+from two same-genre samples: hold the fail line at the egregious extreme, keep the
+warn line loose, and either widen the acceptable band per Vision register or
+gather a different-genre exemplar before the finding is built. A different-genre
+target is the next calibration input (author is sourcing one).
 
 ## Scope guards / not doing
 

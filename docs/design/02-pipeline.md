@@ -274,7 +274,7 @@ central commitment point.
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
 | Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I13; every choice label distinct and non-spoiling; pacing report (no >N consecutive same-intensity passages); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
+| Gate G4 | I10–I13; every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
 

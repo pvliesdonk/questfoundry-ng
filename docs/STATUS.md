@@ -673,9 +673,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > current compiler already enforces plain briefs via `_summary_brief.j2` (SEED
 > scaffold, GROW bridge/contextualize, POLISH passages/finalize: *"a summary is
 > never the page… name a mood instead of performing it"*). So the FILL reframe in
-> this PR is the piece that was missing, not the first of two. **Still open
-> (follow-ups):** design the modulation measure + register-aware bands, then build
-> the `overwriting` guardrail; live validation on Ollama. **NB — item 1 below ("a
+> this PR is the piece that was missing, not the first of two. **The modulation
+> mechanism has a name, and NG lost it** (author, 2026-07-13): heritage
+> distributed prose intensity *structurally* via beat annotations — `scene_type`
+> (Swain scene/sequel: FILL derives "prose intensity / target length" from it) and
+> `narrative_function`. Design doc 01 §10.3 explicitly **kept `scene_type`
+> (scene/sequel) + `exit_mood`**, but **neither was ever built** (0 code
+> references; POLISH notes "pacing report stays deferred with scene_type") — a
+> doc↔code divergence, and exactly the "lost in translation" the author named. The
+> reading-difficulty gap is the "demonstrable FILL quality gap" §10.3 said would
+> justify (re)adding it. So the primary modulation lever should be **structural**
+> — implement `scene_type` as a beat annotation driving FILL's per-passage
+> intensity + word band — with the `overwriting` metric demoted to a guardrail
+> (details in the plan). **Still open (follow-ups):** the `scene_type`-annotation
+> modulation build (frontier, milestone-sized, gated on author go-ahead); the
+> `overwriting` guardrail after; live validation on Ollama. **NB — item 1 below ("a
 > completing FILL run") is now ACHIEVED:** the compounding review/rework chain
 > (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
 > included.
@@ -726,6 +738,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
    built — 2026-07-12, decision log).
 
 ## Known deferrals / open items
+
+- **Doc↔code divergence: `scene_type` / `exit_mood` beat annotations are
+  promised but unbuilt** (found 2026-07-13, reading-difficulty effort). Design
+  doc 01 §10.3 states NG "starts with two — `scene_type` (scene/sequel) and
+  `exit_mood`" annotations; the `Beat` model (`models/structure.py`) has neither,
+  and the only code reference is a POLISH comment deferring the pacing report
+  "with scene_type." The dependent G4 pacing report (design doc 02 §3: "no > N
+  consecutive same-intensity passages") is unbuilt for the same reason. Per
+  AGENTS.md an undocumented doc↔code divergence is a bug even when the code is
+  better — resolve by either building `scene_type` (the recommended modulation
+  mechanism; see [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md))
+  or correcting §10.3 to say the annotations are deferred, not present. Building
+  it is the preferred resolution because the reading-difficulty gap is the
+  "demonstrable FILL quality gap" §10.3 named as the trigger for adding it.
 
 - **Live-run budget discipline is now a working norm** (author call,
   2026-07-12, after a session that exhausted the token budget on repeated

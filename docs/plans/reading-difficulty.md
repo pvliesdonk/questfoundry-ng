@@ -319,6 +319,62 @@ prefer a *modulation* measure (a plain baseline with a few peaks, computed acros
 passages) over any per-corpus average — keeping **compound density > 15/1k** as the
 one clean aggregate red flag that survived genre diversity.
 
+### The structural mechanism NG lost — heritage beat annotations (2026-07-13)
+
+Author observation, confirmed against heritage and the NG design docs: the
+modulation problem is *completely* why the original QuestFoundry carried
+**structural beats** and **beat annotations**, and the annotations were lost in
+translation to NG.
+
+Heritage (`docs/heritage/story-graph-ontology.md`, Part 3 "Beat Annotations")
+distributed stylistic intensity **structurally, per beat**:
+
+- `scene_type ∈ {scene, sequel, micro_beat}` (Swain) — *"Consumed by POLISH for
+  pacing detection and by FILL for prose intensity / target length derivation."* A
+  `scene` (active conflict) earns heightened prose; a `sequel` (reactive) or
+  `micro_beat` (transition) stays plain and short.
+- `narrative_function ∈ {introduce, develop, complicate, confront, resolve}` —
+  *"Consumed by FILL for prose pacing."*
+- `atmospheric_detail` — sensory grounding for FILL.
+
+This is exactly "style distributed across snippets": each beat carries a signal for
+how intense its prose should be, so FILL is *told* where to stay plain and where to
+rise. Strip it and every beat looks identical to the writer → uniform intensity →
+over-stylization. The mechanism against the disease was **designed into the model**.
+
+**NG kept the structural-beat class (`beat_class`, `purpose`) but the annotations
+are gone — and the loss is half-recorded, half an undocumented gap:**
+
+- Design doc 01 §10.3 ("Annotation trimming") deliberately trims the heritage set
+  yet **commits to keeping two — `scene_type` (scene/sequel) and `exit_mood` — and
+  adding more "only when a FILL quality gap demonstrably calls for one."**
+- **Neither exists in NG code** — `Beat` (`models/structure.py`) has no
+  `scene_type` and no `exit_mood`; the only mention anywhere is a POLISH comment,
+  *"the pacing report stays deferred with scene_type."* The G4 pacing report
+  (design doc 02 §3: *"no > N consecutive same-intensity passages"*) is unbuilt for
+  the same reason — it needs the missing intensity signal. So the authoritative doc
+  promises `scene_type`/`exit_mood`; the code shipped neither. Per AGENTS.md that
+  doc↔code divergence is itself a bug (filed in STATUS "Known deferrals / open
+  items", 2026-07-13).
+
+**The reading-difficulty gap is precisely the trigger §10.3 anticipated.** The
+condition for (re)adding the annotation — "a FILL quality gap demonstrably calls
+for one" — is now met, and the annotation §10.3 named (`scene_type`) is the
+modulation carrier. So the primary modulation lever should be **structural, not a
+metric**: implement `scene_type` as a beat annotation (populated where the DAG is
+known — heritage put it at GROW Phase 4b; POLISH is also plausible), consumed by
+FILL to set **both prose intensity and the target word band** (sequel/micro → plain,
+short band; scene → allowed to rise). The `overwriting` finding then demotes to a
+*guardrail* that checks the modulation actually happened (variance across
+passages), with compound-density > 15/1k as the aggregate red flag. **Designing
+modulation in beats measuring it after the fact.**
+
+This is a frontier design effort (a new annotation field, a populate pass, FILL
+consumption, the deferred pacing report, checked against the freeze — heritage
+populated `scene_type` at GROW, i.e. before the topology freezes, so an annotation
+added post-freeze at POLISH would need I-rule clearance). Milestone-sized, not this
+PR. Recorded as the recommended direction; build gated on author go-ahead.
+
 ## Scope guards / not doing
 
 - **No FKGL/FRE gate.** It is anti-correlated with the goal here.

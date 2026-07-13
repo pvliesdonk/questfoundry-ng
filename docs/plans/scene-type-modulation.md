@@ -170,6 +170,18 @@ The payoff. Two changes:
    `sequel`-dominant passage gets the middle band (the modulation), and a
    lone-bridge passage tightens from full→short (a bridge *should* be brief).
 
+   This band feeds the **graded** `_word_budget_finding` (`fill.py:614`), which is
+   the load-bearing mechanism for per-passage length: length today is *not* an LLM
+   rule (`word_budget` is not in `FILL_REVIEW_RULES`; the reviewer never sees a
+   count or band) — it is a mechanical finding merged into the same graded loop the
+   LLM findings feed, blocking only on a large miss. Keying the band off
+   `scene_type` is therefore what makes length **self-correct per beat type** (the
+   author's point, 2026-07-13): a correctly-short sequel now sits inside its band or
+   gets at most a low-confidence, non-blocking finding, while a thin *scene* or a
+   runaway is still caught. The exact tier arithmetic is thus not load-bearing —
+   the graded finding adapts — which is why the aggregate recalibration below is a
+   safe measure-after.
+
 2. **Per-beat intensity directive** (`fill_write.j2`). The write context already
    renders per-beat summaries; add each beat's `effective_scene_type`, plus one
    line stating the passage's dominant intensity and its band. Directive text:
@@ -179,6 +191,16 @@ The payoff. Two changes:
    BELONGS TO THE STORY, NOT TO THIS PARAGRAPH" directive **concrete per beat**:
    the band uses the aggregate, the *directive* uses the per-beat signal, so style
    distributes *within* a passage as well as across the story.
+
+3. **Render `scene_type` to the reviewer too** (`fill_review.j2`). The review runs
+   on the same `_write_context_for` context, but the template shows only
+   `b.summary`. Render each beat's `effective_scene_type` there as well and frame
+   `beat_infidelity`/register expectations by it — a plain, brief *sequel* is
+   *correct* (not a defect to warn against), a *scene* is where fuller rendering is
+   expected. Without this the reviewer can fight appropriate plainness; with it the
+   qualitative judgment aligns with the modulation intent. (Length stays the
+   deterministic graded finding — this is about the LLM axes not penalizing a
+   correctly plain sequel, per the author's "reviewer gets beat types" point.)
 
 ## Golden story + fixtures + docs
 
@@ -213,14 +235,16 @@ The payoff. Two changes:
 
 ## Risks / follow-ups (flag, do not preempt)
 
-- **Scale recalibration is a *measure-after*, not a derive-now.** Modulation makes
-  sequel/micro passages shorter, lowering effective mean words/passage → a
-  sequel-heavy story trends toward the low end of `words_total` (B7, advisory) and
-  the `tests/scale.py` simulation (which assumes a uniform band, pre-`scene_type`)
-  will read slightly high. **Do not touch the scale table in this PR** (no data
-  yet); after the first modulated live run, re-check `words_total`/`passages`
-  bands and teach the sim a scene:sequel mix. Recorded as the calibration
-  follow-up.
+- **Scale recalibration is a *measure-after*, not a derive-now** — and only the
+  *aggregate* half of it. Per-passage length **self-corrects** through the graded
+  `_word_budget_finding` once the band is `scene_type`-keyed (FILL consumption
+  §1), so the exact tier arithmetic need not be nailed. What does not self-correct
+  is the *aggregate* advisory picture: modulation lowers effective mean
+  words/passage, so a sequel-heavy story trends toward the low end of `words_total`
+  (B7, advisory) and the `tests/scale.py` simulation (uniform-band, pre-`scene_type`)
+  reads slightly high. **Do not touch the scale table in this PR** (no data yet);
+  after the first modulated live run, re-check `words_total`/`passages` bands and
+  teach the sim a scene:sequel mix. Recorded as the calibration follow-up.
 - **G4 pacing report** (parent step 4): advisory "no > N consecutive
   same-intensity passages," now buildable because the signal exists.
 - **`overwriting` guardrail** (parent step 5): the *modulation-variance* metric

@@ -158,20 +158,60 @@ signals — never FKGL.
 
 ## Open decisions (author)
 
-1. **Is the diagnosis right?** Confirm the axis is control/modulation/clarity (not
-   reading level), so FKGL stays out of the lever entirely.
-2. **Prompt-only first, or prompt + guardrail finding?** Recommendation: land the
-   Voice + write-prompt restraint directives first (they attack the root cause and
-   touch no schema), add the deterministic `overwriting` finding once its bands are
-   calibrated on more stories. FKGL is dropped either way.
-3. **Target-register exemplar.** Do you want to supply/bless a passage in the
-   target register, or should I draft a rewrite of one golden passage (plain,
-   modulated) for you to react to? This sets the north star everything calibrates
-   against.
+1. ~~**Is the diagnosis right?**~~ **Confirmed** (2026-07-13, author): the axis is
+   control/modulation/clarity, not reading level — and the ALBA exemplar's FKGL 4.6
+   (= a "bad" story's) settles that FKGL stays out of the lever entirely.
+2. **Prompt-only first, or prompt + guardrail finding?** Recommendation (and the
+   path taken): land the Voice + write-prompt restraint directives first (they
+   attack the root cause and touch no schema); add the deterministic `overwriting`
+   finding once bands are calibrated — the ALBA exemplar gives the first
+   calibration (see *Target-register exemplar*). FKGL is dropped either way.
+3. ~~**Target-register exemplar.**~~ **Supplied** by the author (ALBA); profiled
+   above as the north star and finding-calibration. A second exemplar would tighten
+   the bands further.
 4. **Is "modulation intensity" a Vision knob at all?** The old literary↔accessible
    framing was wrong (best story is the most literary). If any knob, it governs
    *maximalism/restraint*, not vocabulary grade — worth deciding whether that is a
    knob or just the always-on default.
+
+## Target-register exemplar (author-supplied, 2026-07-13)
+
+The author supplied a real published second-person gamebook (*ALBA*, ~172k words
+across 587 numbered sections) as the north star. It is **not vendored** (third-
+party text); recorded here are its measured profile and craft traits, which
+calibrate both the prompt reframe and the future `overwriting` finding. Its prose
+is plain, concrete, functional second-person present — events and observations in
+a clear grammatical spine, description that advances the scene, emotion named
+lightly, almost no coined vocabulary.
+
+Measured against the assessment's stories (same script):
+
+| Source | verdict | FKGL | W/sent | short (≤6w) | compounds /1k |
+|---|---|---|---|---|---|
+| **ALBA** (target) | good | **4.6** | 12.7 | 28% | **1.7** |
+| `keepers` | good | 7.5 | 20.3 | 22% | 5.5 |
+| `closed-circle` | good | 18.4 | 24.4 | 1% | 5.6 |
+| `cartographers` | bad | 2.5 | 9.1 | 42% | 21.2 |
+| `bubblegum` | bad | 4.8 | 13.3 | 45% | 6.2 |
+
+Two conclusions:
+
+1. **FKGL is confirmed noise.** ALBA (target) scores 4.6 — statistically the same
+   as `bubblegum` (bad, 4.8) and *lower* than both other good stories. Grade level
+   does not separate good from bad. FKGL stays out of the lever, settled.
+2. **Coined-novelty density is the clean discriminator.** ALBA coins ~1.7
+   compounds/1k words; `cartographers` (worst) runs 21.2 — a **12× gap**, the
+   widest of any signal, and monotonic with the verdict. This is the primary
+   guardrail signal. Fragmentation is secondary and needs a *generous* threshold:
+   ALBA's 28% short sentences is fine, so the finding should fire only well above
+   that (~≥ 40%, where `cartographers`/`bubblegum` sit) — a plain gamebook uses
+   plenty of short sentences; the defect is a *strobe* of them, not their presence.
+
+Calibration for the deputy `overwriting` finding (step 3), to refine on more
+samples: **compound density** — warn ≳ 8/1k, fail ≳ 15/1k (target 1.7, good
+stories ≤ 6, worst 21); **fragmentation** — warn ≳ 40%, fail ≳ 50% (target 28%,
+worst 45%). Human read remains the acceptance test; these only bound the
+egregious cases the metrics catch cleanly.
 
 ## Scope guards / not doing
 

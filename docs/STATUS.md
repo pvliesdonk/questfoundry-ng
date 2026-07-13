@@ -645,11 +645,17 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > register at a few charged moments; names the two measured failure modes —
 > compound-per-clause, fragment-strobe — and states clarity outranks
 > atmosphere). Design doc 01 §2 records the principle (style intensity is taste,
-> the fence is the framing). 515 tests. **Still open (follow-ups):** live
-> validation on Ollama; the author's **real-gamebook exemplars** (in flight) to
-> calibrate against; and the deterministic `overwriting` guardrail finding
-> (fragmentation ratio + novelty density — the signals that tracked the author;
-> FKGL stays out) once the exemplars set its bands. **NB — item 1 below ("a
+> the fence is the framing). 513 tests. **The first real exemplar has landed**
+> (2026-07-13): the author supplied a published second-person gamebook (*ALBA*,
+> ~172k words) as the target register. Measured, it **confirms the thesis
+> outright** — FKGL 4.6 (statistically the same as "bad" `bubblegum`'s 4.8, so
+> grade level is settled noise) but coined-compound density **1.7/1k** vs
+> `cartographers`' 21.2 (a 12× gap — the cleanest discriminator), fragmentation
+> a modest 28%. Its profile + craft traits are recorded in the plan as the north
+> star and the first calibration for the `overwriting` finding (compound density
+> warn ≳8/fail ≳15 per 1k; fragmentation warn ≳40%/fail ≳50%). **Still open
+> (follow-ups):** live validation on Ollama; a second exemplar to tighten bands;
+> and building the deterministic `overwriting` guardrail (FKGL stays out). **NB — item 1 below ("a
 > completing FILL run") is now ACHIEVED:** the compounding review/rework chain
 > (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
 > included.
@@ -1030,7 +1036,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
   review — adding an over-stylization *rule* would reopen the false-positive-halt
   class the review-contract redesign fixed (the review keeps "TASTE IS A WARN,
   NEVER A FAIL," with figurative language named as taste). Tests: two new
-  prompt-source assertions; 515 pass, ruff clean, golden 0/0. The FILL e2e
+  prompt-source assertions; 513 pass, ruff clean, golden 0/0. The FILL e2e
   fixtures did **not** need re-recording — MockProvider replays in call order,
   not by prompt hash, so wording changes don't shift the sequence. **Follow-ups:**
   Ollama live validation; the author's real-gamebook exemplars (in flight) as

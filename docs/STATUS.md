@@ -655,21 +655,27 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > star and the first calibration for the `overwriting` finding. **A second
 > exemplar confirms it** (*Pirates of the Splintered Isles*, ~157k words): FKGL
 > 5.9, compound density **3.0/1k**, fragmentation 20% — two independent published
-> gamebooks now replicate the profile. **Two author cautions then refined the
-> picture (2026-07-13):** (a) both exemplars are the **same genre** (fantasy-
-> adventure), so the acceptable-band ceiling is genre-provisional — a literary
-> register may legitimately sit higher (`keepers` 5.5 > the fantasy targets ≤3);
-> only *FKGL-is-noise* and *the egregious extreme* (21/1k) generalize, so the
-> guardrail is **not** built yet, pending a different-genre exemplar (author
-> sourcing one); (b) **over-stylization compounds across stages** — verified in
-> the graph: `bubblegum`'s *beat summaries* are already stylized prose ("the gym's
-> chatter tightens into a hush as the crowd pulls itself into a ragged circle,
-> streamers drooping overhead…"), so FILL inherits an
-> over-styled brief and amplifies it. **A second, upstream vector** is now
-> identified: the summary-writing passes (GROW/POLISH/notes) should write plain
-> briefs; this PR fixes only the FILL half. **Still open (follow-ups):** the
-> upstream note/summary plain-brief reframe; a different-genre exemplar; then the
-> deterministic `overwriting` guardrail; live validation on Ollama. **NB — item 1 below ("a
+> gamebooks now replicate the profile. **Then two author cautions + a
+> genre-diverse study refined the picture (2026-07-13):** (a) the two gamebooks
+> are the **same genre**, so eight **choice-based** Twine works (the right medium)
+> across horror/noir/literary/sci-fi/romance/crime were measured (Grimnoir
+> independently re-verified). Result: *FKGL is noise* is **reconfirmed and even
+> inverted** (XYZZY-winning horror `Bogeyman` FKGL 4.3 = "bad" bubblegum; worst
+> amateur work highest at 9.6); *compound density > 15/1k* is a **robust red flag**
+> (zero false positives across six genres; only `cartographers` trips it); but
+> *fragmentation alone is NOT safe* — good noir (Grimnoir 49%) and good
+> minimalist-literary (44%) sit in the bad band, so it must not gate alone. The
+> real lesson (author): the exemplars are about **how style distributes across the
+> partial snippets**, not the medium — so the guardrail should measure *modulation*
+> (a plain baseline with a few peaks across passages), not a per-corpus mean. (b) I
+> had claimed an "unaddressed upstream vector" (beats arrive over-stylized); that
+> was **wrong and is retracted** — `bubblegum` is a stale M5 artifact, and the
+> current compiler already enforces plain briefs via `_summary_brief.j2` (SEED
+> scaffold, GROW bridge/contextualize, POLISH passages/finalize: *"a summary is
+> never the page… name a mood instead of performing it"*). So the FILL reframe in
+> this PR is the piece that was missing, not the first of two. **Still open
+> (follow-ups):** design the modulation measure + register-aware bands, then build
+> the `overwriting` guardrail; live validation on Ollama. **NB — item 1 below ("a
 > completing FILL run") is now ACHIEVED:** the compounding review/rework chain
 > (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
 > included.

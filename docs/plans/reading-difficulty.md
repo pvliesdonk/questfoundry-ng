@@ -113,24 +113,29 @@ never gate against a controlled literary register.
 - **The golden fixture over-writes too**, so the pipeline has *no clean in-repo
   exemplar of the target register* to imitate — it is learning from its own
   over-written outputs.
-- **Over-stylization compounds across stages — it does not begin at FILL**
-  (author observation, 2026-07-13, verified against the graph). The beats and
-  passage summaries arrive at FILL *already* written as stylized prose, and the
-  writer then performs that register and amplifies it. `bubblegum-alibi`'s own
-  beat summaries are the proof (verbatim): *"In the ashless world where the ledger
-  is gone…"* (`admired-and-alone--burn-ledger.yaml`) and *"The gym's chatter
-  tightens into a hush as the crowd pulls itself into a ragged circle, streamers
-  drooping overhead while every glittering eye swings toward Juno for an answer."*
-  (`bridge-crowd-to-circle.yaml`) — atmospheric literary prose where a brief should
-  be a plain functional statement of events/stakes. So `fill_write.j2`'s "the
-  summaries are your brief, not your style — leave their wording behind" is fighting
-  a summary that is *itself* over-styled. The register-as-a-note-contract already
-  in the pipeline (design doc 01 §2, and the echo check) governs note *length* and
-  verbatim *repetition* but not note *style*. **This is a second, upstream vector:**
-  the summary-writing passes (GROW weave/contextualize/bridge, POLISH passages, and
-  the story-so-far/arc notes) should write **plain briefs**, applying the
-  whole-story-not-every-note discipline — otherwise FILL inherits the stylization no
-  matter how well its own prompt is framed. The current PR fixes only the FILL half.
+- **Over-stylization *can* compound across stages — but the current compiler
+  already guards the upstream half** (correction, 2026-07-13; an earlier draft of
+  this plan called it an "unaddressed second vector" — that was wrong, author-
+  flagged, and is retracted here). The concern is real in principle: if the
+  beat/passage *summaries* reach FILL already written as stylized prose, the writer
+  inherits and amplifies that register. `bubblegum-alibi`'s beat summaries show the
+  failure mode — *"In the ashless world where the ledger is gone…"*
+  (`admired-and-alone--burn-ledger.yaml`), *"…the crowd pulls itself into a ragged
+  circle, streamers drooping overhead while every glittering eye swings toward
+  Juno…"* (`bridge-crowd-to-circle.yaml`) — atmospheric prose where a brief should
+  state events plainly. **But `bubblegum-alibi` is a stale M5-era artifact**: the
+  current pipeline already enforces exactly this discipline through
+  `_summary_brief.j2`, a shared register contract `{% include %}`d by **SEED
+  scaffold, GROW bridge/contextualize, and POLISH passages/finalize** — *"A summary
+  is never the page itself. Plain declarative present tense… Name a mood instead of
+  performing it ('The mentor is dead and the group blames Rell' is a brief; 'grief
+  hangs over the camp like early winter' is prose)… Every image you spend here is
+  stolen from the writer."* So the upstream half is already contracted (design doc
+  01 §2); the FILL writer/voice reframe in this PR is the piece that was missing,
+  **not the first of two**. Residual worth a look when convenient: whether the
+  contract also reaches FILL's story-so-far notes, and whether it holds on weak
+  tiers — but there is no known unaddressed upstream vector, and re-generating
+  `bubblegum` on the current compiler would likely produce plainer summaries.
 
 ## Recommended lever (corrected)
 
@@ -155,24 +160,29 @@ signals — never FKGL.
    the way the corpus notes do.
 
 3. **A graded `overwriting` finding at FILL apply** (beside `_word_budget_finding`
-   in `fill.py`), on signals that *tracked the author's ranking*, graded warn→fail
-   by distance out of band:
-   - **Fragmentation ratio** — share of very short (≤ ~6-word) sentences. Both
-     unreadable stories run 42–45%; the readable ones 1–22%. An out-of-band ratio
-     is the staccato-monotony catch.
-   - **Novelty/figuration density** — coined-compound (and, if cheaply
-     detectable, fresh-metaphor) rate per 100 words. `cartographers` is a 4×
-     outlier; a ceiling catches the "no plain prose to rest on" failure.
-   Recovery actions are actionable ("this passage is 44% fragments — join the
-   staccato lines into 2–3 flowing sentences"; "you coined N compounds in this
-   paragraph — keep one, say the rest plainly"), per the AGENTS.md error rule.
+   in `fill.py`) — **design updated by the genre-diverse calibration below**:
+   - **Coined-novelty density > ~15/1k words** is the one aggregate signal that
+     survived six genres with zero false positives (`cartographers` 21.2; every
+     competent work ≤ 7.2). Keep the *fail* line at 15 (the 7–15 region is
+     unsampled — do not lower it), warn loose.
+   - **Fragmentation ratio must NOT gate on its own.** Good noir (Grimnoir 49%) and
+     good minimalist-literary (Great-grandmother 44%) sit in the same band as the
+     bad stories — a rate cannot tell "the register is clipped" from "the prose is
+     a strobe." Use it only paired with the novelty flag, or fold it into a
+     modulation measure.
+   - **Prefer a *modulation* measure over any mean** (the exemplars' real lesson):
+     a plain baseline with a few peaks *across passages*, not a per-corpus average —
+     because the discriminator is the distribution/variance of stylistic intensity,
+     which a mean cannot see (see "What the exemplars are for").
+   Recovery actions stay actionable ("you coined N compounds in this paragraph —
+   keep one, say the rest plainly"), per the AGENTS.md error rule. **Do not build
+   until the modulation measure is designed and a register-aware band is set** — the
+   raw fragmentation rule would false-positive on good noir.
 
-4. **Establish a real target-register exemplar (companion task).** Because even the
-   golden reads as over-written, the pipeline has no north star. Either the author
-   supplies/blesses a short passage in the target register, or we rewrite a golden
-   passage to model *modulated, clear* prose — so voice/write prompts can point at
-   it and reviews can calibrate against it. Validation is a **human read**, not a
-   metric.
+4. ~~**Establish a real target-register exemplar.**~~ **Done** — two published
+   gamebooks (ALBA, Pirates) plus eight genre-diverse choice-based Twine works,
+   all measured; profiles above are the north star and calibration. Validation
+   of generated prose remains a **human read**, not a metric.
 
 ## Open decisions (author)
 
@@ -247,8 +257,67 @@ density and sentence length and still read well — `keepers` (good, more litera
 already runs 5.5 vs the fantasy targets' ≤ 3.0. So the bands must **not** be fixed
 from two same-genre samples: hold the fail line at the egregious extreme, keep the
 warn line loose, and either widen the acceptable band per Vision register or
-gather a different-genre exemplar before the finding is built. A different-genre
-target is the next calibration input (author is sourcing one).
+gather a different-genre exemplar before the finding is built.
+
+### Genre-diverse choice-based calibration (2026-07-13)
+
+The same-genre caveat is now largely resolved. Eight **choice-based** Twine works
+from the IF Archive (the *right medium* — branching passage prose, not parser
+room-text), spread across horror, noir, literary/historical, sci-fi, romance, and
+crime, were extracted (passage prose only; macros/links/variables stripped) and
+measured with the same script. Grimnoir was independently re-fetched and
+re-measured to confirm the method (matched to the decimal).
+
+| Work | Genre | words | FKGL | W/sent | short% | cmp/1k |
+|---|---|--:|--:|--:|--:|--:|
+| Bogeyman (XYZZY Best Game) | horror | 14.7k | 4.3 | 11.5 | 27 | 2.6 |
+| Grimnoir | noir | 50k | 3.6 | 8.3 | **49** | 3.4 |
+| Great-grandmother and the War | literary/historical | 20.9k | 3.6 | 8.9 | **44** | 3.9 |
+| Stars Above | sci-fi | 10.7k | 4.3 | 11.5 | 25 | 3.8 |
+| No Love Deep Space | sci-fi/action | 2.8k | 4.7 | 11.8 | 28 | 7.2 |
+| Date Night | romance | 2.9k | 4.9 | 11.2 | 26 | 1.0 |
+| Rough Velvet | crime | 4.8k | 6.5 | 10.3 | 38 | 4.3 |
+| A Date With Logan Davenport (amateur) | romance | 3.9k | **9.6** | 27.2 | 13 | 2.0 |
+
+Refined conclusions across genre:
+
+1. **FKGL is noise — reconfirmed and inverted.** The XYZZY Best-Game horror
+   (Bogeyman) scores 4.3, indistinguishable from "bad" `bubblegum` (4.8). The
+   worst-written work (Logan Davenport — no punctuation, misspellings) scores the
+   *highest* FKGL (9.6), because missing periods inflate words-per-sentence. FKGL
+   tracks quality **backwards** here. Out, definitively.
+2. **Compound density > ~15/1k stays a robust red flag.** No competent work in this
+   diverse set exceeds 7.2/1k; only `cartographers` (21.2) trips 15 — zero false
+   positives across six genres. *Caveat:* nothing sampled sits in 7–15, so the exact
+   cutoff below 15 is untested; keep the fail line at 15, not lower.
+3. **Fragmentation alone is NOT safe — real good counter-examples.** Two of the most
+   competent works exceed 40% short sentences: **Grimnoir** (noir, 49%) and
+   **Great-grandmother** (literary child-narrator, 44%). Clipped declaratives *are*
+   those registers ("No use. Restless. And bored."). Because the bad examples sit in
+   the same band (`cartographers` 42%, `bubblegum` 45%), fragmentation cannot
+   separate good minimalist/noir from staccato failure on its own. It is confounded
+   with genre and dialogue density, and **must not gate alone** — pair it with the
+   compound flag, or (better) measure *modulation*, not the raw rate (below).
+
+### What the exemplars are *for* — style distribution, not the medium
+
+We are not replicating a medium (author, 2026-07-13). Parser IF, choice IF, and a
+QuestFoundry gamebook differ in surface, but the exemplars answer a medium-
+independent question: **how is stylistic intensity distributed across the many
+partial snippets a story is made of?** Good work modulates — most snippets plain
+and load-bearing, a few heightened; the register is felt across the *whole*, not
+performed in every fragment. That is the "style belongs to the story, not the
+paragraph" principle stated at the scale of the whole work — and it is why parser-IF
+exemplars are not disqualified by the medium gap.
+
+It also explains conclusion 3's failure: a **rate** (mean fragmentation, mean
+anything) cannot see distribution. Noir is *uniformly* clipped and reads well;
+over-styled prose is *uniformly* heightened and reads badly — the mean cannot tell
+them apart; only the **variance/distribution of stylistic intensity across snippets**
+can. That is the refined direction for the deferred `overwriting` guardrail:
+prefer a *modulation* measure (a plain baseline with a few peaks, computed across
+passages) over any per-corpus average — keeping **compound density > 15/1k** as the
+one clean aggregate red flag that survived genre diversity.
 
 ## Scope guards / not doing
 

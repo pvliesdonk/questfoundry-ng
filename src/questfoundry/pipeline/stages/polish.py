@@ -22,7 +22,8 @@ Four passes sharing gate G4:
    docs/plans/prose-quality.md W5).
 
 M3 scope notes (tracked in docs/STATUS.md): false branches carry no
-cosmetic flags yet; the pacing report stays deferred with scene_type.
+cosmetic flags yet. The pacing report is built (advisory B8, over beat
+scene_type — graph/validate.py check_b8_pacing).
 """
 
 from __future__ import annotations

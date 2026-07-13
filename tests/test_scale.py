@@ -12,6 +12,7 @@ from questfoundry.graph.validate import (
     Severity,
     check_b6_choice_cadence,
     check_b7_total_words,
+    check_b8_pacing,
     run_checks,
 )
 from questfoundry.models.base import Stage
@@ -296,3 +297,58 @@ def test_projected_walk_traverses_one_diamond_arm():
     micro = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
     assert words == scene + 2 * micro
     assert decisions == 1
+
+
+# -- B8 pacing report --------------------------------------------------------------
+
+
+def _monotone_story(scene_type: SceneType) -> StoryGraph:
+    """A single dilemma with a long pre-chain, every narrative beat the same
+    intensity — a flat arc the pacing report should flag."""
+    from tests.test_weave import make_dilemma, scaffold
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "main")
+    scaffold(g, "main", d, pa, pb, pre=4)  # arc: 4 pre + commit + post = 6 beats
+    for b in g.nodes_of(Beat):
+        if b.beat_class == BeatClass.NARRATIVE:
+            b.scene_type = scene_type
+    return g
+
+
+def _b8(g: StoryGraph):
+    ctx = Context(g=g, vision=Vision(premise="t", genre="t", tone="t", scope="micro"))
+    check_b8_pacing(ctx)
+    return [i for i in ctx.issues if i.check == "B8"]
+
+
+def test_b8_flags_a_monotonous_run():
+    warnings = _b8(_monotone_story(SceneType.SCENE))
+    assert warnings
+    assert "consecutive scene beats" in warnings[0].message
+    assert warnings[0].severity is Severity.WARNING
+
+
+def test_b8_flags_a_flat_sequel_run_too():
+    # symmetric: an unbroken run of sequels is as flat as a run of scenes
+    warnings = _b8(_monotone_story(SceneType.SEQUEL))
+    assert any("consecutive sequel beats" in w.message for w in warnings)
+
+
+def test_b8_skips_an_unannotated_story():
+    # no scene_type anywhere -> missing data, not flat pacing (the fallback
+    # would read every narrative beat as "scene")
+    from tests.test_weave import make_dilemma, scaffold
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "m2")
+    scaffold(g, "m2", d, pa, pb, pre=4)
+    assert _b8(g) == []
+
+
+def test_b8_silent_on_the_modulated_golden(golden):
+    # the golden runs at most 3 same-intensity beats in a row (its passages
+    # go up to 4 scene passages, but scene_type is measured per beat)
+    ctx = Context(g=golden.graph, vision=golden.vision)
+    check_b8_pacing(ctx)
+    assert [i for i in ctx.issues if i.check == "B8"] == []

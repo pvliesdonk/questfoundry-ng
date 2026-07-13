@@ -159,25 +159,26 @@ signals — never FKGL.
    Clarity/Comprehension bar). Show the good/bad contrast (modulated vs relentless)
    the way the corpus notes do.
 
-3. **A graded `overwriting` finding at FILL apply** (beside `_word_budget_finding`
-   in `fill.py`) — **design updated by the genre-diverse calibration below**:
-   - **Coined-novelty density > ~15/1k words** is the one aggregate signal that
-     survived six genres with zero false positives (`cartographers` 21.2; every
-     competent work ≤ 7.2). Keep the *fail* line at 15 (the 7–15 region is
-     unsampled — do not lower it), warn loose.
-   - **Fragmentation ratio must NOT gate on its own.** Good noir (Grimnoir 49%) and
-     good minimalist-literary (Great-grandmother 44%) sit in the same band as the
-     bad stories — a rate cannot tell "the register is clipped" from "the prose is
-     a strobe." Use it only paired with the novelty flag, or fold it into a
-     modulation measure.
-   - **Prefer a *modulation* measure over any mean** (the exemplars' real lesson):
-     a plain baseline with a few peaks *across passages*, not a per-corpus average —
-     because the discriminator is the distribution/variance of stylistic intensity,
-     which a mean cannot see (see "What the exemplars are for").
-   Recovery actions stay actionable ("you coined N compounds in this paragraph —
-   keep one, say the rest plainly"), per the AGENTS.md error rule. **Do not build
-   until the modulation measure is designed and a register-aware band is set** — the
-   raw fragmentation rule would false-positive on good noir.
+3. ~~**A graded `overwriting` finding at FILL apply**~~ **BUILT** (2026-07-13,
+   PR #66; `fill.py _overwriting_finding`, beside `_word_budget_finding`) — the
+   design landed exactly as the genre-diverse calibration prescribed:
+   - **Coined-compound density** is the sole gated signal (the one that survived
+     six genres with zero false positives — `cartographers` 21.2, every competent
+     work ≤ 7.2): warn past ~8/1k, **fail past 15/1k**, graded low/medium/high by
+     distance beyond 15 so a merely rich passage is weighed and an egregious one
+     blocks. Register-flat — 15/1k is ~3× the literary golden and ~5× the plain
+     exemplars, so even a heightened scene passage has headroom.
+   - **Fragmentation is NOT gated** (it false-positives on good noir, Grimnoir 49%).
+   - The **modulation-variance** half of the guardrail is not a per-corpus mean but
+     the **B8 pacing report** (`check_b8_pacing`, PR #66) — a plain baseline with a
+     few peaks, measured as same-`scene_type` beat runs along a playthrough. So the
+     two together are the guardrail: B8 for distribution, `overwriting` for the
+     aggregate red flag.
+   - Recovery action is actionable ("keep the one or two hyphen-compounds that carry
+     weight and say the rest in plain words"), per the AGENTS.md error rule.
+   Validated against the corpus: golden max passage 13.6/1k → non-blocking warn;
+   keeper e2e 0/1k. Live validation (a real over-compounded run tripping it) is the
+   remaining open item, folded into the Ollama follow-up.
 
 4. ~~**Establish a real target-register exemplar.**~~ **Done** — two published
    gamebooks (ALBA, Pirates) plus eight genre-diverse choice-based Twine works,

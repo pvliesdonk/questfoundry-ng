@@ -655,6 +655,57 @@ def _word_budget_finding(project: Project, passage_id: str, prose: str) -> Revie
     )
 
 
+# The overwriting guardrail (docs/plans/reading-difficulty.md): coined-compound
+# density is the one modulation red flag that survived a genre-diverse study with
+# zero false positives — the two published-gamebook exemplars run 1.7-3.0/1k,
+# every competent work measured <= 7.2, and the worst-read story 21.2. A graded
+# finding beside word_budget: warn past ~8/1k, fail past ~15/1k, low/medium/high
+# by distance beyond 15 — so an egregiously over-compounded passage blocks while a
+# merely rich one is weighed. Fragmentation is deliberately NOT gated (it
+# false-positives on good noir, Grimnoir 49%); the modulation-variance half of the
+# guardrail is the B8 pacing report over scene_type. Thresholds are one knob.
+_COMPOUND_RE = re.compile(r"[A-Za-z]+-[A-Za-z]+(?:-[A-Za-z]+)*")
+_OW_WARN_PER_K, _OW_FAIL_PER_K = 8.0, 15.0
+_OW_MEDIUM, _OW_HIGH = 0.15, 0.40
+_OW_MIN_WORDS = 40  # below this a couple of compounds is not a density
+
+
+def _overwriting_finding(prose: str) -> ReviewFinding | None:
+    """Graded coined-compound density (per 1k words). Register-flat by
+    design: 15/1k is ~3x the literary golden and ~5x the plain exemplars,
+    so even a heightened scene passage has headroom before it blocks."""
+    n = len(prose.split())
+    if n < _OW_MIN_WORDS:
+        return None
+    compounds = _COMPOUND_RE.findall(prose)
+    density = 1000 * len(compounds) / n
+    if density <= _OW_WARN_PER_K:
+        return None
+    reason = (
+        f"{len(compounds)} coined hyphen-compounds in {n} words (~{density:.0f}/1k); "
+        "a readable gamebook runs under ~5/1k, and relentless coinage is the "
+        "over-stylization that leaves the reader lost"
+    )
+    recovery = (
+        "keep the one or two hyphen-compounds that carry real weight and say the "
+        "rest in plain words — a specific noun beats a coined compound"
+    )
+    if density <= _OW_FAIL_PER_K:
+        assessment, confidence = "warn", "low"
+    else:
+        beyond = (density - _OW_FAIL_PER_K) / _OW_FAIL_PER_K
+        if beyond <= _OW_MEDIUM:
+            assessment, confidence = "fail", "low"
+        elif beyond <= _OW_HIGH:
+            assessment, confidence = "fail", "medium"
+        else:
+            assessment, confidence = "fail", "high"
+    return ReviewFinding(
+        rule="overwriting", assessment=assessment, confidence=confidence,
+        quote="", reason=reason, recovery_action=recovery,
+    )
+
+
 def _micro_review(g, proposal: WriteProposal, prior_facts: dict) -> list[dict]:
     """What the reviewer needs to judge each proposed micro-detail: the
     proposed value, the value it replaces (from `prior_facts`, captured before
@@ -694,18 +745,20 @@ def _review_for(
     def review(proposal: WriteProposal, project: Project, adapter: Any) -> list[str]:
         from questfoundry.pipeline import runner
 
-        # the engine's own mechanical finding (word budget) rides the same
-        # findings list as the reviewer's — a confident mechanical defect blocks
-        # even when the LLM approves the prose, but a near-miss is a
-        # low-confidence finding that does not force a rework (author-directed,
-        # 2026-07-12).
+        # the engine's own mechanical findings (word budget; the overwriting
+        # guardrail — coined-compound density) ride the same findings list as the
+        # reviewer's — a confident mechanical defect blocks even when the LLM
+        # approves the prose, but a near-miss is a low-confidence finding that does
+        # not force a rework (author-directed, 2026-07-12).
         wb = _word_budget_finding(project, passage_id, proposal.prose)
-        wb_blocks = wb is not None and is_blocking(wb)
+        ow = _overwriting_finding(proposal.prose)
+        mech = [f for f in (wb, ow) if f is not None]
+        mech_blocks = any(is_blocking(f) for f in mech)
 
         def rendered_findings(v: Any) -> list[str]:
             # full fidelity for the writer (and the arbiter): the reviewer's
-            # findings plus the mechanical word_budget finding, if any.
-            return [render_finding(f) for f in [*v.findings, *([wb] if wb is not None else [])]]
+            # findings plus the mechanical ones (word_budget, overwriting).
+            return [render_finding(f) for f in [*v.findings, *mech]]
 
         env = runner._environment()
         context = _write_context_for(passage_id)(project)
@@ -725,14 +778,15 @@ def _review_for(
         )
         # approved auto-accepts and a needs_work verdict gates on confident
         # objective defects only (review-contract); accept iff neither the
-        # reviewer's findings nor a confident word_budget finding block.
-        if not evaluate_review(verdict) and not wb_blocks:
+        # reviewer's findings nor a confident mechanical finding (word_budget,
+        # overwriting) block.
+        if not evaluate_review(verdict) and not mech_blocks:
             return []
         active = verdict
         # a persistent *reviewer* dispute escalates once to an architect arbiter,
-        # shown the full finding set it rules on (word_budget included). A
-        # word_budget-only block is deterministic — an arbiter cannot overturn it
-        # — so it does not spend the frontier call (tiering policy: escalate only
+        # shown the full finding set it rules on (mechanical findings included). A
+        # mechanical-only block is deterministic — an arbiter cannot overturn it —
+        # so it does not spend the frontier call (tiering policy: escalate only
         # what a stronger judge can actually change).
         if prior and evaluate_review(verdict):
             final = adapter.complete(
@@ -748,7 +802,7 @@ def _review_for(
                 schema=FILL_REVIEW_SCHEMA,
                 role="architect",
             )
-            if not evaluate_review(final) and not wb_blocks:
+            if not evaluate_review(final) and not mech_blocks:
                 return []
             active = final
         # rework: hand the writer every finding, full fidelity (the rejected

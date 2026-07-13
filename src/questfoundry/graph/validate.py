@@ -27,6 +27,7 @@ from questfoundry.models.structure import (
     IntersectionGroup,
     StateFlag,
     StructuralPurpose,
+    effective_scene_type,
     passage_intensity,
 )
 from questfoundry.models.world import Entity
@@ -847,6 +848,63 @@ def check_b7_total_words(ctx: Context) -> None:
         )
 
 
+# The pacing report flags a run of MORE than this many same-`scene_type`
+# beats along a playthrough (design doc 02 §GROW/POLISH). The golden story
+# tops out at 3 same-intensity beats in a row, so 3 is the "as modulated as
+# the exemplar" ceiling and 4+ reads flat. One tunable knob.
+PACING_MAX_SAME_INTENSITY = 3
+
+
+def check_b8_pacing(ctx: Context) -> None:
+    """B8 (advisory): prose-intensity modulation, the deferred G4 pacing
+    report now that `scene_type` exists (01 §10.3). Along each playthrough,
+    flag a maximal run of more than PACING_MAX_SAME_INTENSITY beats at the
+    same `scene_type` — sustained same-intensity beats are the unmodulated
+    over-stylization the signal exists to break up. **Beat-level, not
+    passage-level:** `passage_intensity` is a max, so passages read
+    scene-heavy and hide the beat rhythm the reader actually feels (the
+    golden runs 4 scene *passages* but only 3 scene *beats*); heritage
+    measured beats too. A playthrough is one arc's beats in story order
+    (topological over the arc view — the reader's experienced sequence,
+    residue breathers included since POLISH has inserted them by now).
+
+    Skipped unless the story is annotated: without `scene_type` every
+    narrative beat falls back to `scene`, so an unannotated graph is
+    trivially "all scene" — missing data, not flat pacing, and must not
+    warn (a real POLISH story is fully annotated by GROW)."""
+    beats = ctx.g.nodes_of(Beat)
+    if not beats or not any(b.scene_type is not None for b in beats):
+        return
+    order = {b: i for i, b in enumerate(queries.topological_order(ctx.g) or [])}
+    if not order:
+        return
+    reported: set[tuple[str, ...]] = set()
+    for selection in queries.arc_selections(ctx.g):
+        seq = [
+            (b, effective_scene_type(ctx.g.node(b)))
+            for b in sorted(queries.arc_view(ctx.g, selection), key=lambda b: order[b])
+        ]
+        i = 0
+        while i < len(seq):
+            j = i
+            while j + 1 < len(seq) and seq[j + 1][1] == seq[i][1]:
+                j += 1
+            run = seq[i : j + 1]
+            if len(run) > PACING_MAX_SAME_INTENSITY:
+                key = tuple(b for b, _ in run)
+                if key not in reported:
+                    reported.add(key)
+                    ctx.warn(
+                        "B8",
+                        f"{len(run)} consecutive {run[0][1].value} beats hold one "
+                        f"intensity with no change of pace ({run[0][0]} … {run[-1][0]}); "
+                        "the prose reads flat across them — a beat of another intensity "
+                        "(a sequel breather between scenes, a scene among sequels) would "
+                        "vary the rhythm (advisory)",
+                    )
+            i = j + 1
+
+
 # --------------------------------------------------------------------------
 # Gate G6 (DRESS)
 # --------------------------------------------------------------------------
@@ -1001,6 +1059,7 @@ GATES: dict[Stage, list] = {
         check_g4_residue_coverage,
         check_g4_arc_references,
         check_budget_passages,
+        check_b8_pacing,
     ],
     Stage.FILL: [
         check_g5_prose_presence,

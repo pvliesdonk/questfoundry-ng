@@ -20,10 +20,16 @@ of edges) the output alone is ~15–17k tokens, and for Ollama `num_ctx` is the
 `AdapterError` after repair.
 
 This is **not** a prompt-wording defect (the rules are clear and the engine, not
-the model, computes the structure) and **not** model weakness — it is a
-one-giant-call output-size limit. Raising `num_ctx` (the model supports 128k)
-would unblock medium but only defers the same failure at long scope and inflates
-every call; **chunking is the durable fix** (author decision B, 2026-07-13).
+the model, computes the structure) and **not** model weakness. The deeper
+diagnosis (author, 2026-07-13) is a **prompt-engineering** one: the pass **greedily
+stuffs the entire passage layer + all edges into one call** because a large model
+tolerates "context is free" — but that context gives *no per-item benefit* (a
+passage summary is derived from its own beats alone), and it breaks a weak model
+for nothing. Raising `num_ctx` (the model supports 128k) would paper over it and
+inflate every call; the fix is to **decompose the pass into genuinely independent
+calls, each carrying only the context it needs** (author decision B). Call count
+is not a cost we optimize against — FILL already runs ~150 calls per medium run;
+right-sized independent calls are strictly better for weak tiers.
 
 ## What the LLM actually produces (so we know what to chunk)
 
@@ -34,82 +40,107 @@ needs, and does all wiring. The LLM contributes **content only**, per item:
   and `variants[].summary` (only for heavy-residue frontier groups);
 - per edge: a choice `label`.
 
-There is almost no cross-item dependency — a passage summary is derived from its
-own beats, a label from its own edge — so the content is safely batchable.
+Independence analysis (the seam this design turns on — author, 2026-07-13: prefer
+*independent* calls with minimal context, however many, over any batching for its
+own sake):
+
+- **Summaries are independent per collapse group.** A passage summary is a brief
+  derived from that group's own beats; no other passage's content bears on it. A
+  group's *variants* (heavy-residue: same moment, different prose per world-state)
+  must contrast with each other, so they generate **together within their group's
+  call** — still per-group independence.
+- **Labels are independent per *source passage*, not per edge.** A single label
+  needs its source + destination, but the *siblings* (all choices offered at one
+  passage) must be mutually distinct (the apply already enforces distinct labels).
+  So the natural independent unit is "at passage A, write its N choice labels
+  together." Different source passages are independent of one another.
 
 ## Design
 
 Make POLISH's pass list **computed from the project** (like FILL's per-passage
 queue — `StageImpl.passes` already accepts a callable). Replace the single
-`passages` pass with:
+`passages` pass with two families of **independent, minimal-context** passes — no
+batch constant, the unit is the natural one:
 
-1. **`passages:batch-K`** — one pass per batch of `B` collapse groups. Context:
-   only that batch's groups (their beats, ending flag, variant flags). Schema: a
-   batch-scoped `PassagesBatchProposal` (`passages: list[PassageSpec]` for this
-   batch's group indices only — refpin/validation pins `group` to the batch's
-   indices). Apply: build the `Passage` nodes (+ variants) for this batch's groups
-   via the mutation layer, exactly as today's apply does per group; check the
-   batch covered its assigned groups exactly once. No edges yet.
-2. **`labels`** — one pass after all passage nodes exist. Context: the choice
-   edges (source/dest passage ids + summaries now available) — a *small* input,
-   and the output (~1 short label per edge) is well within budget even at medium.
-   Apply: the current edge-wiring (labels + gates + grants + holdability, I10/I13).
-   (If a future *long*-scope run shows the label output overflowing, batch this
-   pass the same way — deferred until measured, not preempted.)
+1. **`summary:<group>`** — one pass per collapse group. Context: *only* that
+   group's beats, its ending flag, and (for a heavy-residue frontier group) the
+   world-states/flags its variants must cover. Schema: one `PassageSpec` (summary,
+   ending_title, variants). Apply: build the `Passage` node(s) for this group via
+   the mutation layer — and **persist each variant's gating flag on its passage**
+   (see prerequisite below) so wiring can recover it later.
+2. **`labels:<source>`** — one pass per passage that has outgoing choices. Context:
+   the source passage + each destination's summary/beats + the engine-known
+   gate/grant of each edge. Apply: wire that source's choice edges (label +
+   requires + grants + holdability, I10/I13), reading the destination's persisted
+   variant flag for a gated variant.
 
-**Batch size `B`:** a scope-independent constant sized so `B` groups' output stays
-well under the window — **`B = 30`**. Effect by scope: micro (≤24 groups) → **1**
-passages batch; short → 1–3; medium → 3–6; long → 5–10. `B` lives as a module
-constant with a comment tying it to the window budget, not a scope-preset field
-(it is an engine safety limit, not story scale).
+All `summary:<group>` passes run before any `labels:<source>` pass (labels
+reference destinations that must exist). Order within each family follows the
+deterministic `collapse_groups(...)` order, so the computed pass list is stable
+across ledger replay/resume (A16).
 
-**Coverage / gate:** each batch checks it covered its own groups; the stage gate
-G4 already enforces I11 (every beat in exactly one passage) across the whole
-graph, so total coverage is still gate-guaranteed. A batch that drops a group
-fails its own apply (repairable) before the gate.
+### Prerequisite: persist the variant→flag mapping (review finding, PR #70)
 
-**Determinism (ledger/replay):** batches are a deterministic function of
-`collapse_groups(...)` order (already deterministic), so the computed pass list is
-stable across replay/resume — required for A16. Group→batch assignment is
-`groups[K*B : (K+1)*B]`.
+Today `_passages_apply` builds `ids_of_group: {group -> [(passage_id, flag)]}`
+**in the same call** that creates the variant passages (from `VariantSpec.flag`)
+and consumes it immediately for edge gating; nothing survives on the graph
+(`Passage` has no flag field; `add_variant` records a bare `VARIANT_OF` edge). Once
+creation (`summary:<group>`) and wiring (`labels:<source>`) are separate passes,
+that mapping must be **persisted**. Fix: add a `variant_flag: str | None` field to
+`Passage` (set only on a variant), written by the create mutation in the
+`summary:<group>` apply; the `labels:<source>` apply reads `dest.variant_flag` to
+set `Choice.requires`. This is a small model + mutation change and is a **build
+prerequisite**, done first. (Alternative considered: have the engine own the
+pairing by presenting the group's flags in a fixed order and taking variant
+summaries positionally — drops `VariantSpec.flag` entirely. Persisting the flag is
+the smaller change and keeps the LLM's explicit flag↔summary pairing; chosen.)
 
-## Decisions to confirm
+**Coverage / gate:** each `summary:<group>` pass covers exactly its one group; the
+stage gate G4 still enforces I11 (every beat in exactly one passage) across the
+whole graph, so total coverage stays gate-guaranteed. A missing group is a missing
+pass — the computed list is exhaustive over `collapse_groups(...)`.
 
-1. **Split summaries (batched) from labels (one pass)** — vs. keeping them in one
-   combined call. Recommended: split. Labels need *all* passages to exist first
-   (edges cross batches), so they can't ride the per-batch passage calls; a
-   separate labels pass is the clean seam. **Consequence:** even micro goes from
-   **1 call → 2 calls** (1 passages batch + 1 labels), so the keeper e2e fixtures
-   re-record (below). The alternative — a "single-call fast path" when everything
-   fits one batch (preserving micro's one call and its fixtures) — keeps two code
-   paths; I recommend against it (complexity > the one-time fixture edit).
-2. **`B = 30`** as the batch constant (vs. a smaller/larger value). 30 keeps
-   per-call output ~3–4k tokens with comfortable head-room under 32k.
+## Decisions (resolved with the author, 2026-07-13)
+
+1. **Decompose into independent per-item calls, not batches.** Call count is not
+   a cost we optimize against; independent minimal-context calls are strictly
+   better for weak tiers. → `summary:<group>` per group + `labels:<source>` per
+   source passage. No `B` constant.
+2. **Persist the variant→flag mapping** on `Passage` (`variant_flag`) as a build
+   prerequisite (review finding above).
 
 ## Fixture / doc blast radius
 
 - **Keeper e2e** (`tests/fixtures/keeper/…`, `test_pipeline_e2e.py`): the single
-  recorded `passages` call splits into `passages:batch-0` + `labels`. Re-record
-  by hand (the content is identical, re-partitioned into the two new schemas) and
-  refresh POLISH snapshots. Micro is one passages batch, so exactly two calls
-  replace one — a bounded, mechanical edit. Golden story (`keepers-bargain`) is a
-  *static* project (no pass execution), so it is **unaffected**.
-- **Unit tests** (`test_polish.py`): the passages-apply tests move to the batched
-  apply + the labels apply; add a batch-boundary test (a synthetic >B-group graph
-  splits into the right batches and still covers every group), and a
-  batch-coverage repairable-error test.
-- **Docs:** 02 §POLISH — the *passages* pass is described as a batched
-  content-gather (summaries per batch of groups) + a labels pass; note the window
-  motivation. 03 §9 mini-ADR — record the batched-pass decision (A2x). STATUS
-  decision log + retire this plan's "next up" line.
+  recorded `passages` call is replaced by one `summary:<group>` call per group
+  plus one `labels:<source>` call per source passage. The keeper is micro, so this
+  is a bounded, mechanical re-record (same content, re-partitioned into the new
+  per-item schemas; ~8–9 summary calls + a few label calls), plus refreshed POLISH
+  snapshots (now carrying `variant_flag` on any variant passage). Golden story
+  (`keepers-bargain`) is a *static* project (no pass execution) — **unaffected by
+  the pass split**, but its variant passages gain the new `variant_flag` field, so
+  the golden YAML + round-trip fixtures get that one field added.
+- **Unit tests** (`tests/test_passages.py` — where `_passages_apply`/
+  `PassagesProposal` are exercised, e.g. `test_heavy_residue_creates_gated_variants`
+  at `test_passages.py:156`): re-point at the per-group summary apply + the
+  per-source labels apply; add a test that `variant_flag` persists and that wiring
+  reads it back to gate the variant's incoming choices; keep the
+  distinct-sibling-labels and holdability assertions on the labels apply.
+- **Docs:** 02 §POLISH — describe the *passages* pass as per-group summary calls +
+  per-source label calls (minimal context each), with the greedy-context motivation.
+  01 §6 / `models/presentation.py` — note `variant_flag` on `Passage`. 03 §9
+  mini-ADR — record the decompose-for-weak-tiers decision (A2x). STATUS decision
+  log + a "Next up" pointer to this plan.
 
 ## Build order
 
-1. `passages.py`/`polish.py`: the batch split (constant `B`, `_passages_batches`
-   computing the pass list, `PassagesBatchProposal` schema + per-batch context +
-   apply), and the separate `labels` pass (schema + context + wiring apply). Wire
-   POLISH's `passes` to the computed list. + unit tests.
-2. Re-record the keeper e2e passages/labels calls; refresh snapshots;
+1. **Prerequisite:** add `Passage.variant_flag` + the create-mutation that sets it;
+   have the current single-pass apply persist it (keeps everything green as a
+   standalone step). + a persistence test.
+2. `polish.py`: replace the single `passages` pass with the computed
+   `summary:<group>` + `labels:<source>` pass families (per-item schema, minimal
+   context, per-item apply). Wire POLISH's `passes` to the computed list. + unit tests.
+3. Re-record the keeper e2e per-item calls; refresh snapshots;
    `pytest`/`ruff`/golden green.
 3. Docs (02, 03 mini-ADR, STATUS).
 4. (Follow-up, unbilled) a live medium `--to polish` on `gpt-oss:120b-cloud` to

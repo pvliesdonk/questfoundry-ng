@@ -1,0 +1,22 @@
+id: passage:p-accept
+summary: Sam pockets the forged dossier, follows its clue to a deserted waterfront warehouse,
+  discovers a dead officer confirming corruption, and later receives Ramos’s demand to silence
+  a key witness.
+entities:
+- character:detective
+- object:jade-figurine
+- location:harbor-district
+prose_summary: Sam slips forged dossier into coat pocket, recalls promise to Lieutenant Ramos.
+  Ledger points to dockside warehouse; he forces its rusted doors in rain. Inside he finds
+  a dead police officer, badge reveals Ramos’s men, showing his evidence is false. Ramos calls,
+  orders Sam to silence dock witness about the jade’s location, confirming debt’s price.
+beats:
+- beat:cop-accept-1
+- beat:cop-accept-2
+- beat:cop-accept-3
+- beat:cop-accept-commit
+choices:
+- label: Feel the neon flicker like a promise
+  requires:
+  - flag:favor-owed
+  to: passage:p-favor-owed

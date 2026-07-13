@@ -1,0 +1,10 @@
+id: beat:residue-accept-favor-light
+created_by: polish
+summary: The city’s neon flickers on Sam’s shoulders, reminding him of the favor owed like
+  a dark promise.
+beat_class: structural
+purpose: residue
+entities:
+- character:detective
+requires_flags:
+- flag:favor-owed

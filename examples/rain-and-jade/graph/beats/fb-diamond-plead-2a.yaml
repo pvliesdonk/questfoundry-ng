@@ -1,0 +1,7 @@
+id: beat:fb-diamond-plead-2a
+created_by: polish
+summary: A rain‑soaked courier slips past, his coat a banner of desperation.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:detective

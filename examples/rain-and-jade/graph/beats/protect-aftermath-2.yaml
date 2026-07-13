@@ -1,0 +1,14 @@
+id: beat:protect-aftermath-2
+summary: Victor roars that this betrayal will cost Sam dearly, as the rain washes away the
+  last chance at anonymity.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: reveals
+entities:
+- character:gang-boss
+- character:detective
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:protect-clara

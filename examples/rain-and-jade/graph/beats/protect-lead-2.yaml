@@ -1,0 +1,13 @@
+id: beat:protect-lead-2
+summary: Clara's eyes dart to Sam, a silent plea for protection amid the gunfire.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: reveals
+entities:
+- character:client-woman
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:protect-clara

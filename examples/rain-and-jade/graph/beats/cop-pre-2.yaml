@@ -1,0 +1,14 @@
+id: beat:cop-pre-2
+summary: Ramos warns that refusing could close the trail to the jade, while accepting will
+  bind Sam to the police's shadowy agenda.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: complicates
+entities:
+- character:detective
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:accept-favor
+- path:refuse-favor

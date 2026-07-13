@@ -1,0 +1,7 @@
+id: path:accept-favor
+name: Take Forged Evidence
+explores: answer:accept-favor
+consequences:
+- id: consequence:favor-owed
+  text: The detective now owes the corrupt dock lieutenant a dangerous favor, binding him
+    to the police's shadowy agenda.

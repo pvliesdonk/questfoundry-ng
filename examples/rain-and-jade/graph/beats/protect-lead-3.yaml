@@ -1,0 +1,13 @@
+id: beat:protect-lead-3
+summary: A rusted metal crate teeters nearby, offering a potential shield if Sam acts quickly.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: complicates
+entities:
+- character:detective
+- location:harbor-district
+scene_type: micro_beat
+narration_scope: limited
+belongs_to:
+- path:protect-clara

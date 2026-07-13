@@ -1266,6 +1266,36 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-13 (narration_scope live validation — micro clean, `wide` not yet exercised;
+  unbilled `gpt-oss:120b-cloud`):** After PR #68 merged, a fresh **noir micro**
+  ("Rain and Jade", the Maltese-Falcon premise — preserved as
+  [`examples/rain-and-jade`](../examples/rain-and-jade)) ran DREAM→FILL on the weak
+  tier. **Result: clean completion, no regression.** FILL finished with 0 gate errors
+  and **no review-exhaustion halt** — every passage ≤ 2 attempts, and the endings (a
+  3rd-person-limited voice, "Sam Rain Marlowe" — the exact shape the pre-fix "Black
+  Bird" run died on) wrote clean limited-POV prose, no head-hopping. **But all 30 beats
+  came out `limited`** and the `wide` coda license was *not* exercised — because SEED
+  produced a story where every consequence reaches the POV character directly (he hands
+  the jade over, hears the informant, is roared at), so no beat *deserved* `wide`.
+  Verified by reading the ending beat summaries: `limited` is correct throughout, not
+  over-suppressed. **Finding (author's instinct, confirmed):** the system is nudged
+  toward `limited` at *two* layers — the annotate prompt's "when in doubt, limited"
+  (appropriate; `wide` is the marked exception) and, more consequentially, the
+  *upstream* steering (this run's `dream` steer "the fates that land after the case
+  closes are a brief coda" + the SEED perceivable-consequence steer) which biases SEED
+  toward writing perceivable endings so a `wide`-deserving beat is rarely generated. So
+  to actually exercise `wide`, a run needs a story that *structurally* demands an
+  out-of-horizon coda — a **death ending** (aftermath beyond the detective's horizon —
+  the "posthumous reputation" case) or a **time-skip epilogue**. Two orthogonal notes:
+  supernatural drift (the jade *pulses*; a binding "ritual") against the vision's
+  `content_notes` (a DREAM/BRAINSTORM adherence issue), and B7 2381 vs the micro floor
+  2400 (the expected modulation-shortens-sequels signal). Also observed: a transient
+  `RemoteProtocolError` (cloud dropped a large SEED-scaffold response) is **not**
+  retried by the Ollama provider — it crashes the stage; the A16 ledger re-run recovers
+  it free, but a transport-level retry/backoff is a worthwhile robustness follow-up. A
+  **medium** run on the same premise is in flight (the real `wide` test — 2 hard
+  dilemmas, 4 endings, epilogue-scope beats).
+
 - **2026-07-13 (epilogue/POV collapse-feasibility — design decided, author-directed):**
   The noir finale failure (STATUS "Next up" kickoff) was diagnosed and resolved into a
   build contract, [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md).

@@ -1,0 +1,41 @@
+beats:
+- beat:choose-clara-1
+- beat:choose-clara-2
+- beat:choose-clara-3
+- beat:choose-clara-commit
+- beat:choose-pre-1
+- beat:choose-pre-2
+- beat:choose-pre-3
+- beat:choose-victor-1
+- beat:choose-victor-2
+- beat:choose-victor-3
+- beat:choose-victor-commit
+- beat:cop-accept-1
+- beat:cop-accept-2
+- beat:cop-accept-3
+- beat:cop-accept-commit
+- beat:cop-pre-1
+- beat:cop-pre-2
+- beat:cop-pre-3
+- beat:cop-refuse-1
+- beat:cop-refuse-2
+- beat:cop-refuse-3
+- beat:cop-refuse-commit
+- beat:protect-aftermath-1
+- beat:protect-aftermath-2
+- beat:protect-lead-1
+- beat:protect-lead-2
+- beat:protect-lead-3
+- beat:protect-resolution
+- beat:setup-1
+- beat:setup-2
+forks:
+  dilemma:choose-recipient:
+  - beat:choose-clara-commit
+  - beat:choose-victor-commit
+  dilemma:corrupt-cop:
+  - beat:cop-accept-commit
+  - beat:cop-refuse-commit
+  dilemma:protect-clara:
+  - beat:protect-resolution
+convergences: {}

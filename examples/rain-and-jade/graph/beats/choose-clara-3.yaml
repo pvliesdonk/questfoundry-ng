@@ -1,0 +1,14 @@
+id: beat:choose-clara-3
+summary: Sam steps back into the relentless rain, realizing he's become a pawn in Clara's
+  expanding empire.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: complicates
+entities:
+- character:detective
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-clara

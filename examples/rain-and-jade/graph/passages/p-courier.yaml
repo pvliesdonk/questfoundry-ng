@@ -1,0 +1,14 @@
+id: passage:p-courier
+summary: A rain‑soaked courier darts past, his coat flapping like a banner of desperation,
+  hinting at a lead amid the chaos.
+entities:
+- character:detective
+prose_summary: Rain falls in harbor district. Courier runs, carrying thin envelope, passes
+  Sam's broken doorway, drops package, scans for pursuers, vanishes into alleys, leaving damp
+  fabric and seaweed scent. Sam notes lead, crouches behind rusted crate for cover, weighs
+  risk/reward, decides to follow clue.
+beats:
+- beat:fb-diamond-plead-2a
+choices:
+- label: Dive behind the rusted crate
+  to: passage:p-confrontation

@@ -1,0 +1,26 @@
+id: character:gang-boss
+name: Victor "Iron Fist" Dario
+concept: Ruthless head of the Dockside Syndicate, wants the jade for a ritual of power.
+pronouns: he/him
+base:
+  appearance: bulky, iron ring on pinky
+  manner: calculating, speaks low
+  ritual_intent: use jade to cement dock control
+arc:
+  begins: ruthless gang boss who seeks the jade for a ritual to dominate the docks
+  pivots:
+  - beat: beat:protect-lead-1
+    becomes: orders thugs, escalating violence to seize the jade
+  - beat: beat:choose-pre-2
+    becomes: learns the jade's ritual purpose, intensifying his obsession
+  - beat: beat:choose-victor-commit
+    becomes: receives the jade, beginning ritual preparation
+  - beat: beat:choose-victor-2
+    becomes: activates the ritual, jade pulses, solidifying his control
+  - beat: beat:choose-victor-3
+    becomes: emerges as overlord of the smuggling routes, cementing his power
+  ends:
+  - path: path:give-to-victor
+    state: controls the jade, completes the ritual and rules the port's black market
+  - path: path:give-to-clara
+    state: fails to obtain the jade, remains thwarted and seeks vengeance

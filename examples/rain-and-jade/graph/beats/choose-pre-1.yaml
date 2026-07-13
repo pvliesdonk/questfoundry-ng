@@ -1,0 +1,16 @@
+id: beat:choose-pre-1
+summary: In a dim backroom, Clara opens the jade figurine, its green eyes glinting, and promises
+  a fortune if Sam delivers it to her.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: reveals
+entities:
+- character:detective
+- character:client-woman
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-clara
+- path:give-to-victor

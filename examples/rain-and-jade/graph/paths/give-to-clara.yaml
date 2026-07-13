@@ -1,0 +1,7 @@
+id: path:give-to-clara
+name: Deliver to Clara
+explores: answer:give-to-clara
+consequences:
+- id: consequence:clara-gets-figurine
+  text: Clara obtains the jade figurine, confirming her manipulative agenda and tightening
+    her control over the underworld.

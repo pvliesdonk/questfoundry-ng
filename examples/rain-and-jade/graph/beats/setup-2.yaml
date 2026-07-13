@@ -1,0 +1,11 @@
+id: beat:setup-2
+summary: Clara Vale, draped in silk, slides into Sam's office with a sealed envelope, hiring
+  him to retrieve a jade dragon figurine rumored to contain a ledger of smuggled goods.
+beat_class: structural
+purpose: setup
+entities:
+- character:detective
+- character:client-woman
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited

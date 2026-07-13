@@ -1,0 +1,13 @@
+id: beat:cop-pre-3
+summary: Rain drums on the precinct's tin roof, mirroring the ticking clock on Sam's case.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: advances
+entities:
+- character:detective
+scene_type: micro_beat
+narration_scope: limited
+belongs_to:
+- path:accept-favor
+- path:refuse-favor

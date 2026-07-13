@@ -1,0 +1,13 @@
+id: beat:cop-accept-2
+summary: Inside the warehouse, Sam discovers a dead officer with a badge, confirming the evidence's
+  corruption.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: reveals
+entities:
+- character:detective
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:accept-favor

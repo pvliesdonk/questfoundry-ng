@@ -1,0 +1,7 @@
+id: intersection:rain-reprisal
+location: character:detective
+rationale: Rain drumming on the precinct roof mirrors the downpour as Sam drags Clara through
+  the streets after the firefight.
+members:
+- beat:cop-pre-3
+- beat:protect-aftermath-1

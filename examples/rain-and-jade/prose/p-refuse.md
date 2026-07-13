@@ -1,0 +1,7 @@
+Sam threw the forged file onto the desk, its ink‑stained pages fluttering before he slammed his palm down. He shook his head, the scar on his cheek catching the dim light, and walked out of the precinct without looking back. The lieutenant’s offer melted away as quickly as the rain on the windows.
+
+Without the file, the thread he had been pulling unraveled. The names he could have followed vanished into the city’s fog, leaving him to hunt rumors through alleys slick with oil and seawater. He moved past leaking warehouses, past neon signs bleeding red into the iron‑gray mist, his cigarette ember a lone beacon.
+
+A jittery informant huddled beneath a rusted awning, eyes darting at every passing silhouette. He muttered that a shipping manifest listed a cargo of jade bound for the next tide, but warned Sam that Victor’s men prowled the docks, eyes sharp as steel. The man’s breath fogged in the cold air, his voice barely rising above the splash of gutter water.
+
+Sam lingered at the waterfront, watching the hulking cargo ship load crates beneath a waning moon. He decided to tail the vessel, knowing a clash with Victor’s crew would be inevitable once the ship pulled away. The rain hammered his coat, and the harbor wind bit his neck, urging him forward.

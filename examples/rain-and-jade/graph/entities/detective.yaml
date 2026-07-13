@@ -1,0 +1,32 @@
+id: character:detective
+name: Sam "Rain" Marlowe
+concept: Hard‑boiled private eye who never trusts, fueled by whiskey and rain.
+pronouns: he/him
+base:
+  appearance: tall, trench coat, scar across left cheek
+  manner: dry wit, clipped speech
+  cigarette_status: still ember glows
+arc:
+  begins: hard‑boiled detective who trusts no one, fueled by whiskey and rain
+  pivots:
+  - beat: beat:protect-lead-1
+    becomes: acts as shield, fighting thugs to protect Clara
+  - beat: beat:cop-pre-1
+    becomes: confronted with a corrupt police offer, tempted to compromise
+  - beat: beat:cop-accept-commit
+    becomes: binds himself to Ramos, becoming indebted
+  - beat: beat:cop-refuse-commit
+    becomes: rejects the police deal, isolates himself and loses leads
+  - beat: beat:choose-clara-commit
+    becomes: aligns with Clara, becoming her enforcer
+  - beat: beat:choose-victor-commit
+    becomes: aligns with Victor, becoming his collaborator
+  ends:
+  - path: path:give-to-clara
+    state: serves as Clara's enforcer, entangled in her expanding empire
+  - path: path:give-to-victor
+    state: serves Victor as collaborator, bound to the syndicate
+  - path: path:accept-favor
+    state: indebted to Lieutenant Ramos, obligated to fulfill future favors
+  - path: path:refuse-favor
+    state: operates alone, lacking police assistance and vulnerable

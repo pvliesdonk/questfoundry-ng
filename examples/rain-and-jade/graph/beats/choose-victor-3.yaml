@@ -1,0 +1,15 @@
+id: beat:choose-victor-3
+summary: Sam leaves the harbor, his coat drenched, aware that every deal now passes through
+  Victor's iron grip, sealing his fate as a collaborator.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: complicates
+entities:
+- character:detective
+- character:gang-boss
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-victor

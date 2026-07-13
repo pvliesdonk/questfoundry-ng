@@ -1,0 +1,22 @@
+id: passage:p-refuse
+summary: Sam slams the forged file away, loses the police lead, scrambles through rain‑slick
+  alleys, hears about a shipping manifest listing the jade, and decides to tail the cargo
+  ship despite Victor’s patrols.
+entities:
+- character:detective
+- character:gang-boss
+- location:harbor-district
+prose_summary: Sam discards forged file, rejects lieutenant’s offer, and loses his investigative
+  lead. He gathers rumors, hears informant report a jade cargo manifest destined for the next
+  tide and warn that Victor’s men guard the docks. Sam decides to tail the loading ship, anticipating
+  an inevitable clash with Victor’s crew.
+beats:
+- beat:cop-refuse-1
+- beat:cop-refuse-2
+- beat:cop-refuse-3
+- beat:cop-refuse-commit
+choices:
+- label: Feel the harbor wind bite your neck
+  requires:
+  - flag:no-favor
+  to: passage:p-no-favor

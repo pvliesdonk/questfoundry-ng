@@ -1,0 +1,11 @@
+id: passage:p-siren
+summary: A distant siren wails through the night, its echo sharpening the tension in the alley.
+prose_summary: The siren sounds, Sam hides behind a metal table in a rain‑slick alley as gunfire
+  erupts from a nearby warehouse. Clara clutches a jade figurine, pleading with him. Sam recalls
+  a favor owed, forged papers at risk, and a ledger hidden in the Green Dragon. He knows the
+  lieutenant’s offer will cost something. The siren peaks then stops.
+beats:
+- beat:fb-diamond-plead-2b
+choices:
+- label: Rush into the firefight
+  to: passage:p-confrontation

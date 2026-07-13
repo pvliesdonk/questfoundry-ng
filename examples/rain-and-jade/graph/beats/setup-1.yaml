@@ -1,0 +1,10 @@
+id: beat:setup-1
+summary: Rain slams the cobblestones of the Harbor District as detective Sam "Rain" Marlowe
+  lights a cigarette beneath flickering neon signs.
+beat_class: structural
+purpose: setup
+entities:
+- character:detective
+- location:harbor-district
+scene_type: sequel
+narration_scope: limited

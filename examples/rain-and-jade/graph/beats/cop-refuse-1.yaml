@@ -1,0 +1,13 @@
+id: beat:cop-refuse-1
+summary: Deprived of the file, Sam's leads evaporate, forcing him to chase rumors through
+  rain‑slick alleys.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: complicates
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:refuse-favor

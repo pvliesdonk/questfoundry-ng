@@ -1,0 +1,24 @@
+id: object:jade-figurine
+name: Jade Dragon Figurine
+concept: A small, ancient jade carving rumored to contain a ledger of smuggled goods.
+base:
+  appearance: green, smooth, weighty
+  significance: the key to control the port's black market
+  weight: heavy
+  pulse: green surface glowed briefly
+arc:
+  begins: small ancient jade carving rumored to contain a ledger of smuggled goods
+  pivots:
+  - beat: beat:choose-pre-1
+    becomes: opened, its green eyes reveal the ledger promise
+  - beat: beat:choose-clara-commit
+    becomes: handed to Clara, becomes leverage for blackmail
+  - beat: beat:choose-victor-commit
+    becomes: handed to Victor, becomes a catalyst for his ritual
+  - beat: beat:choose-victor-2
+    becomes: pulses during the ritual, transforming into a magical conduit
+  ends:
+  - path: path:give-to-clara
+    state: used by Clara to blackmail rivals, central to her power
+  - path: path:give-to-victor
+    state: used by Victor in the ritual to bind smuggling routes, source of his authority

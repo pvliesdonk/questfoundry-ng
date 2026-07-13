@@ -1,0 +1,27 @@
+id: character:client-woman
+name: Clara Vale
+concept: Glamorous socialite who spins lies like silk, hires Sam to retrieve a jade figurine.
+pronouns: she/her
+base:
+  appearance: emerald dress, rain‑slick hair
+  manner: smiles too quickly, evasive
+arc:
+  begins: socialite client who hires Sam to retrieve the jade figurine, masking manipulation
+    with charm
+  pivots:
+  - beat: beat:setup-2
+    becomes: presents a lucrative promise, positioning herself as a patron
+  - beat: beat:choose-pre-1
+    becomes: exposes greed, promising fortune if the jade is delivered
+  - beat: beat:protect-lead-2
+    becomes: shows desperation, pleading for Sam's protection
+  - beat: beat:choose-clara-1
+    becomes: asserts power, using the jade to blackmail rival syndicate heads
+  - beat: beat:choose-clara-3
+    becomes: solidifies as underworld queen, making Sam her pawn
+  ends:
+  - path: path:give-to-clara
+    state: holds the jade, leverages the ledger to blackmail syndicate heads and consolidates
+      her empire
+  - path: path:give-to-victor
+    state: denied the jade, plots retaliation and remains a schemer

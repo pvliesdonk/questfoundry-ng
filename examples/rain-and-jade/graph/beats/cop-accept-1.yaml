@@ -1,0 +1,15 @@
+id: beat:cop-accept-1
+summary: The falsified ledger points to a deserted warehouse on the waterfront, giving Sam
+  a fresh lead on the jade's location.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: advances
+entities:
+- character:detective
+- object:jade-figurine
+- location:harbor-district
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:accept-favor

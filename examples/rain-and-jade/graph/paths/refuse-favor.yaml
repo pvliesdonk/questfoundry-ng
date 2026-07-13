@@ -1,0 +1,7 @@
+id: path:refuse-favor
+name: Refuse Forged Evidence
+explores: answer:refuse-favor
+consequences:
+- id: consequence:no-favor
+  text: Without the forged evidence, the trail to the jade grows cold, forcing the detective
+    to rely on street intel alone.

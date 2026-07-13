@@ -1,0 +1,11 @@
+id: beat:cop-accept-commit
+summary: Sam tucks the forged dossier into his coat, promising Ramos he'll return the favor
+  when asked.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: commits
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:accept-favor

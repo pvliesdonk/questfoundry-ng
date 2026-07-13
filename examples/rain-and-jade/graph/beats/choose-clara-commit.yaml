@@ -1,0 +1,11 @@
+id: beat:choose-clara-commit
+summary: Sam slides the jade figurine across the scarred table to Clara, sealing the exchange
+  with a firm handshake.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: commits
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:give-to-clara

@@ -1,0 +1,17 @@
+id: beat:choose-pre-2
+summary: A street informant whispers that Victor "Iron Fist" Dario plans to use the jade in
+  a ritual to cement his control over the docks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: complicates
+entities:
+- character:detective
+- character:gang-boss
+- object:jade-figurine
+- location:harbor-district
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-clara
+- path:give-to-victor

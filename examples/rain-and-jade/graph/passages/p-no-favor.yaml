@@ -1,0 +1,21 @@
+id: passage:p-no-favor
+summary: The harbor wind bites Sam’s neck, a silent claim that he has walked away from the
+  looming darkness.
+entities:
+- character:detective
+prose_summary: Sam walks away from darkness, pulls his coat tighter, lights a cigarette, and
+  slips a jade figurine into his coat lining, feeling its chill against his cheek scar. He
+  notes steam from warehouses, neon signs, a crane's clank, and a distant police siren. He
+  scans the quay, recognizes Victor’s crew, and turns toward Clara’s shadow, driven by the
+  stone’s weight.
+beats:
+- beat:residue-refuse-favor-light
+choices:
+- label: Pass the jade to Clara
+  grants:
+  - flag:clara-gets-figurine
+  to: passage:p-ending-clara
+- label: Pass the jade to Victor
+  grants:
+  - flag:victor-gets-figurine
+  to: passage:p-ending-victor

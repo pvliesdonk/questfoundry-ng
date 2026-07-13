@@ -1,0 +1,15 @@
+name: Rain and Jade
+stage: fill
+llm:
+  provider: ollama
+  host: https://ollama.com
+  num_ctx: 32768
+  models:
+    architect: gpt-oss:120b-cloud
+    writer: gpt-oss:120b-cloud
+    utility: gpt-oss:120b-cloud
+steering:
+  dream: Hard-boiled noir in the Maltese Falcon vein. Third-person limited, close on the detective
+    throughout. Keep the ending honest to that viewpoint — the fates that land after the case
+    closes (where the figurine ends up, what becomes of the woman, the detective's own reputation)
+    are a brief coda.

@@ -1,0 +1,11 @@
+id: beat:protect-resolution
+summary: Sam dashes forward, grabs Clara's arm, and fires a warning shot, forcing the thugs
+  to duck.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: commits
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:protect-clara

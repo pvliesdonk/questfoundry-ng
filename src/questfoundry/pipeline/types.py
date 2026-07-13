@@ -88,6 +88,15 @@ class PassSpec:
     apply: Callable[[BaseModel, Project], list[str]]
     skip_if: Callable[[Project], str | None] | None = None
     review: Callable[[BaseModel, Project, Any], list[str]] | None = None
+    # After this pass completes (run OR skipped), the runner calls
+    # `expand(project)` and splices the returned passes in right after it.
+    # Lets a pass whose successors depend on its output enumerate them from
+    # the post-apply graph — POLISH's finalize expands into the per-group
+    # `summary`/`labels` passes (the collapse groups aren't known until
+    # finalize has added its residue/false-branch/bridge beats). The
+    # expansion must be deterministic (replayed on ledger resume): the same
+    # post-apply graph must yield the same pass names.
+    expand: Callable[[Project], list[PassSpec]] | None = None
 
     def schema_for(self, project: Project) -> type[BaseModel]:
         """Resolve the proposal schema against the current project. A

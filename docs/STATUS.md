@@ -5,10 +5,18 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-13 · **`scene_type` structural prose-intensity
-> modulation is built** (PR #65) **plus its two guardrails** (follow-up,
-> PR #66): the **B8 pacing report** and the **`overwriting`** compound-density
-> finding.
+> Last updated: 2026-07-13 · **The epilogue/POV collapse-feasibility bug is
+> diagnosed and its fix is a settled build contract**
+> ([`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md);
+> decision log + the resolved kickoff in "Next up"): a narrow per-beat
+> `narration_scope ∈ {limited, wide}` annotation (GROW `annotate` pass,
+> settled-at-freeze like `scene_type`) + a case-A prompt fix separating "no
+> other minds" from psychic-distance widening + the reviewer's POV rule keyed
+> to scope — **no forced passage split** (per-beat register modulation, POLISH
+> untouched). Build not yet started. Before it: **`scene_type` structural
+> prose-intensity modulation is built** (PR #65) **plus its two guardrails**
+> (follow-up, PR #66): the **B8 pacing report** and the **`overwriting`**
+> compound-density finding.
 > A beat now carries an intrinsic `scene_type` (Swain scene/sequel/micro_beat)
 > that GROW's new *annotate* pass writes pre-freeze and FILL reads to
 > modulate prose across the story (per-passage word band + per-beat
@@ -680,6 +688,23 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
+> **DESIGN DECIDED → PLANNED (2026-07-13):** the epilogue/POV
+> collapse-feasibility problem below is now a settled build contract,
+> [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md)
+> (decision log has the record). Resolution: a narrow per-beat
+> `narration_scope ∈ {limited, wide}` annotation folded into GROW's existing
+> `annotate` pass (settled-at-freeze like `scene_type`; `epilogue`→`wide`
+> fallback, else `limited`; opt-in `wide` elsewhere), a **case-A prompt fix**
+> separating "no other minds" from psychic-distance widening (the world-fact
+> half was a blunt-prompt over-constraint, not a model limit), the reviewer's
+> POV rule keyed to scope, and `vision.pov_hint` surfaced into SEED — **no
+> forced passage split** (FILL modulates register per beat within a passage,
+> so POLISH collapse is untouched). Author calls: 1.a mechanism, 3.a scope, and
+> decision 2 resolved *no split* on the author's narrative argument (a passage
+> may run one paragraph wide, the next limited; a forced boundary would insert a
+> spurious single-option page-turn). Build not yet started. Original kickoff
+> framing (now answered) preserved below.
+>
 > **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): the
 > epilogue/POV collapse-feasibility problem.** Surfaced by the live
 > validation (above): a weak-tier noir micro run ("The Black Bird",
@@ -1198,6 +1223,39 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-13 (epilogue/POV collapse-feasibility — design decided, author-directed):**
+  The noir finale failure (STATUS "Next up" kickoff) was diagnosed and resolved into a
+  build contract, [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md).
+  **The reframe that unlocked it:** the corpus's own POV note distinguishes *psychic
+  distance* (camera far↔close) from *POV person*, so the one failure was really two.
+  **(A)** "the Falcon is auctioned… fueling Victor's armaments" is a world-scope fact a
+  *limited* narrator can deliver by widening distance — **not** a POV break; the failure
+  there was a **blunt prompt** (`fill_write.j2`'s "Only that narrator's thoughts may be
+  stated… every other character reaches the reader only through what the narrator can
+  observe" conflates *no other minds* with *close distance always*), exactly the
+  AGENTS.md "prompt is the first suspect" class — the model correctly refused a
+  miswritten rule. **(B)** "Mace becomes a cautionary ghost" (his posthumous reputation,
+  after he exits) is genuinely beyond a Mace-tied limited POV and needs a sanctioned
+  coda register. **Root cause:** POV is chosen at FILL (the `Voice` singleton, one POV
+  string) but beat feasibility-under-POV is fixed at SEED, four stages earlier, with no
+  POV awareness (the scaffold prompt never even renders `vision.pov_hint`); the acute
+  failure was a *collapse* event — a live scene + world coda crushed into one passage.
+  **Decisions (author):** (1.a) a narrow per-beat `narration_scope ∈ {limited, wide}`
+  annotation folded into GROW's existing `annotate` pass, settled-at-freeze like
+  `scene_type`, `epilogue`→`wide` fallback else `limited`; **not** a full per-beat
+  viewpoint-character field (that invites the head-hopping the corpus warns against).
+  (3.a) `wide` is the marked exception — epilogue default, deliberate opt-in elsewhere.
+  (2, resolved **no split**) the author's narrative argument settled it: a passage may
+  run one paragraph `wide` and the next `limited`, and a forced collapse boundary would
+  insert a spurious single-option page-turn between a climax and its coda — so FILL
+  modulates register *per beat within a passage* (the `scene_type` pattern) and **POLISH
+  collapse is untouched**. Scope stays orthogonal to length (`scene_type`/`passage_intensity`
+  keep the word band). The case-A prompt fix ships regardless (a correctness fix). Build
+  not started; the frontier deliverable this session is the contract. Fixture note:
+  FILL prompt changes need no re-record (call-order replay), only the GROW `annotate`
+  recorded call + snapshots widen. **Follow-up:** live validation on `gpt-oss:120b` (the
+  noir re-run + a real *medium* — guard against the `scope:`-line operator slip).
 
 - **2026-07-13 (reading-difficulty fix #1 — over-stylization is per-paragraph
   style saturation; prompt reframe, author-directed):** The author greenlit the

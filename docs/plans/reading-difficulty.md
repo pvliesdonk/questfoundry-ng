@@ -329,8 +329,8 @@ translation to NG.
 Heritage (`docs/heritage/story-graph-ontology.md`, Part 3 "Beat Annotations")
 distributed stylistic intensity **structurally, per beat**:
 
-- `scene_type ∈ {scene, sequel, micro_beat}` (Swain) — *"Consumed by POLISH for
-  pacing detection and by FILL for prose intensity / target length derivation."* A
+- `scene_type ∈ {scene, sequel, micro_beat}` (Swain) — *"Consumed by POLISH Phase 2
+  for pacing detection and by FILL for prose intensity / target length derivation."* A
   `scene` (active conflict) earns heightened prose; a `sequel` (reactive) or
   `micro_beat` (transition) stays plain and short.
 - `narrative_function ∈ {introduce, develop, complicate, confront, resolve}` —
@@ -352,10 +352,16 @@ are gone — and the loss is half-recorded, half an undocumented gap:**
   `scene_type` and no `exit_mood`; the only mention anywhere is a POLISH comment,
   *"the pacing report stays deferred with scene_type."* The G4 pacing report
   (design doc 02 §3: *"no > N consecutive same-intensity passages"*) is unbuilt for
-  the same reason — it needs the missing intensity signal. So the authoritative doc
-  promises `scene_type`/`exit_mood`; the code shipped neither. Per AGENTS.md that
-  doc↔code divergence is itself a bug (filed in STATUS "Known deferrals / open
-  items", 2026-07-13).
+  the same reason — it needs the missing intensity signal.
+
+  **This was not a mistake — it was an honest YAGNI call** (author, 2026-07-13).
+  §10.3 says annotations are "cheap to add and expensive to maintain coherently,"
+  so NG deferred building even the two it named until a FILL quality gap demanded
+  them. The only stale artifact is §10.3's present-tense "NG starts with two"
+  wording, which reads as though they exist; the resolution is to **build
+  `scene_type` now** (the trigger has fired — see below) and update §10.3 to match,
+  not to treat the deferral as an error. (Filed in STATUS "Known deferrals / open
+  items", 2026-07-13.)
 
 **The reading-difficulty gap is precisely the trigger §10.3 anticipated.** The
 condition for (re)adding the annotation — "a FILL quality gap demonstrably calls
@@ -374,6 +380,53 @@ consumption, the deferred pacing report, checked against the freeze — heritage
 populated `scene_type` at GROW, i.e. before the topology freezes, so an annotation
 added post-freeze at POLISH would need I-rule clearance). Milestone-sized, not this
 PR. Recorded as the recommended direction; build gated on author go-ahead.
+
+### Hand-off spec — the `scene_type` modulation build (for a fresh session)
+
+Author-confirmed direction (2026-07-13): capture here, kick off in a new session.
+Goal: give FILL a **per-beat prose-intensity signal** so style distributes across
+passages (plain baseline + a few peaks) instead of every passage running hot.
+
+Build order (each step is a checkpoint; a frontier session should re-resolve the
+open questions before coding — this is a sketch, not a frozen contract):
+
+1. **Model.** Add `scene_type: SceneType | None = None` to `Beat`
+   (`models/structure.py`); `SceneType = {scene, sequel, micro_beat}` (Swain, per
+   heritage). Write-once through the mutation layer (iron rule 1). Reconcile with
+   the existing coarse notion `Beat.is_texture` (residue/false-branch → short band):
+   `scene_type` should subsume it, or the two must be explicitly layered.
+2. **Populate pass.** Assign `scene_type` per beat. Heritage did it at **GROW Phase
+   4b** (order known after weave, before freeze). *Open:* GROW (pre-freeze, needs
+   the woven order) vs POLISH (post-freeze, passages known — but a post-freeze
+   annotation must be shown freeze-exempt: it is metadata, not topology; note it
+   against I9 and the freeze rules). Likely LLM-proposed (scene/sequel is narrative
+   judgment; utility or architect tier) with a heuristic seed from `purpose` /
+   `dilemma_impacts` where safe.
+3. **FILL consumption — the payoff.** (a) Word band: extend
+   `ScopePreset.words_for` / `_word_budget_finding` (`stages/fill.py`) to key off
+   `scene_type` (sequel/micro → short; scene → normal/long) alongside the current
+   `texture`/`ending` axes. (b) Intensity directive in `fill_write.j2`: render the
+   beat's `scene_type` and instruct — a **sequel/micro** beat is plain, brief,
+   low-key (reactive processing / transition); a **scene** is where the prose may
+   rise (active conflict). This makes "style belongs to the story, not the
+   paragraph" concrete per beat.
+4. **Pacing report (the deferred G4 piece, design doc 02 §3).** With `scene_type`
+   present, implement the advisory "no > N consecutive same-intensity passages"
+   check as the modulation guardrail (alternation, not all-scene/all-sequel).
+5. **Guardrail metric, after.** The `overwriting` finding demotes to a check that
+   modulation actually happened (variance across passages), compound-density > 15/1k
+   as the one aggregate red flag (calibration above). Do **not** ship the raw
+   fragmentation rule (false-positives on good noir).
+6. **Docs + fixtures.** Update design doc 01 §10.3 (annotations built, not "will
+   start with"), add the Beat-annotation subsection to 01, the populate pass + G4
+   pacing report to 02, and — if `scene_type` ever gates — a numbered invariant
+   (iron rule 6) with a violating-construction test. Annotate the golden story's
+   beats; re-record e2e fixtures if the populate pass adds LLM calls.
+
+Open questions to settle first: GROW-vs-POLISH placement (freeze interaction);
+LLM-proposed vs heuristic `scene_type`; `scene_type`-alone-first vs also `exit_mood`
+(§10.3 named both — `scene_type` is the modulation carrier, do it first); how
+`scene_type` reconciles with `is_texture`.
 
 ## Scope guards / not doing
 

@@ -616,7 +616,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-> **New top priority (2026-07-12): the prose reads too complex for a
+> **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): restore structural
+> prose-intensity modulation via the `scene_type` beat annotation.** The
+> reading-difficulty effort traced the over-stylization problem to its structural
+> root: heritage distributed prose intensity per beat (`scene_type` scene/sequel →
+> FILL "prose intensity / target length"); NG deferred it under YAGNI (design doc
+> 01 §10.3 names `scene_type`+`exit_mood` but neither was built), and the "FILL
+> quality gap" §10.3 named as the trigger has now fired. The FILL prompt reframe
+> (PR #64) is the completed predecessor; the `scene_type` build is the real fix.
+> **Full hand-off spec: [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)
+> § "Hand-off spec — the `scene_type` modulation build."** Frontier/milestone-sized
+> (model field → GROW/POLISH populate pass → FILL intensity+word-band consumption →
+> deferred G4 pacing report → `overwriting` guardrail after). Read the plan's
+> exemplar calibration first (FKGL is out; compound-density > 15/1k is the one
+> clean aggregate flag; fragmentation-rate false-positives on good noir).
+
+> **Predecessor context (2026-07-12): the prose reads too complex for a
 > gamebook.** The pipeline now completes a weak-tier run **end to end**
 > (FILL → DRESS; decision log below, and the preserved sample
 > `examples/thaw-between/`), so *quality*, not completion, is the frontier.
@@ -739,19 +754,23 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
-- **Doc↔code divergence: `scene_type` / `exit_mood` beat annotations are
-  promised but unbuilt** (found 2026-07-13, reading-difficulty effort). Design
-  doc 01 §10.3 states NG "starts with two — `scene_type` (scene/sequel) and
-  `exit_mood`" annotations; the `Beat` model (`models/structure.py`) has neither,
-  and the only code reference is a POLISH comment deferring the pacing report
-  "with scene_type." The dependent G4 pacing report (design doc 02 §3: "no > N
-  consecutive same-intensity passages") is unbuilt for the same reason. Per
-  AGENTS.md an undocumented doc↔code divergence is a bug even when the code is
-  better — resolve by either building `scene_type` (the recommended modulation
-  mechanism; see [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md))
-  or correcting §10.3 to say the annotations are deferred, not present. Building
-  it is the preferred resolution because the reading-difficulty gap is the
-  "demonstrable FILL quality gap" §10.3 named as the trigger for adding it.
+- **`scene_type` / `exit_mood` beat annotations: an honest YAGNI deferral whose
+  trigger has now fired** (2026-07-13, reading-difficulty effort; author-confirmed
+  it was a deliberate YAGNI call, not a mistake). Design doc 01 §10.3 names two
+  annotations NG would carry — `scene_type` (scene/sequel) and `exit_mood` —
+  "adding more only when a FILL quality gap demonstrably calls for one," and notes
+  annotations are "cheap to add and expensive to maintain coherently." NG deferred
+  building even those two (the `Beat` model has neither; the only reference is a
+  POLISH comment, "the pacing report stays deferred with scene_type"; the G4
+  pacing report in design doc 02 §3 is unbuilt for the same missing-signal reason).
+  That deferral was correct at the time. **The trigger has now fired**: the
+  reading-difficulty / over-stylization gap is exactly the "demonstrable FILL
+  quality gap" §10.3 anticipated, and `scene_type` is the modulation carrier. So
+  the resolution is to **build `scene_type`** (the recommended structural
+  modulation mechanism —
+  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) has the
+  hand-off spec) and update §10.3's present-tense wording to match. To be kicked
+  off in a fresh session (frontier, milestone-sized).
 
 - **Live-run budget discipline is now a working norm** (author call,
   2026-07-12, after a session that exhausted the token budget on repeated

@@ -1292,9 +1292,20 @@ PR #5) and this agent/doc infrastructure (PR #6).
   2400 (the expected modulation-shortens-sequels signal). Also observed: a transient
   `RemoteProtocolError` (cloud dropped a large SEED-scaffold response) is **not**
   retried by the Ollama provider — it crashes the stage; the A16 ledger re-run recovers
-  it free, but a transport-level retry/backoff is a worthwhile robustness follow-up. A
-  **medium** run on the same premise is in flight (the real `wide` test — 2 hard
-  dilemmas, 4 endings, epilogue-scope beats).
+  it free, but a transport-level retry/backoff is a worthwhile robustness follow-up.
+  **Follow-up (same session):** the `limited`-nudge finding drove a **softening of the
+  SEED coda steer** (`seed_scaffold.j2`, commit in PR #69) — the #68 wording forbade a
+  coda beat from existing at all; the softened wording *permits* a brief earned coda
+  while still discouraging omniscient full scenes (plan doc §"SEED context gap" updated
+  to match). Result across **three** runs — micro (30), medium (111), softened-micro
+  (24) — is **still all `limited`, 0 `wide`**: softening *permits* a coda but cannot
+  *manufacture* one, and this recover-the-figurine premise keeps the detective present
+  at every ending, so there is genuinely no out-of-horizon beat. **Conclusion:**
+  completion + no-regression + the case-A/psychic-distance clarity are validated live;
+  the `wide` license itself is proven only by unit tests so far. Exercising `wide`
+  live needs a premise that *structurally* demands a coda — a **death ending** or a
+  **time-skip epilogue** (the original "posthumous reputation" shape) — pending an
+  author go-ahead.
 
 - **2026-07-13 (epilogue/POV collapse-feasibility — design decided, author-directed):**
   The noir finale failure (STATUS "Next up" kickoff) was diagnosed and resolved into a

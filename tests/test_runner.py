@@ -4,6 +4,8 @@ adapter stands in for `questfoundry.llm`."""
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 import yaml
 from jinja2 import DictLoader, Environment, StrictUndefined
@@ -196,6 +198,49 @@ def test_dynamic_pass_lists_are_computed_from_the_project(tmp_path, monkeypatch)
 
     assert report.success
     assert [p.name for p in report.passes] == ["first", "second"]
+
+
+def test_expand_splices_successor_passes(tmp_path, monkeypatch):
+    """A completed pass's `expand` result runs right after it, before any
+    later pass — POLISH's finalize -> per-group passages/labels."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+
+    planner = replace(
+        _vision_pass("planner"),
+        expand=lambda p: [_vision_pass("exp-a"), _vision_pass("exp-b")],
+    )
+    impl = StageImpl(
+        stage=Stage.DREAM, passes=(planner, _vision_pass("trailing")), gate=lambda p: []
+    )
+    adapter = FakeAdapter([VisionProposal(audience=a) for a in ("p", "a", "b", "t")])
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert report.success
+    assert [p.name for p in report.passes] == ["planner", "exp-a", "exp-b", "trailing"]
+
+
+def test_expand_runs_even_when_the_expanding_pass_is_skipped(tmp_path, monkeypatch):
+    """finalize may `skip_if` there is nothing to add, but the passages it
+    would have produced still must be enumerated — expansion runs on skip."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+
+    planner = replace(
+        _vision_pass("planner"),
+        skip_if=lambda p: "nothing to add",
+        expand=lambda p: [_vision_pass("exp-a")],
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(planner,), gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience="a")])  # only exp-a hits the adapter
+
+    report = runner.run_stage(project, impl, adapter)
+
+    assert report.success
+    assert [p.name for p in report.passes] == ["planner", "exp-a"]
+    assert report.passes[0].applied == ["skipped: nothing to add"]
+    assert len(adapter.prompts) == 1
 
 
 def test_repair_loop_restores_graph_and_carries_error_into_prompt(tmp_path, monkeypatch):

@@ -342,8 +342,11 @@ def run_stage(
         project.root, impl.stage, _stage_fingerprint(project, notes)
     )
 
-    passes = impl.passes(project) if callable(impl.passes) else impl.passes
-    total = len(passes)
+    # A growable list: a completed pass with `expand` splices its successors
+    # in right after it (POLISH's finalize -> per-group passages/labels, whose
+    # count is unknown until finalize has run). Expansion is deterministic, so
+    # it reproduces on ledger resume.
+    passes = list(impl.passes(project) if callable(impl.passes) else impl.passes)
 
     def emit(index: int, name: str, status: str, attempts: int = 0) -> None:
         if progress is not None:
@@ -352,19 +355,28 @@ def run_stage(
                     stage=impl.stage,
                     name=name,
                     index=index,
-                    total=total,
+                    total=len(passes),
                     status=status,
                     attempts=attempts,
                 )
             )
 
+    def expand_after(idx: int, spec) -> None:
+        if spec.expand is not None:
+            passes[idx + 1 : idx + 1] = list(spec.expand(project))
+
     pass_reports: list[PassReport] = []
-    for index, spec in enumerate(passes, start=1):
+    index = 0
+    while index < len(passes):
+        spec = passes[index]
+        display = index + 1
         if spec.skip_if is not None and (reason := spec.skip_if(project)):
             pass_reports.append(
                 PassReport(name=spec.name, attempts=0, applied=[f"skipped: {reason}"])
             )
-            emit(index, spec.name, "skipped")
+            emit(display, spec.name, "skipped")
+            expand_after(index, spec)
+            index += 1
             continue
         if keep and spec.name in keep:
             result = _run_kept_pass(project, spec, keep[spec.name])
@@ -374,22 +386,24 @@ def run_stage(
             status = "resumed"
             if isinstance(result, str):
                 stale_note = result
-                emit(index, spec.name, "start")
+                emit(display, spec.name, "start")
                 result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
                 status = "done"
                 if isinstance(result, PassReport):
                     result.applied.insert(0, f"stale in-flight proposal discarded ({stale_note})")
         else:
-            emit(index, spec.name, "start")
+            emit(display, spec.name, "start")
             result = _run_pass(project, spec, env, adapter, notes, max_repairs, impl.stage)
             status = "done"
         if isinstance(result, str):
-            emit(index, spec.name, "failed")
+            emit(display, spec.name, "failed")
             return StageReport(stage=impl.stage, passes=pass_reports, error=result)
-        emit(index, spec.name, status, attempts=result.attempts)
+        emit(display, spec.name, status, attempts=result.attempts)
         pass_reports.append(result)
         if result.proposal is not None:
             _record_inflight(project.root, impl.stage, result)
+        expand_after(index, spec)
+        index += 1
 
     issues = impl.gate(project)
     report = StageReport(stage=impl.stage, passes=pass_reports, issues=issues)

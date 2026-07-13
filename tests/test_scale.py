@@ -17,7 +17,7 @@ from questfoundry.graph.validate import (
 from questfoundry.models.base import Stage
 from questfoundry.models.concept import SCOPE_PRESETS, Vision
 from questfoundry.models.presentation import Choice, Passage
-from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
+from questfoundry.models.structure import Beat, BeatClass, SceneType, StructuralPurpose
 from questfoundry.pipeline import passages as pc
 from tests.scale import SimShape, build_seeded, compile_story, measure
 
@@ -157,9 +157,10 @@ def test_cadence_plan_is_empty_when_the_walk_is_already_paced():
 
 def test_words_for_bands():
     preset = SCOPE_PRESETS["medium"]
-    assert preset.words_for(texture=False) == (200, 550)
-    assert preset.words_for(texture=True) == (200, 316)
-    assert preset.words_for(texture=False, ending=True) == (200, 650)
+    assert preset.words_for(intensity=SceneType.SCENE) == (200, 550)
+    assert preset.words_for(intensity=SceneType.SEQUEL) == (200, 433)  # lo + 2*span//3
+    assert preset.words_for(intensity=SceneType.MICRO_BEAT) == (200, 316)  # == old texture band
+    assert preset.words_for(intensity=SceneType.SCENE, ending=True) == (200, 650)
 
 
 def test_fill_flags_a_texture_arm_written_at_narrative_weight(tmp_path):
@@ -286,8 +287,12 @@ def test_projected_walk_traverses_one_diamond_arm():
     walks = pc.projected_walks(g, preset)
     assert len(walks) == 1  # no branched dilemmas: a single selection
     words, decisions = walks[0]
-    # root + ONE arm + join — the other arm is never walked
-    narrative = round(preset.words_for(texture=False)[1] * 0.9)
-    arm = round(preset.words_for(texture=True)[1] * 0.9)
-    assert words == 2 * narrative + arm
+    # root + ONE arm + join — the other arm is never walked. The beats are
+    # unannotated, so effective_scene_type governs: the SETUP root falls back to
+    # scene, the FALSE_BRANCH arm and the BRIDGE join both to micro_beat (a bridge
+    # is a transition — under scene_type it now projects at the short band, where
+    # is_texture used to leave it at the full narrative band).
+    scene = round(preset.words_for(intensity=SceneType.SCENE)[1] * 0.9)
+    micro = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
+    assert words == scene + 2 * micro
     assert decisions == 1

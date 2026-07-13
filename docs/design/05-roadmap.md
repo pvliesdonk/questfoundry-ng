@@ -234,11 +234,15 @@ stage/pass/spend in `qf status`.
 
 Demand-triggered (tracked as STATUS open items, built when a real
 story or a demonstrated quality gap calls for them, per the annotation
-discipline in 01 §10): the G4 pacing report + `scene_type`,
-character-arc metadata, intersections over exclusive beats, temporal
+discipline in 01 §10): the G4 pacing report,
+intersections over exclusive beats, temporal
 hints inside fork units, cosmetic flags on false branches and locked
 storylines, and non-digit codeword fallbacks. (Tensored residue arms
-were pulled in by M8, as this list anticipated.)
+were pulled in by M8, as this list anticipated; `scene_type` and
+character-arc metadata were built when the over-stylization gap and the
+prose-quality effort called for them — PR #65 and the prose-quality
+effort respectively. The G4 pacing report now has its `scene_type`
+signal and is the next demand-triggered item.)
 
 ## Top risks
 

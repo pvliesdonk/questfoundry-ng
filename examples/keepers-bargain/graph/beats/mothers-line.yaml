@@ -9,3 +9,4 @@ dilemma_impacts:
   effect: reveals
 entities: [character:keeper, location:lighthouse]
 belongs_to: [path:mother-left]
+scene_type: sequel

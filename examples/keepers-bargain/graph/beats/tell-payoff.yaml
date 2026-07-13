@@ -8,3 +8,4 @@ dilemma_impacts:
   effect: advances
 entities: [character:keeper, character:cartographer]
 belongs_to: [path:tell]
+scene_type: sequel

@@ -15,7 +15,13 @@ from questfoundry.graph.store import FreezeRecord, StoryGraph
 from questfoundry.models.base import Edge, EdgeKind
 from questfoundry.models.drama import Answer, Consequence, Dilemma, DilemmaRole, Path
 from questfoundry.models.presentation import Choice, Passage
-from questfoundry.models.structure import Beat, BeatClass, IntersectionGroup, StateFlag
+from questfoundry.models.structure import (
+    Beat,
+    BeatClass,
+    IntersectionGroup,
+    SceneType,
+    StateFlag,
+)
 from questfoundry.models.world import Entity, EntityArc
 
 CODEWORD_RE = re.compile(r"^[A-Z]{3,12}$")
@@ -341,6 +347,20 @@ def set_beat_summary(g: StoryGraph, beat_id: str, summary: str) -> None:
     if g.frozen and beat_id in g.frozen.beats:
         raise MutationError(f"beat {beat_id} is frozen; summaries are settled at the freeze")
     beat.summary = summary
+
+
+def set_beat_scene_type(g: StoryGraph, beat_id: str, scene_type: SceneType) -> None:
+    """GROW's annotate write path: a beat's prose-intensity type (Swain
+    scene/sequel/micro_beat). Like a summary, ``scene_type`` is intrinsic
+    beat content settled at the freeze — it names *why the beat exists*
+    dramatically, which POLISH never restates — so a frozen beat is
+    rejected. Pre-freeze it is settable (repair may re-run the pass)."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if g.frozen and beat_id in g.frozen.beats:
+        raise MutationError(f"beat {beat_id} is frozen; scene_type is settled at the freeze")
+    beat.scene_type = scene_type
 
 
 def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:

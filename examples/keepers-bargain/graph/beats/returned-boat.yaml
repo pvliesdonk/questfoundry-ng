@@ -9,3 +9,4 @@ dilemma_impacts:
   effect: commits
 entities: [character:keeper, character:sleeper]
 belongs_to: [path:mother-left]
+scene_type: sequel

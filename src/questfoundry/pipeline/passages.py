@@ -21,7 +21,13 @@ from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind
 from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
-from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
+from questfoundry.models.structure import (
+    Beat,
+    BeatClass,
+    StateFlag,
+    StructuralPurpose,
+    passage_intensity,
+)
 
 # -- collapse ----------------------------------------------------------------
 
@@ -243,12 +249,13 @@ def long_linear_runs(groups: list[list[str]], min_beats: int = 3) -> list[int]:
 def projected_group_words(g: StoryGraph, group: list[str], preset) -> int:
     """Projected prose words for a passage group: models write near a
     band's cap — every measured live run averaged ~0.9x of it (400/450
-    micro, 440-460/500 short, 529 medium) — so both the narrative band
-    and the texture band (residue arms, diamond arms; FILL enforces the
-    short band since M8) project at 0.9x their cap."""
-    texture = all(_beat(g, b).is_texture for b in group)
+    micro, 440-460/500 short, 529 medium) — so a group projects at 0.9x
+    the cap of its aggregate-intensity band (scene / sequel / micro; a
+    texture arm falls back to micro_beat, keeping the pre-scene_type
+    short-band projection)."""
+    intensity = passage_intensity(_beat(g, b) for b in group)
     ending = any(_beat(g, b).is_ending for b in group)
-    return round(preset.words_for(texture=texture, ending=ending)[1] * 0.9)
+    return round(preset.words_for(intensity=intensity, ending=ending)[1] * 0.9)
 
 
 def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:

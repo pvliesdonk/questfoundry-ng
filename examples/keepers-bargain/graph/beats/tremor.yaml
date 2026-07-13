@@ -8,3 +8,4 @@ dilemma_impacts:
   effect: reveals
 entities: [character:keeper, character:sleeper, location:lighthouse]
 belongs_to: [path:keep, path:break]
+scene_type: scene

@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict
 
+from questfoundry.models.structure import SceneType
+
 
 class ScaffoldShape(BaseModel):
     """Per-scope SEED chain depths (M8): how much pre-commit development,
@@ -56,19 +58,29 @@ class ScopePreset(BaseModel):
     passage_beats_max: int
     shape: ScaffoldShape
 
-    def words_for(self, *, texture: bool, ending: bool = False) -> tuple[int, int]:
-        """The word band a passage writes toward. Texture passages —
-        residue arms, false-branch arms — get the short band: a breath of
-        flavor, not a scene. Live runs wrote arms at ~0.95x narrative
-        weight (measured, M8), which is the false-choice tax in word
-        form; the cadence math only closes when an arm costs a fraction
-        of a narrative passage. Endings get headroom above the scene
-        band — a climax resolution runs long (opus endings measured
-        ~600) and must not be squeezed by the cadence arithmetic."""
+    def words_for(self, *, intensity: SceneType, ending: bool = False) -> tuple[int, int]:
+        """The word band a passage writes toward, from its aggregate prose
+        intensity (the highest-ranked scene_type among its beats — see
+        ``structure.passage_intensity``) and whether it ends the story.
+        A *scene* may rise to the full band; a *sequel* is reactive and
+        plainer; a *micro_beat* is the shortest breath — a transition, or
+        a texture arm (residue / false-branch fall back to micro_beat,
+        which is why texture passages keep exactly their pre-scene_type
+        short band: live runs wrote arms at ~0.95x narrative weight, the
+        false-choice tax in word form, and the cadence math only closes
+        when an arm costs a fraction of a narrative passage). Endings get
+        headroom above the scene band — a climax resolution runs long
+        (opus endings measured ~600) and must not be squeezed by the
+        cadence arithmetic."""
         lo, hi = self.words_per_passage
         if ending:
             return (lo, hi + 100)
-        return (lo, lo + (hi - lo) // 3) if texture else (lo, hi)
+        span = hi - lo
+        if intensity == SceneType.SCENE:
+            return (lo, hi)
+        if intensity == SceneType.SEQUEL:
+            return (lo, lo + 2 * span // 3)
+        return (lo, lo + span // 3)
 
 
 # The scale table is words-primary (A19, M8): words_total anchors each

@@ -1,6 +1,6 @@
 """GROW — weave the beat DAG (design doc 02).
 
-Four passes sharing gate G3:
+Five passes sharing gate G3:
 
 1. *intersections* — the LLM proposes co-occurrence groups over beats
    every player sees (shared pre-commit beats, locked-storyline beats)
@@ -17,7 +17,14 @@ Four passes sharing gate G3:
    the LLM rewrites each cloned beat's summary for its world, and the
    earlier hard forks' de-ended tails to leave the climax question open.
    Skipped when nothing was cloned (single hard dilemma).
-4. *bridge* — for adjacent beats sharing no entities, the LLM writes
+4. *annotate* — the LLM tags every beat with its `scene_type` (Swain
+   scene/sequel/micro_beat), the intrinsic prose-intensity signal FILL
+   reads to modulate prose across the story (design doc 01 §10.3). Runs
+   pre-freeze because scene_type is intrinsic beat content (why the beat
+   exists), settled at the freeze like a summary; beats a later stage
+   adds (bridge here, POLISH's residue/false-branch) ride the purpose
+   fallback (`effective_scene_type`).
+5. *bridge* — for adjacent beats sharing no entities, the LLM writes
    structural bridge beats the engine splices in — before the whole fork
    frontier when the gap runs into a commit beat (a bridge is shared, so
    feeding it into one branch dead-ends the others, I6); seams no bridge
@@ -42,6 +49,7 @@ from questfoundry.models.structure import (
     BeatClass,
     FlagSource,
     IntersectionGroup,
+    SceneType,
     StateFlag,
     StructuralPurpose,
 )
@@ -430,7 +438,68 @@ def _contextualize_apply(proposal: ContextualizeProposal, project: Project) -> l
     return [f"{len(seen)} beat summaries contextualized to their worlds"]
 
 
-# -- pass 4: bridge -----------------------------------------------------------
+# -- pass 4: annotate ---------------------------------------------------------
+
+
+class BeatScene(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    beat: str
+    scene_type: SceneType
+
+
+class AnnotateProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    annotations: list[BeatScene]
+
+
+def _annotate_beats(project: Project) -> list[dict]:
+    g = project.graph
+    rows = []
+    for bid in queries.topological_order(g) or []:
+        beat = g.node(bid)
+        assert isinstance(beat, Beat)
+        rows.append(
+            {"beat": beat, "effects": sorted({i.effect.value for i in beat.dilemma_impacts})}
+        )
+    return rows
+
+
+def _annotate_context(project: Project) -> dict:
+    return {"vision": project.vision, "beats": _annotate_beats(project)}
+
+
+def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
+    g = project.graph
+    expected = set(queries.topological_order(g) or [])
+    seen: set[str] = set()
+    for spec in proposal.annotations:
+        if spec.beat not in expected:
+            raise ApplyError(
+                f"{spec.beat} is not a beat to annotate; annotate exactly these "
+                f"beats: {sorted(expected)}"
+            )
+        if spec.beat in seen:
+            raise ApplyError(f"{spec.beat} annotated twice")
+        seen.add(spec.beat)
+    missing = expected - seen
+    if missing:
+        raise ApplyError(
+            "every beat needs a scene_type — the writer paces the whole story from "
+            f"them; missing {sorted(missing)}"
+        )
+    counts = {SceneType.SCENE: 0, SceneType.SEQUEL: 0, SceneType.MICRO_BEAT: 0}
+    for spec in proposal.annotations:
+        mutations.set_beat_scene_type(g, spec.beat, spec.scene_type)
+        counts[spec.scene_type] += 1
+    return [
+        f"annotated {len(seen)} beats: {counts[SceneType.SCENE]} scene, "
+        f"{counts[SceneType.SEQUEL]} sequel, {counts[SceneType.MICRO_BEAT]} micro_beat"
+    ]
+
+
+# -- pass 5: bridge -----------------------------------------------------------
 
 
 class BridgeSpec(BaseModel):
@@ -584,6 +653,15 @@ def contextualize_proposal_schema(project: Project) -> type[ContextualizeProposa
     )
 
 
+def annotate_proposal_schema(project: Project) -> type[AnnotateProposal]:
+    """Pin `annotations[].beat` to every beat present pre-freeze (the
+    annotatable set — SEED scaffold + GROW clones; bridge/residue/
+    false-branch are added later and ride the purpose fallback). Resolved
+    after weave/contextualize rewire the graph (PassSpec.schema_for)."""
+    beats = queries.topological_order(project.graph) or []
+    return pin(AnnotateProposal, "AnnotateProposal", {("BeatScene", "beat"): beats})
+
+
 def bridge_proposal_schema(project: Project) -> type[BridgeProposal]:
     """Pin `bridges[].entities` to the entity ids."""
     return pin(
@@ -620,6 +698,14 @@ GROW_STAGE = StageImpl(
             build_context=_contextualize_context,
             apply=_contextualize_apply,
             skip_if=_contextualize_skip,
+        ),
+        PassSpec(
+            name="annotate",
+            role="writer",
+            template="grow_annotate.j2",
+            schema=annotate_proposal_schema,
+            build_context=_annotate_context,
+            apply=_annotate_apply,
         ),
         PassSpec(
             name="bridge",

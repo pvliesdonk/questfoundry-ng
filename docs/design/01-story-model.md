@@ -245,6 +245,25 @@ Residue and false-branch beats are *conditionally traversed* (by flag or
 by cosmetic choice); the rest are traversed by every arc that reaches
 them.
 
+**Beat annotations** carry per-beat craft signals that are *properties of
+the beat*, not topology (§10.3 governs which the model keeps):
+
+- **`scene_type` ∈ {scene, sequel, micro_beat}** (Swain's beat rhythm) —
+  the intrinsic prose-intensity signal. A *scene* is active conflict (goal,
+  obstacle, turn) and earns heightened prose and a fuller word band; a
+  *sequel* is the reactive processing between scenes, plain and shorter; a
+  *micro_beat* is a transition, the briefest. GROW's *annotate* pass (02
+  §GROW) writes it per beat **before the freeze** — it names *why the beat
+  exists* dramatically, settled at the freeze like the summary; POLISH only
+  *adds* beats and never restates an existing beat's `scene_type`. Beats a
+  later stage adds (a GROW bridge, a POLISH residue/false-branch arm) carry
+  no annotation and take a deterministic fallback by `purpose`
+  (transition/texture → `micro_beat`; else → `scene`). FILL sets each
+  passage's word band from its highest-intensity beat (a scene beat
+  justifies the words) and modulates prose per beat — style belongs to the
+  story, not to every paragraph. Advisory, not gated: an unannotated beat
+  falls back, never fails. (`exit_mood` remains deferred — §10.3.)
+
 Whatever its class, a beat's summary is a **brief for the prose writer,
 never the prose**: plain declarative present tense stating who does what,
 what changes, and what it now costs — mood *named*, never performed. FILL
@@ -519,10 +538,15 @@ Changed:
    only exception to I5.
 3. **Annotation trimming.** The original accreted per-beat craft
    annotations (scene_type, narrative_function, exit_mood,
-   atmospheric_detail, path_theme, path_mood...). NG starts with two —
-   `scene_type` (scene/sequel) and `exit_mood` — and adds more only when a
-   FILL quality gap demonstrably calls for one. Annotations are cheap to
-   add and expensive to maintain coherently.
+   atmospheric_detail, path_theme, path_mood...). NG deferred all of them
+   under YAGNI — annotations are cheap to add and expensive to maintain
+   coherently — and adds one only when a FILL quality gap demonstrably
+   calls for it. **`scene_type` (scene/sequel/micro_beat) is now built:**
+   the reading-difficulty / over-stylization gap was exactly that trigger
+   (`docs/plans/scene-type-modulation.md`). It is the intrinsic
+   prose-intensity signal GROW's *annotate* pass writes per beat (see
+   "Beat annotations" below) and FILL reads to modulate prose across the
+   story. `exit_mood` remains deferred; the rest stay trimmed.
 4. **Budgets are first-class.** Scope presets bind hard numbers (dilemma
    counts, beats per path, passage ranges) that gates check, making cost a
    contract instead of an emergent property.

@@ -495,7 +495,12 @@ def _labels_context(a: int) -> Callable[[Project], dict]:
             dests.append(
                 {
                     "index": b,
-                    "beats": [g.node(x) for x in groups[b]],
+                    # A group-edge carries ONE label, engine-fanned across a heavy-
+                    # residue destination's variant passages, so a single
+                    # representative summary is the right granularity: the label is
+                    # the world-agnostic action the reader takes, before the
+                    # world-state a variant presents is known. Deterministic pick
+                    # (passages_of_beat sorts by id).
                     "summary": g.node(passages[0][0]).summary if passages else "",
                     "requires": pc.choice_requires(g, groups[b]),
                     "grants": pc.choice_grants(g, groups[b]),

@@ -5,8 +5,16 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-12 · **#1a live validation ran and reframed the
-> work as prompt quality** (author-directed; decision log has the full
+> Last updated: 2026-07-13 · **`scene_type` structural prose-intensity
+> modulation is built** (PR #65; the structural fix the reading-difficulty
+> effort called for — see "Where we are" and the decision log). A beat now
+> carries an intrinsic `scene_type` (Swain scene/sequel/micro_beat) that
+> GROW's new *annotate* pass writes pre-freeze and FILL reads to modulate
+> prose across the story (per-passage word band + per-beat intensity
+> directive); the deferral in 01 §10.3 is resolved. 536 tests. Follow-ups
+> open: the G4 pacing report, the `overwriting` guardrail, and live
+> validation on Ollama. Before it: **#1a live validation ran and reframed
+> the work as prompt quality** (author-directed; decision log has the full
 > record): both fresh stories died at FILL review-exhaustion, so the
 > scaled recurrence read is still open (13 passages can't discriminate)
 > — but the failures were diagnosed as *blunt prompts/messages propped up
@@ -24,6 +32,54 @@
 > pulled forward. Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation remains, and the **review-contract redesign is now BUILT** — a pipeline-wide structured-finding contract ([`docs/plans/review-contract.md`](plans/review-contract.md), `pipeline/review.py`) shared by FILL prose + DRESS codex review: the engine gates only proceed-vs-rework on confident objective defects, the producer weighs the full-fidelity findings). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
 
 ## Where we are
+
+**`scene_type` structural modulation is built** (2026-07-13, PR #65; plan
+[`docs/plans/scene-type-modulation.md`](plans/scene-type-modulation.md),
+decision log below). The reading-difficulty effort traced over-stylization
+to a missing structural signal — heritage distributed prose intensity per
+beat, NG deferred it (01 §10.3) — and this restores it. Five checkpoints,
+all landed:
+
+- **Model** (`models/structure.py`): `SceneType{scene,sequel,micro_beat}` +
+  `Beat.scene_type`; `effective_scene_type()` (annotation wins → structural
+  transition/texture beats fall back to `micro_beat` → else `scene`);
+  `passage_intensity()` (max over beats via an explicit `intensity_rank`
+  map, never a bare `max` over the StrEnum); `set_beat_scene_type` mutation
+  mirroring `set_beat_summary` (settable pre-freeze, rejected once frozen —
+  scene_type is intrinsic beat content, why the beat exists).
+- **GROW `annotate` pass** (`stages/grow.py`, `grow_annotate.j2`): a fifth
+  pass after *contextualize*, before *bridge* (pre-freeze); one LLM call
+  tags every beat present (SEED scaffold + clones); refpin-pinned beat
+  enum; apply requires full coverage. Beats added later (bridge here,
+  POLISH residue/false-branch) ride the purpose fallback.
+- **FILL consumption**: `ScopePreset.words_for` keys off the passage's
+  aggregate `scene_type` (scene → full, sequel → `lo+2·span/3`, micro →
+  `lo+span/3` == the old texture band, so texture passages are unchanged;
+  endings keep +100). The shared `passage_intensity` feeds all four
+  callers — FILL's write context + word-budget finding, B5, and the
+  cadence projection (both now modulation-aware; a lone-bridge group
+  shortens). `fill_write.j2` tags each beat and makes "style belongs to
+  the story" concrete per beat; `fill_review.j2` renders the same tags and
+  is told a plain sequel is correct, not a defect.
+- **Golden + fixtures**: 19 golden beats hand-annotated (commits/reveals →
+  scene; reactive payoffs, aftermath, setup, locked-chain → sequel; the
+  three residue arms left to the micro fallback); every passage keeps a
+  scene beat so bands and the 0-error/0-warning validate are unchanged
+  while per-beat modulation is real. The keeper e2e got the annotate call
+  spliced in (a scene/sequel mix), fixtures renumbered, ledger counts
+  bumped.
+- **Docs**: 01 §10.3 (built, not "will start with") + a new "Beat
+  annotations" subsection; 02 GROW Out/passes + the FILL G5 band mapping.
+
+Advisory throughout — no new gating invariant; an unannotated beat falls
+back, never fails. **Open** (deliberately deferred, see Next up): the G4
+pacing report (now buildable — the signal exists), the `overwriting`
+guardrail (modulation-variance metric + compound-density > 15/1k), and
+live validation on Ollama (unbilled; a human read of whether prose now
+modulates). One risk flagged, not preempted: modulation shortens
+sequel/micro passages, so `words_total`/`passages` bands and
+`tests/scale.py` may read slightly high — a *measure-after-a-live-run*
+recalibration, not touched here. 536 tests.
 
 **The live-validation predecessors are done** (2026-07-12,
 author-directed; the decision log below has the design record). Two
@@ -616,19 +672,27 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-> **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): restore structural
-> prose-intensity modulation via the `scene_type` beat annotation.** The
-> reading-difficulty effort traced the over-stylization problem to its structural
-> root: heritage distributed prose intensity per beat (`scene_type` scene/sequel →
-> FILL "prose intensity / target length"); NG deferred it under YAGNI (design doc
-> 01 §10.3 names `scene_type`+`exit_mood` but neither was built), and the "FILL
-> quality gap" §10.3 named as the trigger has now fired. The FILL prompt reframe
-> (PR #64) is the completed predecessor; the `scene_type` build is the real fix.
-> **Full hand-off spec: [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)
-> § "Hand-off spec — the `scene_type` modulation build."** Frontier/milestone-sized
-> (model field → GROW/POLISH populate pass → FILL intensity+word-band consumption →
-> deferred G4 pacing report → `overwriting` guardrail after). Read the plan's
-> exemplar calibration first (FKGL is out; compound-density > 15/1k is the one
+> **`scene_type` structural modulation is BUILT (2026-07-13, PR #65)** —
+> the kickoff below is done (see "Where we are"). Plan:
+> [`docs/plans/scene-type-modulation.md`](plans/scene-type-modulation.md).
+> The build landed the model field, GROW's *annotate* pass (populate at
+> GROW pre-freeze, not POLISH — scene_type is intrinsic beat content), and
+> FILL's per-passage band + per-beat intensity directive; 01 §10.3 is
+> resolved. **Remaining follow-ups** (deferred by design, in order): (1)
+> the **G4 pacing report** — now buildable since the signal exists:
+> advisory "no > N consecutive same-intensity passages" (02 §GROW/POLISH
+> pacing, design doc 02 G4); (2) the **`overwriting` guardrail** — the
+> modulation-variance metric (plain baseline + a few peaks across
+> passages) with compound-density > 15/1k as the one clean aggregate red
+> flag (calibration in `reading-difficulty.md`); (3) **live validation on
+> Ollama** (`gpt-oss:120b`, unbilled) — a targeted FILL re-run read by a
+> human for whether prose now modulates; (4) the **scale recalibration**
+> (measure-after: modulation shortens sequels, so `words_total`/`passages`
+> and `tests/scale.py` may read slightly high). Historical hand-off spec:
+> [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)
+> § "Hand-off spec — the `scene_type` modulation build" (the exemplar
+> calibration there still governs the guardrail: FKGL is out;
+> compound-density > 15/1k is the one
 > clean aggregate flag; fragmentation-rate false-positives on good noir).
 
 > **Predecessor context (2026-07-12): the prose reads too complex for a
@@ -754,23 +818,17 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Known deferrals / open items
 
-- **`scene_type` / `exit_mood` beat annotations: an honest YAGNI deferral whose
-  trigger has now fired** (2026-07-13, reading-difficulty effort; author-confirmed
-  it was a deliberate YAGNI call, not a mistake). Design doc 01 §10.3 names two
-  annotations NG would carry — `scene_type` (scene/sequel) and `exit_mood` —
-  "adding more only when a FILL quality gap demonstrably calls for one," and notes
-  annotations are "cheap to add and expensive to maintain coherently." NG deferred
-  building even those two (the `Beat` model has neither; the only reference is a
-  POLISH comment, "the pacing report stays deferred with scene_type"; the G4
-  pacing report in design doc 02 §3 is unbuilt for the same missing-signal reason).
-  That deferral was correct at the time. **The trigger has now fired**: the
-  reading-difficulty / over-stylization gap is exactly the "demonstrable FILL
-  quality gap" §10.3 anticipated, and `scene_type` is the modulation carrier. So
-  the resolution is to **build `scene_type`** (the recommended structural
-  modulation mechanism —
-  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) has the
-  hand-off spec) and update §10.3's present-tense wording to match. To be kicked
-  off in a fresh session (frontier, milestone-sized).
+- ~~**`scene_type` / `exit_mood` beat annotations: an honest YAGNI deferral whose
+  trigger has now fired**~~ **`scene_type` is now BUILT** (2026-07-13, PR #65; the
+  reading-difficulty / over-stylization gap was the "demonstrable FILL quality gap"
+  01 §10.3 anticipated). `scene_type` (scene/sequel/micro_beat) is the modulation
+  carrier: an intrinsic beat property GROW's *annotate* pass writes pre-freeze and
+  FILL reads for per-passage word band + per-beat intensity; §10.3's wording is
+  updated to match, and a "Beat annotations" subsection was added to 01. The G4
+  pacing report (02 §3) is now buildable on that signal but stays deferred as a
+  follow-up (see Next up). **`exit_mood` remains deferred** — it is not the
+  intensity lever; add it only when a demonstrated need appears (the same YAGNI
+  discipline).
 
 - **Live-run budget discipline is now a working norm** (author call,
   2026-07-12, after a session that exhausted the token budget on repeated

@@ -1,6 +1,8 @@
 # `scene_type` Structural Modulation — Build Contract
 
-> Status: **plan** (2026-07-13). The hand-off spec in
+> Status: **BUILT** (2026-07-13, PR #65) — checkpoints 1–5 landed; follow-ups
+> (G4 pacing report, `overwriting` guardrail, live validation, scale
+> recalibration) remain, tracked in STATUS "Next up". Original hand-off spec in
 > [`reading-difficulty.md`](reading-difficulty.md) § "Hand-off spec — the
 > `scene_type` modulation build" is the parent; this is the sharpened,
 > decisions-resolved contract a build session follows. Frontier-authored;

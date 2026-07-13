@@ -205,7 +205,7 @@ between:
 | | |
 |---|---|
 | In | All SEED output |
-| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed |
+| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (the prose-intensity annotation FILL reads, set pre-freeze — 01 §Beat annotations) |
 | Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); budgets (beat count per arc within scope) |
 
 The hardest stage, split deliberately:
@@ -233,7 +233,11 @@ The hardest stage, split deliberately:
   beats every player sees — shared pre-commit beats and locked-chain
   beats alike (each accepted intersection resolves the scene's
   location/entities); contextualizing per-world beat instances (below);
-  writing bridge beats where adjacent scenes share no entities or place.
+  annotating every beat with its `scene_type` (the *annotate* pass, after
+  contextualize and before the freeze: scene/sequel/micro_beat, a beat's
+  intrinsic prose-intensity — 01 §Beat annotations — advisory, with a
+  purpose fallback for beats added later); writing bridge beats where
+  adjacent scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a
@@ -314,7 +318,7 @@ writes labels, decides feasibility judgments, and drafts arc metadata.
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details (note register, length-capped); a rolling story-so-far note per passage (utility-summarized) |
-| Gate G5 | Every passage has prose within its word budget — per-passage since M8: texture passages (residue/false-branch arms) take the short band, endings get headroom, scenes the full band (01 §2) — enforced as a **graded review finding** (`word_budget`), not a hard apply gate: confidence scales with distance outside the band, so a near-miss with good prose and a real reason is a low-confidence finding the engine weighs rather than a forced rework, while a large miss blocks (author-directed 2026-07-12; models cannot hit exact windows and the review owns quality); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
+| Gate G5 | Every passage has prose within its word budget — per-passage since M8, keyed off the passage's aggregate `scene_type` (01 §Beat annotations): a `scene` passage takes the full band, a `sequel` the middle band, a `micro_beat` the short band (residue/false-branch arms fall back to `micro_beat`, so texture passages keep exactly their prior short band), and an ending gets headroom above all of them — enforced as a **graded review finding** (`word_budget`), not a hard apply gate: confidence scales with distance outside the band, so a near-miss with good prose and a real reason is a low-confidence finding the engine weighs rather than a forced rework, while a large miss blocks (author-directed 2026-07-12; models cannot hit exact windows and the review owns quality); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
 
 Order matters: FILL locks the Voice first, then picks a **reference
 arc** — one arbitrary complete playthrough, chosen by seeded selection
@@ -327,8 +331,11 @@ has a first author, it is invisible to every other stage, and nothing
 about it may influence depth, length, or quality budgets — G5 applies the
 same word budgets and review bar to every arc.
 
-Per-passage context is rich by design: voice, beat summaries, full entity
-state (base + active overlays), a sliding window of preceding prose,
+Per-passage context is rich by design: voice, beat summaries each tagged
+with their `scene_type` (the passage's aggregate intensity sets its word
+band; the per-beat tag tells the writer where the prose may rise and where
+it stays plain — style belongs to the story, not the paragraph), full
+entity state (base + active overlays), a sliding window of preceding prose,
 character-arc position (from POLISH's arc metadata: the aspect in play
 now, the turn this scene carries, where the entity is heading),
 the story so far (each already-written passage along one deterministic

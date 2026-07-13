@@ -868,6 +868,15 @@ def test_overwriting_finding_grades_by_density():
     warn = _overwriting_finding(_prose(300, 3))  # ~10/1k: past warn, under fail
     assert warn.rule == "overwriting" and warn.assessment == "warn"
     assert not needs_rework(ReviewVerdict(verdict="needs_work", findings=[warn]))
+    # just past the 15/1k fail line: a fail but LOW confidence, so it does NOT
+    # block (mirrors word_budget's near-miss; a threshold tweak must not silently
+    # flip this boundary from weighed to forced-rework)
+    near = _overwriting_finding(_prose(1000, 16))  # ~16/1k
+    assert near.assessment == "fail" and near.confidence == "low"
+    assert not needs_rework(ReviewVerdict(verdict="needs_work", findings=[near]))
+    mid = _overwriting_finding(_prose(1000, 19))  # ~19/1k: fail/medium, blocks
+    assert mid.assessment == "fail" and mid.confidence == "medium"
+    assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[mid]))
     flood = _overwriting_finding(_prose(200, 6))  # ~30/1k: egregious
     assert flood.assessment == "fail" and flood.confidence == "high"
     assert needs_rework(ReviewVerdict(verdict="needs_work", findings=[flood]))

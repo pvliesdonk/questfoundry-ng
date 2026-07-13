@@ -49,11 +49,15 @@ own sake):
   group's *variants* (heavy-residue: same moment, different prose per world-state)
   must contrast with each other, so they generate **together within their group's
   call** — still per-group independence.
-- **Labels are independent per *source passage*, not per edge.** A single label
-  needs its source + destination, but the *siblings* (all choices offered at one
-  passage) must be mutually distinct (the apply already enforces distinct labels).
-  So the natural independent unit is "at passage A, write its N choice labels
-  together." Different source passages are independent of one another.
+- **Labels are independent per *source group*, not per edge or per physical
+  passage.** A single label needs its source + destination, but the *siblings*
+  (all choices leaving one source group) must be mutually distinct (the apply
+  enforces distinct labels), and a group-edge carries **one** label that the
+  engine fans across the destination's variant passages ("Label granularity"
+  below) — so a heavy-residue source group's several physical passages must not
+  each write their own. The natural independent unit is therefore one source
+  group's out-edge labels, written together. Different source groups are
+  independent of one another.
 
 ## Design
 
@@ -68,13 +72,14 @@ batch constant, the unit is the natural one:
    ending_title, variants). Apply: build the `Passage` node(s) for this group via
    the mutation layer — and **persist each variant's gating flag on its passage**
    (see prerequisite below) so wiring can recover it later.
-2. **`labels:<source>`** — one pass per passage that has outgoing choices. Context:
-   the source passage + each destination's summary/beats + the engine-known
-   gate/grant of each edge. Apply: wire that source's choice edges (label +
-   requires + grants + holdability, I10/I13), reading the destination's persisted
+2. **`labels:<group>`** — one pass per source group that has outgoing choices.
+   Context: the source group + each destination's summary/beats + the engine-known
+   gate/grant of each edge. Apply: wire that group's choice edges — one label per
+   group-edge, engine-fanned across the destination's variant passages (label +
+   requires + grants + holdability, I10/I13), reading each destination's persisted
    variant flag for a gated variant.
 
-All `summary:<group>` passes run before any `labels:<source>` pass (labels
+All `summary:<group>` passes run before any `labels:<group>` pass (labels
 reference destinations that must exist). Order within each family follows the
 deterministic `collapse_groups(...)` order, so the computed pass list is stable
 across ledger replay/resume (A16).
@@ -85,10 +90,10 @@ Today `_passages_apply` builds `ids_of_group: {group -> [(passage_id, flag)]}`
 **in the same call** that creates the variant passages (from `VariantSpec.flag`)
 and consumes it immediately for edge gating; nothing survives on the graph
 (`Passage` has no flag field; `add_variant` records a bare `VARIANT_OF` edge). Once
-creation (`summary:<group>`) and wiring (`labels:<source>`) are separate passes,
+creation (`summary:<group>`) and wiring (`labels:<group>`) are separate passes,
 that mapping must be **persisted**. Fix: add a `variant_flag: str | None` field to
 `Passage` (set only on a variant), written by the create mutation in the
-`summary:<group>` apply; the `labels:<source>` apply reads `dest.variant_flag` to
+`summary:<group>` apply; the `labels:<group>` apply reads `dest.variant_flag` to
 set `Choice.requires`. This is a small model + mutation change and is a **build
 prerequisite**, done first. (Alternative considered: have the engine own the
 pairing by presenting the group's flags in a fixed order and taking variant
@@ -104,8 +109,8 @@ pass — the computed list is exhaustive over `collapse_groups(...)`.
 
 1. **Decompose into independent per-item calls, not batches.** Call count is not
    a cost we optimize against; independent minimal-context calls are strictly
-   better for weak tiers. → `summary:<group>` per group + `labels:<source>` per
-   source passage. No `B` constant.
+   better for weak tiers. → `summary:<group>` per group + `labels:<group>` per
+   source group. No `B` constant.
 2. **Persist the variant→flag mapping** on `Passage` (`variant_flag`) as a build
    prerequisite (review finding above).
 
@@ -113,7 +118,7 @@ pass — the computed list is exhaustive over `collapse_groups(...)`.
 
 - **Keeper e2e** (`tests/fixtures/keeper/…`, `test_pipeline_e2e.py`): the single
   recorded `passages` call is replaced by one `summary:<group>` call per group
-  plus one `labels:<source>` call per source passage. The keeper is micro, so this
+  plus one `labels:<group>` call per source group. The keeper is micro, so this
   is a bounded, mechanical re-record (same content, re-partitioned into the new
   per-item schemas; ~8–9 summary calls + a few label calls), plus refreshed POLISH
   snapshots (now carrying `variant_flag` on any variant passage). Golden story
@@ -154,7 +159,7 @@ progress `total` grows after finalize (a cosmetic heartbeat change).
 
 Labels stay **one per group-edge**, engine-fanned across the destination's variant
 passages (today's behavior — `labeled[(a,b)]` reused for every `dst_id` in
-`ids_of_group[b]`). The `labels:<source>` unit is therefore **per source group**:
+`ids_of_group[b]`). The `labels:<group>` unit is therefore **per source group**:
 one call writes the labels for all of that group's out-edges (siblings must be
 distinct). Distinct-per-variant-destination labels are a feature-add this fix does
 not make.
@@ -167,7 +172,7 @@ not make.
    `run_stage`; determinism-preserving. + a runner expansion test. Keeps every
    stage green (no stage uses `expand` yet).
 3. **POLISH:** replace the single `passages` pass with finalize-expanded
-   `summary:<group>` (per group) + `labels:<source-group>` (per source group)
+   `summary:<group>` (per group) + `labels:<group>` (per source group)
    passes — per-item schema, minimal context, per-item apply; the wiring apply
    reads `dest.variant_flag`. + unit tests.
 4. Re-record the keeper e2e per-item calls; refresh snapshots;

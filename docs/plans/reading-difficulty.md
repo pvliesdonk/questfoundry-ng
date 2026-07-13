@@ -117,10 +117,12 @@ never gate against a controlled literary register.
   (author observation, 2026-07-13, verified against the graph). The beats and
   passage summaries arrive at FILL *already* written as stylized prose, and the
   writer then performs that register and amplifies it. `bubblegum-alibi`'s own
-  beat summaries are the proof: *"In the ashless world where the ledger is gone…"*,
-  *"The gym's chatter tightens into a hush as the crowd pulls itself into a ragged
-  circle, pastel streamers…"* — atmospheric literary prose where a brief should be
-  a plain functional statement of events/stakes. So `fill_write.j2`'s "the
+  beat summaries are the proof (verbatim): *"In the ashless world where the ledger
+  is gone…"* (`admired-and-alone--burn-ledger.yaml`) and *"The gym's chatter
+  tightens into a hush as the crowd pulls itself into a ragged circle, streamers
+  drooping overhead while every glittering eye swings toward Juno for an answer."*
+  (`bridge-crowd-to-circle.yaml`) — atmospheric literary prose where a brief should
+  be a plain functional statement of events/stakes. So `fill_write.j2`'s "the
   summaries are your brief, not your style — leave their wording behind" is fighting
   a summary that is *itself* over-styled. The register-as-a-note-contract already
   in the pipeline (design doc 01 §2, and the echo check) governs note *length* and

@@ -663,7 +663,8 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > guardrail is **not** built yet, pending a different-genre exemplar (author
 > sourcing one); (b) **over-stylization compounds across stages** — verified in
 > the graph: `bubblegum`'s *beat summaries* are already stylized prose ("the gym's
-> chatter tightens into a hush… pastel streamers"), so FILL inherits an
+> chatter tightens into a hush as the crowd pulls itself into a ragged circle,
+> streamers drooping overhead…"), so FILL inherits an
 > over-styled brief and amplifies it. **A second, upstream vector** is now
 > identified: the summary-writing passes (GROW/POLISH/notes) should write plain
 > briefs; this PR fixes only the FILL half. **Still open (follow-ups):** the

@@ -1,0 +1,19 @@
+id: dilemma:corrupt-cop
+question: Do you accept the corrupt dock police lieutenant’s offer of forged evidence for
+  a favor, or refuse and risk losing the trail to the jade?
+why_it_matters: Accepting the forged evidence could fast‑track the case but debts the police
+  and compromises your integrity; refusing keeps your moral line but may let the killer slip
+  away.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:accept-favor
+  text: Take the forged evidence and owe the lieutenant a favor.
+- id: answer:refuse-favor
+  text: Decline the offer and continue on your own.
+anchored_to:
+- character:detective
+- character:gang-boss
+concurrent:
+- dilemma:protect-clara

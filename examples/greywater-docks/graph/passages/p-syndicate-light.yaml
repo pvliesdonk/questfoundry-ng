@@ -1,0 +1,16 @@
+id: passage:p-syndicate-light
+summary: The jade shards lie dull in the gutter, a cold reminder that the Syndicate now grips
+  the city’s pulse.
+entities:
+- character:detective
+- faction:crimson-syndicate
+- object:jade-figurine
+prose_summary: Elliot stands under a lantern, injects experimental serum that stops his cough
+  and grants months of health. Syndicate men lift a heavy crate containing broken jade, their
+  scarred leader nods, sealing a pact that gives the Syndicate a share of the Jade Dragon's
+  power. Elliot hides the serum vial in his coat; the Syndicate gains control of trade routes.
+beats:
+- beat:syndicate-light-mem
+choices:
+- label: Witness the Syndicate’s shadow tighten over the city.
+  to: passage:p-finale

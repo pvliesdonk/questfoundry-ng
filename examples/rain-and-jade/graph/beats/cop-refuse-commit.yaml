@@ -1,0 +1,11 @@
+id: beat:cop-refuse-commit
+summary: Sam slams the forged file on the desk, shaking his head, and walks out, refusing
+  Ramos's deal.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: commits
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:refuse-favor

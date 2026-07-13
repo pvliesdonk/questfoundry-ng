@@ -1,0 +1,7 @@
+id: intersection:shatter-shadow
+location: location:harbor
+rationale: Elliot smashes the jade while syndicate thugs linger in the shadows, intertwining
+  the destruction with looming danger.
+members:
+- beat:shatter-figurine
+- beat:syndicate-shadow

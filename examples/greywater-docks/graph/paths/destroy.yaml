@@ -1,0 +1,8 @@
+id: path:destroy
+name: Shatter the Jade Dragon
+explores: answer:destroy
+consequences:
+- id: consequence:jade-destroyed
+  text: The Jade Dragon is shattered, denying its power to all factions.
+- id: consequence:detective-falls
+  text: Elliot dies in the ensuing showdown; the city moves on without him.

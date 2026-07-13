@@ -1,0 +1,16 @@
+id: beat:hand-to-vane
+summary: Elliot slides the jade figurine into Lydia’s gloved hand, sealing the exchange as
+  the rain hammers the pier.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: commits
+entities:
+- character:detective
+- character:woman
+- object:jade-figurine
+- location:harbor
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:give-vane

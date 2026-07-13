@@ -1,0 +1,16 @@
+id: beat:syndicate-approach
+summary: A Crimson Syndicate emissary slides a sealed vial across the table, offering experimental
+  medicine in exchange for a share of the jade.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: reveals
+entities:
+- faction:crimson-syndicate
+- object:jade-figurine
+- character:detective
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:accept-fix
+- path:refuse

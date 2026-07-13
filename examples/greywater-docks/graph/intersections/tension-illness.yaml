@@ -1,0 +1,7 @@
+id: intersection:tension-illness
+location: character:detective
+rationale: Elliot’s mounting dread about the jade’s power mirrors his worsening cough at the
+  same moment.
+members:
+- beat:illness-worsening
+- beat:tension

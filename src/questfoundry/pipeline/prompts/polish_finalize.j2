@@ -25,7 +25,11 @@ strong arm beats two thin ones.
   - path {{ path }} (its truth: {{ flags | join(", ") }}) arrives from: {{ n.tails[path].summary }}
 {% endfor %}
 {% endfor %}
-Emit exactly one residue entry per path per convergence above. Each entry:
+Emit exactly one residue entry per path per convergence above — never two
+entries for the same path. If one arm feels too small, do NOT add a second
+entry: extend the single arm with a "followup" (a longer arm) or a "fork" (two
+textures of the same choice behind the same gate). One entry per path, always.
+Each entry:
 {"dilemma", "path", "id": "beat:slug", "summary", "entities": [...],
 "followup": {"id", "summary", "entities"} or omit,
 "fork": {"id", "summary", "entities", "followup" or omit} or omit}; when a

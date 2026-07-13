@@ -1266,6 +1266,82 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Decision log
 
+- **2026-07-13 (don't blame the weak model — a standing agent rule + two POLISH
+  prompt fixes it forced):** During the narration_scope live runs two POLISH passes
+  crashed on the weak tier, and the session reflexively wrote them off as "known
+  weak-tier difficulty" — exactly the misjudgment AGENTS.md §"Prompt and error-message
+  quality" warns against (author correction). Codified as a new lead rule in that
+  section: *the agent will feel the urge to blame a weak model and will almost always
+  be wrong; red-flag phrases ("weak-tier", "the model isn't strong enough") may not be
+  written until the prompt and the error message have been read and shown correct.*
+  Applying it produced two real defects, not model limits: (1) **finalize
+  residue-duplicate** — the model emitted a second residue arm for a path and
+  repair-exhausted; the rule *was* in the prompt, but the ApplyError's recovery_action
+  offered only `followup` (a longer arm), never `fork` (two textures) — so a model that
+  duplicated because it wanted two flavors was told the wrong tool. **Fixed:** the
+  message now names both recovery paths and "drop the duplicate", and the finalize
+  prompt preempts ("never two entries for one path — use followup/fork"). (2) **passages
+  `AdapterError` at medium** — the *passages* pass generates the **whole** passage layer
+  in a single call (apply requires every group covered at once); at medium scale
+  (90-160 passages) that output overruns `num_ctx 32768` and truncates into invalid
+  JSON. A genuine **scale/output-structure limit** (fix: chunk the pass, or raise
+  num_ctx), diagnosed — not dismissed as model weakness; a real fix is a follow-up. A
+  **death-ending noir micro** was also launched (the premise structurally forces an
+  out-of-horizon coda) to finally exercise `wide` live.
+
+- **2026-07-13 (narration_scope live validation — micro clean, `wide` not yet exercised;
+  unbilled `gpt-oss:120b-cloud`):** After PR #68 merged, a fresh **noir micro**
+  ("Rain and Jade", the Maltese-Falcon premise — preserved as
+  [`examples/rain-and-jade`](../examples/rain-and-jade)) ran DREAM→FILL on the weak
+  tier. **Result: clean completion, no regression.** FILL finished with 0 gate errors
+  and **no review-exhaustion halt** — every passage ≤ 2 attempts, and the endings (a
+  3rd-person-limited voice, "Sam Rain Marlowe" — the exact shape the pre-fix "Black
+  Bird" run died on) wrote clean limited-POV prose, no head-hopping. **But all 30 beats
+  came out `limited`** and the `wide` coda license was *not* exercised — because SEED
+  produced a story where every consequence reaches the POV character directly (he hands
+  the jade over, hears the informant, is roared at), so no beat *deserved* `wide`.
+  Verified by reading the ending beat summaries: `limited` is correct throughout, not
+  over-suppressed. **Finding (author's instinct, confirmed):** the system is nudged
+  toward `limited` at *two* layers — the annotate prompt's "when in doubt, limited"
+  (appropriate; `wide` is the marked exception) and, more consequentially, the
+  *upstream* steering (this run's `dream` steer "the fates that land after the case
+  closes are a brief coda" + the SEED perceivable-consequence steer) which biases SEED
+  toward writing perceivable endings so a `wide`-deserving beat is rarely generated. So
+  to actually exercise `wide`, a run needs a story that *structurally* demands an
+  out-of-horizon coda — a **death ending** (aftermath beyond the detective's horizon —
+  the "posthumous reputation" case) or a **time-skip epilogue**. Two orthogonal notes:
+  supernatural drift (the jade *pulses*; a binding "ritual") against the vision's
+  `content_notes` (a DREAM/BRAINSTORM adherence issue), and B7 2381 vs the micro floor
+  2400 (the expected modulation-shortens-sequels signal). Also observed: a transient
+  `RemoteProtocolError` (cloud dropped a large SEED-scaffold response) is **not**
+  retried by the Ollama provider — it crashes the stage; the A16 ledger re-run recovers
+  it free, but a transport-level retry/backoff is a worthwhile robustness follow-up.
+  **Follow-up (same session):** the `limited`-nudge finding drove a **softening of the
+  SEED coda steer** (`seed_scaffold.j2`, commit in PR #69) — the #68 wording forbade a
+  coda beat from existing at all; the softened wording *permits* a brief earned coda
+  while still discouraging omniscient full scenes (plan doc §"SEED context gap" updated
+  to match). Result across **three** runs — micro (30), medium (111), softened-micro
+  (24) — is **still all `limited`, 0 `wide`**: softening *permits* a coda but cannot
+  *manufacture* one, and this recover-the-figurine premise keeps the detective present
+  at every ending, so there is genuinely no out-of-horizon beat. **Conclusion:**
+  completion + no-regression + the case-A/psychic-distance clarity are validated live;
+  the `wide` license itself is proven only by unit tests so far. Exercising `wide`
+  live needs a premise that *structurally* demands a coda — a **death ending** or a
+  **time-skip epilogue** (the original "posthumous reputation" shape).
+  **`wide` is now proven live** (preserved as [`examples/greywater-docks`](../examples/greywater-docks)):
+  a death-ending noir micro (dying PI, "the city goes on without him") ran clean
+  through FILL. **SEED** (softened steer) generated a genuine out-of-horizon coda beat
+  (`beat:city-continues` — "life in Greywater Docks rolls on, indifferent to the broken
+  myth"); **GROW annotate** tagged it `wide` on its own (a *narrative* beat, not the
+  fallback — 24 `limited`, 1 `wide`); **FILL** wrote the finale passage `p-finale` in one
+  pass — the *exact* collapse shape that broke "Black Bird" (climax `scene` beats +
+  world-coda in one limited-POV finale) — narrating Elliot's death in limited POV then
+  stepping back to a detached `wide` coda beyond the dead detective, no POV break, first
+  try, and the reviewer did not flag it. The full chain (softened SEED → coda beat →
+  annotate picks `wide` → FILL writes limited-then-wide → reviewer accepts) is validated
+  end-to-end. Cleaner than `rain-and-jade` too (no supernatural drift). **The
+  narration_scope effort is now fully live-validated.**
+
 - **2026-07-13 (epilogue/POV collapse-feasibility — design decided, author-directed):**
   The noir finale failure (STATUS "Next up" kickoff) was diagnosed and resolved into a
   build contract, [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md).

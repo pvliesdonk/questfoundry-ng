@@ -1,0 +1,15 @@
+id: passage:p-sirens
+summary: Distant sirens cut through the storm, a metallic wail that hints at hidden panic
+  beneath the rain.
+entities:
+- character:detective
+prose_summary: He shuts office door, steps onto rain‑slick pavement, crosses wind‑blasted
+  street, coughs, sees Lydia Vane on harbor dock holding a jade figurine, notes an unopened
+  sealed envelope promising payment for experimental medicine, observes Crimson Syndicate
+  shadows gathering, hears sirens growing louder, decides to walk toward water’s edge, risking
+  his failing health and time.
+beats:
+- beat:distant-sirens
+choices:
+- label: Head toward the converging standoff at the dock.
+  to: passage:p-standoff

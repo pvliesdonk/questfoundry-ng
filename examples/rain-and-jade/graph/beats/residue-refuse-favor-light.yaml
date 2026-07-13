@@ -1,0 +1,9 @@
+id: beat:residue-refuse-favor-light
+created_by: polish
+summary: The harbor wind bites Sam’s neck, a silent claim that he walked away from the darkness.
+beat_class: structural
+purpose: residue
+entities:
+- character:detective
+requires_flags:
+- flag:no-favor

@@ -1,0 +1,16 @@
+id: beat:protect-lead-1
+summary: Victor's thugs smash the warehouse door, pistols flashing, as Sam and Clara scramble
+  for cover.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: complicates
+entities:
+- character:detective
+- character:client-woman
+- character:gang-boss
+- location:harbor-district
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:protect-clara

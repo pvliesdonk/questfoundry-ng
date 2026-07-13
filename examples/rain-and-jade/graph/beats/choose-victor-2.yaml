@@ -1,0 +1,14 @@
+id: beat:choose-victor-2
+summary: A low hum rises as Victor performs the rite, the jade's surface pulsing, signaling
+  his newfound control over the ledger.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: reveals
+entities:
+- character:gang-boss
+- object:jade-figurine
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:give-to-victor

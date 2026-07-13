@@ -1,0 +1,9 @@
+id: path:accept-fix
+name: Deal with Syndicate
+explores: answer:accept-fix
+consequences:
+- id: consequence:medicine-obtained
+  text: Elliot obtains the experimental medicine, extending his remaining days.
+- id: consequence:syndicate-pact
+  text: A binding pact is formed with the Crimson Syndicate, granting them a share of the
+    Jade Dragon.

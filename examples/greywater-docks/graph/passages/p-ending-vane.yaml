@@ -1,0 +1,25 @@
+id: passage:p-ending-vane
+summary: Elliot hands the jade to Lydia, securing cash and the promised cure, while Lydia’s
+  newfound leverage sparks a gang war as the city burns.
+entities:
+- character:detective
+- character:woman
+- object:jade-figurine
+- location:harbor
+ending:
+  id: e-ending-vane
+  title: Jade in Hand, City Ablaze
+irrelevant_flags:
+- flag:death-imminent
+- flag:integrity-kept
+- flag:syndicate-pact
+prose_summary: Elliot collects jade shards on the pier, reforges them into a figurine, and
+  hands it to Lydia. Lydia gains control of trade guilds. Elliot receives a cash envelope,
+  uses the money to buy medicine needed for his illness. Lydia’s new power sparks a harbor
+  gang war, fire and gunfire; Elliot watches from his window as his reputation fades.
+beats:
+- beat:ending-vane
+- beat:hand-to-vane
+- beat:medicine-funds
+- beat:vane-leverage
+- bridge:gap-5

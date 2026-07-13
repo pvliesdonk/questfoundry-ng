@@ -1,0 +1,25 @@
+id: passage:p-ending-retain
+summary: Elliot keeps the jade, the Syndicate hunts him, Lydia leaves empty‑handed, and without
+  money or cure his illness finally consumes him.
+entities:
+- character:detective
+- object:jade-figurine
+- location:harbor
+- faction:crimson-syndicate
+- character:woman
+ending:
+  id: e-ending-retain
+  title: Jade Held, Life Lost
+irrelevant_flags:
+- flag:medicine-obtained
+- flag:syndicate-pact
+prose_summary: Elliot holds broken jade shards, refuses payment and walks away. Two crimson‑coated
+  men watch; their leader notes the missing jade, orders a courier to plan a raid on Elliot’s
+  safe house. Syndicate learns jade is gone; Lydia Vane leaves the pier, losing the cash envelope
+  to the tide. Elliot’s pockets stay empty, his cure unavailable, he contracts fever and dies.
+beats:
+- beat:ending-retain
+- beat:keep-figurine
+- beat:payment-lost
+- beat:syndicate-interest
+- bridge:gap-4

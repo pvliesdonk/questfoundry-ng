@@ -1,0 +1,14 @@
+id: beat:choose-pre-3
+summary: Sam feels the weight of the rain on his coat, knowing any misstep could drown him
+  in blood or debt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: advances
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-clara
+- path:give-to-victor

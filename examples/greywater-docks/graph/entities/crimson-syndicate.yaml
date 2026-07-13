@@ -1,0 +1,28 @@
+id: faction:crimson-syndicate
+name: Crimson Syndicate
+concept: A ruthless smuggling ring that controls the night‑water trade routes.
+base:
+  influence: high
+  leader: Marek 'Red' Dvorak
+arc:
+  begins: ruthless smuggling ring controlling night‑water trade routes
+  pivots:
+  - beat: beat:convergence
+    becomes: converges on dock, seeking the jade
+  - beat: beat:syndicate-approach
+    becomes: offers experimental medicine for a share of the jade
+  - beat: beat:trade-for-medicine
+    becomes: acquires jade fragment in exchange for medicine
+  - beat: beat:syndicate-claim
+    becomes: secures jade shard, expanding influence over trade guilds
+  ends:
+  - path: path:destroy
+    state: loses jade, influence diminished
+  - path: path:accept-fix
+    state: holds jade fragment, gains partial influence
+  - path: path:refuse
+    state: no jade acquired, continues seeking
+  - path: path:give-vane
+    state: jade leaves their grasp, influence lost
+  - path: path:retain
+    state: jade remains with Elliot, blocked

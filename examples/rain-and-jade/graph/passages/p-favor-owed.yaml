@@ -1,0 +1,19 @@
+id: passage:p-favor-owed
+summary: Neon lights flicker on Sam’s shoulders, a reminder that a dark favor hangs over him
+  like a promise.
+entities:
+- character:detective
+prose_summary: Sam carries forged file, a debt to Victor. He lifts jade figurine from scarred
+  metal table, puts it in his inner pocket, and leaves the neon‑lit warehouse while Victor’s
+  men watch. The favor owed now follows him, promised to return by morning.
+beats:
+- beat:residue-accept-favor-light
+choices:
+- label: Hand the jade to Clara
+  grants:
+  - flag:clara-gets-figurine
+  to: passage:p-ending-clara
+- label: Hand the jade to Victor
+  grants:
+  - flag:victor-gets-figurine
+  to: passage:p-ending-victor

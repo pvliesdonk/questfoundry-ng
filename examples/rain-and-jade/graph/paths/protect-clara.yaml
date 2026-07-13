@@ -1,0 +1,7 @@
+id: path:protect-clara
+name: Shield Clara (Locked)
+explores: answer:protect-clara
+consequences:
+- id: consequence:clara-protected
+  text: The detective shields Clara from Victor's men; the ambush is repelled, but the detective's
+    own safety hangs by a thread.

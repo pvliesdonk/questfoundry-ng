@@ -1,0 +1,24 @@
+premise: 'A dying private eye in a rain-soaked port city takes one last case: recover a jade
+  figurine for a woman who lies as easily as she breathes, knowing the men hunting it will
+  put him in the harbor before the week is out. He cracks it and does not walk away — and
+  the city goes on without him: the figurine changes hands, the woman disappears, and his
+  name curdles into a rumor on the waterfront.'
+genre: Detective Noir
+subgenre: Hard-boiled crime
+tone: gritty, rain-soaked, fatalistic
+themes:
+- duty versus death
+- truth versus deception
+- legacy versus oblivion
+audience: Adult readers who enjoy classic noir and literary crime fiction
+content_notes:
+  include:
+  - rain‑laden waterfront settings
+  - sharp, clipped dialogue
+  - moral ambiguity
+  - a final epilogue narrated from beyond the detective
+  avoid:
+  - supernatural elements
+  - excessive gore
+  - overly comedic tone
+pov_hint: third-person limited focused on the dying detective, past tense

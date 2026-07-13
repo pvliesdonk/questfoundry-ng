@@ -1,0 +1,7 @@
+id: path:give-to-victor
+name: Deliver to Victor
+explores: answer:give-to-victor
+consequences:
+- id: consequence:victor-gets-figurine
+  text: Victor secures the jade, empowering his ritual and marking the detective as a collaborator
+    in the syndicate's eyes.

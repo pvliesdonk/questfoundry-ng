@@ -1,0 +1,17 @@
+id: dilemma:protect-clara
+question: Do you risk your own safety to protect Clara Vale when Victor’s men close in, or
+  abandon her to focus on securing the jade and your own escape?
+why_it_matters: Protecting Clara could expose you to a deadly ambush but may reveal her true
+  motives; abandoning her spares you but seals her fate and deepens your betrayal.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:protect-clara
+  text: Shield Clara and confront Victor’s men.
+- id: answer:abandon-clara
+  text: Leave Clara and flee with the jade.
+anchored_to:
+- character:detective
+- character:client-woman
+- character:gang-boss

@@ -1,0 +1,21 @@
+id: dilemma:final-bargain
+question: When the Syndicate and Lydia converge on the docks, do you destroy the Jade Dragon
+  to prevent its misuse, even if it means no payment and a deadly showdown?
+why_it_matters: Destroying denies power to all but guarantees your death; keeping it may net
+  a final payout but fuels future corruption in the city.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:destroy
+  text: Shatter the figurine, denying anyone its power even at the cost of your life.
+- id: answer:hold
+  text: Hold onto the figurine, using it as leverage in a final, fatal confrontation.
+anchored_to:
+- location:harbor
+- object:jade-figurine
+- faction:crimson-syndicate
+wraps:
+- dilemma:syndicate-medicine
+concurrent:
+- dilemma:trust-vane

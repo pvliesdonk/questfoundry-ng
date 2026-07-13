@@ -1,0 +1,29 @@
+id: character:woman
+name: Lydia Vane
+concept: A seductive socialite who spins lies as effortlessly as she breathes.
+pronouns: she/her
+base:
+  appearance: emerald dress, silver hair pinned up
+  manner: silken voice, evasive smile
+arc:
+  begins: seductive socialite, manipulative, offers jade for cash
+  pivots:
+  - beat: beat:vane-proposal
+    becomes: offers jade for cash, promises secrecy
+  - beat: beat:hand-to-vane
+    becomes: receives jade figurine from Elliot
+  - beat: beat:keep-figurine
+    becomes: denied jade, Elliot clutches it
+  - beat: beat:vane-leverage
+    becomes: uses jade to leverage city trade guilds
+  ends:
+  - path: path:destroy
+    state: fails to obtain jade, loses leverage
+  - path: path:accept-fix
+    state: does not receive jade, payment not fulfilled
+  - path: path:refuse
+    state: does not receive jade, payment not fulfilled
+  - path: path:give-vane
+    state: possesses jade, gains city influence
+  - path: path:retain
+    state: empty‑handed, payment lost

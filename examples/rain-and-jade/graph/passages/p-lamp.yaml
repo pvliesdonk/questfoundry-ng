@@ -1,0 +1,12 @@
+id: passage:p-lamp
+summary: A broken streetlamp sputters, casting a brief halo over scattered evidence, illuminating
+  a clue in the gloom.
+prose_summary: Sam kneels by a gutter, inspects a sealed envelope bearing a dragon seal, notes
+  a cracked bottle and half‑buried metal, sees a shadow flee down an alley, pockets the envelope
+  in his coat, and walks on as the streetlamp dies, facing a choice that could bind him to
+  his foes or send him after ghosts.
+beats:
+- beat:fb-sidetrek-cop-pre-3
+choices:
+- label: Press on, chasing Victor’s rumor
+  to: passage:p-aftermath

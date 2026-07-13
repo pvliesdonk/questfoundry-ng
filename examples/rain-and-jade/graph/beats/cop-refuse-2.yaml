@@ -1,0 +1,13 @@
+id: beat:cop-refuse-2
+summary: A nervous informant whispers about a shipping manifest listing the jade, but warns
+  Victor's men patrol the docks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: reveals
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:refuse-favor

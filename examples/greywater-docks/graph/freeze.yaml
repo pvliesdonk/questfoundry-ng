@@ -1,0 +1,44 @@
+beats:
+- beat:city-continues
+- beat:city-wet
+- beat:convergence
+- beat:dead-detective
+- beat:decline-consequences
+- beat:detective-ill
+- beat:ending-retain
+- beat:ending-vane
+- beat:hand-to-vane
+- beat:illness-worsening
+- beat:imminent-death
+- beat:keep-figurine
+- beat:medicine-administered
+- beat:medicine-funds
+- beat:payment-lost
+- beat:refuse-medicine
+- beat:shatter-figurine
+- beat:syndicate-approach
+- beat:syndicate-claim
+- beat:syndicate-interest
+- beat:syndicate-shadow
+- beat:tension
+- beat:trade-for-medicine
+- beat:vane-leverage
+- beat:vane-proposal
+- bridge:gap-0
+- bridge:gap-1
+- bridge:gap-2
+- bridge:gap-3
+- bridge:gap-4
+- bridge:gap-5
+forks:
+  dilemma:trust-vane:
+  - beat:hand-to-vane
+  - beat:keep-figurine
+  dilemma:syndicate-medicine:
+  - beat:refuse-medicine
+  - beat:trade-for-medicine
+  dilemma:final-bargain:
+  - beat:shatter-figurine
+convergences:
+  dilemma:syndicate-medicine:
+  - beat:shatter-figurine

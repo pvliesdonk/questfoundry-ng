@@ -1,0 +1,22 @@
+id: passage:p-confrontation
+summary: Sam grabs a nearby rusted crate for cover, fires a warning shot that forces the thugs
+  to duck, then later meets Lieutenant Ramos at the precinct, who slides a forged file and
+  offers a shadowy favor.
+entities:
+- character:detective
+- location:harbor-district
+prose_summary: 'Sam lunges, grabs Clara, hides behind metal shield, draws pistol, fires warning
+  shot; thugs stagger, lower weapons, take cover behind pallets. Later, Lieutenant Ramos hands
+  Sam a forged file with crisp signatures, offers choice: accept to keep jade trail but bind
+  to Ramos, incurring future favor debt; decline and let case go cold. Rain continues.'
+beats:
+- beat:cop-pre-1
+- beat:cop-pre-2
+- beat:cop-pre-3
+- beat:protect-lead-3
+- beat:protect-resolution
+choices:
+- label: Examine the sputtering streetlamp
+  to: passage:p-lamp
+- label: Drag Clara through the side exit into the storm
+  to: passage:p-aftermath

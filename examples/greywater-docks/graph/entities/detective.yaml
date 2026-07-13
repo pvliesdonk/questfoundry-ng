@@ -1,0 +1,30 @@
+id: character:detective
+name: Elliot March
+concept: A once-renowned private eye, now terminally ill, haunted by rain and regrets.
+pronouns: he/him
+base:
+  appearance: lean, trench coat soaked, crumbling stubble
+  manner: dry wit, gruff
+  cough: raspy
+arc:
+  begins: terminally ill private eye, weary and gruff
+  pivots:
+  - beat: beat:detective-ill
+    becomes: faces confirmed terminal diagnosis, illness looming
+  - beat: beat:illness-worsening
+    becomes: health deteriorates, cough deepens
+  - beat: beat:trade-for-medicine
+    becomes: trades jade fragment for experimental medicine
+  - beat: beat:shatter-figurine
+    becomes: destroys the jade figurine, rejecting all offers
+  ends:
+  - path: path:destroy
+    state: dead, jade destroyed, no cure obtained
+  - path: path:accept-fix
+    state: dead after temporary cure, jade fragment given to Syndicate
+  - path: path:refuse
+    state: dead, jade retained, no cure
+  - path: path:give-vane
+    state: dead, jade handed to Lydia, no cure
+  - path: path:retain
+    state: dead, jade kept, no cure

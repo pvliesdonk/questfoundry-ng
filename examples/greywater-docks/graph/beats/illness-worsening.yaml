@@ -1,0 +1,14 @@
+id: beat:illness-worsening
+summary: Elliot’s cough deepens, a cold wind of pain threading through his chest, reminding
+  him of the ticking deadline.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: complicates
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:accept-fix
+- path:refuse

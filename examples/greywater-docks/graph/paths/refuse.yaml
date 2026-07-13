@@ -1,0 +1,8 @@
+id: path:refuse
+name: Refuse Syndicate Offer
+explores: answer:refuse
+consequences:
+- id: consequence:integrity-kept
+  text: Elliot preserves his moral integrity, rejecting the criminal bargain.
+- id: consequence:death-imminent
+  text: Without medicine, his terminal illness accelerates, leading to an imminent death.

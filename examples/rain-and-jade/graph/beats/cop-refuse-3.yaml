@@ -1,0 +1,15 @@
+id: beat:cop-refuse-3
+summary: Sam decides to tail the manifest's cargo ship, knowing a confrontation with Victor's
+  crew may be inevitable.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: advances
+entities:
+- character:detective
+- character:gang-boss
+- location:harbor-district
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:refuse-favor

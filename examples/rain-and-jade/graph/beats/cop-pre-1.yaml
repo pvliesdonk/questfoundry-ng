@@ -1,0 +1,14 @@
+id: beat:cop-pre-1
+summary: At the precinct, Lieutenant Ramos slides Sam a file of forged evidence, offering
+  it for a future favor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:corrupt-cop
+  effect: reveals
+entities:
+- character:detective
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:accept-favor
+- path:refuse-favor

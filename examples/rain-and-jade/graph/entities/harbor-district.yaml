@@ -1,0 +1,19 @@
+id: location:harbor-district
+name: Harbor District
+concept: Rain‑soaked maze of warehouses, barrooms, and shadowed alleys where every deal is
+  made.
+base:
+  atmosphere: perpetual drizzle, fog‑filled neon
+  reputation: dangerous, unforgiving
+arc:
+  begins: rain‑soaked maze of warehouses and alleys, perpetual drizzle creating a dangerous
+    atmosphere
+  pivots:
+  - beat: beat:setup-1
+    becomes: rain hammers the cobblestones, heightening the bleak mood
+  - beat: beat:protect-lead-1
+    becomes: doors are smashed, atmosphere turns hostile
+  - beat: beat:protect-aftermath-1
+    becomes: thugs retreat, leaving a tense silence
+  - beat: beat:choose-victor-2
+    becomes: ritual hum adds uncanny tension to the district

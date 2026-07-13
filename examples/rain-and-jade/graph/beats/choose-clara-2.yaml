@@ -1,0 +1,15 @@
+id: beat:choose-clara-2
+summary: Victor's men burst through the doorway, but Clara's hidden enforcers neutralize them,
+  leaving Sam amidst the chaos.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: reveals
+entities:
+- character:detective
+- character:client-woman
+- character:gang-boss
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:give-to-clara

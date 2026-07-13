@@ -1,0 +1,14 @@
+id: beat:refuse-medicine
+summary: Elliot slams his fist on the table, rejecting the syndicate’s bargain, choosing his
+  conscience over a cure.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:syndicate-medicine
+  effect: commits
+entities:
+- character:detective
+- faction:crimson-syndicate
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:refuse

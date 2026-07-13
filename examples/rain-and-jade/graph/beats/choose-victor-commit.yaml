@@ -1,0 +1,11 @@
+id: beat:choose-victor-commit
+summary: Sam hands the jade to Victor in the shadowed dock office, exchanging a nod for a
+  promise of protection.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: commits
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:give-to-victor

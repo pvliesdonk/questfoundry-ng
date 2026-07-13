@@ -1,0 +1,14 @@
+id: passage:p-alley-flicker
+summary: A sputtering streetlamp casts a fleeting halo over a rain‑slick alley, echoing the
+  city’s faded glories.
+entities:
+- character:detective
+- location:harbor
+prose_summary: Elliot March tightens his coat, coughs, notices a green jade figurine glare,
+  weighs pursuing experimental medicine, then walks onto the dock; the alley lamp sputters
+  out behind him. His action costs worsening breath and cold.
+beats:
+- beat:streetlight-flicker
+choices:
+- label: Step onto the dock as the car screeches in.
+  to: passage:p-standoff

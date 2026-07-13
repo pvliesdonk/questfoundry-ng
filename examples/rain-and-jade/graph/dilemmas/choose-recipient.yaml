@@ -1,0 +1,22 @@
+id: dilemma:choose-recipient
+question: Do you hand the jade figurine to Clara Vale, trusting her promise of payment, or
+  give it to Victor Dario, hoping to bargain for safety?
+why_it_matters: Delivering to Clara could secure the fee but possibly empower a manipulator;
+  giving it to Victor may buy a truce but binds you to a mob that could erase you.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:give-to-clara
+  text: Hand the figurine over to Clara Vale.
+- id: answer:give-to-victor
+  text: Hand the figurine over to Victor Dario.
+anchored_to:
+- character:detective
+- character:client-woman
+- character:gang-boss
+- object:jade-figurine
+wraps:
+- dilemma:corrupt-cop
+concurrent:
+- dilemma:protect-clara

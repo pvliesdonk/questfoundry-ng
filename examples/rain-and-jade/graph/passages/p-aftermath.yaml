@@ -1,0 +1,27 @@
+id: passage:p-aftermath
+summary: The thugs retreat; Sam drags Clara into the rain, learns Victor plans a ritual with
+  the jade, and hears Victor’s threatening roar that the betrayal will cost Sam dearly.
+entities:
+- character:detective
+- character:client-woman
+- location:harbor-district
+- character:gang-boss
+- object:jade-figurine
+prose_summary: Sam drags Clara through the side door into rain; thugs flee. A gaunt informant
+  tells Sam Victor "Iron Fist" Dario plans to use the jade in a ritual to bind the docks.
+  Sam learns Victor threatens severe retaliation, ending his anonymity. Sam now faces a risk
+  of bloodshed or an unpayable debt, and vows to confront Victor.
+beats:
+- beat:choose-pre-2
+- beat:choose-pre-3
+- beat:protect-aftermath-1
+- beat:protect-aftermath-2
+choices:
+- label: Take the forged dossier
+  grants:
+  - flag:favor-owed
+  to: passage:p-accept
+- label: Reject Ramos’s file
+  grants:
+  - flag:no-favor
+  to: passage:p-refuse

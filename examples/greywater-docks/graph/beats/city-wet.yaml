@@ -1,0 +1,9 @@
+id: beat:city-wet
+summary: Rain pours over the neon‑slick streets of Greywater, the harbor mist swallowing the
+  night.
+beat_class: structural
+purpose: setup
+entities:
+- location:harbor
+scene_type: micro_beat
+narration_scope: limited

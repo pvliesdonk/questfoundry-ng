@@ -1,0 +1,22 @@
+id: passage:p-ending-victor
+summary: Sam delivers the jade to Victor, who initiates a ritual that binds the smuggling
+  ledger to his control, and Sam departs drenched, aware he now serves Victor’s iron grip.
+entities:
+- character:gang-boss
+- object:jade-figurine
+- character:detective
+ending:
+  id: e-ending-victor
+  title: Iron Tide
+irrelevant_flags:
+- flag:favor-owed
+- flag:no-favor
+prose_summary: Sam enters the harbor office and gives Victor the jade figurine. Victor puts
+  jade in a steel chest, mentions a ritual to bind smuggling routes, and the chest hums as
+  jade pulses and the ledger activates. Victor’s iron ring catches light, his control consolidates.
+  Sam leaves, knowing all deals run through Victor and jade now costs Sam independence.
+beats:
+- beat:choose-victor-1
+- beat:choose-victor-2
+- beat:choose-victor-3
+- beat:choose-victor-commit

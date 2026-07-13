@@ -1,0 +1,23 @@
+id: passage:p-ending-clara
+summary: Sam hands the jade to Clara, who reveals its leverage over rival syndicates and deploys
+  hidden enforcers to eliminate Victor’s men, leaving Sam a pawn in her expanding empire.
+entities:
+- character:client-woman
+- object:jade-figurine
+- character:detective
+- character:gang-boss
+ending:
+  id: e-ending-clara
+  title: Silk and Shadows
+irrelevant_flags:
+- flag:favor-owed
+- flag:no-favor
+prose_summary: Sam hands jade figurine to Clara, confirming leverage over rival syndicates.
+  Victor’s men burst in; two hidden enforcers kill them on Clara’s signal. Sam observes the
+  bodies, then exits into rain, pocketing jade. He now recognizes he is a pawn in Clara’s
+  expanding empire, costing him autonomy.
+beats:
+- beat:choose-clara-1
+- beat:choose-clara-2
+- beat:choose-clara-3
+- beat:choose-clara-commit

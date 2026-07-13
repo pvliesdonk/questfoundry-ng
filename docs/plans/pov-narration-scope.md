@@ -200,13 +200,25 @@ Reduce overspecified omniscient beats at the source — advisory, not a gate:
 
 - Render `vision.pov_hint` into the scaffold context/prompt so SEED writes
   aftermath/post-commit beats with the intended frame in view.
-- Add one line to the aftermath/post-commit guidance: consequences should read as
-  something a character in the scene experiences; a world-scope wrap-up that no
-  single character can perceive (an event elsewhere, a reputation after death) is
-  a **brief coda**, not a full scene — keep it short and name it as aftermath, so
-  GROW's annotate pass will mark it `wide` and FILL will write it as a coda. (This
-  does not require SEED to know the final POV; it biases toward
-  perceivable-consequence beats and flags true codas as brief.)
+- Add guidance to the aftermath/post-commit steer that discourages *overspecified
+  omniscient full scenes* without forbidding a genuine coda. **Revised after live
+  validation** (2026-07-13, STATUS decision log): the first wording — "an outcome
+  should reach the story through someone who is present … never expand it into a
+  beat of its own weight" — *over-suppressed*: it effectively forbade a coda beat
+  from existing, so three live runs (micro, medium, softened-micro) produced **zero**
+  out-of-horizon beats and the `wide` license never fired. The shipped steer instead
+  says: *most* beats should be something a character present lives through (an
+  ordinary outcome reaches the story through someone on the page, not an omniscient
+  report), **but an ending may close on a brief earned CODA that steps outside any
+  single character** — a fate, or what becomes of a person/place/object once the
+  story is over — kept short (a later stage frames it); don't inflate an ordinary
+  perceivable outcome into an omniscient scene, and don't force a genuine epilogue
+  into one character's eyes either. A SEED coda beat is then what GROW's annotate
+  pass marks `wide` and FILL writes as a coda. (This does not require SEED to know
+  the final POV.) **Caveat the runs revealed:** softening *permits* a coda but does
+  not *manufacture* one — a premise whose protagonist is present at every ending has
+  no out-of-horizon beat regardless of wording, so exercising `wide` live still needs
+  a story that structurally demands a coda (a death ending / time-skip epilogue).
 
 ## Golden story + fixtures + docs
 

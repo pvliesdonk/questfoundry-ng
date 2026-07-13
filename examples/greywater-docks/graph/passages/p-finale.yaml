@@ -1,0 +1,32 @@
+id: passage:p-finale
+summary: Elliot smashes the jade dragon with a wrench, scattering shards into water; Syndicate
+  thugs open fire, Elliot collapses, and the tide cleans the blood‑stained dock as Greywater’s
+  night carries on.
+entities:
+- character:detective
+- object:jade-figurine
+- faction:crimson-syndicate
+- location:harbor
+irrelevant_flags:
+- flag:medicine-obtained
+- flag:syndicate-pact
+prose_summary: Elliot uses wrench to smash jade dragon relic; shards fall and jade sinks.
+  Two Crimson Syndicate thugs fire rifles at Elliot; he is shot in chest and dies. Rain mixes
+  with blood; tide washes crimson away; Greywater Docks remain unchanged.
+beats:
+- beat:city-continues
+- beat:dead-detective
+- beat:shatter-figurine
+- beat:syndicate-shadow
+- bridge:gap-1
+choices:
+- label: Hand the jade to Lydia, securing cash.
+  grants:
+  - flag:cash-received
+  - flag:jade-in-lydia
+  to: passage:p-ending-vane
+- label: Clutch the jade and refuse the deal.
+  grants:
+  - flag:jade-held
+  - flag:no-cash
+  to: passage:p-ending-retain

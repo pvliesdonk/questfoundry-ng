@@ -1,0 +1,14 @@
+id: beat:ending-retain
+summary: Without money and with syndicate hunters at his door, Elliot’s illness overtakes
+  him; the rain swallows his final gasp.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-vane
+  effect: advances
+entities:
+- character:detective
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:retain

@@ -1,0 +1,19 @@
+id: passage:p-refuse-medicine
+summary: Elliot slams his fist, rejecting the syndicate’s cure; the emissary departs, Elliot’s
+  illness tightens, and within days death looms.
+entities:
+- character:detective
+- faction:crimson-syndicate
+prose_summary: Elliot slams his fist on the scarred oak table, rejects the vial cure, and
+  declares No cure for a price. The emissary lifts a glass, leaves through the rain‑slick
+  alley, and vanishes. Over two days the fever spikes, rain drums on the cracked windowpane,
+  and Elliot dies as the lantern dies.
+beats:
+- beat:decline-consequences
+- beat:imminent-death
+- beat:refuse-medicine
+choices:
+- label: Watch the illness consume you.
+  requires:
+  - flag:death-imminent
+  to: passage:p-death-mem

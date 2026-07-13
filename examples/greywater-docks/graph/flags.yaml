@@ -1,0 +1,52 @@
+flags:
+- id: flag:cash-received
+  description: Elliot receives the promised payment, enough to buy his experimental medicine.
+  source: dilemma
+  path: path:give-vane
+  derived_from:
+  - consequence:cash-received
+- id: flag:death-imminent
+  description: Without medicine, his terminal illness accelerates, leading to an imminent
+    death.
+  source: dilemma
+  path: path:refuse
+  derived_from:
+  - consequence:death-imminent
+- id: flag:integrity-kept
+  description: Elliot preserves his moral integrity, rejecting the criminal bargain.
+  source: dilemma
+  path: path:refuse
+  derived_from:
+  - consequence:integrity-kept
+- id: flag:jade-held
+  description: Elliot keeps the Jade Dragon, attracting the attention of the Crimson Syndicate.
+  source: dilemma
+  path: path:retain
+  derived_from:
+  - consequence:jade-held
+- id: flag:jade-in-lydia
+  description: The Jade Dragon is in Lydia Vane's possession, giving her leverage over the
+    city's trade guilds.
+  source: dilemma
+  path: path:give-vane
+  derived_from:
+  - consequence:jade-in-lydia
+- id: flag:medicine-obtained
+  description: Elliot obtains the experimental medicine, extending his remaining days.
+  source: dilemma
+  path: path:accept-fix
+  derived_from:
+  - consequence:medicine-obtained
+- id: flag:no-cash
+  description: He goes without payment, jeopardizing his ability to afford treatment.
+  source: dilemma
+  path: path:retain
+  derived_from:
+  - consequence:no-cash
+- id: flag:syndicate-pact
+  description: A binding pact is formed with the Crimson Syndicate, granting them a share
+    of the Jade Dragon.
+  source: dilemma
+  path: path:accept-fix
+  derived_from:
+  - consequence:syndicate-pact

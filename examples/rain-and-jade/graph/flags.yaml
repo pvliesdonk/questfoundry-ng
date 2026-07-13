@@ -1,0 +1,29 @@
+flags:
+- id: flag:clara-gets-figurine
+  description: Clara obtains the jade figurine, confirming her manipulative agenda and tightening
+    her control over the underworld.
+  source: dilemma
+  path: path:give-to-clara
+  derived_from:
+  - consequence:clara-gets-figurine
+- id: flag:favor-owed
+  description: The detective now owes the corrupt dock lieutenant a dangerous favor, binding
+    him to the police's shadowy agenda.
+  source: dilemma
+  path: path:accept-favor
+  derived_from:
+  - consequence:favor-owed
+- id: flag:no-favor
+  description: Without the forged evidence, the trail to the jade grows cold, forcing the
+    detective to rely on street intel alone.
+  source: dilemma
+  path: path:refuse-favor
+  derived_from:
+  - consequence:no-favor
+- id: flag:victor-gets-figurine
+  description: Victor secures the jade, empowering his ritual and marking the detective as
+    a collaborator in the syndicate's eyes.
+  source: dilemma
+  path: path:give-to-victor
+  derived_from:
+  - consequence:victor-gets-figurine

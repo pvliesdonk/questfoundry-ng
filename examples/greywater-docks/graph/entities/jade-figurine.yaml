@@ -1,0 +1,28 @@
+id: object:jade-figurine
+name: The Jade Dragon
+concept: An ancient jade figurine rumored to grant influence over the city's trade guilds.
+base:
+  size: hand‑sized, smooth, green veins
+  location: gutter
+arc:
+  begins: hand‑sized jade figurine, smooth with green veins, rumored to grant influence
+  pivots:
+  - beat: beat:vane-proposal
+    becomes: offered as payment to Lydia
+  - beat: beat:trade-for-medicine
+    becomes: fragment given to Syndicate in exchange for medicine
+  - beat: beat:shatter-figurine
+    becomes: destroyed into glittering shards
+  - beat: beat:hand-to-vane
+    becomes: handed to Lydia, entering her possession
+  ends:
+  - path: path:destroy
+    state: shattered, influence gone
+  - path: path:accept-fix
+    state: fragment given to Syndicate, remainder lost
+  - path: path:refuse
+    state: kept by Elliot, unused
+  - path: path:give-vane
+    state: in Lydia's possession, used for leverage
+  - path: path:retain
+    state: held by Elliot until death, never used

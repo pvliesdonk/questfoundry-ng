@@ -1,0 +1,14 @@
+id: beat:dead-detective
+summary: Bullets fly as syndicate thugs open fire; Elliot collapses under a hail of lead,
+  his last breath mingling with the rain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-bargain
+  effect: reveals
+entities:
+- character:detective
+- faction:crimson-syndicate
+scene_type: scene
+narration_scope: limited
+belongs_to:
+- path:destroy

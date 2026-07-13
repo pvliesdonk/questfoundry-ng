@@ -1,0 +1,15 @@
+id: beat:protect-aftermath-1
+summary: The thugs retreat under Sam's fire, and he drags Clara through a side exit into the
+  pouring rain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:protect-clara
+  effect: advances
+entities:
+- character:detective
+- character:client-woman
+- location:harbor-district
+scene_type: micro_beat
+narration_scope: limited
+belongs_to:
+- path:protect-clara

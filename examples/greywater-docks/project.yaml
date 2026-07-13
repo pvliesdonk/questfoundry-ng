@@ -1,0 +1,15 @@
+name: Greywater Docks
+stage: fill
+llm:
+  provider: ollama
+  host: https://ollama.com
+  num_ctx: 32768
+  models:
+    architect: gpt-oss:120b-cloud
+    writer: gpt-oss:120b-cloud
+    utility: gpt-oss:120b-cloud
+steering:
+  dream: Hard-boiled noir in the Maltese Falcon vein, third-person limited on the detective.
+    The detective does not survive the last case. Close the story on a short epilogue narrated
+    from beyond him — what became of the jade, the woman, and his name on the waterfront in
+    the years after he is gone.

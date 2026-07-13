@@ -1,0 +1,28 @@
+id: location:harbor
+name: Greywater Docks
+concept: The rain‑slicked waterfront where shipments, smugglers, and shadows converge.
+base:
+  atmosphere: perpetual mist, clanging steel, gull cries
+  lantern-flicker: oil lantern trembles
+arc:
+  begins: rain‑slicked waterfront, perpetual mist and clanging steel
+  pivots:
+  - beat: beat:city-wet
+    becomes: rain‑soaked waterfront shrouded in mist
+  - beat: beat:convergence
+    becomes: dock becomes contested arena of factions
+  - beat: beat:shatter-figurine
+    becomes: witnesses destruction of jade, blood splatters on rails
+  - beat: beat:city-continues
+    becomes: returns to indifferent routine, shadows persist
+  ends:
+  - path: path:destroy
+    state: blood‑soaked dock, lingering violence
+  - path: path:accept-fix
+    state: dock sees medical transaction, tension diffused
+  - path: path:refuse
+    state: dock quiet after failed deal, tension persists
+  - path: path:give-vane
+    state: dock empties after jade exchange, tension unresolved
+  - path: path:retain
+    state: dock quiet after Elliot's death, jade withheld

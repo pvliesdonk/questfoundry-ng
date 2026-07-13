@@ -1,0 +1,25 @@
+id: passage:p-setup
+summary: Detective Sam "Rain" Marlowe meets silk‑clad Clara Vale, who hires him to retrieve
+  a jade dragon said to hold a smuggled‑goods ledger, just as Victor’s thugs storm the warehouse
+  and gunfire erupts.
+entities:
+- character:detective
+- location:harbor-district
+- character:client-woman
+- object:jade-figurine
+- character:gang-boss
+prose_summary: Sam meets Clara, who hands a sealed envelope and asks for the jade dragon figurine
+  that hides a smuggler ledger. Victor’s thugs assault the warehouse; Sam shields Clara with
+  a metal table, they flee to a backroom, Clara lifts the figurine, warns the payout will
+  drown the city in gold, and demands Sam’s protection, costing him heavy responsibility.
+beats:
+- beat:choose-pre-1
+- beat:protect-lead-1
+- beat:protect-lead-2
+- beat:setup-1
+- beat:setup-2
+choices:
+- label: Follow the desperate courier
+  to: passage:p-courier
+- label: Turn toward the wailing siren
+  to: passage:p-siren

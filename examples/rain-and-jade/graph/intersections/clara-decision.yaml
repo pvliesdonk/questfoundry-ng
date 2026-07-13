@@ -1,0 +1,7 @@
+id: intersection:clara-decision
+location: character:client-woman
+rationale: Clara's promise about the jade and her desperate plea for protection happen in
+  the same tense moment.
+members:
+- beat:choose-pre-1
+- beat:protect-lead-2

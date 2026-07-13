@@ -1,0 +1,7 @@
+Rain hammered the pier, turning the wooden planks into slick mirrors. Elliot knelt in the gutter, fingers slick with brine, and gathered the broken shards that had sunk when the jade dragon fell. He pressed them together, the green veins snapping back into a hand‑sized shape, a single figurine reborn in the rain. He stood, the limp lantern above trembling, and slid the reclaimed jade into Lydia’s gloved hand, sealing the exchange with a click of metal against metal as his coat brushed the wet rail.
+
+Lydia’s smile widened, thin as a blade. The jade caught the lantern’s amber glow, a silent promise that would bend the city’s trade guilds to her will. She held the figurine aloft, the light playing across its veins, and Elliot felt the balance of power shift in an instant.
+
+Her smile lingered on the dock while the jade’s cold sparkle faded into the mist. Back in his office, Elliot lifted a thick envelope from his satchel and slid it into his coat, the cash inside enough to purchase the experimental medicine he had chased through rain‑slick streets. He tucked the envelope deeper, feeling the fabric stretch around the bulk of notes. The money meant the cure was now within his reach, a lifeline before the illness claimed him.
+
+Days later, Lydia’s newfound leverage ignited a gang war that set the harbor ablaze. From his fourth‑floor window, Elliot watched the fire licking the warehouse roofs, the crack of gunfire rising like a chorus of steel. Smoke mingled with the endless rain, and his name slipped away, a whisper drowned by the storm.

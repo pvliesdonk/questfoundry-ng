@@ -1,0 +1,14 @@
+id: beat:choose-victor-1
+summary: Victor slots the jade into a steel chest, muttering about the imminent ritual to
+  bind the city's smuggling routes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-recipient
+  effect: advances
+entities:
+- character:gang-boss
+- object:jade-figurine
+scene_type: sequel
+narration_scope: limited
+belongs_to:
+- path:give-to-victor

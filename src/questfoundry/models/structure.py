@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, model_validator
@@ -153,6 +154,18 @@ def effective_scene_type(beat: Beat) -> SceneType:
     ):
         return SceneType.MICRO_BEAT
     return SceneType.SCENE
+
+
+def passage_intensity(beats: Iterable[Beat]) -> SceneType:
+    """A collapsed passage's prose intensity: the highest-ranked
+    ``effective_scene_type`` among its beats — a scene beat justifies the
+    words and a sequel riding along must not starve it. Aggregation goes
+    through ``intensity_rank`` (never a bare ``max`` over the StrEnum).
+    Empty -> scene (the safe full band)."""
+    beats = list(beats)
+    if not beats:
+        return SceneType.SCENE
+    return max((effective_scene_type(b) for b in beats), key=intensity_rank)
 
 
 class FlagSource(StrEnum):

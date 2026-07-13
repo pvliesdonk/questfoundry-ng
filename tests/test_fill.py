@@ -118,12 +118,13 @@ def test_flag_status_choice_gate_makes_a_variant_certain(golden_fill):
 
 def _arrival_band(golden_fill):
     from questfoundry.graph import queries
+    from questfoundry.models.structure import passage_intensity
 
     g = golden_fill.graph
     pg = g.node("passage:p-arrival")
     beats = [g.node(b) for b in queries.beats_of_passage(g, "passage:p-arrival")]
     return golden_fill.vision.preset.words_for(
-        texture=bool(beats) and all(b.is_texture for b in beats), ending=pg.ending is not None
+        intensity=passage_intensity(beats), ending=pg.ending is not None
     )
 
 

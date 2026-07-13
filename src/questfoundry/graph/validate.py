@@ -27,6 +27,7 @@ from questfoundry.models.structure import (
     IntersectionGroup,
     StateFlag,
     StructuralPurpose,
+    passage_intensity,
 )
 from questfoundry.models.world import Entity
 
@@ -750,16 +751,14 @@ def check_b5_word_budget(ctx: Context) -> None:
     preset = ctx.vision.preset
     for passage in ctx.g.nodes_of(Passage):
         beats = [ctx.g.node(b) for b in queries.beats_of_passage(ctx.g, passage.id)]
-        texture = bool(beats) and all(
-            isinstance(b, Beat) and b.is_texture for b in beats
-        )
-        lo, hi = preset.words_for(texture=texture, ending=passage.ending is not None)
+        intensity = passage_intensity(b for b in beats if isinstance(b, Beat))
+        lo, hi = preset.words_for(intensity=intensity, ending=passage.ending is not None)
         count = len(passage.prose.split())
         if passage.prose.strip() and not lo <= count <= hi:
             ctx.warn(
                 "B5",
                 f"passage {passage.id} has {count} words; scope '{preset.name}' "
-                f"budgets {lo}-{hi}{' (texture)' if texture else ''} (advisory)",
+                f"budgets {lo}-{hi} ({intensity.value}) (advisory)",
             )
 
 

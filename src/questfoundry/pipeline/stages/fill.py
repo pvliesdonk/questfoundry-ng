@@ -31,7 +31,7 @@ from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.concept import Voice
 from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
-from questfoundry.models.structure import StateFlag
+from questfoundry.models.structure import StateFlag, effective_scene_type, passage_intensity
 from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import echo
 from questfoundry.pipeline.refpin import entity_ref_ids, pin
@@ -433,8 +433,9 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
         entities = [
             g.node(e) for e in passage.entities if isinstance(g.get(e), Entity)
         ]
+        intensity = passage_intensity(beats)
         lo, hi = project.vision.preset.words_for(
-            texture=all(b.is_texture for b in beats),
+            intensity=intensity,
             ending=passage.ending is not None,
         )
         story_so_far, story_elided = _story_so_far(project, passage.id)
@@ -443,6 +444,12 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             "voice": project.voice,
             "passage": passage,
             "beats": beats,
+            # the aggregate intensity sets the band; the per-beat map lets the
+            # write/review prompts mark which beat may rise and which stays plain
+            # (style belongs to the story, not the paragraph — PR #64, made
+            # concrete per beat by scene_type)
+            "intensity": intensity.value,
+            "beat_scene": {b.id: effective_scene_type(b).value for b in beats},
             "entities": entities,
             "arcs": _arc_positions(g, passage.id),
             "flags": flags,
@@ -616,7 +623,7 @@ def _word_budget_finding(project: Project, passage_id: str, prose: str) -> Revie
     passage = g.node(passage_id)
     beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
     lo, hi = project.vision.preset.words_for(
-        texture=bool(beats) and all(b.is_texture for b in beats),
+        intensity=passage_intensity(beats),
         ending=passage.ending is not None,
     )
     count = len(prose.split())

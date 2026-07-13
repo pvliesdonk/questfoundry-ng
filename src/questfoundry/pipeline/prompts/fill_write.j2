@@ -54,14 +54,22 @@ licence to enter their mind: render it as observable behavior. Stating a
 non-narrator character's interiority is the most common POV break and fails
 review (rule 1).
 
-PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %}:
+PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %} — overall a {{ intensity }} passage:
 summary: {{ passage.summary }}
 Realize these beats, in order, as one continuous scene. The summaries are your
 brief, not your style: take the events, stakes, and mood they name; leave their
-wording behind — the VOICE above, not the summary, owns how anything sounds:
+wording behind — the VOICE above, not the summary, owns how anything sounds.
+Each beat is tagged with its INTENSITY — where the prose may rise and where it
+stays plain:
 {% for b in beats %}
-- {{ b.summary }}
+- [{{ beat_scene[b.id] }}] {{ b.summary }}
 {% endfor %}
+INTENSITY makes "style belongs to the story" concrete per beat: a `scene` beat is
+active conflict — the turn this passage exists for, where the heightened register
+may come out and the words may run a little longer. A `sequel` beat is reactive —
+a character absorbing what just happened; write it plain and brief. A `micro_beat`
+is a transition; keep it to the fewest clear sentences. Most beats are not scenes —
+hold the ornament for the ones that are.
 
 CAST IN SCENE — facts are CONSTRAINTS, not choreography. Every fact below is
 already established: the scene must not contradict it, and the reader already

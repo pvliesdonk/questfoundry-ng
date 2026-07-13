@@ -42,9 +42,11 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   question in the text; a ban aimed at the reader is not violated by words one
   character speaks to another — dialogue is never reader-address.
 {% endif %}
-- beat_infidelity — a required beat is missing, out of order, or contradicted:
+- beat_infidelity — a required beat is missing, out of order, or contradicted
+  (each beat is tagged with its INTENSITY, which governs its register, not its
+  events — see the note under TASTE below):
 {% for b in beats %}
-  - {{ b.summary }}
+  - [{{ beat_scene[b.id] }}] {{ b.summary }}
 {% endfor %}
   Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
   what stays ambiguous, whose eyes we feel it through — is craft, not fidelity.
@@ -101,6 +103,14 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   is fine — no finding. Quote the proposed value; name the fact it contradicts
   in `reason`.
 {% endif %}
+
+INTENSITY GOVERNS REGISTER. Each beat's tag sets its intended register: a
+`sequel` or `micro_beat` beat is MEANT to be plain and brief (reactive processing
+or a transition), and a `scene` beat is where the heightened register belongs. Do
+not fault a plain sequel or micro_beat as "too spare" or "underwritten" — that
+plainness is the story modulating, and grading it down (even as a warn) fights the
+design. Judge a beat's events against its summary; judge its register against its
+INTENSITY.
 
 TASTE IS A WARN, NEVER A FAIL. Register, rhythm, metaphor and simile quality,
 imagery, figurative language, cliché, sentimentality, and "too literary / too

@@ -17,6 +17,7 @@ from questfoundry.models.structure import (
     StructuralPurpose,
     effective_scene_type,
     intensity_rank,
+    passage_intensity,
 )
 from tests.conftest import make_dilemma, make_y_scaffold, narrative_beat
 
@@ -87,6 +88,37 @@ def test_rank_inverts_lexicographic_stringenum_order():
     types = [SceneType.SCENE, SceneType.SEQUEL, SceneType.MICRO_BEAT]
     assert max(types) == SceneType.SEQUEL  # the trap
     assert max(types, key=intensity_rank) == SceneType.SCENE  # the fix
+
+
+# -- passage_intensity aggregation --------------------------------------------
+
+
+def _narr(slug: str, scene_type: SceneType) -> Beat:
+    beat = narrative_beat(slug, "dilemma:d")
+    beat.scene_type = scene_type
+    return beat
+
+
+def test_passage_intensity_scene_dominates_a_mixed_passage():
+    beats = [_narr("a", SceneType.SEQUEL), _narr("b", SceneType.SCENE)]
+    assert passage_intensity(beats) == SceneType.SCENE
+
+
+def test_passage_intensity_all_sequel_is_sequel():
+    assert passage_intensity([_narr("a", SceneType.SEQUEL), _narr("b", SceneType.SEQUEL)]) == (
+        SceneType.SEQUEL
+    )
+
+
+def test_passage_intensity_texture_only_is_micro():
+    # residue/false-branch fall back to micro_beat -> preserves the short band
+    assert passage_intensity([_structural("arm", StructuralPurpose.RESIDUE)]) == (
+        SceneType.MICRO_BEAT
+    )
+
+
+def test_passage_intensity_empty_defaults_to_scene():
+    assert passage_intensity([]) == SceneType.SCENE
 
 
 # -- set_beat_scene_type mutation ---------------------------------------------

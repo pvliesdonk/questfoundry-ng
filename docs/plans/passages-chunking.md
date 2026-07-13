@@ -1,10 +1,13 @@
 # POLISH `passages` pass chunking — Plan
 
-> Status: **PLANNED** (2026-07-13). Fixes the medium-scale `AdapterError` the
+> Status: **BUILT** (2026-07-13). Fixes the medium-scale `AdapterError` the
 > narration_scope live runs surfaced (STATUS decision log): the POLISH *passages*
-> pass emits the whole passage layer in one LLM call and overruns the context
-> window at medium scope. Frontier-authored; the design has fixture/doc blast
-> radius, so it lands after author sign-off.
+> pass emitted the whole passage layer in one LLM call and overran the context
+> window at medium scope. The pass is now decomposed — `finalize` expands into a
+> `summary:<group>` per collapse group + a `labels:<group>` per source group
+> (mini-ADR A21, 03 §9; 02 §POLISH). Offline-green (559 tests, ruff, golden 0/0);
+> a live medium `--to polish` on `gpt-oss:120b-cloud` remains the one open
+> acceptance check (build order §6, unbilled).
 
 ## Root cause (confirmed, not assumed)
 
@@ -168,16 +171,25 @@ not make.
 
 1. **Prerequisite (done):** `Passage.variant_flag`, set when POLISH creates a
    variant, persisted for the later wiring pass. + a persistence test.
-2. **Runner:** add `PassSpec.expand` + splice-after-complete (incl. skipped) to
-   `run_stage`; determinism-preserving. + a runner expansion test. Keeps every
-   stage green (no stage uses `expand` yet).
-3. **POLISH:** replace the single `passages` pass with finalize-expanded
-   `summary:<group>` (per group) + `labels:<group>` (per source group)
-   passes — per-item schema, minimal context, per-item apply; the wiring apply
-   reads `dest.variant_flag`. + unit tests.
-4. Re-record the keeper e2e per-item calls; refresh snapshots;
-   `pytest`/`ruff`/golden green.
-5. Docs (01 §6 done; 02 §POLISH, 03 §9 mini-ADR A2x, STATUS + a "Next up" pointer).
+2. **Runner (done):** `PassSpec.expand` + splice-after-complete (incl. skipped) in
+   `run_stage`; determinism-preserving. + runner expansion tests
+   (`test_expand_splices_successor_passes`, `…_even_when_the_expanding_pass_is_skipped`).
+   No stage changed behavior (no stage used `expand` yet).
+3. **POLISH (done):** the single `passages` pass is replaced with finalize-expanded
+   `summary:<group>` (per group) + `labels:<group>` (per source group) passes —
+   per-item schema (`SummaryProposal`/`LabelsProposal`), minimal context, per-item
+   apply; the wiring apply reads `dest.variant_flag` via `_group_passages`.
+   `polish_summary.j2` + `polish_labels.j2` replace `polish_passages.j2`. Unit
+   tests re-pointed at the per-group summary + per-source labels applies
+   (`tests/test_passages.py::_build_passages`, `test_multihard`,
+   `test_proposal_schemas`).
+4. **Keeper e2e (done):** the single recorded `passages` call is re-recorded as 8
+   `summary:<group>` + 6 `labels:<group>` calls (59 fixtures total, +13); ledger
+   counts bumped (POLISH 12→25, FILL 39→52, DRESS 46→59). Golden unaffected (no
+   pass execution; its variant passages already carry `variant_flag` from the
+   prerequisite). `pytest`/`ruff`/golden green.
+5. **Docs (done):** 01 §6 (prerequisite), 02 §POLISH (the decomposition), 03 §9
+   mini-ADR A21, STATUS + this plan.
 6. (Follow-up, unbilled) a live medium `--to polish` on `gpt-oss:120b-cloud` to
    confirm the pass completes where it truncated before — the acceptance test.
 

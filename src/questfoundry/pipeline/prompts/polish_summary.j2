@@ -1,0 +1,36 @@
+Write the passage the player will read for one group of beats. The engine has
+grouped these beats into a single passage and computed all structure — you
+contribute only the words for THIS passage: a summary{% if is_ending %}, and a
+short ending title{% endif %}{% if variant_flags %}, and one variant per world-state below{% endif %}.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+PASSAGE (group {{ index }}){% if is_ending %} [ENDING]{% endif %}{% if gate %} [only reached with {{ gate | join(", ") }}]{% endif %}:
+{% for b in beats %}
+- {{ b.id }}: {{ b.summary }}
+{% endfor %}
+
+REQUIREMENTS:
+- id: a passage id, "passage:p-slug", a short slug distilling this moment.
+- summary: 1-2 sentences distilling the beats above, in the SUMMARY REGISTER
+  below (a brief for the later writer, not the page itself).
+{% if is_ending %}
+- ending_title: this passage ends the story — a short, evocative title, no
+  spoilers. Unlike the summary, the title IS player-facing: carry the voice.
+{% endif %}
+{% if variant_flags %}
+- variants: this passage is a heavy-residue convergence — the SAME story moment
+  reads differently depending on the path the reader took to reach it. Emit one
+  variant per world-state below, each a genuinely different situation that must
+  contrast with the others:
+{% for flag, desc in variant_flags %}
+  - {{ flag }}: {{ desc }}
+{% endfor %}
+  Each variant is {"flag", "id" (a "passage:p-slug" id), "summary"} in the same
+  summary register. (The group's own id and summary are ignored for a variant
+  group; give plausible values anyway.)
+{% endif %}
+- Never mention flags, dilemmas, or structure in any player-facing text.
+{% include "_craft.j2" %}
+{% include "_summary_brief.j2" %}
+{% include "_shared.j2" %}

@@ -116,7 +116,7 @@ def test_every_stage_reference_pinned_schema_stays_inside_the_subset() -> None:
         seed.scaffold_proposal_schema(project),
         seed.order_proposal_schema(project),
         polish.finalize_proposal_schema(project),
-        polish.passages_proposal_schema(project),
+        *(spec.schema_for(project) for spec in polish._polish_expand(project)),
         polish.audit_proposal_schema(project),
         polish.arcs_proposal_schema(project),
         *(spec.schema for spec in dress._passes(project)),

@@ -363,9 +363,8 @@ def test_contextualize_skipped_on_single_hard(golden):
 
 def test_passage_layer_gets_four_titled_endings(vision, tmp_path):
     from questfoundry.models.presentation import Passage
-    from questfoundry.pipeline.stages.polish import _passages_apply
     from questfoundry.project.io import Project
-    from tests.test_passages import _proposal_for
+    from tests.test_passages import _build_passages
 
     g = StoryGraph()
     two_hard_story(g)
@@ -373,7 +372,7 @@ def test_passage_layer_gets_four_titled_endings(vision, tmp_path):
     _derive_flags(g)
     mutations.freeze_topology(g)
     project = Project(root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g)
-    _passages_apply(_proposal_for(g), project)
+    _build_passages(project)
     endings = [p for p in g.nodes_of(Passage) if p.ending is not None]
     assert len(endings) == 4
     issues = run_checks(g, vision, Stage.POLISH)

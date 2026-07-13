@@ -79,7 +79,9 @@ weak tier can't. Findings by stage (H/M/L severity):
   fresh/unique — the prompt-side root cause of the live finalize collision.
   [M] false-branch arm id shows no `beat:slug` format. [M] `polish_audit.j2`
   "a granted/paid-off flag is never irrelevant" is trust-only. [M]
-  `polish_passages.j2` doesn't require passage/variant ids distinct. [L]
+  `polish_summary.j2` (was `polish_passages.j2`, now decomposed per group —
+  plan passages-chunking.md) doesn't require passage/variant ids distinct,
+  though the mutation layer rejects a duplicate id repairably. [L]
   arcs "in story order" unenforced; cadence "fill each run's count"
   overstates an advisory budget.
 - **DRESS/voice**: [H] `fill_voice.j2` pov `NAME` never validated against

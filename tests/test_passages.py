@@ -21,18 +21,20 @@ from questfoundry.pipeline.stages.polish import (
     ArmSpec,
     AuditEntry,
     AuditProposal,
+    EdgeLabelSpec,
     FalseBranchSpec,
     FinalizeProposal,
     ForkSpec,
-    LabelSpec,
-    PassageSpec,
-    PassagesProposal,
+    LabelsProposal,
     ResidueSpec,
+    SummaryProposal,
     VariantSpec,
     _audit_apply,
     _finalize_apply,
+    _groups,
+    _labels_apply,
     _light_needs,
-    _passages_apply,
+    _summary_apply,
     _variant_needs,
 )
 from questfoundry.pipeline.types import ApplyError
@@ -104,31 +106,35 @@ def _woven_story(g: StoryGraph, sub_residue: ResidueWeight) -> None:
     _derive_flags(g)
 
 
-def _proposal_for(g: StoryGraph) -> PassagesProposal:
-    """Build a mechanically valid proposal for the current groups."""
-    groups = pc.collapse_groups(g)
+def _build_passages(project: Project) -> None:
+    """Apply the whole passage layer through the decomposed per-group passes
+    (what the runner's finalize-expansion drives): one `summary:<group>` apply
+    per collapse group, then one `labels:<group>` apply per source group. Uses
+    the same capped grouping the applies index into, so group numbers align."""
+    g = project.graph
+    groups = _groups(project)
     variant_needs = _variant_needs(g)
-    specs = []
     for i, group in enumerate(groups):
         needs = [flags for c, flags in variant_needs.items() if c in group]
         variants = [
             VariantSpec(flag=f, id=f"passage:p{i}-v{j}", summary=f"variant {j}")
             for j, f in enumerate(needs[0])
         ] if needs else []
-        specs.append(
-            PassageSpec(
-                group=i,
-                id=f"passage:p{i}",
-                summary=f"group {i}",
-                ending_title="An End" if pc.ending_beat(g, group) else "",
-                variants=variants,
-            )
+        proposal = SummaryProposal(
+            id=f"passage:p{i}",
+            summary=f"group {i}",
+            ending_title="An End" if pc.ending_beat(g, group) else "",
+            variants=variants,
         )
-    labels = [
-        LabelSpec.model_validate({"from": a, "to": b, "label": f"onward {a}-{b}"})
-        for a, b in pc.group_edges(groups, g)
-    ]
-    return PassagesProposal(passages=specs, labels=labels)
+        _summary_apply(i)(proposal, project)
+    edges = pc.group_edges(groups, g)
+    for a in sorted({x for x, _ in edges}):
+        labels = [
+            EdgeLabelSpec.model_validate({"to": b, "label": f"onward {a}-{b}"})
+            for x, b in edges
+            if x == a
+        ]
+        _labels_apply(a)(LabelsProposal(labels=labels), project)
 
 
 def _polish_errors(g, vision) -> list:
@@ -145,7 +151,7 @@ def test_heavy_residue_creates_gated_variants(vision, tmp_path):
     # still engage finalize, so assert the residue claim directly
     assert not _light_needs(project)
 
-    _passages_apply(_proposal_for(g), project)
+    _build_passages(project)
     (convergence,) = [n.rejoin[0] for n in pc.convergence_needs(g)]
     holders = queries.passages_of_beat(g, convergence)
     assert len(holders) == 2
@@ -185,10 +191,12 @@ def test_variants_missing_where_needed_is_repairable(vision, tmp_path):
     g = StoryGraph()
     _woven_story(g, ResidueWeight.HEAVY)
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    proposal = _proposal_for(g)
-    stripped = [spec.model_copy(update={"variants": []}) for spec in proposal.passages]
+    groups = _groups(project)
+    # the heavy-residue frontier group's summary pass must emit variants
+    i = next(i for i, grp in enumerate(groups) if _variant_needs(g).keys() & set(grp))
+    proposal = SummaryProposal(id=f"passage:p{i}", summary="s", variants=[])
     with pytest.raises(ApplyError, match="heavy residue"):
-        _passages_apply(PassagesProposal(passages=stripped, labels=proposal.labels), project)
+        _summary_apply(i)(proposal, project)
 
 
 def test_residue_insertion_preserves_convergence(vision):
@@ -259,7 +267,7 @@ def test_tensored_residue_arm_is_a_gated_choice_on_one_side(vision, tmp_path):
     issues = run_checks(g, vision, Stage.GROW)
     assert [i for i in issues if i.check == "I9"] == []
 
-    _passages_apply(_proposal_for(g), project)
+    _build_passages(project)
     proposal = AuditProposal(
         audit=[
             AuditEntry(passage=p.id, irrelevant=[])
@@ -463,7 +471,7 @@ def test_heavy_residue_at_fork_rejoin_needs_per_world_variants(vision, tmp_path)
         "beat:main-commit-b": flags,
     }
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    _passages_apply(_proposal_for(g), project)
+    _build_passages(project)
     issues = run_checks(g, vision, Stage.POLISH)
     assert not any(i.check == "G4" and "variant" in i.message for i in issues)
     for commit in ("beat:main-commit-a", "beat:main-commit-b"):
@@ -692,7 +700,7 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
     g = StoryGraph()
     _woven_story(g, ResidueWeight.LIGHT)
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    _passages_apply(_proposal_for(g), project)
+    _build_passages(project)
     flagged = [
         p.id
         for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)

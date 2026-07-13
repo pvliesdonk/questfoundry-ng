@@ -154,7 +154,7 @@ beats).
 
 ## FILL consumption (`pipeline/stages/fill.py`, `models/concept.py`)
 
-The payoff. Two changes:
+The payoff. Three changes:
 
 1. **Word band keys off intensity** (`ScopePreset.words_for`). New signature:
    ```python

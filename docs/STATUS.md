@@ -15,8 +15,13 @@
 > intensity directive); the deferral in 01 §10.3 is resolved. Both
 > guardrails followed: advisory **B8** (beat-level, `check_b8_pacing`) and
 > the graded **`overwriting`** compound-density FILL finding
-> (`_overwriting_finding`). 543 tests. Follow-ups still open: live
-> validation on Ollama and the scale recalibration. Before it: **#1a live validation ran and reframed
+> (`_overwriting_finding`). 543 tests. **Live validation is DONE** (both PRs
+> merged): a `gpt-oss:120b` micro run modulated cleanly and completed FILL
+> (a weak-tier first) with `overwriting` silent (0/1k) and B8 firing on a
+> real flat run — the modulation work validates. A noir micro run surfaced a
+> separate **epilogue/POV collapse-feasibility bug** (the next-session
+> kickoff at the top of "Next up"), and confirmed the **scale-recalibration**
+> signal (B7 just under the floor). Before it: **#1a live validation ran and reframed
 > the work as prompt quality** (author-directed; decision log has the full
 > record): both fresh stories died at FILL review-exhaustion, so the
 > scaled recurrence read is still open (13 passages can't discriminate)
@@ -675,6 +680,39 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
+> **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): the
+> epilogue/POV collapse-feasibility problem.** Surfaced by the live
+> validation (above): a weak-tier noir micro run ("The Black Bird",
+> `gpt-oss:120b`) failed FILL twice on its finale passage — `p-finale`
+> collapsed **4 beats** (a bridge + the climax `scene` + two `sequel`
+> **aftermath/epilogue** beats). The voice was 3rd-person **limited**
+> (Mace), but the aftermath beats describe world-scope events the POV
+> character cannot perceive ("the Falcon is auctioned… fueling Victor's
+> armaments"; "Mace becomes a cautionary ghost in rainy alleys" — his own
+> *posthumous* reputation). The writer hit a catch-22 — include them → POV
+> break; omit them → missing beats — and two independent runs failed on two
+> different legitimate defects (POV break, then a Falcon-state continuity
+> contradiction). **Per iron rule 5 this is a POLISH/GROW/POV structural
+> bug, not a writing or prompt failure** (the model correctly refused to
+> fake omniscience). `scene_type` gives a usable signal here (the aftermath
+> beats are `sequel`/epilogue; the climax is `scene`). **Author's framing
+> questions to open the discussion** (not yet decided):
+> 1. If a beat *requires* a POV change, did SEED/GROW **overspecify** it
+>    (i.e., write an omniscient world-fact where a POV-local beat belonged)?
+> 2. Is a POV change **reasonable for an epilogue**? (Author: yes.)
+> 3. If it's reasonable for an epilogue, is it reasonable **elsewhere** too?
+> 4. Do we **tag beats with a POV** — or add a **POV-exception tag** for
+>    special (epilogue-like) beats?
+> 5. Do we **force a passage split on a POV switch**, or can a single
+>    passage carry **multiple POVs**?
+> Evidence lives in this session's transcript; the scratch projects
+> ("The Lock-Keeper's Coat" micro = the clean validation; "The Black Bird"
+> noir = the failure) were not committed. Also noted: the noir "medium" run
+> was actually **micro** — an operator slip (a `cat >` overwrite of
+> `vision.yaml` dropped the `scope:` line), *not* weak-tier under-scaffolding;
+> a real medium re-run is pending this discussion, since the finale bug would
+> recur (worse) at medium.
+
 > **`scene_type` structural modulation is BUILT (2026-07-13, PR #65)** —
 > the kickoff below is done (see "Where we are"). Plan:
 > [`docs/plans/scene-type-modulation.md`](plans/scene-type-modulation.md).
@@ -699,12 +737,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > false-positives on good noir); the modulation-variance half is the B8
 > pacing report. Register-flat — 15/1k has headroom over even the literary
 > golden (max passage 13.6/1k → non-blocking warn), and the keeper e2e is
-> 0/1k. **Remaining follow-ups** (in order): (1) **live validation on
-> Ollama** (`gpt-oss:120b`, unbilled) — a targeted FILL re-run read by a
-> human for whether prose now modulates, and whether the guardrails fire
-> where they should; (2) the **scale recalibration**
-> (measure-after: modulation shortens sequels, so `words_total`/`passages`
-> and `tests/scale.py` may read slightly high). Historical hand-off spec:
+> 0/1k. **Live validation is now DONE** (2026-07-13, `gpt-oss:120b` cloud,
+> unbilled — see the epilogue/POV kickoff at the top of "Next up" for the
+> full record): a fresh **micro** story ("The Lock-Keeper's Coat") ran clean
+> through FILL — the *first* weak-tier story not to die at FILL
+> review-exhaustion — with the annotate pass live, restrained voice
+> (`spare, straightforward, occasional longer sentences`), **0.0 coined
+> compounds/1k** across every passage, a scene>sequel>micro length gradient,
+> B8 firing on a real 4-`micro_beat` flat run, and `overwriting` correctly
+> silent. A **noir** micro story ("The Black Bird") confirmed the register
+> most prone to over-styling stays plain (0/1k), but surfaced the
+> epilogue/POV finale bug (kickoff below). **Remaining follow-up**: the
+> **scale recalibration** (measure-after — confirmed live: the micro story
+> landed B7 = 2377 words vs the 2400 floor, so modulation shortens
+> sequels/micros; `words_total`/`passages` and `tests/scale.py` want a
+> nudge). Historical hand-off spec:
 > [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)
 > § "Hand-off spec — the `scene_type` modulation build" (the exemplar
 > calibration there still governs the guardrail: FKGL is out;

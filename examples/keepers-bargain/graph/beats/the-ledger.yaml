@@ -8,3 +8,4 @@ dilemma_impacts:
   effect: advances
 entities: [character:keeper, location:lighthouse]
 belongs_to: [path:keep, path:break]
+scene_type: sequel

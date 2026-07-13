@@ -9,3 +9,4 @@ dilemma_impacts:
 entities: [character:keeper, character:sleeper]
 belongs_to: [path:break]
 is_ending: true
+scene_type: scene

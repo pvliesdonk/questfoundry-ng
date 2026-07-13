@@ -8,3 +8,4 @@ dilemma_impacts:
   effect: commits
 entities: [character:keeper, character:cartographer]
 belongs_to: [path:hide]
+scene_type: scene

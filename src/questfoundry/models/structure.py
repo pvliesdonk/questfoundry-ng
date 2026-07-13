@@ -68,6 +68,25 @@ class SceneType(StrEnum):
     MICRO_BEAT = "micro_beat"
 
 
+class NarrationScope(StrEnum):
+    """A beat's POV/coda register — the per-beat signal FILL reads to know
+    whether a beat is narrated inside the story's single Voice POV or may
+    step back to a detached coda (design doc 01 §Beat annotations). A
+    *limited* beat stays inside the viewpoint the Voice fixes — no mind but
+    the narrator's, though psychic distance may still widen to report a
+    world fact the narrator could plausibly know. A *wide* beat is a
+    sanctioned coda licensed to narrate beyond the viewpoint character's
+    horizon — world aftermath once the dilemmas resolve, or a character's
+    fate after they exit the story. Populated at GROW pre-freeze as intrinsic
+    beat content (settled at the freeze like ``summary``/``scene_type``); a
+    beat left unset falls back by purpose (``effective_narration_scope``).
+    ``wide`` is the marked exception: epilogue beats default to it, every
+    other beat to ``limited``."""
+
+    LIMITED = "limited"
+    WIDE = "wide"
+
+
 class Beat(Node):
     """A concrete story moment — the atomic unit from SEED onward.
 
@@ -85,9 +104,11 @@ class Beat(Node):
     is_ending: bool = False
     temporal_hints: list[TemporalHint] = []  # SEED -> GROW interleave guidance
     flexibility: str = ""  # SEED -> GROW intersection invitation
-    # GROW's annotate pass writes this pre-freeze; None means "not
-    # annotated" and the effective value is derived (effective_scene_type).
+    # GROW's annotate pass writes these pre-freeze; None means "not
+    # annotated" and the effective value is derived (effective_scene_type /
+    # effective_narration_scope).
     scene_type: SceneType | None = None
+    narration_scope: NarrationScope | None = None
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:
@@ -154,6 +175,20 @@ def effective_scene_type(beat: Beat) -> SceneType:
     ):
         return SceneType.MICRO_BEAT
     return SceneType.SCENE
+
+
+def effective_narration_scope(beat: Beat) -> NarrationScope:
+    """A beat's POV/coda register, resolving the fallback for beats no
+    annotate pass reached. GROW's LLM annotation wins; else an ``epilogue``
+    beat is the sanctioned world-coda site -> wide; else — every other beat,
+    including POLISH-added residue/false-branch/bridge and any unannotated
+    narrative/setup beat — is narrated inside the Voice's POV -> limited
+    (the conservative default; ``wide`` is always the marked exception)."""
+    if beat.narration_scope is not None:
+        return beat.narration_scope
+    if beat.purpose == StructuralPurpose.EPILOGUE:
+        return NarrationScope.WIDE
+    return NarrationScope.LIMITED
 
 
 def passage_intensity(beats: Iterable[Beat]) -> SceneType:

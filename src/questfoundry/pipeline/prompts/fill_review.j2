@@ -30,9 +30,16 @@ same way — or "warn" for a concern or a matter of taste. The rules:
     required POV: {{ voice.pov }}
     required tense: {{ voice.tense }}
   A POV departure means the narrating character is rendered in the wrong
-  person, or the narration leaves what they can perceive. Other characters are
-  naturally he/she/they in ANY pov, and a sentence that does not mention the
-  narrator (a scene opening on someone else's action) is not a departure.
+  person, or the narration enters another character's mind (states a
+  non-narrator's private thoughts, intentions, or feelings as fact). Other
+  characters are naturally he/she/they in ANY pov, and a sentence that does not
+  mention the narrator (a scene opening on someone else's action) is not a
+  departure. Narrating a world fact the narrator could plausibly know — weather,
+  a rumor, a witnessed or inferred event, in a wider summary register — is NOT a
+  departure either: limited fixes whose MIND we are in, not how far the camera
+  pulls back. A beat tagged `wide` below is a CODA, licensed to narrate beyond
+  the viewpoint character's horizon (world aftermath, a fate past their exit) —
+  that is authorized, NOT a departure; only entering another mind is.
 {% if voice.banned %}
 - banned_pattern — these patterns are BANNED; a defect exists if any appears
   in the text:
@@ -46,7 +53,7 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   (each beat is tagged with its INTENSITY, which governs its register, not its
   events — see the note under TASTE below):
 {% for b in beats %}
-  - [{{ beat_scene[b.id] }}] {{ b.summary }}
+  - [{{ beat_scene[b.id] }} · {{ beat_scope[b.id] }}] {{ b.summary }}
 {% endfor %}
   Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
   what stays ambiguous, whose eyes we feel it through — is craft, not fidelity.

@@ -5,6 +5,12 @@ paths, each with its commit beat (the point of no return, where the choice locks
 and post-commit beats (playing out that answer's consequences).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+POINT OF VIEW (the story's intended viewpoint): {{ vision.pov_hint or "one limited viewpoint" }}.
+Write beats a character in the scene could live through: an outcome should reach the
+story through someone who is present. A world-scope wrap-up no single character can
+perceive — an event elsewhere, a reputation that outlives a character — is a brief
+CODA, not a full scene: state it in a sentence or two and let a later stage frame it,
+never expand it into a beat of its own weight.
 
 RETAINED CAST:
 {% for e in entities %}

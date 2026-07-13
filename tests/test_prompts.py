@@ -183,8 +183,27 @@ def test_fill_write_states_pov_externalization():
     prompt must instruct that only the narrator's interiority may be
     stated and others are rendered through observable behavior."""
     source = (PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8")
-    assert "POINT OF VIEW IS LIMITED" in source
+    assert "NO OTHER MINDS" in source
     assert "observable behavior" in source
+
+
+def test_fill_write_separates_pov_from_psychic_distance():
+    """The narration-scope fix (case A): being limited forbids other minds,
+    not world-summary — the write prompt must distinguish the two so a
+    limited narrator can still report a world fact, and must license a
+    ``wide`` coda beat to narrate beyond the viewpoint character's horizon."""
+    source = (PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8")
+    assert "DISTANCE MAY WIDEN" in source
+    assert "beat_scope" in source  # per-beat scope tag is rendered
+    assert "coda" in source.lower()
+
+
+def test_fill_review_keys_pov_rule_to_scope():
+    """The reviewer must not fault a ``wide`` coda as a POV departure, and
+    must treat world-summary under limited POV as authorized (case A)."""
+    source = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
+    assert "beat_scope" in source
+    assert "coda" in source.lower()
 
 
 # ---------------------------------------------------------------------------

@@ -205,7 +205,7 @@ between:
 | | |
 |---|---|
 | In | All SEED output |
-| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (the prose-intensity annotation FILL reads, set pre-freeze — 01 §Beat annotations) |
+| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (prose-intensity) and `narration_scope` (POV/coda register) — the annotations FILL reads, set pre-freeze (01 §Beat annotations) |
 | Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); budgets (beat count per arc within scope) |
 
 The hardest stage, split deliberately:
@@ -233,9 +233,10 @@ The hardest stage, split deliberately:
   beats every player sees — shared pre-commit beats and locked-chain
   beats alike (each accepted intersection resolves the scene's
   location/entities); contextualizing per-world beat instances (below);
-  annotating every beat with its `scene_type` (the *annotate* pass, after
-  contextualize and before the freeze: scene/sequel/micro_beat, a beat's
-  intrinsic prose-intensity — 01 §Beat annotations — advisory, with a
+  annotating every beat with its `scene_type` **and** `narration_scope`
+  (the *annotate* pass, after contextualize and before the freeze:
+  scene/sequel/micro_beat prose-intensity and limited/wide POV-coda register,
+  a beat's intrinsic craft signals — 01 §Beat annotations — advisory, with a
   purpose fallback for beats added later); writing bridge beats where
   adjacent scenes share no entities or place.
 
@@ -332,9 +333,14 @@ about it may influence depth, length, or quality budgets — G5 applies the
 same word budgets and review bar to every arc.
 
 Per-passage context is rich by design: voice, beat summaries each tagged
-with their `scene_type` (the passage's aggregate intensity sets its word
-band; the per-beat tag tells the writer where the prose may rise and where
-it stays plain — style belongs to the story, not the paragraph), full
+with their `scene_type` and `narration_scope` (the passage's aggregate
+intensity sets its word band; the per-beat `scene_type` tells the writer where
+the prose may rise and where it stays plain — style belongs to the story, not
+the paragraph — and the per-beat `narration_scope` tells it which beats stay
+inside the POV and which are a `wide` coda it may narrate beyond the viewpoint
+character's horizon, so register modulates within a passage without a split;
+the POV rule separates *no other minds* from psychic-distance widening, and the
+reviewer keys that rule to scope so a wide coda is not a departure), full
 entity state (base + active overlays), a sliding window of preceding prose,
 character-arc position (from POLISH's arc metadata: the aspect in play
 now, the turn this scene carries, where the entity is heading),

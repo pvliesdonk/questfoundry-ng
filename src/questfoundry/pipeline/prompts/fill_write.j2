@@ -44,25 +44,31 @@ present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
 your first sentence back before anything else — that is where the wrong tense
 slips in.
 
-POINT OF VIEW IS LIMITED: the POV above fixes whose mind the reader is inside.
-Only that narrator's thoughts, intentions, and feelings may be stated directly.
-Every other character reaches the reader only through what the narrator can
-observe — their actions, their speech, their expression. When a beat or an ARC
-POSITION below describes another character's plan or state ("she intends to…",
-"he has decided…"), that is a brief for what they DO in this scene, not a
-licence to enter their mind: render it as observable behavior. Stating a
-non-narrator character's interiority is the most common POV break and fails
-review (rule 1).
+POINT OF VIEW — TWO SEPARATE RULES:
+1. NO OTHER MINDS. The POV above fixes whose mind the reader is inside. Only that
+   narrator's thoughts, intentions, and feelings may be stated directly. Every
+   other character reaches the reader only through what the narrator can observe —
+   their actions, their speech, their expression. When a beat or an ARC POSITION
+   below describes another character's plan or state ("she intends to…", "he has
+   decided…"), that is a brief for what they DO in this scene, not a licence to
+   enter their mind: render it as observable behavior. Stating a non-narrator
+   character's interiority is the most common POV break and fails review (rule 1).
+2. DISTANCE MAY WIDEN. Being limited does NOT confine the narration to the
+   character's immediate sensation. The narrator may still report a world fact they
+   could plausibly know — the weather, a rumor, the shape of a place, an event they
+   witness or infer — in a wider, more summary register. Reporting the world is not
+   a POV break; entering another mind is. (A beat marked a `wide` coda below goes
+   further still — see INTENSITY & SCOPE.)
 
 PASSAGE {{ passage.id }}{% if passage.ending %} — ENDING "{{ passage.ending.title }}"{% endif %} — overall a {{ intensity }} passage:
 summary: {{ passage.summary }}
 Realize these beats, in order, as one continuous scene. The summaries are your
 brief, not your style: take the events, stakes, and mood they name; leave their
 wording behind — the VOICE above, not the summary, owns how anything sounds.
-Each beat is tagged with its INTENSITY — where the prose may rise and where it
-stays plain:
+Each beat is tagged with its INTENSITY (where the prose may rise) and its SCOPE
+(whether it stays inside the POV or is a detached coda):
 {% for b in beats %}
-- [{{ beat_scene[b.id] }}] {{ b.summary }}
+- [{{ beat_scene[b.id] }} · {{ beat_scope[b.id] }}] {{ b.summary }}
 {% endfor %}
 INTENSITY makes "style belongs to the story" concrete per beat: a `scene` beat is
 active conflict — the turn this passage exists for, where the heightened register
@@ -70,6 +76,13 @@ may come out and the words may run a little longer. A `sequel` beat is reactive 
 a character absorbing what just happened; write it plain and brief. A `micro_beat`
 is a transition; keep it to the fewest clear sentences. Most beats are not scenes —
 hold the ornament for the ones that are.
+SCOPE tells you the POV frame per beat: a `limited` beat obeys the POV rules above
+(no other minds, distance may widen). A `wide` beat is a CODA — you may step back
+to a detached register and narrate what the viewpoint character could not know:
+world aftermath, a fate that plays out beyond this scene, a character's reputation
+after they are gone. Write the shift cleanly at the paragraph — a limited scene may
+close into a wide coda — never as a mid-sentence leap. Do not widen a `limited`
+beat this way; the coda license belongs only to `wide`.
 
 CAST IN SCENE — facts are CONSTRAINTS, not choreography. Every fact below is
 already established: the scene must not contradict it, and the reader already

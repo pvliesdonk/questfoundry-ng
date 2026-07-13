@@ -1,9 +1,13 @@
-Tag every beat with its prose-intensity type, so the writer later knows where the
-prose should rise and where it should stay plain. This is the story's MODULATION:
-most beats are quiet and load-bearing; only a few are charged. A story where every
-beat runs hot is exhausting to read — a plain baseline is what makes the peaks land.
+Tag every beat with two per-beat signals the writer reads later: its prose-INTENSITY
+(where the prose rises vs. stays plain) and its narration SCOPE (whether it is
+narrated inside the story's single point of view or steps back to a detached coda).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+POINT OF VIEW (the story's single viewpoint, advisory): {{ vision.pov_hint or "one limited viewpoint" }}.
+
+This is the story's MODULATION: most beats are quiet and load-bearing; only a few
+are charged. A story where every beat runs hot is exhausting to read — a plain
+baseline is what makes the peaks land.
 
 Assign each beat exactly one SCENE TYPE (Swain's beat rhythm):
 
@@ -28,6 +32,28 @@ MODULATION across the whole story: a plain baseline of sequels and micro-beats
 with scenes reserved for the charged turns. Do NOT label everything a scene — that
 is the exact failure this pass exists to prevent.
 
+Also assign each beat one NARRATION SCOPE — whether it can be narrated from inside
+the story's single viewpoint above:
+
+- limited — narrated inside that viewpoint. Almost every beat is limited: the
+  reader is with the viewpoint character, so no other character's private thoughts
+  are stated. (This does NOT forbid stating a world fact the narrator could
+  plausibly know or observe — reporting the weather, a rumor, an event they witness
+  is still limited; scope is about whose knowledge the narration is bound to, not
+  how wide the camera pulls back.)
+- wide — a detached CODA, narrated from BEYOND any single character's perception.
+  Use this ONLY for a beat whose content the viewpoint character could not deliver
+  at all: a world aftermath once the story's dilemmas have resolved (an event
+  elsewhere, a faction's rise, a fate that unfolds over time), or a character's
+  reputation or fate AFTER they have exited the story (including after death). An
+  EPILOGUE beat is wide by default. A narrative aftermath or post-commit beat is
+  wide only when it genuinely narrates such out-of-horizon events — if a character
+  in the scene could witness or infer it, it is limited.
+
+wide is the MARKED EXCEPTION, not a convenience: defaulting a beat to wide licenses
+the writer to leave the viewpoint, so reserve it for true codas. When in doubt,
+choose limited.
+
 BEATS (in story order):
 {% for r in beats %}
 - {{ r.beat.id }} [{{ r.beat.beat_class.value }}{% if r.beat.purpose %}/{{ r.beat.purpose.value }}{% endif %}{% if r.effects %}; {{ r.effects | join(", ") }}{% endif %}{% if r.beat.is_ending %}; ENDING{% endif %}]: {{ r.beat.summary }}
@@ -35,6 +61,7 @@ BEATS (in story order):
 
 REQUIREMENTS:
 - Annotate every beat listed above, exactly once, keyed by its full beat id.
-- Assign exactly one of: scene, sequel, micro_beat.
+- Assign exactly one scene_type (scene, sequel, micro_beat) AND one narration_scope
+  (limited, wide) to each.
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

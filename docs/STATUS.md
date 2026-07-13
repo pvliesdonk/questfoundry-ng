@@ -616,7 +616,22 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-> **New top priority (2026-07-12): the prose reads too complex for a
+> **KICKOFF FOR A FRESH SESSION (2026-07-13, author-directed): restore structural
+> prose-intensity modulation via the `scene_type` beat annotation.** The
+> reading-difficulty effort traced the over-stylization problem to its structural
+> root: heritage distributed prose intensity per beat (`scene_type` scene/sequel →
+> FILL "prose intensity / target length"); NG deferred it under YAGNI (design doc
+> 01 §10.3 names `scene_type`+`exit_mood` but neither was built), and the "FILL
+> quality gap" §10.3 named as the trigger has now fired. The FILL prompt reframe
+> (PR #64) is the completed predecessor; the `scene_type` build is the real fix.
+> **Full hand-off spec: [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md)
+> § "Hand-off spec — the `scene_type` modulation build."** Frontier/milestone-sized
+> (model field → GROW/POLISH populate pass → FILL intensity+word-band consumption →
+> deferred G4 pacing report → `overwriting` guardrail after). Read the plan's
+> exemplar calibration first (FKGL is out; compound-density > 15/1k is the one
+> clean aggregate flag; fragmentation-rate false-positives on good noir).
+
+> **Predecessor context (2026-07-12): the prose reads too complex for a
 > gamebook.** The pipeline now completes a weak-tier run **end to end**
 > (FILL → DRESS; decision log below, and the preserved sample
 > `examples/thaw-between/`), so *quality*, not completion, is the frontier.
@@ -633,17 +648,64 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > unmodulated prose (bubblegum's wall-to-wall aphorism) and fragmentation +
 > coined-compound overload (cartographers: 42% tiny sentences, 4× compound
 > density). The readable stories have a plain baseline, grammatical flow, and
-> modulation (ornate ≠ unreadable — `closed-circle` is both). Corrected lever:
-> **generative first** — a `fill_voice.j2` restraint/modulation directive + a
-> `fill_write.j2` "plain baseline, clarity over atmosphere" rule (corpus-
-> grounded: prose_patterns:52) — with a deterministic `overwriting` finding on
-> the signals that *did* track the author (fragmentation ratio, novelty
-> density), and **FKGL dropped from the lever entirely**. Also flagged: the
-> pipeline has **no clean target-register exemplar** (the golden over-writes
-> too). Build gated on the author confirming the diagnosis + exemplar approach
-> (plan's *Open decisions*). **NB — item 1 below ("a completing FILL run") is now
-> ACHIEVED:** the compounding review/rework chain (#57→#58→#59→#60→#61)
-> carried `gpt-oss:120b` through DRESS, codex review included.
+> modulation (ornate ≠ unreadable — `closed-circle` is both). **The first fix
+> is now BUILT** (2026-07-13, author-directed — the author's sharpening: *"the
+> writer tried to apply the style to every paragraph, while it should apply to
+> the whole story"*; decision log below): the generative lever landed as a
+> prompt reframe — `fill_voice.j2` now frames the voice as characterizing the
+> **whole story, not every paragraph** (plain baseline, restraint, clarity over
+> atmosphere; `rhythm`/`imagery` reworded so they can't read as a per-sentence
+> quota), and `fill_write.j2` gained a **"STYLE BELONGS TO THE STORY, NOT TO
+> THIS PARAGRAPH"** directive (most prose plain and load-bearing; heightened
+> register at a few charged moments; names the two measured failure modes —
+> compound-per-clause, fragment-strobe — and states clarity outranks
+> atmosphere). Design doc 01 §2 records the principle (style intensity is taste,
+> the fence is the framing). 513 tests. **The first real exemplar has landed**
+> (2026-07-13): the author supplied a published second-person gamebook (*ALBA*,
+> ~172k words) as the target register. Measured, it **confirms the thesis
+> outright** — FKGL 4.6 (statistically the same as "bad" `bubblegum`'s 4.8, so
+> grade level is settled noise) but coined-compound density **1.7/1k** vs
+> `cartographers`' 21.2 (a 12× gap — the cleanest discriminator), fragmentation
+> a modest 28%. Its profile + craft traits are recorded in the plan as the north
+> star and the first calibration for the `overwriting` finding. **A second
+> exemplar confirms it** (*Pirates of the Splintered Isles*, ~157k words): FKGL
+> 5.9, compound density **3.0/1k**, fragmentation 20% — two independent published
+> gamebooks now replicate the profile. **Then two author cautions + a
+> genre-diverse study refined the picture (2026-07-13):** (a) the two gamebooks
+> are the **same genre**, so eight **choice-based** Twine works (the right medium)
+> across horror/noir/literary/sci-fi/romance/crime were measured (Grimnoir
+> independently re-verified). Result: *FKGL is noise* is **reconfirmed and even
+> inverted** (XYZZY-winning horror `Bogeyman` FKGL 4.3 = "bad" bubblegum; worst
+> amateur work highest at 9.6); *compound density > 15/1k* is a **robust red flag**
+> (zero false positives across six genres; only `cartographers` trips it); but
+> *fragmentation alone is NOT safe* — good noir (Grimnoir 49%) and good
+> minimalist-literary (44%) sit in the bad band, so it must not gate alone. The
+> real lesson (author): the exemplars are about **how style distributes across the
+> partial snippets**, not the medium — so the guardrail should measure *modulation*
+> (a plain baseline with a few peaks across passages), not a per-corpus mean. (b) I
+> had claimed an "unaddressed upstream vector" (beats arrive over-stylized); that
+> was **wrong and is retracted** — `bubblegum` is a stale M5 artifact, and the
+> current compiler already enforces plain briefs via `_summary_brief.j2` (SEED
+> scaffold, GROW bridge/contextualize, POLISH passages/finalize: *"a summary is
+> never the page… name a mood instead of performing it"*). So the FILL reframe in
+> this PR is the piece that was missing, not the first of two. **The modulation
+> mechanism has a name, and NG lost it** (author, 2026-07-13): heritage
+> distributed prose intensity *structurally* via beat annotations — `scene_type`
+> (Swain scene/sequel: FILL derives "prose intensity / target length" from it) and
+> `narrative_function`. Design doc 01 §10.3 explicitly **kept `scene_type`
+> (scene/sequel) + `exit_mood`**, but **neither was ever built** (0 code
+> references; POLISH notes "pacing report stays deferred with scene_type") — a
+> doc↔code divergence, and exactly the "lost in translation" the author named. The
+> reading-difficulty gap is the "demonstrable FILL quality gap" §10.3 said would
+> justify (re)adding it. So the primary modulation lever should be **structural**
+> — implement `scene_type` as a beat annotation driving FILL's per-passage
+> intensity + word band — with the `overwriting` metric demoted to a guardrail
+> (details in the plan). **Still open (follow-ups):** the `scene_type`-annotation
+> modulation build (frontier, milestone-sized, gated on author go-ahead); the
+> `overwriting` guardrail after; live validation on Ollama. **NB — item 1 below ("a
+> completing FILL run") is now ACHIEVED:** the compounding review/rework chain
+> (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
+> included.
 
 1. **A completing FILL run — the recurrence read is still open, and the
    prompt fixes need live validation** (2026-07-12 decision log has the
@@ -691,6 +753,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
    built — 2026-07-12, decision log).
 
 ## Known deferrals / open items
+
+- **`scene_type` / `exit_mood` beat annotations: an honest YAGNI deferral whose
+  trigger has now fired** (2026-07-13, reading-difficulty effort; author-confirmed
+  it was a deliberate YAGNI call, not a mistake). Design doc 01 §10.3 names two
+  annotations NG would carry — `scene_type` (scene/sequel) and `exit_mood` —
+  "adding more only when a FILL quality gap demonstrably calls for one," and notes
+  annotations are "cheap to add and expensive to maintain coherently." NG deferred
+  building even those two (the `Beat` model has neither; the only reference is a
+  POLISH comment, "the pacing report stays deferred with scene_type"; the G4
+  pacing report in design doc 02 §3 is unbuilt for the same missing-signal reason).
+  That deferral was correct at the time. **The trigger has now fired**: the
+  reading-difficulty / over-stylization gap is exactly the "demonstrable FILL
+  quality gap" §10.3 anticipated, and `scene_type` is the modulation carrier. So
+  the resolution is to **build `scene_type`** (the recommended structural
+  modulation mechanism —
+  [`docs/plans/reading-difficulty.md`](plans/reading-difficulty.md) has the
+  hand-off spec) and update §10.3's present-tense wording to match. To be kicked
+  off in a fresh session (frontier, milestone-sized).
 
 - **Live-run budget discipline is now a working norm** (author call,
   2026-07-12, after a session that exhausted the token budget on repeated
@@ -997,6 +1077,37 @@ PR #5) and this agent/doc infrastructure (PR #6).
   when the review UX milestone lands.
 
 ## Decision log
+
+- **2026-07-13 (reading-difficulty fix #1 — over-stylization is per-paragraph
+  style saturation; prompt reframe, author-directed):** The author greenlit the
+  fix and sharpened the root cause: *"the writer tried to apply the style to
+  every paragraph, while it should apply to the whole story."* That is exactly
+  what the assessment measured — the readable stories keep a plain, load-bearing
+  baseline and surface style at a few charged moments; the unreadable ones max
+  every sentence. The lever is generative (the fence is framing — style
+  intensity is taste, not a gate; design doc 01 §2), so it landed as a
+  two-prompt reframe, no schema/engine change: (1) `fill_voice.j2` gained a
+  **"THE VOICE CHARACTERIZES THE WHOLE STORY, NOT EVERY PARAGRAPH"** principle
+  (plain baseline, restraint, clarity over atmosphere) and reworded `rhythm`
+  (a default to depart from, not a maximal pattern) and `imagery` (spent at a
+  few moments, "never a coat of paint for every sentence"); (2) `fill_write.j2`
+  gained a **"STYLE BELONGS TO THE STORY, NOT TO THIS PARAGRAPH"** directive —
+  most prose plain and load-bearing with a clear grammatical spine, the
+  heightened register at only a few charged moments (opening image / the turn /
+  last line), and it names the two failure modes the assessment found
+  (a fresh metaphor or coined compound *per clause*; a *strobe of short
+  fragments*) plus "clarity outranks atmosphere." Design doc 01 §2 records the
+  principle and the FKGL-inversion finding. Deliberately **not** touched: the
+  review — adding an over-stylization *rule* would reopen the false-positive-halt
+  class the review-contract redesign fixed (the review keeps "TASTE IS A WARN,
+  NEVER A FAIL," with figurative language named as taste). Tests: two new
+  prompt-source assertions; 513 pass, ruff clean, golden 0/0. The FILL e2e
+  fixtures did **not** need re-recording — MockProvider replays in call order,
+  not by prompt hash, so wording changes don't shift the sequence. **Follow-ups:**
+  Ollama live validation; the author's real-gamebook exemplars (in flight) as
+  the target-register north star; and the deterministic `overwriting` guardrail
+  (fragmentation + novelty density; FKGL stays out) once the exemplars set its
+  bands.
 
 - **2026-07-12 (reading-difficulty assessment — v1 thesis WRONG, corrected by
   an author read; plan doc

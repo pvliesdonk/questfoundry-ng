@@ -3,6 +3,16 @@ operational descendant of the vision: where the vision names a mood, the voice
 makes concrete, checkable commitments every one of the {{ passage_count }} passages
 must obey.
 
+THE VOICE CHARACTERIZES THE WHOLE STORY, NOT EVERY PARAGRAPH. A reader should feel
+this voice across the arc — not braced against it in every sentence. Within any one
+passage most prose is plain, clear, and load-bearing; the voice's distinctive
+qualities (its imagery, its heightened cadence, its richest diction) surface only at
+the few moments that earn them. So coin a voice that reads as unmistakable over the
+whole book while leaving ample room for plain sentences to carry the events, and
+frame every commitment below so it can be applied with restraint rather than
+saturated into every line. Clarity always outranks atmosphere — a reader must be
+able to say what happened.
+
 VISION: {{ vision.genre }}{% if vision.subgenre %} / {{ vision.subgenre }}{% endif %}, {{ vision.tone }}.
 Themes: {{ vision.themes | join("; ") }}. Audience: {{ vision.audience }}.
 POV hint (advisory): {{ vision.pov_hint or "none" }}.
@@ -36,11 +46,16 @@ Decide:
   be held to this string verbatim.
 - tense: past or present.
 - diction: the register in a phrase ("spare, salt-worn, literary").
-- rhythm: one line of sentence-rhythm rules.
+- rhythm: one line of sentence-rhythm rules — set a PLAIN baseline (most
+  sentences straightforward and complete, varied in length) and reserve
+  elaboration or a heightened cadence for emphasis, so the rhythm is a default to
+  depart from, not a maximal pattern the writer must hit in every sentence.
 - imagery: where the voice's images come from — the sensory domains it draws
   on and their limits ("tide, oil-light, worked rope; dread lives in objects,
   never in similes"). The writer reaches for this palette instead of copying
   phrasing it has seen, so make it generative: domains, not example sentences.
+  It is spent at a few charged moments per passage, not in every description — a
+  palette to reach for, never a coat of paint for every sentence.
 - dialogue: how speech behaves on the page — length, tags, what stays unsaid
   ("brief, unornamented; tags are 'said' or nothing").
 - banned: 3-6 patterns to forbid — each a specific construction the reviewer

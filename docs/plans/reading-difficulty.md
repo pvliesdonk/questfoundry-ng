@@ -5,8 +5,15 @@
 > author read of the preserved stories inverted its central claim (decision log,
 > 2026-07-12). This version records what the correction taught: the fault is
 > *over-stylization*, not high reading level, and grade-level metrics are
-> **anti-correlated** with the author's readability judgment. Build is gated on
-> the author (see *Open decisions*).
+> **anti-correlated** with the author's readability judgment.
+>
+> **Update 2026-07-13 — fix #1 built.** The author greenlit the fix and sharpened
+> the cause (*"the writer applied the style to every paragraph; it should apply to
+> the whole story"*). Recommended-lever steps 1–2 (Voice restraint directive +
+> write-prompt plain-baseline/clarity rule) landed as a prompt reframe; FKGL stays
+> out per this assessment. Remaining: Ollama live validation, the author's
+> real-gamebook exemplars (step 4, in flight), and the deterministic `overwriting`
+> guardrail (step 3) once the exemplars calibrate its bands.
 
 ## What v1 got wrong (recorded so it is not repeated)
 
@@ -106,6 +113,29 @@ never gate against a controlled literary register.
 - **The golden fixture over-writes too**, so the pipeline has *no clean in-repo
   exemplar of the target register* to imitate — it is learning from its own
   over-written outputs.
+- **Over-stylization *can* compound across stages — but the current compiler
+  already guards the upstream half** (correction, 2026-07-13; an earlier draft of
+  this plan called it an "unaddressed second vector" — that was wrong, author-
+  flagged, and is retracted here). The concern is real in principle: if the
+  beat/passage *summaries* reach FILL already written as stylized prose, the writer
+  inherits and amplifies that register. `bubblegum-alibi`'s beat summaries show the
+  failure mode — *"In the ashless world where the ledger is gone…"*
+  (`admired-and-alone--burn-ledger.yaml`), *"…the crowd pulls itself into a ragged
+  circle, streamers drooping overhead while every glittering eye swings toward
+  Juno…"* (`bridge-crowd-to-circle.yaml`) — atmospheric prose where a brief should
+  state events plainly. **But `bubblegum-alibi` is a stale M5-era artifact**: the
+  current pipeline already enforces exactly this discipline through
+  `_summary_brief.j2`, a shared register contract `{% include %}`d by **SEED
+  scaffold, GROW bridge/contextualize, and POLISH passages/finalize** — *"A summary
+  is never the page itself. Plain declarative present tense… Name a mood instead of
+  performing it ('The mentor is dead and the group blames Rell' is a brief; 'grief
+  hangs over the camp like early winter' is prose)… Every image you spend here is
+  stolen from the writer."* So the upstream half is already contracted (design doc
+  01 §2); the FILL writer/voice reframe in this PR is the piece that was missing,
+  **not the first of two**. Residual worth a look when convenient: whether the
+  contract also reaches FILL's story-so-far notes, and whether it holds on weak
+  tiers — but there is no known unaddressed upstream vector, and re-generating
+  `bubblegum` on the current compiler would likely produce plainer summaries.
 
 ## Recommended lever (corrected)
 
@@ -130,41 +160,273 @@ signals — never FKGL.
    the way the corpus notes do.
 
 3. **A graded `overwriting` finding at FILL apply** (beside `_word_budget_finding`
-   in `fill.py`), on signals that *tracked the author's ranking*, graded warn→fail
-   by distance out of band:
-   - **Fragmentation ratio** — share of very short (≤ ~6-word) sentences. Both
-     unreadable stories run 42–45%; the readable ones 1–22%. An out-of-band ratio
-     is the staccato-monotony catch.
-   - **Novelty/figuration density** — coined-compound (and, if cheaply
-     detectable, fresh-metaphor) rate per 100 words. `cartographers` is a 4×
-     outlier; a ceiling catches the "no plain prose to rest on" failure.
-   Recovery actions are actionable ("this passage is 44% fragments — join the
-   staccato lines into 2–3 flowing sentences"; "you coined N compounds in this
-   paragraph — keep one, say the rest plainly"), per the AGENTS.md error rule.
+   in `fill.py`) — **design updated by the genre-diverse calibration below**:
+   - **Coined-novelty density > ~15/1k words** is the one aggregate signal that
+     survived six genres with zero false positives (`cartographers` 21.2; every
+     competent work ≤ 7.2). Keep the *fail* line at 15 (the 7–15 region is
+     unsampled — do not lower it), warn loose.
+   - **Fragmentation ratio must NOT gate on its own.** Good noir (Grimnoir 49%) and
+     good minimalist-literary (Great-grandmother 44%) sit in the same band as the
+     bad stories — a rate cannot tell "the register is clipped" from "the prose is
+     a strobe." Use it only paired with the novelty flag, or fold it into a
+     modulation measure.
+   - **Prefer a *modulation* measure over any mean** (the exemplars' real lesson):
+     a plain baseline with a few peaks *across passages*, not a per-corpus average —
+     because the discriminator is the distribution/variance of stylistic intensity,
+     which a mean cannot see (see "What the exemplars are for").
+   Recovery actions stay actionable ("you coined N compounds in this paragraph —
+   keep one, say the rest plainly"), per the AGENTS.md error rule. **Do not build
+   until the modulation measure is designed and a register-aware band is set** — the
+   raw fragmentation rule would false-positive on good noir.
 
-4. **Establish a real target-register exemplar (companion task).** Because even the
-   golden reads as over-written, the pipeline has no north star. Either the author
-   supplies/blesses a short passage in the target register, or we rewrite a golden
-   passage to model *modulated, clear* prose — so voice/write prompts can point at
-   it and reviews can calibrate against it. Validation is a **human read**, not a
-   metric.
+4. ~~**Establish a real target-register exemplar.**~~ **Done** — two published
+   gamebooks (ALBA, Pirates) plus eight genre-diverse choice-based Twine works,
+   all measured; profiles above are the north star and calibration. Validation
+   of generated prose remains a **human read**, not a metric.
 
 ## Open decisions (author)
 
-1. **Is the diagnosis right?** Confirm the axis is control/modulation/clarity (not
-   reading level), so FKGL stays out of the lever entirely.
-2. **Prompt-only first, or prompt + guardrail finding?** Recommendation: land the
-   Voice + write-prompt restraint directives first (they attack the root cause and
-   touch no schema), add the deterministic `overwriting` finding once its bands are
-   calibrated on more stories. FKGL is dropped either way.
-3. **Target-register exemplar.** Do you want to supply/bless a passage in the
-   target register, or should I draft a rewrite of one golden passage (plain,
-   modulated) for you to react to? This sets the north star everything calibrates
-   against.
+1. ~~**Is the diagnosis right?**~~ **Confirmed** (2026-07-13, author): the axis is
+   control/modulation/clarity, not reading level — and the ALBA exemplar's FKGL 4.6
+   (= a "bad" story's) settles that FKGL stays out of the lever entirely.
+2. **Prompt-only first, or prompt + guardrail finding?** Recommendation (and the
+   path taken): land the Voice + write-prompt restraint directives first (they
+   attack the root cause and touch no schema); add the deterministic `overwriting`
+   finding once bands are calibrated — the ALBA exemplar gives the first
+   calibration (see *Target-register exemplar*). FKGL is dropped either way.
+3. ~~**Target-register exemplar.**~~ **Supplied** by the author — *two* published
+   gamebooks (ALBA, Pirates of the Splintered Isles), profiled above as the north
+   star and the finding calibration (the two replicate each other closely).
 4. **Is "modulation intensity" a Vision knob at all?** The old literary↔accessible
    framing was wrong (best story is the most literary). If any knob, it governs
    *maximalism/restraint*, not vocabulary grade — worth deciding whether that is a
    knob or just the always-on default.
+
+## Target-register exemplars (author-supplied, 2026-07-13)
+
+The author supplied **two** real published second-person gamebooks as the north
+star: *ALBA* (~172k words, 587 numbered sections) and *Pirates of the Splintered
+Isles* (Legendary Kingdoms Bk 3, O. Hulme; ~157k words of prose). Neither is
+**vendored** (third-party text); recorded here are their measured profiles and
+craft traits, which calibrate both the prompt reframe and the future `overwriting`
+finding. Both are plain, concrete, functional second-person present — events and
+observations in a clear grammatical spine, description that advances the scene,
+dialogue with plain tags, emotion named lightly, almost no coined vocabulary, and
+figuration used *sparingly* (Pirates: "the spar snaps like a match under the blow"
+— one flourish in an otherwise plain action beat).
+
+Measured against the assessment's stories (same script):
+
+| Source | verdict | FKGL | W/sent | short (≤6w) | compounds /1k |
+|---|---|---|---|---|---|
+| **ALBA** (target) | good | 4.6 | 12.7 | 28% | **1.7** |
+| **Pirates** (target) | good | 5.9 | 13.3 | 20% | **3.0** |
+| `keepers` | good | 7.5 | 20.3 | 22% | 5.5 |
+| `closed-circle` | good | 18.4 | 24.4 | 1% | 5.6 |
+| `cartographers` | bad | 2.5 | 9.1 | 42% | 21.2 |
+| `bubblegum` | bad | 4.8 | 13.3 | 45% | 6.2 |
+
+Three conclusions, now **replicated** across two independent published books:
+
+1. **FKGL is confirmed noise.** The targets score 4.6 and 5.9 — the same band as
+   `bubblegum` (bad, 4.8) and *below* both other good stories (7.5, 18.4). Grade
+   level does not separate good from bad. FKGL stays out of the lever, settled.
+2. **Coined-novelty density is the clean discriminator.** Both gamebooks sit at
+   ≤ 3/1k; every acceptable sample is ≤ 6.2; `cartographers` (worst) runs 21.2 —
+   a **≥ 3× gap to the nearest acceptable sample and ~7–12× to the targets**,
+   monotonic with the verdict. This is the primary guardrail signal.
+3. **Fragmentation is secondary and needs a generous threshold.** The targets run
+   20–28% short sentences and read fine; the bad stories sit at 42–45%. A plain
+   gamebook *uses* plenty of short sentences — the defect is a *strobe* of them,
+   not their presence — so the finding must fire only well above the target band.
+
+Calibration for the deferred `overwriting` finding (step 3), from these two
+samples (refine as more arrive): **compound density** — warn ≳ 8/1k, fail ≳ 15/1k
+(targets 1.7–3.0, all acceptable ≤ 6.2, worst 21.2); **fragmentation** — warn
+≳ 38%, fail ≳ 50% (targets 20–28%, worst 45%). Human read remains the acceptance
+test; these only bound the egregious cases the metrics catch cleanly.
+
+**Caveat — same genre, so the bands are provisional** (author, 2026-07-13). Both
+exemplars are the same *kind* of gamebook (fantasy-adventure, plain functional
+register). What generalizes safely: **FKGL is out** (also supported cross-genre —
+the literary `closed-circle` is "good" at FKGL 18.4), and **the egregious extreme
+is a defect in any register** (`cartographers`' 21.2 compounds/1k is not a genre
+choice). What does *not* yet generalize: the **acceptable ceiling**. A legitimately
+literary register (a gothic-horror gamebook, say) may sit higher on compound
+density and sentence length and still read well — `keepers` (good, more literary)
+already runs 5.5 vs the fantasy targets' ≤ 3.0. So the bands must **not** be fixed
+from two same-genre samples: hold the fail line at the egregious extreme, keep the
+warn line loose, and either widen the acceptable band per Vision register or
+gather a different-genre exemplar before the finding is built.
+
+### Genre-diverse choice-based calibration (2026-07-13)
+
+The same-genre caveat is now largely resolved. Eight **choice-based** Twine works
+from the IF Archive (the *right medium* — branching passage prose, not parser
+room-text), spread across horror, noir, literary/historical, sci-fi, romance, and
+crime, were extracted (passage prose only; macros/links/variables stripped) and
+measured with the same script. Grimnoir was independently re-fetched and
+re-measured to confirm the method (matched to the decimal).
+
+| Work | Genre | words | FKGL | W/sent | short% | cmp/1k |
+|---|---|--:|--:|--:|--:|--:|
+| Bogeyman (XYZZY Best Game) | horror | 14.7k | 4.3 | 11.5 | 27 | 2.6 |
+| Grimnoir | noir | 50k | 3.6 | 8.3 | **49** | 3.4 |
+| Great-grandmother and the War | literary/historical | 20.9k | 3.6 | 8.9 | **44** | 3.9 |
+| Stars Above | sci-fi | 10.7k | 4.3 | 11.5 | 25 | 3.8 |
+| No Love Deep Space | sci-fi/action | 2.8k | 4.7 | 11.8 | 28 | 7.2 |
+| Date Night | romance | 2.9k | 4.9 | 11.2 | 26 | 1.0 |
+| Rough Velvet | crime | 4.8k | 6.5 | 10.3 | 38 | 4.3 |
+| A Date With Logan Davenport (amateur) | romance | 3.9k | **9.6** | 27.2 | 13 | 2.0 |
+
+Refined conclusions across genre:
+
+1. **FKGL is noise — reconfirmed and inverted.** The XYZZY Best-Game horror
+   (Bogeyman) scores 4.3, indistinguishable from "bad" `bubblegum` (4.8). The
+   worst-written work (Logan Davenport — no punctuation, misspellings) scores the
+   *highest* FKGL (9.6), because missing periods inflate words-per-sentence. FKGL
+   tracks quality **backwards** here. Out, definitively.
+2. **Compound density > ~15/1k stays a robust red flag.** No competent work in this
+   diverse set exceeds 7.2/1k; only `cartographers` (21.2) trips 15 — zero false
+   positives across six genres. *Caveat:* nothing sampled sits in 7–15, so the exact
+   cutoff below 15 is untested; keep the fail line at 15, not lower.
+3. **Fragmentation alone is NOT safe — real good counter-examples.** Two of the most
+   competent works exceed 40% short sentences: **Grimnoir** (noir, 49%) and
+   **Great-grandmother** (literary child-narrator, 44%). Clipped declaratives *are*
+   those registers ("No use. Restless. And bored."). Because the bad examples sit in
+   the same band (`cartographers` 42%, `bubblegum` 45%), fragmentation cannot
+   separate good minimalist/noir from staccato failure on its own. It is confounded
+   with genre and dialogue density, and **must not gate alone** — pair it with the
+   compound flag, or (better) measure *modulation*, not the raw rate (below).
+
+### What the exemplars are *for* — style distribution, not the medium
+
+We are not replicating a medium (author, 2026-07-13). Parser IF, choice IF, and a
+QuestFoundry gamebook differ in surface, but the exemplars answer a medium-
+independent question: **how is stylistic intensity distributed across the many
+partial snippets a story is made of?** Good work modulates — most snippets plain
+and load-bearing, a few heightened; the register is felt across the *whole*, not
+performed in every fragment. That is the "style belongs to the story, not the
+paragraph" principle stated at the scale of the whole work — and it is why parser-IF
+exemplars are not disqualified by the medium gap.
+
+It also explains conclusion 3's failure: a **rate** (mean fragmentation, mean
+anything) cannot see distribution. Noir is *uniformly* clipped and reads well;
+over-styled prose is *uniformly* heightened and reads badly — the mean cannot tell
+them apart; only the **variance/distribution of stylistic intensity across snippets**
+can. That is the refined direction for the deferred `overwriting` guardrail:
+prefer a *modulation* measure (a plain baseline with a few peaks, computed across
+passages) over any per-corpus average — keeping **compound density > 15/1k** as the
+one clean aggregate red flag that survived genre diversity.
+
+### The structural mechanism NG lost — heritage beat annotations (2026-07-13)
+
+Author observation, confirmed against heritage and the NG design docs: the
+modulation problem is *completely* why the original QuestFoundry carried
+**structural beats** and **beat annotations**, and the annotations were lost in
+translation to NG.
+
+Heritage (`docs/heritage/story-graph-ontology.md`, Part 3 "Beat Annotations")
+distributed stylistic intensity **structurally, per beat**:
+
+- `scene_type ∈ {scene, sequel, micro_beat}` (Swain) — *"Consumed by POLISH Phase 2
+  for pacing detection and by FILL for prose intensity / target length derivation."* A
+  `scene` (active conflict) earns heightened prose; a `sequel` (reactive) or
+  `micro_beat` (transition) stays plain and short.
+- `narrative_function ∈ {introduce, develop, complicate, confront, resolve}` —
+  *"Consumed by FILL for prose pacing."*
+- `atmospheric_detail` — sensory grounding for FILL.
+
+This is exactly "style distributed across snippets": each beat carries a signal for
+how intense its prose should be, so FILL is *told* where to stay plain and where to
+rise. Strip it and every beat looks identical to the writer → uniform intensity →
+over-stylization. The mechanism against the disease was **designed into the model**.
+
+**NG kept the structural-beat class (`beat_class`, `purpose`) but the annotations
+are gone — and the loss is half-recorded, half an undocumented gap:**
+
+- Design doc 01 §10.3 ("Annotation trimming") deliberately trims the heritage set
+  yet **commits to keeping two — `scene_type` (scene/sequel) and `exit_mood` — and
+  adding more "only when a FILL quality gap demonstrably calls for one."**
+- **Neither exists in NG code** — `Beat` (`models/structure.py`) has no
+  `scene_type` and no `exit_mood`; the only mention anywhere is a POLISH comment,
+  *"the pacing report stays deferred with scene_type."* The G4 pacing report
+  (design doc 02 §3: *"no > N consecutive same-intensity passages"*) is unbuilt for
+  the same reason — it needs the missing intensity signal.
+
+  **This was not a mistake — it was an honest YAGNI call** (author, 2026-07-13).
+  §10.3 says annotations are "cheap to add and expensive to maintain coherently,"
+  so NG deferred building even the two it named until a FILL quality gap demanded
+  them. The only stale artifact is §10.3's present-tense "NG starts with two"
+  wording, which reads as though they exist; the resolution is to **build
+  `scene_type` now** (the trigger has fired — see below) and update §10.3 to match,
+  not to treat the deferral as an error. (Filed in STATUS "Known deferrals / open
+  items", 2026-07-13.)
+
+**The reading-difficulty gap is precisely the trigger §10.3 anticipated.** The
+condition for (re)adding the annotation — "a FILL quality gap demonstrably calls
+for one" — is now met, and the annotation §10.3 named (`scene_type`) is the
+modulation carrier. So the primary modulation lever should be **structural, not a
+metric**: implement `scene_type` as a beat annotation (populated where the DAG is
+known — heritage put it at GROW Phase 4b; POLISH is also plausible), consumed by
+FILL to set **both prose intensity and the target word band** (sequel/micro → plain,
+short band; scene → allowed to rise). The `overwriting` finding then demotes to a
+*guardrail* that checks the modulation actually happened (variance across
+passages), with compound-density > 15/1k as the aggregate red flag. **Designing
+modulation in beats measuring it after the fact.**
+
+This is a frontier design effort (a new annotation field, a populate pass, FILL
+consumption, the deferred pacing report, checked against the freeze — heritage
+populated `scene_type` at GROW, i.e. before the topology freezes, so an annotation
+added post-freeze at POLISH would need I-rule clearance). Milestone-sized, not this
+PR. Recorded as the recommended direction; build gated on author go-ahead.
+
+### Hand-off spec — the `scene_type` modulation build (for a fresh session)
+
+Author-confirmed direction (2026-07-13): capture here, kick off in a new session.
+Goal: give FILL a **per-beat prose-intensity signal** so style distributes across
+passages (plain baseline + a few peaks) instead of every passage running hot.
+
+Build order (each step is a checkpoint; a frontier session should re-resolve the
+open questions before coding — this is a sketch, not a frozen contract):
+
+1. **Model.** Add `scene_type: SceneType | None = None` to `Beat`
+   (`models/structure.py`); `SceneType = {scene, sequel, micro_beat}` (Swain, per
+   heritage). Write-once through the mutation layer (iron rule 1). Reconcile with
+   the existing coarse notion `Beat.is_texture` (residue/false-branch → short band):
+   `scene_type` should subsume it, or the two must be explicitly layered.
+2. **Populate pass.** Assign `scene_type` per beat. Heritage did it at **GROW Phase
+   4b** (order known after weave, before freeze). *Open:* GROW (pre-freeze, needs
+   the woven order) vs POLISH (post-freeze, passages known — but a post-freeze
+   annotation must be shown freeze-exempt: it is metadata, not topology; note it
+   against I9 and the freeze rules). Likely LLM-proposed (scene/sequel is narrative
+   judgment; utility or architect tier) with a heuristic seed from `purpose` /
+   `dilemma_impacts` where safe.
+3. **FILL consumption — the payoff.** (a) Word band: extend
+   `ScopePreset.words_for` / `_word_budget_finding` (`stages/fill.py`) to key off
+   `scene_type` (sequel/micro → short; scene → normal/long) alongside the current
+   `texture`/`ending` axes. (b) Intensity directive in `fill_write.j2`: render the
+   beat's `scene_type` and instruct — a **sequel/micro** beat is plain, brief,
+   low-key (reactive processing / transition); a **scene** is where the prose may
+   rise (active conflict). This makes "style belongs to the story, not the
+   paragraph" concrete per beat.
+4. **Pacing report (the deferred G4 piece, design doc 02 §3).** With `scene_type`
+   present, implement the advisory "no > N consecutive same-intensity passages"
+   check as the modulation guardrail (alternation, not all-scene/all-sequel).
+5. **Guardrail metric, after.** The `overwriting` finding demotes to a check that
+   modulation actually happened (variance across passages), compound-density > 15/1k
+   as the one aggregate red flag (calibration above). Do **not** ship the raw
+   fragmentation rule (false-positives on good noir).
+6. **Docs + fixtures.** Update design doc 01 §10.3 (annotations built, not "will
+   start with"), add the Beat-annotation subsection to 01, the populate pass + G4
+   pacing report to 02, and — if `scene_type` ever gates — a numbered invariant
+   (iron rule 6) with a violating-construction test. Annotate the golden story's
+   beats; re-record e2e fixtures if the populate pass adds LLM calls.
+
+Open questions to settle first: GROW-vs-POLISH placement (freeze interaction);
+LLM-proposed vs heuristic `scene_type`; `scene_type`-alone-first vs also `exit_mood`
+(§10.3 named both — `scene_type` is the modulation carrier, do it first); how
+`scene_type` reconciles with `is_texture`.
 
 ## Scope guards / not doing
 

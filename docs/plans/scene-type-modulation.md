@@ -86,7 +86,12 @@ class SceneType(StrEnum):
   construction; `effective_scene_type` is the richer signal FILL consumes, and
   `is_texture` remains the convenience predicate. Document the layering in both
   docstrings.
-- Intensity ordering for aggregation: `SCENE > SEQUEL > MICRO_BEAT`.
+- Intensity ordering for aggregation: `SCENE > SEQUEL > MICRO_BEAT`, expressed as
+  an **explicit rank map** — `_INTENSITY_RANK = {SCENE: 2, SEQUEL: 1, MICRO_BEAT: 0}`
+  — **not** enum-native comparison. `SceneType` is a `StrEnum`, so `max()` over its
+  members sorts *lexicographically* (`"micro_beat" < "scene" < "sequel"`), which
+  would let a `sequel` outrank a `scene`. Every aggregation goes through the rank
+  map's `key=`.
 
 ## The mutation (`graph/mutations.py`)
 
@@ -130,7 +135,14 @@ beats).
   `advances`, an `epilogue`); a **micro_beat** is a pure transition. Give the
   intensity consequence explicitly ("a scene earns heightened prose and a longer
   word band; a sequel/micro stays plain and short") so the model understands what
-  it is choosing, not just labelling.
+  it is choosing, not just labelling. **Anchor the non-dilemma cases too** — the
+  impact-based anchors above do not reach `setup`/`epilogue` beats
+  (`BeatClass.STRUCTURAL`, zero `dilemma_impacts`), which are nonetheless in the
+  annotate-time LLM set. Give each an explicit anchor: a **setup** beat orients the
+  reader in the world before any dilemma opens, so it defaults to **sequel** (plain,
+  establishing) unless it stages an active moment of its own (then **scene**); an
+  **epilogue** beat winds the story down → **sequel**. Every case the pass must
+  classify gets an anchor, not inference (AGENTS.md prompt-quality bar).
 - **Apply (`_annotate_apply`):** require the proposal to cover the annotatable set
   exactly once (repairable `ApplyError` naming missing/duplicate/stray beats —
   same shape as `_contextualize_apply`); set each via `set_beat_scene_type`. Report
@@ -157,9 +169,12 @@ The payoff. Two changes:
            return (lo, lo + 2 * span // 3)      # reduced — reactive, plainer
        return (lo, lo + span // 3)              # micro_beat — shortest (== today's texture band)
    ```
-   A passage collapses ≥1 beats; its intensity is the **max** over
-   `effective_scene_type` of its beats (a scene beat justifies the words; a sequel
-   riding along must not starve it). New helper `_passage_intensity(g, beats)`.
+   A passage collapses ≥1 beats; its intensity is the highest-ranked
+   `effective_scene_type` among its beats via the rank map (`max(beats,
+   key=lambda b: _INTENSITY_RANK[effective_scene_type(b)])`, **not** a bare
+   `max()` over the `StrEnum` — see the Model section) — a scene beat justifies the
+   words; a sequel riding along must not starve it. New helper
+   `_passage_intensity(g, beats)`.
    Replace both current call sites — `_write_context_for` (`fill.py:436`) and
    `_word_budget_finding` (`fill.py:618`) — which pass
    `texture=all(b.is_texture...)`, with `intensity=_passage_intensity(...)`.

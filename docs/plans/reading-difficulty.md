@@ -166,52 +166,57 @@ signals — never FKGL.
    attack the root cause and touch no schema); add the deterministic `overwriting`
    finding once bands are calibrated — the ALBA exemplar gives the first
    calibration (see *Target-register exemplar*). FKGL is dropped either way.
-3. ~~**Target-register exemplar.**~~ **Supplied** by the author (ALBA); profiled
-   above as the north star and finding-calibration. A second exemplar would tighten
-   the bands further.
+3. ~~**Target-register exemplar.**~~ **Supplied** by the author — *two* published
+   gamebooks (ALBA, Pirates of the Splintered Isles), profiled above as the north
+   star and the finding calibration (the two replicate each other closely).
 4. **Is "modulation intensity" a Vision knob at all?** The old literary↔accessible
    framing was wrong (best story is the most literary). If any knob, it governs
    *maximalism/restraint*, not vocabulary grade — worth deciding whether that is a
    knob or just the always-on default.
 
-## Target-register exemplar (author-supplied, 2026-07-13)
+## Target-register exemplars (author-supplied, 2026-07-13)
 
-The author supplied a real published second-person gamebook (*ALBA*, ~172k words
-across 587 numbered sections) as the north star. It is **not vendored** (third-
-party text); recorded here are its measured profile and craft traits, which
-calibrate both the prompt reframe and the future `overwriting` finding. Its prose
-is plain, concrete, functional second-person present — events and observations in
-a clear grammatical spine, description that advances the scene, emotion named
-lightly, almost no coined vocabulary.
+The author supplied **two** real published second-person gamebooks as the north
+star: *ALBA* (~172k words, 587 numbered sections) and *Pirates of the Splintered
+Isles* (Legendary Kingdoms Bk 3, O. Hulme; ~157k words of prose). Neither is
+**vendored** (third-party text); recorded here are their measured profiles and
+craft traits, which calibrate both the prompt reframe and the future `overwriting`
+finding. Both are plain, concrete, functional second-person present — events and
+observations in a clear grammatical spine, description that advances the scene,
+dialogue with plain tags, emotion named lightly, almost no coined vocabulary, and
+figuration used *sparingly* (Pirates: "the spar snaps like a match under the blow"
+— one flourish in an otherwise plain action beat).
 
 Measured against the assessment's stories (same script):
 
 | Source | verdict | FKGL | W/sent | short (≤6w) | compounds /1k |
 |---|---|---|---|---|---|
-| **ALBA** (target) | good | **4.6** | 12.7 | 28% | **1.7** |
+| **ALBA** (target) | good | 4.6 | 12.7 | 28% | **1.7** |
+| **Pirates** (target) | good | 5.9 | 13.3 | 20% | **3.0** |
 | `keepers` | good | 7.5 | 20.3 | 22% | 5.5 |
 | `closed-circle` | good | 18.4 | 24.4 | 1% | 5.6 |
 | `cartographers` | bad | 2.5 | 9.1 | 42% | 21.2 |
 | `bubblegum` | bad | 4.8 | 13.3 | 45% | 6.2 |
 
-Two conclusions:
+Three conclusions, now **replicated** across two independent published books:
 
-1. **FKGL is confirmed noise.** ALBA (target) scores 4.6 — statistically the same
-   as `bubblegum` (bad, 4.8) and *lower* than both other good stories. Grade level
-   does not separate good from bad. FKGL stays out of the lever, settled.
-2. **Coined-novelty density is the clean discriminator.** ALBA coins ~1.7
-   compounds/1k words; `cartographers` (worst) runs 21.2 — a **12× gap**, the
-   widest of any signal, and monotonic with the verdict. This is the primary
-   guardrail signal. Fragmentation is secondary and needs a *generous* threshold:
-   ALBA's 28% short sentences is fine, so the finding should fire only well above
-   that (~≥ 40%, where `cartographers`/`bubblegum` sit) — a plain gamebook uses
-   plenty of short sentences; the defect is a *strobe* of them, not their presence.
+1. **FKGL is confirmed noise.** The targets score 4.6 and 5.9 — the same band as
+   `bubblegum` (bad, 4.8) and *below* both other good stories (7.5, 18.4). Grade
+   level does not separate good from bad. FKGL stays out of the lever, settled.
+2. **Coined-novelty density is the clean discriminator.** Both gamebooks sit at
+   ≤ 3/1k; every acceptable sample is ≤ 6.2; `cartographers` (worst) runs 21.2 —
+   a **≥ 3× gap to the nearest acceptable sample and ~7–12× to the targets**,
+   monotonic with the verdict. This is the primary guardrail signal.
+3. **Fragmentation is secondary and needs a generous threshold.** The targets run
+   20–28% short sentences and read fine; the bad stories sit at 42–45%. A plain
+   gamebook *uses* plenty of short sentences — the defect is a *strobe* of them,
+   not their presence — so the finding must fire only well above the target band.
 
-Calibration for the deputy `overwriting` finding (step 3), to refine on more
-samples: **compound density** — warn ≳ 8/1k, fail ≳ 15/1k (target 1.7, good
-stories ≤ 6, worst 21); **fragmentation** — warn ≳ 40%, fail ≳ 50% (target 28%,
-worst 45%). Human read remains the acceptance test; these only bound the
-egregious cases the metrics catch cleanly.
+Calibration for the deferred `overwriting` finding (step 3), from these two
+samples (refine as more arrive): **compound density** — warn ≳ 8/1k, fail ≳ 15/1k
+(targets 1.7–3.0, all acceptable ≤ 6.2, worst 21.2); **fragmentation** — warn
+≳ 38%, fail ≳ 50% (targets 20–28%, worst 45%). Human read remains the acceptance
+test; these only bound the egregious cases the metrics catch cleanly.
 
 ## Scope guards / not doing
 

@@ -652,10 +652,14 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > grade level is settled noise) but coined-compound density **1.7/1k** vs
 > `cartographers`' 21.2 (a 12× gap — the cleanest discriminator), fragmentation
 > a modest 28%. Its profile + craft traits are recorded in the plan as the north
-> star and the first calibration for the `overwriting` finding (compound density
-> warn ≳8/fail ≳15 per 1k; fragmentation warn ≳40%/fail ≳50%). **Still open
-> (follow-ups):** live validation on Ollama; a second exemplar to tighten bands;
-> and building the deterministic `overwriting` guardrail (FKGL stays out). **NB — item 1 below ("a
+> star and the first calibration for the `overwriting` finding. **A second
+> exemplar confirms it** (*Pirates of the Splintered Isles*, ~157k words): FKGL
+> 5.9, compound density **3.0/1k**, fragmentation 20% — two independent published
+> gamebooks now replicate the profile (novelty density ≤3/1k, moderate
+> fragmentation), tightening the guardrail bands (compound warn ≳8/fail ≳15 per
+> 1k; fragmentation warn ≳38%/fail ≳50%). **Still open (follow-ups):** live
+> validation on Ollama, and building the deterministic `overwriting` guardrail
+> (FKGL stays out — settled by both exemplars scoring in the "bad" FKGL band). **NB — item 1 below ("a
 > completing FILL run") is now ACHIEVED:** the compounding review/rework chain
 > (#57→#58→#59→#60→#61) carried `gpt-oss:120b` through DRESS, codex review
 > included.

@@ -24,9 +24,14 @@ hand-off (read the caveat under "Documentation contract"):
    roadmap (Shipped / Now / Next / Later): where the current work sits in the arc.
 3. **[`docs/BACKLOG.md`](docs/BACKLOG.md)** — the working backlog: sub-epic loose
    ends not owned by a roadmap epic.
-4. **[`docs/adr/`](docs/adr/)** — the decision log, one record per file (plus the
-   legacy mini-ADR table in design doc 03 §9, not yet migrated).
-5. The **design doc for the area you're touching** (table below).
+4. **[`docs/decision-log.md`](docs/decision-log.md)** — the dated session
+   decision log: a provenance archive, **search it** for *why* something changed;
+   don't read it end-to-end. (Architecture decisions proper are the mini-ADR
+   table in design doc 03 §9.)
+5. The **design doc for the area you're touching** (table below) — the
+   authoritative rules, including its Departures section and (for 03) the
+   mini-ADR table. This, not the decision log, is where an agent reliably gets
+   the history for its area into context.
 6. Skim the code you'll change — the package map below tells you where.
 
 | Design doc | Owns |
@@ -48,7 +53,7 @@ derive from first principles: consult `docs/heritage/` (the original
 QuestFoundry source documents, reference-only — see its README) and the
 danger zones in design doc 01 §9 first, then bring the answer into the
 NG docs. Free derivation in doc-silent territory produced a confidently
-wrong invariant claim once already (STATUS decision log, 2026-07-08).
+wrong invariant claim once already (decision log, 2026-07-08).
 
 ## Commands
 
@@ -167,8 +172,11 @@ file:
   between Shipped / Now / Next / Later when it starts or finishes.
 - **[`docs/BACKLOG.md`](docs/BACKLOG.md)** — add a loose end you open; delete one
   you close (git history keeps it).
-- **[`docs/adr/`](docs/adr/)** — a decision worth keeping gets its own ADR file
-  (`NNNN-title.md`); the log stays small because each decision is one file.
+- **A decision worth keeping** — an *architecture* decision gets a new row in the
+  mini-ADR table (design doc 03 §9) and the durable rule lands in the relevant
+  design-doc section (so a by-area reader gets it in context); a notable session
+  decision/effort gets a dated entry in [`docs/decision-log.md`](docs/decision-log.md)
+  (the searchable provenance archive — never the primary source of a rule).
 - **Affected `docs/design/*` sections** — or state in the PR body why none apply.
 - **The README status section** stays true (milestone claims, sample transcripts).
 - **The golden story stays green** — extend the fixture when you add something it
@@ -224,7 +232,7 @@ and escalate rather than guess.
 **Small tier (Haiku-class) — mechanical work:**
 
 - Renames, formatting, doc-link fixes, YAML fixture typing, BACKLOG.md and
-  STATUS.md upkeep, ADR filing, changelog-style edits.
+  STATUS.md upkeep, decision-log entries, changelog-style edits.
 
 **Session pattern for expensive models:** act as architect + integrator.
 Sharpen the contract first (design-doc section, module interface,

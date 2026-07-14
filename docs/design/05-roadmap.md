@@ -7,8 +7,8 @@ each has a demoable exit criterion and none depends on a later one.
 
 Granularity here is the **epic**. Sub-epic loose ends live in
 [`../BACKLOG.md`](../BACKLOG.md); a task owned by an epic below lives *under that
-epic*, not in the backlog. Decisions live as [ADRs](../adr/) and the mini-ADR
-table (design doc 03 §9).
+epic*, not in the backlog. Decisions live in the mini-ADR table (design doc 03
+§9) and the dated [`decision-log.md`](../decision-log.md).
 
 > Written and maintained by coding agents for hand-off (AGENTS.md
 > §"Documentation contract"). Framing is an agent's unless it cites the author.

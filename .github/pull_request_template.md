@@ -13,7 +13,8 @@
 - [ ] `docs/STATUS.md` (current epic + next steps) updated, if this PR changes them
 - [ ] `docs/design/05-roadmap.md` — epic moved between Shipped/Now/Next/Later, if applicable
 - [ ] `docs/BACKLOG.md` — loose ends opened/closed, if applicable
-- [ ] `docs/adr/NNNN-*.md` — new record if a decision worth keeping was made
+- [ ] Decision recorded — mini-ADR row (03 §9) for an architecture decision, or a
+      `docs/decision-log.md` entry for a notable session decision, if applicable
 - [ ] Affected `docs/design/*` sections updated — or none apply because: …
 - [ ] README status section still true (milestones, sample transcripts)
 - [ ] Golden story still green (`uv run qf validate examples/keepers-bargain`),

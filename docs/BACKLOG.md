@@ -4,7 +4,8 @@ Sub-epic tasks that aren't owned by a roadmap epic. One line each; a task owned
 by a future epic lives **under that epic in [`design/05-roadmap.md`](design/05-roadmap.md)**,
 not here (that's the rule that stops this list and the roadmap from duplicating).
 Close an item by **deleting** it — git history keeps the record; a lasting
-decision it settled gets an [ADR](adr/).
+architecture decision it settled gets a mini-ADR row (design doc 03 §9), a
+notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 > Written and maintained by coding agents for hand-off (see AGENTS.md
 > §"Documentation contract"). An item's framing is an agent's, not the author's,

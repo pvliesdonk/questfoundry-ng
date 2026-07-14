@@ -524,7 +524,7 @@ before deriving from first principles.
    beat materializes once per world — same inner-Y node (meaning),
    different outer-Y node (context), distinct realized beats. Two
    symmetric misreadings, both made and corrected on 2026-07-08
-   (STATUS decision log): "beats are never cloned, therefore multi-hard
+   (decision log): "beats are never cloned, therefore multi-hard
    is impossible," and "multi-hard needs duplication machinery."
 5. **State multiplication ≠ world expansion.** Soft dilemmas multiply
    *states* on shared nodes (flags/overlays — no new beats); hard

@@ -9,8 +9,10 @@ from pydantic import ValidationError
 from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
+    LabelRewrite,
     VoiceProposal,
     WriteProposal,
+    _choice_menu,
     _fill_gate,
     _flag_status,
     _passes,
@@ -1027,8 +1029,61 @@ def test_write_prompt_demands_planted_choice_referents(golden_fill):
     context, rendered = _render_write(golden_fill, "passage:p-arrival")
     assert context["choices"], "p-arrival should have outgoing choices"
     assert "PLANT THEIR REFERENTS" in rendered
-    for label in context["choices"]:
-        assert f'"{label}"' in rendered
+    for c in context["choices"]:
+        assert f'choice {c["n"]}: "{c["label"]}"' in rendered
+        assert c["toward"]  # the destination hint keeps a rewrite honest
+
+
+def test_write_prompt_offers_the_label_rewrite(golden_fill):
+    _, rendered = _render_write(golden_fill, "passage:p-arrival")
+    assert "REWRITE A LABEL WHEN THE PROSE KNOWS BETTER" in rendered
+    assert '"label_rewrites"' in rendered
+
+
+def test_write_apply_rewrites_a_label_through_the_mutation_layer(golden_fill):
+    from questfoundry.models.base import EdgeKind
+
+    g = golden_fill.graph
+    menu = _choice_menu(g, "passage:p-arrival")
+    assert len(menu) == 2
+    proposal = _proposal_with_rewrites(
+        golden_fill, [LabelRewrite(choice=1, label="Lead him down to the lamp room")]
+    )
+    lines = _write_apply_for("passage:p-arrival")(proposal, golden_fill)
+    assert any("choice 1 relabeled" in line for line in lines)
+    for dst in menu[0]["dsts"]:
+        edges = [
+            e for e in g.out_edges("passage:p-arrival", EdgeKind.CHOICE) if e.dst == dst
+        ]
+        assert all(e.payload["label"] == "Lead him down to the lamp room" for e in edges)
+    # a rewrite to the current text is a no-op, not a logged relabel
+    again = _proposal_with_rewrites(
+        golden_fill, [LabelRewrite(choice=1, label="Lead him down to the lamp room")]
+    )
+    lines = _write_apply_for("passage:p-arrival")(again, golden_fill)
+    assert not any("relabeled" in line for line in lines)
+
+
+def test_write_apply_rejects_colliding_label_rewrites(golden_fill):
+    menu = _choice_menu(golden_fill.graph, "passage:p-arrival")
+    clash = _proposal_with_rewrites(
+        golden_fill, [LabelRewrite(choice=1, label=menu[1]["label"])]
+    )
+    with pytest.raises(ApplyError, match="must stay distinct"):
+        _write_apply_for("passage:p-arrival")(clash, golden_fill)
+    dupe = _proposal_with_rewrites(
+        golden_fill,
+        [LabelRewrite(choice=1, label="a"), LabelRewrite(choice=1, label="b")],
+    )
+    with pytest.raises(ApplyError, match="rewritten twice"):
+        _write_apply_for("passage:p-arrival")(dupe, golden_fill)
+
+
+def _proposal_with_rewrites(project, rewrites):
+    from questfoundry.pipeline.stages.fill import WriteProposal
+
+    prose = project.graph.node("passage:p-arrival").prose or ("word " * 250)
+    return WriteProposal(prose=prose, label_rewrites=rewrites)
 
 
 def test_write_prompt_ending_lands_instead_of_planting(golden_fill):

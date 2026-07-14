@@ -23,7 +23,7 @@ from __future__ import annotations
 import re
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, create_model
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import Issue, Severity, run_checks
@@ -235,10 +235,25 @@ class RevisionResponse(BaseModel):
     how_addressed: str
 
 
+class LabelRewrite(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # the numbered choice from THE CHOICES LEAVING THIS PAGE (numbering is
+    # keyed to destinations, so it is stable across rework rounds even after
+    # a round-1 rewrite changed the text)
+    choice: int
+    label: str
+
+
 class WriteProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     prose: str
+    # the writer may re-ground any outgoing label in the prose it just wrote
+    # (author-directed, 2026-07-14) — destinations, gates, and grants are
+    # fixed; empty means every POLISH label already fits. Optional so the
+    # recorded replay fixtures (no field) stay valid.
+    label_rewrites: list[LabelRewrite] = []
     # at most one, and only on a genuine new fact or a sharper version of a
     # listed one — the write prompt frames adding as the exception, not an
     # obligation (author-directed micro-detail redesign, 2026-07-12): a
@@ -477,6 +492,22 @@ def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
     return seen
 
 
+def _choice_menu(g, passage_id: str) -> list[dict]:
+    """The passage's outgoing choices as a numbered menu. One entry per
+    distinct label (a variant fan shares its label); numbering is keyed to
+    the smallest destination id, so a rework round that renamed a label in
+    round 1 still addresses the same choice by the same number."""
+    groups: dict[str, dict] = {}
+    for e in sorted(g.out_edges(passage_id, EdgeKind.CHOICE), key=lambda e: e.dst):
+        label = e.payload.get("label", "")
+        groups.setdefault(label, {"label": label, "dsts": []})["dsts"].append(e.dst)
+    menu = sorted(groups.values(), key=lambda m: m["dsts"][0])
+    for n, m in enumerate(menu, 1):
+        m["n"] = n
+        m["toward"] = g.node(m["dsts"][0]).summary
+    return menu
+
+
 def _write_context_for(passage_id: str, last_draft: dict | None = None):
     def build(project: Project) -> dict:
         g = project.graph
@@ -531,9 +562,7 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             "story_elided": story_elided,
             "window": _neighbor_prose(g, passage.id, "in"),
             "lookahead": _neighbor_prose(g, passage.id, "out"),
-            "choices": [
-                e.payload.get("label", "") for e in g.out_edges(passage.id, EdgeKind.CHOICE)
-            ],
+            "choices": _choice_menu(g, passage.id),
             "words_min": lo,
             "words_max": hi,
             # a mutable box the review fills with the rejected draft, so the
@@ -619,6 +648,34 @@ def _write_apply_for(
         _check_echoes(g, passage_id, proposal.prose)
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
+        # Label rewrites land BEFORE the review runs (review rebuilds its
+        # context from the graph), so the choice_grounding rule judges the
+        # labels the player will actually read. Numbers are schema-pinned to
+        # this passage's menu; the joint constraint an enum cannot express —
+        # the final label set stays distinct — is enforced here.
+        if proposal.label_rewrites:
+            menu = {m["n"]: m for m in _choice_menu(g, passage_id)}
+            rewrites: dict[int, str] = {}
+            for rw in proposal.label_rewrites:
+                if rw.choice in rewrites:
+                    raise ApplyError(
+                        f"choice {rw.choice} is rewritten twice in this proposal — "
+                        "keep at most one label_rewrites entry per numbered choice"
+                    )
+                rewrites[rw.choice] = rw.label.strip()
+            final = {n: rewrites.get(n, m["label"]) for n, m in menu.items()}
+            if len(set(final.values())) != len(final):
+                raise ApplyError(
+                    "after these rewrites two choices on this page would carry the "
+                    "same label — labels leaving one passage must stay distinct; "
+                    "vary the wording or drop one rewrite"
+                )
+            for n, label in rewrites.items():
+                if label == menu[n]["label"]:
+                    continue
+                for dst in menu[n]["dsts"]:
+                    mutations.relabel_choice(g, passage_id, dst, label)
+                lines.append(f'choice {n} relabeled: "{menu[n]["label"]}" -> "{label}"')
         # A micro-detail is optional enrichment, never a blocker (author-
         # directed redesign, 2026-07-12): the only apply check is the note-form
         # length cap, and an over-long one is DROPPED, not repaired — a
@@ -909,6 +966,27 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
     write_schema = pin(
         WriteProposal, "WriteProposal", {("MicroDetail", "entity"): entity_ref_ids(project.graph)}
     )
+
+    def schema_for(passage_id: str) -> type[WriteProposal]:
+        # Pin `label_rewrites[].choice` to this passage's menu numbers (the
+        # reference discipline, refpin.py); an ending has no choices, so the
+        # list is forbidden outright — the finalize empty-set precedent.
+        menu = _choice_menu(project.graph, passage_id)
+        if not menu:
+            return create_model(
+                "WriteProposal",
+                __base__=write_schema,
+                label_rewrites=(list[LabelRewrite], Field(default=[], max_length=0)),
+            )
+        pinned = create_model(
+            "LabelRewrite",
+            __base__=LabelRewrite,
+            choice=(Literal[tuple(m["n"] for m in menu)], ...),
+        )
+        return create_model(
+            "WriteProposal", __base__=write_schema, label_rewrites=(list[pinned], [])
+        )
+
     for passage_id in writing_order(project):
         slug = passage_id.split(":", 1)[1]
         # A micro-detail may UPDATE a fact, so apply overwrites base before the
@@ -926,7 +1004,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 name=f"write:{slug}",
                 role="writer",
                 template="fill_write.j2",
-                schema=write_schema,
+                schema=schema_for(passage_id),
                 build_context=_write_context_for(passage_id, last_draft),
                 apply=_write_apply_for(passage_id, prior_facts, last_draft),
                 review=_review_for(passage_id, prior_facts),

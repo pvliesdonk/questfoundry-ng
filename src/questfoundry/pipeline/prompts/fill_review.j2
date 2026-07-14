@@ -120,9 +120,9 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   leakage — and ordinary English uses of those words ("her heart beats", "the
   garden path") are just words.
 {% if choices %}
-- choice_grounding — the fixed choice labels leaving this page are:
+- choice_grounding — the choice labels leaving this page are:
 {% for c in choices %}
-  - "{{ c }}"
+  - "{{ c.label }}"
 {% endfor %}
   Each concrete thing a label names (an object, a door or exit, a person, an
   act in motion) must be present in THIS passage's prose. Check each label

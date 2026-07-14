@@ -76,7 +76,11 @@ REQUIREMENTS:
   read anywhere Elias works". These invite the interleaver to merge scenes. Optional,
   and meaningful only on pre-commit and locked-storyline beats — the beats every
   player sees are the only ones that can share a scene.
-- Beat ids: beat:slug. Reference entity ids in each beat's entities list.
+- Beat ids: the literal prefix "beat:" plus a fresh slug — beat:crossroads-dusk,
+  beat:route-choice-pre-1. NEVER another prefix: the dilemma or path a beat
+  serves is named by its scaffold entry, not by its id ("route-choice:pre-1"
+  is invalid; "beat:route-choice-pre-1" is right). Reference entity ids in
+  each beat's entities list.
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}
 {% include "_shared.j2" %}

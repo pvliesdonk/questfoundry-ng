@@ -380,7 +380,17 @@ def _make_beat(
             flexibility=spec.flexibility,
         )
     except ValidationError as e:
-        raise ApplyError(f"invalid beat {spec.id}: {format_validation_error(e)}") from e
+        # the raw id-pattern diagnostic ("must match 'kind:slug'") invited a
+        # weak tier to invent a kind ("route-choice:pre-1" — live short run,
+        # 2026-07-14); the recovery action names the one legal prefix
+        msg = f"invalid beat {spec.id}: {format_validation_error(e)}"
+        if not spec.id.startswith("beat:"):
+            msg += (
+                " — every beat id begins with the literal prefix 'beat:' "
+                "followed by a fresh slug; rename "
+                f"{spec.id!r} to 'beat:{spec.id.replace(':', '-')}'"
+            )
+        raise ApplyError(msg) from e
 
 
 def _chain(g, beat_ids: list[str]) -> None:

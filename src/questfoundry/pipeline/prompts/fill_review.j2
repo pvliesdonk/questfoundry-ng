@@ -211,7 +211,8 @@ THE PROSE:
 Report a `verdict` ("approved" or "needs_work") and a `findings` list. Each
 finding is {"rule": one of the rule names above, "assessment": "fail" or
 "warn", "confidence": "high" | "medium" | "low", "quote": the exact offending
-text ("" only when the defect is a missing beat), "reason": how the quoted text
+text ("" only when nothing exists to quote: a missing beat, or a
+choice_grounding referent the prose never shows), "reason": how the quoted text
 breaks THAT rule, in the rule's own terms, "recovery_action": the specific fix
 the writer should make}. Use "approved" with an empty list when the passage is
 clean; use "needs_work" and list your findings otherwise.

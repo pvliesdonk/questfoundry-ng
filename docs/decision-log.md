@@ -26,16 +26,20 @@ history; the decisions it recorded are captured below and in the design docs.
   every `raise ApplyError` in `src/questfoundry` (79 sites: polish 23+, dress 18,
   grow 15, seed 15, fill 5, brainstorm/research/types 1 each) and judged each
   against the AGENTS.md contract (reason + subject + recovery_action as an
-  instruction). Verdicts: **62 already conformant** (imperative corrective or
-  exact valid set present; `format_validation_error` and seed's aggregated
-  scaffold-audit briefs verified conformant), **8 blunt → fixed** (finalize
-  world-mismatch — fixed earlier the same day; false-branch not-in-long-run,
-  now pointing at the prompt's CADENCE runs; false-branch and residue bare
-  KeyError id-collisions, now naming the mint-a-fresh-id corrective; SEED
-  unknown answer / unknown locked dilemma, now listing the valid ids; GROW
-  intersection member, now listing the eligible beats; DRESS brief-count, now
-  stating add/drop-to-target; POLISH needs-no-variants, now instructing
-  `variants: []`), and **9 duplicate-entry sites sharpened** with the explicit
+  instruction). Verdicts (as corrected by PR #74 review): **64 already
+  conformant** (imperative corrective or exact valid set present;
+  `format_validation_error` and seed's aggregated scaffold-audit briefs
+  verified conformant — and the false-branch/residue KeyError wraps, which
+  this audit first mis-recorded as blunt: `add_beat` already converts the
+  duplicate-id KeyError into an actionable MutationError, so the added
+  `except KeyError` branches were dead code and would have mislabeled a
+  GraphError; reverted, the combined catch's inner messages carry their own
+  correctives), **6 blunt → fixed** (finalize world-mismatch — fixed earlier
+  the same day; false-branch not-in-long-run, now pointing at the prompt's
+  CADENCE runs; SEED unknown answer / unknown locked dilemma, now listing the
+  valid ids; GROW intersection member, now listing the eligible beats; DRESS
+  brief-count, now stating add/drop-to-target; POLISH needs-no-variants, now
+  instructing `variants: []`), and **9 duplicate-entry sites sharpened** with the explicit
   "keep exactly one / drop the extras" imperative (dress profiles/briefs/
   codex/codewords, grow rewrite/annotate dups + intersection double-membership,
   polish audit/arcs dups). The **prompt-template half is NOT covered** by this

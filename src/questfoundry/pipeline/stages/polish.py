@@ -219,15 +219,11 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
             else:
                 pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
-        except KeyError as e:
-            # An id collision raises a bare KeyError whose str() is just the
-            # key — state the corrective, not the key (AGENTS error contract)
-            raise ApplyError(
-                f"false branch {spec.before} -> {spec.after}: beat id {e.args[0]!r} "
-                "already exists — every new arm beat needs a fresh unused id; "
-                "re-emit this arm with new ids"
-            ) from e
-        except mutations.MutationError as e:
+        except (mutations.MutationError, KeyError) as e:
+            # add_beat already converts a duplicate-id KeyError into an
+            # actionable MutationError; the KeyError arm here catches the
+            # store's GraphError family (its messages carry their own
+            # correctives), so the wrap adds location, not a diagnosis
             raise ApplyError(f"false branch {spec.before} -> {spec.after}: {e}") from e
         if len(chains) == 1:
             lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
@@ -299,12 +295,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 pc.insert_residue_diamond(
                     g, chain, gated_chain(spec.fork), spec.path, need.rejoin
                 )
-        except KeyError as e:  # duplicate beat id — bare KeyError str() is just the key
-            raise ApplyError(
-                f"residue {spec.id}: beat id {e.args[0]!r} already exists — every new "
-                "arm beat needs a fresh unused id; re-emit this arm with new ids"
-            ) from e
-        except mutations.MutationError as e:
+        except (mutations.MutationError, KeyError) as e:
+            # same shape as the false-branch catch above: duplicate ids arrive
+            # pre-converted by add_beat, GraphError carries its own corrective
             raise ApplyError(f"residue {spec.id}: {e}") from e
         covered.add((spec.dilemma, spec.world, spec.path))
         arm = " -> ".join(b.id for b in chain)

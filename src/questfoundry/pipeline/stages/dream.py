@@ -34,16 +34,13 @@ def _context(project: Project) -> dict:
 
 
 def _apply(proposal: DreamProposal, project: Project) -> list[str]:
-    # premise, scope, and the authored pov_hint are the author's; everything
-    # else is the model's. POV provenance is two fields (Vision docstring):
-    # the engine copies `pov_hint` through untouched — two live runs
-    # (2026-07-14, gpt-oss:120b and kimi-k2.5) replaced an authored rotating
-    # scheme with an invented single-head one, because the prompt never saw
-    # the authored value and unconditionally asked the model to "decide" one —
-    # while the model's own decision lands in `pov_hint_decided`, freely
-    # re-decided on every run/rerun exactly like genre and tone (so a first
-    # run's guess never masquerades as an author mandate on a rerun; PR #74
-    # review).
+    # premise and scope are the author's; everything else — pov_hint
+    # included — is the model's translation of them. DREAM interprets, it is
+    # not micromanaged (author decision, 2026-07-14): the authored hint's
+    # only guarantee is that DREAM *sees* it (_context renders it as input —
+    # two live runs rewrote the scheme simply because the prompt was blind
+    # to it). A validation that needs the scheme pinned pins it at the
+    # operator level, not here.
     project.vision = Vision(
         premise=project.vision.premise,
         scope=project.vision.scope,
@@ -55,8 +52,7 @@ def _apply(proposal: DreamProposal, project: Project) -> list[str]:
         content_notes=ContentNotes(
             include=proposal.content_include, avoid=proposal.content_avoid
         ),
-        pov_hint=project.vision.pov_hint,
-        pov_hint_decided=proposal.pov_hint,
+        pov_hint=proposal.pov_hint,
     )
     return [f"vision: {proposal.genre} / {proposal.tone} / {len(proposal.themes)} theme(s)"]
 

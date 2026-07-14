@@ -415,72 +415,37 @@ def test_fill_review_matches_beat_actors_by_identity_not_epithet():
     assert "resolve the role against the cast before flagging" in source
     assert "DIFFERENT person performs the event" in source
 
-
-def test_dream_keeps_an_authored_pov_hint(tmp_path):
-    """Two live DREAM runs (gpt-oss:120b and kimi-k2.5, 2026-07-14) replaced
-    an authored rotating pov_hint with an invented single-head scheme: the
-    context never carried the authored value, the prompt unconditionally said
-    'decide a point-of-view hint', and apply overwrote from the proposal. Now
-    the authored hint is engine-kept, rendered as a constraint, and the
-    decide-list only asks for a hint when none was authored."""
+def test_dream_sees_an_authored_pov_hint_but_is_not_bound_by_it(tmp_path):
+    """DREAM translates the author's vision; it is not micromanaged (author
+    decision, 2026-07-14). The one guarantee is VISIBILITY: two live runs
+    rewrote an authored rotating scheme simply because the prompt never saw
+    it. The authored hint renders as vision input; the model's translation is
+    what apply stores — a validation that needs the scheme pinned pins it at
+    the operator level, not in the engine."""
     from questfoundry.pipeline.stages.dream import DreamProposal, _apply
     from questfoundry.project.io import scaffold_project
 
     project = scaffold_project(tmp_path, "t", "micro")
     project.vision.pov_hint = "third-person limited rotating among the suspects"
-    context = dream_context(project)
-    env = runner._environment()
-    rendered = _render(env, "dream.j2", "", **context)
-    assert "THE AUTHOR HAS ALREADY SET THE POINT OF VIEW" in rendered
+    rendered = _render(
+        runner._environment(), "dream.j2", "", **dream_context(project)
+    )
+    assert "stated point-of-view inclination" in rendered
     assert "rotating among the suspects" in rendered
-    assert "point-of-view\nhint (advisory" not in rendered
+    assert "deliberate reinterpretation is yours" in rendered
 
     proposal = DreamProposal(
-        genre="g", subgenre="s", tone="t", themes=["a v b", "c v d"], audience="adult",
-        content_include=[], content_avoid=[],
-        pov_hint="single fixed head — an invented replacement",
+        genre="g", tone="t", themes=["a v b", "c v d"],
+        pov_hint="rotating third limited among the four suspects, journal interludes",
     )
     _apply(proposal, project)
-    assert project.vision.pov_hint == "third-person limited rotating among the suspects"
-    assert project.vision.effective_pov_hint == (
-        "third-person limited rotating among the suspects"
+    assert project.vision.pov_hint == (
+        "rotating third limited among the four suspects, journal interludes"
     )
 
-    # no authored hint -> the model's decision is used, as before — but it
-    # lands in pov_hint_decided, NOT in the author's field
+    # no authored hint -> no inclination block; the model still decides one
     project2 = scaffold_project(tmp_path / "p2", "t2", "micro")
-    context2 = dream_context(project2)
-    rendered2 = _render(env, "dream.j2", "", **context2)
-    assert "ALREADY SET THE POINT OF VIEW" not in rendered2
-    _apply(proposal, project2)
-    assert project2.vision.pov_hint == ""
-    assert project2.vision.effective_pov_hint == "single fixed head — an invented replacement"
-
-
-def test_dream_rerun_re_decides_a_model_chosen_pov_hint(tmp_path):
-    """PR #74 review finding on 75de5a4: non-emptiness is not provenance. A
-    first hint-less DREAM run's own guess must not masquerade as an author
-    mandate on a rerun (vision.yaml is deliberately unrestored, A17) — the
-    model's decision lives in pov_hint_decided and is freely re-decided,
-    while the author's field stays empty and the prompt never claims 'THE
-    AUTHOR HAS ALREADY SET' for a value the author never wrote."""
-    from questfoundry.pipeline.stages.dream import DreamProposal, _apply
-    from questfoundry.project.io import scaffold_project
-
-    project = scaffold_project(tmp_path, "t", "micro")
-
-    def proposal(hint):
-        return DreamProposal(
-            genre="g", tone="t", themes=["a v b", "c v d"], pov_hint=hint
-        )
-
-    _apply(proposal("first guess: single fixed head"), project)
-    assert project.vision.pov_hint == ""  # the author's field stays the author's
-
-    # rerun: the prompt must NOT present the first guess as authored...
-    context = dream_context(project)
-    rendered = _render(runner._environment(), "dream.j2", "", **context)
-    assert "ALREADY SET THE POINT OF VIEW" not in rendered
-    # ...and the fresh decision replaces the old one, like genre/tone
-    _apply(proposal("second take: rotating heads"), project)
-    assert project.vision.effective_pov_hint == "second take: rotating heads"
+    rendered2 = _render(
+        runner._environment(), "dream.j2", "", **dream_context(project2)
+    )
+    assert "stated point-of-view inclination" not in rendered2

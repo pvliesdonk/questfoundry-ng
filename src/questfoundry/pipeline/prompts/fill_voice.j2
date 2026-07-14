@@ -15,7 +15,7 @@ able to say what happened.
 
 VISION: {{ vision.genre }}{% if vision.subgenre %} / {{ vision.subgenre }}{% endif %}, {{ vision.tone }}.
 Themes: {{ vision.themes | join("; ") }}. Audience: {{ vision.audience }}.
-POV hint (advisory): {{ vision.effective_pov_hint or "none" }}.
+POV hint (advisory): {{ vision.pov_hint or "none" }}.
 PREMISE (the author's ask): {{ vision.premise }}
 
 THE STORY'S SHAPE:

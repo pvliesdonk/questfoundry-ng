@@ -16,6 +16,24 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (DREAM interprets the vision; it is not micromanaged — author
+  decision):** After two live DREAM runs rewrote an authored rotating
+  `pov_hint` into an invented single-head scheme, the session over-corrected
+  twice — first an engine-keep of the authored wording (75de5a4), then a
+  two-field authored/decided provenance split (c03b37a) — and the author
+  rejected both: DREAM's task is to *translate* the author's vision into a
+  creative contract, so its output is legitimately interpretive, and the
+  rewrite-survival requirement was only ever this validation's *test* need,
+  not pipeline semantics. What ships instead: **visibility only** — the
+  authored `pov_hint` now renders in the dream prompt as vision input (both
+  live rewrites happened because `_context` never passed it: interpretation
+  without the input is not interpretation), `_apply` stores the model's
+  translation exactly as before, and the sanctioned override when an author
+  or a validation must pin the scheme is the existing A17 path: **edit the
+  DREAM artifact after DREAM, before BRAINSTORM** (the live validation's
+  operator loop automates the stop-and-check). `pov_hint_decided` and
+  `effective_pov_hint` are reverted; `Vision` keeps its single field.
+
 - **2026-07-14 (model strength is not the diagnosis axis — author correction to
   the standing rule):** During the *Closed Circle* live validation the session
   wrote off FILL stalls as "classic stochastic weak-tier behavior" — a red-flag

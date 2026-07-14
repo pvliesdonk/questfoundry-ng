@@ -40,12 +40,14 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
    that hit the FILL blocker). The new vision pins the same premise and the
    rotating+journal `pov_hint` verbatim. The DREAM quirk this surfaced —
    envision rewrote the authored hint to an invented single-head scheme,
-   twice, on two model tiers — is **fixed**: the authored hint reaches the
-   dream prompt as a constraint and the engine never overwrites it, while
-   the model's own decision lands in the separate `pov_hint_decided` field
-   (freely re-decided per run, so a hint-less first run's guess never
-   masquerades as an author mandate on rerun); consumers read
-   `effective_pov_hint`. Acceptance: FILL clears the rotating-scheme passages, with the
+   twice, on two model tiers — resolved per the author (2026-07-14): DREAM
+   **translates** the vision and is not micromanaged; the only engine
+   guarantee is *visibility* (the authored hint now renders in the dream
+   prompt as vision input — both rewrites happened because the prompt never
+   saw it), and the override path when a scheme must be pinned (as in this
+   validation) is the existing one: edit the DREAM artifact after DREAM,
+   before BRAINSTORM (A17; the validation's operator loop automates the
+   stop-and-check). Acceptance: FILL clears the rotating-scheme passages, with the
    rotation reading deliberately (one head per passage, journal interludes
    where the scheme asks). (For a project that *does* survive, the resume
    point is `qf rerun grow` — heads are minted at annotate; a pre-viewpoint

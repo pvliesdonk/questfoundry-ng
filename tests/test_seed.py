@@ -323,6 +323,12 @@ def test_scaffold_beat_id_kind_confusion_gets_a_rename_corrective(tmp_path):
         make("route-choice:pre-1")
     with pytest.raises(ApplyError, match="rename 'Route:My-Slug' to 'beat:route-my-slug'"):
         make("Route:My-Slug")
+    # underscores are legal in a kind but not a slug — the suggestion
+    # must collapse them too, or it fails validation itself
+    with pytest.raises(
+        ApplyError, match="rename 'route_choice:pre_1' to 'beat:route-choice-pre-1'"
+    ):
+        make("route_choice:pre_1")
 
 
 # -- reserve disposition (unwoven feedstock; structural-depth W2) -------------

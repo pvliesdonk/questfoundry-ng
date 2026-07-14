@@ -19,6 +19,7 @@ BRAINSTORM's overgeneration is absorbed entirely by locked dispositions.
 
 from __future__ import annotations
 
+import re
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -386,8 +387,10 @@ def _make_beat(
         msg = f"invalid beat {spec.id}: {format_validation_error(e)}"
         if not spec.id.startswith("beat:"):
             # the suggested rename must itself survive validation, or the
-            # corrective becomes a sharper trap than the raw diagnostic
-            slug = spec.id.replace(":", "-").lower()
+            # corrective becomes a sharper trap than the raw diagnostic —
+            # the slug charset is [a-z0-9-], so everything else collapses
+            # to hyphens (underscores included: legal in a kind, not a slug)
+            slug = re.sub(r"[^a-z0-9]+", "-", spec.id.lower()).strip("-") or "renamed"
             msg += (
                 " — every beat id begins with the literal prefix 'beat:' "
                 "followed by a fresh slug; rename "

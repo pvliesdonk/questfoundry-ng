@@ -18,7 +18,7 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   high. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
-  yet in a STATUS/ADR entry) — treat as an unverified agent observation until
+  yet in a decision-log entry) — treat as an unverified agent observation until
   reproduced. Re-measure the preset bands against a modulated live run
   (`tests/scale.py`) and adjust. (Flagged when `scene_type` landed; no longer
   purely hypothetical.)
@@ -57,9 +57,3 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   preserving schema-validation + determinism? A small targeted spike.
 - [ ] **Corpus curation** — `corpus/interactive-fiction/` is the author's
   ongoing add/trim pass; `style-exemplars` stays out until M9 can consume it.
-
-## Docs hygiene (fold into the STATUS slim-down)
-
-- [ ] **Reconcile the stale "G4 pacing report is deferred" mentions** — it
-  shipped as advisory **B8** (`check_b8_pacing`); older STATUS/roadmap text
-  still calls it deferred.

@@ -16,6 +16,25 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (model strength is not the diagnosis axis — author correction to
+  the standing rule):** During the *Closed Circle* live validation the session
+  wrote off FILL stalls as "classic stochastic weak-tier behavior" — a red-flag
+  phrase — and the author corrected the *frame itself*, twice: (1) an
+  under-determined prompt makes **every** tier sample the gap; a strong model
+  does not reconstruct intent, it fills the gap plausibly and confidently, so
+  the same variance ships with more fluency; (2) strong-tier success on an
+  unproven prompt is therefore not neutral luck but **the masking mechanism
+  observed in action** — evidence the model papered over a defect that is
+  still there, now invisible, waiting for a different sample, story, or tier.
+  Codified in AGENTS.md §"Prompt and error-message quality" (direct author
+  instruction, this session): only constraint completeness validates a prompt,
+  "stochastic weak-tier behavior" joins the forbidden phrases, and the weak
+  tier surfaces defects first only because it fails less persuasively. The
+  correction immediately produced results: tracing the stall journal against
+  the prompts (instead of writing "stochastic") found three real write-prompt
+  under-determinations, fixed the same session (head pronouns in the viewpoint
+  line; check-the-beats-off; REVISE, DON'T REWRITE).
+
 - **2026-07-14 (repair-message audit — all 79 ApplyError sites, author-requested):**
   The *Closed Circle* live run exhausted finalize repairs on a residue
   world-mismatch whose message listed the valid set but not the corrective —

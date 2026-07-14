@@ -1022,7 +1022,7 @@ def test_voice_proposal_requires_an_interlude_decision(golden_fill):
     proposal = VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
         rhythm="r", imagery="i", dialogue="g",
-        interlude="first-person journal entries in Elias Wren's voice",
+        interlude="first-person past-tense journal entries (Elias Wren)",
     )
     golden_fill.voice = None
     lines = _voice_apply(proposal, golden_fill)
@@ -1030,12 +1030,27 @@ def test_voice_proposal_requires_an_interlude_decision(golden_fill):
     assert "interlude:" in lines[0]
 
 
-def test_voice_interlude_narrator_is_validated_against_the_cast(golden_fill):
-    proposal = VoiceProposal(
+def _interlude_proposal(interlude: str) -> VoiceProposal:
+    return VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
-        rhythm="r", imagery="i", dialogue="g",
-        interlude="first-person journal entries (Nadia)",
+        rhythm="r", imagery="i", dialogue="g", interlude=interlude,
     )
+
+
+def test_voice_interlude_narrator_is_validated_against_the_cast(golden_fill):
     golden_fill.voice = None
     with pytest.raises(ApplyError, match="not a character"):
-        _voice_apply(proposal, golden_fill)
+        _voice_apply(_interlude_proposal("first-person journal entries (Nadia)"), golden_fill)
+
+
+def test_voice_interlude_without_a_parenthetical_narrator_is_repairable(golden_fill):
+    # the pov checker's no-parens early return must not silently skip the
+    # interlude (PR #74 review finding): an interlude always has a narrator,
+    # so the parenthetical is required, and the prompted paren-free phrasing
+    # is exactly the case that used to slip through
+    golden_fill.voice = None
+    with pytest.raises(ApplyError, match="names no narrator"):
+        _voice_apply(
+            _interlude_proposal("first-person journal entries in Maren Voss's voice"),
+            golden_fill,
+        )

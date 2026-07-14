@@ -185,10 +185,29 @@ def _check_pov_names_the_cast(pov: str, project: Project) -> None:
         )
 
 
+def _check_interlude_names_the_cast(interlude: str, project: Project) -> None:
+    """The interlude register always has a narrator (unlike a pronoun POV),
+    so the parenthetical is REQUIRED here — without it the pov checker's
+    no-parens early return would silently skip validation for exactly the
+    format the prompt teaches (PR #74 review finding)."""
+    names = sorted(
+        e.name
+        for e in project.graph.nodes_of(Entity)
+        if e.retained and e.category == EntityCategory.CHARACTER and e.name
+    )
+    if not _POV_PAREN_RE.search(interlude):
+        raise ApplyError(
+            "the interlude names no narrator; add the narrator's cast name in "
+            'parentheses, as the pov does — e.g. "first-person journal entries '
+            f'(NAME)" with NAME one of: {names}.'
+        )
+    _check_pov_names_the_cast(interlude, project)
+
+
 def _voice_apply(proposal: VoiceProposal, project: Project) -> list[str]:
     _check_pov_names_the_cast(proposal.pov, project)
     if proposal.interlude:
-        _check_pov_names_the_cast(proposal.interlude, project)
+        _check_interlude_names_the_cast(proposal.interlude, project)
     project.voice = Voice(**proposal.model_dump())
     line = f"voice: {proposal.pov}; {proposal.tense}; {proposal.diction}"
     if proposal.interlude:

@@ -12,7 +12,13 @@ Four passes sharing gate G4:
    choice topology (endpoints, requires, grants); the LLM contributes
    only words: passage summaries, choice labels, ending titles, and —
    for heavy-residue soft convergences — one variant summary per path
-   flag (the engine wires the gated variant passages).
+   flag (the engine wires the gated variant passages). Not one call:
+   finalize *expands* into independent, minimal-context passes — one
+   `summary:<group>` per collapse group (its own beats are all the
+   context a beat-derived summary needs) and one `labels:<group>` per
+   source group with outgoing choices — because a single greedy call
+   over the whole passage layer overran the context window at medium
+   scope for no per-item benefit (docs/plans/passages-chunking.md).
 3. *audit* — the prose-feasibility audit: the engine computes each
    passage's possibly-active flags; the LLM marks the flags a passage's
    prose must not address; gate I12 enforces the cap on the rest.
@@ -27,6 +33,8 @@ scene_type — graph/validate.py check_b8_pacing).
 """
 
 from __future__ import annotations
+
+from collections.abc import Callable
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
@@ -297,7 +305,19 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     return lines or ["nothing inserted"]
 
 
-# -- pass 2: passages ---------------------------------------------------------
+# -- pass 2: passages (finalize-expanded per-group summary + per-source labels) --
+#
+# The passage layer is NOT emitted in one greedy call. Finalize expands into
+# independent, minimal-context passes (docs/plans/passages-chunking.md; mini-ADR
+# A21): one `summary:<group>` per collapse group and one `labels:<group>` per
+# source group with outgoing choices. A single call over every group and edge
+# overran `num_ctx` at medium scope (the medium-scale AdapterError the
+# narration_scope live runs hit) while giving no per-item benefit — a passage
+# summary is derived from that group's own beats alone. The engine still computes
+# every bit of structure; the LLM contributes only words. Because passage
+# creation (`summary:<group>`) and choice wiring (`labels:<group>`) are now
+# separate passes, each variant's gate is recovered from the persisted
+# `Passage.variant_flag` (the create-time mapping the single pass held in memory).
 
 
 class VariantSpec(BaseModel):
@@ -308,29 +328,36 @@ class VariantSpec(BaseModel):
     summary: str
 
 
-class PassageSpec(BaseModel):
+class SummaryProposal(BaseModel):
+    """One collapse group's passage content."""
+
     model_config = ConfigDict(extra="forbid")
 
-    group: int
     id: str
     summary: str
     ending_title: str = ""  # required iff the group contains an ending beat
     variants: list[VariantSpec] = []  # required iff the group needs variants
 
 
-class LabelSpec(BaseModel):
+class EdgeLabelSpec(BaseModel):
     model_config = ConfigDict(extra="forbid", populate_by_name=True)
 
-    src: int = Field(alias="from")
     dst: int = Field(alias="to")
     label: str
 
 
-class PassagesProposal(BaseModel):
+class LabelsProposal(BaseModel):
+    """One source group's outgoing choice labels (one per destination group)."""
+
     model_config = ConfigDict(extra="forbid")
 
-    passages: list[PassageSpec]
-    labels: list[LabelSpec]
+    labels: list[EdgeLabelSpec]
+
+
+def _groups(project: Project) -> list[list[str]]:
+    """The capped collapse groups — the single grouping every POLISH passage
+    pass indexes into, so `summary:<i>` / `labels:<i>` names stay stable."""
+    return pc.collapse_groups(project.graph, max_beats=project.vision.preset.passage_beats_max)
 
 
 def _variant_needs(g) -> dict[str, list[str]]:
@@ -349,33 +376,25 @@ def _variant_needs(g) -> dict[str, list[str]]:
     return needs
 
 
-def _passages_context(project: Project) -> dict:
-    g = project.graph
-    groups = pc.collapse_groups(g, max_beats=project.vision.preset.passage_beats_max)
-    variant_needs = _variant_needs(g)
-    rendered = []
-    for i, group in enumerate(groups):
-        beats = [g.node(b) for b in group]
-        needs = [flags for c, flags in variant_needs.items() if c in group]
-        rendered.append(
-            {
-                "index": i,
-                "beats": beats,
-                "is_ending": pc.ending_beat(g, group) is not None,
-                "gate": pc.choice_requires(g, group),
-                "variant_flags": needs[0] if needs else [],
-            }
-        )
-    edges = [
-        {
-            "src": a,
-            "dst": b,
-            "grants": pc.choice_grants(g, groups[b]),
-            "requires": pc.choice_requires(g, groups[b]),
-        }
-        for a, b in pc.group_edges(groups, g)
-    ]
-    return {"vision": project.vision, "groups": rendered, "edges": edges}
+def _group_variant_flags(g, group: list[str]) -> list[str]:
+    """The per-path gate flags a heavy-residue frontier group needs variants
+    for; empty for an ordinary group."""
+    needs = [flags for c, flags in _variant_needs(g).items() if c in group]
+    return needs[0] if needs else []
+
+
+def _group_passages(g, group: list[str]) -> list[tuple[str, list[str]]]:
+    """The passage(s) a group's beats belong to, each paired with its gate
+    recovered from the persisted `variant_flag` — one entry for an ordinary
+    group, one per variant for a heavy-residue frontier group. Read by
+    `labels:<group>` after the `summary:<group>` passes mint the passages, so
+    wiring can gate variants without the create-time mapping the single pass
+    once held in memory."""
+    result: list[tuple[str, list[str]]] = []
+    for pid in queries.passages_of_beat(g, group[0]):
+        vf = g.node(pid).variant_flag
+        result.append((pid, [vf] if vf else []))
+    return result
 
 
 def _ending_id(passage_id: str) -> str:
@@ -383,40 +402,52 @@ def _ending_id(passage_id: str) -> str:
     return "e-" + slug.removeprefix("p-")
 
 
-def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
-    g = project.graph
-    groups = pc.collapse_groups(g, max_beats=project.vision.preset.passage_beats_max)
-    edges = pc.group_edges(groups, g)
-    variant_needs = _variant_needs(g)
+def _summary_context(i: int) -> Callable[[Project], dict]:
+    def build(project: Project) -> dict:
+        g = project.graph
+        group = _groups(project)[i]
+        flag_text = {f.id: f.description for f in g.nodes_of(StateFlag)}
+        return {
+            "vision": project.vision,
+            "index": i,
+            "beats": [g.node(b) for b in group],
+            "is_ending": pc.ending_beat(g, group) is not None,
+            "gate": pc.choice_requires(g, group),
+            "variant_flags": [
+                (fl, flag_text.get(fl, "")) for fl in _group_variant_flags(g, group)
+            ],
+        }
 
-    by_group = {spec.group: spec for spec in proposal.passages}
-    if sorted(by_group) != list(range(len(groups))) or len(proposal.passages) != len(groups):
-        raise ApplyError(f"passages must cover each group 0..{len(groups) - 1} exactly once")
-    labeled = {(spec.src, spec.dst): spec.label for spec in proposal.labels}
-    if sorted(labeled) != edges or len(proposal.labels) != len(edges):
-        raise ApplyError(f"labels must cover each choice edge exactly once: {edges}")
-    for label in labeled.values():
-        if not label.strip():
-            raise ApplyError("choice labels must be non-empty")
+    return build
 
-    # passage ids per group; variant groups create one passage per flag
-    ids_of_group: dict[int, list[tuple[str, list[str]]]] = {}  # group -> [(passage id, gate)]
-    lines = []
-    for i, group in enumerate(groups):
-        spec = by_group[i]
-        needs = [flags for c, flags in variant_needs.items() if c in group]
+
+def _summary_schema(i: int) -> Callable[[Project], type[BaseModel]]:
+    """An ordinary group forbids variants outright (grammar-level, like
+    finalize's empty false-branch list); a heavy-residue frontier group pins
+    `variants[].flag` to its per-path gate flags."""
+
+    def schema(project: Project) -> type[BaseModel]:
+        flags = _group_variant_flags(project.graph, _groups(project)[i])
+        if not flags:
+            return create_model(
+                "SummaryProposal",
+                __base__=SummaryProposal,
+                variants=(list[VariantSpec], Field(default=[], max_length=0)),
+            )
+        return pin(SummaryProposal, "SummaryProposal", {("VariantSpec", "flag"): flags})
+
+    return schema
+
+
+def _summary_apply(i: int) -> Callable[[BaseModel, Project], list[str]]:
+    def apply(proposal: SummaryProposal, project: Project) -> list[str]:
+        g = project.graph
+        group = _groups(project)[i]
+        flags = _group_variant_flags(g, group)
         ending = pc.ending_beat(g, group)
         entities = pc.group_entities(g, group)
 
-        def build(
-            pid: str,
-            summary: str,
-            *,
-            variant_flag=None,
-            entities=entities,
-            spec=spec,
-            ending=ending,
-        ):
+        def build(pid: str, summary: str, *, variant_flag=None):
             try:
                 return Passage(
                     id=pid,
@@ -425,59 +456,159 @@ def _passages_apply(proposal: PassagesProposal, project: Project) -> list[str]:
                     entities=entities,
                     variant_flag=variant_flag,
                     ending=(
-                        Ending(id=_ending_id(pid), title=spec.ending_title) if ending else None
+                        Ending(id=_ending_id(pid), title=proposal.ending_title)
+                        if ending
+                        else None
                     ),
                 )
             except ValidationError as e:
                 raise ApplyError(f"invalid passage {pid}: {format_validation_error(e)}") from e
 
-        if ending and not spec.ending_title.strip():
+        if ending and not proposal.ending_title.strip():
             raise ApplyError(f"group {i} contains an ending beat; ending_title is required")
-        if needs:
-            flags = needs[0]
-            if sorted(v.flag for v in spec.variants) != flags:
-                raise ApplyError(
-                    f"group {i} needs one variant per flag {flags} (heavy residue)"
-                )
-            members: list[tuple[str, list[str]]] = []
-            for v in spec.variants:
+        if flags:
+            if sorted(v.flag for v in proposal.variants) != flags:
+                raise ApplyError(f"group {i} needs one variant per flag {flags} (heavy residue)")
+            members: list[str] = []
+            for v in proposal.variants:
                 mutations.add_passage(g, build(v.id, v.summary, variant_flag=v.flag), group)
-                members.append((v.id, [v.flag]))
-            base = members[0][0]
-            for vid, _ in members[1:]:
-                mutations.add_variant(g, vid, base)
-            ids_of_group[i] = members
-            lines.append(f"group {i}: variants {', '.join(m[0] for m in members)}")
-        else:
-            if spec.variants:
-                raise ApplyError(f"group {i} needs no variants")
-            mutations.add_passage(g, build(spec.id, spec.summary), group)
-            ids_of_group[i] = [(spec.id, [])]
-            lines.append(f"group {i}: {spec.id} ({len(group)} beat(s))")
+                members.append(v.id)
+            for vid in members[1:]:
+                mutations.add_variant(g, vid, members[0])
+            return [f"group {i}: variants {', '.join(members)}"]
+        if proposal.variants:
+            raise ApplyError(f"group {i} needs no variants")
+        mutations.add_passage(g, build(proposal.id, proposal.summary), group)
+        return [f"group {i}: {proposal.id} ({len(group)} beat(s))"]
 
-    def gate_holdable_from(group: list[str], flag_id: str) -> bool:
-        return any(
-            grant in group or grant in queries.ancestors(g, group[-1])
-            for grant in queries.grant_beats(g, flag_id)
-        )
+    return apply
 
-    for a, b in edges:
-        base_requires = pc.choice_requires(g, groups[b])
-        grants = pc.choice_grants(g, groups[b])
-        for src_id, _ in ids_of_group[a]:
-            for dst_id, variant_gate in ids_of_group[b]:
-                # a variant's gate must be holdable on arcs that reach this
-                # source, or the choice could never be taken (I10)
-                if any(not gate_holdable_from(groups[a], f) for f in variant_gate):
-                    continue
-                choice = Choice(
-                    label=labeled[(a, b)],
-                    requires=sorted({*base_requires, *variant_gate}),
-                    grants=grants,
+
+def _labels_context(a: int) -> Callable[[Project], dict]:
+    def build(project: Project) -> dict:
+        g = project.graph
+        groups = _groups(project)
+        out = [b for x, b in pc.group_edges(groups, g) if x == a]
+        dests = []
+        for b in out:
+            passages = _group_passages(g, groups[b])
+            dests.append(
+                {
+                    "index": b,
+                    # A group-edge carries ONE label, engine-fanned across a heavy-
+                    # residue destination's variant passages, so a single
+                    # representative summary is the right granularity: the label is
+                    # the world-agnostic action the reader takes, before the
+                    # world-state a variant presents is known. Deterministic pick
+                    # (passages_of_beat sorts by id).
+                    "summary": g.node(passages[0][0]).summary if passages else "",
+                    "requires": pc.choice_requires(g, groups[b]),
+                    "grants": pc.choice_grants(g, groups[b]),
+                    "is_ending": pc.ending_beat(g, groups[b]) is not None,
+                }
+            )
+        return {
+            "vision": project.vision,
+            "index": a,
+            "beats": [g.node(x) for x in groups[a]],
+            "dests": dests,
+        }
+
+    return build
+
+
+def _labels_apply(a: int) -> Callable[[BaseModel, Project], list[str]]:
+    def apply(proposal: LabelsProposal, project: Project) -> list[str]:
+        g = project.graph
+        groups = _groups(project)
+        out = [b for x, b in pc.group_edges(groups, g) if x == a]
+
+        labeled: dict[int, str] = {}
+        for spec in proposal.labels:
+            if spec.dst in labeled:
+                raise ApplyError(
+                    f"group {a}: destination group {spec.dst} labeled twice — "
+                    "one label per outgoing choice"
                 )
-                mutations.add_choice(g, src_id, dst_id, choice)
-    lines.append(f"choices: {len(edges)} edge(s) wired")
-    return lines
+            labeled[spec.dst] = spec.label
+        if sorted(labeled) != sorted(out):
+            raise ApplyError(
+                f"group {a}: label each outgoing choice exactly once; "
+                f"destination groups are {sorted(out)}"
+            )
+        stripped = {b: lbl.strip() for b, lbl in labeled.items()}
+        if any(not lbl for lbl in stripped.values()):
+            raise ApplyError("choice labels must be non-empty")
+        if len(set(stripped.values())) != len(stripped):
+            raise ApplyError(
+                f"group {a}: choices leaving one passage must have distinct labels; "
+                f"got {sorted(stripped.values())}"
+            )
+
+        def gate_holdable_from(group: list[str], flag_id: str) -> bool:
+            return any(
+                grant in group or grant in queries.ancestors(g, group[-1])
+                for grant in queries.grant_beats(g, flag_id)
+            )
+
+        src_passages = _group_passages(g, groups[a])
+        lines = []
+        for b in out:
+            base_requires = pc.choice_requires(g, groups[b])
+            grants = pc.choice_grants(g, groups[b])
+            for src_id, _ in src_passages:
+                for dst_id, variant_gate in _group_passages(g, groups[b]):
+                    # a variant's gate must be holdable on arcs that reach this
+                    # source, or the choice could never be taken (I10)
+                    if any(not gate_holdable_from(groups[a], f) for f in variant_gate):
+                        continue
+                    choice = Choice(
+                        label=labeled[b],
+                        requires=sorted({*base_requires, *variant_gate}),
+                        grants=grants,
+                    )
+                    mutations.add_choice(g, src_id, dst_id, choice)
+            lines.append(f"group {a} -> {b}: {labeled[b]!r}")
+        return lines
+
+    return apply
+
+
+def _polish_expand(project: Project) -> list[PassSpec]:
+    """Finalize's post-apply expansion: the collapse groups exist only after
+    finalize adds its residue/false-branch/bridge beats, so the per-group
+    passage passes are enumerated here and spliced in right after finalize
+    (runner `PassSpec.expand`). Deterministic — the same post-finalize graph
+    yields the same pass names on ledger resume (docs/plans/passages-chunking.md).
+    All `summary:<group>` passes precede every `labels:<group>` pass: labels
+    reference destinations that must already exist."""
+    g = project.graph
+    groups = _groups(project)
+    source_groups = sorted({a for a, _ in pc.group_edges(groups, g)})
+    passes: list[PassSpec] = []
+    for i in range(len(groups)):
+        passes.append(
+            PassSpec(
+                name=f"summary:{i}",
+                role="writer",
+                template="polish_summary.j2",
+                schema=_summary_schema(i),
+                build_context=_summary_context(i),
+                apply=_summary_apply(i),
+            )
+        )
+    for a in source_groups:
+        passes.append(
+            PassSpec(
+                name=f"labels:{a}",
+                role="writer",
+                template="polish_labels.j2",
+                schema=LabelsProposal,
+                build_context=_labels_context(a),
+                apply=_labels_apply(a),
+            )
+        )
+    return passes
 
 
 # -- pass 3: audit ------------------------------------------------------------
@@ -681,13 +812,6 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
     return schema
 
 
-def passages_proposal_schema(project: Project) -> type[PassagesProposal]:
-    """Pin `variants[].flag` to the heavy-residue per-path gate flags."""
-    needs = _variant_needs(project.graph)
-    flags = list(dict.fromkeys(fl for group in needs.values() for fl in group))
-    return pin(PassagesProposal, "PassagesProposal", {("VariantSpec", "flag"): flags})
-
-
 def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
     """Pin `arcs[].entity` to the retained entities (exact ids plus the
     bare slugs `resolve_entity_ref` also accepts), `pivots[].beat` to
@@ -743,14 +867,9 @@ POLISH_STAGE = StageImpl(
             build_context=_finalize_context,
             apply=_finalize_apply,
             skip_if=_finalize_skip,
-        ),
-        PassSpec(
-            name="passages",
-            role="writer",
-            template="polish_passages.j2",
-            schema=passages_proposal_schema,
-            build_context=_passages_context,
-            apply=_passages_apply,
+            # The passage layer: finalize expands into per-group summary + per-source
+            # label passes (their count is unknown until finalize's additions land).
+            expand=_polish_expand,
         ),
         PassSpec(
             name="audit",

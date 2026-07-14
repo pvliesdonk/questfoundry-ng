@@ -196,7 +196,8 @@ def test_pipeline_reaches_polish(polished):
     assert all(r.success for r in reports), [r.error or r.issues for r in reports]
     assert project.stage == Stage.POLISH
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    assert len(ledger) == 12  # 8 through GROW + finalize + passages + audit + arcs
+    # 8 through GROW + finalize + 8 summary:<group> + 6 labels:<group> + audit + arcs
+    assert len(ledger) == 25
 
 
 def test_polish_builds_the_passage_layer(polished):
@@ -268,8 +269,8 @@ def test_pipeline_reaches_fill_through_one_review_round(filled):
     # the first-written passage failed review once and was rewritten
     assert by_name["write:p-wrong-depths"].attempts == 2
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    # 12 through POLISH + voice + 8x(write+review+summarize) + 1 revision pair
-    assert len(ledger) == 39
+    # 25 through POLISH + voice + 8x(write+review+summarize) + 1 revision pair
+    assert len(ledger) == 52
 
 
 def test_fill_wrote_every_passage_within_budget(filled):
@@ -412,8 +413,8 @@ def test_pipeline_reaches_dress_through_one_review_round(dressed):
     assert by_name["codex"].attempts == 2
     assert by_name["codewords"].attempts == 1
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    # 30 through FILL + direction + briefs + 2x(codex propose + review) + codewords
-    assert len(ledger) == 46
+    # 52 through FILL + direction + briefs + 2x(codex propose + review) + codewords
+    assert len(ledger) == 59
 
 
 def test_dress_populates_enrichment(dressed):

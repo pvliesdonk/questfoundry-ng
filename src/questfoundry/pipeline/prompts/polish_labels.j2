@@ -1,0 +1,25 @@
+Write the choice labels the player clicks to leave one passage. The engine has
+already fixed every choice's destination, gate, and consequence — you contribute
+only the label the player reads, one per outgoing choice.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+THIS PASSAGE (group {{ index }}) — the moment the player is choosing from:
+{% for b in beats %}
+- {{ b.id }}: {{ b.summary }}
+{% endfor %}
+
+CHOICES LEAVING IT (write one label per destination):
+{% for d in dests %}
+- to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}
+{% endfor %}
+
+REQUIREMENTS:
+- labels: one entry per destination above, {"to": N, "label": "..."}.
+- A label is the player's voice: a concrete present-tense action, no outcomes
+  revealed. No meta-language — "continue", "go to the next scene" are failures;
+  even a single onward choice deserves a diegetic line.
+- Labels leaving this passage must differ from one another.
+- Match the tone. Never mention flags, dilemmas, or structure in a label.
+{% include "_craft.j2" %}
+{% include "_shared.j2" %}

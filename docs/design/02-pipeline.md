@@ -313,6 +313,28 @@ Two phases:
 The engine computes collapse boundaries and gate satisfiability; the LLM
 writes labels, decides feasibility judgments, and drafts arc metadata.
 
+The passage layer is **not** emitted in one call. The `finalize` pass
+*expands* (runner `PassSpec.expand`) into independent, minimal-context
+passes — the collapse groups are known only after finalize adds its
+residue/false-branch/bridge beats — one **`summary:<group>`** per
+collapse group (context: that group's own beats, its ending flag, and
+for a heavy-residue frontier group the world-states its variants must
+cover) and one **`labels:<group>`** per source group with outgoing
+choices (context: the source group plus each destination's summary and
+the engine-known gate/grant of each edge). A single greedy call over the
+whole passage layer + every edge overran the model's context window at
+medium scope (the `AdapterError` a medium-scale run hit) while giving no
+per-item benefit — a passage summary is derived from that group's own
+beats alone. Call count is not a cost the pipeline optimizes against
+(FILL already runs ~150 write calls per medium story); right-sized
+independent calls are strictly better for weak tiers (mini-ADR A21).
+Because passage creation (`summary:<group>`) and choice wiring
+(`labels:<group>`) are now separate passes, each variant's gate is
+persisted on `Passage.variant_flag` at creation and read back at wiring
+(01 §6). Coverage stays gate-guaranteed: I11 (every beat in exactly one
+passage) holds across the whole graph at G4, and the computed pass list
+is exhaustive over the collapse groups.
+
 ### FILL — prose
 
 | | |

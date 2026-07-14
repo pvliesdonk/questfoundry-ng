@@ -5,7 +5,15 @@
 > starting a session, read this first; if you are ending one, leave it
 > the way you'd want to find it.
 >
-> Last updated: 2026-07-13 · **The epilogue/POV collapse-feasibility bug is
+> Last updated: 2026-07-13 · **The POLISH `passages` pass is decomposed**
+> ([`docs/plans/passages-chunking.md`](plans/passages-chunking.md), now BUILT;
+> "Where we are" top + mini-ADR A21): the single whole-layer call that overran
+> `num_ctx` at medium scope is split into independent minimal-context passes —
+> `summary:<group>` per collapse group + `labels:<group>` per source group,
+> `finalize`-expanded via the runner's `PassSpec.expand`; the wiring recovers each
+> variant's gate from the persisted `Passage.variant_flag`. 559 tests, ruff, golden
+> 0/0; a live medium `--to polish` on `gpt-oss:120b-cloud` is the one open check.
+> Before it: **the epilogue/POV collapse-feasibility bug is
 > fixed** ([`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md),
 > now BUILT; decision log + the resolved kickoff in "Next up"): a narrow per-beat
 > `narration_scope ∈ {limited, wide}` annotation (GROW `annotate` pass emits it
@@ -48,6 +56,44 @@
 > pulled forward. Before it: **The prose-quality-at-scale engine is built** (next-up #1's engine half — echo check, input-role framing, note register + richer Voice, rolling story-so-far, character-arc metadata; the decision-log entry has the design record; live validation remains, and the **review-contract redesign is now BUILT** — a pipeline-wide structured-finding contract ([`docs/plans/review-contract.md`](plans/review-contract.md), `pipeline/review.py`) shared by FILL prose + DRESS codex review: the engine gates only proceed-vs-rework on confident objective defects, the producer weighs the full-fidelity findings). Before it: M8 complete; Ollama backend built AND validated live. The triage referential-integrity gap (#40, `explores`) generalized into a **pipeline-wide reference-pinning discipline** (`pipeline/refpin.py`): every proposal field that names an existing id — across SEED, GROW, POLISH, FILL, DRESS — is pinned to a per-project `Literal` enum, so a dangling reference is unrepresentable under grammar-constrained decoding and named back on a miss. Re-confirmed live on the `gpt-oss:120b` cloud tier via `OLLAMA_API_KEY`: every reference-heavy stage (DREAM→BRAINSTORM→SEED→GROW) passes clean end-to-end. **A follow-up effort then drove the weak tier deeper** (open item 5 / decision log): the finalize false-branch gap turned out to be a real latent engine bug (false branches validated against post-residue rather than the pristine frozen topology) — **fixed, POLISH now clears live** — and three FILL prose-prompt hardenings (tense as a directive, POSSIBLE-state honesty, review event-vs-scenery precision) carry the run to its first clean FILL passages. A full clean DRESS on `gpt-oss:120b` remains gated by residual weak-tier prose inconsistency (the prose-quality-at-scale milestone, next-up #1), so no cloud example is preserved yet. **A full prompt-engineering audit then swept every template** (all 24 `.j2` files + each pass's render context, author-directed): context gaps closed (order-pass dispositions, taken codewords, premise at triage/voice, reviewer lookahead), prompt/spec mismatches fixed, and one latent engine bug caught by the audit's "the context must be true" clause — gate certainty now propagates to rival paths in FILL's flag statuses (decision log).
 
 ## Where we are
+
+**The POLISH `passages` pass is decomposed** (2026-07-13, PR #70; plan
+[`docs/plans/passages-chunking.md`](plans/passages-chunking.md), now BUILT;
+mini-ADR A21). The single `passages` pass emitted the entire passage layer —
+every collapse group's summary + every choice label — in one LLM call, and its
+~15–17k-token output overran a weak provider's `num_ctx` at medium scope (the
+`AdapterError` a noir-medium run hit). The greedy context gave *no* per-item
+benefit (a passage summary derives from its own group's beats alone), so the fix
+is to **decompose into independent, minimal-context calls** (author decision B),
+not to raise `num_ctx`:
+
+- **Runner `PassSpec.expand`** (prerequisite, already landed): a completed pass
+  may splice successor passes in after it. POLISH's collapse groups exist only
+  after `finalize` adds its residue/false-branch/bridge beats, so the per-group
+  passes can't be enumerated at stage start — `finalize` carries the expansion
+  (`_polish_expand`), which reads the post-finalize graph. Deterministic, so it
+  reproduces on ledger resume.
+- **`summary:<group>`** — one pass per collapse group; context is that group's
+  own beats, its ending flag, and (for a heavy-residue frontier group) the
+  world-states its variants must cover. Schema `SummaryProposal`;
+  `polish_summary.j2`. The apply builds the passage node(s) and persists each
+  variant's gate on `Passage.variant_flag`.
+- **`labels:<group>`** — one pass per source group with outgoing choices; context
+  is the source group + each destination's summary + the engine-known gate/grant.
+  Schema `LabelsProposal` (one label per destination group, engine-fanned across a
+  destination's variant passages); `polish_labels.j2`. The wiring apply recovers
+  each variant's gate from the persisted `variant_flag` (`_group_passages`) — the
+  create-time mapping the single pass held in memory, now graph state since
+  creation and wiring are separate passes.
+
+All `summary:<group>` passes precede every `labels:<group>` (labels reference
+destinations that must exist); both families follow the deterministic
+`collapse_groups(...)` order. Coverage stays gate-guaranteed (I11 at G4). The
+keeper e2e re-records the one `passages` call as 8 summary + 6 label calls (59
+fixtures, +13; POLISH ledger 12→25, FILL 39→52, DRESS 46→59); the golden story
+is static (no pass execution) and unaffected. 559 tests, ruff clean, golden 0/0.
+**Open**: the live medium `--to polish` on `gpt-oss:120b-cloud` acceptance test
+(unbilled) — confirm the pass completes where it truncated before.
 
 **`narration_scope` (POV/coda) is built** (2026-07-13; plan
 [`docs/plans/pov-narration-scope.md`](plans/pov-narration-scope.md), now BUILT;
@@ -725,21 +771,21 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
-> **IN PROGRESS (2026-07-13, PR #70): POLISH `passages`-pass decomposition** —
-> plan [`docs/plans/passages-chunking.md`](plans/passages-chunking.md). The
-> passages pass emits the whole passage layer in one LLM call and overruns
+> **BUILT (2026-07-13, PR #70): POLISH `passages`-pass decomposition** —
+> plan [`docs/plans/passages-chunking.md`](plans/passages-chunking.md), now BUILT
+> (see "The POLISH `passages` pass is decomposed" at the top of "Where we are").
+> The passages pass emitted the whole passage layer in one LLM call and overran
 > `num_ctx` at medium scope (the `AdapterError` the noir-medium run hit). Fix
 > (author decision B, then the greedy-context reframe): decompose into
 > independent minimal-context calls — `summary:<group>` per collapse group +
-> `labels:<group>` per source group — no batching. **Landed so far:** the
-> `variant_flag` persistence prerequisite (so wiring can recover a variant's gate
-> once creation/wiring split); the runner `PassSpec.expand` mechanism (finalize
-> expands into the per-group passes, since collapse groups aren't known until
-> finalize runs — author decision #1); 01 §6 + the finalized plan. **Remaining:**
-> the POLISH split itself (finalize's `expand`, the `summary`/`labels` schemas +
-> prompts + applies reading `dest.variant_flag`), the keeper e2e re-record, 02/03
-> docs, and a live medium `--to polish` on `gpt-oss:120b-cloud` as the acceptance
-> test.
+> `labels:<group>` per source group — no batching. **All landed:** the
+> `variant_flag` persistence prerequisite, the runner `PassSpec.expand` mechanism,
+> the POLISH split (finalize's `expand`, the `SummaryProposal`/`LabelsProposal`
+> schemas + `polish_summary.j2`/`polish_labels.j2` prompts + per-item applies
+> reading `dest.variant_flag`), the keeper e2e re-record (59 fixtures, +13; POLISH
+> ledger 12→25), 02/03 docs (mini-ADR A21), and 01 §6. Offline-green (559 tests,
+> ruff, golden 0/0). **Open:** the live medium `--to polish` on `gpt-oss:120b-cloud`
+> acceptance test (unbilled; confirms the pass completes where it truncated).
 
 > **BUILT (2026-07-13):** the epilogue/POV collapse-feasibility problem below is
 > resolved — see "`narration_scope` (POV/coda) is built" at the top of "Where we

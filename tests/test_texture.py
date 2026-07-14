@@ -235,6 +235,30 @@ def test_cadence_diamond_mirrored_into_arm(vision):
     del preset
 
 
+def test_cadence_sidetrack_mirrored_into_arm(vision):
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    detour = Beat(
+        id="beat:st-detour",
+        created_by=Stage.POLISH,
+        summary="detour",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+    )
+    pc.insert_cadence_sidetrack(g, [detour], "beat:t4", "beat:t5")
+    # both direct edges survive (declining the detour is the choice)...
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", "beat:a5")
+    # ...and the detour exists in both worlds, the arm's as a mirrored twin
+    twins = [b for b in g.nodes_of(Beat) if b.mirrors == "beat:st-detour"]
+    assert len(twins) == 1
+    assert twins[0].purpose == StructuralPurpose.TEXTURE_WORLD
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", twins[0].id)
+    assert g.has_edge(EdgeKind.PREDECESSOR, twins[0].id, "beat:a5")
+    assert i15_errors(g, vision) == []
+
+
 def test_cadence_plan_skips_arm_runs():
     g = StoryGraph()
     preset = _micro_vision_preset()

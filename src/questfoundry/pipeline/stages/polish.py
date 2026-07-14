@@ -356,8 +356,13 @@ class LabelsProposal(BaseModel):
 
 def _groups(project: Project) -> list[list[str]]:
     """The capped collapse groups — the single grouping every POLISH passage
-    pass indexes into, so `summary:<i>` / `labels:<i>` names stay stable."""
-    return pc.collapse_groups(project.graph, max_beats=project.vision.preset.passage_beats_max)
+    pass indexes into, so `summary:<i>` / `labels:<i>` names stay stable.
+    Viewpoint-split: a head-switch is a passage boundary (I14)."""
+    return pc.collapse_groups(
+        project.graph,
+        max_beats=project.vision.preset.passage_beats_max,
+        split_viewpoints=True,
+    )
 
 
 def _variant_needs(g) -> dict[str, list[str]]:

@@ -1,0 +1,17 @@
+id: beat:revolver-commit-hand--accuse-hostess
+created_by: grow
+summary: The investigator throws the old revolver into the sheriff’s deputies’ hands while
+  loudly denouncing Marta’s alibi as a fabrication, shattering the hostess’s reputation and
+  igniting chaos in the lodge.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: commits
+entities:
+- faction:local-sheriff
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

@@ -1,0 +1,19 @@
+id: passage:p-quiet-confession
+summary: Marta thanks the investigator and shares a previously hidden detail about the night
+  of the murder; the winter wind rattles the lodge as their quiet conversation fades into
+  the hushed corridors, allowing the miner’s unvoiced grievances to linger.
+entities:
+- character:author
+- character:hostess
+- character:miner
+prose_summary: Marta thanks the investigator, then tells the investigator she heard a muffled
+  argument in the service corridor on the murder night about a delayed ore load and a broken
+  promise, revealing a miner’s grievance. The new clue adds a motive to the case. Marta and
+  the investigator leave the hallway.
+beats:
+- beat:author-post3-suppress
+- bridge:gap1
+- bridge:gap3
+choices:
+- label: listen as whispered grievances echo through the lodge
+  to: passage:p-no-outrage

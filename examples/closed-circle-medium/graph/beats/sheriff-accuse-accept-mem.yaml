@@ -1,0 +1,11 @@
+id: beat:sheriff-accuse-accept-mem
+created_by: polish
+summary: The sheriff’s cuffs clink, and the investigator tastes the metallic tang of resignation
+  as the lodge’s laughter turns brittle.
+beat_class: structural
+purpose: residue
+entities:
+- faction:local-sheriff
+- location:lodge
+requires_flags:
+- flag:investigator-detained

@@ -1,0 +1,9 @@
+id: bridge:gap35
+created_by: grow
+summary: The icy torrent freezes mid‑corridor, highlighting a concealed sabotage that the
+  miner might still exploit.
+beat_class: structural
+purpose: bridge
+entities:
+- location:lodge
+- character:miner

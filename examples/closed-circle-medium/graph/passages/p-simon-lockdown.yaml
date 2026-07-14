@@ -1,0 +1,19 @@
+id: passage:p-simon-lockdown
+summary: The investigator takes Butler Simon’s secret passages, slipping into the lodge just
+  as the sheriff declares a lockdown, while pressing on to expose Marta’s false alibi.
+entities:
+- character:butler
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Sheriff orders lockdown, seals doors; deputies guard, clerk shuts entrance.
+  Investigator evades deputy, clutching notebook accusing Marta Valen, and slips into hidden
+  stone corridor behind tapestry revealed by Simon. Simon watches, notes that ordinary routes
+  are blocked but secret passage remains, decides to use it to transport Marta’s alibi evidence
+  away from sheriff, and steps aside as hallway becomes conduit.
+beats:
+- beat:sheriff-post2-defy--accuse-hostess
+- bridge:gap67
+choices:
+- label: Push deeper into the sealed lodge
+  to: passage:p-lockdown-revelation

@@ -1,0 +1,7 @@
+Jordan stood near the hearth as Deputy Hale placed the ledger on the cold stone table. The fresh ink on the page caught the wan light from the dying fire. They lifted the book and read the entry aloud, their voice even, noting that the miner’s body had been found beside the sealed service door and that no evidence of malice was recorded. The words fell into the hall like a thin layer of ash, and the occupants shifted, the bland conclusion settling over the room.
+
+Marta Valen lingered by the brass rail, her hand resting on the cool metal, her expression unchanged. The hostel’s hostess remained respected; no one turned her gaze away. Jordan saw the faint tremor in Marta’s fingers as she tightened her grip on a steaming mug, a silent acknowledgment that her alibi still held.
+
+The deputies stamped the report and slid the final page onto the ledge with a metallic click. "This closes the case," one said, and the sound echoed off the stone arches. Jordan felt a small loosening of the knot in their throat but also a lingering coldness in the pit of their stomach. The investigation now paused, the unanswered questions hovering like smoke over the walls.
+
+Around them, the lodge retained its uneasy stillness. Some guests exchanged wary glances, shadows flickering across their faces as the fire sputtered. The storm raged beyond the shutters, wind whistling through the cracks. Jordan slipped their notebook back into their coat, the pages still warm, and surveyed the scene, aware that the case was officially filed yet the tension in the lodge remained unbroken.

@@ -1,0 +1,9 @@
+id: bridge:gap52
+created_by: grow
+summary: A stray spark causes the miner's revolver to misfire, sealing his fate while Marta's
+  innocence remains unscathed.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- object:old-revolver

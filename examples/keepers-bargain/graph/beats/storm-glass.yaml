@@ -6,3 +6,4 @@ beat_class: structural
 purpose: setup
 entities: [character:keeper, location:lighthouse]
 scene_type: sequel
+viewpoint: character:keeper

@@ -1,0 +1,8 @@
+id: bridge:gap53
+created_by: grow
+summary: Simon's revelation of the revolver's origins prompts deputies to demand its surrender.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- faction:local-sheriff

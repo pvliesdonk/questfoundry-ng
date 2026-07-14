@@ -1,0 +1,19 @@
+id: passage:p-reveal-sacrifice
+summary: The investigator publicly names the killer, sacrificing his own safety as the lodge’s
+  darkly comic atmosphere erupts into lethal chaos, while Marta’s reputation remains untarnished.
+entities:
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan enters lantern-lit hearth, burns torn notebook fragment, sacrificing
+  their investigation record. Jordan accuses Simon Kade of setting furnace and planting revolver.
+  Deputy Hale steps forward, crowd surges. Hidden revolver clatters to floor, spark ignites
+  splinter. Marta Valen lifts blanket, reputation unchanged. Jordan receives soot, stands
+  exposed as deputies seize revolver and restrain crowd; cold chuckle echoes.
+beats:
+- beat:sheriff-post5-defy--silent-hostess
+choices:
+- label: Grip the cold revolver and let a dark chuckle echo through the lodge
+  requires:
+  - flag:investigator-rogue
+  to: passage:p-lone-revolver

@@ -1,0 +1,16 @@
+id: beat:revolver-post2-hand--silent-hostess
+created_by: grow
+summary: The miner is arrested amid his protests, the revolver is in the sheriff’s possession,
+  and the investigator’s silence on Marta’s alibi keeps the social tension simmering rather
+  than exploding.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

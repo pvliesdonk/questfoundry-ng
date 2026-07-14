@@ -1,0 +1,15 @@
+id: beat:butler-lead3
+summary: Jordan Blythe overhears the heated exchange while searching for notes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: reveals
+entities:
+- character:author
+- character:butler
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:avoid-confront

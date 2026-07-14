@@ -1,0 +1,9 @@
+id: bridge:gap87
+created_by: grow
+summary: Bolstered by Jordan’s note, the investigator either submits to the sheriff’s arrest
+  or slips away to continue in secret.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- faction:local-sheriff

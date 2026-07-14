@@ -1,0 +1,9 @@
+id: bridge:gap37
+created_by: grow
+summary: Cole's proximity to the furnace fuels Simon's complaints about the cold, hinting
+  at possible tampering.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:butler

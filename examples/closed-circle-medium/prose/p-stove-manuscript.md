@@ -1,0 +1,9 @@
+Simon moved through the dim aisle, the lantern’s glow catching the dust that settled on the oak shelves. He felt the cold iron of his coat against the stone floor and heard the faint hiss of the stove that lay hidden behind the rows of volumes. The brass hinge of the pantry door creaked as a draft slipped in, carrying the scent of pine sap and a faint metallic tang from the ember that had smoldered moments before.
+
+He stopped beside Jordan, who was crouching over a leather‑bound treatise. Simon’s voice cut low across the stone. “The old stove behind those shelves could set the whole library alight,” he said, eyes lingering on the faint glow of the fire pit. Jordan did not look up, the notebook still clutched in their hand, but the tension in their shoulders tightened.
+
+Jordan’s reply was a single, steady sentence. “We have to secure the manuscript now; the clue is inside.” The author’s tone carried the weight of the investigation, and Simon felt the pull between duty to preserve the collection and the urgency of the evidence. He noted the manuscript rested on a low ledge, its wax seal still warm from the lamp’s light, and sensed the risk of a spark reaching the nearby piles of vellum.
+
+The furnace’s dying flame flickered, casting a thin line of shadow across the stone wall. Simon knew the flues beneath the shelves could channel a blaze through the entire wing. He glanced at the fire’s ember, then at Jordan’s fixed gaze on the paper, and he understood that any delay could let the heat spread.
+
+A pause settled over the room as both men weighed the danger. Simon lowered his hand, the iron hinges of the stove’s doors creaking once more. He realized the choice before them: leave the stove unchecked and risk a fire that would consume the volumes, or risk the manuscript’s loss by waiting for a safer moment.

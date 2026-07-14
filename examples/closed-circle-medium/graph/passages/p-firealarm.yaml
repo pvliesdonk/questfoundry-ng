@@ -1,0 +1,18 @@
+id: passage:p-firealarm
+summary: The investigator sounds the fire alarm, forcing the library's occupants to flee;
+  the rare manuscripts are rescued, but the hidden envelope is consumed by the blaze.
+entities:
+- character:author
+- location:library
+prose_summary: Jordan pulls fire alarm lever; alarm sounds, Jordan orders evacuation. Simon
+  gestures toward exit; Marta pockets leather‑bound tome. Jordan guides cart of rare manuscripts
+  onto floor, steadies volumes as heat and ember threaten. A sealed warm‑wax envelope burns
+  to ash. Oak doors close; rescued manuscripts placed on cold table. Hidden clue lost; fire,
+  alarm, tense silence persist.
+beats:
+- beat:library-commit-evacuate
+- beat:library-post1-evac
+- bridge:gap20
+choices:
+- label: herd the coughing guests into the smoky hallway
+  to: passage:p-evacuation-blame

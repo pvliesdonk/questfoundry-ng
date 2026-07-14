@@ -1,0 +1,17 @@
+id: beat:revolver-commit-hand--silent-hostess
+created_by: grow
+summary: The investigator slips the old revolver to the sheriff’s deputies but stays silent
+  about Marta’s alibi, preserving the hostess’s standing even as suspicion lingers among the
+  guests.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: commits
+entities:
+- faction:local-sheriff
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

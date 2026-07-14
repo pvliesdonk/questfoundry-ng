@@ -1,0 +1,17 @@
+id: beat:revolver-pre2--accuse-hostess
+created_by: grow
+summary: Butler Simon reveals the gun’s provenance as a family heirloom of the lodge founder,
+  prompting the investigator to ready an accusation against Marta’s fabricated alibi.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:butler
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

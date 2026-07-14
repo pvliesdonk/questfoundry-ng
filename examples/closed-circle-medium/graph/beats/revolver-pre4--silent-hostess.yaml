@@ -1,0 +1,16 @@
+id: beat:revolver-pre4--silent-hostess
+created_by: grow
+summary: Concerned that the sheriff’s possession might reveal a guest’s involvement, the investigator
+  instead safeguards Marta’s alibi by remaining silent.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

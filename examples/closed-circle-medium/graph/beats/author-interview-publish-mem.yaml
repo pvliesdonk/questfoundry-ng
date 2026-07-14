@@ -1,0 +1,10 @@
+id: beat:author-interview-publish-mem
+created_by: polish
+summary: A cold wind whistles through the mine shafts, reminding the investigator of the theory
+  he let the world hear, and the uneasy glances of the miners linger in the stale air.
+beat_class: structural
+purpose: residue
+entities:
+- character:miner
+requires_flags:
+- flag:theory-published

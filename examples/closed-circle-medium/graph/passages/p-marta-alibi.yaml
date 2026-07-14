@@ -1,0 +1,15 @@
+id: passage:p-marta-alibi
+summary: Marta tells the group she was alone in the library, absorbed in a rare volume, when
+  the murder took place, prompting a tense atmosphere of doubt.
+entities:
+- character:hostess
+- location:library
+prose_summary: Marta declares she was alone in the library reading a vellum‑bound treatise
+  when a scream occurs. Jordan's notebook lies open blank; the deputy watches her, Simon watches,
+  guests exchange nervous glances. Marta notes the brass clock's minute hand lagging behind
+  the hour hand. She resolves to keep the treatise safe, believing truth hides in the shelves.
+beats:
+- beat:hostess-pre1
+choices:
+- label: Inspect the library clock for its irregular tick
+  to: passage:p-clock-discrepancy

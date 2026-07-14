@@ -1,0 +1,17 @@
+id: passage:p-clock-discrepancy
+summary: The investigator discovers a mismatch in the library’s clock logs that contradicts
+  her timeline; Marta notes the clock’s irregular tick, steps toward the stacks, and hears
+  Simon whisper about a hidden passage.
+entities:
+- character:hostess
+- location:library
+prose_summary: Jordan Blythe notes brass clock reads 3:32 while log reads 3:37, marking a
+  five‑minute discrepancy. Marta Valen remarks the tick is uneven. Simon Kade reveals an unused
+  door behind the dust‑laden stacks from old maps. Jordan records the hidden passage, suspects
+  clock tampering, and decides to search the shelves for the door despite the storm.
+beats:
+- beat:hostess-pre2
+- bridge:gap17
+choices:
+- label: Press Simon for details about the hidden passage
+  to: passage:p-secret-confrontation

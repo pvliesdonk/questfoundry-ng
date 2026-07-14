@@ -1,0 +1,9 @@
+id: bridge:gap46
+created_by: grow
+summary: Deputies issue a perjury warning, yet the hidden gun remains concealed while Marta's
+  alibi stays intact.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- faction:local-sheriff

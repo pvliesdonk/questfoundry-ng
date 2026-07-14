@@ -1,0 +1,14 @@
+id: beat:miner-lead1
+summary: Cole Duvall attempts to slip out through the back service door as the wind howls
+  outside.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: reveals
+entities:
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:release-miner

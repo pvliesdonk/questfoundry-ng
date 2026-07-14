@@ -1,0 +1,9 @@
+id: bridge:gap36
+created_by: grow
+summary: The engineer's missing‑valve report leads investigators to spot Cole lingering by
+  the furnace.
+beat_class: structural
+purpose: bridge
+entities:
+- location:lodge
+- character:miner

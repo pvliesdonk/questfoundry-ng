@@ -1,0 +1,20 @@
+id: passage:p-burning-revelation
+summary: The investigator seizes a torn page as fire consumes the library stacks, guests shout
+  in outrage over the destruction of irreplaceable books, and a hidden ledger rises from the
+  charred remains, exposing Simon's concealed debt.
+entities:
+- object:old-revolver
+- location:library
+- character:butler
+prose_summary: Jordan Blythe holds torn page while fire devours lower stacks; guests shout.
+  Jordan reads ledger from charred crate, discovers Simon Kade owes a miner, slips ledger
+  into coat. The page bears the same name tied to the murder. Marta Valen attempts water rescue
+  but pipes freeze. Simon Kade watches. Jordan notes orange hinges warning possible collapse.
+  Chandelier shatters.
+beats:
+- beat:library-post2-stay
+- bridge:gap23
+- bridge:gap25
+choices:
+- label: Show the ledger to the sheriff
+  to: passage:p-simon-debt-lockdown

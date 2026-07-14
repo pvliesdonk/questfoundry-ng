@@ -1,0 +1,14 @@
+id: beat:hostess-post4-accuse
+summary: The lodge’s heating fails, the night turns into a frozen, smoky comedy as guests
+  flee in mismatched attire.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- location:lodge
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accuse-hostess

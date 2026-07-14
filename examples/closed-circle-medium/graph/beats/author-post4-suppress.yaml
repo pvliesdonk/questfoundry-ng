@@ -1,0 +1,13 @@
+id: beat:author-post4-suppress
+summary: The absence of public outrage lets hidden motives fester beneath the surface.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: complicates
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:suppress-theory

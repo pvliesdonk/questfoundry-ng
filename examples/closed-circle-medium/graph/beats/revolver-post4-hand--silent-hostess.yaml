@@ -1,0 +1,15 @@
+id: beat:revolver-post4-hand--silent-hostess
+created_by: grow
+summary: A lockdown is enforced by the sheriff, the revolver is held by deputies, and the
+  investigator’s decision to protect Marta’s alibi leaves the tension contained but unresolved.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

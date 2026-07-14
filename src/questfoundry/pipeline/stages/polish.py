@@ -192,7 +192,10 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     for spec in proposal.false_branches:
         if spec.before not in long_run_beats or spec.after not in long_run_beats:
             raise ApplyError(
-                f"false branch at {spec.before} -> {spec.after} is not inside a long linear run"
+                f"false branch at {spec.before} -> {spec.after} is not inside a long "
+                "linear run — place both endpoints on adjacent beats of one of the "
+                "runs listed under CADENCE in the prompt (the suggested seam edges "
+                "there are always valid), or drop this site"
             )
         try:
             chains = [
@@ -217,10 +220,10 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             else:
                 pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
         except (mutations.MutationError, KeyError) as e:
-            # Symmetric with the residue path below: a new false-branch beat id
-            # colliding with an existing beat raised a bare KeyError that
-            # escaped the repair loop entirely (only the residue path caught
-            # it). Make it repairable with context.
+            # add_beat already converts a duplicate-id KeyError into an
+            # actionable MutationError; the KeyError arm here catches the
+            # store's GraphError family (its messages carry their own
+            # correctives), so the wrap adds location, not a diagnosis
             raise ApplyError(f"false branch {spec.before} -> {spec.after}: {e}") from e
         if len(chains) == 1:
             lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
@@ -237,9 +240,17 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             expected = sorted(
                 f"dilemma {d}" + (f" in world {w}" if w else "") for d, w in needs
             )
+            # State the corrective, not just the mismatch (AGENTS.md error
+            # contract; the Closed Circle live run exhausted repairs on a
+            # world added to a shared convergence with only the list to
+            # infer from — same treatment as the duplicate-arm error below)
             raise ApplyError(
                 f"residue {spec.id}: (dilemma, world) must match exactly one "
-                f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}"
+                f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}. "
+                "A convergence listed WITHOUT a world is shared: leave its world out "
+                "(or \"\") — do not attach one. A convergence listed WITH a world "
+                "takes that exact world string. Correct this entry to one of the "
+                "listed (dilemma, world) pairs."
             )
         flags = need.path_flags.get(spec.path)
         if flags is None:
@@ -284,7 +295,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 pc.insert_residue_diamond(
                     g, chain, gated_chain(spec.fork), spec.path, need.rejoin
                 )
-        except (mutations.MutationError, KeyError) as e:  # duplicate beat id / bad splice
+        except (mutations.MutationError, KeyError) as e:
+            # same shape as the false-branch catch above: duplicate ids arrive
+            # pre-converted by add_beat, GraphError carries its own corrective
             raise ApplyError(f"residue {spec.id}: {e}") from e
         covered.add((spec.dilemma, spec.world, spec.path))
         arm = " -> ".join(b.id for b in chain)
@@ -356,8 +369,13 @@ class LabelsProposal(BaseModel):
 
 def _groups(project: Project) -> list[list[str]]:
     """The capped collapse groups — the single grouping every POLISH passage
-    pass indexes into, so `summary:<i>` / `labels:<i>` names stay stable."""
-    return pc.collapse_groups(project.graph, max_beats=project.vision.preset.passage_beats_max)
+    pass indexes into, so `summary:<i>` / `labels:<i>` names stay stable.
+    Viewpoint-split: a head-switch is a passage boundary (I14)."""
+    return pc.collapse_groups(
+        project.graph,
+        max_beats=project.vision.preset.passage_beats_max,
+        split_viewpoints=True,
+    )
 
 
 def _variant_needs(g) -> dict[str, list[str]]:
@@ -477,7 +495,10 @@ def _summary_apply(i: int) -> Callable[[BaseModel, Project], list[str]]:
                 mutations.add_variant(g, vid, members[0])
             return [f"group {i}: variants {', '.join(members)}"]
         if proposal.variants:
-            raise ApplyError(f"group {i} needs no variants")
+            raise ApplyError(
+                f"group {i} needs no variants — it is not a heavy-residue frontier; "
+                "re-emit with variants: []"
+            )
         mutations.add_passage(g, build(proposal.id, proposal.summary), group)
         return [f"group {i}: {proposal.id} ({len(group)} beat(s))"]
 
@@ -666,7 +687,7 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
                 f"audit exactly these ids: {sorted(expected)}"
             )
         if entry.passage in seen:
-            raise ApplyError(f"{entry.passage} audited twice")
+            raise ApplyError(f"{entry.passage} audited twice — keep one audit entry per passage")
         seen.add(entry.passage)
         stray = set(entry.irrelevant) - set(expected[entry.passage])
         if stray:
@@ -757,7 +778,7 @@ def _arcs_apply(proposal: ArcsProposal, project: Project) -> list[str]:
                 f"{entity_id} is not a retained entity; arc exactly these: {sorted(eligible)}"
             )
         if entity_id in seen:
-            raise ApplyError(f"{entity_id} arced twice")
+            raise ApplyError(f"{entity_id} arced twice — keep one arc entry per entity")
         seen.add(entity_id)
         arc = EntityArc(
             begins=spec.begins,

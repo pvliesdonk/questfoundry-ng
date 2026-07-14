@@ -1,0 +1,11 @@
+id: beat:sheriff-silent-defy-mem
+created_by: polish
+summary: The old revolver rests cold in the investigator’s coat, and a dark chuckle ripples
+  through the lodge as he stands alone against the law.
+beat_class: structural
+purpose: residue
+entities:
+- object:old-revolver
+- location:lodge
+requires_flags:
+- flag:investigator-rogue

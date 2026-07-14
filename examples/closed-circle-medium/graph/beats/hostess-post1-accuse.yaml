@@ -1,0 +1,13 @@
+id: beat:hostess-post1-accuse
+summary: Marta erupts, the lodge descends into panic as guests scramble for safety.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:accuse-hostess

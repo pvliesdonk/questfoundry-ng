@@ -1,0 +1,22 @@
+id: passage:p-gun-unrest
+summary: Marta worries the concealed gun will ignite the volatile gathering, while the investigator
+  remains silent to keep her story intact, and deputies issue a jurisdictional warning about
+  the investigator's restraint concerning Marta's alibi.
+entities:
+- character:hostess
+- object:old-revolver
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta finds concealed revolver in false drawer, holds walnut case. Jordan Blythe
+  lowers notebook, stays silent, preserving Marta’s alibi story. Marta recalls anonymous note
+  to protect hostess’s alibi and considers that giving gun to deputies would break it. Deputy
+  announces jurisdictional notice, noting restraint on alibi. Marta keeps revolver secret,
+  risking guests.
+beats:
+- beat:revolver-pre5--silent-hostess
+- bridge:gap58
+- bridge:gap60
+choices:
+- label: Listen to the sheriff's warning
+  to: passage:p-sheriff-warning

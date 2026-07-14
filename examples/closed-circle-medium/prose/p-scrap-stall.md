@@ -1,0 +1,5 @@
+Jordan Blythe lifted the torn fragment from the carpet and held it to the lamplight. The ink traced a single line beneath the revolver's walnut grip, naming a hand that had not been identified. Jordan recorded that the mark meant the weapon could have been handled by someone other than Marta Valen, leaving her possible innocence intact.
+
+The wind pressed harder against the lodge as the night grew darker. Jordan set the paper inside the notebook and glanced at the empty study; the fire had dimmed to a faint glow. No other clue presented itself, and the hours slipped by without a new lead. The investigation stalled as the storm sealed the mountain.
+
+Jordan rose from the desk, the old revolver still lying on the table, its iron cylinder catching the weak light. The suspect remained at large, and rumors suggested Marta Valen's standing among the guests might still be unscathed. Jordan felt the decision settle like cold stone: the weapon could be handed to Sheriff Hale for official analysis, or it could be concealed until a safer moment. The choice lingered, unresolved, as the wind howled against the stone walls.

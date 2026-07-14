@@ -1,0 +1,24 @@
+id: passage:p-sparked-fate
+summary: A stray spark causes Cole’s revolver to misfire, killing him. The sheriff now holds
+  the weapon, Marta’s alibi stays unblemished, and a bleak, darkly comic tension lingers in
+  the lodge.
+entities:
+- character:miner
+- object:old-revolver
+ending:
+  id: e-sparked-fate
+  title: A Spark in the Dark
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: In stone hall, deputies lower rifles, Marta puts mug on rail, Cole holds pipe
+  wrench, spark ignites revolver cylinder, gun fires, bullet kills Cole, Jordan lifts revolver,
+  Sheriff Hale takes it, orders forensic hold, returns gun to case, points at deputies, Marta
+  watches, Jordan notes Marta’s alibi unchallenged, crowd laughs, room quiet.
+beats:
+- beat:revolver-post5-hand-ending--silent-hostess
+- bridge:gap52

@@ -1,0 +1,17 @@
+id: passage:p-lone-revolver
+summary: The investigator grips the cold revolver in his coat, lets a dark chuckle echo through
+  the lodge, and stands alone defying the sheriff’s authority.
+entities:
+- object:old-revolver
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan conceals his heirloom revolver in his coat as the sheriff orders surrender;
+  Deputy Hale steps forward with badge visible while deputies hold rifles, Simon holds a lantern
+  and Marta a blanket. Jordan deepens the gun’s concealment, hears a back‑door lock click
+  and furnace sigh, and resolves to keep the revolver from the sheriff, remaining defiant.
+beats:
+- beat:sheriff-silent-defy-mem
+choices:
+- label: Slip the cold revolver into my coat
+  to: passage:bridge-gap78

@@ -1,0 +1,22 @@
+id: passage:p-scrap-stall
+summary: The investigator uncovers a scrap of paper tying the old revolver to an unknown hand,
+  preserving Marta’s innocence, and as night deepens the case stalls, leaving the murderer
+  free and Marta’s reputation untouched while the investigator still faces the choice of what
+  to do with the revolver.
+entities:
+- object:old-revolver
+- character:hostess
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe lifts torn fragment, sees ink line under revolver grip indicating
+  unknown handler, keeping Marta Valen possibly innocent. He records fragment, notes storm
+  sealing lodge, fire dimming, and investigation stalling. He notes revolver on table, suspect
+  at large, rumors about Marta's standing. He must choose to give revolver to Sheriff Hale
+  for analysis or conceal it.
+beats:
+- beat:hostess-post4-silent
+- beat:hostess-post5-silent-ending
+- bridge:gap14
+choices:
+- label: Examine the revolver as dawn spills across the desk
+  to: passage:p-quiet-revolver

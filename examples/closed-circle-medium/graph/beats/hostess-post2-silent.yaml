@@ -1,0 +1,14 @@
+id: beat:hostess-post2-silent
+summary: Cole mutters about vengeance, his eyes narrowing on Marta’s every move.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- character:miner
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:silent-hostess

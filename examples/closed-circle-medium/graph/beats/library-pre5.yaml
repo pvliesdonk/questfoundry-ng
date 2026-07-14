@@ -1,0 +1,14 @@
+id: beat:library-pre5
+summary: Sheriff’s deputies order a safety check, fearing the blaze could mask further crimes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library
+- path:stay-for-clue

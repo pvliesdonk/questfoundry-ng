@@ -1,0 +1,23 @@
+id: character:butler
+name: Simon Kade
+concept: Long‑serving butler who knows every hidden passage of the lodge
+pronouns: he/him
+base:
+  appearance: pristine uniform, stoic posture
+  manner: deferential, quiet
+  paid debt to miner: 'true'
+  knows_hidden_passage: 'true'
+arc:
+  begins: long‑serving butler, knows all hidden passages, pristine uniform, deferential
+  pivots:
+  - beat: beat:butler-lead1
+    becomes: slips cash to miner, covertly financing an overdue debt
+  - beat: beat:butler-aftermath1
+    becomes: moves silently, outward loyalty masking inner conflict
+  - beat: beat:hostess-post3-accuse
+    becomes: shoots himself, revealing desperation and ending his role
+  ends:
+  - path: path:accuse-hostess
+    state: butler dead, hidden debt exposed
+  - path: path:silent-hostess
+    state: butler alive, debt stays concealed

@@ -1,0 +1,27 @@
+id: passage:p-perjury-revolver
+summary: The deputies warn Marta that lying about the night could be perjury, while the hidden
+  gun stays out of sight and her alibi remains unchallenged. The sheriff presses the charge,
+  the revolver stays concealed, the investigator keeps Marta’s silence, until the butler discovers
+  the weapon and quietly displays it, yet the investigator continues to shield Marta’s testimony.
+entities:
+- object:old-revolver
+- faction:local-sheriff
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Deputy Hale warns Marta Valen against perjury; Jordan notes Hale’s pistol and
+  Marta’s steady alibi; the revolver stays hidden in the desk’s false panel; Sheriff Hale
+  reiterates the charge, scans the room, and notes the empty weapon space; Simon Kade extracts
+  the revolver, shows it briefly to Jordan, then replaces it; Jordan continues protecting
+  Marta’s silence.
+beats:
+- beat:revolver-post2-hide--silent-hostess
+- bridge:gap46
+- bridge:gap48
+choices:
+- label: brandish the hidden revolver at anyone who challenges me
+  to: passage:p-revolver-hostess

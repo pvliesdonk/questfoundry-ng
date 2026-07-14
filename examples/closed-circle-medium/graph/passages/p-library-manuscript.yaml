@@ -1,0 +1,19 @@
+id: passage:p-library-manuscript
+summary: The deputies comment on the media's power to tip the scales of justice, their murmurs
+  fading as the investigator walks down the hallway into a dim library, where a rare manuscript
+  points to a similar unsolved case, deepening the intrigue.
+entities:
+- faction:local-sheriff
+- location:library
+prose_summary: Deputies discuss media influence and containment; Jordan hears, then proceeds
+  down damp hallway, opens oak library door, enters lit room, finds vellum‑bound manuscript
+  on table; he reads entry describing 1912 mountain‑lodge heiress disappearance that mirrors
+  current tragedy; manuscript hints unsolved case; Jordan decides to follow its trail, deepening
+  his investigation.
+beats:
+- beat:author-pre4
+- beat:author-pre5
+- bridge:gap6
+choices:
+- label: Follow Simon through the dim corridor
+  to: passage:p-simon-lantern

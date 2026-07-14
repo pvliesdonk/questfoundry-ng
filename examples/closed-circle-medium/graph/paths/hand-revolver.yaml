@@ -1,0 +1,6 @@
+id: path:hand-revolver
+name: Hand Revolver
+explores: answer:hand-revolver
+consequences:
+- id: consequence:revolver-in-custody
+  text: The old revolver is turned over to the sheriff, enabling formal forensic analysis.

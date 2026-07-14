@@ -1,0 +1,14 @@
+id: beat:library-pre3
+summary: Simon warns that an old stove behind the shelves could ignite the entire collection.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:evacuate-library
+- path:stay-for-clue

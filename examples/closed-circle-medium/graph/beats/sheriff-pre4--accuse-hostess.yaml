@@ -1,0 +1,16 @@
+id: beat:sheriff-pre4--accuse-hostess
+created_by: grow
+summary: A chorus of miners outside chant for swift justice, heightening pressure on the investigator
+  who has already shattered Marta’s credibility.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

@@ -1,0 +1,14 @@
+id: beat:hostess-post1-silent
+summary: Tension lingers; guests exchange mistrustful glances without a clear accusation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- character:hostess
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:silent-hostess

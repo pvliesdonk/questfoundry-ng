@@ -1,0 +1,8 @@
+id: bridge:gap33
+created_by: grow
+summary: Jordan's pursuit prompts the sheriff's deputies to order an immediate safety inspection.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- faction:local-sheriff

@@ -1,0 +1,20 @@
+id: passage:p-sheriff-closure
+summary: The sheriff files a tepid report on the miner’s mysterious death, leaving the lodge
+  uneasy, while the investigator is left puzzling over Cole’s desperate escape that ends in
+  a baffling death, with Marta’s reputation untouched.
+entities:
+- character:miner
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Sheriff files bland report confirming miner’s death near service entrance,
+  no foul play; Marta Valen’s alibi stays unchallenged. Cole Duvall defies deputy, uses pipe
+  wrench to pry locked service door, latch briefly yields, deputy grabs his wrist, wrench
+  drops, Cole dies. Jordan Blythe notes smudged revolver prints; investigation stalls, Marta’s
+  reputation unchanged.
+beats:
+- beat:sheriff-post4-accept--silent-hostess
+- bridge:gap74
+choices:
+- label: file the final report
+  to: passage:p-final-paperwork

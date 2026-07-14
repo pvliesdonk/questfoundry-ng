@@ -1,0 +1,9 @@
+id: bridge:gap78
+created_by: grow
+summary: After the investigator’s costly revelation, the old revolver is either slipped to
+  deputies or concealed.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- object:old-revolver

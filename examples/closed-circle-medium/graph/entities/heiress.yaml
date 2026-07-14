@@ -1,0 +1,8 @@
+id: character:heiress
+name: Lila Hart
+concept: Young, entitled heiress visiting the lodge for a weekend retreat
+pronouns: she/her
+base:
+  appearance: blonde, designer clothing, restless
+  manner: impulsive, flirtatious
+retained: false

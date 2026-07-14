@@ -1,0 +1,14 @@
+id: passage:p-silenced-breakroom
+summary: In the miners' break room a heavy silence settles as the investigator watches the
+  workers deliberately avoid the forbidden topic, the shared secret pressing down on everyone.
+entities:
+- character:miner
+prose_summary: Jordan enters the break room; miners sit on benches in silence after the furnace
+  cooled. Cole Duvall leans against the service door, hands on a pipe wrench on the floor.
+  Simon Kade nods, avoids mentioning the intake valve. Marta Valen places burnt biscuits on
+  the table. The missing intake valve debt hangs unresolved.
+beats:
+- beat:author-interview-suppress-mem
+choices:
+- label: release Cole into the storm as Marta declares she was alone in the library
+  to: passage:p-resolution-marta

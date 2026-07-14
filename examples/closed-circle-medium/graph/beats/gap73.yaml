@@ -1,0 +1,8 @@
+id: bridge:gap73
+created_by: grow
+summary: After Cole’s death, the sheriff finalizes a bland report, sealing the case.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- faction:local-sheriff

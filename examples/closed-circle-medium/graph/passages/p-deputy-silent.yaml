@@ -1,0 +1,17 @@
+id: passage:p-deputy-silent
+summary: The deputy writes the quiet into the notebook, and the investigator senses a hollow
+  calm as the investigation dissolves into bureaucratic routine.
+entities:
+- faction:local-sheriff
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan watches Deputy Hale write a note marked quiet in his notebook, then
+  file the ledger. Other deputies file paperwork. Jordan’s notebook stays warm from recent
+  notes; his pen feels heavier. The lodge remains locked, the storm beats the shutters, guests
+  stay wrapped in blankets, and the revolver stays on the table.
+beats:
+- beat:sheriff-silent-accept-mem
+choices:
+- label: Study the final report
+  to: passage:p-bridge-gap76

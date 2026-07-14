@@ -1,0 +1,15 @@
+id: beat:hostess-pre1
+summary: Marta claims she was alone in the library reading a rare volume when the murder occurred.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: reveals
+entities:
+- character:hostess
+- location:library
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:accuse-hostess
+- path:silent-hostess

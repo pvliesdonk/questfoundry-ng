@@ -1,0 +1,18 @@
+id: passage:p-rogue-defiance
+summary: The investigator catches a lingering scent of gunpowder and, feeling a sharp sting
+  of solitary defiance, openly refuses the sheriff’s accusation as the lodge’s grim atmosphere
+  bears down.
+entities:
+- object:old-revolver
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe smells lingering gunpowder in the lodge, deputy Hale accuses
+  him of negligence for a fire and lost evidence. Jordan confronts Hale, declares he will
+  not be silenced. The old revolver lies warm on the table. The blizzard beats the windows,
+  the furnace sputters; Jordan realizes defying the sheriff forces him to work clandestinely.
+beats:
+- beat:sheriff-accuse-defy-mem
+choices:
+- label: Set the revolver down at the crossroads
+  to: passage:p-bridge-gap77

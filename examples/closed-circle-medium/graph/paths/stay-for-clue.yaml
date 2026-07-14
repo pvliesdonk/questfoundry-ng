@@ -1,0 +1,7 @@
+id: path:stay-for-clue
+name: Stay for Clue
+explores: answer:stay-for-clue
+consequences:
+- id: consequence:clue-recovered
+  text: The hidden clue is retrieved, providing a breakthrough, while the library suffers
+    fire damage.

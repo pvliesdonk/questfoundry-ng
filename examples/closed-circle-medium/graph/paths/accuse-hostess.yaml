@@ -1,0 +1,7 @@
+id: path:accuse-hostess
+name: Accuse Hostess
+explores: answer:accuse-hostess
+consequences:
+- id: consequence:hostess-ruined
+  text: The hostess’s reputation is shattered, creating chaos but forcing the killer into
+    exposure.

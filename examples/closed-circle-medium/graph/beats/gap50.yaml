@@ -1,0 +1,8 @@
+id: bridge:gap50
+created_by: grow
+summary: The miner's anger simmers as deputies lock down the lodge, containing the unrest.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- faction:local-sheriff

@@ -1,0 +1,15 @@
+id: beat:sheriff-commit-accept--accuse-hostess
+created_by: grow
+summary: The sheriff arrests the investigator, who submits to custody after having publicly
+  accused Marta, surrendering personal inquiry to official channels.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: commits
+entities:
+- faction:local-sheriff
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

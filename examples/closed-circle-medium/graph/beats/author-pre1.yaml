@@ -1,0 +1,16 @@
+id: beat:author-pre1
+summary: Jordan Blythe shares a controversial theory blaming the heiress during a tense dinner
+  conversation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- character:author
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory
+- path:suppress-theory

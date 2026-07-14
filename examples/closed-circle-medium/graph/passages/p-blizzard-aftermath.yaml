@@ -1,0 +1,19 @@
+id: passage:p-blizzard-aftermath
+summary: Cole vanishes into a howling blizzard while the deputies conduct checks, and days
+  later a frozen body is found on the trail, presumed to be the missing miner, sparking rumors
+  of retribution.
+entities:
+- faction:local-sheriff
+- character:miner
+prose_summary: Deputies move through lodge hallway; deputy presses lantern on grate, partner
+  unrolls rope for railing. Storm rages outside. Cole Duvall slips past service entrance,
+  drops pipe wrench, disappears; deputy points, says he’s gone, door slams shut. Days later
+  patrol returns with frozen body near door, matching Cole’s hands and shoulders; rumors spread
+  of mountain revenge, whispers retribution as blizzard relents.
+beats:
+- beat:miner-aftermath1
+- beat:miner-aftermath2
+- bridge:gap34
+choices:
+- label: Examine the frozen body by the trail
+  to: passage:p-frozen-corpse-suspicion

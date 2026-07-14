@@ -1,0 +1,8 @@
+id: bridge:gap58
+created_by: grow
+summary: Marta fears the hidden gun could spark unrest, while the investigator remains silent.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- object:old-revolver

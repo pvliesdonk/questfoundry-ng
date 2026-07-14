@@ -1,0 +1,13 @@
+id: beat:library-post4-stay
+summary: Sheriff orders a lockdown, fearing the fire may conceal further crimes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:stay-for-clue

@@ -1,0 +1,16 @@
+id: beat:sheriff-pre3--accuse-hostess
+created_by: grow
+summary: Hostess Marta offers quiet support but warns that defying the sheriff could endanger
+  everyone, as the investigator’s accusation of her alibi fuels the risk.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: complicates
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

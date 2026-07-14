@@ -1,0 +1,15 @@
+id: passage:p-door-block
+summary: Simon Kade blocks the door, his grip firm, and warns Cole that leaving now would
+  endanger everyone.
+entities:
+- character:butler
+- character:miner
+prose_summary: Simon Kade blocks the back service door with his body; Cole Duvall grips a
+  wrench and tries to leave but Simon tells him the furnace is failing, doors are locked,
+  and everyone must stay. Cole hesitates, drops the wrench slightly, and then yields; the
+  door stays sealed, the fire stabilizes briefly, increasing tension.
+beats:
+- beat:miner-lead2
+choices:
+- label: Signal Jordan to intervene
+  to: passage:p-miner-mediation

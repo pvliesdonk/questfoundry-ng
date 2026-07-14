@@ -38,7 +38,9 @@ def _beat(g: StoryGraph, beat_id: str) -> Beat:
     return node
 
 
-def collapse_groups(g: StoryGraph, max_beats: int | None = None) -> list[list[str]]:
+def collapse_groups(
+    g: StoryGraph, max_beats: int | None = None, *, split_viewpoints: bool = False
+) -> list[list[str]]:
     """Maximal linear runs of beats, in topological order of their heads.
 
     A run extends across a -> b iff a has exactly one successor, b has
@@ -56,18 +58,40 @@ def collapse_groups(g: StoryGraph, max_beats: int | None = None) -> list[list[st
     cadence diamonds meter *choices* (B6), never words. Pass None for the
     raw choice-topology runs (cadence site detection wants the true
     choice-less stretch, however it is chunked into prose).
+
+    ``split_viewpoints`` additionally cuts where annotated viewpoints
+    conflict — one head per passage (I14; rotating-pov-build.md). Two
+    beats merge unless both carry a viewpoint and disagree on
+    ``(viewpoint, interlude)``; a beat without one (bridge, residue,
+    false-branch, wide codas) is a wildcard and merges anywhere. Like the
+    cap, this is prose chunking: passage-building call sites set it, the
+    raw choice-topology mode leaves it off.
     """
     order = queries.topological_order(g)
     if order is None:
         raise ValueError("beat graph has a cycle; collapse needs a DAG")
 
+    def head(beat_id: str) -> tuple[str, bool] | None:
+        beat = _beat(g, beat_id)
+        return None if beat.viewpoint is None else (beat.viewpoint, beat.interlude)
+
     def merges(a: str, b: str) -> bool:
         if len(queries.successors(g, a)) != 1 or len(queries.predecessors(g, b)) != 1:
             return False
-        return sorted(_beat(g, a).requires_flags) == sorted(_beat(g, b).requires_flags)
+        if sorted(_beat(g, a).requires_flags) != sorted(_beat(g, b).requires_flags):
+            return False
+        if split_viewpoints:
+            # the group's head so far is a's run-head: a itself may be a
+            # wildcard riding an earlier annotated beat, so compare against
+            # the group's settled head, not just a's own
+            ha, hb = group_head.get(group_of[a]), head(b)
+            if ha is not None and hb is not None and ha != hb:
+                return False
+        return True
 
     groups: list[list[str]] = []
     group_of: dict[str, int] = {}
+    group_head: dict[int, tuple[str, bool]] = {}
     for b in order:
         preds = queries.predecessors(g, b)
         if (
@@ -81,6 +105,10 @@ def collapse_groups(g: StoryGraph, max_beats: int | None = None) -> list[list[st
         else:
             group_of[b] = len(groups)
             groups.append([b])
+        if split_viewpoints and group_of[b] not in group_head:
+            h = head(b)
+            if h is not None:
+                group_head[group_of[b]] = h
     return groups
 
 
@@ -266,7 +294,7 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
     semantics) and follows the first live in-view successor. One diamond
     arm is traversed, not both — the projection measures what a reader
     experiences, which is what the arc view over-counted."""
-    groups = collapse_groups(g, max_beats=preset.passage_beats_max)
+    groups = collapse_groups(g, max_beats=preset.passage_beats_max, split_viewpoints=True)
     edges = group_edges(groups, g)
     succ: dict[int, list[int]] = {}
     for a, b in edges:

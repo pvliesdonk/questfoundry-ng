@@ -1,0 +1,17 @@
+id: passage:p-resolution-marta
+summary: The investigator releases Cole, allowing him to disappear into the storm, and Marta
+  steps forward, insisting she was alone in the library at the hour of the murder.
+entities:
+- character:miner
+- character:author
+- character:hostess
+prose_summary: Jordan commands Cole; Cole opens back door and leaves into blizzard, door slams
+  shut. Storm intensifies, fire weakens. Marta rises and declares she was alone in the library
+  when the body was found. Jordan records Marta’s guarded demeanor. Investigator’s notebook
+  shows blank page next to half‑filled revolver entry.
+beats:
+- beat:miner-resolution
+- bridge:gap42
+choices:
+- label: Demand Marta explain the library hour
+  to: passage:p-marta-alibi

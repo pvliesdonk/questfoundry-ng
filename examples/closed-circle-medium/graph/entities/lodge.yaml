@@ -1,0 +1,18 @@
+id: location:lodge
+name: Highpine Lodge
+concept: Isolated mountain lodge cut off by a snowstorm
+base:
+  appearance: log construction, cracked windows, central fireplace
+  manner: claustrophobic
+  heating_status: sputtering
+  valve_missing: 'true'
+  hidden lever exposed by ice: visible when pipe water freezes
+arc:
+  begins: isolated mountain lodge, log construction, cracked windows, central fireplace, claustrophobic
+  pivots:
+  - beat: beat:lodge-lead1
+    becomes: heating sputters, temperature drops, tension rises
+  - beat: beat:lodge-aftermath1
+    becomes: guests shiver under thin blankets, atmosphere deepens
+  - beat: beat:hostess-post4-accuse
+    becomes: heating fails completely, freezing chaos ensues

@@ -1,0 +1,7 @@
+Smoke rose from the cracked hearth, curling in thin spirals that clung to the cold stone like breath from a dying animal.
+
+Jordan Blythe stood in the library as flames licked the lower shelves, amber tongues licking the spines of vellum and oak. The fire had already blackened the edge of the north wall, yet they did not retreat. The blaze threw shadows that danced across the marble floor, and Jordan felt the heat press against their back while the distant howl of the storm hammered the shutters. They knew the envelope was hidden among the rows, a clue the investigation could not afford to lose, and they moved forward despite the crackling danger.
+
+Smoke curled around Jordan's coat as they pushed deeper between the aisles, the air thick with ash. With a steady hand they lifted a pile of damp journals, the scent of pine sap rising from the cracked bindings. Beneath the journals an envelope lay, its wax seal still warm, and Jordan snatched it before a falling ember could consume the paper.
+
+The flames licked the shelves further, licking a forgotten corner where the envelope had rested. Jordan held the torn page aloft, the ragged edge revealing a name scrawled in hurried ink. The suspect's name glinted in the flickering light, a thin thread of evidence that might pull the case from the darkness. Jordan slipped the page into their notebook, noting the discovery before the fire threatened to swallow the remaining books.

@@ -1,0 +1,18 @@
+id: passage:p-publish
+summary: Jordan signs the article and sends it to the leading newspaper; the story catches
+  fire, turning public opinion against the heiress and forcing the investigation to confront
+  heightened pressure.
+entities:
+- character:author
+- character:hostess
+prose_summary: Jordan signs and folds a paper accusing the heiress of staging her death, hides
+  it in pocket, hands it to a Gazette messenger who puts it in satchel and exits through door.
+  Gazette prints front‑page headline; copies arrive on tea tray at lodge. Guests read, Marta
+  warns panic, deputy orders order, Jordan notes heat despite storm. Investigation now faces
+  questioning.
+beats:
+- beat:author-commit-publish
+- beat:author-post1-publish
+choices:
+- label: Read the anonymous note
+  to: passage:p-anonymous-threats

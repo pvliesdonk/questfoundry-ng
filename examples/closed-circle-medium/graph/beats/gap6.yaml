@@ -1,0 +1,9 @@
+id: bridge:gap6
+created_by: grow
+summary: The deputies' murmurs fade into the hallway, leading the investigator toward the
+  dim library where an old manuscript lies waiting.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- location:library

@@ -1,0 +1,16 @@
+id: beat:revolver-pre4--accuse-hostess
+created_by: grow
+summary: The investigator worries that handing the revolver to the sheriff could implicate
+  a guest, yet the plan to publicly ruin Marta’s credibility outweighs that fear.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

@@ -1,0 +1,24 @@
+id: passage:p-lockdown-revelation
+summary: The sheriff seals the lodge, and the investigator threads the tightening corridors
+  while the gathered clues coalesce around the real murderer; with Marta’s alibi destroyed,
+  she prepares to confront the hidden threat among the guests.
+entities:
+- faction:local-sheriff
+- character:author
+- character:hostess
+irrelevant_flags:
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Sheriff Hale orders doors sealed and guests stay inside. Jordan Blythe slips
+  past a deputy, grabs notebook, examines revolver, broken‑seal note, ash‑stained pipe, Marta's
+  fingerprint on the barrel, ledger of miner transactions, and travel receipt whose timestamp
+  conflicts with lodge clock. Jordan tears the receipt, concludes the murderer is a guest
+  with debts, and readies to announce the identity.
+beats:
+- beat:sheriff-post3-defy--accuse-hostess
+- beat:sheriff-post4-defy--accuse-hostess
+- bridge:gap71
+choices:
+- label: Expose the lodge’s secret
+  to: passage:p-truth-fatal-cost

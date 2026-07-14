@@ -1,0 +1,14 @@
+id: beat:miner-aftermath1
+summary: Cole disappears into the blizzard, his fate unknown, leaving a lingering threat behind
+  the lodge walls.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: complicates
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:release-miner

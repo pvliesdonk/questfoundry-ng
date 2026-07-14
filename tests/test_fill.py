@@ -9,11 +9,13 @@ from pydantic import ValidationError
 from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
+    VoiceProposal,
     WriteProposal,
     _fill_gate,
     _flag_status,
     _passes,
     _review_for,
+    _voice_apply,
     _write_apply_for,
     _write_context_for,
     reference_selection,
@@ -551,11 +553,15 @@ def test_fact_echo_allows_fresh_wording(golden_fill):
 
 def test_window_echo_fails_apply(golden_fill):
     """A run lifted verbatim from adjacent prose: the window is
-    continuity, not a style template."""
+    continuity, not a style template. The message carries the restated-
+    dialogue corrective (Closed Circle live run, 2026-07-14: a character
+    repeating their theory to the room re-transcribed the line and
+    exhausted repairs on a generic 'write fresh ones')."""
     apply = _write_apply_for("passage:p-tremor")
     lifted = "She waits for slack tide, when the water holds its breath"
-    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room") as exc:
         apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+    assert "say it in NEW words" in str(exc.value)
 
 
 def test_micro_detail_capped_at_one(golden_fill):
@@ -906,3 +912,161 @@ def test_overwriting_blocks_a_compound_flood_even_when_approved(golden_fill, mon
     # is purely the overwriting guardrail, not word_budget
     issues = review(WriteProposal(prose=_prose(200, 6)), golden_fill, FakeAdapter())
     assert issues and any("overwriting" in i for i in issues)
+
+
+# -- per-passage viewpoint + interludes (rotating-pov-build.md) ----------------
+
+
+def _render_write(project, passage_id):
+    from questfoundry.pipeline import runner
+
+    context = _write_context_for(passage_id)(project)
+    template = runner._environment().get_template("fill_write.j2")
+    return context, template.render(**context, notes="", repair_errors=[], research="")
+
+
+def _render_review(project, passage_id):
+    from questfoundry.pipeline import runner
+
+    context = _write_context_for(passage_id)(project)
+    template = runner._environment().get_template("fill_review.j2")
+    return template.render(
+        **context, prose="p", micro_review=[], revision_notes=[], prior_issues=[],
+        arbitration=None,
+    )
+
+
+def _set_passage_head(g, passage_id, viewpoint, interlude=False):
+    # in-memory annotation for consumption tests (the golden is frozen; the
+    # GROW-time write path is covered in test_grow / test_viewpoint)
+    from questfoundry.graph import queries
+
+    for bid in queries.beats_of_passage(g, passage_id):
+        beat = g.node(bid)
+        beat.viewpoint = viewpoint
+        beat.interlude = interlude
+
+
+def test_write_context_degrades_without_annotations(golden_fill):
+    # no beat carries a head -> the book-wide Voice.pov semantics
+    # (strip the golden's annotation: this is the pre-migration shape)
+    _set_passage_head(golden_fill.graph, "passage:p-arrival", None)
+    context, rendered = _render_write(golden_fill, "passage:p-arrival")
+    assert context["viewpoint"] is None and context["interlude"] is False
+    assert "THIS passage's viewpoint character" not in rendered
+    assert "TENSE IS ABSOLUTE" in rendered
+
+
+def test_write_prompt_names_the_passage_head(golden_fill):
+    _set_passage_head(golden_fill.graph, "passage:p-arrival", "character:keeper")
+    context, rendered = _render_write(golden_fill, "passage:p-arrival")
+    assert context["viewpoint"].id == "character:keeper"
+    assert "THIS passage's viewpoint character is\n   Maren Voss" in rendered or (
+        "THIS passage's viewpoint character is" in rendered and "Maren Voss" in rendered
+    )
+
+
+def test_write_prompt_marks_a_neighbor_head_switch(golden_fill):
+    g = golden_fill.graph
+    _set_passage_head(g, "passage:p-arrival", "character:keeper")
+    context = _write_context_for("passage:p-arrival")(golden_fill)
+    context["window"] = [
+        {"passage": g.node("passage:p-tremor"), "label": "go", "head": "Elias Wren"},
+        {"passage": g.node("passage:p-chart"), "label": "on", "head": "Maren Voss"},
+    ]
+    from questfoundry.pipeline import runner
+
+    rendered = (
+        runner._environment()
+        .get_template("fill_write.j2")
+        .render(**context, notes="", repair_errors=[], research="")
+    )
+    # a different head is flagged; the same head is not
+    assert "told from Elias Wren's viewpoint" in rendered
+    assert "told from Maren Voss's viewpoint" not in rendered
+
+
+def test_write_prompt_renders_the_interlude_register(golden_fill):
+    golden_fill.voice.interlude = (
+        "first-person past-tense journal entries in Maren Voss's voice"
+    )
+    _set_passage_head(
+        golden_fill.graph, "passage:p-arrival", "character:keeper", interlude=True
+    )
+    context, rendered = _render_write(golden_fill, "passage:p-arrival")
+    assert context["interlude"] is True
+    assert "THIS PASSAGE IS AN INTERLUDE" in rendered
+    assert "journal entries in Maren Voss's voice" in rendered
+    # the interlude register owns person/tense for this passage
+    assert "TENSE IS ABSOLUTE" not in rendered
+
+
+def test_review_prompt_keys_pov_to_the_passage_head(golden_fill):
+    _set_passage_head(golden_fill.graph, "passage:p-arrival", "character:keeper")
+    rendered = _render_review(golden_fill, "passage:p-arrival")
+    assert "viewpoint character: Maren Voss" in rendered
+
+
+def test_review_prompt_judges_an_interlude_against_its_register(golden_fill):
+    golden_fill.voice.interlude = "first-person journal entries in Maren Voss's voice"
+    _set_passage_head(
+        golden_fill.graph, "passage:p-arrival", "character:keeper", interlude=True
+    )
+    rendered = _render_review(golden_fill, "passage:p-arrival")
+    assert "THIS PASSAGE IS AN INTERLUDE" in rendered
+    assert "required POV:" not in rendered
+
+
+def test_voice_proposal_requires_an_interlude_decision(golden_fill):
+    with pytest.raises(ValidationError):
+        VoiceProposal(
+            pov="third person limited (Maren)", tense="past", diction="d",
+            rhythm="r", imagery="i", dialogue="g",
+        )
+    proposal = VoiceProposal(
+        pov="third person limited (Maren)", tense="past", diction="d",
+        rhythm="r", imagery="i", dialogue="g",
+        interlude="first-person past-tense journal entries (Elias Wren)",
+    )
+    golden_fill.voice = None
+    lines = _voice_apply(proposal, golden_fill)
+    assert golden_fill.voice.interlude.startswith("first-person")
+    assert "interlude:" in lines[0]
+
+
+def _interlude_proposal(interlude: str) -> VoiceProposal:
+    return VoiceProposal(
+        pov="third person limited (Maren)", tense="past", diction="d",
+        rhythm="r", imagery="i", dialogue="g", interlude=interlude,
+    )
+
+
+def test_voice_interlude_narrator_is_validated_against_the_cast(golden_fill):
+    golden_fill.voice = None
+    with pytest.raises(ApplyError, match="not a character"):
+        _voice_apply(_interlude_proposal("first-person journal entries (Nadia)"), golden_fill)
+
+
+def test_voice_interlude_without_a_parenthetical_narrator_is_repairable(golden_fill):
+    # the pov checker's no-parens early return must not silently skip the
+    # interlude (PR #74 review finding): an interlude always has a narrator,
+    # so the parenthetical is required, and the prompted paren-free phrasing
+    # is exactly the case that used to slip through
+    golden_fill.voice = None
+    with pytest.raises(ApplyError, match="names no narrator"):
+        _voice_apply(
+            _interlude_proposal("first-person journal entries in Maren Voss's voice"),
+            golden_fill,
+        )
+
+
+def test_review_prompt_renders_the_cast_for_actor_resolution(golden_fill):
+    """PR #74 review finding on 6dd9aca: the fidelity rule said 'resolve the
+    role against the cast below' but the template rendered no cast — the only
+    entity listing was gated on pronouns being set (never true for the
+    golden). The roster now renders unconditionally beside the rule, proven
+    on the rendered template, not the source."""
+    rendered = _render_review(golden_fill, "passage:p-arrival")
+    assert "THE CAST ON THIS PAGE" in rendered
+    assert "Maren Voss (character:keeper)" in rendered
+    assert "resolve the role against the cast" in rendered

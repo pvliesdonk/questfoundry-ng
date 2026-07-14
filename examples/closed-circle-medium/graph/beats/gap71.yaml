@@ -1,0 +1,9 @@
+id: bridge:gap71
+created_by: grow
+summary: Within the locked lodge, the investigator pieces together clues that point toward
+  the genuine murderer.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

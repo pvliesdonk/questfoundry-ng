@@ -8,3 +8,4 @@ purpose: residue
 created_by: polish
 entities: [character:keeper, character:cartographer]
 requires_flags: [flag:lie-between]
+viewpoint: character:keeper

@@ -1,0 +1,13 @@
+id: beat:lodge-lead3
+summary: Cole Duvall is seen lingering near the furnace just before the malfunction is discovered.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lodge-sabotage
+  effect: complicates
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:conceal-sabotage

@@ -1,0 +1,16 @@
+id: passage:p-simon-debt-lockdown
+summary: The discovery that Simon is hiding a substantial debt links him directly to the murder,
+  and the sheriff immediately seals the lodge with a strict lockdown.
+entities:
+- character:butler
+- faction:local-sheriff
+prose_summary: Simon carries a ledger showing his debt to a miner linked to the heiress murder.
+  Deputy Hale orders all exits sealed, bars doors, locks service tunnel, and keeps guests
+  in the main hall. The sheriff repeats the lockdown. Simon hides the ledger under his vest
+  while the fire burns low. Sheriff’s lantern provides light.
+beats:
+- beat:library-post3-stay
+- bridge:gap27
+choices:
+- label: scrutinize the fresh evidence
+  to: passage:p-lockdown-evidence

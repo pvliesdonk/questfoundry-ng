@@ -1,0 +1,9 @@
+id: bridge:gap41
+created_by: grow
+summary: 'The jammed carts force Jordan to choose: send the scandalous article to print or
+  hold it back.'
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:author

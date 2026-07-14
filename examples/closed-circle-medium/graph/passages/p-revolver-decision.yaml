@@ -1,0 +1,21 @@
+id: passage:p-revolver-decision
+summary: The investigator weighs the sheriff’s deputies’ demand for the revolver as a chance
+  to expose Marta’s false alibi and assert authority, but hesitates, fearing an innocent guest
+  might be implicated; the urge to publicly ruin Marta’s credibility ultimately outweighs
+  the concern.
+entities:
+- faction:local-sheriff
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Deputy Hale orders Jordan to place the revolver under sheriff control. Jordan
+  evaluates using the warm revolver to expose Marta Valen’s false alibi versus risking an
+  innocent guest. He decides the exposure matters more, hands the revolver to Hale, confirming
+  the evidence and granting sheriff jurisdiction.
+beats:
+- beat:revolver-pre3--accuse-hostess
+- beat:revolver-pre4--accuse-hostess
+- bridge:gap55
+choices:
+- label: Slide the revolver across to the deputy
+  to: passage:p-revolver-tension

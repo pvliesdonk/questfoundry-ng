@@ -1,0 +1,20 @@
+id: passage:p-marta-initiative
+summary: Marta, rebelling against the sheriff's accusation, seizes the initiative, and the
+  resulting chaos drives miner Cole to make a desperate attempt to escape.
+entities:
+- faction:local-sheriff
+- character:hostess
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta observes indifferent deputies and a silent sheriff, then she takes the
+  revolver from the central table, declares she will stop the killer, and confronts them.
+  Cole Duvall drops his pipe wrench, rushes to the back service door, slams it, and disappears
+  into the blizzard.
+beats:
+- beat:sheriff-post3-accept--accuse-hostess
+- bridge:gap65
+- bridge:gap69
+choices:
+- label: I push Cole toward the tunnel as he bolts for the exit
+  to: passage:p-cole-death-report

@@ -1,0 +1,11 @@
+id: beat:sheriff-accuse-defy-mem
+created_by: polish
+summary: A flicker of gunpowder scent lingers, and the investigator feels the sharp sting
+  of solitary defiance under the lodge’s grim grin.
+beat_class: structural
+purpose: residue
+entities:
+- object:old-revolver
+- location:lodge
+requires_flags:
+- flag:investigator-rogue

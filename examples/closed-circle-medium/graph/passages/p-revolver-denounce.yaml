@@ -1,0 +1,18 @@
+id: passage:p-revolver-denounce
+summary: The warm revolver sits on the desk, fresh fingerprints visible, as the investigator
+  readies a damning accusation against Marta's alibi.
+entities:
+- character:hostess
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan checks warm 1876 revolver, matches Marta Valen’s fingerprints, confirming
+  it was fired minutes ago. Jordan declares Marta’s alibi invalid, asserting she could not
+  have been in the library. The revolver becomes key evidence; the accusation raises tension
+  and forces Marta’s defense.
+beats:
+- beat:revolver-pre1--accuse-hostess
+- bridge:gap15
+choices:
+- label: Accuse Marta of fabricating her alibi
+  to: passage:p-revolver-accuse

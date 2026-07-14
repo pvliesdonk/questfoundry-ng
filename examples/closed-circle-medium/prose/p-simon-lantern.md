@@ -1,0 +1,9 @@
+The lantern sputtered, its weak flame catching the edge of a vellum‑bound manuscript that lay on a low table in the library. Its glow trembled across the cracked leather cover, briefly revealing the faded emblem before swallowing the light again. Simon watched the flame dance, feeling the thin heat on his wrist, then turned his back to the desk and stepped into the hallway.
+
+The corridor stretched ahead, its pine‑scented floor slick from the storm outside. He moved with the practiced silence of a servant who knew every concealed doorway and each echo that might betray a footfall. The stone walls rose cold and steady, the iron hinges of doors clanking only when he nudged them. Guests murmured beyond the doorways, but their words fell soft and distant, as if muffled by the snow that hammered the lodge’s windows.
+
+Simon’s mind kept the ledger of his debt hidden beneath the leather of his uniform. The cash he had slipped to Cole in the pantry still weighed against his ribs, a reminder of the promise made to the miner. He pressed the lantern forward, its light catching a stray scrap of paper on the floor, then let the flame die, preferring the darkness that concealed his purpose.
+
+He continued onward, the lantern’s flicker a brief pulse in the gloom, his steps measured and unseen. Outwardly, he offered the guests a calm smile, his posture immaculate, his loyalty unquestioned. Inside, the secret tangle of obligations tightened, a knot of desperation that no guest could perceive.
+
+The hallway opened onto the common room, where the fire sputtered low and the cold seeped through the cracks, and Simon paused, his breath a faint cloud in the dim light.

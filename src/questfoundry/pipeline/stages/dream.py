@@ -26,11 +26,21 @@ class DreamProposal(BaseModel):
 
 def _context(project: Project) -> dict:
     preset = project.vision.preset
-    return {"premise": project.vision.premise, "scope": preset}
+    return {
+        "premise": project.vision.premise,
+        "scope": preset,
+        "pov_hint": project.vision.pov_hint,
+    }
 
 
 def _apply(proposal: DreamProposal, project: Project) -> list[str]:
-    # premise and scope are the author's; everything else is the model's
+    # premise and scope are the author's; everything else — pov_hint
+    # included — is the model's translation of them. DREAM interprets, it is
+    # not micromanaged (author decision, 2026-07-14): the authored hint's
+    # only guarantee is that DREAM *sees* it (_context renders it as input —
+    # two live runs rewrote the scheme simply because the prompt was blind
+    # to it). A validation that needs the scheme pinned pins it at the
+    # operator level, not here.
     project.vision = Vision(
         premise=project.vision.premise,
         scope=project.vision.scope,

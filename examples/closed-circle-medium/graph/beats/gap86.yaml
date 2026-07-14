@@ -1,0 +1,9 @@
+id: bridge:gap86
+created_by: grow
+summary: While miners protest, Jordan drafts a trembling note reminding the investigator to
+  hold steady.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:author

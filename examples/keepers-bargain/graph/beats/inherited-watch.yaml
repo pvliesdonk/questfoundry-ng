@@ -10,3 +10,4 @@ dilemma_impacts:
 entities: [character:keeper, location:lighthouse]
 belongs_to: [path:mother-left]
 scene_type: sequel
+viewpoint: character:keeper

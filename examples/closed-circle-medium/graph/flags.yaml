@@ -1,0 +1,67 @@
+flags:
+- id: flag:clue-recovered
+  description: The hidden clue is retrieved, providing a breakthrough, while the library suffers
+    fire damage.
+  source: dilemma
+  path: path:stay-for-clue
+  derived_from:
+  - consequence:clue-recovered
+- id: flag:hostess-ruined
+  description: The hostess’s reputation is shattered, creating chaos but forcing the killer
+    into exposure.
+  source: dilemma
+  path: path:accuse-hostess
+  derived_from:
+  - consequence:hostess-ruined
+- id: flag:hostess-untouched
+  description: The hostess remains respected; suspicion lingers without a public showdown.
+  source: dilemma
+  path: path:silent-hostess
+  derived_from:
+  - consequence:hostess-untouched
+- id: flag:investigator-detained
+  description: The protagonist is arrested, halting personal probing; official channels continue.
+  source: dilemma
+  path: path:accept-arrest
+  derived_from:
+  - consequence:investigator-detained
+- id: flag:investigator-rogue
+  description: Defying the sheriff forces the protagonist to work clandestinely, deepening
+    the investigation.
+  source: dilemma
+  path: path:defy-sheriff
+  derived_from:
+  - consequence:investigator-rogue
+- id: flag:manuscripts-saved
+  description: All rare manuscripts are secured; the hidden clue is lost, leaving a gap in
+    evidence.
+  source: dilemma
+  path: path:evacuate-library
+  derived_from:
+  - consequence:manuscripts-saved
+- id: flag:revolver-concealed
+  description: The revolver is hidden, protecting the guest but obstructing justice.
+  source: dilemma
+  path: path:hide-revolver
+  derived_from:
+  - consequence:revolver-concealed
+- id: flag:revolver-in-custody
+  description: The old revolver is turned over to the sheriff, enabling formal forensic analysis.
+  source: dilemma
+  path: path:hand-revolver
+  derived_from:
+  - consequence:revolver-in-custody
+- id: flag:theory-published
+  description: The author’s incendiary article shapes public opinion, pressuring the heiress
+    and skewing the investigation.
+  source: dilemma
+  path: path:publish-theory
+  derived_from:
+  - consequence:theory-published
+- id: flag:theory-suppressed
+  description: The theory remains unpublished, keeping the investigation unbiased but losing
+    a potential lead.
+  source: dilemma
+  path: path:suppress-theory
+  derived_from:
+  - consequence:theory-suppressed

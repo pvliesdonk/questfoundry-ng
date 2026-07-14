@@ -1,0 +1,9 @@
+id: bridge:gap18
+created_by: grow
+summary: Simon fades into the shadows, and moments later Cole confronts Marta, accusing her
+  of exploiting the miners.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- character:miner

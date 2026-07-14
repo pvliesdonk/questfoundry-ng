@@ -1,0 +1,15 @@
+id: beat:sheriff-commit-accept--silent-hostess
+created_by: grow
+summary: The investigator yields to the sheriff’s arrest, stepping back after preserving Marta’s
+  alibi, and relinquishes further investigation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: commits
+entities:
+- faction:local-sheriff
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

@@ -1,0 +1,14 @@
+id: beat:butler-aftermath1
+summary: Simon continues to move silently through the lodge, his loyalty to the guests unquestioned
+  outwardly.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: complicates
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:avoid-confront

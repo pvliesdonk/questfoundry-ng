@@ -1,11 +1,18 @@
 # Rotating limited POV — a wanted feature (new record of intent)
 
-> Status: **WANTED / not yet designed** (2026-07-14). This records an author
-> intent that a **prior agent overrode**: rotating limited POV — a viewpoint
-> character that changes across the book (per passage or per section) while each
-> unit stays inside one head — is a real, foreseen literary choice the author
-> wants supported. It was previously written off as out of scope. This document
-> reverses that **going forward**; it does not rewrite the earlier record.
+> Status: **DESIGNED — see [`rotating-pov-build.md`](rotating-pov-build.md)**
+> (2026-07-14). The five open questions below were answered **by the author
+> directly** (2026-07-14, in-session): per-passage viewpoint, assigned by
+> GROW's annotate pass, no cadence engine constraint in v1, first-person
+> interludes in scope, golden coverage via annotating keepers-bargain + the
+> e2e fixture. This file stays as the record of intent and the live trigger.
+>
+> Original record: this documents an author intent that a **prior agent
+> overrode**: rotating limited POV — a viewpoint character that changes across
+> the book (per passage or per section) while each unit stays inside one head —
+> is a real, foreseen literary choice the author wants supported. It was
+> previously written off as out of scope. This document reverses that **going
+> forward**; it does not rewrite the earlier record.
 
 ## Why this exists (read this first)
 

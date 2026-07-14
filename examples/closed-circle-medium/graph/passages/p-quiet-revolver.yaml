@@ -1,0 +1,19 @@
+id: passage:p-quiet-revolver
+summary: Morning light illuminates the antique revolver on the desk, and the investigator
+  lets Marta’s story stand unchallenged, keeping tension low.
+entities:
+- character:hostess
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe stands in the study, examines the antique revolver with smudged
+  prints, and listens to Marta Valen’s account that she was alone in the library when the
+  scream occurred. Jordan decides not to challenge Marta, puts the notebook back in the coat
+  pocket, watches Marta near the brass rail, and preserves the hostess’s reputation, leaving
+  the investigation stalled.
+beats:
+- beat:revolver-pre1--silent-hostess
+- bridge:gap16
+choices:
+- label: Stash the revolver in the desk drawer
+  to: passage:p-revolver-heirloom

@@ -1,0 +1,19 @@
+id: passage:p-lockdown-corridors
+summary: Simon the butler leads the investigator through hidden corridors, letting the investigation
+  continue without questioning Marta’s story. Meanwhile, the sheriff imposes a full lockdown,
+  sealing the manor.
+entities:
+- character:butler
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Simon Kade holds lantern, leads Jordan Blythe through concealed arch after
+  deputy locks main hall, declaring full lockdown. Deputy seals exits, secures pantry and
+  back stair. Simon notes Jordan’s notebook, hidden family corridor, and avoids discussing
+  Marta’s story. Lockdown intensifies; each step advances investigation toward clue.
+beats:
+- beat:sheriff-post2-defy--silent-hostess
+- bridge:gap68
+choices:
+- label: Navigate the cramped corridor, keeping Marta’s alibi hidden
+  to: passage:p-lockdown-reveal

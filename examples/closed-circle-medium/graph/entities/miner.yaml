@@ -1,0 +1,22 @@
+id: character:miner
+name: Cole Duvall
+concept: Local miner with a gruff exterior and a hidden grudge
+pronouns: he/him
+base:
+  appearance: dusty overalls, muscular, scarred hands
+  manner: blunt, uneasy
+  deceased: 'true'
+arc:
+  begins: local miner, dusty overalls, muscular, scarred hands, harbors hidden grudge
+  pivots:
+  - beat: beat:miner-lead1
+    becomes: attempts desperate escape through the back service door
+  - beat: beat:miner-resolution
+    becomes: released by investigator, vanishes into the storm
+  - beat: beat:revolver-post5-hand-ending--accuse-hostess
+    becomes: dies from revolver backfire, confirming guilt
+  ends:
+  - path: path:hand-revolver
+    state: miner killed by revolver, evidence points to him
+  - path: path:hide-revolver
+    state: miner presumed dead in snow, fate ambiguous, suspicion lingers

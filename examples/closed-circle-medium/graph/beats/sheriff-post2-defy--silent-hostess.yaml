@@ -1,0 +1,15 @@
+id: beat:sheriff-post2-defy--silent-hostess
+created_by: grow
+summary: Simon the butler shares hidden corridors with the investigator, who continues the
+  investigation while keeping Marta’s story unchallenged.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:butler
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:defy-sheriff

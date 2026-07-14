@@ -1,0 +1,23 @@
+id: passage:p-bridge-gap77
+summary: 'The investigator’s fatal sacrifice leaves the revolver at a crossroads: the deputies
+  either claim it or it is hidden away, shaping the next move.'
+entities:
+- character:author
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe enters stone hallway, approaches oak table with warm walnut‑cased
+  revolver (cold iron cylinder). Deputy Hale stands by doorway with badge; partner holds rifle.
+  Marta Valen clutches broken‑seal note. Powder curl from earlier shot lingers. Jordan holds
+  notebook, then hesitates, able to either give revolver to Hale or hide it in table compartment.
+beats:
+- bridge:gap77
+choices:
+- label: Throw the revolver to the deputies, denounce Marta’s alibi
+  grants:
+  - flag:revolver-in-custody
+  to: passage:p-revolver-accusation
+- label: Slip the revolver into the hidden compartment, brand Marta’s alibi false
+  grants:
+  - flag:revolver-concealed
+  to: passage:p-marta-accusation

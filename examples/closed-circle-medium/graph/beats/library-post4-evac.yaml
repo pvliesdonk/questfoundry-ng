@@ -1,0 +1,14 @@
+id: beat:library-post4-evac
+summary: Investigator feels the weight of the missed clue, vowing to find another path to
+  truth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: advances
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library

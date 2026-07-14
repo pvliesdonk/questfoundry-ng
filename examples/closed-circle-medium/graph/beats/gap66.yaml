@@ -1,0 +1,9 @@
+id: bridge:gap66
+created_by: grow
+summary: While the sheriff’s office drags, Marta resolves to act independently, her alibi
+  untouched.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:hostess

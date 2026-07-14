@@ -152,13 +152,20 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
     for spec in proposal.paths:
         did = answer_dilemma.get(spec.explores)
         if did is None:
-            raise ApplyError(f"path {spec.id} explores unknown answer {spec.explores!r}")
+            raise ApplyError(
+                f"path {spec.id} explores unknown answer {spec.explores!r}; "
+                f"explores must name one of the brainstormed answer ids: "
+                f"{sorted(answer_dilemma)}"
+            )
         explored_by_dilemma.setdefault(did, set()).add(spec.explores)
 
     locked_reasons = {s.dilemma: s.reason for s in proposal.locked}
     unknown = sorted(set(locked_reasons) - set(answer_dilemma.values()))
     if unknown:
-        raise ApplyError(f"locked names unknown dilemma(s) {unknown}")
+        raise ApplyError(
+            f"locked names unknown dilemma(s) {unknown}; lock only real dilemmas — "
+            f"the ids are {sorted(set(answer_dilemma.values()))}"
+        )
 
     # Every dilemma gets a disposition: branched (both answers explored)
     # or locked (one answer explored, declared with a reason). Branched

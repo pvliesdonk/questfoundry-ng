@@ -1,0 +1,19 @@
+id: passage:p-case-closed-marta
+summary: The sheriff files the final report, sealing the investigation with a bland official
+  summary while the lodge’s dark humor hangs in the air and Marta’s ruined reputation lingers
+  as a sour reminder.
+entities:
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan stands at hall edge while Sheriff Hale places a ledger on the oak desk,
+  writes the final entry that concludes the investigation and seals the lodge records. Deputy
+  chuckles and makes a mocking remark. Marta Valen watches the ledger; her reputation is declared
+  ruined. Hale stamps the report, lifts the ledger, nods, exits; Jordan watches the seal imprint.
+beats:
+- beat:sheriff-post5-accept--accuse-hostess
+choices:
+- label: clamp the cold handcuffs around the investigator's wrists
+  requires:
+  - flag:investigator-detained
+  to: passage:p-cuffed-resignation

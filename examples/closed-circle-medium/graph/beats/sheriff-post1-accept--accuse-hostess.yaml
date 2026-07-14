@@ -1,0 +1,15 @@
+id: beat:sheriff-post1-accept--accuse-hostess
+created_by: grow
+summary: The sheriff escorts the investigator away, the official case proceeds under protocol
+  as the earlier public accusation against Marta looms over the investigation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: advances
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

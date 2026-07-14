@@ -1,0 +1,18 @@
+id: passage:p-sealed-passage-discovery
+summary: Simon reinforces the hidden passage, sealing it and monitoring all exits, and the
+  investigator later uncovers a discarded scrap that links the revolver to an unseen hand.
+entities:
+- character:butler
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Simon seals hidden oak door, bolts pantry door, locks back stair, places lantern
+  at garden entrance, inspects each exit for drafts. Jordan arrives, kneels at study, reads
+  torn scrap revealing line linking revolver case to unseen hand, matching fresh fingerprints.
+  Simon notes clue, keeps lantern low, monitors sealed passage and exits.
+beats:
+- beat:hostess-post3-silent
+- bridge:gap12
+choices:
+- label: inspect the torn scrap linking the revolver
+  to: passage:p-scrap-stall

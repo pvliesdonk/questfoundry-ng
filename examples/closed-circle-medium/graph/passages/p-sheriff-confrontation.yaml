@@ -1,0 +1,21 @@
+id: passage:p-sheriff-confrontation
+summary: Deputies demand the investigator’s arrest after he publicly accuses Marta, forcing
+  him to brace for a showdown while wrestling with his conflict between upholding justice
+  and protecting himself.
+entities:
+- faction:local-sheriff
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan enters main room; deputies line doorway with rifles and badges. Lead
+  deputy declares Jordan overstepped jurisdiction and orders arrest. Second deputy points
+  at revolver on oak table then lowers it. Crowd shifts. Jordan grips notebook, weighs option
+  to surrender notebook and inquiry versus hide notebook and continue investigation. Jordan
+  chooses to refuse arrest and demand answer; deputies tighten rifles.
+beats:
+- beat:sheriff-pre1--accuse-hostess
+- beat:sheriff-pre2--accuse-hostess
+- bridge:gap79
+choices:
+- label: Lean in as Marta whispers a quiet promise of aid
+  to: passage:p-marta-support

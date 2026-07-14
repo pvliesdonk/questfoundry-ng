@@ -1,0 +1,21 @@
+id: passage:p-resolute-hall
+summary: The investigator strides into the main hall, standing poised to either denounce Marta
+  before the assembled witnesses or to conceal her in silence.
+entities:
+- character:author
+- character:hostess
+prose_summary: Jordan enters main hall. Simon stands by fire with mug, Marta watches from
+  rail, Cole holds pipe wrench near doorway, deputy patrols perimeter. Revolver sits on central
+  table, broken‑seal note lies in brass tray, blankets rustle. Marta asserts she was alone
+  in library. Jordan prepares to either accuse Marta or remain silent, shaping the night.
+beats:
+- bridge:gap28
+choices:
+- label: Speak out, calling Marta's alibi a lie
+  grants:
+  - flag:hostess-ruined
+  to: passage:p-accuse-marta
+- label: Stand up and uphold Marta's alibi
+  grants:
+  - flag:hostess-untouched
+  to: passage:p-silent-alibi

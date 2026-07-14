@@ -1,0 +1,14 @@
+id: beat:lodge-aftermatter3
+summary: The hidden sabotage becomes a silent lever the murderer may still employ.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lodge-sabotage
+  effect: complicates
+entities:
+- character:miner
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:conceal-sabotage

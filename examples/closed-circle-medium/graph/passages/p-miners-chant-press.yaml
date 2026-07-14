@@ -1,0 +1,19 @@
+id: passage:p-miners-chant-press
+summary: The miners outside chant for swift justice, intensifying the pressure on the investigator
+  whose assault on Marta’s credibility has already sown doubt. Jordan quickly scribbles a
+  terse note urging the investigator to stand firm.
+entities:
+- character:miner
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Miners gather by iron doors, chanting for swift justice for Marta. Jordan Blythe
+  writes a terse note urging the investigator to hold firm, folds it, and places it on the
+  central table. The investigator stands rigid under pressure; Cole Duvall feels cold tightening
+  his scarred hands, expecting the night to last until the stone reveals its secret.
+beats:
+- beat:sheriff-pre4--accuse-hostess
+- bridge:gap85
+choices:
+- label: Read Jordan's trembling note and steel my resolve
+  to: passage:p-note-stand-firm

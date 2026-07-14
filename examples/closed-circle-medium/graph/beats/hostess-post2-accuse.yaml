@@ -1,0 +1,15 @@
+id: beat:hostess-post2-accuse
+summary: In the chaos, a hidden passage is uncovered, revealing a concealed body behind a
+  false wall.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: reveals
+entities:
+- location:lodge
+- character:butler
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accuse-hostess

@@ -36,6 +36,14 @@ the prose into a strobe of short fragments; keep sentences complete and varied i
 length. Clarity outranks atmosphere — after reading, a player must be able to say
 plainly what just happened.
 
+{% if interlude %}
+THIS PASSAGE IS AN INTERLUDE — a marked deviation from the book's base narration:
+{{ voice.interlude or "a first-person reflective piece in the viewpoint character's own voice" }}
+Write the whole passage in that register — its person, tense, and form override
+the VOICE's pov and tense above for this passage only (the review judges it
+against this register, not the book default). It is still ONE mind on the page:
+{% if viewpoint %}{{ viewpoint.name }}'s{% else %}the named narrator's{% endif %} — the no-other-minds rule below still holds.
+{% else %}
 TENSE IS ABSOLUTE: narrate in {{ voice.tense }} tense, every verb, start to
 finish — the review checks this verb by verb and it is the most common failure.
 Events that happened before this moment are still told in {{ voice.tense }}: a
@@ -43,9 +51,16 @@ present-tense voice renders a prior event in the present perfect or simple
 present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
 your first sentence back before anything else — that is where the wrong tense
 slips in.
+{% endif %}
 
 POINT OF VIEW — TWO SEPARATE RULES:
-1. NO OTHER MINDS. The POV above fixes whose mind the reader is inside. Only that
+1. NO OTHER MINDS. {% if viewpoint %}THIS passage's viewpoint character is
+   {{ viewpoint.name }} ({{ viewpoint.id }}){% if viewpoint.pronouns %} — pronouns {{ viewpoint.pronouns }}, exactly,
+   in every sentence (the head is named constantly; this is where a wrong
+   pronoun slips in){% endif %}: the reader is inside {{ viewpoint.name }}'s
+   mind and no other, whatever heads other passages use — the VOICE above names the
+   book's scheme; this line names the head that scheme assigns HERE.{% else %}The
+   POV above fixes whose mind the reader is inside.{% endif %} Only that
    narrator's thoughts, intentions, and feelings may be stated directly. Every
    other character reaches the reader only through what the narrator can observe —
    their actions, their speech, their expression. When a beat or an ARC POSITION
@@ -83,6 +98,12 @@ world aftermath, a fate that plays out beyond this scene, a character's reputati
 after they are gone. Write the shift cleanly at the paragraph — a limited scene may
 close into a wide coda — never as a mid-sentence leap. Do not widen a `limited`
 beat this way; the coda license belongs only to `wide`.
+BEFORE RETURNING, CHECK THE BEATS OFF: for each beat above, its named event
+must actually happen in your prose, in order, performed by the character the
+summary names (a summary's "the sheriff blames" is not satisfied by a deputy
+blaming). The most common fidelity failure is a beat silently dropped or its
+actor swapped while polishing style — verify each, then verify every
+character's pronouns against the cast below.
 
 CAST IN SCENE — facts are CONSTRAINTS, not choreography. Every fact below is
 already established: the scene must not contradict it, and the reader already
@@ -143,16 +164,21 @@ happened for every reader — WORLD STATE above governs what you may assert):
 WHAT THE READER JUST READ (continuity, not a style template): continue from it
 seamlessly — its events happened, its objects and weather persist. Do not
 reuse its imagery or repeat its phrasing; the reader just read those words,
-and a lifted run is rejected:
+and a lifted run is rejected — even inside dialogue: when a character restates
+something said there (a theory repeated to the room, a callback), they say it
+in NEW words, or the narration notes the repetition without re-transcribing
+the line. A neighbor told from a DIFFERENT viewpoint is
+still continuity of events — but its narrator's interiority stays there; this
+passage opens fresh inside its own head:
 {% for w in window %}
---- from {{ w.passage.id }} (arrived via "{{ w.label }}"):
+--- from {{ w.passage.id }} (arrived via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
 {{ w.passage.prose }}
 {% endfor %}
 {% endif %}
 {% if lookahead %}
 WHAT AWAITS (already written — land so it follows naturally, without echoing it):
 {% for w in lookahead %}
---- toward {{ w.passage.id }} (via "{{ w.label }}"):
+--- toward {{ w.passage.id }} (via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
 {{ w.passage.prose }}
 {% endfor %}
 {% endif %}
@@ -180,7 +206,11 @@ fact}. If nothing genuinely new surfaced, add nothing.
 {% if previous_draft and previous_draft.prose %}
 YOUR PREVIOUS DRAFT WAS REJECTED (do not repeat it — revise it so every finding
 below is resolved; a fresh draft that reintroduces the same problem will fail
-again):
+again). REVISE, DON'T REWRITE: keep every sentence the findings do not touch —
+the review re-checks EVERYTHING each round, so fixing one finding while
+regressing a constraint the draft already satisfied (a beat dropped, a pronoun
+slipped, a banned pattern reintroduced) fails the round exactly as hard.
+Targeted edits converge; fresh derivations whack-a-mole:
 ---
 {{ previous_draft.prose }}
 ---

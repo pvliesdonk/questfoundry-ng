@@ -1,0 +1,26 @@
+id: passage:p-revolver-confrontation
+summary: The sheriff’s deputies confront the investigator, warning that perjury will be punished
+  while the hidden revolver stays concealed, deepening his isolation after denouncing Marta.
+  Simon then uncovers the gun, its barrel repurposed as a tool of intimidation, and the tension
+  in the room rises sharply.
+entities:
+- object:old-revolver
+- faction:local-sheriff
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan hides a revolver in a false table panel. Deputy Hale and another deputy
+  warn Jordan about perjury. Simon Kade opens the panel, reveals the warm revolver, and declares
+  it will keep anyone quiet. The revolver’s presence increases tension and isolates Jordan
+  from authority.
+beats:
+- beat:revolver-post2-hide--accuse-hostess
+- bridge:gap45
+- bridge:gap47
+choices:
+- label: raise the concealed revolver and demand silence
+  to: passage:p-revolver-accuse-hostess

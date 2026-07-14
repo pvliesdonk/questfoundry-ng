@@ -1,0 +1,16 @@
+id: passage:p-library-envelope
+summary: The investigator stays inside the burning library, pushing through smoke to retrieve
+  the hidden envelope. Flames lick the shelves, but the recovered torn page names a suspect.
+entities:
+- character:author
+- object:old-revolver
+prose_summary: Jordan enters burning library, advances despite flames, lifts damp journals,
+  retrieves warm‑sealed envelope, extracts torn page with suspect name, records it in notebook.
+  Fire spreads, threatening shelves and remaining books.
+beats:
+- beat:library-commit-stay
+- beat:library-post1-stay
+- bridge:gap21
+choices:
+- label: Snatch the torn page
+  to: passage:p-burning-revelation

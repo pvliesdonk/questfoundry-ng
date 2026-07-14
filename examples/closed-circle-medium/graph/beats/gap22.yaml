@@ -1,0 +1,8 @@
+id: bridge:gap22
+created_by: grow
+summary: The rescued books are carried out while guests, coughing, spill into the cold hallway.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:hostess

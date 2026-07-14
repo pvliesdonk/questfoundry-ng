@@ -1,0 +1,15 @@
+id: beat:hostess-pre4
+summary: Cole confronts Marta, accusing her of despising the miners and possibly framing them.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- character:miner
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:accuse-hostess
+- path:silent-hostess

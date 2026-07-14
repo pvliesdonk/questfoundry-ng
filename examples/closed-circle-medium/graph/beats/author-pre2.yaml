@@ -1,0 +1,15 @@
+id: beat:author-pre2
+summary: Investigator notes that publishing the theory could sway public opinion and bias
+  the case.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: complicates
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory
+- path:suppress-theory

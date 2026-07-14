@@ -39,7 +39,7 @@ from questfoundry.pipeline.stages.polish import (
 )
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
-from tests.conftest import make_dilemma
+from tests.conftest import make_dilemma, narrative_beat
 from tests.test_weave import scaffold
 
 
@@ -598,6 +598,26 @@ def test_llm_beat_entities_must_be_ids(vision, tmp_path):
         _finalize_apply(FinalizeProposal(residue=[spec]), project)
 
 
+def test_residue_world_on_shared_convergence_names_the_corrective(vision, tmp_path):
+    """Closed Circle live run (2026-07-14): a residue arm attached a world to
+    a convergence listed without one and exhausted repairs — the message
+    showed the valid set but never the corrective. It now instructs (AGENTS
+    error contract): a shared convergence takes no world."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    spec = ResidueSpec(
+        dilemma=need.dilemma,
+        path=sorted(need.path_flags)[0],
+        world="path:not-a-world" if not need.world else "",
+        id="beat:afterglow",
+        summary="s",
+    )
+    with pytest.raises(ApplyError, match="listed WITHOUT a world is shared"):
+        _finalize_apply(FinalizeProposal(residue=[spec]), project)
+
+
 def test_b6_choice_cadence_measures_feel(golden):
     """B6 (advisory): story size FEELS like words traversed per genuine
     choice (calibration decision, 2026-07-09 — the medium live run read
@@ -783,3 +803,69 @@ def test_arcs_apply_accepts_every_retained_category(golden):
     golden.graph.node("character:sleeper").retained = False
     with pytest.raises(ApplyError, match="not a retained entity"):
         _arcs_apply(ArcsProposal(arcs=[ArcSpec(entity="character:sleeper", begins="x")]), golden)
+
+
+# -- collapse: viewpoint cut (rotating-pov-build.md) ---------------------------
+
+
+def _viewpoint_chain(g: StoryGraph, heads: list[tuple[str | None, bool] | None]) -> list[str]:
+    """A linear run of beats with the given per-beat (viewpoint, interlude)
+    annotations (None = unannotated wildcard)."""
+    d, pa, pb = make_dilemma(g, "one")
+    ids = []
+    prev = None
+    for i, head in enumerate(heads):
+        beat = narrative_beat(f"run{i}", d)
+        if head is not None:
+            beat.viewpoint, beat.interlude = head
+        mutations.add_beat(g, beat, [pa, pb])
+        if prev:
+            mutations.add_ordering(g, prev, beat.id)
+        prev = beat.id
+        ids.append(beat.id)
+    return ids
+
+
+def test_collapse_cuts_at_a_head_switch():
+    g = StoryGraph()
+    a = ("character:eleanor", False)
+    b = ("character:charles", False)
+    ids = _viewpoint_chain(g, [a, a, b, b])
+    groups = pc.collapse_groups(g, split_viewpoints=True)
+    assert ids[:2] in groups and ids[2:] in groups
+
+
+def test_collapse_default_mode_ignores_viewpoints():
+    # the raw choice-topology runs (cadence planning) stay uncut: a
+    # head-switch chunks prose, not choices
+    g = StoryGraph()
+    ids = _viewpoint_chain(g, [("character:eleanor", False), ("character:charles", False)])
+    assert ids in pc.collapse_groups(g)
+
+
+def test_collapse_wildcards_merge_across_and_ride_the_run_head():
+    # an unannotated beat (bridge/residue/false-branch, wide coda) merges
+    # anywhere; a later annotated beat is held to the group's settled head
+    g = StoryGraph()
+    a = ("character:eleanor", False)
+    b = ("character:charles", False)
+    ids = _viewpoint_chain(g, [a, None, a, None, b])
+    groups = pc.collapse_groups(g, split_viewpoints=True)
+    assert ids[:4] in groups and [ids[4]] in groups
+
+
+def test_collapse_never_merges_interlude_with_base_register():
+    # a journal entry and base narration never share a passage, even in
+    # the same head
+    g = StoryGraph()
+    ids = _viewpoint_chain(
+        g, [("character:eleanor", False), ("character:eleanor", True)]
+    )
+    groups = pc.collapse_groups(g, split_viewpoints=True)
+    assert [ids[0]] in groups and [ids[1]] in groups
+
+
+def test_collapse_headless_run_is_one_group():
+    g = StoryGraph()
+    ids = _viewpoint_chain(g, [None, None, None])
+    assert ids in pc.collapse_groups(g, split_viewpoints=True)

@@ -1,0 +1,19 @@
+id: passage:p-library-spark
+summary: The fire alarm is dead and a spark threatens the dusty stacks; the investigator pulls
+  a sealed envelope from a rare volume just as Simon warns that the stove behind the shelves
+  is volatile.
+entities:
+- location:library
+- character:author
+- character:butler
+prose_summary: Jordan moves deeper into Highpine Library, spots ember on vellum, brushes it
+  off, notices leather‑bound treatise, envelope falls with warm wax seal matching earlier
+  clue, feels pine sap scent, Simon enters, warns stove instability and hidden flues, Jordan
+  pockets envelope, flame remains smoldering but contained, risk of fire persists.
+beats:
+- beat:library-pre1
+- beat:library-pre2
+- bridge:gap31
+choices:
+- label: Pull the manuscript from the shelf
+  to: passage:p-stove-manuscript

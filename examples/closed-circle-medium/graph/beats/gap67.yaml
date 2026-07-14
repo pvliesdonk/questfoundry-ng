@@ -1,0 +1,9 @@
+id: bridge:gap67
+created_by: grow
+summary: Simon’s assistance leads the investigator into the lodge just as the sheriff declares
+  a lockdown.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- faction:local-sheriff

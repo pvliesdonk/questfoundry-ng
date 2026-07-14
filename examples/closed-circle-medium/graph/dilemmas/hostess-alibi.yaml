@@ -1,0 +1,21 @@
+id: dilemma:hostess-alibi
+question: Do you publicly accuse the hostess of fabricating her alibi, risking her ruin, or
+  keep silent to preserve her reputation while suspicion lingers?
+why_it_matters: Exposing the lie could force the killer into the open but destroy the hostess's
+  life; silence maintains order but may let the murderer slip away.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:accuse-hostess
+  text: Declare the hostess's alibi false in front of the group.
+- id: answer:silent-hostess
+  text: Let the hostess's story stand, avoiding public scandal.
+anchored_to:
+- character:hostess
+- character:detective
+- character:butler
+wraps:
+- dilemma:library-fire
+serial:
+- dilemma:revolver-choice

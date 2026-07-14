@@ -1,0 +1,9 @@
+id: bridge:gap2
+created_by: grow
+summary: As the deputy's questions echo through the hallway, the murmurs among the guests
+  swell, setting the stage for fractures to emerge.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:butler

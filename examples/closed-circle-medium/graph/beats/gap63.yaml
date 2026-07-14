@@ -1,0 +1,9 @@
+id: bridge:gap63
+created_by: grow
+summary: The investigator slips into shadowed corridors, where Simon later offers clandestine
+  aid.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:butler

@@ -1,0 +1,9 @@
+id: bridge:gap70
+created_by: grow
+summary: With Marta acting alone, the tension heightens as Cole tries to flee, meeting a grim
+  fate.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- character:miner

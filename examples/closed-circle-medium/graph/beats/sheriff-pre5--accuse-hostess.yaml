@@ -1,0 +1,16 @@
+id: beat:sheriff-pre5--accuse-hostess
+created_by: grow
+summary: Author Jordan scribes a terse note urging the investigator to stand firm, his shaking
+  ink reflecting resolve after the public ruin of Marta’s alibi.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

@@ -1,0 +1,21 @@
+id: passage:p-marta-support
+summary: The investigator, torn between duty and self‑preservation, receives a quiet promise
+  of aid from Marta, who warns that accusing her alibi and opposing the sheriff could endanger
+  everyone, just as a chorus of miners erupts, demanding swift justice and drowning her encouragement.
+entities:
+- character:author
+- character:hostess
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta slips a note to the investigator offering the cellar as a workspace,
+  warns him that defying the sheriff will seal the lodge and snow will drown escape if his
+  charge rises. She notes a warm revolver on the oak table. Miners chant demanding the guilty
+  before the furnace, drowning her warning and threatening the truce.
+beats:
+- beat:sheriff-pre3--accuse-hostess
+- bridge:gap81
+- bridge:gap83
+choices:
+- label: Steady my resolve as the miners chant for swift justice
+  to: passage:p-miners-chant-press

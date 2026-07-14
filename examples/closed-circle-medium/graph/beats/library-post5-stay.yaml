@@ -1,0 +1,14 @@
+id: beat:library-post5-stay
+summary: Investigator uses the new evidence to press harder, the stakes climbing with each
+  breath of smoke.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: advances
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:stay-for-clue

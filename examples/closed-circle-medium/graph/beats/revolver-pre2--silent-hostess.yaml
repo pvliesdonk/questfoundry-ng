@@ -1,0 +1,17 @@
+id: beat:revolver-pre2--silent-hostess
+created_by: grow
+summary: Simon discloses the revolver’s heirloom status, and the investigator decides to preserve
+  Marta’s reputation, holding back any public accusation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:butler
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

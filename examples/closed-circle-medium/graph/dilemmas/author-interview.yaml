@@ -1,0 +1,16 @@
+id: dilemma:author-interview
+question: Do you let the famed author publish their controversial theory blaming the heiress,
+  which could swing public opinion, or suppress it to keep the investigation unbiased?
+why_it_matters: Publishing could pressure the heiress into confession or sabotage the case;
+  suppressing maintains neutrality but forfeits a possible lead.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:publish-theory
+  text: Allow the author's theory to hit the press.
+- id: answer:suppress-theory
+  text: Prevent the article from being released.
+anchored_to:
+- character:author
+- character:heiress

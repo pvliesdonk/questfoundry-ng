@@ -1,0 +1,16 @@
+id: beat:revolver-post4-hide--silent-hostess
+created_by: grow
+summary: The hidden revolver discharges a second victim, while the investigator’s silence
+  on Marta’s alibi keeps her reputation intact, but the secret weapon continues to spark deadly
+  confusion.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

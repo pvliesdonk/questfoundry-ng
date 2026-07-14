@@ -1,0 +1,9 @@
+id: bridge:gap21
+created_by: grow
+summary: Smoke curls as the investigator pushes deeper, rescuing the envelope from the burning
+  shelves.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- object:old-revolver

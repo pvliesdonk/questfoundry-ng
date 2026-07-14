@@ -1,0 +1,24 @@
+id: passage:p-fracture-trust
+summary: Sheriff’s officers publicly challenge the investigator’s impartiality, citing media
+  bias, while the deputy’s probing questions reverberate through the hallway, amplifying murmurs
+  among the guests; accusations erupt, shattering trust and plunging the group into chaotic
+  suspicion.
+entities:
+- faction:local-sheriff
+- character:butler
+- character:author
+- character:miner
+prose_summary: Deputy Hale questions Jordan about article bias; Jordan faces the sheriff’s
+  men. Marta grips blanket, Simon tightens jaw, Cole holds pipe wrench. Guests shout accusations
+  toward author, butler, and miner, pointing at printed headline. Group trust fractures; Deputy
+  warns any further bias triggers legal penalty.
+beats:
+- beat:author-post3-publish
+- beat:author-post4-publish
+- bridge:gap2
+choices:
+- label: Walk the mine shafts, the cold wind whistling while the published theory circles
+    my mind
+  requires:
+  - flag:theory-published
+  to: passage:p-theory-published-mine

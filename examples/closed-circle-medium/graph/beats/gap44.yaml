@@ -1,0 +1,9 @@
+id: bridge:gap44
+created_by: grow
+summary: The old revolver slides silently into a hidden niche, while Marta's reputation remains
+  unblemished.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- character:author

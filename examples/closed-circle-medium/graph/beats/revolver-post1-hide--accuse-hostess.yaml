@@ -1,0 +1,16 @@
+id: beat:revolver-post1-hide--accuse-hostess
+created_by: grow
+summary: The investigator’s accusation of Marta hangs over the lodge as the hidden revolver
+  protects the guest suspected of ownership, keeping the gun out of official hands and the
+  case tangled.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

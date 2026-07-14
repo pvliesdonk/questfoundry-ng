@@ -1,0 +1,20 @@
+id: passage:p-sheriff-arrest
+summary: The sheriff arrests the investigator after the public accusation against Marta and
+  escorts them to custody, initiating a formal case. The accusation looms over the sluggish
+  review of evidence in the sheriff’s office.
+entities:
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Sheriff Hale reads charge, displays badge, handcuffs Jordan Blythe, who places
+  notebook on desk. Hale opens oak door to waiting truck, escorts Jordan down corridor while
+  deputy men hold rifles. Hale holds protocol handbook. Senior deputy sorts open file, turns
+  pages, writes brief notes on stamped top sheet. Official case proceeds; personal investigation
+  remains dormant.
+beats:
+- beat:sheriff-commit-accept--accuse-hostess
+- beat:sheriff-post1-accept--accuse-hostess
+- beat:sheriff-post2-accept--accuse-hostess
+choices:
+- label: Burst through the hallway toward the uproar
+  to: passage:p-marta-initiative

@@ -1,0 +1,17 @@
+id: passage:p-anonymous-threats
+summary: Marta discovers an anonymous note demanding she withdraw the heiress’s name, and
+  as night deepens the threat sits unopened while the sheriff’s men file paperwork in the
+  next town, marking a tense lull between menace and accusation.
+entities:
+- character:hostess
+- faction:local-sheriff
+prose_summary: Marta Valen takes an envelope, reads an anonymous note demanding she withdraw
+  the heiress’s name, and returns it to the brass tray. A storm rages outside. A courier delivers
+  a satchel to the clerk’s desk, where uniformed men begin filing paperwork. The note stays
+  beside the hearth; Marta rests her hand on the stone rail, prepared for the next demand.
+beats:
+- beat:author-post2-publish
+- bridge:gap0
+choices:
+- label: Challenge the sheriff’s officers publicly
+  to: passage:p-fracture-trust

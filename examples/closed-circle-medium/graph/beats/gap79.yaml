@@ -1,0 +1,8 @@
+id: bridge:gap79
+created_by: grow
+summary: The deputies’ rebuke fuels the investigator’s inner turmoil over the next steps.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

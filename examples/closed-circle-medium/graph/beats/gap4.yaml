@@ -1,0 +1,9 @@
+id: bridge:gap4
+created_by: grow
+summary: The investigator sips stale coffee, contemplating influence, while Marta steps into
+  the study, warning of the article's potential hysteria.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:hostess

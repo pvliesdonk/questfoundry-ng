@@ -1,0 +1,19 @@
+id: passage:p-debt-cold
+summary: The hidden debt lingers as an unspoken motive while the conversation about it dissolves
+  into a chilling draft; the guests huddle under thin blankets, shivering as an uneasy silence
+  tightens the lodge’s claustrophobic atmosphere.
+entities:
+- character:miner
+- character:butler
+- location:lodge
+prose_summary: Jordan steps from the hearth, sees Simon Kade standing rigid, hears the butler
+  announce Cole Duvall's hinted debt and the word payment cut off by furnace hiss; cold drafts
+  enter through cracked windows, Marta Valen and other guests pull blankets, Simon’s mug trembles,
+  the revolver on the table dims, Jordan notes the hidden debt will surface later.
+beats:
+- beat:butler-aftermath3
+- beat:lodge-aftermath1
+- bridge:gap8
+choices:
+- label: follow the icy water into the frozen hallway
+  to: passage:p-ice-sabotage

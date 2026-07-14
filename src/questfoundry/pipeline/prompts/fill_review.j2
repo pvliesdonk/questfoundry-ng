@@ -27,8 +27,21 @@ same way — or "warn" for a concern or a matter of taste. The rules:
 - voice_pov / voice_tense — the contract REQUIRES this point of view and
   tense; prose written in them is correct, so a defect exists only if the
   prose DEPARTS from them:
+{% if interlude %}
+    THIS PASSAGE IS AN INTERLUDE — its required register (person, tense, form)
+    is: {{ voice.interlude or "a first-person reflective piece in the viewpoint character's own voice" }}
+    Judge voice_pov and voice_tense against THAT register, not the book-default
+    pov/tense; prose in the interlude's own person and tense is correct.
+{% else %}
     required POV: {{ voice.pov }}
     required tense: {{ voice.tense }}
+{% endif %}
+{% if viewpoint %}
+    THIS passage's viewpoint character: {{ viewpoint.name }} — the one mind the
+    narration may enter here (the required POV above names the book's scheme;
+    this names the head it assigns to THIS passage). Another passage using a
+    different head is not this passage's concern.
+{% endif %}
   A POV departure means the narrating character is rendered in the wrong
   person, or the narration enters another character's mind (states a
   non-narrator's private thoughts, intentions, or feelings as fact). Other
@@ -45,9 +58,18 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   in the text:
   - {{ voice.banned | join("
   - ") }}
-  Banned patterns match LITERALLY: a banned rhetorical question must be a
-  question in the text; a ban aimed at the reader is not violated by words one
-  character speaks to another — dialogue is never reader-address.
+  Banned patterns match LITERALLY. A ban about ADDRESS — "second-person
+  address", "you/your", "rhetorical questions (to the reader)", any ban whose
+  point is who the prose speaks TO — is about the NARRATION addressing the
+  reader and NEVER matches words inside quotation marks: characters say "you"
+  to each other; that is dialogue, not reader-address. Mechanical check
+  before flagging such a ban: is the candidate text inside quotation marks?
+  Then there is no finding. (Bans on diction, idiom, or punctuation still
+  apply everywhere, including dialogue, unless they say otherwise.) A ban on
+  dialogue tags is about the tag VERB ("murmured", "exclaimed breathlessly"):
+  a plain "said" with the speaker's name — "said Jordan", "Jordan said" — IS
+  the plain said-tag and never violates a tags-are-said rule; naming the
+  speaker is grammar, not ornament.
 {% endif %}
 - beat_infidelity — a required beat is missing, out of order, or contradicted
   (each beat is tagged with its INTENSITY, which governs its register, not its
@@ -55,7 +77,19 @@ same way — or "warn" for a concern or a matter of taste. The rules:
 {% for b in beats %}
   - [{{ beat_scene[b.id] }} · {{ beat_scope[b.id] }}] {{ b.summary }}
 {% endfor %}
-  Fidelity is about EVENTS. How a beat is rendered — interiority, emphasis,
+  THE CAST ON THIS PAGE (who is who — resolve any role or epithet a summary
+  uses against these people before judging fidelity):
+{% for e in entities %}
+  - {{ e.name }} ({{ e.id }}) — {{ e.concept }}
+{% endfor %}
+  Fidelity is about EVENTS. Match actors by WHO they are, not by the word used:
+  a summary that names a character by role ("the investigator", "the hostess")
+  is satisfied by prose naming the same character from the cast above —
+  resolve the role against the cast before flagging. A defect exists
+  only when a DIFFERENT person performs the event (a deputy delivering what the
+  summary assigns to the sheriff), never when the same person appears under
+  another of their names.
+  How a beat is rendered — interiority, emphasis,
   what stays ambiguous, whose eyes we feel it through — is craft, not fidelity.
   The scenery a beat names (time of day, weather, light, an incidental object)
   is rendering: a beat "morning light reveals the cracks" is fulfilled by any

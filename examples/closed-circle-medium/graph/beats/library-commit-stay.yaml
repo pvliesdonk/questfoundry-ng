@@ -1,0 +1,13 @@
+id: beat:library-commit-stay
+summary: Investigator remains inside, risking the blaze to retrieve the concealed envelope.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: commits
+entities:
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:stay-for-clue

@@ -1,0 +1,5 @@
+The winter wind rattled the lodge eaves as the press retreated to their notes, their pens scratching in the dim light. In the quiet that followed, Marta Valen found the space to turn to the investigator, the thin firelight casting a brief glow on the stone floor.
+
+She thanked the investigator in a voice that steadied despite the cold, then said that on the night of the murder she had heard a muffled argument coming from the service corridor. A voice, she recalled, had spoken of a load of ore delayed and a promise broken, a grievance the miner had carried back to his shift. That detail had never left her lips before, but now it slipped into the conversation, a piece of the night she had kept hidden.
+
+Marta’s gratitude faded as they stepped back into the lodge’s hushed corridors. The hallways swallowed their words, and the lack of outcry let the miner’s unvoiced grievances linger like cold in the stone, waiting for someone to hear them.

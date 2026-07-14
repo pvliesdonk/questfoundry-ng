@@ -1,0 +1,18 @@
+id: beat:revolver-post5-hide-ending--silent-hostess
+created_by: grow
+summary: The hidden revolver misfires, killing the investigator; the weapon remains concealed
+  to protect the guest, while Marta’s reputation stays intact, leaving the darkly comic ending
+  unresolved.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- character:author
+- object:old-revolver
+is_ending: true
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

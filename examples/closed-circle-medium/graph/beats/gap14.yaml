@@ -1,0 +1,9 @@
+id: bridge:gap14
+created_by: grow
+summary: The night deepens around the unearthed scrap, and with no new leads the investigation
+  stalls.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- character:hostess

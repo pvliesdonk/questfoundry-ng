@@ -1,0 +1,6 @@
+id: path:release-miner
+name: Release Miner
+explores: answer:release-miner
+consequences:
+- id: consequence:miner-freed
+  text: The miner is allowed to leave, maintaining his freedom but risking further violence.

@@ -1,0 +1,22 @@
+id: passage:p-cart-jam-choice
+summary: A pile of coal carts blocks the tunnel, turning any escape into a gamble; Jordan
+  faces the split‑second decision to send the scandalous article to print or keep it hidden.
+entities:
+- character:miner
+- character:author
+prose_summary: Coal carts block the service tunnel, forming a dead‑end. Jordan holds a folded
+  sheet naming the heiress and accusing the town’s power brokers; his other hand hovers over
+  a notebook. Cole grips an idle pipe wrench, feels cold, and vows to stop paper’s misuse.
+  Jordan must either give the paper to the printer or fold it, choosing scandal or silence.
+beats:
+- beat:miner-lead4
+- bridge:gap41
+choices:
+- label: send the scandalous article to print
+  grants:
+  - flag:theory-published
+  to: passage:p-publish
+- label: withhold the article for now
+  grants:
+  - flag:theory-suppressed
+  to: passage:p-press-suppressed

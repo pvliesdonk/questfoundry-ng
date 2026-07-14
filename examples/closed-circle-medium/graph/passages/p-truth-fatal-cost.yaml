@@ -1,0 +1,19 @@
+id: passage:p-truth-fatal-cost
+summary: The investigator exposes the lodge’s secret, but the revelation costs his life and
+  leaves Marta’s disgrace irrevocably sealed.
+entities:
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe accuses Marta Valen, presenting her fingerprints and false alibi,
+  and declares the murder solved. The deputy sheriff grabs the revolver, fires, and kills
+  Jordan. Marta clutches a broken‑seal note; the lieutenant ends the investigation without
+  the investigator. Jordan’s notebook falls open to a final line stating truth has a price.
+  Marta’s disgrace is sealed.
+beats:
+- beat:sheriff-post5-defy--accuse-hostess
+choices:
+- label: I stare the sheriff down and shout, I'm not the one you're accusing!
+  requires:
+  - flag:investigator-rogue
+  to: passage:p-rogue-defiance

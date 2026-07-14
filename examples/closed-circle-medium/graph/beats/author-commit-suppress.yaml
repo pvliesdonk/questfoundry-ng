@@ -1,0 +1,13 @@
+id: beat:author-commit-suppress
+summary: Investigator persuades Jordan to hold the article back, keeping the theory unpublished.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: commits
+entities:
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:suppress-theory

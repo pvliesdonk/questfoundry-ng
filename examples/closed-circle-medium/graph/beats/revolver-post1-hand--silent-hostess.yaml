@@ -1,0 +1,17 @@
+id: beat:revolver-post1-hand--silent-hostess
+created_by: grow
+summary: The sheriff’s deputies receive the revolver for analysis, confirming miner Cole Duvall’s
+  prints, while the investigator keeps Marta’s alibi unchallenged, leaving the lodge uneasy
+  but the suspect identified.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:miner
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

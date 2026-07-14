@@ -1,0 +1,14 @@
+id: beat:library-pre1
+summary: The fire alarm is inoperative; a sudden spark threatens the dusty stacks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- location:library
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library
+- path:stay-for-clue

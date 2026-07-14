@@ -1,0 +1,16 @@
+id: beat:sheriff-pre1--silent-hostess
+created_by: grow
+summary: Deputies warn the investigator of jurisdictional overreach; the investigator, who
+  kept Marta’s alibi untouched, readies for the inevitable clash.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

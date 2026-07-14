@@ -1,0 +1,18 @@
+id: passage:p-miner-protest
+summary: Miner protesters crowd the town square demanding justice, and the investigator bears
+  their weight while shielding Marta’s reputation; at the same time, Jordan scribbles a trembling
+  note urging the investigator to hold steady.
+entities:
+- character:miner
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Miner crowd pressures town square; investigator stands at hearth, watches Marta
+  and holds crowd back; Cole observes both crowd and investigator; Jordan writes trembling
+  note saying stay firm, holds it; note promises steadiness; tension remains high.
+beats:
+- beat:sheriff-pre4--silent-hostess
+- bridge:gap86
+choices:
+- label: Grip the trembling note and melt into the crowd
+  to: passage:p-sheriff-or-veil

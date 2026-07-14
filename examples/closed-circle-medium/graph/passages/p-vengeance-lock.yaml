@@ -1,0 +1,19 @@
+id: passage:p-vengeance-lock
+summary: Cole mutters about vengeance, his eyes narrowing on Marta, and Simon reinforces the
+  locked passage while assigning surveillance to every exit.
+entities:
+- character:miner
+- character:hostess
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Cole Duvall states vengeance; Marta Valen watches. Simon Kade closes the heavy
+  oak service‑tunnel door, latches the pantry door, secures the back stair, places a lantern
+  by the garden entrance, and declares all exits sealed to the deputy, who nods. Cole tightens
+  his pipe wrench grip.
+beats:
+- beat:hostess-post2-silent
+- bridge:gap10
+choices:
+- label: Seal the hidden passage and monitor every exit
+  to: passage:p-sealed-passage-discovery

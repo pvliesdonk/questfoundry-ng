@@ -1,0 +1,16 @@
+id: beat:library-pre2
+summary: Investigator notes a sealed envelope tucked inside a rare volume that could hold
+  a decisive clue.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- location:library
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library
+- path:stay-for-clue

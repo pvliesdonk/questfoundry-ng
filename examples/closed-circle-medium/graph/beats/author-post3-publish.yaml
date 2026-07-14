@@ -1,0 +1,14 @@
+id: beat:author-post3-publish
+summary: Sheriff’s officers begin questioning the investigator’s objectivity, citing media
+  bias.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory

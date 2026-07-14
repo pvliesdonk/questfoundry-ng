@@ -11,11 +11,58 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 > §"Documentation contract"). An item's framing is an agent's, not the author's,
 > unless it says otherwise.
 
+## Prompt & error-message quality
+
+- [ ] **Prompt-template audit (all 28 templates), author-requested 2026-07-14.**
+  The repair-*message* audit is done (decision log, 2026-07-14: all 79
+  `ApplyError` sites judged, 17 fixed) after a blunt finalize message survived
+  earlier claimed audits; the *prompt* half has NOT had the same exhaustive
+  pass and must not be assumed audited. Audit each template against AGENTS.md
+  §"Prompt and error-message quality" (rules structurally enforced, intent
+  explicit, no reliance on inference) and record per-template verdicts so the
+  claim is checkable: `_craft`, `_shared`, `_summary_brief`, `brainstorm`,
+  `dream`, `dress_briefs`, `dress_codewords`, `dress_codex`,
+  `dress_codex_review`, `dress_direction`, `fill_review`, `fill_summary`,
+  `fill_voice`, `fill_write`, `grow_annotate`, `grow_bridge`,
+  `grow_contextualize`, `grow_intersections`, `grow_weave`, `polish_arcs`,
+  `polish_audit`, `polish_finalize`, `polish_labels`, `polish_summary`,
+  `research`, `seed_order`, `seed_scaffold`, `seed_triage`. Known open
+  question to fold in: DREAM's envision rewrote an authored rotating
+  `pov_hint` into a single-head scheme (observed live 2026-07-14, root cause
+  fixed: the prompt never saw the authored hint) — the audit bar for
+  `dream.j2` is *visibility*, not preservation: the model must SEE the
+  authored inclination as vision input; reinterpreting it is DREAM's job
+  (author decision, 2026-07-14, decision log).
+
+- [ ] **Echo guard vs canonical utterances (two live instances, 2026-07-14).**
+  The window-echo floor (8 shared tokens) collides with fixed statements the
+  drama must repeat across adjacent passages: Jordan's theory declaration and
+  Marta's alibi ("said I was alone in the library") both exhausted repairs in
+  the *Closed Circle* medium run — the second WITH the restated-dialogue
+  corrective already in the prompt and repair brief, so this is a design gap,
+  not message bluntness. A weak writer cannot always paraphrase a short
+  canonical utterance below 8 shared tokens when the beat mandates its
+  content. Needs a designed allowance (e.g. a quoted-utterance exemption for
+  short runs inside quotation marks in both passages), weighed against the
+  laundering risk (a lifted run dressed as a quote) — frontier judgment, its
+  own PR. Until then the operator move is a fresh re-roll of the stuck
+  passage's cached call chain.
+
 ## Structure & scale
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens
   sequel/micro passages, so the `words_total`/`passages` (B3/B7) bands read
-  high. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  high. **Tier confound to calibrate around** (author, 2026-07-14, restating a
+  heritage QuestFoundry finding from the :4B era): floor-phrased counts ("at
+  least N", open band positions) are tier-dependent sizing knobs — a small
+  model reads the floor as the target, a strong model fills toward the
+  ceiling when it can reason more fits. The hard totals are pinned (exact
+  dilemma counts, B1), but the within-band choices (scaffold shape bands,
+  min_payoff floors, intersection group counts, finalize arm counts)
+  compound through weave and collapse: live 2026-07-14, the same medium
+  premise produced a ~40% larger passage layer on kimi-k2.5 than on
+  gpt-oss:120b. Calibration must state per-tier expectations or tighten the
+  bands it wants respected. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
   yet in a decision-log entry) — treat as an unverified agent observation until

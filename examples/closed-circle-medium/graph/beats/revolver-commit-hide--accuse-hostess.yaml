@@ -1,0 +1,16 @@
+id: beat:revolver-commit-hide--accuse-hostess
+created_by: grow
+summary: The investigator stashes the old revolver in a concealed compartment and publicly
+  declares Marta’s alibi false, leaving the hostess disgraced while the weapon remains out
+  of official reach.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: commits
+entities:
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

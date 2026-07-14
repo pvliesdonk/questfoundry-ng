@@ -1,0 +1,16 @@
+id: beat:revolver-pre5--silent-hostess
+created_by: grow
+summary: Marta fears the gun will ignite the volatile atmosphere, but the investigator chooses
+  to keep her story intact, hoping to avoid further unrest.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

@@ -1,0 +1,16 @@
+id: beat:revolver-pre3--accuse-hostess
+created_by: grow
+summary: Sheriff’s deputies demand the weapon be turned over; the investigator sees this as
+  leverage to expose Marta’s false alibi and assert authority.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

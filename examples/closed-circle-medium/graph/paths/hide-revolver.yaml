@@ -1,0 +1,6 @@
+id: path:hide-revolver
+name: Hide Revolver
+explores: answer:hide-revolver
+consequences:
+- id: consequence:revolver-concealed
+  text: The revolver is hidden, protecting the guest but obstructing justice.

@@ -40,11 +40,23 @@ or imitate a note's wording.
 {{ research }}
 {% endif %}
 Decide:
-- pov: whose head, how close — "second person", or "third person limited (NAME)"
-  with NAME being the viewpoint character's name spelled exactly as the cast
-  lists it. Never coin or vary a name here: every passage and its review will
-  be held to this string verbatim.
+- pov: the story's viewpoint SCHEME — whose head(s), how close. A single fixed
+  viewpoint reads "second person", or "third person limited (NAME)". A rotating
+  scheme (only when the POV hint asks for one) reads "third person limited,
+  rotating at passage boundaries among NAME, NAME, ..." — each passage stays
+  inside ONE of those heads (the engine assigns which). Every NAME must be a
+  viewpoint character's name spelled exactly as the cast lists it. Never coin or
+  vary a name here: every passage and its review will be held to this string.
 - tense: past or present.
+- interlude: "" for almost every story. Set it ONLY when the POV hint names a
+  marked deviant register woven into the scheme (occasional first-person journal
+  entries, letters, diary pages): one line naming its form, person, and tense,
+  with the narrator's name IN PARENTHESES exactly as the pov names its
+  viewpoint — "first-person past-tense journal entries (NAME)" — spelled
+  exactly as the cast lists it. The parenthetical is required: it is how the
+  engine checks the narrator against the cast. Passages the engine marks as
+  interludes are written and reviewed against this line instead of the
+  pov/tense above.
 - diction: the register in a phrase ("spare, salt-worn, literary").
 - rhythm: one line of sentence-rhythm rules — set a PLAIN baseline (most
   sentences straightforward and complete, varied in length) and reserve
@@ -66,7 +78,12 @@ Decide:
   ban a common word — forbidding "as" or "like" outlaws ordinary prose ("as the
   river rose" is not a simile), and NEVER ban a vague label the writer cannot
   mechanically check ("direct metaphor", "purple prose", "clichés"): an
-  over-broad or unactionable ban traps every passage. Ban the construction that
-  would puncture the tone, never a word ordinary sentences need.
+  over-broad or unactionable ban traps every passage. NEVER phrase a ban as a
+  complement ("anything other than X", "tags other than 'said'") — that is not
+  a construction the reviewer can find literally, and it invites misreading
+  ordinary grammar (a speaker's name after "said") as a violation; a rule about
+  what speech SHOULD look like belongs in `dialogue`, stated positively. Ban
+  the construction that would puncture the tone, never a word ordinary
+  sentences need.
 - notes: one line of guidance for the writer.
 {% include "_shared.j2" %}

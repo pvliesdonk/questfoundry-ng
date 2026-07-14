@@ -16,6 +16,118 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (rotating-POV live validation: PASSED — first weak-tier medium
+  FILL, gate-clean):** The fresh *Closed Circle* medium on `gpt-oss:120b`
+  completed FILL with 0 gate errors (6 advisory warnings: 5× B5 near-band
+  passages the graded contract accepted, 1× B6 words-per-choice high): 112
+  passages / 239 beats / 8 dilemmas, the rotating scheme real at every level —
+  voice "third-person limited, rotating among Jordan Blythe, Simon Kade, Marta
+  Valen, Cole Duvall", 4 heads over 98 headed passages (60/14/12/12) + 14
+  headless texture/coda passages, one head per passage (I14 passing), the
+  reviewer observed live enforcing the per-passage head ("may only convey
+  Jordan Blythe's internal state"). 844 calls, ~2.8M in / 1.0M out, unbilled.
+  ~15 halts total, all diagnosed per the standing rule: five were pre-existing
+  prompt/review defects fixed on the branch (finalize world-mismatch brief,
+  dialogue-tag fabrication, restated-dialogue echo corrective, address-bans-
+  in-dialogue, actor-identity matching), one a design gap backlogged (echo
+  floor vs canonical utterances), the rest honest 2-round non-convergence
+  cleared by fresh rolls (the operator loop's journal is the per-stall
+  record). Zero failures attributable to the rotating-POV machinery. Not
+  exercised: interludes (voice declared the register; annotate marked no
+  beats) and DRESS. The kimi-k2.5 A/B of the same premise (structure ~40%
+  larger; see the tier-confound backlog note) continues.
+
+- **2026-07-14 (DREAM interprets the vision; it is not micromanaged — author
+  decision):** After two live DREAM runs rewrote an authored rotating
+  `pov_hint` into an invented single-head scheme, the session over-corrected
+  twice — first an engine-keep of the authored wording (75de5a4), then a
+  two-field authored/decided provenance split (c03b37a) — and the author
+  rejected both: DREAM's task is to *translate* the author's vision into a
+  creative contract, so its output is legitimately interpretive, and the
+  rewrite-survival requirement was only ever this validation's *test* need,
+  not pipeline semantics. What ships instead: **visibility only** — the
+  authored `pov_hint` now renders in the dream prompt as vision input (both
+  live rewrites happened because `_context` never passed it: interpretation
+  without the input is not interpretation), `_apply` stores the model's
+  translation exactly as before, and the sanctioned override when an author
+  or a validation must pin the scheme is the existing A17 path: **edit the
+  DREAM artifact after DREAM, before BRAINSTORM** (the live validation's
+  operator loop automates the stop-and-check). `pov_hint_decided` and
+  `effective_pov_hint` are reverted; `Vision` keeps its single field.
+
+- **2026-07-14 (model strength is not the diagnosis axis — author correction to
+  the standing rule):** During the *Closed Circle* live validation the session
+  wrote off FILL stalls as "classic stochastic weak-tier behavior" — a red-flag
+  phrase — and the author corrected the *frame itself*, twice: (1) an
+  under-determined prompt makes **every** tier sample the gap; a strong model
+  does not reconstruct intent, it fills the gap plausibly and confidently, so
+  the same variance ships with more fluency; (2) strong-tier success on an
+  unproven prompt is therefore not neutral luck but **the masking mechanism
+  observed in action** — evidence the model papered over a defect that is
+  still there, now invisible, waiting for a different sample, story, or tier.
+  Codified in AGENTS.md §"Prompt and error-message quality" (direct author
+  instruction, this session): only constraint completeness validates a prompt,
+  "stochastic weak-tier behavior" joins the forbidden phrases, and the weak
+  tier surfaces defects first only because it fails less persuasively. The
+  correction immediately produced results: tracing the stall journal against
+  the prompts (instead of writing "stochastic") found three real write-prompt
+  under-determinations, fixed the same session (head pronouns in the viewpoint
+  line; check-the-beats-off; REVISE, DON'T REWRITE).
+
+- **2026-07-14 (repair-message audit — all 79 ApplyError sites, author-requested):**
+  The *Closed Circle* live run exhausted finalize repairs on a residue
+  world-mismatch whose message listed the valid set but not the corrective —
+  despite earlier sessions having been asked to audit *all* prompts and repair
+  messages. The author called it out ("what else was silently skipped"); no
+  artifact existed to answer that, which is itself the finding: **an audit
+  without a per-site record is a claim, not an audit.** This session enumerated
+  every `raise ApplyError` in `src/questfoundry` (79 sites: polish 23+, dress 18,
+  grow 15, seed 15, fill 5, brainstorm/research/types 1 each) and judged each
+  against the AGENTS.md contract (reason + subject + recovery_action as an
+  instruction). Verdicts (as corrected by PR #74 review): **64 already
+  conformant** (imperative corrective or exact valid set present;
+  `format_validation_error` and seed's aggregated scaffold-audit briefs
+  verified conformant — and the false-branch/residue KeyError wraps, which
+  this audit first mis-recorded as blunt: `add_beat` already converts the
+  duplicate-id KeyError into an actionable MutationError, so the added
+  `except KeyError` branches were dead code and would have mislabeled a
+  GraphError; reverted, the combined catch's inner messages carry their own
+  correctives), **6 blunt → fixed** (finalize world-mismatch — fixed earlier
+  the same day; false-branch not-in-long-run, now pointing at the prompt's
+  CADENCE runs; SEED unknown answer / unknown locked dilemma, now listing the
+  valid ids; GROW intersection member, now listing the eligible beats; DRESS
+  brief-count, now stating add/drop-to-target; POLISH needs-no-variants, now
+  instructing `variants: []`), and **9 duplicate-entry sites sharpened** with the explicit
+  "keep exactly one / drop the extras" imperative (dress profiles/briefs/
+  codex/codewords, grow rewrite/annotate dups + intersection double-membership,
+  polish audit/arcs dups). The **prompt-template half is NOT covered** by this
+  audit — recorded as an explicit BACKLOG item listing all 28 templates so the
+  next "audited?" question has a checkable answer either way.
+
+- **2026-07-14 (rotating limited POV — author-answered design, built offline):**
+  The five open questions in `docs/plans/rotating-pov.md` were put to the author
+  directly (explicit per-question prompts, this session) and answered: viewpoint
+  **per passage** (never switching inside one; `wide` codas still compose on
+  top), assigned **per beat by GROW's annotate pass**, **no cadence engine
+  constraint** in v1 (prompt guidance: prefer runs), **first-person interludes
+  in scope**, golden coverage by **annotating keepers-bargain's constant head**
+  plus the recorded e2e fixture (no second golden). Design in
+  `docs/plans/rotating-pov-build.md`; built the same session: `Beat.viewpoint`/
+  `Beat.interlude` + `set_beat_viewpoint` (settled at freeze), `passage_viewpoint`
+  derivation (computed, never stored), **I14** (one head per passage, gate G4) +
+  a G3 referential check, the annotate schema pin to retained character ids, the
+  collapse `split_viewpoints` cut (passage-building only; raw cadence runs stay
+  uncut), per-passage POV keying in `fill_write.j2`/`fill_review.j2` with window
+  head-switch notes, and `Voice.interlude` (+ required `VoiceProposal.interlude`,
+  cast-validated). Architecture row A22 (03 §9). Open: the live *Closed Circle*
+  validation on the unbilled tier — a **fresh medium project** (author-directed,
+  2026-07-14): the prior session's medium project died with its container (only
+  the old M8 `examples/closed-circle` survives in git, a different, completed
+  project), and the old POLISH checkpoint would have been headless anyway (heads
+  are minted at GROW's annotate; `qf rerun grow` is the resume point when a
+  project *does* survive). The fresh vision pins the same premise and the
+  rotating+journal `pov_hint` verbatim.
+
 - **2026-07-13 (don't blame the weak model — a standing agent rule + two POLISH
   prompt fixes it forced):** During the narration_scope live runs two POLISH passes
   crashed on the weak tier, and the session reflexively wrote them off as "known

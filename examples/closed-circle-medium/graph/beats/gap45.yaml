@@ -1,0 +1,9 @@
+id: bridge:gap45
+created_by: grow
+summary: Sheriff deputies confront the investigator, warning of perjury as the concealed revolver
+  stays out of sight.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- faction:local-sheriff

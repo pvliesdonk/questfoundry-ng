@@ -1,0 +1,18 @@
+id: passage:p-press-suppressed
+summary: The investigator persuades Jordan to withhold the article, keeping the theory unpublished;
+  the press stays silent, allowing the investigation to proceed unhindered, while journalists
+  begin probing the lodge and uncover minor rumors.
+entities:
+- character:author
+prose_summary: Investigator advises Jordan not to send exposé; Jordan keeps paper in coat
+  pocket, theory stays unpublished. Morning paper omits story; editor delays lodge coverage
+  pending sheriff clearance. Deputy patrols move without media; investigators can question
+  witnesses unobserved. Reporters discuss missing ledger and revolver seen in basement, adding
+  new rumors.
+beats:
+- beat:author-commit-suppress
+- beat:author-post1-suppress
+- beat:author-post2-suppress
+choices:
+- label: Hear Marta’s secret about the murder night
+  to: passage:p-quiet-confession

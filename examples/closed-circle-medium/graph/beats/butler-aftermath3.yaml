@@ -1,0 +1,14 @@
+id: beat:butler-aftermath3
+summary: The undisclosed debt becomes a silent motive that may surface later in the inquiry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: reveals
+entities:
+- character:miner
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:avoid-confront

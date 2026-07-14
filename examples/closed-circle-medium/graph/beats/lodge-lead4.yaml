@@ -1,0 +1,13 @@
+id: beat:lodge-lead4
+summary: Simon Kade mentions recent complaints about the cold, hinting at possible sabotage.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lodge-sabotage
+  effect: reveals
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:conceal-sabotage

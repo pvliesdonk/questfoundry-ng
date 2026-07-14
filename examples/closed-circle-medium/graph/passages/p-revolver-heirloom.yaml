@@ -1,0 +1,19 @@
+id: passage:p-revolver-heirloom
+summary: Simon reveals the revolver is an heirloom. The investigator chooses to protect Marta's
+  reputation, refusing the deputies' demand for custody and keeping the heirloom hidden.
+entities:
+- character:butler
+- object:old-revolver
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Simon Kade hides heirloom revolver in false desk drawer; Jordan Blythe refuses
+  deputy’s order to surrender the weapon; deputy demands the weapon for the sheriff; tension
+  rises; secret weapon now concealed; conflict between loyalty and duty introduced; Jordan
+  risks arrest; storm outside adds pressure.
+beats:
+- beat:revolver-pre2--silent-hostess
+- bridge:gap54
+choices:
+- label: Refuse to hand over the revolver
+  to: passage:p-revolver-alibi

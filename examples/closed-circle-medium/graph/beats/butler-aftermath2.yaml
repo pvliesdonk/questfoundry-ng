@@ -1,0 +1,15 @@
+id: beat:butler-aftermath2
+summary: Cole watches the butler’s steps from the shadows, his resentment simmering beneath
+  a forced calm.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: complicates
+entities:
+- character:miner
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:avoid-confront

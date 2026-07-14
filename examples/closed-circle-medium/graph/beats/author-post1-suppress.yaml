@@ -1,0 +1,14 @@
+id: beat:author-post1-suppress
+summary: The press remains silent, allowing the investigation to proceed without external
+  pressure.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: advances
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:suppress-theory

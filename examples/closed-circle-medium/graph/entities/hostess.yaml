@@ -1,0 +1,22 @@
+id: character:hostess
+name: Marta Valen
+concept: Owner of the remote mountain lodge, fiercely protective of her guests
+pronouns: she/her
+base:
+  appearance: short, gray hair pulled back, sharp eyes
+  manner: warm but guarded
+  received_anonymous_note: 'true'
+arc:
+  begins: owner of lodge, fiercely protective, warm yet guarded
+  pivots:
+  - beat: beat:hostess-pre1
+    becomes: asserts solitary alibi in the library
+  - beat: beat:hostess-commit-accuse
+    becomes: publicly accused, reputation shattered
+  - beat: beat:hostess-commit-silent
+    becomes: investigator stays silent, reputation preserved
+  ends:
+  - path: path:accuse-hostess
+    state: hostess's reputation ruined, under suspicion
+  - path: path:silent-hostess
+    state: hostess's reputation intact, mystery unresolved

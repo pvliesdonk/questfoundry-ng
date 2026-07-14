@@ -1,0 +1,9 @@
+Cold stone pressed against his cheek as Cole stepped back into the common room. The hearth sputtered, sending a thin ribbon of smoke up toward the low beams. Marta stood by the bar, a mug of steaming tea cradled in her hands, the steam curling in the draft. He felt the pipe wrench thrum against his thigh, the metal weight a reminder of the night’s labor.
+
+He cleared his throat. “You’ve been taking the miners’ share and hiding it,” he said, his voice raw. The accusation hit the air like a hammer on iron. Marta’s grip on the mug tightened, the porcelain wobbling ever so slightly. She kept her gaze on the fire, then flicked it toward the darkened doorway before her eyes settled again on his scar‑etched face. She said nothing, the silence heavy enough to choke the room.
+
+Cole watched the flare of the hearth die to a low ember, the cold slipping through the cracked windows. He could see the faint outline of the old revolver on the table, its barrel still warm from the earlier scuffle. A thought crossed his mind: the gun might be the proof he needed to link the anonymous note to the workers’ plight. He steadied his breath, feeling the scar on his knuckles pulse with each beat of his heart.
+
+He shifted his weight, the uprights of his boots grinding dust from the worn floorboards. The storm outside roared, rattling the lodge’s shutters, but inside the tension held tighter than any wind. The hidden passage behind the library shelves lingered in his memory, a route that could let him move unseen. If he could retrieve the clue before the fire spread, the miners’ names might finally be cleared.
+
+A resolve hardened in his chest. He reached for the revolver, the metal cool under his palm, and turned toward the library door, the storm’s howl echoing his purpose.

@@ -1,0 +1,9 @@
+id: bridge:gap30
+created_by: grow
+summary: Armed with fresh proof, the investigator returns to the gathering, poised to either
+  accuse Marta or keep her alibi intact.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:hostess

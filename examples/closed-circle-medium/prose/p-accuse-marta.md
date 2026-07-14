@@ -1,0 +1,7 @@
+Jordan stepped into the main hall and felt the weight of the stone walls settle around them. The iron hinges of the doors shivered with each gust that hammered the shutters, and a thin column of smoke curled upward from the dying stove. Guests huddled under blankets, their faces pinpricked by the weak ember light, while Simon Kade kept his mug steady on the hearth and Marta Valen lingered by the rail, her gray hair tucked tight against her neck.
+
+Jordan noted the revolver on the central table, its barrel still cold, and the brass tray that held the broken seal of the anonymous note. The note’s paper lay crumpled, its accusation still unread by most. A deputy paced the perimeter, his badge catching the flicker of the fire, his eyes scanning the crowd for any sign of unrest. The atmosphere pressed tight, as though the blizzard outside pressed against the very stones of the lodge.
+
+Jordan raised their voice and said, "Marta's alibi was a lie," and the words cut through the murmurs. "The note you examined earlier demanded she withdraw the name, and she claimed to have been alone in the library. Both cannot be true. The evidence points to a fabrication."
+
+Marta's shoulders tightened, and the spark of surprise flashed in her sharp eyes. Simon's jaw clenched, his mug trembling. The deputy's hand rested on his holster, and the murmuring crowd fell to a hush. Jordan watched the tension coil around the room like a rope ready to snap. The decision hung in the cold air, waiting for the next move.

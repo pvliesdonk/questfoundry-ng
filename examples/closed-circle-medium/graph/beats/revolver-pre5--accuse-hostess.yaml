@@ -1,0 +1,16 @@
+id: beat:revolver-pre5--accuse-hostess
+created_by: grow
+summary: Hostess Marta frets that the revolver’s appearance will inflame the already tense
+  lodge, unaware the investigator is about to publicly shatter her credibility.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

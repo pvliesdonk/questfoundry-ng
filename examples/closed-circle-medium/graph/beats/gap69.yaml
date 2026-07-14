@@ -1,0 +1,9 @@
+id: bridge:gap69
+created_by: grow
+summary: Marta's bold move sparks further chaos, prompting miner Cole to attempt a desperate
+  escape.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- character:miner

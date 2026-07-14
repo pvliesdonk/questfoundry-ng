@@ -61,7 +61,9 @@ def test_fill_write_omits_craft_block_when_window_is_non_empty(golden):
     context = _write_context_for("passage:p-arrival")(golden)
     # Force the guard's condition regardless of what this golden passage
     # naturally borders: a non-empty window alone must suppress the block.
-    context["window"] = [{"passage": golden.graph.node("passage:p-arrival"), "label": "go"}]
+    context["window"] = [
+        {"passage": golden.graph.node("passage:p-arrival"), "label": "go", "head": ""}
+    ]
     context["lookahead"] = []
 
     rendered = _render(env, "fill_write.j2", SENTINEL, **context)
@@ -87,7 +89,7 @@ def test_fill_write_omits_craft_block_when_only_lookahead_is_non_empty(golden):
     context = _write_context_for("passage:p-arrival")(golden)
     context["window"] = []
     context["lookahead"] = [
-        {"passage": golden.graph.node("passage:p-arrival"), "label": "go"}
+        {"passage": golden.graph.node("passage:p-arrival"), "label": "go", "head": ""}
     ]
 
     rendered = _render(env, "fill_write.j2", SENTINEL, **context)
@@ -346,3 +348,104 @@ def test_voice_banned_field_forbids_word_and_vague_bans():
     assert "enforces these VERBATIM" in source
     assert "ban a common word" in source
     assert "not a simile" in source  # the "as" example
+
+
+def test_fill_review_said_plus_speaker_is_never_a_banned_tag():
+    """Closed Circle live run (2026-07-14): the reviewer read '"…," said
+    Jordan' as a "dialogue tag other than 'said'" and demanded the
+    ungrammatical fix 'replace with just "said"' — a fabricated rule that
+    stalled the passage. The banned_pattern clarifier now states a tag ban
+    is about the verb, and a named speaker with a plain said IS the plain
+    tag; the voice prompt forbids complement-form bans at the source."""
+    review = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
+    assert "said Jordan" in review and "never violates a tags-are-said rule" in review
+    voice = " ".join((PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8").split())
+    assert "NEVER phrase a ban as a complement" in voice
+
+
+def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden):
+    """Tracing the Closed Circle stall journal against the prompts (the
+    author's don't-blame-the-weak-model correction, 2026-07-14) found three
+    under-determinations, each mapping to an observed failure: the head's
+    pronouns were stated only deep in the CAST block (they/them head drifted
+    to 'he'); nothing asked the writer to verify beat events and actors
+    before emitting (sheriff's accusation delivered by a deputy); and the
+    rework brief never said to keep what already passed (fix-one-break-one
+    across rounds)."""
+    source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
+    assert "BEFORE RETURNING, CHECK THE BEATS OFF" in source
+    assert "performed by the character the summary names" in source
+    assert "REVISE, DON'T REWRITE" in source
+    assert "keep every sentence the findings do not touch" in source
+    # the head's pronouns render in the viewpoint line itself
+    from questfoundry.pipeline.stages.fill import _write_context_for
+    from tests.test_fill import _set_passage_head
+
+    golden.graph.node("character:keeper").pronouns = "she/her"
+    _set_passage_head(golden.graph, "passage:p-arrival", "character:keeper")
+    context = _write_context_for("passage:p-arrival")(golden)
+    rendered = (
+        runner._environment()
+        .get_template("fill_write.j2")
+        .render(**context, notes="", repair_errors=[], research="")
+    )
+    assert "pronouns she/her, exactly" in rendered
+
+
+def test_fill_review_address_bans_never_match_inside_dialogue():
+    """Closed Circle stall journal, cycle 5: the reviewer flagged a deputy
+    saying "you have overstepped" against the voice's second-person-address
+    ban, despite the aimed-at-the-reader clarifier — stated but inferential.
+    The rule is now mechanical (inside quotation marks -> no address-ban
+    finding) and scoped: diction/punctuation bans still reach dialogue."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "NEVER matches words inside quotation marks" in source
+    assert "is the candidate text inside quotation marks?" in source
+    assert "still apply everywhere, including dialogue" in source
+
+
+def test_fill_review_matches_beat_actors_by_identity_not_epithet():
+    """Stall journal cycle 6: the beat said 'the investigator' and the draft
+    wrote 'Jordan' — the same character — and the reviewer flagged a missing
+    event, demanding the epithet. The fidelity rule now resolves roles
+    against the cast (same person under another name satisfies the beat)
+    while a genuinely different actor still fails."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "Match actors by WHO they are" in source
+    assert "resolve the role against the cast before flagging" in source
+    assert "DIFFERENT person performs the event" in source
+
+def test_dream_sees_an_authored_pov_hint_but_is_not_bound_by_it(tmp_path):
+    """DREAM translates the author's vision; it is not micromanaged (author
+    decision, 2026-07-14). The one guarantee is VISIBILITY: two live runs
+    rewrote an authored rotating scheme simply because the prompt never saw
+    it. The authored hint renders as vision input; the model's translation is
+    what apply stores — a validation that needs the scheme pinned pins it at
+    the operator level, not in the engine."""
+    from questfoundry.pipeline.stages.dream import DreamProposal, _apply
+    from questfoundry.project.io import scaffold_project
+
+    project = scaffold_project(tmp_path, "t", "micro")
+    project.vision.pov_hint = "third-person limited rotating among the suspects"
+    rendered = _render(
+        runner._environment(), "dream.j2", "", **dream_context(project)
+    )
+    assert "stated point-of-view inclination" in rendered
+    assert "rotating among the suspects" in rendered
+    assert "deliberate reinterpretation is yours" in rendered
+
+    proposal = DreamProposal(
+        genre="g", tone="t", themes=["a v b", "c v d"],
+        pov_hint="rotating third limited among the four suspects, journal interludes",
+    )
+    _apply(proposal, project)
+    assert project.vision.pov_hint == (
+        "rotating third limited among the four suspects, journal interludes"
+    )
+
+    # no authored hint -> no inclination block; the model still decides one
+    project2 = scaffold_project(tmp_path / "p2", "t2", "micro")
+    rendered2 = _render(
+        runner._environment(), "dream.j2", "", **dream_context(project2)
+    )
+    assert "stated point-of-view inclination" not in rendered2

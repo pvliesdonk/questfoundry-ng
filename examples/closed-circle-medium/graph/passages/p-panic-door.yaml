@@ -1,0 +1,18 @@
+id: passage:p-panic-door
+summary: Marta erupts in accusation, sending the lodge into a frantic scramble, and the chaos
+  exposes a concealed doorway hidden behind the pantry.
+entities:
+- character:hostess
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta receives Jordan's accusation, clutches an anonymous note, and screams.
+  Guests scramble; a pantry shelf latches open, exposing a narrow iron‑bound hidden doorway
+  with cold wind. Marta steadies against a rail, noting her reputation is ruined and the panic
+  may reveal the lodge's secret, presenting an escape route or new danger.
+beats:
+- beat:hostess-post1-accuse
+- bridge:gap9
+choices:
+- label: Force the hidden door open
+  to: passage:p-hidden-body

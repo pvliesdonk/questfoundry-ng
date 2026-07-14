@@ -1,0 +1,8 @@
+id: bridge:gap49
+created_by: grow
+summary: As the miner's fury peaks, the sheriff seals all exits, tightening the lodge's grip.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- faction:local-sheriff

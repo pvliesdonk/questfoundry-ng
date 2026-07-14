@@ -1,0 +1,16 @@
+id: dilemma:sheriff-pressure
+question: Do you comply with the sheriff's demand to arrest you for overstepping, preserving
+  authority, or defy him to continue the probe?
+why_it_matters: Arrest ends your investigation but keeps official order; defiance risks your
+  freedom but may reveal the killer.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:accept-arrest
+  text: Submit to the sheriff's arrest.
+- id: answer:defy-sheriff
+  text: Refuse and keep investigating.
+anchored_to:
+- character:detective
+- faction:local-sheriff

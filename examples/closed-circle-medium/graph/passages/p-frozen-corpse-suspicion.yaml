@@ -1,0 +1,26 @@
+id: passage:p-frozen-corpse-suspicion
+summary: The frozen corpse is discovered, sending murmurs through the lodge and amplifying
+  suspicion about who helped the escape. The remaining guests each wonder who might have aided
+  the fugitive, heightening tension and mistrust.
+entities:
+- character:miner
+- character:author
+- character:butler
+- character:hostess
+prose_summary: Jordan Blythe enters hallway, records frozen miner’s corpse, pipe wrench in
+  scarred hands and half‑buried revolver, in notebook. Simon Kade watches from fire, Marta
+  Valen remains silent. Guests whisper about an unseen aid, a tampered furnace, and a possible
+  escape route. The speculation raises distrust; Jordan notes that the next question will
+  determine whom they trust.
+beats:
+- beat:miner-aftermath3
+- bridge:gap39
+choices:
+- label: Sound the fire alarm
+  grants:
+  - flag:manuscripts-saved
+  to: passage:p-firealarm
+- label: Push through the smoke to fetch the envelope
+  grants:
+  - flag:clue-recovered
+  to: passage:p-library-envelope

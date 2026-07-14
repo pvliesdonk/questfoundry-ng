@@ -9,3 +9,4 @@ dilemma_impacts:
 entities: [character:keeper, character:sleeper]
 belongs_to: [path:keep]
 scene_type: sequel
+viewpoint: character:keeper

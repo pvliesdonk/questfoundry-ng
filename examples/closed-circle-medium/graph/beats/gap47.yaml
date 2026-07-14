@@ -1,0 +1,9 @@
+id: bridge:gap47
+created_by: grow
+summary: Simon uncovers the concealed revolver, its barrel now a tool for intimidation as
+  tensions rise.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- object:old-revolver

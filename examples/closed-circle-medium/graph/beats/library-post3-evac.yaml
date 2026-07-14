@@ -1,0 +1,13 @@
+id: beat:library-post3-evac
+summary: Sheriff blames the investigator for the loss of vital evidence, demanding accountability.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library

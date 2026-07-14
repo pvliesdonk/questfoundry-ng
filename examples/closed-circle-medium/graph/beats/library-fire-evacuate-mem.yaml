@@ -1,0 +1,10 @@
+id: beat:library-fire-evacuate-mem
+created_by: polish
+summary: The flames recede behind the stone doors, leaving the investigator with the echo
+  of saved pages and the weight of what he left behind.
+beat_class: structural
+purpose: residue
+entities:
+- location:library
+requires_flags:
+- flag:manuscripts-saved

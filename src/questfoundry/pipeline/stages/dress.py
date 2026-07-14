@@ -106,7 +106,10 @@ def _direction_apply(proposal: DirectionProposal, project: Project) -> list[str]
                 f"expected one of {sorted(retained)}"
             )
         if item.entity in seen:
-            raise ApplyError(f"entity {item.entity} has more than one profile")
+            raise ApplyError(
+                f"entity {item.entity} has more than one profile — "
+                "keep exactly one; drop the extras"
+            )
         seen[item.entity] = item
     missing = retained - set(seen)
     if missing:
@@ -178,7 +181,11 @@ def _briefs_apply(proposal: BriefsProposal, project: Project) -> list[str]:
     g = project.graph
     target = _target_brief_count(project)
     if len(proposal.briefs) != target:
-        raise ApplyError(f"need exactly {target} briefs, got {len(proposal.briefs)}")
+        raise ApplyError(
+            f"need exactly {target} briefs, got {len(proposal.briefs)} — add or drop "
+            f"briefs to hit {target}, keeping the most illustratable scenes; at most "
+            "one brief per passage"
+        )
     passages = {p.id: p for p in g.nodes_of(Passage)}
     seen_passages: set[str] = set()
     priorities = []
@@ -189,7 +196,10 @@ def _briefs_apply(proposal: BriefsProposal, project: Project) -> list[str]:
                 f"{item.passage!r} is not a passage id; use one of {sorted(passages)}"
             )
         if item.passage in seen_passages:
-            raise ApplyError(f"passage {item.passage} has more than one brief")
+            raise ApplyError(
+                f"passage {item.passage} has more than one brief — "
+                "keep exactly one; drop the extras"
+            )
         seen_passages.add(item.passage)
         priorities.append(item.priority)
         stray = set(item.entities) - set(passage.entities)
@@ -294,7 +304,10 @@ def _codex_apply(proposal: CodexProposal, project: Project) -> list[str]:
                 f"the codex covers exactly {sorted(required)}"
             )
         if item.entity in seen:
-            raise ApplyError(f"entity {item.entity} has more than one codex entry")
+            raise ApplyError(
+                f"entity {item.entity} has more than one codex entry — "
+                "keep exactly one; drop the extras"
+            )
         seen[item.entity] = item
         if not item.title.strip():
             raise ApplyError(f"codex entry for {item.entity} needs a non-empty title")
@@ -414,7 +427,10 @@ def _codewords_apply(proposal: CodewordsProposal, project: Project) -> list[str]
                 f"{item.flag!r} does not need a codeword; expected exactly {sorted(pending)}"
             )
         if item.flag in seen:
-            raise ApplyError(f"flag {item.flag} given more than one codeword")
+            raise ApplyError(
+                f"flag {item.flag} given more than one codeword — "
+                "keep exactly one; drop the extras"
+            )
         seen.add(item.flag)
     missing = pending - seen
     if missing:

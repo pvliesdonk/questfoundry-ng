@@ -1,0 +1,15 @@
+id: beat:sheriff-commit-defy--accuse-hostess
+created_by: grow
+summary: Defying the sheriff, the investigator slips away to continue probing in secret while
+  still having denounced Marta’s alibi to the lodge.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: commits
+entities:
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

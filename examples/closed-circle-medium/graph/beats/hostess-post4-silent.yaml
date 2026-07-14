@@ -1,0 +1,14 @@
+id: beat:hostess-post4-silent
+summary: Investigator discovers a scrap of paper linking the old revolver to an unknown hand,
+  keeping Marta’s innocence plausible.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: reveals
+entities:
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:silent-hostess

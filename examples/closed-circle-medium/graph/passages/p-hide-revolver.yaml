@@ -1,0 +1,25 @@
+id: passage:p-hide-revolver
+summary: The investigator slips the old revolver into a concealed niche, keeping the weapon
+  out of sight while preserving Marta’s spotless alibi and the hostess’s reputation, leaving
+  the forensic link to the miner as a silent undercurrent.
+entities:
+- object:old-revolver
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Deputy Hale interrogates; Jordan Blythe notes missing revolver, feels hidden
+  metal against ribs. Jordan slides the revolver into a concealed niche behind the desk’s
+  false walnut panel, cylinder against his spine, and declares it stays. Deputy hardens, hand
+  on his pistol, offers no command. Murmurs rise, investigation proceeds, Marta Valen remains
+  composed; fingerprints link barrel to miner, unnoticed.
+beats:
+- beat:revolver-commit-hide--silent-hostess
+- beat:revolver-post1-hide--silent-hostess
+- bridge:gap44
+choices:
+- label: Tuck the revolver into the hidden niche
+  to: passage:p-perjury-revolver

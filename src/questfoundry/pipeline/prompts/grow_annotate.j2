@@ -1,9 +1,15 @@
-Tag every beat with two per-beat signals the writer reads later: its prose-INTENSITY
-(where the prose rises vs. stays plain) and its narration SCOPE (whether it is
-narrated inside the story's single point of view or steps back to a detached coda).
+Tag every beat with three per-beat signals the writer reads later: its
+prose-INTENSITY (where the prose rises vs. stays plain), its narration SCOPE
+(whether it is narrated inside a limited point of view or steps back to a
+detached coda), and its VIEWPOINT (whose head narrates it).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
-POINT OF VIEW (the story's single viewpoint, advisory): {{ vision.pov_hint or "one limited viewpoint" }}.
+POINT OF VIEW SCHEME (advisory): {{ vision.pov_hint or "one limited viewpoint" }}.
+
+THE CHARACTERS (viewpoint values are these exact ids):
+{% for c in characters %}
+- {{ c.id }} — {{ c.name }}: {{ c.concept }}
+{% endfor %}
 
 This is the story's MODULATION: most beats are quiet and load-bearing; only a few
 are charged. A story where every beat runs hot is exhausting to read — a plain
@@ -33,7 +39,7 @@ with scenes reserved for the charged turns. Do NOT label everything a scene — 
 is the exact failure this pass exists to prevent.
 
 Also assign each beat one NARRATION SCOPE — whether it can be narrated from inside
-the story's single viewpoint above:
+a single character's viewpoint:
 
 - limited — narrated inside that viewpoint. Almost every beat is limited: the
   reader is with the viewpoint character, so no other character's private thoughts
@@ -54,14 +60,39 @@ wide is the MARKED EXCEPTION, not a convenience: defaulting a beat to wide licen
 the writer to leave the viewpoint, so reserve it for true codas. When in doubt,
 choose limited.
 
+Also assign each limited beat its VIEWPOINT — the id of the ONE character whose
+head narrates it. The writer will render that beat's interiority through this
+character and no other mind, so choose the perceiving center, not merely someone
+present: whose perception, stakes, and inner reaction does the summary live in —
+who uncovers, notices, suspects, decides, fears? A beat "Eleanor uncovers the
+letters while Charles watches" is Eleanor's beat.
+
+- The POV SCHEME above governs the range. A single-viewpoint scheme names the SAME
+  character on every limited beat — that is correct, not a failure to vary. A
+  rotating scheme rotates where the drama's center moves.
+- PREFER RUNS. Consecutive beats that stay with the same thread stay in the same
+  head; rotate at a real shift of dramatic center, never beat-by-beat. Each
+  head-switch becomes a page-turn for the reader, so a switch must earn its place.
+- A wide beat has NO head: set its viewpoint to "" (a coda is narrated from beyond
+  any single character).
+
+Set interlude to true ONLY when the POV scheme above names a marked deviant
+register (occasional first-person journal entries, letters, diary pages) AND this
+beat belongs to it — a reflective beat in the named character's voice. An
+interlude beat needs a viewpoint (whose voice) and is never wide. A scheme that
+names no such register means interlude is false on every beat.
+
 BEATS (in story order):
 {% for r in beats %}
-- {{ r.beat.id }} [{{ r.beat.beat_class.value }}{% if r.beat.purpose %}/{{ r.beat.purpose.value }}{% endif %}{% if r.effects %}; {{ r.effects | join(", ") }}{% endif %}{% if r.beat.is_ending %}; ENDING{% endif %}]: {{ r.beat.summary }}
+- {{ r.beat.id }} [{{ r.beat.beat_class.value }}{% if r.beat.purpose %}/{{ r.beat.purpose.value }}{% endif %}{% if r.effects %}; {{ r.effects | join(", ") }}{% endif %}{% if r.beat.is_ending %}; ENDING{% endif %}]{% if r.beat.entities %} (on the page: {{ r.beat.entities | join(", ") }}){% endif %}: {{ r.beat.summary }}
 {% endfor %}
 
 REQUIREMENTS:
 - Annotate every beat listed above, exactly once, keyed by its full beat id.
 - Assign exactly one scene_type (scene, sequel, micro_beat) AND one narration_scope
   (limited, wide) to each.
+- Assign every limited beat a viewpoint from the character ids above; give every
+  wide beat viewpoint "". Set interlude true only for beats of the scheme's named
+  deviant register.
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

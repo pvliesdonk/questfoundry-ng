@@ -1,0 +1,20 @@
+id: passage:p-revolver-accuse
+summary: Butler Simon tells the group the revolver is a family heirloom of the lodge founder,
+  prompting the investigator to confront Marta with an accusation about her fabricated alibi
+  as the deputies order the gun turned over.
+entities:
+- character:butler
+- object:old-revolver
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Simon lifts walnut‑cased revolver, heirloom of lodge founder. Jordan Blythe
+  declares printed fingerprints match Marta Valen and the gun is warm, disproving her alibi.
+  Deputy Hale and two deputies take the revolver, place it in a leather case, close the case,
+  securing it.
+beats:
+- beat:revolver-pre2--accuse-hostess
+- bridge:gap53
+choices:
+- label: Grab the revolver and expose Marta's false alibi
+  to: passage:p-revolver-decision

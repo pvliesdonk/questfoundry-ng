@@ -1,0 +1,9 @@
+id: bridge:gap61
+created_by: grow
+summary: As the snowstorm intensifies, the morning reveals the heiress's lifeless body beside
+  the antique revolver.
+beat_class: structural
+purpose: bridge
+entities:
+- location:lodge
+- object:old-revolver

@@ -264,23 +264,46 @@ the beat*, not topology (§10.3 governs which the model keeps):
   story, not to every paragraph. Advisory, not gated: an unannotated beat
   falls back, never fails. (`exit_mood` remains deferred — §10.3.)
 - **`narration_scope` ∈ {limited, wide}** — the per-beat POV/coda signal. The
-  Voice fixes one point of view for the whole book (§2); *scope* is where a beat
-  may step outside it. A *limited* beat is narrated inside that viewpoint — no
-  mind but the narrator's, though psychic distance may still widen to report a
-  world fact the narrator could plausibly know (reporting the world is not a POV
-  break; entering another mind is). A *wide* beat is a sanctioned **coda**,
-  licensed to narrate beyond the viewpoint character's horizon — world aftermath
-  once the dilemmas resolve, or a character's fate after they exit (their legend,
-  the wake of their death). Like `scene_type`, GROW's *annotate* pass writes it
-  per beat **before the freeze**, settled at the freeze; the fallback is
-  `epilogue` → `wide`, every other beat → `limited` (`wide` is always the marked
-  exception, never the default). FILL renders each beat's scope and modulates
-  register *within* a passage — a limited scene may close into a wide coda
-  paragraph — so a passage is never split for register alone (a split would insert
-  a spurious single-option page-turn); the reviewer keys its POV rule to scope, so
-  a wide coda is not flagged as a departure. Advisory, not gated. Resolves the
-  epilogue/POV collapse-feasibility gap the `scene_type` live validation surfaced
-  (`docs/plans/pov-narration-scope.md`).
+  Voice fixes the book's POV *scheme* (§2); *scope* is where a beat may step
+  outside its viewpoint. A *limited* beat is narrated inside the beat's
+  viewpoint — no mind but the narrator's, though psychic distance may still
+  widen to report a world fact the narrator could plausibly know (reporting the
+  world is not a POV break; entering another mind is). A *wide* beat is a
+  sanctioned **coda**, licensed to narrate beyond the viewpoint character's
+  horizon — world aftermath once the dilemmas resolve, or a character's fate
+  after they exit (their legend, the wake of their death). Like `scene_type`,
+  GROW's *annotate* pass writes it per beat **before the freeze**, settled at
+  the freeze; the fallback is `epilogue` → `wide`, every other beat → `limited`
+  (`wide` is always the marked exception, never the default). FILL renders each
+  beat's scope and modulates register *within* a passage — a limited scene may
+  close into a wide coda paragraph — so a passage is never split for register
+  alone (a split would insert a spurious single-option page-turn); the reviewer
+  keys its POV rule to scope, so a wide coda is not flagged as a departure.
+  Advisory, not gated. Resolves the epilogue/POV collapse-feasibility gap the
+  `scene_type` live validation surfaced (`docs/plans/pov-narration-scope.md`).
+- **`viewpoint` (a character entity id) + `interlude` (bool)** — the per-beat
+  viewpoint head, the mechanism behind **rotating limited POV**
+  (author-confirmed 2026-07-14; `docs/plans/rotating-pov-build.md`). The Voice's
+  `pov` describes the *scheme* ("third limited, rotating among the suspects");
+  `viewpoint` names the one character whose head narrates *this* beat. GROW's
+  *annotate* pass writes it per beat **before the freeze** (settled like the
+  other annotations); a `wide` beat carries **no viewpoint** by construction
+  (a coda has no head), and beats a later stage adds (bridge, residue,
+  false-branch) stay unannotated — **wildcards** everywhere the head is
+  consumed. The head is fixed **per passage** and never switches inside one
+  (invariant I14): POLISH collapse cuts a passage boundary at every head
+  switch, so a rotation is always a page-turn — the corpus's "clear structural
+  marker" — while wildcard and `wide` beats ride along in any passage. FILL
+  derives each passage's head from its beats (computed, never stored) and
+  enforces *no other minds* against that head; a passage with no annotated
+  head degrades to the book-wide `Voice.pov` rule. `interlude` marks a beat of
+  the scheme's *marked deviant register* (the Voice's `interlude`: occasional
+  first-person journal entries, letters); an interlude beat needs a viewpoint,
+  is never `wide`, never shares a passage with base-register beats, and FILL
+  writes/reviews its passage against the interlude register instead of the
+  book-default pov/tense. Rotation cadence is deliberately *not* engine-
+  constrained (author decision): the annotate prompt prefers head-runs and
+  rotates at shifts of dramatic center.
 
 Whatever its class, a beat's summary is a **brief for the prose writer,
 never the prose**: plain declarative present tense stating who does what,
@@ -495,6 +518,11 @@ design.
   for everyone who arrives.
 - **I13** The passage graph has no dead ends: every non-ending passage
   has ≥1 always-satisfiable choice; every ending is reachable.
+- **I14** One head per passage: among a passage's member beats that carry
+  a `viewpoint`, all agree on `(viewpoint, interlude)`. The viewpoint
+  never switches inside a passage — a rotation is always a page-turn
+  (author-confirmed 2026-07-14, `docs/plans/rotating-pov-build.md`);
+  unannotated beats and `wide` codas are wildcards.
 
 ## 9. Where the mapping breaks (danger zones)
 
@@ -564,7 +592,7 @@ Changed:
    atmospheric_detail, path_theme, path_mood...). NG deferred all of them
    under YAGNI — annotations are cheap to add and expensive to maintain
    coherently — and adds one only when a FILL quality gap demonstrably
-   calls for it. Two are now built, each on a demonstrated gap.
+   calls for it. Three are now built, each on a demonstrated gap.
    **`scene_type` (scene/sequel/micro_beat)** answered the reading-difficulty /
    over-stylization gap (`docs/plans/scene-type-modulation.md`): the intrinsic
    prose-intensity signal GROW's *annotate* pass writes per beat (see "Beat
@@ -572,8 +600,19 @@ Changed:
    **`narration_scope` (limited/wide)** answered the epilogue/POV
    collapse-feasibility gap that same live validation surfaced
    (`docs/plans/pov-narration-scope.md`): the per-beat POV/coda signal the same
-   *annotate* pass writes alongside `scene_type`. `exit_mood` remains deferred;
-   the rest stay trimmed.
+   *annotate* pass writes alongside `scene_type`.
+   **`viewpoint` + `interlude`** answered the rotating-limited-POV gap (the
+   *Closed Circle* FILL blocker, `docs/plans/rotating-pov.md`) — note the
+   earlier blanket deferral of "a full per-beat viewpoint-character/distance
+   field" was an **agent scope-cut recorded under the author's name, not an
+   author decision**; the author confirmed the feature was wanted and answered
+   the design questions directly (2026-07-14,
+   `docs/plans/rotating-pov-build.md`). What shipped is narrower than the
+   original's field family: the head only (no per-beat distance — distance
+   stays `narration_scope`'s job), one head per passage (I14), rotation only
+   at passage boundaries — which does not conflict with the corpus's
+   *mid-scene* head-hopping warning the earlier rejection conflated it with.
+   `exit_mood` remains deferred; the rest stay trimmed.
 4. **Budgets are first-class.** Scope presets bind hard numbers (dilemma
    counts, beats per path, passage ranges) that gates check, making cost a
    contract instead of an emergent property.

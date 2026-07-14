@@ -1,0 +1,9 @@
+id: bridge:gap75
+created_by: grow
+summary: With the case officially closed, the investigator contemplates either handing the
+  revolver to deputies or concealing it.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- object:old-revolver

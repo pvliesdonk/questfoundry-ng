@@ -1,0 +1,15 @@
+id: beat:sheriff-post5-defy--silent-hostess
+created_by: grow
+summary: The investigator reveals the killer at great personal sacrifice, the lodge’s dark
+  comedy turning lethal, while Marta’s reputation stays unblemished.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: advances
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

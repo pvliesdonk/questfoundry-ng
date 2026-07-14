@@ -1,0 +1,23 @@
+id: passage:p-revolver-hostess
+summary: Simon discovers the concealed revolver and brandishes it at anyone who challenges
+  him, while the investigator deliberately avoids accusing Marta, preserving her reputation
+  even as the hidden gun raises the danger.
+entities:
+- character:butler
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Simon Kade discovers a hidden revolver in the oak desk niche and draws it,
+  pointing it at the assembled guests. Deputy Hale stands near the stove, Jordan Blythe agrees
+  to keep the record, Marta Valen remains seated, and Cole Duvall tightens his pipe wrench.
+  Simon now chooses to lower the gun or force Hale back.
+beats:
+- beat:revolver-post3-hide--silent-hostess
+choices:
+- label: step forward, ordering Simon to drop the gun
+  to: passage:p-revolver-epilogue

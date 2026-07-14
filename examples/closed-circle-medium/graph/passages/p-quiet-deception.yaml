@@ -1,0 +1,18 @@
+id: passage:p-quiet-deception
+summary: Jordan Blythe overhears a heated exchange while searching for notes. The investigator
+  decides to conceal the sabotage and keep the secret hidden to maintain calm among the guests.
+entities:
+- character:author
+- character:butler
+- character:miner
+prose_summary: Jordan puts notebook in coat, moves among desks, hears Simon say furnace tampered,
+  Cole warns cold, remembers missing intake valve, decides sabotage stays hidden, covers exposed
+  conduit with canvas, stabilizes fire, checks pantry door locked by Cole, returns notebook
+  to coat.
+beats:
+- beat:butler-lead3
+- beat:butler-resolution
+- beat:lodge-resolution
+choices:
+- label: dash for the back service door
+  to: passage:p-dash-door

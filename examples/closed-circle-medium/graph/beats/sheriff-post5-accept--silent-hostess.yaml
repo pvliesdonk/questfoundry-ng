@@ -1,0 +1,15 @@
+id: beat:sheriff-post5-accept--silent-hostess
+created_by: grow
+summary: The final paperwork ends the investigation in a tepid summary, while Marta’s standing
+  remains intact and the lodge’s uneasy vibe persists.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: advances
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

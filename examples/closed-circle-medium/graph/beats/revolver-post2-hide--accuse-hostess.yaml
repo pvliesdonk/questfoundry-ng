@@ -1,0 +1,16 @@
+id: beat:revolver-post2-hide--accuse-hostess
+created_by: grow
+summary: The sheriff suspects perjury, warning the investigator, while the concealed revolver
+  continues to protect the guest, deepening the investigator’s isolation after denouncing
+  Marta.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

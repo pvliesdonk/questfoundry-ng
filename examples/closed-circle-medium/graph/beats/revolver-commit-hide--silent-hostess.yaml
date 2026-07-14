@@ -1,0 +1,15 @@
+id: beat:revolver-commit-hide--silent-hostess
+created_by: grow
+summary: The investigator hides the revolver secretively and refrains from accusing Marta,
+  allowing the hostess’s reputation to stay intact while the gun stays hidden.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: commits
+entities:
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

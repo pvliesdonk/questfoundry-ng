@@ -1,0 +1,17 @@
+id: beat:revolver-post1-hand--accuse-hostess
+created_by: grow
+summary: Forensic testing links the revolver’s fingerprints to miner Cole Duvall; the investigator,
+  having already exposed Marta, now holds the evidence in the sheriff’s custody as the miner
+  becomes the primary suspect.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:miner
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:hand-revolver

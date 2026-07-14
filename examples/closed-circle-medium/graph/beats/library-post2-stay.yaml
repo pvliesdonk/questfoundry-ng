@@ -1,0 +1,13 @@
+id: beat:library-post2-stay
+summary: The fire destroys irreplaceable books, drawing angry shouts from the guests.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- location:library
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:stay-for-clue

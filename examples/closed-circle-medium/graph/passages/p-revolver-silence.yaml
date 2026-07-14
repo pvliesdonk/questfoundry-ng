@@ -1,0 +1,26 @@
+id: passage:p-revolver-silence
+summary: The investigator hands the old revolver to the sheriff’s deputies and keeps Marta’s
+  alibi hidden, allowing the deputies to confirm miner Cole Duvall’s fingerprints and arrest
+  him while the lodge’s social tension remains simmering.
+entities:
+- faction:local-sheriff
+- object:old-revolver
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan hands revolver in walnut case to Deputy Hale, says it stays there, and
+  keeps Marta’s claim of being alone in library secret. Deputies move gun to sheriff’s office;
+  forensic team matches prints to miner Cole Duvall. Cole protests, is handcuffed. Revolver
+  sits on sheriff’s desk; Jordan carries notebook. Hostess’s reputation remains intact.
+beats:
+- beat:revolver-commit-hand--silent-hostess
+- beat:revolver-post1-hand--silent-hostess
+- beat:revolver-post2-hand--silent-hostess
+choices:
+- label: seal the lodge doors as the crowd turns on the miner
+  to: passage:p-locked-lodge-tension

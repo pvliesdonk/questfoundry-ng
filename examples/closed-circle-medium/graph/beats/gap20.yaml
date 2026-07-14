@@ -1,0 +1,9 @@
+id: bridge:gap20
+created_by: grow
+summary: The shrill alarm echoes through the aisles, prompting the hurried evacuation of the
+  library's rare volumes.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- location:library

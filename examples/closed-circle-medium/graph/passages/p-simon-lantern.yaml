@@ -1,0 +1,16 @@
+id: passage:p-simon-lantern
+summary: Simon glides silently through the lodge corridors, a flickering lantern briefly illuminating
+  the manuscript, while his loyalty to the guests remains outwardly unquestioned.
+entities:
+- location:library
+- character:butler
+prose_summary: Simon watches lantern light the manuscript, then leaves the library, walks
+  the hallway silently, knows hidden doors, carries hidden debt ledger and remembers cash
+  given to Cole for the miner’s promise. He shines lantern on a scrap of paper, then extinguishes
+  it to stay hidden, continues to common room, smiles at guests, and pauses as fire sputters.
+beats:
+- beat:butler-aftermath1
+- bridge:gap7
+choices:
+- label: Watch Cole linger as the butler walks by
+  to: passage:butler-aftermath-shadow

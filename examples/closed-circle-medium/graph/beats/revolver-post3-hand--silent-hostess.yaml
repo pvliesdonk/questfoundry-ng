@@ -1,0 +1,15 @@
+id: beat:revolver-post3-hand--silent-hostess
+created_by: grow
+summary: The miner is vilified by the crowd, the investigator has kept Marta’s alibi quiet,
+  and the revolver remains with the sheriff, allowing formal forensic work to proceed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

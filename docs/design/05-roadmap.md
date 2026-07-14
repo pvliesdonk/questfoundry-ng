@@ -65,14 +65,21 @@ decomposition (A21). See `docs/plans/` and the decision log.
   weak-tier story completes FILL and DRESS gate-clean, exports round-trip, and
   reads without prose-quality rework.
 
-## Next
-
 - **Rotating limited POV.** A wanted, previously-mis-deferred feature: the
   viewpoint character changes across the book while each unit stays in one head.
-  The pipeline accepts a rotating POV in vision/voice but can't honor one at
-  write time (no per-passage viewpoint), which blocks closed-circle-of-suspects
-  mysteries. Design-first, its own PR; open questions (granularity, derivation,
-  cadence, first-person interludes) are the author's. → [`../plans/rotating-pov.md`](../plans/rotating-pov.md).
+  The author answered the design questions directly (2026-07-14: per-passage
+  head, GROW-annotate assignment, no cadence engine constraint, first-person
+  interludes in v1) and the engine half is **built offline-green** (per-beat
+  `viewpoint`/`interlude`, the collapse cut, I14, per-passage FILL enforcement,
+  `Voice.interlude`). **Open:** the live *Closed Circle* validation on a
+  fresh medium project (the prior session's project died with its container;
+  a surviving pre-viewpoint project would resume at `qf rerun grow`, since
+  heads are minted at GROW's annotate pass and a POLISH checkpoint is
+  headless by construction) — the acceptance test is FILL clearing the
+  rotating-scheme passages, with the rotation reading deliberately.
+  → [`../plans/rotating-pov-build.md`](../plans/rotating-pov-build.md).
+
+## Next
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved
@@ -89,6 +96,34 @@ decomposition (A21). See `docs/plans/` and the decision log.
   exemplars; per-stage digest sources visibly differ.
 
 ## Later
+
+- **Pipeline operator loop** (author-proposed, 2026-07-14). A frontier-tier AI
+  operator supervising live runs as part of the pipeline itself, doing what
+  this session's external loop did for the *Closed Circle* validation: watch
+  pass telemetry, diagnose each halt (prompt defect vs structural vs
+  non-convergence at the review cap), journal every stall verbatim, re-roll a
+  failed pass's cached call chain with a per-passage retry cap, and stop for
+  escalation when a stall repeats or a failure isn't review-shaped. The
+  in-session prototype (a ~90-line driver + stall journal) cleared 7 stalls
+  across a medium FILL unattended and its journal fed 5 prompt fixes back
+  into the repo — the pipeline version would be a first-class runner mode
+  (an `--operator` supervisor around `qf run`), with the frontier tier doing
+  the diagnosis and the unbilled tier doing the writing.
+
+- **Sampling & reasoning knobs per stage** (author-proposed, 2026-07-14).
+  The Ollama provider already exposes `temperature` and `think` project-wide;
+  make them per-role/per-stage and measure whether they matter where it
+  counts: does low temperature help the mechanical passes (annotate, labels,
+  codewords) converge; does higher temperature help the writer's variety
+  without hurting review convergence; does reasoning effort/thinking help the
+  reviewer and arbiter apply rules as written (the fabricated-rule class) —
+  the A16 ledger and the stall journal give the measurement instruments.
+  Fold in the model-tier question the same experiments raise: the cloud
+  catalog now carries stronger tiers (GLM-5.x, Kimi K2.5+, DeepSeek-V4-Pro)
+  worth benchmarking against the `gpt-oss:120b` baseline — remembering the
+  2026-07-14 doctrine note: a stronger model *hiding* more defects is not
+  the same as fewer defects; judge by gates and the stall journal, not by
+  fluency.
 
 - **M10 — SHIP & the author loop.** The last pipeline stage and the review
   experience around it.

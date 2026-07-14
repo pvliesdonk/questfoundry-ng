@@ -19,32 +19,50 @@ _Last updated: 2026-07-14._
 
 ## Current epic
 
-**Administration restructure** (in flight, PR #73): the single ~3,250-line
-STATUS doc is split by lifecycle so no file grows unbounded and open items stop
-hiding — this slim STATUS (current epic only), the Shipped/Now/Next/Later
-roadmap, `BACKLOG.md`, and the decision log moved to its own file. Architecture
-decisions stay in the 03 §9 mini-ADR table (an agent reads the table with the
-doc; it would not open per-file ADRs). Provenance of agent-authored records is
-handled for now by the AGENTS.md caveat; the real fix is the eventual move to
-GitHub issues.
+**Rotating limited POV** (built offline-green, PR pending on
+`claude/rotating-limited-pov-hikty0`): the author answered the five design
+questions directly (2026-07-14 — per-passage head, GROW-annotate assignment,
+no cadence engine constraint, first-person interludes in v1, golden coverage
+via keepers-bargain's constant head + the e2e fixture) and the engine half is
+built per [`plans/rotating-pov-build.md`](plans/rotating-pov-build.md):
+per-beat `viewpoint`/`interlude` settled at the freeze, invariant **I14** (one
+head per passage) + a G3 referential check, the collapse head-switch cut,
+per-passage POV enforcement in FILL's write/review, `Voice.interlude`, and
+mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
 
 ## Immediate next steps
 
-1. **Land PR #73** (this restructure), then this hand-off note is the live one.
+0. **Live validation: PASSED** (2026-07-14, ~13:30Z). A fresh medium *Closed
+   Circle* project on the unbilled tier (`gpt-oss:120b`, ollama.com; premise +
+   rotating+journal `pov_hint` pinned verbatim, the hint re-pinned by editing
+   the DREAM artifact post-DREAM per A17 — DREAM translates, it is not
+   micromanaged; author decision 2026-07-14, decision log) completed FILL
+   **gate-clean (0 errors)** — the first weak-tier medium ever to finish FILL
+   — with the rotating scheme real at every level: 4 heads over 98 headed
+   passages (60/14/12/12) + 14 headless texture/coda passages, one head per
+   passage (I14 in the passing gate set), 112 passages / 239 beats, 844
+   calls, ~2.8M in / 1.0M out, unbilled. Six advisory warnings (5× B5
+   near-band, 1× B6 pacing). ~15 halts along the way, every one a
+   pre-existing prompt/review defect or honest 2-round non-convergence —
+   zero rotating-POV machinery failures; the fixes are on this branch and
+   the stall journal is the record. NOT exercised: first-person interludes
+   (the voice declared the register but annotate marked no beats — open
+   follow-up) and DRESS. The finished project is checked in as
+   [`examples/closed-circle-medium/`](../examples/closed-circle-medium/)
+   (at FILL — no codex/art; exports stay out of the repo per AGENTS.md,
+   the author has the generated HTML/PDF). A kimi-k2.5 A/B of the same
+   premise is still running for the tier comparison.
+1. **Land the rotating-POV PR** (this branch), then:
 2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
-   the engine half is built and offline-green; no weak tier has yet completed a
-   full clean FILL/DRESS at scale. The *Closed Circle* medium run (2026-07-14)
-   got POLISH clean at medium (validating the A21 passages decomposition) and
-   surfaced the rotating-POV gap as its FILL blocker.
-3. **Rotating limited POV** (design-first, author-gated): a wanted feature
-   recorded in [`plans/rotating-pov.md`](plans/rotating-pov.md); the design
-   questions (granularity, viewpoint derivation, cadence, first-person
-   interludes) are the author's to answer before any code. Blocks
-   closed-circle-of-suspects mysteries at FILL.
+   FILL at scale on a weak tier is now demonstrated (step 0); the missing half
+   of the exit is **DRESS** — no weak tier has yet completed a clean DRESS at
+   scale. Natural next kick: `qf run dress` on the finished *Closed Circle*
+   project (or a successor run that also exercises interludes).
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 
-M0–M8 complete. Recent post-M8 efforts merged: the POLISH passages-pass
-decomposition (A21, PR #71, live-validated at medium), `scene_type` /
-`narration_scope` beat annotations + the B8 pacing report, the review contract,
-reference-pinning (`refpin.py`), and the Ollama backend (A20).
+M0–M8 complete. Recent post-M8 efforts merged: the administration restructure
+(PR #73), the POLISH passages-pass decomposition (A21, PR #71, live-validated
+at medium), `scene_type` / `narration_scope` beat annotations + the B8 pacing
+report, the review contract, reference-pinning (`refpin.py`), and the Ollama
+backend (A20).

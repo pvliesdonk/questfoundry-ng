@@ -91,6 +91,27 @@ get headroom above the scene band (climax resolutions run long). The
 locked column is an allowance, not a floor: BRAINSTORM overgenerates by
 up to that many dilemmas and triage locks the surplus (B1).
 
+**A scope earns its length — the words-target coupling** (structural-depth
+milestone W1, [`docs/plans/structural-depth.md`](../plans/structural-depth.md)):
+the vision may carry an author-chosen `words_target` inside the scope's
+words band (an economic input like scope itself, never invented by DREAM's
+LLM; G0 checks the band). When set, the **soft** dilemma budget scales with
+it: `table_soft + round((words_target − anchor) / words_per_soft)`, clamped
+to `[1, table_soft + 2]`, where each scope's `anchor_words` is the
+simulation-projected story words at the table budget and `words_per_soft`
+the measured marginal story words of one soft dilemma through the real
+weave/collapse/cadence machinery (2026-07-14 measurement, `tests/scale.py`:
+short ≈ 3.2k over a 13.6k anchor, medium ≈ 9k over 49.3k, long ≈ 11k over
+72.5k). Hard counts never move (hard forks multiply worlds; ending count is
+story shape, not a length knob), the locked allowance stays the table's,
+and micro is exempt (its shape pins pre-M8 literals). Unset means the table
+counts exactly — the pre-coupling behavior. The rationale is the flat-book
+post-mortem (decision log, 2026-07-14): the projected structure at the
+table budget only reaches the *top* of each words band, so the lower band
+was reachable only by stretching — bridge-fed length with no dramatic
+material behind it. B9 (bridge share over all beats, warn above 25%) is
+the advisory tripwire for exactly that signal.
+
 **Voice** — a singleton record created by FILL before any prose: POV,
 tense, register, rhythm rules, an imagery palette (where the voice's
 images come from and their limits), dialogue rules, banned patterns. The

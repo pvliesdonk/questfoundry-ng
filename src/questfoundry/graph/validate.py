@@ -79,6 +79,16 @@ def check_g0_vision_complete(ctx: Context) -> None:
         ctx.error("G0", "vision.themes is empty")
     if v.scope not in SCOPE_PRESETS:
         ctx.error("G0", f"vision.scope {v.scope!r} is not a known preset")
+        return
+    if v.words_target is not None:
+        lo, hi = v.preset.words_total
+        if not lo <= v.words_target <= hi:
+            ctx.error(
+                "G0",
+                f"vision.words_target {v.words_target} is outside scope "
+                f"'{v.scope}'s words band {lo}-{hi}; pick a target inside the "
+                "band or change the scope",
+            )
 
 
 # --------------------------------------------------------------------------
@@ -129,13 +139,26 @@ def check_g1_shared_entity(ctx: Context) -> None:
     ctx.error("G1", "no two dilemmas share an anchored entity (parallel-novels risk)")
 
 
+def _budget_label(ctx: Context) -> str:
+    """How B1's counts were arrived at, for actionable messages: the bare
+    scope when uncoupled, scope + words_target when the budget derives
+    from it (docs/plans/structural-depth.md, W1)."""
+    if ctx.vision.words_target is None:
+        return f"scope '{ctx.vision.preset.name}'"
+    return f"scope '{ctx.vision.preset.name}' at words_target {ctx.vision.words_target}"
+
+
 def check_budget_dilemmas(ctx: Context) -> None:
-    """B1: branched dilemmas match the scope's role counts exactly; up to
-    `locked_dilemmas` extra may be locked at triage (single explored path
-    — design doc 01 §4). Before triage no path exists, so the same totals
-    are checked as a range: BRAINSTORM overgenerates, triage disposes."""
-    preset = ctx.vision.preset
-    want = {DilemmaRole.HARD: preset.hard_dilemmas, DilemmaRole.SOFT: preset.soft_dilemmas}
+    """B1: branched dilemmas match the budget's role counts exactly; up
+    to the locked allowance extra may lock at triage (single explored
+    path — design doc 01 §4). The budget is the scope table's, coupled to
+    vision.words_target when set (the soft count scales so a scope earns
+    its length or shrinks — structural-depth W1). Before triage no path
+    exists, so the same totals are checked as a range: BRAINSTORM
+    overgenerates, triage disposes."""
+    budget = ctx.vision.budget
+    label = _budget_label(ctx)
+    want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
     dilemmas = ctx.g.nodes_of(Dilemma)
     explored = {d.id: len(queries.explored_paths(ctx.g, d.id)) for d in dilemmas}
     if not any(explored.values()):
@@ -147,16 +170,16 @@ def check_budget_dilemmas(ctx: Context) -> None:
             if count < want[role]:
                 ctx.error(
                     "B1",
-                    f"scope '{preset.name}' expects >={want[role]} {role.value} "
+                    f"{label} expects >={want[role]} {role.value} "
                     f"dilemma(s), found {count}",
                 )
             else:
                 surplus += count - want[role]
-        if surplus > preset.locked_dilemmas:
+        if surplus > budget.locked:
             ctx.error(
                 "B1",
-                f"{surplus} dilemma(s) beyond the branched budget; scope "
-                f"'{preset.name}' allows at most {preset.locked_dilemmas} to lock",
+                f"{surplus} dilemma(s) beyond the branched budget; {label} "
+                f"allows at most {budget.locked} to lock",
             )
         return
     branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
@@ -176,14 +199,13 @@ def check_budget_dilemmas(ctx: Context) -> None:
         if count != want[role]:
             ctx.error(
                 "B1",
-                f"scope '{preset.name}' expects {want[role]} branched {role.value} "
+                f"{label} expects {want[role]} branched {role.value} "
                 f"dilemma(s), found {count}",
             )
-    if locked > preset.locked_dilemmas:
+    if locked > budget.locked:
         ctx.error(
             "B1",
-            f"{locked} locked dilemma(s); scope '{preset.name}' allows at most "
-            f"{preset.locked_dilemmas}",
+            f"{locked} locked dilemma(s); {label} allows at most {budget.locked}",
         )
 
 
@@ -490,6 +512,39 @@ def check_budget_arc_beats(ctx: Context) -> None:
                 f"arc {label} has {count} beats; scope '{preset.name}' targets "
                 f"{preset.arc_beats_min}-{preset.arc_beats_max} (advisory)",
             )
+
+
+# B9: bridges are connective tissue — beats serving no dilemma, minting
+# prose with no dramatic material behind it. A high share is the
+# *stretching* signal (the flat *Closed Circle* exemplar ran 89 bridges
+# over 239 beats, 37%; the healthy runs on the same premise carried 27
+# and 33, ≤15%). Advisory by design: the count is engine-computed but not
+# in-pass repairable — GROW's bridge pass must cover every gap (I6) — so
+# the actionable fix is upstream material (SEED scaffolds that share
+# entities; the B1 words-target coupling), never a count a pass can hit
+# (docs/plans/structural-depth.md, W1).
+B9_BRIDGE_SHARE_MAX = 0.25
+
+
+def check_b9_bridge_share(ctx: Context) -> None:
+    beats = ctx.g.nodes_of(Beat)
+    if not beats:
+        return
+    bridges = sum(
+        1
+        for b in beats
+        if b.beat_class == BeatClass.STRUCTURAL and b.purpose == StructuralPurpose.BRIDGE
+    )
+    share = bridges / len(beats)
+    if share > B9_BRIDGE_SHARE_MAX:
+        ctx.warn(
+            "B9",
+            f"{bridges} of {len(beats)} beats ({share:.0%}) are bridges — above "
+            f"the {B9_BRIDGE_SHARE_MAX:.0%} stretching threshold: the story is "
+            "sustaining its length with connective tissue instead of dramatic "
+            "material; fix upstream (denser scaffolds sharing entities, or a "
+            "dilemma budget matching the words target), not with prose (advisory)",
+        )
 
 
 def check_i8_intersections(ctx: Context) -> None:
@@ -1097,6 +1152,7 @@ GATES: dict[Stage, list] = {
         check_g3_viewpoint_refs,
         check_g3_flag_derivation,
         check_budget_arc_beats,
+        check_b9_bridge_share,
     ],
     Stage.POLISH: [
         check_i10_gates_satisfiable,

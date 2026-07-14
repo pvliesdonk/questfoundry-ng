@@ -66,62 +66,37 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   for a 120b model"). **Open:** DRESS — no weak tier has completed a clean
   DRESS at scale. The next validation run also proves the now-mandatory
   cadence budget live (its enforcement shipped after the flat exemplar; the
-  deeper structural work is the Next milestone below). **Exit:** a
+  deeper structural work is the sibling milestone below). **Exit:** a
   corpus-grounded weak-tier story completes FILL and DRESS gate-clean,
   exports round-trip, and reads without prose-quality rework.
 
-## Next
+- **Structural depth — material density & texture worlds**
+  (author-directed, 2026-07-14; picked up the same day). Opened by the
+  first reading of `examples/closed-circle-medium`: gate-clean yet
+  "essentially a flat story" — the author's diagnosis is *stretching* ("if
+  we do not have enough branching material we may not be able to sustain
+  such a long story and need more dilemmas"), and false branching "may
+  help, but cannot compensate something as bare as the finished run"; the
+  structural A/B agrees (the stretched run carried 89 bridge beats vs 27
+  and 33; even kimi's budget-saturated structure projects 1020
+  words/choice — texture saturates on a bare trunk). Four author-directed
+  ingredients: **material density** (dilemma budget coupled to the words
+  budget, bridge share bounded), **brainstorm surplus retained** as
+  branching feedstock (tagged, not woven), **tensored texture worlds**
+  (the false branch generalized to a diamond over a whole run — parallel
+  texture-worlds, different textures, never different consequences), and
+  **the context lever** (FILL's per-world context makes parallel beats
+  read as genuinely different scenes). Design, mechanics, and PR slicing
+  live in [`../plans/structural-depth.md`](../plans/structural-depth.md)
+  — the authoritative contract. **Status:** PR-1 (the words-target budget
+  coupling + the B9 bridge-share tripwire) is built; W2
+  brainstorm-surplus retention, W3 texture worlds (frontier: arc
+  invisibility, freeze compliance, annotation mirroring), and W4 follow
+  per the plan. **Exit:** a fresh weak-tier medium at a band-top words
+  target derives its budget, plants texture forks, lands B6 mid-band with
+  B9 quiet, and an author read finds actual interactivity.
 
-- **Structural depth — material density & texture worlds** (the next
-  milestone after prose quality at scale; author-directed, 2026-07-14).
-  Opened by the first reading of `examples/closed-circle-medium`: gate-clean
-  yet "essentially a flat story" — 10 branch points over 112 passages
-  against M8's 62/148, four finalize rounds of `false_branches: []`
-  unchallenged. The immediate fix shipped (the cadence budget is mandatory
-  at apply, design 02), but the author's diagnosis goes deeper —
-  **enforcement is the floor, not the fix**: what the run witnessed was
-  *stretching* ("if we do not have enough branching material we may not be
-  able to sustain such a long story and need more dilemmas"), and false
-  branching "may help, but cannot compensate something as bare as the
-  finished run". The structural A/B agrees (no FILL needed; all three runs
-  share 8 dilemmas / 4 endings): the stretched run carried 89 bridge beats
-  (kimi 27, M8 33), and even kimi's budget-saturated structure projects
-  1020 words/choice — above band; texture saturates on a bare trunk. The
-  milestone combines:
-  - **Material density**: couple the dilemma/explored-path budget to the
-    words budget so a scope earns its length (or shrinks); bound the
-    bridge-beat share (the stretching signal); decide whether the remaining
-    floor-phrased within-band knobs (scaffold shape bands, intersection
-    group counts, residue fork uptake) get the same mandatory treatment
-    (BACKLOG tier-confound item — enforced counts beat calibrated
-    expectations).
-  - **More brainstorm material and/or dilemmas** (author, 2026-07-14):
-    overgenerate further and/or retain more at triage as the source of
-    *additional branching* when the words budget demands it — surplus
-    dilemmas, subplots, and settings kept available (tagged, not woven)
-    instead of discarded.
-  - **Tensored texture worlds — diamonds over whole runs** (author,
-    2026-07-14): generalize the false branch from a 1–2 beat graft between
-    adjacent beats to a diamond laid over a whole *run* of the DAG (many
-    beats, even containing branches), temporarily creating parallel
-    texture-worlds — "one where the next events happen in the forest,
-    another where they happen in the mountains" — converging where the run
-    ends. Same contract as false branches (different textures, never
-    different consequences) but scene-scale: the substance beat-scale
-    diamonds cannot supply. Feedstock: the retained brainstorm surplus
-    above, so POLISH grafts real material instead of inventing it.
-  - **The context lever** (author, 2026-07-14): similar beats in different
-    worlds can yield *completely different passages*, because FILL writes
-    prose from completely different context (world truths, window, head,
-    story-so-far). Parallel worlds are structurally cheap — one tensored
-    run — but read as genuinely different scenes, which is what makes
-    texture worlds substantive interactivity rather than decoration. (The
-    multi-hard machinery already demonstrates this: per-world beats share a
-    skeleton and read as different scenes.)
-  - Frontier design throughout: interacts with arc computation (texture
-    worlds stay invisible to arcs), the topology freeze (grafts post-freeze
-    like false branches), collapse, and FILL windows across the parallel
-    stretch.
+## Next
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved

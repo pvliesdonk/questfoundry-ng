@@ -486,7 +486,9 @@ def _save_enrichment(root: FSPath, enrichment: Enrichment) -> None:
         path.write_text(f"---\n{header}---\n\n{entry.body.strip()}\n", encoding="utf-8")
 
 
-def scaffold_project(root: FSPath, name: str, scope: str) -> Project:
+def scaffold_project(
+    root: FSPath, name: str, scope: str, words_target: int | None = None
+) -> Project:
     if root.exists() and any(root.iterdir()):
         raise ProjectError(f"{root} already exists and is not empty")
     vision = Vision(
@@ -494,6 +496,7 @@ def scaffold_project(root: FSPath, name: str, scope: str) -> Project:
         genre="TODO",
         tone="TODO",
         scope=scope,
+        words_target=words_target,
     )
     project = Project(
         root=root, name=name, stage=Stage.NEW, vision=vision, graph=StoryGraph()

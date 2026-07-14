@@ -29,6 +29,8 @@ def _context(project: Project) -> dict:
     return {
         "premise": project.vision.premise,
         "scope": preset,
+        "budget": project.vision.budget,
+        "words_target": project.vision.words_target,
         "pov_hint": project.vision.pov_hint,
     }
 
@@ -44,6 +46,7 @@ def _apply(proposal: DreamProposal, project: Project) -> list[str]:
     project.vision = Vision(
         premise=project.vision.premise,
         scope=project.vision.scope,
+        words_target=project.vision.words_target,
         genre=proposal.genre,
         subgenre=proposal.subgenre,
         tone=proposal.tone,

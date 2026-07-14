@@ -17,20 +17,25 @@ Where to look for the rest:
 
 _Last updated: 2026-07-14._
 
-## Current epic
+## Current epics (two threads, roadmap "Now")
 
-**Prose quality at scale** (roadmap "Now"): FILL at medium is demonstrated
-(the *Closed Circle* run, gate-clean on `gpt-oss:120b`, author-read prose
-verdict "good for a 120b model"); the open half is **DRESS**. The same
-reading found the run "essentially a flat story" (10 branch points / 112
-passages, zero false-branch beats — finalize proposed `false_branches: []`
-four rounds straight against a full budget, unchallenged). The immediate
-fix shipped: the cadence budget is **mandatory at `_finalize_apply`**
-(design 02; decision log "flat-book post-mortem"). The deeper work — the
-author's stretching diagnosis, material density, brainstorm-surplus
-feedstock, tensored texture worlds, the different-context lever — is
-combined as the **next milestone**: roadmap "Next" → *Structural depth —
-material density & texture worlds* (author-directed, 2026-07-14).
+**Prose quality at scale — the remaining live validation**: FILL at medium
+is demonstrated (the *Closed Circle* run, gate-clean on `gpt-oss:120b`,
+author-read prose verdict "good for a 120b model"); the open half is
+**DRESS**, plus proving the now-mandatory cadence budget live. The
+kimi-k2.5 A/B of the same premise runs in a parallel session.
+
+**Structural depth — material density & texture worlds** (author-directed
+2026-07-14, started same day): the flat-book reading's deeper fix. The
+milestone design is in
+[`plans/structural-depth.md`](plans/structural-depth.md) — the
+authoritative contract, PR-sliced. **PR-1 is built on this branch**:
+`Vision.words_target` couples the soft-dilemma budget to the words budget
+(a scope earns its length or shrinks; calibrated against the structural
+simulation — one soft ≈ 9k story words at medium), and **B9** warns when
+bridges exceed 25% of beats (the stretching tripwire; the flat exemplar
+now trips it at 37%, by design). Uncoupled projects (no `words_target`)
+behave exactly as before; every exemplar stays green.
 Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
@@ -60,19 +65,23 @@ Previous epic **Rotating limited POV shipped in PR #74** (A22).
    author reading ("good for a 120b model" — the first author-ratified
    weak-tier prose verdict): the gap is confined to POLISH's choice layer. A kimi-k2.5 A/B of the same
    premise is still running for the tier comparison.
-1. **The epic's next run — DRESS at scale, proving the enforced cadence
-   budget on the way:** a fresh weak-tier medium run whose finalize fills
-   the budget (or halts honestly trying), whose passage layer lands in the
-   B6 band, and which then completes DRESS gate-clean. Watch for repair
-   exhaustion: a ~60-site budget in one proposal is untested at the weak
-   tier; if it exhausts, the fix is decomposing the finalize pass (per-run
-   calls), not softening the requirement. (DRESS purely as machinery
-   exercise could also run on the flat exemplar.)
-2. **Then the next milestone** (roadmap "Next"): *Structural depth —
-   material density & texture worlds* — the author's stretching diagnosis
-   turned into engine work (dilemma budget coupled to words budget, bridge
-   share bounded, brainstorm surplus retained as branching feedstock,
-   tensored texture worlds over whole runs, the different-context lever).
+1. **The prose epic's next run — DRESS at scale, proving the enforced
+   cadence budget on the way:** a fresh weak-tier medium run whose finalize
+   fills the budget (or halts honestly trying), whose passage layer lands
+   in the B6 band, and which then completes DRESS gate-clean. Watch for
+   repair exhaustion: a ~60-site budget in one proposal is untested at the
+   weak tier; if it exhausts, the fix is decomposing the finalize pass
+   (per-run calls), not softening the requirement. (DRESS purely as
+   machinery exercise could also run on the flat exemplar.) Setting a
+   band-top `--words-target` on that run would also exercise PR-1's
+   coupling live.
+2. **Structural depth, next slices** (contracts in
+   [`plans/structural-depth.md`](plans/structural-depth.md)): **PR-2**
+   brainstorm-surplus retention (the `reserve` triage disposition —
+   mid-tier work against the written contract); **PR-3** tensored texture
+   worlds engine (frontier: annotation mirroring, arc invisibility, freeze
+   compliance — read the plan's starred seams first); **PR-4** finalize
+   integration + FILL context lever + live validation.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

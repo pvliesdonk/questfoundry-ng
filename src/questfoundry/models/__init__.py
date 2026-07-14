@@ -1,5 +1,5 @@
 from questfoundry.models.base import Edge, EdgeKind, Node, NodeKind, Stage
-from questfoundry.models.concept import SCOPE_PRESETS, ScopePreset, Vision
+from questfoundry.models.concept import SCOPE_PRESETS, DilemmaBudget, ScopePreset, Vision
 from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
 from questfoundry.models.enrichment import (
     ArtDirection,
@@ -21,6 +21,7 @@ __all__ = [
     "CodexEntry",
     "Consequence",
     "Dilemma",
+    "DilemmaBudget",
     "DilemmaImpact",
     "Edge",
     "EdgeKind",

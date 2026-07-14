@@ -39,7 +39,12 @@ history; the decisions it recorded are captured below and in the design docs.
   the contract, with a violating-construction test. The B6 gate itself stays
   advisory — the *budget* is the enforcement point because it is exact and
   actionable. The exemplar predates the fix and stays checked in as the
-  cautionary baseline. (Same reading also surfaced a mechanical `qf graph`
+  cautionary baseline. The same author reading split the verdict cleanly:
+  "the actual prose is good (for a 120b model)" (author, 2026-07-14) — the
+  first author-ratified prose judgment on a weak-tier run, so the
+  prose-quality engine half (echo guard, story-so-far, review contract,
+  per-passage POV) held at FILL and the defect was purely structural, in
+  POLISH's choice layer. (Same reading also surfaced a mechanical `qf graph`
   defect: per-world beat ids carry `--`, which Mermaid parses as an edge —
   ids are now sanitized, labels untouched.)
 

@@ -55,7 +55,9 @@ epic **Rotating limited POV shipped in PR #74** (A22; roadmap "Shipped").
    the author has the generated HTML/PDF). **Caveat discovered on first
    reading (same day):** gate-clean but structurally flat — see "Current
    epic"; the exemplar predates the cadence-budget enforcement and stays
-   checked in as the cautionary baseline. A kimi-k2.5 A/B of the same
+   checked in as the cautionary baseline. The prose itself passed the same
+   author reading ("good for a 120b model" — the first author-ratified
+   weak-tier prose verdict): the gap is confined to POLISH's choice layer. A kimi-k2.5 A/B of the same
    premise is still running for the tier comparison.
 1. **Prove the enforced cadence budget live:** a fresh weak-tier medium run
    whose finalize fills the budget (or halts honestly trying) and whose

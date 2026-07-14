@@ -46,6 +46,29 @@ history; the decisions it recorded are captured below and in the design docs.
   (counts a prompt merely states are tier knobs) and for the B4-style
   band drift the structural-depth milestone's coupled budget addresses.
 
+- **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
+  author-directed on the live run):** The texture-trial's second halt
+  (five spymaster passages "over the I12 cap") unwound into two author
+  corrections. (1) The session's cap-enforcement-at-apply was wrong in
+  spirit: a hard irrelevance budget pressures the model to mark
+  load-bearing states irrelevant — the model was *right* to keep the
+  letter-state flags relevant at a scene about surrendering the letter.
+  (2) The count was a unit error: the "7 ambiguous states" were per-path
+  flags of TWO dilemmas (a path derives one flag per consequence; any of
+  them identifies the path), i.e. two binary uncertainties. I12 now
+  counts **ambiguous dilemma states** (`ambiguous_dilemma_groups`), and
+  passage-level gates condition arrivals (`passage_gate_flags`, the
+  intersection of in-choice requires — incidentally fixing a latent
+  heavy-residue variant over-count). And because a genuine >cap overlap
+  is the *expected* regime at medium/long (author: "this is going to
+  happen... so let's immediately address"), the escape valve named in
+  I12's own message since M3 ships: the audit's **`split_on`** keys a
+  passage on up to 2 dilemmas and `mutations.split_passage` re-presents
+  the wired moment as flag-gated variants — arrivals hold a known side,
+  the state honestly stops counting. Audit violations batch into one
+  repairable error (the run's third halt was whack-a-mole: one violation
+  surfaced per repair round). 01 §8 and 02 carry the durable rules.
+
 - **2026-07-14 (texture worlds: contamination caught and the definition
   widened — author corrections on the live run):** Two corrections from
   the author reading the texture-trial's first finalize output. (1)

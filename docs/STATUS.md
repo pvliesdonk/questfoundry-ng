@@ -33,10 +33,14 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
 ## Immediate next steps
 
 1. **Land the rotating-POV PR** (this branch), then:
-2. **Live *Closed Circle* re-run** from its POLISH checkpoint on the unbilled
-   tier (`gpt-oss:120b-cloud`) — the acceptance test is clearing the FILL
-   passage the 2026-07-14 run died on, with the rotation reading deliberately
-   (one head per passage, journal interludes where the scheme asks).
+2. **Live *Closed Circle* re-run** via `qf rerun grow` on the unbilled tier
+   (`gpt-oss:120b-cloud`) — not from the POLISH checkpoint: heads are minted
+   by GROW's annotate pass and settled at the freeze, so the old checkpoint
+   is headless and would only exercise the degradation path. The unchanged
+   GROW passes replay from the A16 cache for free; annotate goes live, then
+   POLISH/FILL rebuild. Acceptance: clearing the FILL passage the 2026-07-14
+   run died on, with the rotation reading deliberately (one head per passage,
+   journal interludes where the scheme asks).
 3. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
    the engine half is built and offline-green; no weak tier has yet completed a
    full clean FILL/DRESS at scale. The *Closed Circle* medium run (2026-07-14)

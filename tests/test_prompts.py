@@ -361,3 +361,32 @@ def test_fill_review_said_plus_speaker_is_never_a_banned_tag():
     assert "said Jordan" in review and "never violates a tags-are-said rule" in review
     voice = " ".join((PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8").split())
     assert "NEVER phrase a ban as a complement" in voice
+
+
+def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden):
+    """Tracing the Closed Circle stall journal against the prompts (the
+    author's don't-blame-the-weak-model correction, 2026-07-14) found three
+    under-determinations, each mapping to an observed failure: the head's
+    pronouns were stated only deep in the CAST block (they/them head drifted
+    to 'he'); nothing asked the writer to verify beat events and actors
+    before emitting (sheriff's accusation delivered by a deputy); and the
+    rework brief never said to keep what already passed (fix-one-break-one
+    across rounds)."""
+    source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
+    assert "BEFORE RETURNING, CHECK THE BEATS OFF" in source
+    assert "performed by the character the summary names" in source
+    assert "REVISE, DON'T REWRITE" in source
+    assert "keep every sentence the findings do not touch" in source
+    # the head's pronouns render in the viewpoint line itself
+    from questfoundry.pipeline.stages.fill import _write_context_for
+    from tests.test_fill import _set_passage_head
+
+    golden.graph.node("character:keeper").pronouns = "she/her"
+    _set_passage_head(golden.graph, "passage:p-arrival", "character:keeper")
+    context = _write_context_for("passage:p-arrival")(golden)
+    rendered = (
+        runner._environment()
+        .get_template("fill_write.j2")
+        .render(**context, notes="", repair_errors=[], research="")
+    )
+    assert "pronouns she/her, exactly" in rendered

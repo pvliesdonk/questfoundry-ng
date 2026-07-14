@@ -55,7 +55,9 @@ slips in.
 
 POINT OF VIEW — TWO SEPARATE RULES:
 1. NO OTHER MINDS. {% if viewpoint %}THIS passage's viewpoint character is
-   {{ viewpoint.name }} ({{ viewpoint.id }}): the reader is inside {{ viewpoint.name }}'s
+   {{ viewpoint.name }} ({{ viewpoint.id }}){% if viewpoint.pronouns %} — pronouns {{ viewpoint.pronouns }}, exactly,
+   in every sentence (the head is named constantly; this is where a wrong
+   pronoun slips in){% endif %}: the reader is inside {{ viewpoint.name }}'s
    mind and no other, whatever heads other passages use — the VOICE above names the
    book's scheme; this line names the head that scheme assigns HERE.{% else %}The
    POV above fixes whose mind the reader is inside.{% endif %} Only that
@@ -96,6 +98,12 @@ world aftermath, a fate that plays out beyond this scene, a character's reputati
 after they are gone. Write the shift cleanly at the paragraph — a limited scene may
 close into a wide coda — never as a mid-sentence leap. Do not widen a `limited`
 beat this way; the coda license belongs only to `wide`.
+BEFORE RETURNING, CHECK THE BEATS OFF: for each beat above, its named event
+must actually happen in your prose, in order, performed by the character the
+summary names (a summary's "the sheriff blames" is not satisfied by a deputy
+blaming). The most common fidelity failure is a beat silently dropped or its
+actor swapped while polishing style — verify each, then verify every
+character's pronouns against the cast below.
 
 CAST IN SCENE — facts are CONSTRAINTS, not choreography. Every fact below is
 already established: the scene must not contradict it, and the reader already
@@ -198,7 +206,11 @@ fact}. If nothing genuinely new surfaced, add nothing.
 {% if previous_draft and previous_draft.prose %}
 YOUR PREVIOUS DRAFT WAS REJECTED (do not repeat it — revise it so every finding
 below is resolved; a fresh draft that reintroduces the same problem will fail
-again):
+again). REVISE, DON'T REWRITE: keep every sentence the findings do not touch —
+the review re-checks EVERYTHING each round, so fixing one finding while
+regressing a constraint the draft already satisfied (a beat dropped, a pronoun
+slipped, a banned pattern reintroduced) fails the round exactly as hard.
+Targeted edits converge; fresh derivations whack-a-mole:
 ---
 {{ previous_draft.prose }}
 ---

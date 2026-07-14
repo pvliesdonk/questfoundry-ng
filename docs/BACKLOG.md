@@ -31,6 +31,20 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   `pov_hint` into a single-head scheme (observed live 2026-07-14) — check
   `dream.j2` preserves authored POV intent.
 
+- [ ] **Echo guard vs canonical utterances (two live instances, 2026-07-14).**
+  The window-echo floor (8 shared tokens) collides with fixed statements the
+  drama must repeat across adjacent passages: Jordan's theory declaration and
+  Marta's alibi ("said I was alone in the library") both exhausted repairs in
+  the *Closed Circle* medium run — the second WITH the restated-dialogue
+  corrective already in the prompt and repair brief, so this is a design gap,
+  not message bluntness. A weak writer cannot always paraphrase a short
+  canonical utterance below 8 shared tokens when the beat mandates its
+  content. Needs a designed allowance (e.g. a quoted-utterance exemption for
+  short runs inside quotation marks in both passages), weighed against the
+  laundering risk (a lifted run dressed as a quote) — frontier judgment, its
+  own PR. Until then the operator move is a fresh re-roll of the stuck
+  passage's cached call chain.
+
 ## Structure & scale
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens

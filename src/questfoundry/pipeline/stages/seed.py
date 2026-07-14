@@ -385,10 +385,13 @@ def _make_beat(
         # 2026-07-14); the recovery action names the one legal prefix
         msg = f"invalid beat {spec.id}: {format_validation_error(e)}"
         if not spec.id.startswith("beat:"):
+            # the suggested rename must itself survive validation, or the
+            # corrective becomes a sharper trap than the raw diagnostic
+            slug = spec.id.replace(":", "-").lower()
             msg += (
                 " — every beat id begins with the literal prefix 'beat:' "
                 "followed by a fresh slug; rename "
-                f"{spec.id!r} to 'beat:{spec.id.replace(':', '-')}'"
+                f"{spec.id!r} to 'beat:{slug}'"
             )
         raise ApplyError(msg) from e
 

@@ -71,10 +71,12 @@ decomposition (A21). See `docs/plans/` and the decision log.
   head, GROW-annotate assignment, no cadence engine constraint, first-person
   interludes in v1) and the engine half is **built offline-green** (per-beat
   `viewpoint`/`interlude`, the collapse cut, I14, per-passage FILL enforcement,
-  `Voice.interlude`). **Open:** the live *Closed Circle* re-run via
-  `qf rerun grow` (the old POLISH checkpoint is headless by construction —
-  heads are minted at GROW's annotate pass) — the acceptance test is clearing
-  the passage it died on, with the rotation reading deliberately.
+  `Voice.interlude`). **Open:** the live *Closed Circle* validation on a
+  fresh medium project (the prior session's project died with its container;
+  a surviving pre-viewpoint project would resume at `qf rerun grow`, since
+  heads are minted at GROW's annotate pass and a POLISH checkpoint is
+  headless by construction) — the acceptance test is FILL clearing the
+  rotating-scheme passages, with the rotation reading deliberately.
   → [`../plans/rotating-pov-build.md`](../plans/rotating-pov-build.md).
 
 ## Next

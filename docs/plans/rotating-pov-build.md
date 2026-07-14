@@ -237,19 +237,21 @@ old projects and the current golden behavior are the degenerate case.
   the hint; the voice pass emits `""` when unused.
 - **Window inflation.** Rendering neighbor heads adds a few tokens per window
   entry — negligible; no context budget change.
-- **Live validation** (unbilled, per budget discipline): re-run the *Closed
-  Circle* medium on `gpt-oss:120b-cloud` via **`qf rerun grow`** — NOT from
-  the POLISH checkpoint: the head is minted by GROW's annotate pass and
-  settled at the freeze, so the old checkpoint's beats are permanently
-  headless and FILL would degrade to the book-wide rule, reproducing the
-  original failure rather than exercising the feature. `rerun grow` replays
-  the unchanged GROW passes from the A16 cache for free (the key hashes
-  prompt + schema; only annotate's changed), mints the heads live, then
-  POLISH rebuilds the passage layer with the viewpoint cuts and FILL runs
-  fresh. The acceptance test is the run clearing the passage it died on, with
-  the rotation reading deliberately (one head per passage, journal interludes
-  where the scheme asks). This PR ships offline-green; the live re-run is the
-  follow-up, same as narration-scope's.
+- **Live validation** (unbilled, per budget discipline): a **fresh medium
+  project** with the same premise and the rotating+journal `pov_hint` pinned
+  verbatim, run on `gpt-oss:120b` (ollama.com) — fresh because the prior
+  session's medium project died with its ephemeral container. (When a
+  pre-viewpoint project *does* survive, the resume point is `qf rerun grow`,
+  never its POLISH checkpoint: the head is minted by GROW's annotate pass and
+  settled at the freeze, so old checkpointed beats are permanently headless
+  and FILL would degrade to the book-wide rule, reproducing the original
+  failure rather than exercising the feature; `rerun grow` replays the
+  unchanged GROW passes from the A16 cache for free — the key hashes
+  prompt + schema, and only annotate's changed.) The acceptance test is FILL
+  clearing the rotating-scheme passages, with the rotation reading
+  deliberately (one head per passage, journal interludes where the scheme
+  asks). This PR ships offline-green; the live run is the follow-up, same as
+  narration-scope's.
 
 ## Build order (checkpoints)
 
@@ -265,5 +267,7 @@ old projects and the current golden behavior are the degenerate case.
 6. Golden annotation; fixture re-record; full `pytest`/`ruff`/golden
    `validate` green.
 7. Docs (01, 02, 03 §9, STATUS, roadmap, rotating-pov.md header).
-8. (Follow-up, not this PR) Live *Closed Circle* re-run via `qf rerun grow`
-   (see Risks: the POLISH checkpoint is headless by construction).
+8. (Follow-up, not this PR) Live *Closed Circle* validation on a fresh medium
+   project (see Risks: the prior project is gone; a surviving one would
+   resume at `qf rerun grow`, its POLISH checkpoint being headless by
+   construction).

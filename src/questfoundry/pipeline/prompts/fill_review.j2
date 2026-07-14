@@ -77,10 +77,15 @@ same way — or "warn" for a concern or a matter of taste. The rules:
 {% for b in beats %}
   - [{{ beat_scene[b.id] }} · {{ beat_scope[b.id] }}] {{ b.summary }}
 {% endfor %}
+  THE CAST ON THIS PAGE (who is who — resolve any role or epithet a summary
+  uses against these people before judging fidelity):
+{% for e in entities %}
+  - {{ e.name }} ({{ e.id }}) — {{ e.concept }}
+{% endfor %}
   Fidelity is about EVENTS. Match actors by WHO they are, not by the word used:
   a summary that names a character by role ("the investigator", "the hostess")
-  is satisfied by prose naming the same character from the cast below ("Jordan",
-  "Marta") — resolve the role against the cast before flagging. A defect exists
+  is satisfied by prose naming the same character from the cast above —
+  resolve the role against the cast before flagging. A defect exists
   only when a DIFFERENT person performs the event (a deputy delivering what the
   summary assigns to the sheriff), never when the same person appears under
   another of their names.

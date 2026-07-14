@@ -1058,3 +1058,15 @@ def test_voice_interlude_without_a_parenthetical_narrator_is_repairable(golden_f
             _interlude_proposal("first-person journal entries in Maren Voss's voice"),
             golden_fill,
         )
+
+
+def test_review_prompt_renders_the_cast_for_actor_resolution(golden_fill):
+    """PR #74 review finding on 6dd9aca: the fidelity rule said 'resolve the
+    role against the cast below' but the template rendered no cast — the only
+    entity listing was gated on pronouns being set (never true for the
+    golden). The roster now renders unconditionally beside the rule, proven
+    on the rendered template, not the source."""
+    rendered = _render_review(golden_fill, "passage:p-arrival")
+    assert "THE CAST ON THIS PAGE" in rendered
+    assert "Maren Voss (character:keeper)" in rendered
+    assert "resolve the role against the cast" in rendered

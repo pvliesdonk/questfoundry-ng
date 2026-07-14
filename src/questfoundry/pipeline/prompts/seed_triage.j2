@@ -23,8 +23,8 @@ YOUR TASKS:
 1. cut_entities: cut any entity that doesn't serve a dilemma or the ensemble
    (id + one-line reason). Keep at least {{ scope.cast_min }} entities, and never cut an
    entity that would leave a dilemma with no retained anchor. Cutting nothing is fine.
-2. Give every dilemma a disposition. Exactly {{ scope.hard_dilemmas }} hard and
-   {{ scope.soft_dilemmas }} soft dilemma(s) are BRANCHED: both answers get paths and the
+2. Give every dilemma a disposition. Exactly {{ budget.hard }} hard and
+   {{ budget.soft }} soft dilemma(s) are BRANCHED: both answers get paths and the
    player chooses between them. Every other dilemma is LOCKED: exactly one answer
    gets a path — the story explores that answer as a subplot woven through every
    playthrough, the player never chooses, and the unexplored answer stays a
@@ -32,7 +32,7 @@ YOUR TASKS:
    suspicion that resolves without a fork). Branch the questions whose BOTH sides
    deserve to be lived; lock the ones whose drama enriches the world either way.
    List each locked dilemma in "locked": {"dilemma", "reason"} (one line).
-   At most {{ scope.locked_dilemmas }} may be locked; locking none is allowed only if the
+   At most {{ budget.locked }} may be locked; locking none is allowed only if the
    dilemma counts already match the branched budget exactly.
 3. paths: create exactly one path per EXPLORED answer — both answers of every
    branched dilemma, the one canonized answer of every locked dilemma.

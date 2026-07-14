@@ -123,13 +123,16 @@ never patched downstream (Principle 4).
 
 | | |
 |---|---|
-| In | Premise (free text), scope preset, author preferences |
+| In | Premise (free text), scope preset, optional words target, author preferences |
 | Out | **Vision** record |
-| Gate G0 | Vision complete; scope budgets resolved; content boundaries explicit |
+| Gate G0 | Vision complete; scope budgets resolved; `words_target` (when set) inside the scope's words band; content boundaries explicit |
 
 The LLM expands the premise into genre/subgenre, tone, themes, audience,
 content boundaries, and a POV hint; the engine binds the scope preset's
-budgets. Cheapest stage to iterate on — the author should churn here, not
+budgets — coupled to the author's `words_target` when one is set (the soft
+dilemma budget scales so the scope earns its length or shrinks; 01 §2,
+structural-depth W1). Premise, scope, and words target are the author's;
+DREAM never invents them. Cheapest stage to iterate on — the author should churn here, not
 later. Everything downstream that contradicts the vision gets cut, so this
 is where taste is captured.
 
@@ -139,7 +142,7 @@ is where taste is captured.
 |---|---|
 | In | Vision |
 | Out | Entities (cast), Dilemmas with two Answers each, `anchored_to` edges |
-| Gate G1 | Budgets met — per-role dilemma counts at least the branched budget, surplus within the locked allowance (B1); I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
+| Gate G1 | Budgets met — per-role dilemma counts at least the branched budget (the words-target-coupled budget, 01 §2), surplus within the locked allowance (B1); I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
 
 The LLM generates generously — more dilemmas and cast than will survive
 as player choices — because SEED triages down and it is far cheaper to
@@ -159,7 +162,7 @@ analysis (which entities are load-bearing).
 |---|---|
 | In | Vision + full BRAINSTORM output |
 | Out | Triage dispositions (branched / locked, 01 §4); Paths (+ Consequences) per explored answer; per-path beat scaffolds with temporal hints and flexibility annotations; dilemma ordering (`wraps`/`serial`/`concurrent`); convergence sketch |
-| Gate G2 | I3 per explored path; branched role budget met exactly (e.g. `micro` = 1 hard + 1 soft) with locked dispositions within the allowance (B1); ordering relations acyclic and consistent; every surviving entity anchored; every cut justified |
+| Gate G2 | I3 per explored path; branched role budget met exactly (e.g. `micro` = 1 hard + 1 soft; the words-target-coupled counts when `words_target` is set, 01 §2) with locked dispositions within the allowance (B1); ordering relations acyclic and consistent; every surviving entity anchored; every cut justified |
 
 The heaviest creative stage, run as three LLM passes with engine checks
 between:
@@ -206,7 +209,7 @@ between:
 |---|---|
 | In | All SEED output |
 | Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (prose-intensity), `narration_scope` (POV/coda register), and `viewpoint`/`interlude` (whose head narrates it; headless for `wide` codas) — the annotations FILL reads, set pre-freeze (01 §Beat annotations) |
-| Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); every set beat `viewpoint` resolves to a retained character entity; budgets (beat count per arc within scope) |
+| Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); every set beat `viewpoint` resolves to a retained character entity; budgets (beat count per arc within scope); **B9** (advisory) bridge share ≤ 25% — the stretching tripwire (01 §2): engine-computed but not in-pass repairable (bridges must cover every gap, I6), so the fix is upstream material, never a count a pass can hit; re-checked at G4 after POLISH's pacing bridges |
 
 The hardest stage, split deliberately:
 

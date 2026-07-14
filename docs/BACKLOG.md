@@ -56,31 +56,24 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   heritage QuestFoundry finding from the :4B era): floor-phrased counts ("at
   least N", open band positions) are tier-dependent sizing knobs — a small
   model reads the floor as the target, a strong model fills toward the
-  ceiling when it can reason more fits. The hard totals are pinned (exact
-  dilemma counts, B1), but the within-band choices (scaffold shape bands,
-  min_payoff floors, intersection group counts, finalize arm counts)
-  compound through weave and collapse: live 2026-07-14, the same medium
+  ceiling when it can reason more fits; live 2026-07-14, the same medium
   premise produced a ~40% larger passage layer on kimi-k2.5 than on
   gpt-oss:120b. Calibration must state per-tier expectations or tighten the
-  bands it wants respected. First knob settled by enforcement instead
-  (2026-07-14, the flat-book post-mortem in the decision log): finalize's
-  false-branch site counts are now mandatory at apply — the precedent when
-  a knob's target is engine-computed and exact. Author reframe (2026-07-14,
-  same session): the deeper miscalibration is **material density, not site
-  counts** — the flat run was "stretching" (8 dilemmas across 239 beats, 89
-  of them bridges vs 27/33 in the healthy runs); a scope whose words budget
-  outruns its dilemma budget cannot be textured back into interactivity
-  (kimi's budget-saturated structure still projects 1020 words/choice).
-  Recalibration should couple the dilemma/explored-path count to the words
-  budget and bound the bridge-beat share (the stretching signal); owned by
-  the "Structural depth — material density & texture worlds" milestone
-  (roadmap "Next"), tracked here as the scale item it grew from. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
-  medium run reached POLISH at **59 passages against the 90–160 band** (its B3
-  advisory). Provenance: observed live in that scratch run (not committed, not
-  yet in a decision-log entry) — treat as an unverified agent observation until
-  reproduced. Re-measure the preset bands against a modulated live run
-  (`tests/scale.py`) and adjust. (Flagged when `scene_type` landed; no longer
-  purely hypothetical.)
+  bands it wants respected. The material-density half of this item moved to
+  the "Structural depth" milestone and its PR-1 is built (2026-07-14,
+  `docs/plans/structural-depth.md` W1): the dilemma budget couples to
+  `words_target` (B1), bridge share warns at 25% (B9), and the knob
+  decision rule is recorded there — mandatory-at-apply only where the
+  target is engine-computed, exact, *and* in-pass repairable; the remaining
+  floor-phrased knobs (scaffold shape bands, intersection group counts,
+  residue fork uptake) get judged against that three-part test when they
+  next bite. What stays here: re-measure the preset `passages`/`arc_beats`/
+  `words_total` bands against a modulated live run (`tests/scale.py`) and
+  adjust — those bands do not yet scale with a coupled budget. Data point:
+  the 2026-07-14 *Closed Circle* `gpt-oss:120b` medium run reached POLISH
+  at **59 passages against the 90–160 band** (its B3 advisory). Provenance:
+  observed live in that scratch run (not committed) — treat as an
+  unverified agent observation until reproduced.
 - [ ] **Intersections over post-commit (exclusive) beats** — M2 only groups
   shared pre-commit beats; exclusive-beat intersections are meaningful but
   interact with arc membership in ways the spine model doesn't cover. Same for

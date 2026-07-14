@@ -135,6 +135,7 @@ def _triage_context(project: Project) -> dict:
     return {
         "vision": project.vision,
         "scope": project.vision.preset,
+        "budget": project.vision.budget,
         "entities": g.nodes_of(Entity),
         "dilemmas": dilemmas,
     }
@@ -169,8 +170,9 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
 
     # Every dilemma gets a disposition: branched (both answers explored)
     # or locked (one answer explored, declared with a reason). Branched
-    # counts must match the scope's role budget exactly (B1).
-    preset = project.vision.preset
+    # counts must match the role budget exactly (B1) — the scope table's,
+    # coupled to vision.words_target when set (structural-depth W1).
+    budget = project.vision.budget
     branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
     for d in g.nodes_of(Dilemma):
         n = len(explored_by_dilemma.get(d.id, set()))
@@ -193,16 +195,17 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
                 f"dilemma {d.id} has no path; branch it (two paths) or lock it "
                 "(one path + a locked entry)"
             )
-    want = {DilemmaRole.HARD: preset.hard_dilemmas, DilemmaRole.SOFT: preset.soft_dilemmas}
+    want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
+    label = project.vision.budget_label
     for role, count in branched.items():
         if count != want[role]:
             raise ApplyError(
                 f"exactly {want[role]} {role.value} dilemma(s) must be branched "
-                f"(both answers explored); got {count}"
+                f"(both answers explored) for {label}; got {count}"
             )
-    if len(locked_reasons) > preset.locked_dilemmas:
+    if len(locked_reasons) > budget.locked:
         raise ApplyError(
-            f"scope {preset.name!r} allows at most {preset.locked_dilemmas} locked "
+            f"{label} allows at most {budget.locked} locked "
             f"dilemma(s); got {len(locked_reasons)}"
         )
 

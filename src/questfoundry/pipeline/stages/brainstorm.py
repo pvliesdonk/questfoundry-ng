@@ -57,7 +57,11 @@ class BrainstormProposal(BaseModel):
 
 
 def _context(project: Project) -> dict:
-    return {"vision": project.vision, "scope": project.vision.preset}
+    return {
+        "vision": project.vision,
+        "scope": project.vision.preset,
+        "budget": project.vision.budget,
+    }
 
 
 def _apply(proposal: BrainstormProposal, project: Project) -> list[str]:

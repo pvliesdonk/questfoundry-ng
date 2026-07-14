@@ -26,14 +26,28 @@ console = Console()
 def new(
     name: str,
     scope: str = typer.Option("micro", help=f"One of {sorted(SCOPE_PRESETS)}"),
+    words_target: int | None = typer.Option(
+        None,
+        "--words-target",
+        help="Target prose words inside the scope's band; couples the dilemma "
+        "budget so the scope earns its length (default: uncoupled table budget)",
+    ),
     directory: FSPath | None = typer.Option(None, help="Target directory (default: ./NAME)"),
 ) -> None:
     """Scaffold a new story project."""
     if scope not in SCOPE_PRESETS:
         console.print(f"[red]unknown scope {scope!r}; pick one of {sorted(SCOPE_PRESETS)}[/red]")
         raise typer.Exit(2)
+    if words_target is not None:
+        lo, hi = SCOPE_PRESETS[scope].words_total
+        if not lo <= words_target <= hi:
+            console.print(
+                f"[red]words-target {words_target} is outside scope {scope!r}'s "
+                f"band {lo}-{hi}[/red]"
+            )
+            raise typer.Exit(2)
     root = directory or FSPath(name)
-    scaffold_project(root, name=name, scope=scope)
+    scaffold_project(root, name=name, scope=scope, words_target=words_target)
     console.print(f"[green]created[/green] {root}/ (scope: {scope}, stage: new)")
     console.print("next: edit the premise in vision.yaml, then: qf run --to seed")
 

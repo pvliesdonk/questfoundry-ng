@@ -16,6 +16,34 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (structural depth milestone started: the plan, the
+  words-target coupling, B9):** The author-directed milestone (see the
+  roadmap reframe entry below) moved from "Next" to "Now" the same day; a
+  frontier session wrote the milestone contract
+  (`docs/plans/structural-depth.md` — four workstreams, PR slicing, the
+  texture-fork contract with its starred frontier seams) and built PR-1.
+  The mechanics are the agent's, derived from the author's directions plus
+  a new structural-simulation measurement: at the table budgets the
+  projected story words reach only the *top* of each scope's words band
+  (medium: 46–52k of 20–55k), so the lower band was reachable only by
+  stretching — and one soft dilemma's marginal yield through the real
+  weave/collapse/cadence machinery is ~9k story words at medium (~3.2k
+  short, ~11k long). What shipped: `Vision.words_target` (author input,
+  `qf new --words-target`, G0-checked against the band) couples the
+  **soft** branched budget through `ScopePreset.budget_for` (hard counts
+  and the locked allowance never move; clamp [1, table+2]; micro exempt;
+  unset = the table exactly, so every existing project, fixture, and
+  exemplar validates unchanged), B1/triage/prompts consume the derived
+  budget with the derivation named in messages, and **B9** warns when
+  bridges exceed 25% of beats — advisory *by design*: the count is
+  engine-computed but not in-pass repairable (GROW must bridge every gap,
+  I6), so the mandatory-at-apply treatment (the cadence precedent) is
+  recorded in the plan as requiring engine-computed + exact + in-pass
+  repairable, and bridge share fails the third test. The flat
+  `closed-circle-medium` exemplar now trips B9 at 37% (its warning label;
+  still 0 errors). Design docs 01 §2 / 02 updated; the BACKLOG
+  tier-confound item shrank to the band-recalibration remainder.
+
 - **2026-07-14 (the cadence budget becomes mandatory — the flat-book
   post-mortem):** Reading the checked-in `closed-circle-medium` exemplar, the
   author found it "essentially a flat story ... not interactive fiction" —

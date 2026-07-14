@@ -27,6 +27,19 @@ class ScaffoldShape(BaseModel):
     locked_aftermath: tuple[int, int]
 
 
+class DilemmaBudget(BaseModel):
+    """The dilemma counts a project is gated against (B1): the scope
+    table's counts, unless the vision carries a ``words_target`` — then
+    the soft count scales with it so the scope earns its length or
+    shrinks (docs/plans/structural-depth.md, W1)."""
+
+    model_config = ConfigDict(frozen=True)
+
+    hard: int
+    soft: int
+    locked: int  # an allowance, not a floor (design doc 01 §4)
+
+
 class ScopePreset(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -57,6 +70,31 @@ class ScopePreset(BaseModel):
     # mints no pages. Diamonds meter choices; the cap cuts prose.
     passage_beats_max: int
     shape: ScaffoldShape
+    # Density calibration (structural-depth W1): `anchor_words` is the
+    # simulation-projected story words at the table budget (midpoint of
+    # the shape corners), `words_per_soft` the measured marginal story
+    # words one soft dilemma yields through the real weave/collapse/
+    # cadence machinery (2026-07-14 measurement via tests/scale.py;
+    # worlds multiplication included — words_total is story-total).
+    # None exempts the scope from words-target coupling (micro: its
+    # shape pins pre-M8 literals for the golden story).
+    anchor_words: int | None = None
+    words_per_soft: int | None = None
+
+    def budget_for(self, words_target: int | None) -> DilemmaBudget:
+        """B1's dilemma budget. With a ``words_target`` the soft count
+        scales so a scope earns its length (or shrinks): hard never moves
+        (hard forks multiply worlds — cost is exponential, and ending
+        count is story shape, not a length knob), and the locked
+        *allowance* stays the table's. Round-half-up on the marginal-rate
+        shift; clamped to [1, table_soft + 2] (cast_max stays fixed while
+        dilemmas grow — each needs anchoring)."""
+        soft = self.soft_dilemmas
+        if words_target is not None and self.anchor_words and self.words_per_soft:
+            delta = words_target - self.anchor_words
+            shift = (2 * delta + self.words_per_soft) // (2 * self.words_per_soft)
+            soft = max(1, min(self.soft_dilemmas + 2, self.soft_dilemmas + shift))
+        return DilemmaBudget(hard=self.hard_dilemmas, soft=soft, locked=self.locked_dilemmas)
 
     def words_for(self, *, intensity: SceneType, ending: bool = False) -> tuple[int, int]:
         """The word band a passage writes toward, from its aggregate prose
@@ -132,6 +170,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             arc_beats_max=78,
             words_per_passage=(150, 500),
             passage_beats_max=3,
+            anchor_words=13600,
+            words_per_soft=3200,
             shape=ScaffoldShape(
                 setup=(1, 2),
                 pre_commit=(3, 4),
@@ -155,6 +195,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             arc_beats_max=150,
             words_per_passage=(200, 550),
             passage_beats_max=3,
+            anchor_words=49300,
+            words_per_soft=9000,
             shape=ScaffoldShape(
                 setup=(2, 3),
                 pre_commit=(4, 6),
@@ -178,6 +220,8 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             arc_beats_max=245,
             words_per_passage=(200, 500),
             passage_beats_max=3,
+            anchor_words=72500,
+            words_per_soft=11000,
             shape=ScaffoldShape(
                 setup=(2, 3),
                 pre_commit=(5, 8),
@@ -237,7 +281,28 @@ class Vision(BaseModel):
     content_notes: ContentNotes = ContentNotes()
     pov_hint: str = ""
     scope: str = "micro"
+    # An author-chosen point inside the scope's words_total band — an
+    # economic input like scope itself, never invented by DREAM's LLM.
+    # None = uncoupled: the budget is exactly the scope table's counts
+    # (docs/plans/structural-depth.md, W1).
+    words_target: int | None = None
 
     @property
     def preset(self) -> ScopePreset:
         return SCOPE_PRESETS[self.scope]
+
+    @property
+    def budget(self) -> DilemmaBudget:
+        """The dilemma budget B1 gates against — coupled to words_target
+        when set, the scope table's counts otherwise."""
+        return self.preset.budget_for(self.words_target)
+
+    @property
+    def budget_label(self) -> str:
+        """How the budget's counts were arrived at, for model-facing B1
+        messages (gate and repair alike): the bare scope when uncoupled
+        (no words_target, or a coupling-exempt scope), scope + words_target
+        when the budget derives from it."""
+        if self.words_target is None or self.preset.anchor_words is None:
+            return f"scope '{self.scope}'"
+        return f"scope '{self.scope}' at words_target {self.words_target}"

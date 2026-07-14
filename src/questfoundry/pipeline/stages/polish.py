@@ -237,9 +237,17 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             expected = sorted(
                 f"dilemma {d}" + (f" in world {w}" if w else "") for d, w in needs
             )
+            # State the corrective, not just the mismatch (AGENTS.md error
+            # contract; the Closed Circle live run exhausted repairs on a
+            # world added to a shared convergence with only the list to
+            # infer from — same treatment as the duplicate-arm error below)
             raise ApplyError(
                 f"residue {spec.id}: (dilemma, world) must match exactly one "
-                f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}"
+                f"convergence of {expected}; got {spec.dilemma!r} in world {spec.world!r}. "
+                "A convergence listed WITHOUT a world is shared: leave its world out "
+                "(or \"\") — do not attach one. A convergence listed WITH a world "
+                "takes that exact world string. Correct this entry to one of the "
+                "listed (dilemma, world) pairs."
             )
         flags = need.path_flags.get(spec.path)
         if flags is None:

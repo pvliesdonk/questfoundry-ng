@@ -598,6 +598,26 @@ def test_llm_beat_entities_must_be_ids(vision, tmp_path):
         _finalize_apply(FinalizeProposal(residue=[spec]), project)
 
 
+def test_residue_world_on_shared_convergence_names_the_corrective(vision, tmp_path):
+    """Closed Circle live run (2026-07-14): a residue arm attached a world to
+    a convergence listed without one and exhausted repairs — the message
+    showed the valid set but never the corrective. It now instructs (AGENTS
+    error contract): a shared convergence takes no world."""
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    (need,) = [n for n in pc.convergence_needs(g) if n.weight == ResidueWeight.LIGHT]
+    spec = ResidueSpec(
+        dilemma=need.dilemma,
+        path=sorted(need.path_flags)[0],
+        world="path:not-a-world" if not need.world else "",
+        id="beat:afterglow",
+        summary="s",
+    )
+    with pytest.raises(ApplyError, match="listed WITHOUT a world is shared"):
+        _finalize_apply(FinalizeProposal(residue=[spec]), project)
+
+
 def test_b6_choice_cadence_measures_feel(golden):
     """B6 (advisory): story size FEELS like words traversed per genuine
     choice (calibration decision, 2026-07-09 — the medium live run read

@@ -52,6 +52,12 @@ class StructuralPurpose(StrEnum):
     BRIDGE = "bridge"
     RESIDUE = "residue"  # flag-gated mood-setter (requires_flags is set)
     FALSE_BRANCH = "false_branch"
+    # run-scale parallel world: mirrors a trunk stretch beat-for-beat
+    # (structural-depth W3; invariant I15). Deliberately NOT a texture
+    # purpose in the word-band sense — arm beats carry their twins'
+    # copied annotations and write at the mirrored band, never the
+    # short texture band (the asymmetry the mirroring exists to prevent).
+    TEXTURE_WORLD = "texture_world"
 
 
 class SceneType(StrEnum):
@@ -119,9 +125,17 @@ class Beat(Node):
     # meaningful only with a viewpoint.
     viewpoint: str | None = None
     interlude: bool = False
+    # texture_world beats only (structural-depth W3): the trunk beat this
+    # arm beat mirrors. Set by the engine splice, never model-proposed —
+    # insertion provenance the mirror-parity gate (I15) checks against;
+    # it cannot be recomputed unambiguously once several forks share
+    # endpoints, which is why it is stored (cf. A14's world-suffixed ids).
+    mirrors: str | None = None
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:
+        if self.mirrors is not None and self.purpose != StructuralPurpose.TEXTURE_WORLD:
+            raise ValueError(f"beat {self.id} carries mirrors but is not a texture_world beat")
         if self.beat_class == BeatClass.STRUCTURAL:
             if self.dilemma_impacts:
                 raise ValueError(f"structural beat {self.id} must not carry dilemma_impacts")
@@ -181,7 +195,12 @@ def effective_scene_type(beat: Beat) -> SceneType:
     else — an unannotated narrative/setup/epilogue beat, only on partial
     coverage — default to scene (heritage R-4b.1: conservative, never
     starves prose). Consistent with ``Beat.is_texture`` by construction:
-    every texture purpose maps to micro_beat."""
+    every texture purpose maps to micro_beat. ``texture_world`` is
+    deliberately absent from the micro set: an arm beat carries its
+    twin's *effective* annotations, engine-copied at the splice (I15),
+    so the fallback never fires on a valid arm — and a hand-authored
+    unannotated one takes the conservative scene default like any
+    other, never the short band its trunk twin might not have."""
     if beat.scene_type is not None:
         return beat.scene_type
     if beat.purpose in (

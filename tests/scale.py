@@ -213,9 +213,30 @@ def fill_cadence_budget(g: StoryGraph, preset: ScopePreset) -> int:
                 ]
                 for side in ("a", "b")
             ]
-            pc.insert_false_branch(g, arms[0], arms[1], before, after)
+            pc.insert_cadence_diamond(g, arms[0], arms[1], before, after)
             inserted += 1
     return inserted
+
+
+def fill_texture_budget(g: StoryGraph, preset: ScopePreset) -> int:
+    """Insert the engine-computed run-scale texture forks (pc.texture_plan,
+    structural-depth W3) with mirrored arms, as POLISH finalize will —
+    before the cadence budget, which tops up around them. Returns the
+    number of forks inserted."""
+    plan = pc.texture_plan(g, preset)
+    for k, run in enumerate(plan):
+        arm = [
+            Beat(
+                id=f"beat:tex-{k}-{i}",
+                created_by=Stage.POLISH,
+                summary="texture world",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.TEXTURE_WORLD,
+            )
+            for i in range(len(run))
+        ]
+        pc.insert_texture_world(g, arm, run)
+    return len(plan)
 
 
 def compile_story(
@@ -225,16 +246,22 @@ def compile_story(
     order_index: int = 0,
     arm_beats: int = 1,
     tensored_arms: bool = False,
+    texture_worlds: bool = False,
 ) -> tuple[StoryGraph, int]:
     """GROW + the structural half of POLISH, deterministically: weave one
-    candidate order, derive flags, splice residue arms, fill the cadence
-    budget. Returns (compiled graph, diamonds inserted)."""
+    candidate order, derive flags, splice residue arms, optionally plant
+    the texture-world forks (off by default — the density calibration
+    constants in models/concept.py were measured without them; flip the
+    default only alongside a recalibration), fill the cadence budget.
+    Returns (compiled graph, diamonds inserted)."""
     g = copy.deepcopy(g)
     planned = weave.plan(g)
     orders = weave.candidates(planned)
     weave.realize(g, planned, orders[min(order_index, len(orders) - 1)])
     _derive_flags(g)
     add_residue_arms(g, arm_beats=arm_beats, fork=tensored_arms)
+    if texture_worlds:
+        fill_texture_budget(g, preset)
     diamonds = fill_cadence_budget(g, preset)
     return g, diamonds
 

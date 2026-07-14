@@ -402,3 +402,15 @@ def test_fill_review_address_bans_never_match_inside_dialogue():
     assert "NEVER matches words inside quotation marks" in source
     assert "is the candidate text inside quotation marks?" in source
     assert "still apply everywhere, including dialogue" in source
+
+
+def test_fill_review_matches_beat_actors_by_identity_not_epithet():
+    """Stall journal cycle 6: the beat said 'the investigator' and the draft
+    wrote 'Jordan' — the same character — and the reviewer flagged a missing
+    event, demanding the epithet. The fidelity rule now resolves roles
+    against the cast (same person under another name satisfies the beat)
+    while a genuinely different actor still fails."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "Match actors by WHO they are" in source
+    assert "resolve the role against the cast before flagging" in source
+    assert "DIFFERENT person performs the event" in source

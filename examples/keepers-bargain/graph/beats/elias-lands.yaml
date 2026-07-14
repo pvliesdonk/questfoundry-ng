@@ -9,3 +9,4 @@ dilemma_impacts:
 entities: [character:keeper, character:cartographer]
 belongs_to: [path:tell, path:hide]
 scene_type: scene
+viewpoint: character:keeper

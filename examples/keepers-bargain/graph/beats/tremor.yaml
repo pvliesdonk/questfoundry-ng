@@ -9,3 +9,4 @@ dilemma_impacts:
 entities: [character:keeper, character:sleeper, location:lighthouse]
 belongs_to: [path:keep, path:break]
 scene_type: scene
+viewpoint: character:keeper

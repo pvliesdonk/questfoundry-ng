@@ -944,7 +944,9 @@ def _set_passage_head(g, passage_id, viewpoint, interlude=False):
 
 
 def test_write_context_degrades_without_annotations(golden_fill):
-    # no beat carries a head -> today's book-wide Voice.pov semantics
+    # no beat carries a head -> the book-wide Voice.pov semantics
+    # (strip the golden's annotation: this is the pre-migration shape)
+    _set_passage_head(golden_fill.graph, "passage:p-arrival", None)
     context, rendered = _render_write(golden_fill, "passage:p-arrival")
     assert context["viewpoint"] is None and context["interlude"] is False
     assert "THIS passage's viewpoint character" not in rendered

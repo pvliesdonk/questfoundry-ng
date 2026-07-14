@@ -10,3 +10,4 @@ entities: [character:keeper, location:lighthouse]
 belongs_to: [path:keep]
 is_ending: true
 scene_type: scene
+viewpoint: character:keeper

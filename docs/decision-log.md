@@ -16,6 +16,27 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (rotating-POV live validation: PASSED — first weak-tier medium
+  FILL, gate-clean):** The fresh *Closed Circle* medium on `gpt-oss:120b`
+  completed FILL with 0 gate errors (6 advisory warnings: 5× B5 near-band
+  passages the graded contract accepted, 1× B6 words-per-choice high): 112
+  passages / 239 beats / 8 dilemmas, the rotating scheme real at every level —
+  voice "third-person limited, rotating among Jordan Blythe, Simon Kade, Marta
+  Valen, Cole Duvall", 4 heads over 98 headed passages (60/14/12/12) + 14
+  headless texture/coda passages, one head per passage (I14 passing), the
+  reviewer observed live enforcing the per-passage head ("may only convey
+  Jordan Blythe's internal state"). 844 calls, ~2.8M in / 1.0M out, unbilled.
+  ~15 halts total, all diagnosed per the standing rule: five were pre-existing
+  prompt/review defects fixed on the branch (finalize world-mismatch brief,
+  dialogue-tag fabrication, restated-dialogue echo corrective, address-bans-
+  in-dialogue, actor-identity matching), one a design gap backlogged (echo
+  floor vs canonical utterances), the rest honest 2-round non-convergence
+  cleared by fresh rolls (the operator loop's journal is the per-stall
+  record). Zero failures attributable to the rotating-POV machinery. Not
+  exercised: interludes (voice declared the register; annotate marked no
+  beats) and DRESS. The kimi-k2.5 A/B of the same premise (structure ~40%
+  larger; see the tier-confound backlog note) continues.
+
 - **2026-07-14 (DREAM interprets the vision; it is not micromanaged — author
   decision):** After two live DREAM runs rewrote an authored rotating
   `pov_hint` into an invented single-head scheme, the session over-corrected

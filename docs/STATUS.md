@@ -32,6 +32,20 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
 
 ## Immediate next steps
 
+0. **Live validation: PASSED** (2026-07-14, ~13:30Z). The fresh medium *Closed
+   Circle* on `gpt-oss:120b` completed FILL **gate-clean (0 errors)** — the
+   first weak-tier medium ever to finish FILL — with the rotating scheme
+   real at every level: 4 heads over 98 headed passages (60/14/12/12) + 14
+   headless texture/coda passages, one head per passage (I14 in the passing
+   gate set), 112 passages / 239 beats, 844 calls, ~2.8M in / 1.0M out,
+   unbilled. Six advisory warnings (5× B5 near-band, 1× B6 pacing). ~15
+   halts along the way, every one a pre-existing prompt/review defect or
+   honest 2-round non-convergence — zero rotating-POV machinery failures;
+   the fixes are on this branch and the stall journal is the record. NOT
+   exercised: first-person interludes (the voice declared the register but
+   annotate marked no beats — open follow-up) and DRESS (the full
+   prose-at-scale exit also wants DRESS clean). A kimi-k2.5 A/B of the same
+   premise is still running for the tier comparison.
 1. **Land the rotating-POV PR** (this branch), then:
 2. **Live *Closed Circle* validation on a fresh medium project** on the
    unbilled tier (`gpt-oss:120b`, ollama.com) — fresh because the prior

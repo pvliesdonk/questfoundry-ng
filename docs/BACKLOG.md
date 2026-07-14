@@ -73,8 +73,8 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   (kimi's budget-saturated structure still projects 1020 words/choice).
   Recalibration should couple the dilemma/explored-path count to the words
   budget and bound the bridge-beat share (the stretching signal); owned by
-  the "Structural interactivity" roadmap epic, tracked here as the scale
-  item it grew from. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  the "Structural depth — material density & texture worlds" milestone
+  (roadmap "Next"), tracked here as the scale item it grew from. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
   yet in a decision-log entry) — treat as an unverified agent observation until

@@ -19,18 +19,19 @@ _Last updated: 2026-07-14._
 
 ## Current epic
 
-**Structural interactivity holds at every tier** (roadmap "Now"; opened by
-the author's first reading of the checked-in exemplar, 2026-07-14): the
-gate-clean *Closed Circle* medium turned out "essentially a flat story" —
-10 branch points over 112 passages (M8's run: 62/148), zero false-branch
-beats, 3352 words per genuine choice vs the 250–800 band. Root cause found
-and fixed the same day: finalize's engine-computed cadence budget was
-requested in prose but never enforced — the live run proposed
-`false_branches: []` four rounds straight, unchallenged (the kimi A/B
-filled the same budget: a tier-dependent knob, hence an architecture bug —
-author framing). The budget is now **mandatory at `_finalize_apply`**
-(design 02; decision log 2026-07-14 "flat-book post-mortem"). Previous
-epic **Rotating limited POV shipped in PR #74** (A22; roadmap "Shipped").
+**Prose quality at scale** (roadmap "Now"): FILL at medium is demonstrated
+(the *Closed Circle* run, gate-clean on `gpt-oss:120b`, author-read prose
+verdict "good for a 120b model"); the open half is **DRESS**. The same
+reading found the run "essentially a flat story" (10 branch points / 112
+passages, zero false-branch beats — finalize proposed `false_branches: []`
+four rounds straight against a full budget, unchallenged). The immediate
+fix shipped: the cadence budget is **mandatory at `_finalize_apply`**
+(design 02; decision log "flat-book post-mortem"). The deeper work — the
+author's stretching diagnosis, material density, brainstorm-surplus
+feedstock, tensored texture worlds, the different-context lever — is
+combined as the **next milestone**: roadmap "Next" → *Structural depth —
+material density & texture worlds* (author-directed, 2026-07-14).
+Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
 
@@ -59,17 +60,19 @@ epic **Rotating limited POV shipped in PR #74** (A22; roadmap "Shipped").
    author reading ("good for a 120b model" — the first author-ratified
    weak-tier prose verdict): the gap is confined to POLISH's choice layer. A kimi-k2.5 A/B of the same
    premise is still running for the tier comparison.
-1. **Prove the enforced cadence budget live:** a fresh weak-tier medium run
-   whose finalize fills the budget (or halts honestly trying) and whose
-   passage layer lands in the B6 band — the acceptance test for the current
-   epic. Watch for repair exhaustion: a 60-site budget in one proposal is
-   untested at the weak tier; if it exhausts, the fix is decomposing the
-   finalize pass (per-run calls), not softening the requirement.
-2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
-   FILL at scale on a weak tier is now demonstrated (step 0); the missing half
-   of the exit is **DRESS** — no weak tier has yet completed a clean DRESS at
-   scale. Worth running on a post-enforcement project rather than the flat
-   exemplar (or on it, purely to exercise the DRESS machinery).
+1. **The epic's next run — DRESS at scale, proving the enforced cadence
+   budget on the way:** a fresh weak-tier medium run whose finalize fills
+   the budget (or halts honestly trying), whose passage layer lands in the
+   B6 band, and which then completes DRESS gate-clean. Watch for repair
+   exhaustion: a ~60-site budget in one proposal is untested at the weak
+   tier; if it exhausts, the fix is decomposing the finalize pass (per-run
+   calls), not softening the requirement. (DRESS purely as machinery
+   exercise could also run on the flat exemplar.)
+2. **Then the next milestone** (roadmap "Next"): *Structural depth —
+   material density & texture worlds* — the author's stretching diagnosis
+   turned into engine work (dilemma budget coupled to words budget, bridge
+   share bounded, brainstorm surplus retained as branching feedstock,
+   tensored texture worlds over whole runs, the different-context lever).
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

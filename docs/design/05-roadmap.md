@@ -60,41 +60,68 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
 - **Prose quality at scale — the remaining live validation.** The engine half is
   built (echo check, rolling story-so-far, input-role framing, richer Voice,
   character-arc metadata, `scene_type`/`narration_scope` modulation, the
-  structured review contract) and offline-green. **Open:** no weak tier
-  (`gpt-oss:120b`) has completed a full clean FILL/DRESS at scale — runs reach
-  FILL and stochastically exhaust review on the hardest passages. The *Closed
-  Circle* medium run (2026-07-14) advanced this: POLISH now clears clean at
-  medium (the A21 passages decomposition validated), and FILL surfaced the
-  rotating-POV gap (below) as its passage-1 blocker. **Exit:** a corpus-grounded
-  weak-tier story completes FILL and DRESS gate-clean, exports round-trip, and
-  reads without prose-quality rework.
-
-- **Structural interactivity holds at every tier.** Opened by the first
-  reading of `examples/closed-circle-medium` (author, 2026-07-14): the run was
-  gate-clean yet "essentially a flat story" — 10 branch points over 112
-  passages against M8's 62/148, because finalize's engine-computed cadence
-  budget went unfilled (four rounds of `false_branches: []`, unchallenged)
-  and B6 is advisory. The budget is now **mandatory at apply** (design 02).
-  **Open:** a fresh weak-tier medium run proving the enforced budget yields
-  an in-band, played-not-read structure end-to-end; whether the remaining
-  floor-phrased within-band knobs (scaffold shape bands, intersection group
-  counts, residue fork uptake) need the same treatment (see the BACKLOG
-  tier-confound item — enforced counts beat calibrated expectations).
-  **Author direction (2026-07-14) — enforcement is the floor, not the fix:**
-  what the flat run witnessed was *stretching* — "if we do not have enough
-  branching material we may not be able to sustain such a long story and
-  need more dilemmas", and false branching "may help, but cannot compensate
-  something as bare as the finished run". The structural A/B (no FILL
-  needed; all three runs share 8 dilemmas / 4 endings) bears both out: the
-  stretched run carried 89 bridge beats (kimi 27, M8 33) — connective
-  tissue standing in for material — and even kimi's budget-saturated
-  structure projects 1020 words/choice, still above band (cap-aligned
-  capacity ran out, as `cadence_plan`'s docstring predicts). So the epic's
-  deeper half is **material density**: couple the dilemma/explored-path
-  budget to the words budget so a scope earns its length (or shrinks), and
-  treat bridge-beat share as the stretching signal.
+  structured review contract) and offline-green. FILL at medium is now
+  demonstrated (2026-07-14: the *Closed Circle* run finished FILL gate-clean
+  on `gpt-oss:120b`, and the author's read verdict was "the prose is good,
+  for a 120b model"). **Open:** DRESS — no weak tier has completed a clean
+  DRESS at scale. The next validation run also proves the now-mandatory
+  cadence budget live (its enforcement shipped after the flat exemplar; the
+  deeper structural work is the Next milestone below). **Exit:** a
+  corpus-grounded weak-tier story completes FILL and DRESS gate-clean,
+  exports round-trip, and reads without prose-quality rework.
 
 ## Next
+
+- **Structural depth — material density & texture worlds** (the next
+  milestone after prose quality at scale; author-directed, 2026-07-14).
+  Opened by the first reading of `examples/closed-circle-medium`: gate-clean
+  yet "essentially a flat story" — 10 branch points over 112 passages
+  against M8's 62/148, four finalize rounds of `false_branches: []`
+  unchallenged. The immediate fix shipped (the cadence budget is mandatory
+  at apply, design 02), but the author's diagnosis goes deeper —
+  **enforcement is the floor, not the fix**: what the run witnessed was
+  *stretching* ("if we do not have enough branching material we may not be
+  able to sustain such a long story and need more dilemmas"), and false
+  branching "may help, but cannot compensate something as bare as the
+  finished run". The structural A/B agrees (no FILL needed; all three runs
+  share 8 dilemmas / 4 endings): the stretched run carried 89 bridge beats
+  (kimi 27, M8 33), and even kimi's budget-saturated structure projects
+  1020 words/choice — above band; texture saturates on a bare trunk. The
+  milestone combines:
+  - **Material density**: couple the dilemma/explored-path budget to the
+    words budget so a scope earns its length (or shrinks); bound the
+    bridge-beat share (the stretching signal); decide whether the remaining
+    floor-phrased within-band knobs (scaffold shape bands, intersection
+    group counts, residue fork uptake) get the same mandatory treatment
+    (BACKLOG tier-confound item — enforced counts beat calibrated
+    expectations).
+  - **More brainstorm material and/or dilemmas** (author, 2026-07-14):
+    overgenerate further and/or retain more at triage as the source of
+    *additional branching* when the words budget demands it — surplus
+    dilemmas, subplots, and settings kept available (tagged, not woven)
+    instead of discarded.
+  - **Tensored texture worlds — diamonds over whole runs** (author,
+    2026-07-14): generalize the false branch from a 1–2 beat graft between
+    adjacent beats to a diamond laid over a whole *run* of the DAG (many
+    beats, even containing branches), temporarily creating parallel
+    texture-worlds — "one where the next events happen in the forest,
+    another where they happen in the mountains" — converging where the run
+    ends. Same contract as false branches (different textures, never
+    different consequences) but scene-scale: the substance beat-scale
+    diamonds cannot supply. Feedstock: the retained brainstorm surplus
+    above, so POLISH grafts real material instead of inventing it.
+  - **The context lever** (author, 2026-07-14): similar beats in different
+    worlds can yield *completely different passages*, because FILL writes
+    prose from completely different context (world truths, window, head,
+    story-so-far). Parallel worlds are structurally cheap — one tensored
+    run — but read as genuinely different scenes, which is what makes
+    texture worlds substantive interactivity rather than decoration. (The
+    multi-hard machinery already demonstrates this: per-world beats share a
+    skeleton and read as different scenes.)
+  - Frontier design throughout: interacts with arc computation (texture
+    worlds stay invisible to arcs), the topology freeze (grafts post-freeze
+    like false branches), collapse, and FILL windows across the parallel
+    stretch.
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved
@@ -111,24 +138,6 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   exemplars; per-stage digest sources visibly differ.
 
 ## Later
-
-- **Tensored texture worlds — diamonds over whole runs** (author-proposed,
-  2026-07-14). Generalize the false branch: today it grafts a 1–2 beat
-  diamond between two adjacent beats; the tensored form would lay a diamond
-  over a whole *run* of the DAG (many beats, even containing branches),
-  temporarily creating parallel texture-worlds — "one where the next events
-  happen in the forest, another where they happen in the mountains" — that
-  converge where the run ends. Same contract as false branches (different
-  textures, never different consequences), but scene-scale instead of
-  beat-scale, which is exactly the substance the flat-run post-mortem showed
-  beat-scale diamonds cannot supply (they saturate above band on a bare
-  trunk). Feedstock: "keep some of the optional brainstorm material" —
-  BRAINSTORM already overgenerates and triage cuts the surplus; retaining
-  cut-but-plausible settings/subplots as tagged texture material would give
-  POLISH real parallel-world content instead of asking finalize to invent
-  it. Frontier design: interacts with arc computation (a texture world must
-  stay invisible to arcs), the topology freeze (these graft post-freeze like
-  false branches), collapse, and FILL windows across the parallel stretch.
 
 - **Pipeline operator loop** (author-proposed, 2026-07-14). A frontier-tier AI
   operator supervising live runs as part of the pipeline itself, doing what

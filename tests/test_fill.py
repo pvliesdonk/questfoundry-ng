@@ -553,11 +553,15 @@ def test_fact_echo_allows_fresh_wording(golden_fill):
 
 def test_window_echo_fails_apply(golden_fill):
     """A run lifted verbatim from adjacent prose: the window is
-    continuity, not a style template."""
+    continuity, not a style template. The message carries the restated-
+    dialogue corrective (Closed Circle live run, 2026-07-14: a character
+    repeating their theory to the room re-transcribed the line and
+    exhausted repairs on a generic 'write fresh ones')."""
     apply = _write_apply_for("passage:p-tremor")
     lifted = "She waits for slack tide, when the water holds its breath"
-    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room") as exc:
         apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+    assert "say it in NEW words" in str(exc.value)
 
 
 def test_micro_detail_capped_at_one(golden_fill):

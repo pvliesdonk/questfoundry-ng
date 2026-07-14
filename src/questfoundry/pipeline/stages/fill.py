@@ -576,7 +576,11 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
                 raise ApplyError(
                     f'prose repeats {w["passage"].id} verbatim: "{run}". Adjacent '
                     "prose is continuity, not a style template — the reader just "
-                    "read those words; write fresh ones"
+                    "read those words; write fresh ones. If a character is "
+                    "restating something said there (a theory repeated to the "
+                    "room, a callback), have them say it in NEW words, or narrate "
+                    "the repetition (\"she said it again, the same words\") — "
+                    "never re-transcribe the line"
                 )
 
 

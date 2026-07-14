@@ -52,7 +52,17 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens
   sequel/micro passages, so the `words_total`/`passages` (B3/B7) bands read
-  high. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  high. **Tier confound to calibrate around** (author, 2026-07-14, restating a
+  heritage QuestFoundry finding from the :4B era): floor-phrased counts ("at
+  least N", open band positions) are tier-dependent sizing knobs — a small
+  model reads the floor as the target, a strong model fills toward the
+  ceiling when it can reason more fits. The hard totals are pinned (exact
+  dilemma counts, B1), but the within-band choices (scaffold shape bands,
+  min_payoff floors, intersection group counts, finalize arm counts)
+  compound through weave and collapse: live 2026-07-14, the same medium
+  premise produced a ~40% larger passage layer on kimi-k2.5 than on
+  gpt-oss:120b. Calibration must state per-tier expectations or tighten the
+  bands it wants respected. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
   yet in a decision-log entry) — treat as an unverified agent observation until

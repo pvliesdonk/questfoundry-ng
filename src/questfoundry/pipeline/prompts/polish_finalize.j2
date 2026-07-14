@@ -58,16 +58,19 @@ advance, reveal, or decide them.
 {% if texture_sites %}
 TEXTURE WORLDS (required). Each stretch below runs several scenes with no
 choice; lay a PARALLEL WORLD over it — the SAME story events rendered in a
-genuinely different texture ("one where the next events happen in the
-forest, another where they happen in the mountains"). The reader chooses a
-world where the stretch begins and both worlds converge exactly where it
-ends: different textures, never different consequences — nothing may
-happen in one world that changes what is true after the convergence.
+genuinely different texture: a different place, route, weather, company,
+or social setting. The reader chooses a world where the stretch begins and
+both worlds converge exactly where it ends: different textures, never
+different consequences — nothing may happen in one world that changes what
+is true after the convergence.
 For EACH site: declare a one-line "premise" (where or how these events now
-happen — graft from the RESERVED MATERIAL above when it fits), then write
-exactly ONE beat per trunk beat, IN ORDER: the same event the trunk beat
-carries, re-expressed in the premise's texture. Summaries in plain
-declarative present tense (a brief for the writer, never the prose).
+happen). The premise must come from THIS story's own world — a place,
+route, or tension its beats, cast, or the RESERVED MATERIAL above already
+name or clearly imply; never invent generic scenery, and never take a
+setting from these instructions. Then write exactly ONE beat per trunk
+beat, IN ORDER: the same event the trunk beat carries, re-expressed in the
+premise's texture. Summaries in plain declarative present tense (a brief
+for the writer, never the prose).
 {% for site in texture_sites %}
 - site {{ site.index }} ({{ site.beats | length }} beats to mirror):
 {% for b in site.beats %}
@@ -77,8 +80,9 @@ declarative present tense (a brief for the writer, never the prose).
 Each entry: {"site": the site index above, "premise": one line, "beats":
 [{"id": "beat:slug", "summary", "entities": [...]}] — exactly one per trunk
 beat, in order}. Every "id" names a NEW beat: coin fresh, unique
-"beat:slug"s no existing beat uses (a colliding id is rejected); derive
-them from the premise, e.g. "beat:mountain-crossing-1". The site counts
+"beat:slug"s no existing beat uses (a colliding id is rejected); a
+mechanical scheme is fine — site 0's beats as "beat:tw0-1", "beat:tw0-2",
+and so on. The site counts
 are MANDATORY: a proposal that skips a site, doubles one, or writes a
 different beat count than the stretch is rejected whole.
 {% endif %}

@@ -484,6 +484,36 @@ passages and wires choices in separate passes
 *diamond* (two choices, same destination) or *sidetrack* (a short detour
 that rejoins). May grant cosmetic flags for later flavor callbacks.
 
+**Texture world** — the false branch generalized to scene scale
+(structural-depth W3, author-directed 2026-07-14): a diamond laid over a
+whole choice-free *stretch* of the DAG, temporarily creating a parallel
+world — "one where the next events happen in the forest, another where
+they happen in the mountains" — that converges exactly where the stretch
+does. Same contract as false branches (different textures, never
+different consequences), different economics: a beat-scale diamond buys
+one choice for one texture arm's traversed words, while a texture fork
+buys one at near-zero traversed words — the reader walks one world of
+roughly the trunk's length — paid for in FILL tokens and print pages (the
+stretch is written twice). The arm **mirrors the trunk beat-for-beat**:
+structural beats (`purpose: texture_world`, zero `belongs_to`, zero
+impacts, ungated) each carrying their trunk twin in `mirrors` and the
+twin's *effective* `scene_type`/`narration_scope`/`viewpoint`/`interlude`,
+engine-copied at the splice — both worlds read at the same band and head
+(the strictly-equal doctrine's mechanical form; the false-branch
+micro_beat fallback would starve the parallel world). `mirrors` is stored
+because it cannot be recomputed once forks share endpoints — insertion
+provenance like A14's world suffixes, consumed only by the engine and
+gate I15, never rendered to a prompt. Cadence diamonds inside a mirrored
+stretch are mirrored into the arm (engine-suffixed twins), so both worlds
+keep the same choice topology; sites are cap-aligned sub-stretches
+containing no commit, gate, ending, or other arm, and avoid rejoin
+frontiers (a residue splice would otherwise be bypassed). Arcs, flags,
+and the freeze are untouched by construction — the arm is conditionally
+traversed structure, like any diamond arm. Feedstock for the arm's
+material is the triage reserve (§4). Invariant I15 (§8) holds the whole
+contract; the wording pass that writes arm summaries per world is the
+finalize integration's job (structural-depth PR-4).
+
 The **passage graph** — passages + choices — is what SHIP exports and the
 player traverses. The beat DAG never ships; it is the authoring truth from
 which the passage graph is compiled.
@@ -558,6 +588,16 @@ design.
   never switches inside a passage — a rotation is always a page-turn
   (author-confirmed 2026-07-14, `docs/plans/rotating-pov-build.md`);
   unannotated beats and `wide` codas are wildcards.
+- **I15** Texture worlds mirror their trunk (§6, structural-depth W3).
+  Field half: every `texture_world` beat names an existing twin in
+  `mirrors` that is not itself an arm beat, not gated, commits nothing,
+  and ends nothing; the arm beat is ungated and carries the twin's
+  *effective* annotations. Shape half (the projection rule): every
+  ordering edge incident to a texture beat projects, via `mirrors`, onto
+  an existing trunk edge — which pins arm contiguity, fork/convergence
+  parity (the arm rejoins exactly where its stretch does), twin
+  injectivity, and catches any splice that would let the arm bypass a
+  later graft, all as local edge checks.
 
 ## 9. Where the mapping breaks (danger zones)
 

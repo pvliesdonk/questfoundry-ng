@@ -124,7 +124,7 @@ What shipped (as designed, plus the seams the build surfaced):
   reserve at triage instead of re-brainstorming (promotion is a normal
   triage disposition on the rerun; no extra machinery).
 
-## W3 — Tensored texture worlds (PR-3 engine, PR-4 pipeline)
+## W3 — Tensored texture worlds (PR-3 engine BUILT; PR-4 pipeline open)
 
 **Author direction (2026-07-14):** generalize the false branch from a 1–2
 beat graft between adjacent beats to a diamond laid over a whole *run* of
@@ -133,6 +133,48 @@ parallel texture-worlds — "one where the next events happen in the forest,
 another where they happen in the mountains" — converging where the run
 ends. Same contract as false branches (different textures, never different
 consequences) but scene-scale.
+
+**As built (PR-3), where it departs from the contract below** — three
+build discoveries, each probed on the structural simulation:
+
+1. **Sites are cap-aligned sub-stretches, not whole runs.** A real
+   weave's long shared run always carries locked-chain resolutions
+   (medium sim: the 60-beat trunk run), so whole runs never qualify; the
+   site excises qualifying windows around commits/gates/endings and
+   snaps boundaries to collapse chunks so the trunk's chunking survives
+   the fork edges (`texture_sites`).
+2. **"Even containing branches" arrived early, in cosmetic form.**
+   Reserving textured stretches from the cadence budget starved a
+   capacity-limited system (medium-max probe: B6 780 → 1129 — the forks
+   displaced ~14 diamonds while adding 3 decisions). The fix is the
+   author's own direction brought forward: a cadence diamond planted on
+   a trunk edge inside a mirrored stretch is **mirrored into every arm**
+   (`insert_cadence_diamond`: engine-suffixed texture twins of the fresh
+   false-branch beats, wired identically), so both worlds keep the same
+   choice topology and the I15 projection stays edge-exact. Result:
+   B6 785 with 3 scene-scale worlds planted (21/15/6-beat stretches)
+   vs 780 without — density preserved, substance added.
+3. **Parallel worlds consume words budget without walk words** (medium
+   sim: story words 52.5k → 62.8k, walk words flat) — the FILL/print
+   price of writing a stretch twice. PR-4 must fold this into the
+   words-target arithmetic (a story with texture worlds "spends" part of
+   its words_target on parallel stretches; the W1 calibration constants
+   were measured texture-off, and `tests/scale.py` keeps
+   `texture_worlds=False` as the default until recalibration).
+
+The mirror evidence is stored: `Beat.mirrors` names the trunk twin —
+insertion provenance that cannot be recomputed once forks share
+endpoints (cf. A14's world suffixes), consumed only by the engine and
+gate I15, never rendered to a prompt. I15's shape half is a local
+**edge-projection rule** (every edge incident to a texture beat projects
+via `mirrors` onto an existing trunk edge), which pins contiguity,
+convergence parity, injectivity, and residue-bypass without chain
+reconstruction. What PR-4 owns: finalize integration (site offers +
+mandatory counts in the proposal, the model wording each arm beat's
+summary per world — including the mirrored diamond twins, whose
+summaries the engine seeds as copies pending the wording pass, A14's
+"structure is copied, words are rewritten"), the FILL context lever
+(W4), prompts, and the live validation.
 
 Contract (agent design; the starred items are the frontier seams):
 
@@ -220,7 +262,7 @@ instead of inferring it from summaries alone.
 |---|---|---|
 | PR-1 (this branch) | `words_target` coupling, `budget_for`, B1 wiring, prompt plumbing, B9 bridge share, sim calibration, docs | frontier design, mid-tier typing |
 | PR-2 (built) | reserve disposition end-to-end (BRAINSTORM → triage → gates), feedstock context plumbing | mid-tier against this contract |
-| PR-3 | texture-fork engine: model, splice, mirroring, site computation, gate checks, sim extension | frontier (freeze/arc seams) |
+| PR-3 (built) | texture-fork engine: model, splice, mirroring, site computation, gate checks (I15), sim extension | frontier (freeze/arc seams) |
 | PR-4 | finalize integration + prompts, FILL context lever, live validation | frontier review, mid-tier typing |
 
 Live validation for the milestone: a fresh weak-tier medium with

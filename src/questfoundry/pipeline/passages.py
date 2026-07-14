@@ -26,6 +26,8 @@ from questfoundry.models.structure import (
     BeatClass,
     StateFlag,
     StructuralPurpose,
+    effective_narration_scope,
+    effective_scene_type,
     passage_intensity,
 )
 
@@ -371,8 +373,15 @@ def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
     target = (lo + 2 * hi) // 3
     cap = preset.passage_beats_max
     runs = collapse_groups(g)
+    # Texture arms host no independent diamonds — theirs arrive mirrored
+    # from the trunk (insert_cadence_diamond), so both worlds keep the
+    # same choice topology. Mirrored trunk stretches stay in capacity:
+    # a diamond there is planted on both sides at once.
+    arms = {b.id for b in g.nodes_of(Beat) if b.purpose == StructuralPurpose.TEXTURE_WORLD}
     capacity: dict[int, list[int]] = {}
     for i in long_linear_runs(runs):
+        if arms & set(runs[i]):
+            continue
         aligned = [e for e in range(len(runs[i]) - 1) if (e + 1) % cap == 0]
         if aligned:
             capacity[i] = [aligned[j] for j in _bisection_order(len(aligned))]
@@ -393,7 +402,7 @@ def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
         run_idx = max(open_runs, key=lambda i: (len(capacity[i]) - taken[i], -i))
         run = runs[run_idx]
         edge = capacity[run_idx][taken[run_idx]]
-        arms = [
+        probe_arms = [
             Beat(
                 id=f"beat:cadence-probe-{probe}-{side}",
                 created_by=_beat(g, run[0]).created_by,
@@ -403,7 +412,9 @@ def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
             )
             for side in ("a", "b")
         ]
-        insert_false_branch(scratch, [arms[0]], [arms[1]], run[edge], run[edge + 1])
+        # mirrored-stretch edges get the paired splice so the projection
+        # counts both worlds' choices, exactly as the apply will
+        insert_cadence_diamond(scratch, [probe_arms[0]], [probe_arms[1]], run[edge], run[edge + 1])
         taken[run_idx] += 1
         probe += 1
     return {
@@ -448,6 +459,257 @@ def insert_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, after: str
         mutations.add_ordering(g, prev, beat.id)
         prev = beat.id
     mutations.add_ordering(g, prev, after)
+
+
+# -- texture worlds (structural-depth W3; invariant I15) -------------------------
+
+# Scene-scale substance, not cadence filler: a run-scale fork is the
+# cheapest choice in reader-words (the walk traverses one world), but each
+# one doubles the FILL cost of its stretch, so the budget stays small.
+TEXTURE_WORLDS_MAX = 3
+
+
+def texture_sites(g: StoryGraph, preset) -> list[list[str]]:
+    """Stretches a texture fork may parallel — v1: **cap-aligned
+    sub-stretches** of maximal linear runs. Every beat in the stretch is
+    ungated, commits nothing, ends nothing, and is not itself a texture
+    arm (a real weave's long shared run always carries locked resolutions,
+    so whole runs almost never qualify — the stretch excises around them);
+    boundaries snap to the collapse cap so the trunk's passage chunking
+    survives the fork edges (cadence's aligned-seam logic, run-scale); at
+    least one full chunk long (scene-scale, not a graft); with a
+    predecessor to fork from (a root-headed stretch would mint a second
+    root, I4); and touching no soft rejoin frontier at either boundary —
+    a later residue splice reroutes the trunk edges around a frontier,
+    and a parallel arm's edge would bypass the memory beat (the I15
+    projection rule catches that bypass loudly; the site rule avoids
+    creating it). One candidate per qualifying window: its largest
+    aligned stretch."""
+    cap = preset.passage_beats_max
+    frontier_beats = {b for need in convergence_needs(g) for b in need.rejoin}
+
+    def qualifies(beat_id: str) -> bool:
+        b = _beat(g, beat_id)
+        return not (
+            b.requires_flags
+            or b.commits_dilemmas
+            or b.is_ending
+            or b.purpose == StructuralPurpose.TEXTURE_WORLD
+        )
+
+    sites = []
+    for run in collapse_groups(g):
+        i = 0
+        while i < len(run):
+            if not qualifies(run[i]):
+                i += 1
+                continue
+            j = i
+            while j + 1 < len(run) and qualifies(run[j + 1]):
+                j += 1
+            start = i if i % cap == 0 else i + (cap - i % cap)
+            if start == 0 and not queries.predecessors(g, run[0]):
+                start = cap
+            end = j if j == len(run) - 1 else (j + 1) // cap * cap - 1
+            if end == len(run) - 1 and not queries.successors(g, run[-1]):
+                end = (j + 1) // cap * cap - 1
+            if end - start + 1 >= cap:
+                stretch = run[start : end + 1]
+                head_frontier = stretch[0] in frontier_beats
+                tail_frontier = set(queries.successors(g, stretch[-1])) & frontier_beats
+                if not head_frontier and not tail_frontier:
+                    sites.append(stretch)
+            i = j + 1
+    return sites
+
+
+def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[str]) -> None:
+    """Splice a parallel texture-world arm around ``stretch``: every
+    predecessor of the stretch head also feeds the arm head, the arm tail
+    feeds every successor of the stretch tail, and no trunk edge moves —
+    additions only (I9), the trunk becomes conditionally traversed like a
+    diamond arm. The engine copies each twin's *effective* annotations
+    onto its arm beat (mirroring is engine work, never model-set — copied
+    raw, a twin's unset annotation would fall back asymmetrically) and
+    records the twin in ``mirrors``, the evidence I15 checks. ``entities``
+    is deliberately NOT copied: the arm's whole point is a different
+    texture — different places, different passers-by — so its entities
+    belong to whoever words the arm (PR-4's proposal); ``_twin_chain``'s
+    fresh cadence twins copy them only as verbatim placeholders for that
+    same wording pass."""
+    if not arm:
+        raise mutations.MutationError("a texture arm needs at least one beat")
+    if len(arm) != len(stretch):
+        raise mutations.MutationError(
+            f"texture arm has {len(arm)} beat(s) against a {len(stretch)}-beat "
+            "stretch; the arm mirrors the trunk beat-for-beat (I15) — give "
+            "every trunk beat exactly one arm twin, in order"
+        )
+    preds = queries.predecessors(g, stretch[0])
+    succs = queries.successors(g, stretch[-1])
+    if not preds or not succs:
+        raise mutations.MutationError(
+            f"stretch {stretch[0]} .. {stretch[-1]} has no predecessor or no "
+            "successor to fork around; a root or ending stretch cannot be "
+            "paralleled — pick an interior stretch"
+        )
+    for a, b in zip(stretch, stretch[1:], strict=False):
+        if not g.has_edge(EdgeKind.PREDECESSOR, a, b):
+            raise mutations.MutationError(
+                f"stretch beats {a} -> {b} are not adjacent; the stretch must "
+                "be a contiguous linear chain"
+            )
+    for beat, twin_id in zip(arm, stretch, strict=True):
+        twin = _beat(g, twin_id)
+        if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
+            raise mutations.MutationError(
+                f"stretch beat {twin_id} is gated, commits, or ends the story; "
+                "a texture fork parallels only consequence-free stretches — "
+                "shrink the stretch to exclude it"
+            )
+        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
+            raise mutations.MutationError(
+                f"stretch beat {twin_id} is itself a texture arm; worlds do "
+                "not nest — parallel the trunk, not an arm"
+            )
+        if beat.purpose != StructuralPurpose.TEXTURE_WORLD:
+            raise mutations.MutationError(
+                f"texture arm beat {beat.id} must carry purpose texture_world"
+            )
+        beat.mirrors = twin.id
+        beat.scene_type = effective_scene_type(twin)
+        beat.narration_scope = effective_narration_scope(twin)
+        beat.viewpoint = twin.viewpoint
+        beat.interlude = twin.interlude
+    for beat in arm:
+        mutations.add_beat(g, beat, [])
+    for p in sorted(preds):
+        mutations.add_ordering(g, p, arm[0].id)
+    for prev, beat in zip(arm, arm[1:], strict=False):
+        mutations.add_ordering(g, prev.id, beat.id)
+    for s in sorted(succs):
+        mutations.add_ordering(g, arm[-1].id, s)
+
+
+def _arm_pairs(g: StoryGraph, before: str, after: str) -> list[tuple[str, str]]:
+    """Texture-arm beat pairs mirroring the trunk edge (before, after) —
+    one per arm paralleling that stretch."""
+    by_mirror: dict[str, list[str]] = {}
+    for b in g.nodes_of(Beat):
+        if b.mirrors:
+            by_mirror.setdefault(b.mirrors, []).append(b.id)
+    return sorted(
+        (a, z)
+        for a in by_mirror.get(before, [])
+        for z in by_mirror.get(after, [])
+        if g.has_edge(EdgeKind.PREDECESSOR, a, z)
+    )
+
+
+def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int) -> list[Beat]:
+    """Texture twins of freshly spliced trunk false-branch beats: same
+    summary for now (words for texture worlds are the wording pass's job —
+    structure is copied by the engine, words are rewritten per world,
+    A14's doctrine), mirrored annotations, engine-suffixed ids."""
+    return [
+        Beat(
+            id=f"{fb.id}--tw{k}",
+            created_by=fb.created_by,
+            summary=fb.summary,
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.TEXTURE_WORLD,
+            entities=list(fb.entities),
+            mirrors=fb.id,
+            scene_type=effective_scene_type(fb),
+            narration_scope=effective_narration_scope(fb),
+            viewpoint=fb.viewpoint,
+            interlude=fb.interlude,
+        )
+        for fb in chain
+    ]
+
+
+def insert_cadence_diamond(
+    g: StoryGraph, arm_a: Sequence[Beat], arm_b: Sequence[Beat], before: str, after: str
+) -> None:
+    """The cadence splice finalize applies: a plain diamond on an ordinary
+    edge; on a trunk edge inside a mirrored stretch, the same diamond is
+    additionally mirrored into every texture arm paralleling it —
+    engine-suffixed twins of the fresh arms, wired identically — so both
+    worlds keep the same choice topology and the I15 projection stays
+    edge-exact (a one-sided diamond would remove the trunk edge the arm's
+    edge projects onto, and hand the trunk world choices the parallel
+    world lacks)."""
+    pairs = _arm_pairs(g, before, after)
+    insert_false_branch(g, arm_a, arm_b, before, after)
+    for k, (ai, aj) in enumerate(pairs):
+        twins = [_twin_chain(g, chain, k) for chain in (arm_a, arm_b)]
+        for chain in twins:
+            for beat in chain:
+                mutations.add_beat(g, beat, [])
+        mutations.remove_ordering(g, ai, aj)
+        for chain in twins:
+            prev = ai
+            for beat in chain:
+                mutations.add_ordering(g, prev, beat.id)
+                prev = beat.id
+            mutations.add_ordering(g, prev, aj)
+
+
+def insert_cadence_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, after: str) -> None:
+    """Sidetrack counterpart of ``insert_cadence_diamond``: the direct
+    edge stays on both sides; the detour is mirrored into every arm."""
+    pairs = _arm_pairs(g, before, after)
+    insert_sidetrack(g, arm, before, after)
+    for k, (ai, aj) in enumerate(pairs):
+        twins = _twin_chain(g, arm, k)
+        for beat in twins:
+            mutations.add_beat(g, beat, [])
+        prev = ai
+        for beat in twins:
+            mutations.add_ordering(g, prev, beat.id)
+            prev = beat.id
+        mutations.add_ordering(g, prev, aj)
+
+
+def texture_plan(g: StoryGraph, preset) -> list[list[str]]:
+    """Run-scale fork budget: the stretches finalize parallels, sized by
+    the same iterated projection as ``cadence_plan`` but budgeted FIRST —
+    a texture fork adds a decision at near-zero traversed words, so it
+    takes the cheap wins before beat diamonds spend arm-words on the
+    rest. Longest qualifying runs first (the most scene-scale substance),
+    until the projected mean reaches the same upper-middle B6 target,
+    the cap (TEXTURE_WORLDS_MAX) is hit, or sites run out."""
+    from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
+
+    lo, hi = B6_WORDS_PER_CHOICE
+    target = (lo + 2 * hi) // 3
+    sites = sorted(texture_sites(g, preset), key=lambda run: (-len(run), run[0]))
+    if not sites:
+        return []
+
+    def projected_mean(scratch: StoryGraph) -> float:
+        walks = projected_walks(scratch, preset)
+        return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
+
+    scratch = copy.deepcopy(g)
+    chosen: list[list[str]] = []
+    for run in sites:
+        if len(chosen) >= TEXTURE_WORLDS_MAX or projected_mean(scratch) <= target:
+            break
+        arm = [
+            Beat(
+                id=f"beat:texture-probe-{len(chosen)}-{i}",
+                created_by=_beat(g, run[0]).created_by,
+                summary="probe",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.TEXTURE_WORLD,
+            )
+            for i in range(len(run))
+        ]
+        insert_texture_world(scratch, arm, run)
+        chosen.append(run)
+    return chosen
 
 
 # -- feasibility ---------------------------------------------------------------

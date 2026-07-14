@@ -16,6 +16,33 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (structural depth PR-3: the texture-worlds engine — I15,
+  mirrored arms, mirrored cadence):** W3's engine half, built and probed
+  on the structural simulation; A23 records the architecture decision.
+  What shipped: `StructuralPurpose.TEXTURE_WORLD` + `Beat.mirrors`;
+  `insert_texture_world` (parallel arm around a stretch, trunk edges
+  untouched, twin's *effective* annotations engine-copied so both worlds
+  read at the same band and head); `texture_sites` (cap-aligned
+  consequence-free sub-stretches — whole runs never qualify, the medium
+  sim's 60-beat trunk run always carries locked resolutions);
+  `texture_plan` (longest-first sizing against the B6 projection, cap 3,
+  budgeted before cadence); invariant **I15** (field checks + the
+  edge-projection rule) at G4 with violating-construction tests; and
+  `insert_cadence_diamond`/`insert_cadence_sidetrack`, which mirror a
+  cadence splice into every arm paralleling its edge. The last one is
+  the session's design turn: the plan's v1 reserved textured stretches
+  from cadence, and the probe showed that starving a capacity-limited
+  system (B6 780→1129 at medium-max — 3 fork decisions bought by ~14
+  displaced diamonds); mirroring the diamonds into the arms — the
+  author's "even containing branches", arrived early in cosmetic form —
+  keeps B6 at 785 with 3 scene-scale worlds (21/15/6-beat stretches)
+  planted. Measured cost: +10k story words at medium-max with flat walk
+  words — the FILL/print price of writing stretches twice; PR-4 must
+  fold that into the words-target arithmetic (plan W3 as-built note; the
+  sim keeps `texture_worlds=False` default so W1's calibration constants
+  stay true). Engine-only: nothing in the pipeline invokes texture
+  worlds until PR-4 wires finalize, prompts, and the FILL context lever.
+
 - **2026-07-14 (structural depth PR-2: the reserve disposition —
   brainstorm surplus as unwoven feedstock):** W2 of the milestone plan,
   built as designed with the seams the build surfaced. Triage gains the

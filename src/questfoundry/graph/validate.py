@@ -27,6 +27,7 @@ from questfoundry.models.structure import (
     IntersectionGroup,
     StateFlag,
     StructuralPurpose,
+    effective_narration_scope,
     effective_scene_type,
     passage_intensity,
 )
@@ -733,6 +734,99 @@ def check_i13_passage_graph(ctx: Context) -> None:
             ctx.error("I13", f"passage {p.id} is unreachable on every arc")
 
 
+def check_i15_texture_worlds(ctx: Context) -> None:
+    """I15: a texture-world arm mirrors a consequence-free trunk stretch
+    beat-for-beat (design doc 01 §6, §8; docs/plans/structural-depth.md W3).
+
+    Field half: every texture_world beat names an existing, non-arm,
+    ungated, non-commit, non-ending twin (``mirrors``), carries the twin's
+    *effective* annotations — band and head parity, the strictly-equal
+    doctrine's mechanical form — and no gate of its own.
+
+    Shape half, the projection rule: every ordering edge incident to a
+    texture beat must project, via ``mirrors``, onto an existing trunk
+    edge. This pins arm contiguity, fork/convergence parity (the arm
+    rejoins exactly where its stretch does), twin injectivity along the
+    chain, and catches a later splice that reroutes the trunk around a
+    residue arm while the texture arm still bypasses it — all as local
+    edge checks, no chain reconstruction."""
+    beats = {b.id: b for b in ctx.g.nodes_of(Beat)}
+    arms = {bid for bid, b in beats.items() if b.purpose == StructuralPurpose.TEXTURE_WORLD}
+    if not arms:
+        return
+    for bid in sorted(arms):
+        b = beats[bid]
+        if b.requires_flags:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} is flag-gated; a texture fork is a "
+                "cosmetic choice — remove its requires_flags",
+            )
+        if b.mirrors is None:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} names no mirrored trunk beat; set "
+                "mirrors to its twin (the engine splice records it)",
+            )
+            continue
+        twin = beats.get(b.mirrors)
+        if twin is None:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} mirrors {b.mirrors}, which is not a "
+                "beat; point mirrors at its trunk twin",
+            )
+            continue
+        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} mirrors another texture arm "
+                f"({twin.id}); worlds do not nest — mirror the trunk",
+            )
+            continue
+        if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} mirrors {twin.id}, which is gated, "
+                "commits, or ends the story; a texture fork parallels only "
+                "consequence-free stretches",
+            )
+        expected = (
+            effective_scene_type(twin),
+            effective_narration_scope(twin),
+            twin.viewpoint,
+            twin.interlude,
+        )
+        got = (b.scene_type, b.narration_scope, b.viewpoint, b.interlude)
+        if got != expected:
+            ctx.error(
+                "I15",
+                f"texture-world beat {bid} does not carry {twin.id}'s effective "
+                f"annotations (got {got}, expected {expected}); both worlds must "
+                "read at the same band and head — copy the twin's annotations",
+            )
+
+    def proj(beat_id: str) -> str:
+        b = beats.get(beat_id)
+        if b is not None and beat_id in arms and b.mirrors:
+            return b.mirrors
+        return beat_id
+
+    for e in ctx.g.edges:
+        if e.kind != EdgeKind.PREDECESSOR:
+            continue
+        if e.src not in arms and e.dst not in arms:
+            continue
+        ps, pd = proj(e.src), proj(e.dst)
+        if ps == pd or not ctx.g.has_edge(EdgeKind.PREDECESSOR, ps, pd):
+            ctx.error(
+                "I15",
+                f"edge {e.src} -> {e.dst} projects onto {ps} -> {pd}, which is "
+                "not a trunk edge; the arm must run parallel to its mirrored "
+                "stretch and rejoin exactly where it does",
+            )
+
+
 def check_g4_choice_labels(ctx: Context) -> None:
     """G4: sibling choice labels are non-empty and distinct. Same-label
     siblings are allowed only behind different gates (variant passages:
@@ -1177,6 +1271,7 @@ GATES: dict[Stage, list] = {
         check_i12_feasibility,
         check_i13_passage_graph,
         check_i14_passage_viewpoint,
+        check_i15_texture_worlds,
         check_g4_choice_labels,
         check_g4_residue_coverage,
         check_g4_arc_references,

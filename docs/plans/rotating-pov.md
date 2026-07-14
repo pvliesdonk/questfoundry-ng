@@ -12,7 +12,7 @@
 The earlier POV work (`docs/plans/pov-narration-scope.md`, decision **1.a**,
 under a heading titled *"Decisions locked (author-confirmed 2026-07-13)"*)
 rejected *"a full per-beat viewpoint-character/distance field"* as something that
-*"vastly exceeds the problem,"* and design doc 01 §562 files the whole
+*"vastly exceeds the problem,"* and design doc 01 §10.3 files the whole
 viewpoint-annotation family under a blanket *"deferred all of them under YAGNI."*
 
 **That rejection was an agent scope-cut, not an author decision** — it was
@@ -24,7 +24,7 @@ standing bias toward minimal change, this is a known failure mode, named here so
 the next session does not inherit the false premise a third time.
 
 **What this document does NOT do:** it does not edit or delete the earlier
-record. `pov-narration-scope.md` and 01 §562 stay as written — they are the
+record. `pov-narration-scope.md` and 01 §10.3 stay as written — they are the
 historical account of what was built (single fixed POV + `narration_scope`).
 This file is the forward-looking record that the direction has changed.
 

@@ -775,7 +775,7 @@ PR #5) and this agent/doc infrastructure (PR #6).
 > [`docs/plans/rotating-pov.md`](plans/rotating-pov.md). Rotating limited POV (the
 > viewpoint character changes across the book while each unit stays in one head)
 > is a real, author-wanted feature that a **prior agent overrode and wrote off as
-> the author's YAGNI call** (`pov-narration-scope.md` decision 1.a, 01 §562) — it
+> the author's YAGNI call** (`pov-narration-scope.md` decision 1.a, 01 §10.3) — it
 > was not. The earlier record stands as history; the new plan doc is the
 > forward direction and reverses the deferral going forward. Concrete trigger: a
 > fresh medium *Closed Circle* live run on `gpt-oss:120b-cloud` reached POLISH

@@ -97,6 +97,34 @@ decomposition (A21). See `docs/plans/` and the decision log.
 
 ## Later
 
+- **Pipeline operator loop** (author-proposed, 2026-07-14). A frontier-tier AI
+  operator supervising live runs as part of the pipeline itself, doing what
+  this session's external loop did for the *Closed Circle* validation: watch
+  pass telemetry, diagnose each halt (prompt defect vs structural vs
+  non-convergence at the review cap), journal every stall verbatim, re-roll a
+  failed pass's cached call chain with a per-passage retry cap, and stop for
+  escalation when a stall repeats or a failure isn't review-shaped. The
+  in-session prototype (a ~90-line driver + stall journal) cleared 7 stalls
+  across a medium FILL unattended and its journal fed 5 prompt fixes back
+  into the repo — the pipeline version would be a first-class runner mode
+  (an `--operator` supervisor around `qf run`), with the frontier tier doing
+  the diagnosis and the unbilled tier doing the writing.
+
+- **Sampling & reasoning knobs per stage** (author-proposed, 2026-07-14).
+  The Ollama provider already exposes `temperature` and `think` project-wide;
+  make them per-role/per-stage and measure whether they matter where it
+  counts: does low temperature help the mechanical passes (annotate, labels,
+  codewords) converge; does higher temperature help the writer's variety
+  without hurting review convergence; does reasoning effort/thinking help the
+  reviewer and arbiter apply rules as written (the fabricated-rule class) —
+  the A16 ledger and the stall journal give the measurement instruments.
+  Fold in the model-tier question the same experiments raise: the cloud
+  catalog now carries stronger tiers (GLM-5.x, Kimi K2.5+, DeepSeek-V4-Pro)
+  worth benchmarking against the `gpt-oss:120b` baseline — remembering the
+  2026-07-14 doctrine note: a stronger model *hiding* more defects is not
+  the same as fewer defects; judge by gates and the stall journal, not by
+  fluency.
+
 - **M10 — SHIP & the author loop.** The last pipeline stage and the review
   experience around it.
   - **SHIP**: final assembly + the Twee lint that flags constructs which don't

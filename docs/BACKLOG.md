@@ -28,8 +28,11 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   `polish_audit`, `polish_finalize`, `polish_labels`, `polish_summary`,
   `research`, `seed_order`, `seed_scaffold`, `seed_triage`. Known open
   question to fold in: DREAM's envision rewrote an authored rotating
-  `pov_hint` into a single-head scheme (observed live 2026-07-14) — check
-  `dream.j2` preserves authored POV intent.
+  `pov_hint` into a single-head scheme (observed live 2026-07-14, root cause
+  fixed: the prompt never saw the authored hint) — the audit bar for
+  `dream.j2` is *visibility*, not preservation: the model must SEE the
+  authored inclination as vision input; reinterpreting it is DREAM's job
+  (author decision, 2026-07-14, decision log).
 
 - [ ] **Echo guard vs canonical utterances (two live instances, 2026-07-14).**
   The window-echo floor (8 shared tokens) collides with fixed statements the

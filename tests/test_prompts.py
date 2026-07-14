@@ -61,7 +61,9 @@ def test_fill_write_omits_craft_block_when_window_is_non_empty(golden):
     context = _write_context_for("passage:p-arrival")(golden)
     # Force the guard's condition regardless of what this golden passage
     # naturally borders: a non-empty window alone must suppress the block.
-    context["window"] = [{"passage": golden.graph.node("passage:p-arrival"), "label": "go"}]
+    context["window"] = [
+        {"passage": golden.graph.node("passage:p-arrival"), "label": "go", "head": ""}
+    ]
     context["lookahead"] = []
 
     rendered = _render(env, "fill_write.j2", SENTINEL, **context)
@@ -87,7 +89,7 @@ def test_fill_write_omits_craft_block_when_only_lookahead_is_non_empty(golden):
     context = _write_context_for("passage:p-arrival")(golden)
     context["window"] = []
     context["lookahead"] = [
-        {"passage": golden.graph.node("passage:p-arrival"), "label": "go"}
+        {"passage": golden.graph.node("passage:p-arrival"), "label": "go", "head": ""}
     ]
 
     rendered = _render(env, "fill_write.j2", SENTINEL, **context)

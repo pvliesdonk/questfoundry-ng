@@ -36,6 +36,14 @@ the prose into a strobe of short fragments; keep sentences complete and varied i
 length. Clarity outranks atmosphere — after reading, a player must be able to say
 plainly what just happened.
 
+{% if interlude %}
+THIS PASSAGE IS AN INTERLUDE — a marked deviation from the book's base narration:
+{{ voice.interlude or "a first-person reflective piece in the viewpoint character's own voice" }}
+Write the whole passage in that register — its person, tense, and form override
+the VOICE's pov and tense above for this passage only (the review judges it
+against this register, not the book default). It is still ONE mind on the page:
+{% if viewpoint %}{{ viewpoint.name }}'s{% else %}the named narrator's{% endif %} — the no-other-minds rule below still holds.
+{% else %}
 TENSE IS ABSOLUTE: narrate in {{ voice.tense }} tense, every verb, start to
 finish — the review checks this verb by verb and it is the most common failure.
 Events that happened before this moment are still told in {{ voice.tense }}: a
@@ -43,9 +51,14 @@ present-tense voice renders a prior event in the present perfect or simple
 present ("has vanished", "vanishes"), never the simple past ("vanished"). Read
 your first sentence back before anything else — that is where the wrong tense
 slips in.
+{% endif %}
 
 POINT OF VIEW — TWO SEPARATE RULES:
-1. NO OTHER MINDS. The POV above fixes whose mind the reader is inside. Only that
+1. NO OTHER MINDS. {% if viewpoint %}THIS passage's viewpoint character is
+   {{ viewpoint.name }} ({{ viewpoint.id }}): the reader is inside {{ viewpoint.name }}'s
+   mind and no other, whatever heads other passages use — the VOICE above names the
+   book's scheme; this line names the head that scheme assigns HERE.{% else %}The
+   POV above fixes whose mind the reader is inside.{% endif %} Only that
    narrator's thoughts, intentions, and feelings may be stated directly. Every
    other character reaches the reader only through what the narrator can observe —
    their actions, their speech, their expression. When a beat or an ARC POSITION
@@ -143,16 +156,18 @@ happened for every reader — WORLD STATE above governs what you may assert):
 WHAT THE READER JUST READ (continuity, not a style template): continue from it
 seamlessly — its events happened, its objects and weather persist. Do not
 reuse its imagery or repeat its phrasing; the reader just read those words,
-and a lifted run is rejected:
+and a lifted run is rejected. A neighbor told from a DIFFERENT viewpoint is
+still continuity of events — but its narrator's interiority stays there; this
+passage opens fresh inside its own head:
 {% for w in window %}
---- from {{ w.passage.id }} (arrived via "{{ w.label }}"):
+--- from {{ w.passage.id }} (arrived via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
 {{ w.passage.prose }}
 {% endfor %}
 {% endif %}
 {% if lookahead %}
 WHAT AWAITS (already written — land so it follows naturally, without echoing it):
 {% for w in lookahead %}
---- toward {{ w.passage.id }} (via "{{ w.label }}"):
+--- toward {{ w.passage.id }} (via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
 {{ w.passage.prose }}
 {% endfor %}
 {% endif %}

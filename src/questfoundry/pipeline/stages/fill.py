@@ -36,6 +36,7 @@ from questfoundry.models.structure import (
     effective_narration_scope,
     effective_scene_type,
     passage_intensity,
+    passage_viewpoint,
 )
 from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import echo
@@ -105,6 +106,9 @@ class VoiceProposal(BaseModel):
     dialogue: str
     banned: list[str] = []
     notes: str = ""
+    # the scheme's marked deviant register ("" when the scheme has none);
+    # required so the pass decides explicitly rather than omitting
+    interlude: str
 
 
 def _voice_skip(project: Project) -> str | None:
@@ -183,8 +187,13 @@ def _check_pov_names_the_cast(pov: str, project: Project) -> None:
 
 def _voice_apply(proposal: VoiceProposal, project: Project) -> list[str]:
     _check_pov_names_the_cast(proposal.pov, project)
+    if proposal.interlude:
+        _check_pov_names_the_cast(proposal.interlude, project)
     project.voice = Voice(**proposal.model_dump())
-    return [f"voice: {proposal.pov}; {proposal.tense}; {proposal.diction}"]
+    line = f"voice: {proposal.pov}; {proposal.tense}; {proposal.diction}"
+    if proposal.interlude:
+        line += f"; interlude: {proposal.interlude}"
+    return [line]
 
 
 # -- write passes -------------------------------------------------------------
@@ -398,6 +407,20 @@ def _story_so_far(project: Project, passage_id: str) -> tuple[list[str], int]:
     return entries[elided:], elided
 
 
+def _passage_head(g, passage_id: str) -> tuple[Entity | None, bool]:
+    """The passage's viewpoint entity (resolved) and interlude mark —
+    (None, False) when its beats carry no head (texture/bridge passages,
+    pre-annotation projects): the write prompt then degrades to the
+    book-wide Voice.pov rule."""
+    beats = [g.node(b) for b in queries.beats_of_passage(g, passage_id)]
+    vp = passage_viewpoint(beats)
+    if vp.viewpoint is None:
+        return None, False
+    entity = g.get(vp.viewpoint)
+    assert isinstance(entity, Entity)
+    return entity, vp.interlude
+
+
 def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
     edges = (
         g.in_edges(passage_id, EdgeKind.CHOICE)
@@ -410,7 +433,16 @@ def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
         other = g.node(other_id)
         assert isinstance(other, Passage)
         if other.prose:
-            seen.append({"passage": other, "label": e.payload.get("label", "")})
+            head, _ = _passage_head(g, other_id)
+            seen.append(
+                {
+                    "passage": other,
+                    "label": e.payload.get("label", ""),
+                    # the neighbor's head, so the writer sees a switch and does
+                    # not bleed the adjacent passage's interiority across it
+                    "head": head.name if head else "",
+                }
+            )
     # Canonical order, not store order: choice edges reload from disk
     # grouped by source file, so store order differs between a live run
     # and a resumed one — a shifted window changes prompt bytes and
@@ -444,11 +476,18 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             ending=passage.ending is not None,
         )
         story_so_far, story_elided = _story_so_far(project, passage.id)
+        viewpoint, interlude = _passage_head(g, passage.id)
         return {
             "vision": project.vision,
             "voice": project.voice,
             "passage": passage,
             "beats": beats,
+            # THIS passage's head (a resolved character entity, or None when
+            # no beat carries one — then the prompts fall back to the
+            # book-wide Voice.pov rule) and whether it is an interlude in the
+            # Voice's marked deviant register (rotating-pov-build.md)
+            "viewpoint": viewpoint,
+            "interlude": interlude,
             # the aggregate intensity sets the band; the per-beat map lets the
             # write/review prompts mark which beat may rise and which stays plain
             # (style belongs to the story, not the paragraph — PR #64, made

@@ -27,8 +27,21 @@ same way — or "warn" for a concern or a matter of taste. The rules:
 - voice_pov / voice_tense — the contract REQUIRES this point of view and
   tense; prose written in them is correct, so a defect exists only if the
   prose DEPARTS from them:
+{% if interlude %}
+    THIS PASSAGE IS AN INTERLUDE — its required register (person, tense, form)
+    is: {{ voice.interlude or "a first-person reflective piece in the viewpoint character's own voice" }}
+    Judge voice_pov and voice_tense against THAT register, not the book-default
+    pov/tense; prose in the interlude's own person and tense is correct.
+{% else %}
     required POV: {{ voice.pov }}
     required tense: {{ voice.tense }}
+{% endif %}
+{% if viewpoint %}
+    THIS passage's viewpoint character: {{ viewpoint.name }} — the one mind the
+    narration may enter here (the required POV above names the book's scheme;
+    this names the head it assigns to THIS passage). Another passage using a
+    different head is not this passage's concern.
+{% endif %}
   A POV departure means the narrating character is rendered in the wrong
   person, or the narration enters another character's mind (states a
   non-narrator's private thoughts, intentions, or feelings as fact). Other

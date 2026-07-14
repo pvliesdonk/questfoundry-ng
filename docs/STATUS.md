@@ -771,6 +771,24 @@ PR #5) and this agent/doc infrastructure (PR #6).
 
 ## Next up
 
+> **WANTED (2026-07-14): rotating limited POV** — new record of intent at
+> [`docs/plans/rotating-pov.md`](plans/rotating-pov.md). Rotating limited POV (the
+> viewpoint character changes across the book while each unit stays in one head)
+> is a real, author-wanted feature that a **prior agent overrode and wrote off as
+> the author's YAGNI call** (`pov-narration-scope.md` decision 1.a, 01 §562) — it
+> was not. The earlier record stands as history; the new plan doc is the
+> forward direction and reverses the deferral going forward. Concrete trigger: a
+> fresh medium *Closed Circle* live run on `gpt-oss:120b-cloud` reached POLISH
+> clean but died on FILL passage 1 — the vision/voice ask for a rotating POV, but
+> FILL fixes one `Voice.pov` for the whole book with no per-passage viewpoint, so
+> the writer picked a suspect's head for an investigator-centric passage and the
+> review (rightly) rejected it. Design is **not started**: the plan doc records
+> the intent and hands the granularity/derivation/cadence decisions back to the
+> author as open questions. Frontier narrative-semantics work; its own PR, design
+> before code. (The same live run also served as the **acceptance test for the
+> passages-pass decomposition** — POLISH completed clean at medium scale where the
+> old single call overran `num_ctx`. See PR #71 / passages-chunking.)
+
 > **BUILT (2026-07-13, PR #70): POLISH `passages`-pass decomposition** —
 > plan [`docs/plans/passages-chunking.md`](plans/passages-chunking.md), now BUILT
 > (see "The POLISH `passages` pass is decomposed" at the top of "Where we are").

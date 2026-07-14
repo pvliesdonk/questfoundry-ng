@@ -89,9 +89,10 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   read as genuinely different scenes). Design, mechanics, and PR slicing
   live in [`../plans/structural-depth.md`](../plans/structural-depth.md)
   — the authoritative contract. **Status:** PR-1 (the words-target budget
-  coupling + the B9 bridge-share tripwire) is built; W2
-  brainstorm-surplus retention, W3 texture worlds (frontier: arc
-  invisibility, freeze compliance, annotation mirroring), and W4 follow
+  coupling + the B9 bridge-share tripwire, merged #77) and PR-2 (the
+  `reserve` triage disposition — brainstorm surplus retained as unwoven
+  texture feedstock) are built; W3 texture worlds (frontier: arc
+  invisibility, freeze compliance, annotation mirroring) and W4 follow
   per the plan. **Exit:** a fresh weak-tier medium at a band-top words
   target derives its budget, plants texture forks, lands B6 mid-band with
   B9 quiet, and an author read finds actual interactivity.

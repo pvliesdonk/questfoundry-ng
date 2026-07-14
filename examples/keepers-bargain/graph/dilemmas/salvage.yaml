@@ -1,0 +1,17 @@
+id: dilemma:salvage
+question: Does the coast let the wrecks off the point stay drowned?
+why_it_matters: >-
+  Every keel the sleeper pulled down lies in the shallows off the point,
+  and the villages have argued for a generation whether raising the
+  cargo would honor the drowned or rob them. Vivid material — but it is
+  the coast's quarrel, not Maren's, and the story never weaves it.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+reserved: true
+answers:
+- id: answer:salvage-raised
+  text: The villages raise the cargo and pay the memory its tithe.
+- id: answer:salvage-left
+  text: The wrecks keep what they hold; the coast keeps its silence.
+anchored_to: [location:lighthouse, character:sleeper]

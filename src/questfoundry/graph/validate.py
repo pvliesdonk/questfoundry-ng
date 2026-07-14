@@ -105,6 +105,10 @@ def check_i1_two_answers(ctx: Context) -> None:
 
 def check_i2_anchoring(ctx: Context) -> None:
     for d in ctx.g.nodes_of(Dilemma):
+        if d.reserved:
+            # feedstock, not story: its anchors may legitimately be cut
+            # at triage (structural-depth W2)
+            continue
         anchors = ctx.g.out_ids(d.id, EdgeKind.ANCHORED_TO)
         retained = [
             e for e in anchors if isinstance(n := ctx.g.get(e), Entity) and n.retained
@@ -142,11 +146,12 @@ def check_g1_shared_entity(ctx: Context) -> None:
 def check_budget_dilemmas(ctx: Context) -> None:
     """B1: branched dilemmas match the budget's role counts exactly; up
     to the locked allowance extra may lock at triage (single explored
-    path — design doc 01 §4). The budget is the scope table's, coupled to
-    vision.words_target when set (the soft count scales so a scope earns
-    its length or shrinks — structural-depth W1). Before triage no path
-    exists, so the same totals are checked as a range: BRAINSTORM
-    overgenerates, triage disposes."""
+    path), and up to the reserve allowance may be reserved as unwoven
+    feedstock (no path — design doc 01 §4, structural-depth W2). The
+    budget is the scope table's, coupled to vision.words_target when set
+    (the soft count scales so a scope earns its length or shrinks — W1).
+    Before triage no path exists, so the same totals are checked as a
+    range: BRAINSTORM overgenerates, triage disposes."""
     budget = ctx.vision.budget
     label = ctx.vision.budget_label
     want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
@@ -166,16 +171,29 @@ def check_budget_dilemmas(ctx: Context) -> None:
                 )
             else:
                 surplus += count - want[role]
-        if surplus > budget.locked:
+        if surplus > budget.locked + budget.reserve:
             ctx.error(
                 "B1",
                 f"{surplus} dilemma(s) beyond the branched budget; {label} "
-                f"allows at most {budget.locked} to lock",
+                f"allows at most {budget.locked} to lock plus "
+                f"{budget.reserve} to reserve",
             )
         return
     branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
     locked = 0
+    reserved = 0
     for d in dilemmas:
+        if d.reserved:
+            if explored[d.id]:
+                ctx.error(
+                    "B1",
+                    f"reserved dilemma {d.id} has {explored[d.id]} explored "
+                    "path(s); a reserve is unwoven feedstock — remove its "
+                    "path(s) or drop the reserve disposition",
+                )
+            else:
+                reserved += 1
+            continue
         if explored[d.id] == 2:
             branched[d.role] += 1
         elif explored[d.id] == 1:
@@ -183,8 +201,8 @@ def check_budget_dilemmas(ctx: Context) -> None:
         else:
             ctx.error(
                 "B1",
-                f"dilemma {d.id} has no explored path; triage must branch or lock "
-                "every dilemma",
+                f"dilemma {d.id} has no explored path; triage must branch, "
+                "lock, or reserve every dilemma",
             )
     for role, count in branched.items():
         if count != want[role]:
@@ -197,6 +215,11 @@ def check_budget_dilemmas(ctx: Context) -> None:
         ctx.error(
             "B1",
             f"{locked} locked dilemma(s); {label} allows at most {budget.locked}",
+        )
+    if reserved > budget.reserve:
+        ctx.error(
+            "B1",
+            f"{reserved} reserved dilemma(s); {label} allows at most {budget.reserve}",
         )
 
 
@@ -1075,7 +1098,10 @@ def check_g6_codex(ctx: Context) -> None:
         ctx.error("G6", "no codex entries")
         return
     retained = {e.id for e in ctx.g.nodes_of(Entity) if e.retained}
-    anchored = {e.dst for e in ctx.g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    reserved = {d.id for d in ctx.g.nodes_of(Dilemma) if d.reserved}
+    anchored = {
+        e.dst for e in ctx.g.edges if e.kind == EdgeKind.ANCHORED_TO and e.src not in reserved
+    }
     required = retained & anchored
     counts: dict[str, int] = {}
     for entry in codex:

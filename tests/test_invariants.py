@@ -226,11 +226,12 @@ def test_b1_pre_triage_overgeneration_within_allowance(vision):
     g = StoryGraph()
     make_dilemma(g, "main", role=DilemmaRole.HARD, explore=0)
     make_dilemma(g, "sub", explore=0)
-    make_dilemma(g, "extra", explore=0)  # micro allows 1 locked
+    make_dilemma(g, "extra", explore=0)  # micro allows 1 locked...
+    make_dilemma(g, "spare", explore=0)  # ...plus 1 reserved (W2)
     assert errors_for("B1", g, vision, Stage.BRAINSTORM) == []
     make_dilemma(g, "surplus", explore=0)
     issues = errors_for("B1", g, vision, Stage.BRAINSTORM)
-    assert any("at most 1 to lock" in i.message for i in issues)
+    assert any("at most 1 to lock plus 1 to reserve" in i.message for i in issues)
 
 
 def test_b1_pre_triage_branched_shortfall_flagged(vision):

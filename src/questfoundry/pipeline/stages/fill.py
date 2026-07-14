@@ -133,7 +133,7 @@ def _voice_context(project: Project) -> dict:
     )
     return {
         "vision": project.vision,
-        "dilemmas": g.nodes_of(Dilemma),
+        "dilemmas": [d for d in g.nodes_of(Dilemma) if not d.reserved],
         "endings": endings,
         "passage_count": len(g.nodes_of(Passage)),
         "cast": cast,
@@ -395,6 +395,8 @@ def _arc_positions(g, passage_id: str) -> list[dict]:
 def _shadows(g) -> list[dict]:
     result = []
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
+        if d.reserved:
+            continue  # feedstock, not story: no shadow weight to carry (W2)
         answers = []
         for a in queries.answers_of(g, d.id):
             node = g.node(a)

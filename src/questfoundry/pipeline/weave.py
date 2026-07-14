@@ -139,6 +139,8 @@ def shapes(g: StoryGraph) -> tuple[list[DilemmaShape], list[str]]:
     hard: list[str] = []
     claimed: set[str] = set()
     for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id):
+        if d.reserved:
+            continue  # unwoven feedstock, never a shape (structural-depth W2)
         paths = queries.explored_paths(g, d.id)
         if len(paths) == 1:
             # locked at triage: one fork-less chain on the single path

@@ -163,3 +163,54 @@ def test_b9_bridge_share_below_threshold_quiet(vision):
         mutations.add_beat(g, narrative_beat(f"n-{i}", d), [pa])
     _bridge(g, 0)  # 1 of 10 beats: 10%
     assert not issues_for("B9", g, vision, Stage.GROW, Severity.WARNING)
+
+
+# -- reserve disposition (unwoven feedstock; W2) --------------------------------
+
+
+def test_b1_post_triage_reserve_within_allowance(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_dilemma(g, "sub")
+    spare, _, _ = make_dilemma(g, "spare", explore=0)
+    mutations.set_dilemma_disposition(g, spare, reserved=True)
+    assert not issues_for("B1", g, vision, Stage.BRAINSTORM, Severity.ERROR)
+    spare2, _, _ = make_dilemma(g, "spare2", explore=0)
+    mutations.set_dilemma_disposition(g, spare2, reserved=True)  # micro allows 1
+    issues = issues_for("B1", g, vision, Stage.BRAINSTORM, Severity.ERROR)
+    assert any("2 reserved dilemma(s)" in i.message for i in issues)
+
+
+def test_b1_reserved_dilemma_with_a_path_flagged(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_dilemma(g, "sub")
+    spare, _, _ = make_dilemma(g, "spare", explore=1)
+    mutations.set_dilemma_disposition(g, spare, reserved=True)
+    issues = issues_for("B1", g, vision, Stage.BRAINSTORM, Severity.ERROR)
+    assert any("unwoven feedstock" in i.message for i in issues)
+
+
+def test_i2_reserved_dilemma_anchor_may_be_cut(vision):
+    g = StoryGraph()
+    make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_dilemma(g, "sub")
+    spare, _, _ = make_dilemma(g, "spare", explore=0)
+    mutations.set_entity_disposition(g, "character:spare-anchor", retained=False)
+    assert issues_for("I2", g, vision, Stage.BRAINSTORM, Severity.ERROR)
+    mutations.set_dilemma_disposition(g, spare, reserved=True)
+    assert not issues_for("I2", g, vision, Stage.BRAINSTORM, Severity.ERROR)
+
+
+def test_weave_skips_reserved_dilemmas(vision):
+    from questfoundry.pipeline import weave
+    from tests.conftest import make_y_scaffold
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    make_y_scaffold(g, "main", d, pa, pb)
+    spare, _, _ = make_dilemma(g, "spare", explore=0)
+    mutations.set_dilemma_disposition(g, spare, reserved=True)
+    # without the skip, a zero-path dilemma is a WeaveError
+    shapes, _ = weave.shapes(g)
+    assert [s.dilemma for s in shapes] == [d]

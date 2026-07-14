@@ -23,15 +23,18 @@ REQUIREMENTS:
   ("she/her", "they/them", …) — prose will be held to them exactly.
 - Every entity must be in some dilemma's anchored_to. Fewer entities that all
   matter beat a full roster with passengers.
-- Output exactly {{ budget.hard + budget.soft + budget.locked }} dilemmas now — this total, not fewer. Give at least
+- Output exactly {{ budget.hard + budget.soft + budget.locked + budget.reserve }} dilemmas now — this total, not fewer. Give at least
   {{ budget.hard }} the role HARD and at least {{ budget.soft }} the role SOFT; the remaining
-  {{ budget.locked }} may take either role. (Triage then branches the strongest
-  {{ budget.hard }}+{{ budget.soft }} into player choices and LOCKS the surplus — you are not
+  {{ budget.locked + budget.reserve }} may take either role. (Triage then branches the strongest
+  {{ budget.hard }}+{{ budget.soft }} into player choices, LOCKS up to {{ budget.locked }} as
+  fork-less subplots, and RESERVES the rest as unwoven feedstock — you are not
   choosing which. A locked dilemma is explored down one answer only, a subplot
   woven through every playthrough: in a mystery, the red herrings; extra cast
-  earns its place by anchoring them.) Locked candidates must still be real
-  dilemmas with two compelling answers — which answers stay shadows is triage's
-  call, not yours.
+  earns its place by anchoring them. A reserved dilemma never enters the story's
+  structure at all — it is kept as raw material later stages may graft texture
+  from, so it costs the ensemble nothing.) Every candidate must still be a real
+  dilemma with two compelling answers — which are branched, locked, or reserved
+  is triage's call, not yours.
   A dilemma is a binary dramatic question where BOTH answers are compelling and
   choosing costs something. Hard dilemmas are the backbone: they commit near the
   climax and their outcomes never reconverge. Soft dilemmas are subplots: they

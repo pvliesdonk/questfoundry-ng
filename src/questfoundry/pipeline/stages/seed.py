@@ -84,11 +84,23 @@ class LockSpec(BaseModel):
     reason: str
 
 
+class ReserveSpec(BaseModel):
+    """A reserve disposition: the dilemma is kept as unwoven texture
+    feedstock — no path, no beats, never woven; POLISH finalize sees it
+    as graft material (structural-depth W2)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    dilemma: str
+    reason: str
+
+
 class TriageProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     cut_entities: list[CutSpec] = []
     locked: list[LockSpec] = []
+    reserve: list[ReserveSpec] = []
     paths: list[PathSpec] = Field(min_length=2)
 
 
@@ -118,6 +130,7 @@ def triage_proposal_schema(
     resolvers = {
         ("PathSpec", "explores"): answer_ids or [],
         ("LockSpec", "dilemma"): dilemma_ids or [],
+        ("ReserveSpec", "dilemma"): dilemma_ids or [],
         ("CutSpec", "id"): entity_ids or [],
     }
     return pin(TriageProposal, "TriageProposal", resolvers)
@@ -167,15 +180,32 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
             f"locked names unknown dilemma(s) {unknown}; lock only real dilemmas — "
             f"the ids are {sorted(set(answer_dilemma.values()))}"
         )
+    reserve_reasons = {s.dilemma: s.reason for s in proposal.reserve}
+    both = sorted(set(reserve_reasons) & set(locked_reasons))
+    if both:
+        raise ApplyError(
+            f"dilemma(s) {both} are listed in both locked and reserve; a "
+            "dilemma gets exactly one disposition — locked keeps one explored "
+            "path, reserve keeps none"
+        )
 
-    # Every dilemma gets a disposition: branched (both answers explored)
-    # or locked (one answer explored, declared with a reason). Branched
-    # counts must match the role budget exactly (B1) — the scope table's,
-    # coupled to vision.words_target when set (structural-depth W1).
+    # Every dilemma gets a disposition: branched (both answers explored),
+    # locked (one explored path, declared with a reason), or reserved
+    # (no path — unwoven feedstock, structural-depth W2). Branched counts
+    # must match the role budget exactly (B1) — the scope table's, coupled
+    # to vision.words_target when set (W1).
     budget = project.vision.budget
     branched = {DilemmaRole.HARD: 0, DilemmaRole.SOFT: 0}
     for d in g.nodes_of(Dilemma):
         n = len(explored_by_dilemma.get(d.id, set()))
+        if d.id in reserve_reasons:
+            if n:
+                raise ApplyError(
+                    f"dilemma {d.id} is listed in reserve but has {n} path(s); "
+                    "a reserve keeps no path — remove its paths entry, or "
+                    "branch/lock it instead"
+                )
+            continue
         if n == 2:
             if d.id in locked_reasons:
                 raise ApplyError(
@@ -192,8 +222,9 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
                 )
         else:
             raise ApplyError(
-                f"dilemma {d.id} has no path; branch it (two paths) or lock it "
-                "(one path + a locked entry)"
+                f"dilemma {d.id} has no path; branch it (two paths), lock it "
+                "(one path + a locked entry), or reserve it (a reserve entry, "
+                "no path)"
             )
     want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
     label = project.vision.budget_label
@@ -208,6 +239,13 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
             f"{label} allows at most {budget.locked} locked "
             f"dilemma(s); got {len(locked_reasons)}"
         )
+    if len(reserve_reasons) > budget.reserve:
+        raise ApplyError(
+            f"{label} allows at most {budget.reserve} reserved "
+            f"dilemma(s); got {len(reserve_reasons)}"
+        )
+    for dilemma_id in sorted(reserve_reasons):
+        mutations.set_dilemma_disposition(g, dilemma_id, reserved=True)
 
     try:
         for spec in proposal.paths:
@@ -226,6 +264,7 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
         f"cut: {[c.id for c in proposal.cut_entities] or 'nothing'}",
         f"paths: {', '.join(p.id for p in proposal.paths)}",
         f"locked: {', '.join(sorted(locked_reasons)) or 'nothing'}",
+        f"reserved: {', '.join(sorted(reserve_reasons)) or 'nothing'}",
     ]
 
 
@@ -293,6 +332,8 @@ def _scaffold_context(project: Project) -> dict:
     g = project.graph
     dilemmas = []
     for d in g.nodes_of(Dilemma):
+        if d.reserved:
+            continue  # no path, nothing to scaffold (structural-depth W2)
         paths = []
         for path_id in queries.explored_paths(g, d.id):
             answer_id = g.out_ids(path_id, EdgeKind.EXPLORES)[0]
@@ -593,7 +634,9 @@ def _order_context(project: Project) -> dict:
     return {
         "vision": project.vision,
         "dilemmas": [
-            {"dilemma": d, "locked": d.id in locked} for d in g.nodes_of(Dilemma)
+            {"dilemma": d, "locked": d.id in locked}
+            for d in g.nodes_of(Dilemma)
+            if not d.reserved  # unwoven: no ordering relations (W2)
         ],
     }
 
@@ -646,8 +689,10 @@ def scaffold_proposal_schema(project: Project) -> type[ScaffoldProposal]:
 
 
 def order_proposal_schema(project: Project) -> type[OrderProposal]:
-    """Pin order's `relations[].a`/`.b` to the dilemma ids."""
-    dilemma_ids = [d.id for d in project.graph.nodes_of(Dilemma)]
+    """Pin order's `relations[].a`/`.b` to the woven dilemma ids (a
+    reserved dilemma is never interleaved, so a relation on it is
+    unrepresentable)."""
+    dilemma_ids = [d.id for d in project.graph.nodes_of(Dilemma) if not d.reserved]
     return pin(
         OrderProposal,
         "OrderProposal",

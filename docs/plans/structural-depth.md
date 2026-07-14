@@ -91,28 +91,38 @@ the derived budget (advisory; the scale-recalibration BACKLOG item owns
 them); micro is exempt from coupling (its shape pins pre-M8 literals for
 the golden story; a micro that wants coupling is a design smell anyway).
 
-## W2 — Brainstorm surplus as feedstock (PR-2)
+## W2 — Brainstorm surplus as feedstock (PR-2, built)
 
 **Author direction (2026-07-14):** overgenerate further and/or retain more
 at triage as the source of *additional branching* when the words budget
 demands it — surplus dilemmas, subplots, and settings kept available
 (tagged, not woven) instead of discarded.
 
-Mechanical design (agent, open to revision at build time):
+What shipped (as designed, plus the seams the build surfaced):
 
-- BRAINSTORM's requested total grows by a per-scope **reserve allowance**;
-  G1's B1 range check admits the reserve.
-- Triage gains a third disposition: **`reserve`** — dilemma kept in the
-  graph, *no path*, never woven, excluded from GROW's plan/weave and from
-  every budget count except its own allowance check. (Today a dilemma must
-  branch or lock; entities are the only cuttable material.)
-- Reserved material is surfaced to POLISH finalize as **texture feedstock**
-  (W3): the prompt shows reserved dilemmas' questions/settings so grafts
-  use real story material instead of inventing texture. It is also the
-  author's shelf: a rerun that raises `words_target` can promote a reserve
-  to locked/branched at triage instead of re-brainstorming.
-- Invariant surface: reserved dilemmas are invisible to I3 (no path), I6,
-  and flag derivation; a `reserve` with a path is a gate error.
+- `ScopePreset.reserve_dilemmas` (1/2/3/4 by scope) grows BRAINSTORM's
+  requested total; G1's B1 range check admits locked + reserve surplus.
+- Triage's third disposition **`reserve`**: `Dilemma.reserved` (the one
+  disposition that *needs* a stored marker — zero paths is also the
+  pre-triage state; branched/locked stay topology-derived), written only
+  via `mutations.set_dilemma_disposition`. The triage proposal gains a
+  schema-pinned `reserve` list; apply rejects reserve∩locked, a reserve
+  with paths, and over-allowance, all repairably.
+- Invisibility, enforced at each seam the sweep found: `weave.shapes`
+  skips reserved (else a zero-path dilemma is a WeaveError); SEED's
+  scaffold and order contexts and the order schema's dilemma enum exclude
+  them; FILL's voice context and shadows exclude them; **I2 exempts
+  them** (their anchors may legitimately be cut — feedstock, not story);
+  DRESS codex eligibility and G6's check ignore their anchoring edges.
+  I3/I6/I7/flag derivation/arcs ignore them by construction (no paths).
+- B1 post-triage counts reserved against the allowance and errors on a
+  reserved dilemma with an explored path.
+- POLISH finalize's context carries the reserved dilemmas (question,
+  stakes, anchor names) and the prompt frames them as advisory graft
+  stock for false-branch arms: echo as texture, never advance or decide.
+- The author's shelf: a rerun that raises `words_target` can promote a
+  reserve at triage instead of re-brainstorming (promotion is a normal
+  triage disposition on the rerun; no extra machinery).
 
 ## W3 — Tensored texture worlds (PR-3 engine, PR-4 pipeline)
 
@@ -209,7 +219,7 @@ instead of inferring it from summaries alone.
 | PR | Contents | Tier |
 |---|---|---|
 | PR-1 (this branch) | `words_target` coupling, `budget_for`, B1 wiring, prompt plumbing, B9 bridge share, sim calibration, docs | frontier design, mid-tier typing |
-| PR-2 | reserve disposition end-to-end (BRAINSTORM → triage → gates), feedstock context plumbing | mid-tier against this contract |
+| PR-2 (built) | reserve disposition end-to-end (BRAINSTORM → triage → gates), feedstock context plumbing | mid-tier against this contract |
 | PR-3 | texture-fork engine: model, splice, mirroring, site computation, gate checks, sim extension | frontier (freeze/arc seams) |
 | PR-4 | finalize integration + prompts, FILL context lever, live validation | frontier review, mid-tier typing |
 

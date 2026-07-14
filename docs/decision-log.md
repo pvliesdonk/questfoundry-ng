@@ -16,6 +16,31 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (structural depth PR-2: the reserve disposition —
+  brainstorm surplus as unwoven feedstock):** W2 of the milestone plan,
+  built as designed with the seams the build surfaced. Triage gains the
+  third disposition `reserve`: BRAINSTORM's requested total grows by a
+  per-scope `reserve_dilemmas` allowance (1/2/3/4), and triage keeps the
+  surplus in the graph with **no path** — never woven — as texture
+  feedstock POLISH finalize surfaces (question, stakes, anchors) as
+  advisory graft stock for false-branch arms: echo as texture, never
+  advance or decide. Design note recorded in 01 §4: reserve is the one
+  disposition that *needs* a stored marker (`Dilemma.reserved`, written
+  only via `mutations.set_dilemma_disposition`) because its topology —
+  zero explored paths — is also the pre-triage state; branched/locked
+  stay topology-derived. Invisibility was a sweep of every
+  `nodes_of(Dilemma)` consumer: `weave.shapes` skips reserved (else a
+  zero-path dilemma is a WeaveError), SEED's scaffold/order contexts and
+  the order schema's enum exclude them, FILL's voice context and shadows
+  exclude them, I2 exempts them (feedstock anchors may be cut), and
+  DRESS codex eligibility + G6 ignore their anchoring edges; the
+  path-based machinery (I3/I6/I7, flags, arcs, freeze) ignores them by
+  construction. B1 admits locked+reserve surplus pre-triage and counts
+  reserved against the allowance post-triage; a reserved dilemma with a
+  path is a gate error. Promotion needs no machinery: a rerun that
+  raises `words_target` just re-triages the reserve. Recorded fixtures
+  stay green (replay is order-based; the new proposal field is optional).
+
 - **2026-07-14 (structural depth milestone started: the plan, the
   words-target coupling, B9):** The author-directed milestone (see the
   roadmap reframe entry below) moved from "Next" to "Now" the same day; a

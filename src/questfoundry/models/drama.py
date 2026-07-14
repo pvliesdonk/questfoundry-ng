@@ -36,6 +36,13 @@ class Dilemma(Node):
     role: DilemmaRole
     residue_weight: ResidueWeight
     ending_salience: EndingSalience
+    # SEED triage's third disposition (structural-depth W2): kept as
+    # unwoven feedstock — no path, no beats, invisible to the weave and
+    # every downstream context except POLISH finalize's texture material.
+    # Branched/locked stay derived from topology (design doc 01 §4);
+    # reserve needs a stored marker because zero explored paths is also
+    # the pre-triage state.
+    reserved: bool = False
 
 
 class Answer(Node):

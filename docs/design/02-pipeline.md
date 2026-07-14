@@ -142,15 +142,16 @@ is where taste is captured.
 |---|---|
 | In | Vision |
 | Out | Entities (cast), Dilemmas with two Answers each, `anchored_to` edges |
-| Gate G1 | Budgets met — per-role dilemma counts at least the branched budget (the words-target-coupled budget, 01 §2), surplus within the locked allowance (B1); I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
+| Gate G1 | Budgets met — per-role dilemma counts at least the branched budget (the words-target-coupled budget, 01 §2), surplus within the locked + reserve allowances (B1); I1, I2; every entity anchors ≥1 dilemma *or* is flagged for triage; ≥2 dilemmas share an entity |
 
 The LLM generates generously — more dilemmas and cast than will survive
 as player choices — because SEED triages down and it is far cheaper to
 cut than to weave in a missing character later (the cast is effectively
 locked here). The overgeneration is structural: the prompt asks for the
-branched budget *plus* the scope's locked allowance, and triage locks
-the surplus into single-answer storylines (01 §4) rather than cutting
-it. The shared-entity check exists because dilemmas that share no
+branched budget *plus* the scope's locked allowance *plus* its reserve
+allowance, and triage locks part of the surplus into single-answer
+storylines and reserves the rest as unwoven texture feedstock (01 §4,
+structural-depth W2) rather than cutting it. The shared-entity check exists because dilemmas that share no
 entities produce parallel novels, not a woven story.
 
 Deterministic: ID assignment, namespace enforcement, anchoring-graph
@@ -161,21 +162,23 @@ analysis (which entities are load-bearing).
 | | |
 |---|---|
 | In | Vision + full BRAINSTORM output |
-| Out | Triage dispositions (branched / locked, 01 §4); Paths (+ Consequences) per explored answer; per-path beat scaffolds with temporal hints and flexibility annotations; dilemma ordering (`wraps`/`serial`/`concurrent`); convergence sketch |
-| Gate G2 | I3 per explored path; branched role budget met exactly (e.g. `micro` = 1 hard + 1 soft; the words-target-coupled counts when `words_target` is set, 01 §2) with locked dispositions within the allowance (B1); ordering relations acyclic and consistent; every surviving entity anchored; every cut justified |
+| Out | Triage dispositions (branched / locked / reserve, 01 §4); Paths (+ Consequences) per explored answer; per-path beat scaffolds with temporal hints and flexibility annotations; dilemma ordering (`wraps`/`serial`/`concurrent`, woven dilemmas only); convergence sketch |
+| Gate G2 | I3 per explored path; branched role budget met exactly (e.g. `micro` = 1 hard + 1 soft; the words-target-coupled counts when `words_target` is set, 01 §2) with locked and reserved dispositions within their allowances (B1, a reserved dilemma carries no path); ordering relations acyclic and consistent; every surviving entity anchored (reserved dilemmas exempt, I2); every cut justified |
 
 The heaviest creative stage, run as three LLM passes with engine checks
 between:
 
 1. **Triage** — select the cohesive ensemble; cut brilliant-but-
    disconnected material. Give every dilemma a disposition: exactly the
-   scope's role budget is **branched** (both answers get paths); the
+   budget's role counts are **branched** (both answers get paths); the
    rest are **locked** — one answer gets a path, declared with a
-   reason, and the other stays a permanent shadow (01 §4). The apply
-   step enforces the disposition arithmetic repairably: branched counts
-   per role equal the budget, every dilemma gets 1 or 2 paths, a
-   single-path dilemma must be declared locked, and locked stays within
-   the allowance.
+   reason, the other a permanent shadow — or **reserved**: no path,
+   kept as unwoven texture feedstock POLISH finalize grafts from
+   (01 §4, structural-depth W2). The apply step enforces the
+   disposition arithmetic repairably: branched counts per role equal
+   the budget, every non-reserved dilemma gets 1 or 2 paths, a
+   single-path dilemma must be declared locked, a reserved dilemma may
+   carry no path, and locked/reserved each stay within their allowance.
 2. **Scaffold** — per branched dilemma, the Y-shape: pre-commit chain
    (shared, dual `belongs_to`), one commit beat per path, post-commit
    chains; per locked dilemma, the chain: lead-in beats, one resolution
@@ -301,7 +304,11 @@ Two phases:
    whole extra passage per choice) — the model chooses diamond (two
    arms, different textures of the same forward motion) or sidetrack
    (one arm, an optional detour the reader may decline) per site and
-   writes the arms. The real choices are the dilemmas; cadence sites
+   writes the arms — grafting, where it fits, from the triage-reserved
+   dilemmas its context surfaces as advisory feedstock (real brainstormed
+   material over invented flavor; 01 §4, structural-depth W2: an arm may
+   echo reserved material as texture, never advance or decide it). The
+   real choices are the dilemmas; cadence sites
    are safe dressing precisely because the structure guarantees the
    real ones. Each run's site count is **mandatory** — the apply rejects
    a proposal that leaves any run short, with the shortfall named

@@ -131,11 +131,21 @@ class Beat(Node):
     # it cannot be recomputed unambiguously once several forks share
     # endpoints, which is why it is stored (cf. A14's world-suffixed ids).
     mirrors: str | None = None
+    # texture_world beats only (W4, the context lever): the parallel
+    # world's one-line premise ("the crossing goes over the mountain
+    # pass"), declared in the finalize proposal and persisted so FILL's
+    # write prompt can name the world it is grounding — the same
+    # persist-for-a-later-pass precedent as Passage.variant_flag (A21).
+    texture_premise: str = ""
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:
         if self.mirrors is not None and self.purpose != StructuralPurpose.TEXTURE_WORLD:
             raise ValueError(f"beat {self.id} carries mirrors but is not a texture_world beat")
+        if self.texture_premise and self.purpose != StructuralPurpose.TEXTURE_WORLD:
+            raise ValueError(
+                f"beat {self.id} carries a texture_premise but is not a texture_world beat"
+            )
         if self.beat_class == BeatClass.STRUCTURAL:
             if self.dilemma_impacts:
                 raise ValueError(f"structural beat {self.id} must not carry dilemma_impacts")

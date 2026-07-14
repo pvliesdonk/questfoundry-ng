@@ -298,6 +298,139 @@ def test_texture_plan_caps_and_adds_free_decisions():
     assert words_after <= words_before * 1.05
 
 
+def test_texture_plan_respects_the_words_budget():
+    g = StoryGraph()
+    preset = _micro_vision_preset()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    # uncapped: the band top admits the fork; a floor words_target does not
+    assert pc.texture_plan(g, preset) != []
+    assert pc.texture_plan(g, preset, words_target=2400) == []
+
+
+# -- finalize integration (PR-4) --------------------------------------------------
+
+
+def _finalize_project(tmp_path, vision):
+    from questfoundry.project.io import Project
+
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    return Project(
+        root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g
+    )
+
+
+def test_finalize_texture_budget_is_mandatory(vision, tmp_path):
+    from questfoundry.pipeline.stages.polish import (
+        FinalizeProposal,
+        _finalize_apply,
+        _texture_and_cadence,
+    )
+    from questfoundry.pipeline.types import ApplyError
+
+    project = _finalize_project(tmp_path, vision)
+    sites, _, _ = _texture_and_cadence(project)
+    assert sites  # the chain offers a stretch
+    before = {b.id for b in project.graph.nodes_of(Beat)}
+    with pytest.raises(ApplyError, match="texture-world budget is mandatory"):
+        _finalize_apply(FinalizeProposal(), project)
+    assert {b.id for b in project.graph.nodes_of(Beat)} == before  # nothing spliced
+
+
+def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
+    from questfoundry.pipeline.stages.polish import (
+        ArmSpec,
+        FalseBranchSpec,
+        FinalizeProposal,
+        TextureBeatSpec,
+        TextureWorldSpec,
+        _finalize_apply,
+        _texture_and_cadence,
+    )
+
+    project = _finalize_project(tmp_path, vision)
+    g = project.graph
+    sites, cadence, _ = _texture_and_cadence(project)
+    (site,) = sites
+    proposal = FinalizeProposal(
+        texture_worlds=[
+            TextureWorldSpec(
+                site=0,
+                premise="the crossing goes over the mountain pass",
+                beats=[
+                    TextureBeatSpec(id=f"beat:mountain-{i}", summary=f"m{i}")
+                    for i in range(len(site))
+                ],
+            )
+        ],
+        false_branches=[
+            FalseBranchSpec(
+                before=before,
+                after=after,
+                arms=[
+                    ArmSpec(id=f"beat:fb-{i}-a", summary="s"),
+                    ArmSpec(id=f"beat:fb-{i}-b", summary="s"),
+                ],
+            )
+            for i, (before, after) in enumerate(
+                edge for run in cadence for edge in run["edges"]
+            )
+        ],
+    )
+    lines = _finalize_apply(proposal, project)
+    assert any("texture world" in line for line in lines)
+    arm0 = g.node("beat:mountain-0")
+    assert arm0.purpose == StructuralPurpose.TEXTURE_WORLD
+    assert arm0.mirrors == site[0]
+    assert arm0.texture_premise == "the crossing goes over the mountain pass"
+    # cadence diamonds inside the mirrored stretch got mirrored twins
+    # carrying the arm's premise (both worlds keep the same topology)
+    twins = [b for b in g.nodes_of(Beat) if b.mirrors and b.mirrors.startswith("beat:fb-")]
+    assert twins
+    assert all(b.texture_premise == arm0.texture_premise for b in twins)
+    assert i15_errors(g, vision) == []
+
+
+def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
+    from questfoundry.pipeline.stages.polish import (
+        FinalizeProposal,
+        TextureBeatSpec,
+        TextureWorldSpec,
+        _finalize_apply,
+        _texture_and_cadence,
+    )
+    from questfoundry.pipeline.types import ApplyError
+
+    project = _finalize_project(tmp_path, vision)
+    sites, _, _ = _texture_and_cadence(project)
+    (site,) = sites
+    short = FinalizeProposal(
+        texture_worlds=[
+            TextureWorldSpec(
+                site=0,
+                premise="p",
+                beats=[TextureBeatSpec(id="beat:m0", summary="m")],
+            )
+        ]
+    )
+    with pytest.raises(ApplyError, match="beat-for-beat"):
+        _finalize_apply(short, project)
+    blank = FinalizeProposal(
+        texture_worlds=[
+            TextureWorldSpec(
+                site=0,
+                premise="  ",
+                beats=[
+                    TextureBeatSpec(id=f"beat:m{i}", summary="m")
+                    for i in range(len(site))
+                ],
+            )
+        ]
+    )
+    with pytest.raises(ApplyError, match="empty premise"):
+        _finalize_apply(blank, project)
+
+
 def test_sim_with_texture_keeps_b6_in_band():
     from tests.scale import SimShape, build_seeded, compile_story, measure
 

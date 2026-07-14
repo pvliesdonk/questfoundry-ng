@@ -573,7 +573,10 @@ def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypat
     budget = [
         {"beats": run, "edges": [(run[0], run[1]), (run[1], run[2])]},
     ]
-    monkeypatch.setattr(polish_mod, "_cadence", lambda _p: budget)
+    long_beats = {b for r in pc.collapse_groups(g) for b in r}
+    monkeypatch.setattr(
+        polish_mod, "_texture_and_cadence", lambda _p: ([], budget, long_beats)
+    )
 
     before = {b.id for b in g.nodes_of(Beat)}
     with pytest.raises(ApplyError, match="mandatory.*needs 2 site\\(s\\), this proposal places 1"):

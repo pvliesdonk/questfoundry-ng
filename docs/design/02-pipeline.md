@@ -283,7 +283,7 @@ central commitment point.
 | | |
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
-| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, false branches, pacing bridges; character-arc metadata per entity |
+| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, texture worlds (run-scale parallel arms, I15), false branches, pacing bridges; character-arc metadata per entity |
 | Gate G4 | I10–I15 (I15: texture-world arms mirror their trunk stretch beat-for-beat — annotations, boundaries, and choice topology; 01 §6, §8); every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
@@ -297,8 +297,21 @@ Two phases:
    passage), or a tensored arm — two same-gate branches, each its own
    gated passage, giving the reader who holds the flag a texture-only
    choice in how to carry the memory (M8; either branch satisfies G4's
-   coverage); add false branches at the engine-computed cadence budget
+   coverage); lay **texture worlds** over the engine-computed sites
+   (structural-depth W3, invariant I15, 01 §6): cap-aligned
+   consequence-free stretches, sized against the same B6 projection
+   *before* cadence and capped by the words budget (`words_target` when
+   set — a parallel stretch is written and printed twice); the model
+   declares each world's one-line premise and words one arm beat per
+   trunk beat, in order, grafting from the triage reserve — the engine
+   mirrors annotations, wires the fork, and persists the premise on the
+   arm beats for FILL's context (the site counts are mandatory at
+   apply, like cadence's); then add false branches at the
+   engine-computed cadence budget
    (M8): the engine projects a playthrough walk from the capped groups
+   — sized on a graph already carrying the texture forks, so the two
+   budgets agree, and a diamond landing inside a mirrored stretch is
+   mirrored into every arm so both worlds keep the same choice topology —
    and sizes the diamonds that bring words-per-choice into the B6 band,
    offering only cap-aligned seam edges (a mid-chunk split would mint a
    whole extra passage per choice) — the model chooses diamond (two
@@ -390,7 +403,11 @@ the paragraph — and the per-beat `narration_scope` tells it which beats stay
 inside the POV and which are a `wide` coda it may narrate beyond the viewpoint
 character's horizon, so register modulates within a passage without a split;
 the POV rule separates *no other minds* from psychic-distance widening, and the
-reviewer keys that rule to scope so a wide coda is not a departure), full
+reviewer keys that rule to scope so a wide coda is not a departure), the
+passage's **texture-world premise** when its beats carry one
+(structural-depth W4, the context lever: the writer grounds the parallel
+world it is in, named the way world truths are named, instead of
+inferring it from summaries alone), full
 entity state (base + active overlays), a sliding window of preceding prose,
 character-arc position (from POLISH's arc metadata: the aspect in play
 now, the turn this scene carries, where the entity is heading),

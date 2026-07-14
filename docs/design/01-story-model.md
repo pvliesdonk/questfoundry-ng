@@ -511,8 +511,13 @@ frontiers (a residue splice would otherwise be bypassed). Arcs, flags,
 and the freeze are untouched by construction — the arm is conditionally
 traversed structure, like any diamond arm. Feedstock for the arm's
 material is the triage reserve (§4). Invariant I15 (§8) holds the whole
-contract; the wording pass that writes arm summaries per world is the
-finalize integration's job (structural-depth PR-4).
+contract. The arm's material is model-worded in the finalize proposal
+(one beat per trunk beat, in order, behind a declared one-line
+**premise** — "the crossing goes over the mountain pass"), and the
+premise is persisted on the arm beats (`texture_premise`, the
+`Passage.variant_flag` persist-for-a-later-pass precedent) so FILL's
+write prompt names the world the passage grounds — the different-context
+lever (W4) that makes parallel beats read as genuinely different scenes.
 
 The **passage graph** — passages + choices — is what SHIP exports and the
 player traverses. The beat DAG never ships; it is the authoring truth from

@@ -72,6 +72,22 @@ def test_fill_write_omits_craft_block_when_window_is_non_empty(golden):
     assert "CRAFT NOTES" not in rendered
 
 
+def test_fill_write_names_the_texture_world_premise(golden):
+    # W4, the context lever (structural-depth): a passage inside a texture
+    # arm grounds the writer in its world; every other passage stays silent
+    env = runner._environment()
+    context = _write_context_for("passage:p-arrival")(golden)
+    assert context["texture_premise"] is None  # no texture beats here
+
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "TEXTURE WORLD" not in rendered
+
+    context["texture_premise"] = "the crossing goes over the mountain pass"
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "TEXTURE WORLD" in rendered
+    assert "over the mountain pass" in rendered
+
+
 def test_fill_write_includes_craft_block_when_window_and_lookahead_empty(golden):
     env = runner._environment()
     context = _write_context_for("passage:p-arrival")(golden)

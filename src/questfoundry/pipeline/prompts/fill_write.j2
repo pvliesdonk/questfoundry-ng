@@ -129,6 +129,14 @@ state as their thoughts (see POINT OF VIEW above):
 {% endfor %}
 {% endif %}
 
+{% if texture_premise %}
+TEXTURE WORLD: this passage lies in a parallel rendering of the story's
+events — the reader chose this texture at the fork: {{ texture_premise }}.
+Ground every scene in that texture (its places, weather, passers-by); the
+beat summaries carry the events, this line carries the world. The other
+rendering exists on a parallel path the reader declined — never reference
+it, compare against it, or hint the world could have been otherwise.
+{% endif %}
 WORLD STATE AT THIS PASSAGE — only CERTAIN facts may be stated as true:
 {% for f in flags %}
 - {{ f.flag.description }} — {{ f.status }}

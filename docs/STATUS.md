@@ -35,15 +35,19 @@ authoritative contract, PR-sliced. **PR-1 merged** (#77):
 exceed 25% of beats (the stretching tripwire; the flat exemplar trips it
 at 37%, by design). **PR-2 merged** (#78): the `reserve` triage
 disposition — brainstorm surplus kept as unwoven texture feedstock.
-**PR-3 is built on this branch**: the texture-worlds *engine* — the
-run-scale parallel-world splice with engine-copied annotation mirroring
-(`Beat.mirrors`, invariant **I15** with its edge-projection rule),
-cap-aligned sub-stretch sites, the `texture_plan` sizing budget, and
-cadence diamonds mirrored into arms so both worlds keep the same choice
-topology (sim probe at medium-max: 3 scene-scale worlds planted, B6
-785 vs 780 baseline, +10k story words — the print price of parallel
-stretches). Engine-only: nothing invokes it in the pipeline yet; PR-4
-wires finalize/prompts/FILL. Every exemplar stays green.
+**PR-3 merged** (#79): the texture-worlds *engine* — the mirrored
+parallel-world splice (`Beat.mirrors`, invariant **I15** with its
+edge-projection rule), cap-aligned sub-stretch sites, `texture_plan`,
+and cadence diamonds mirrored into arms. **PR-4 is built on this
+branch**: the pipeline wiring — POLISH finalize offers the texture sites
+and *requires* them filled (site index + one-line premise + one
+model-worded beat per trunk beat; splices texture → false branches →
+residue, cadence sized on a graph carrying the forks so both budgets
+agree), `texture_plan` is capped by the words budget (a parallel stretch
+is printed twice and must fit `words_target`), and FILL's write prompt
+names the passage's texture-world premise (W4 — persisted on the arm
+beats, the `variant_flag` precedent). Every exemplar and recorded
+fixture stays green (fixture stories offer no sites).
 Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
@@ -83,15 +87,18 @@ Previous epic **Rotating limited POV shipped in PR #74** (A22).
    machinery exercise could also run on the flat exemplar.) Setting a
    band-top `--words-target` on that run would also exercise PR-1's
    coupling live.
-2. **Structural depth, final slice** (contracts in
-   [`plans/structural-depth.md`](plans/structural-depth.md)): **PR-4**
-   — finalize integration (texture-site offers + mandatory counts in the
-   proposal, the model wording arm summaries per world including the
-   mirrored diamond twins), the FILL context lever (W4), prompts, the
-   words-target arithmetic folding in texture-world word costs (the
-   plan's W3 as-built note #3), then the live validation run. PR-1/2/3
-   are done; the engine is complete but nothing invokes texture worlds
-   in the pipeline until PR-4 wires finalize.
+2. **Structural depth — only the live validation remains** (the
+   milestone's exit, plan §PR slicing): a fresh weak-tier medium with a
+   band-top `--words-target` — the budget derives more softs (W1),
+   triage reserves feedstock (W2), finalize plants texture worlds and
+   fills the cadence budget (W3), FILL grounds each world's premise
+   (W4); exit is B6 mid-band, B9 quiet, gate-clean through DRESS, and an
+   author read that finds actual interactivity. This run can double as
+   the prose epic's DRESS-at-scale validation (step 1). All four PRs are
+   built; watch the finalize pass closely on the weak tier — texture
+   arms are its largest single proposal yet (a ~15-beat site in one
+   entry) and repair exhaustion there means decomposing the pass
+   (per-site calls, the A21 precedent), not softening the requirement.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

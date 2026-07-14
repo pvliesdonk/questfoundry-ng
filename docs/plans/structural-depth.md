@@ -124,7 +124,7 @@ What shipped (as designed, plus the seams the build surfaced):
   reserve at triage instead of re-brainstorming (promotion is a normal
   triage disposition on the rerun; no extra machinery).
 
-## W3 — Tensored texture worlds (PR-3 engine BUILT; PR-4 pipeline open)
+## W3 — Tensored texture worlds (PR-3 engine + PR-4 pipeline BUILT)
 
 **Author direction (2026-07-14):** generalize the false branch from a 1–2
 beat graft between adjacent beats to a diamond laid over a whole *run* of
@@ -156,11 +156,12 @@ build discoveries, each probed on the structural simulation:
    vs 780 without — density preserved, substance added.
 3. **Parallel worlds consume words budget without walk words** (medium
    sim: story words 52.5k → 62.8k, walk words flat) — the FILL/print
-   price of writing a stretch twice. PR-4 must fold this into the
-   words-target arithmetic (a story with texture worlds "spends" part of
-   its words_target on parallel stretches; the W1 calibration constants
-   were measured texture-off, and `tests/scale.py` keeps
-   `texture_worlds=False` as the default until recalibration).
+   price of writing a stretch twice. PR-4 folded this into the plan:
+   `texture_plan` admits a fork only while the projected story total
+   stays inside the words budget (`words_target` when set, the scope
+   band's top otherwise) — a scope earns its parallel worlds too. The W1
+   calibration constants were measured texture-off, and `tests/scale.py`
+   keeps `texture_worlds=False` as the default until recalibration.
 
 The mirror evidence is stored: `Beat.mirrors` names the trunk twin —
 insertion provenance that cannot be recomputed once forks share
@@ -169,12 +170,20 @@ gate I15, never rendered to a prompt. I15's shape half is a local
 **edge-projection rule** (every edge incident to a texture beat projects
 via `mirrors` onto an existing trunk edge), which pins contiguity,
 convergence parity, injectivity, and residue-bypass without chain
-reconstruction. What PR-4 owns: finalize integration (site offers +
-mandatory counts in the proposal, the model wording each arm beat's
-summary per world — including the mirrored diamond twins, whose
-summaries the engine seeds as copies pending the wording pass, A14's
-"structure is copied, words are rewritten"), the FILL context lever
-(W4), prompts, and the live validation.
+reconstruction. PR-4 wired the pipeline: `_texture_and_cadence` computes
+both fork budgets together (cadence sized on a scratch graph carrying
+probe arms, so the numbers the model sees are the numbers apply
+enforces); the finalize proposal gains `texture_worlds` (site index +
+one-line premise + one model-worded beat per trunk beat, mandatory
+coverage checked before any splice, empty-list schema discipline when no
+sites); apply splices texture → false branches → residue, with the
+cadence splices dispatching through the mirroring variants; the premise
+persists on arm beats (`Beat.texture_premise`, the `variant_flag`
+precedent) and FILL's write prompt names it (W4). Mirrored diamond twins
+keep engine-copied summaries (A14's "structure is copied" — their
+one-line flavor is world-neutral by instruction; revisit if a live read
+catches a twin clashing with its world). Still open: the milestone's
+**live validation run**.
 
 Contract (agent design; the starred items are the frontier seams):
 
@@ -243,7 +252,7 @@ Contract (agent design; the starred items are the frontier seams):
   §6; if review finds an invariant-shaped rule here (e.g. mirror parity),
   it gets an I-number in 01 §8 per iron rule 6.
 
-## W4 — The context lever (rides PR-4)
+## W4 — The context lever (BUILT, rides PR-4)
 
 **Author direction (2026-07-14):** similar beats in different worlds can
 yield *completely different passages*, because FILL writes prose from
@@ -263,7 +272,7 @@ instead of inferring it from summaries alone.
 | PR-1 (this branch) | `words_target` coupling, `budget_for`, B1 wiring, prompt plumbing, B9 bridge share, sim calibration, docs | frontier design, mid-tier typing |
 | PR-2 (built) | reserve disposition end-to-end (BRAINSTORM → triage → gates), feedstock context plumbing | mid-tier against this contract |
 | PR-3 (built) | texture-fork engine: model, splice, mirroring, site computation, gate checks (I15), sim extension | frontier (freeze/arc seams) |
-| PR-4 | finalize integration + prompts, FILL context lever, live validation | frontier review, mid-tier typing |
+| PR-4 (built) | finalize integration + prompts, FILL context lever; live validation remains the milestone's exit | frontier review, mid-tier typing |
 
 Live validation for the milestone: a fresh weak-tier medium with
 `words_target` near the band top — the budget derives more softs, POLISH

@@ -1097,8 +1097,10 @@ def test_review_prompt_carries_the_choice_grounding_rule(golden_fill):
     rendered = _render_review(golden_fill, "passage:p-arrival")
     assert "choice_grounding" in rendered
     assert "QUOTE them in `quote`" in rendered
-    # the corrective goes to the prose, never the label
-    assert "never a change to the label" in rendered
+    # both correctives are on the table: plant the referent, or rename the
+    # label to what the prose shows — never demand padding
+    assert "rewrite the label" in rendered
+    assert "never demand padded prose" in rendered
 
 
 def test_review_prompt_omits_choice_grounding_on_endings(golden_fill):

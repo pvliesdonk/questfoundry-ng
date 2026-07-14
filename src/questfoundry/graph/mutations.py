@@ -310,7 +310,8 @@ def add_choice(g: StoryGraph, src: str, dst: str, choice: Choice) -> None:
 
 def relabel_choice(g: StoryGraph, src: str, dst: str, label: str) -> None:
     """FILL's writer may rewrite a choice label so it names what the prose
-    it just wrote actually shows (author-directed, 2026-07-14). Text only:
+    it just wrote actually shows (author request, in-session 2026-07-14:
+    "can we have the writer *also* rewrite the choice labels?"). Text only:
     the destination, gate, and grants were fixed at POLISH — the label is
     the one presentation field the finished prose knows better."""
     for p in (src, dst):

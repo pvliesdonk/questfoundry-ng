@@ -406,9 +406,10 @@ never a repair that blocks the required prose. Whether a detail genuinely
 adds and does not contradict an established fact is the reviewer's
 `micro_detail` rule (below), not a blunt guard. The passage's outgoing
 **choice labels are a planting contract, and the writer may re-ground
-them** (author finding + direction, 2026-07-14: labels are minted at
-POLISH from beat summaries, so ungrounded ones read as connective tissue
-to the *next* passage — "open the door" with no door on the page): the
+them** (author finding, 2026-07-14 — labels minted at POLISH from beat
+summaries read as connective tissue to the *next* passage, "open the
+door" with no door on the page — and author request, in-session same
+day: "can we have the writer *also* rewrite the choice labels?"): the
 write prompt lists the choices as a numbered menu (label + a
 destination-summary hint) and requires every concrete referent a label
 names to exist in this passage's prose — and the writer may **rewrite any

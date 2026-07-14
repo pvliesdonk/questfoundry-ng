@@ -58,9 +58,14 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   in the text:
   - {{ voice.banned | join("
   - ") }}
-  Banned patterns match LITERALLY: a banned rhetorical question must be a
-  question in the text; a ban aimed at the reader is not violated by words one
-  character speaks to another — dialogue is never reader-address. A ban on
+  Banned patterns match LITERALLY. A ban about ADDRESS — "second-person
+  address", "you/your", "rhetorical questions (to the reader)", any ban whose
+  point is who the prose speaks TO — is about the NARRATION addressing the
+  reader and NEVER matches words inside quotation marks: characters say "you"
+  to each other; that is dialogue, not reader-address. Mechanical check
+  before flagging such a ban: is the candidate text inside quotation marks?
+  Then there is no finding. (Bans on diction, idiom, or punctuation still
+  apply everywhere, including dialogue, unless they say otherwise.) A ban on
   dialogue tags is about the tag VERB ("murmured", "exclaimed breathlessly"):
   a plain "said" with the speaker's name — "said Jordan", "Jordan said" — IS
   the plain said-tag and never violates a tags-are-said rule; naming the

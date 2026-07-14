@@ -390,3 +390,15 @@ def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden)
         .render(**context, notes="", repair_errors=[], research="")
     )
     assert "pronouns she/her, exactly" in rendered
+
+
+def test_fill_review_address_bans_never_match_inside_dialogue():
+    """Closed Circle stall journal, cycle 5: the reviewer flagged a deputy
+    saying "you have overstepped" against the voice's second-person-address
+    ban, despite the aimed-at-the-reader clarifier — stated but inferential.
+    The rule is now mechanical (inside quotation marks -> no address-ban
+    finding) and scoped: diction/punctuation bans still reach dialogue."""
+    source = " ".join((PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8").split())
+    assert "NEVER matches words inside quotation marks" in source
+    assert "is the candidate text inside quotation marks?" in source
+    assert "still apply everywhere, including dialogue" in source

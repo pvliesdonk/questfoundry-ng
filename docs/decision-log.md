@@ -16,6 +16,32 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (repair-message audit — all 79 ApplyError sites, author-requested):**
+  The *Closed Circle* live run exhausted finalize repairs on a residue
+  world-mismatch whose message listed the valid set but not the corrective —
+  despite earlier sessions having been asked to audit *all* prompts and repair
+  messages. The author called it out ("what else was silently skipped"); no
+  artifact existed to answer that, which is itself the finding: **an audit
+  without a per-site record is a claim, not an audit.** This session enumerated
+  every `raise ApplyError` in `src/questfoundry` (79 sites: polish 23+, dress 18,
+  grow 15, seed 15, fill 5, brainstorm/research/types 1 each) and judged each
+  against the AGENTS.md contract (reason + subject + recovery_action as an
+  instruction). Verdicts: **62 already conformant** (imperative corrective or
+  exact valid set present; `format_validation_error` and seed's aggregated
+  scaffold-audit briefs verified conformant), **8 blunt → fixed** (finalize
+  world-mismatch — fixed earlier the same day; false-branch not-in-long-run,
+  now pointing at the prompt's CADENCE runs; false-branch and residue bare
+  KeyError id-collisions, now naming the mint-a-fresh-id corrective; SEED
+  unknown answer / unknown locked dilemma, now listing the valid ids; GROW
+  intersection member, now listing the eligible beats; DRESS brief-count, now
+  stating add/drop-to-target; POLISH needs-no-variants, now instructing
+  `variants: []`), and **9 duplicate-entry sites sharpened** with the explicit
+  "keep exactly one / drop the extras" imperative (dress profiles/briefs/
+  codex/codewords, grow rewrite/annotate dups + intersection double-membership,
+  polish audit/arcs dups). The **prompt-template half is NOT covered** by this
+  audit — recorded as an explicit BACKLOG item listing all 28 templates so the
+  next "audited?" question has a checkable answer either way.
+
 - **2026-07-14 (rotating limited POV — author-answered design, built offline):**
   The five open questions in `docs/plans/rotating-pov.md` were put to the author
   directly (explicit per-question prompts, this session) and answered: viewpoint

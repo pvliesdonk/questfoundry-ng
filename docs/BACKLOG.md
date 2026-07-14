@@ -11,6 +11,26 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 > §"Documentation contract"). An item's framing is an agent's, not the author's,
 > unless it says otherwise.
 
+## Prompt & error-message quality
+
+- [ ] **Prompt-template audit (all 28 templates), author-requested 2026-07-14.**
+  The repair-*message* audit is done (decision log, 2026-07-14: all 79
+  `ApplyError` sites judged, 17 fixed) after a blunt finalize message survived
+  earlier claimed audits; the *prompt* half has NOT had the same exhaustive
+  pass and must not be assumed audited. Audit each template against AGENTS.md
+  §"Prompt and error-message quality" (rules structurally enforced, intent
+  explicit, no reliance on inference) and record per-template verdicts so the
+  claim is checkable: `_craft`, `_shared`, `_summary_brief`, `brainstorm`,
+  `dream`, `dress_briefs`, `dress_codewords`, `dress_codex`,
+  `dress_codex_review`, `dress_direction`, `fill_review`, `fill_summary`,
+  `fill_voice`, `fill_write`, `grow_annotate`, `grow_bridge`,
+  `grow_contextualize`, `grow_intersections`, `grow_weave`, `polish_arcs`,
+  `polish_audit`, `polish_finalize`, `polish_labels`, `polish_summary`,
+  `research`, `seed_order`, `seed_scaffold`, `seed_triage`. Known open
+  question to fold in: DREAM's envision rewrote an authored rotating
+  `pov_hint` into a single-head scheme (observed live 2026-07-14) — check
+  `dream.j2` preserves authored POV intent.
+
 ## Structure & scale
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens

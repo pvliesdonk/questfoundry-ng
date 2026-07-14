@@ -125,10 +125,13 @@ def _intersections_apply(proposal: IntersectionProposal, project: Project) -> li
             if m not in shared:
                 raise ApplyError(
                     f"intersection {spec.id}: member {m} is not a shared pre-commit "
-                    "or locked-storyline beat"
+                    f"or locked-storyline beat; members must come from {sorted(shared)}"
                 )
             if m in used:
-                raise ApplyError(f"beat {m} appears in more than one intersection group")
+                raise ApplyError(
+                    f"beat {m} appears in more than one intersection group — "
+                    "keep it in one group and drop it from the others"
+                )
             used.add(m)
 
     def _build(spec: IntersectionSpec) -> IntersectionGroup:
@@ -433,7 +436,7 @@ def _contextualize_apply(proposal: ContextualizeProposal, project: Project) -> l
                 f"beats: {sorted(expected)}"
             )
         if spec.beat in seen:
-            raise ApplyError(f"{spec.beat} rewritten twice")
+            raise ApplyError(f"{spec.beat} rewritten twice — keep one rewrite entry per beat")
         if not spec.summary.strip():
             raise ApplyError(f"summary for {spec.beat} is empty")
         seen.add(spec.beat)
@@ -496,7 +499,7 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
                 f"beats: {sorted(expected)}"
             )
         if spec.beat in seen:
-            raise ApplyError(f"{spec.beat} annotated twice")
+            raise ApplyError(f"{spec.beat} annotated twice — keep one entry per beat")
         seen.add(spec.beat)
         if spec.narration_scope == NarrationScope.WIDE and spec.interlude:
             raise ApplyError(

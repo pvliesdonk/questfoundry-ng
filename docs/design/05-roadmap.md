@@ -65,14 +65,17 @@ decomposition (A21). See `docs/plans/` and the decision log.
   weak-tier story completes FILL and DRESS gate-clean, exports round-trip, and
   reads without prose-quality rework.
 
-## Next
-
 - **Rotating limited POV.** A wanted, previously-mis-deferred feature: the
   viewpoint character changes across the book while each unit stays in one head.
-  The pipeline accepts a rotating POV in vision/voice but can't honor one at
-  write time (no per-passage viewpoint), which blocks closed-circle-of-suspects
-  mysteries. Design-first, its own PR; open questions (granularity, derivation,
-  cadence, first-person interludes) are the author's. → [`../plans/rotating-pov.md`](../plans/rotating-pov.md).
+  The author answered the design questions directly (2026-07-14: per-passage
+  head, GROW-annotate assignment, no cadence engine constraint, first-person
+  interludes in v1) and the engine half is **built offline-green** (per-beat
+  `viewpoint`/`interlude`, the collapse cut, I14, per-passage FILL enforcement,
+  `Voice.interlude`). **Open:** the live *Closed Circle* re-run from its POLISH
+  checkpoint — the acceptance test is clearing the passage it died on, with the
+  rotation reading deliberately. → [`../plans/rotating-pov-build.md`](../plans/rotating-pov-build.md).
+
+## Next
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved

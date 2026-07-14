@@ -205,8 +205,8 @@ between:
 | | |
 |---|---|
 | In | All SEED output |
-| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (prose-intensity) and `narration_scope` (POV/coda register) — the annotations FILL reads, set pre-freeze (01 §Beat annotations) |
-| Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); budgets (beat count per arc within scope) |
+| Out | The **beat DAG** (ordering edges; per-world beat instances where hard forks nest); intersection groups (consumed here); bridge beats; state flags derived from branched paths' consequences; entity overlays activated; convergence points fixed; each beat's `scene_type` (prose-intensity), `narration_scope` (POV/coda register), and `viewpoint`/`interlude` (whose head narrates it; headless for `wide` codas) — the annotations FILL reads, set pre-freeze (01 §Beat annotations) |
+| Gate G3 | I4–I9; every computed arc complete (I6); flag derivation total (every consequence → ≥1 flag); every set beat `viewpoint` resolves to a retained character entity; budgets (beat count per arc within scope) |
 
 The hardest stage, split deliberately:
 
@@ -233,12 +233,15 @@ The hardest stage, split deliberately:
   beats every player sees — shared pre-commit beats and locked-chain
   beats alike (each accepted intersection resolves the scene's
   location/entities); contextualizing per-world beat instances (below);
-  annotating every beat with its `scene_type` **and** `narration_scope`
-  (the *annotate* pass, after contextualize and before the freeze:
-  scene/sequel/micro_beat prose-intensity and limited/wide POV-coda register,
-  a beat's intrinsic craft signals — 01 §Beat annotations — advisory, with a
-  purpose fallback for beats added later); writing bridge beats where
-  adjacent scenes share no entities or place.
+  annotating every beat with its `scene_type`, `narration_scope`, **and**
+  `viewpoint` (the *annotate* pass, after contextualize and before the freeze:
+  scene/sequel/micro_beat prose-intensity, limited/wide POV-coda register, and
+  the character whose head narrates the beat — plus its `interlude` mark when
+  the POV scheme names a deviant register — a beat's intrinsic craft signals,
+  01 §Beat annotations; the first two advisory with a purpose fallback, the
+  viewpoint schema-pinned to the retained character ids and checked
+  referentially at G3, with unannotated later-added beats as wildcards);
+  writing bridge beats where adjacent scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a
@@ -275,7 +278,7 @@ central commitment point.
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
 | Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I13; every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
+| Gate G4 | I10–I14; every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
 
@@ -300,8 +303,11 @@ Two phases:
    real ones.
 2. **Build the passage layer:** collapse maximal linear runs into
    passages (boundaries at forks/joins; runs split at the scope's
-   `passage_beats_max` — the choice-free cutter, 01 §6); merge
-   intersection-adjacent
+   `passage_beats_max` — the choice-free cutter, 01 §6 — **and at every
+   viewpoint switch**: one head per passage, I14, with unannotated and
+   `wide` beats riding as wildcards; the raw choice-topology runs cadence
+   planning reads stay uncut — a head-switch chunks prose, not choices);
+   merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
    audit** on every passage — for each possibly-active flag decide
    *irrelevant here* (annotate "don't address"), *compatible* (poly-state
@@ -354,7 +360,13 @@ has a first author, it is invisible to every other stage, and nothing
 about it may influence depth, length, or quality budgets — G5 applies the
 same word budgets and review bar to every arc.
 
-Per-passage context is rich by design: voice, beat summaries each tagged
+Per-passage context is rich by design: voice, **this passage's viewpoint
+head** (derived from its beats, never stored — the write and review prompts
+enforce *no other minds* against that head while `Voice.pov` stays the book's
+scheme; a headless passage degrades to the book-wide rule, and an `interlude`
+passage is written and reviewed against the Voice's interlude register
+instead of the book-default pov/tense — 01 §Beat annotations,
+`docs/plans/rotating-pov-build.md`), beat summaries each tagged
 with their `scene_type` and `narration_scope` (the passage's aggregate
 intensity sets its word band; the per-beat `scene_type` tells the writer where
 the prose may rise and where it stays plain — style belongs to the story, not

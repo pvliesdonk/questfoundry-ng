@@ -19,32 +19,34 @@ _Last updated: 2026-07-14._
 
 ## Current epic
 
-**Administration restructure** (in flight, PR #73): the single ~3,250-line
-STATUS doc is split by lifecycle so no file grows unbounded and open items stop
-hiding — this slim STATUS (current epic only), the Shipped/Now/Next/Later
-roadmap, `BACKLOG.md`, and the decision log moved to its own file. Architecture
-decisions stay in the 03 §9 mini-ADR table (an agent reads the table with the
-doc; it would not open per-file ADRs). Provenance of agent-authored records is
-handled for now by the AGENTS.md caveat; the real fix is the eventual move to
-GitHub issues.
+**Rotating limited POV** (built offline-green, PR pending on
+`claude/rotating-limited-pov-hikty0`): the author answered the five design
+questions directly (2026-07-14 — per-passage head, GROW-annotate assignment,
+no cadence engine constraint, first-person interludes in v1, golden coverage
+via keepers-bargain's constant head + the e2e fixture) and the engine half is
+built per [`plans/rotating-pov-build.md`](plans/rotating-pov-build.md):
+per-beat `viewpoint`/`interlude` settled at the freeze, invariant **I14** (one
+head per passage) + a G3 referential check, the collapse head-switch cut,
+per-passage POV enforcement in FILL's write/review, `Voice.interlude`, and
+mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
 
 ## Immediate next steps
 
-1. **Land PR #73** (this restructure), then this hand-off note is the live one.
-2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
+1. **Land the rotating-POV PR** (this branch), then:
+2. **Live *Closed Circle* re-run** from its POLISH checkpoint on the unbilled
+   tier (`gpt-oss:120b-cloud`) — the acceptance test is clearing the FILL
+   passage the 2026-07-14 run died on, with the rotation reading deliberately
+   (one head per passage, journal interludes where the scheme asks).
+3. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
    the engine half is built and offline-green; no weak tier has yet completed a
    full clean FILL/DRESS at scale. The *Closed Circle* medium run (2026-07-14)
-   got POLISH clean at medium (validating the A21 passages decomposition) and
-   surfaced the rotating-POV gap as its FILL blocker.
-3. **Rotating limited POV** (design-first, author-gated): a wanted feature
-   recorded in [`plans/rotating-pov.md`](plans/rotating-pov.md); the design
-   questions (granularity, viewpoint derivation, cadence, first-person
-   interludes) are the author's to answer before any code. Blocks
-   closed-circle-of-suspects mysteries at FILL.
+   got POLISH clean at medium (validating the A21 passages decomposition); its
+   FILL blocker was the rotating-POV gap this epic closes.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 
-M0–M8 complete. Recent post-M8 efforts merged: the POLISH passages-pass
-decomposition (A21, PR #71, live-validated at medium), `scene_type` /
-`narration_scope` beat annotations + the B8 pacing report, the review contract,
-reference-pinning (`refpin.py`), and the Ollama backend (A20).
+M0–M8 complete. Recent post-M8 efforts merged: the administration restructure
+(PR #73), the POLISH passages-pass decomposition (A21, PR #71, live-validated
+at medium), `scene_type` / `narration_scope` beat annotations + the B8 pacing
+report, the review contract, reference-pinning (`refpin.py`), and the Ollama
+backend (A20).

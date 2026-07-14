@@ -16,6 +16,24 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (rotating limited POV — author-answered design, built offline):**
+  The five open questions in `docs/plans/rotating-pov.md` were put to the author
+  directly (explicit per-question prompts, this session) and answered: viewpoint
+  **per passage** (never switching inside one; `wide` codas still compose on
+  top), assigned **per beat by GROW's annotate pass**, **no cadence engine
+  constraint** in v1 (prompt guidance: prefer runs), **first-person interludes
+  in scope**, golden coverage by **annotating keepers-bargain's constant head**
+  plus the recorded e2e fixture (no second golden). Design in
+  `docs/plans/rotating-pov-build.md`; built the same session: `Beat.viewpoint`/
+  `Beat.interlude` + `set_beat_viewpoint` (settled at freeze), `passage_viewpoint`
+  derivation (computed, never stored), **I14** (one head per passage, gate G4) +
+  a G3 referential check, the annotate schema pin to retained character ids, the
+  collapse `split_viewpoints` cut (passage-building only; raw cadence runs stay
+  uncut), per-passage POV keying in `fill_write.j2`/`fill_review.j2` with window
+  head-switch notes, and `Voice.interlude` (+ required `VoiceProposal.interlude`,
+  cast-validated). Architecture row A22 (03 §9). Open: the live *Closed Circle*
+  re-run from its POLISH checkpoint on the unbilled tier.
+
 - **2026-07-13 (don't blame the weak model — a standing agent rule + two POLISH
   prompt fixes it forced):** During the narration_scope live runs two POLISH passes
   crashed on the weak tier, and the session reflexively wrote them off as "known

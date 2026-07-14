@@ -308,6 +308,28 @@ def add_choice(g: StoryGraph, src: str, dst: str, choice: Choice) -> None:
     g._add_edge(Edge(kind=EdgeKind.CHOICE, src=src, dst=dst, payload=choice.model_dump()))
 
 
+def relabel_choice(g: StoryGraph, src: str, dst: str, label: str) -> None:
+    """FILL's writer may rewrite a choice label so it names what the prose
+    it just wrote actually shows (author request, in-session 2026-07-14:
+    "can we have the writer *also* rewrite the choice labels?"). Text only:
+    the destination, gate, and grants were fixed at POLISH — the label is
+    the one presentation field the finished prose knows better."""
+    for p in (src, dst):
+        if not isinstance(g.get(p), Passage):
+            raise MutationError(f"{p!r} is not a passage")
+    label = label.strip()
+    if not label:
+        raise MutationError(
+            f"choice {src} -> {dst}: a rewritten label must be non-empty — "
+            "keep the existing label (omit the rewrite) instead of blanking it"
+        )
+    edges = [e for e in g.out_edges(src, EdgeKind.CHOICE) if e.dst == dst]
+    if not edges:
+        raise MutationError(f"no choice {src} -> {dst} to relabel")
+    for e in edges:
+        e.payload["label"] = label
+
+
 def set_flag_codeword(g: StoryGraph, flag_id: str, codeword: str) -> None:
     """DRESS pass 4: assign a flag's print codeword. Codewords are stable
     once set — a print run may already reference the old word, so changing

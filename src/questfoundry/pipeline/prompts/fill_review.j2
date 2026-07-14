@@ -119,6 +119,24 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   In-world objects and events that flags merely describe are story, not
   leakage — and ordinary English uses of those words ("her heart beats", "the
   garden path") are just words.
+{% if choices %}
+- choice_grounding — the choice labels leaving this page are:
+{% for c in choices %}
+  - "{{ c.label }}"
+{% endfor %}
+  Each concrete thing a label names (an object, a door or exit, a person, an
+  act in motion) must be present in THIS passage's prose. Check each label
+  mechanically: find the words in the prose that introduce its referent, and
+  QUOTE them in `quote`; if the prose never shows the referent, that label's
+  finding is a "fail" with `quote` empty and the absent referent named in
+  `reason`. Two valid correctives — say which fits: introduce the referent
+  in the PROSE, or rewrite the label (the writer's label_rewrites) so it
+  names what the prose already shows; never demand padded prose when a
+  rename is the honest fix. A referent present under another of its names
+  counts (resolve against the cast above); a label naming only an abstract
+  act with no prop ("press on", "stand firm") needs no referent and is not a
+  finding.
+{% endif %}
 {% if entities | selectattr("pronouns") | list %}
 - pronoun — a character is referred to with pronouns other than their stated
   ones (a defect only on an actual wrong pronoun in the text, quoted; a name
@@ -195,7 +213,8 @@ THE PROSE:
 Report a `verdict` ("approved" or "needs_work") and a `findings` list. Each
 finding is {"rule": one of the rule names above, "assessment": "fail" or
 "warn", "confidence": "high" | "medium" | "low", "quote": the exact offending
-text ("" only when the defect is a missing beat), "reason": how the quoted text
+text ("" only when nothing exists to quote: a missing beat, or a
+choice_grounding referent the prose never shows), "reason": how the quoted text
 breaks THAT rule, in the rule's own terms, "recovery_action": the specific fix
 the writer should make}. Use "approved" with an empty list when the passage is
 clean; use "needs_work" and list your findings otherwise.

@@ -404,7 +404,23 @@ a new universal fact or *update* a listed one (re-using its key); the only
 apply check is the note-form length cap, and an over-long value is dropped,
 never a repair that blocks the required prose. Whether a detail genuinely
 adds and does not contradict an established fact is the reviewer's
-`micro_detail` rule (below), not a blunt guard.
+`micro_detail` rule (below), not a blunt guard. The passage's outgoing
+**choice labels are a planting contract, and the writer may re-ground
+them** (author finding, 2026-07-14 — labels minted at POLISH from beat
+summaries read as connective tissue to the *next* passage, "open the
+door" with no door on the page — and author request, in-session same
+day: "can we have the writer *also* rewrite the choice labels?"): the
+write prompt lists the choices as a numbered menu (label + a
+destination-summary hint) and requires every concrete referent a label
+names to exist in this passage's prose — and the writer may **rewrite any
+label inline** (`label_rewrites`, numbered so a rework round addresses the
+same choice after a rename; destination, gate, and grants stay fixed;
+distinctness across the page's labels is enforced at apply, the rewrite
+lands through `relabel_choice` before the review runs). The reviewer's
+`choice_grounding` rule then judges the labels the player will actually
+read: quote the prose that plants each referent, or fail with the absent
+referent named — the corrective is to the prose or, now, a rewrite that
+names what the prose shows.
 
 A passage failing review twice is a structural bug: it goes back to
 POLISH (or GROW), never to a third rewrite. Prose cannot rescue a broken

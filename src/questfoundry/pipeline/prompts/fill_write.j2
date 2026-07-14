@@ -187,7 +187,28 @@ WHAT AWAITS (already written — land so it follows naturally, without echoing i
 {% include "_craft.j2" %}
 {% endif %}
 {% if choices %}
-The passage ends where these choices can naturally follow: {{ choices | join(" / ") }}.
+THE CHOICES LEAVING THIS PAGE (the player reads these next; each choice's
+destination, gate, and consequence are fixed — only its wording is yours
+to improve):
+{% for c in choices %}
+- choice {{ c.n }}: "{{ c.label }}"{% if c.toward %} (leads toward: {{ c.toward }}){% endif %}
+{% endfor %}
+PLANT THEIR REFERENTS. Each concrete thing a choice names — an object, a
+door or exit, a person, an act already in motion — must exist on this page:
+introduced in this passage's prose before the end. Prose that describes the
+old revolver on the desk gives "pick up the revolver" something to pick up;
+a choice that says "open the door" when no door was ever on the page is a
+defect. Work each referent into the scene where it sits naturally — it need
+not be the closing image, it must simply be there.
+REWRITE A LABEL WHEN THE PROSE KNOWS BETTER. You may rewrite any label so it
+names what your prose actually shows — the object you placed, the exit you
+described: "label_rewrites": [{"choice": N, "label": "..."}]. Omit a choice
+whose label already fits (an empty list is the common case). A rewritten
+label stays the player's voice — a concrete present-tense action, no outcome
+revealed, honest about where it leads (the "leads toward" hint), and
+distinct from this page's other labels. Ground or rewrite; either way every
+label must name something on the page. Then end the passage where these
+choices can naturally follow.
 {% else %}
 This is an ending: land it completely.
 {% endif %}

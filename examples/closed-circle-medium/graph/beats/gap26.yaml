@@ -1,0 +1,9 @@
+id: bridge:gap26
+created_by: grow
+summary: Facing the sheriff's accusation, the investigator steels themselves, vowing to pursue
+  an alternative route to truth.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

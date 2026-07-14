@@ -1,0 +1,17 @@
+id: passage:p-stove-manuscript
+summary: Simon warns that the aging stove hidden behind the shelves could set the entire library
+  ablaze, while Jordan insists on retrieving the valuable manuscript, raising the danger for
+  everyone.
+entities:
+- character:butler
+- character:author
+prose_summary: 'Simon enters the aisle, inspects the hidden stove and sees Jordan over a warm
+  sealed manuscript. Simon warns the stove could ignite the library; Jordan says the manuscript
+  holds a clue and must be secured. They note the ember, flues, and nearby vellum piles. They
+  decide: leave the stove unchecked and risk fire, or delay and risk losing the manuscript.'
+beats:
+- beat:library-pre3
+- bridge:gap32
+choices:
+- label: Take the manuscript before the stove catches fire
+  to: passage:p-library-inspection

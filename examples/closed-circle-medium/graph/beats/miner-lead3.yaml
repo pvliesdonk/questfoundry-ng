@@ -1,0 +1,16 @@
+id: beat:miner-lead3
+summary: Jordan Blythe mediates, weighing the risk of a volatile miner against the lodge’s
+  fragile peace.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: reveals
+entities:
+- character:author
+- character:miner
+- character:butler
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:release-miner

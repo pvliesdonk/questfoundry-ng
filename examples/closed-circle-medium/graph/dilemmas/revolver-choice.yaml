@@ -1,0 +1,19 @@
+id: dilemma:revolver-choice
+question: Do you turn the old revolver over to the local sheriff or hide it to protect the
+  guest?
+why_it_matters: Handing it in could implicate the guest but preserve legal order; hiding it
+  risks obstruction of justice and future violence.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:hand-revolver
+  text: Hand the revolver to the sheriff, trusting official channels.
+- id: answer:hide-revolver
+  text: Conceal the revolver to keep the guest safe from immediate arrest.
+anchored_to:
+- object:old-revolver
+- character:detective
+- faction:local-sheriff
+wraps:
+- dilemma:sheriff-pressure

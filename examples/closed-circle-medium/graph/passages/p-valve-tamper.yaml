@@ -1,0 +1,16 @@
+id: passage:p-valve-tamper
+summary: The engineer reports a missing valve, suspecting deliberate sabotage, and the report
+  leads investigators to find Cole lingering by the furnace.
+entities:
+- location:lodge
+- character:miner
+prose_summary: Jordan hears engineer say the furnace's main intake valve is missing, suspecting
+  sabotage. He records the clue, links it to the earlier murder, and notes the risk of the
+  furnace starving for air. He approaches the hearth, finds the furnace weak, and sees Cole
+  Duvall nearby holding a pipe wrench, appearing uneasy.
+beats:
+- beat:lodge-lead2
+- bridge:gap36
+choices:
+- label: step toward the furnace where Cole lingers
+  to: passage:p-furnace-whisper

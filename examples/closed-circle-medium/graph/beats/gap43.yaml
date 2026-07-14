@@ -1,0 +1,9 @@
+id: bridge:gap43
+created_by: grow
+summary: The concealed revolver clinks in its compartment as the investigator's accusation
+  reverberates through the lodge.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- character:author

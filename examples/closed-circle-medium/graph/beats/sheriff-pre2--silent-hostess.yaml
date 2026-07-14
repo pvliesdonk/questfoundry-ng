@@ -1,0 +1,16 @@
+id: beat:sheriff-pre2--silent-hostess
+created_by: grow
+summary: The investigator feels the strain of duty versus self‑preservation while having allowed
+  Marta’s alibi to stand, fearing retribution.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

@@ -1,0 +1,15 @@
+id: beat:sheriff-post4-accept--accuse-hostess
+created_by: grow
+summary: Miner Cole attempts to flee amid the chaos and is later found dead under mysterious
+  circumstances, while the investigator’s earlier smear of Marta fuels the disorder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:accept-arrest

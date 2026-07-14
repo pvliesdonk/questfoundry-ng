@@ -1,0 +1,16 @@
+id: beat:miner-aftermath3
+summary: The unresolved escape fuels suspicion among the remaining guests, each wondering
+  who might have helped him.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: complicates
+entities:
+- character:author
+- character:butler
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:release-miner

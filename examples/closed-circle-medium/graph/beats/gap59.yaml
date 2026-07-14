@@ -1,0 +1,9 @@
+id: bridge:gap59
+created_by: grow
+summary: Sheriff deputies confront the investigator, accusing overreach as Marta's reputation
+  hangs in the balance.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- faction:local-sheriff

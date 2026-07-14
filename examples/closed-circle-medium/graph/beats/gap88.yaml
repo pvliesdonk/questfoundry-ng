@@ -1,0 +1,9 @@
+id: bridge:gap88
+created_by: grow
+summary: Encouraged by Jordan’s warning, the investigator chooses between surrendering to
+  the sheriff or persisting covertly.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- faction:local-sheriff

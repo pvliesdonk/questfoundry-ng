@@ -1,0 +1,18 @@
+id: passage:p-ice-sabotage
+summary: A ruptured pipe floods the corridors with icy water that soon freezes, exposing a
+  sabotaged section that acts as a silent lever the murderer could still employ.
+entities:
+- location:lodge
+- character:miner
+- character:butler
+prose_summary: Jordan hears water from a burst pipe, watches it freeze into a sheet that reveals
+  a hidden hinge and rusted lever controlling furnace airflow. Cole Duvall slips on ice while
+  trying to open a bolted service door, losing his wrench. Jordan notes the lever can seal
+  the lodge in deeper freeze, threatening guests.
+beats:
+- beat:lodge-aftermath2
+- beat:lodge-aftermatter3
+- bridge:gap35
+choices:
+- label: push past Simon Kade's grip and slip through the door
+  to: passage:p-door-block

@@ -1,0 +1,9 @@
+id: bridge:gap27
+created_by: grow
+summary: The revelation of Simon's debt prompts the sheriff to impose a strict lockdown on
+  the lodge.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- faction:local-sheriff

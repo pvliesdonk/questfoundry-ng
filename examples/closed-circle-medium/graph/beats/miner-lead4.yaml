@@ -1,0 +1,13 @@
+id: beat:miner-lead4
+summary: A stack of coal carts blocks the exit, making any escape a perilous gamble.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: complicates
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:release-miner

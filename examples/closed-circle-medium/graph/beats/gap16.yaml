@@ -1,0 +1,9 @@
+id: bridge:gap16
+created_by: grow
+summary: Morning light streams onto the desk where the revolver lies untouched, as the investigator
+  lets Marta's story remain unchallenged.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- object:old-revolver

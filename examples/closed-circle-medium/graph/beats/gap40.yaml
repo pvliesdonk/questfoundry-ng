@@ -1,0 +1,9 @@
+id: bridge:gap40
+created_by: grow
+summary: Cole's failed exit lingers in the air as the dinner table erupts with Jordan's incendiary
+  theory about the heiress.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:hostess

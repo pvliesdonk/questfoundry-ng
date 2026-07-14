@@ -1,0 +1,9 @@
+id: bridge:gap81
+created_by: grow
+summary: While wrestling with duty, the investigator receives a quiet promise of support from
+  Marta.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:hostess

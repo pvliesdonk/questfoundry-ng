@@ -1,0 +1,9 @@
+id: bridge:gap74
+created_by: grow
+summary: Following the miner's mysterious demise, the sheriff files a tepid conclusion, leaving
+  the lodge uneasy.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- faction:local-sheriff

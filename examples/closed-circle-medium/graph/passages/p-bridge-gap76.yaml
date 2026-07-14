@@ -1,0 +1,23 @@
+id: passage:p-bridge-gap76
+summary: The investigator reviews the final report and must decide whether to hand the revolver
+  to the sheriff or conceal it, weighing duty against personal risk.
+entities:
+- faction:local-sheriff
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan Blythe examines a final report and the revolver with rust‑colored fingerprints
+  while Deputy Hale files paperwork. Sheriff’s men order the weapon for forensic custody.
+  Jordan weighs handing it over—satisfying law, sealing case, harming hostess’s reputation—against
+  hiding it—protecting guest but risking obstruction charge and arrest. He holds his notebook.
+beats:
+- bridge:gap76
+choices:
+- label: hand the revolver to the deputies
+  grants:
+  - flag:revolver-in-custody
+  to: passage:p-revolver-silence
+- label: slide the revolver into the hidden niche
+  grants:
+  - flag:revolver-concealed
+  to: passage:p-hide-revolver

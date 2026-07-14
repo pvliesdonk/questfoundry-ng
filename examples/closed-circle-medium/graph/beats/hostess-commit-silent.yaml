@@ -1,0 +1,13 @@
+id: beat:hostess-commit-silent
+summary: Investigator chooses to keep Marta’s alibi unquestioned, avoiding a public scandal.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: commits
+entities:
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:silent-hostess

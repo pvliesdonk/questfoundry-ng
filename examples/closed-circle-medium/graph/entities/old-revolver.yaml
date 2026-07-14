@@ -1,0 +1,27 @@
+id: object:old-revolver
+name: Vermont 1876 Revolver
+concept: Antique revolver found in the study, fingerprints on its barrel
+base:
+  appearance: polished walnut, iron cylinder
+  manner: deadly
+  found_in: study
+  temperature: cold to touch
+  heirloom_status: family heirloom
+  case_temperature: warm
+  location: concealed niche behind desk
+arc:
+  begins: antique revolver, polished walnut, iron cylinder, deadly but idle
+  pivots:
+  - beat: beat:revolver-pre1--accuse-hostess
+    becomes: identified as potential evidence against hostess
+  - beat: beat:revolver-pre3--accuse-hostess
+    becomes: deputies demand its custody, raising stakes
+  - beat: beat:revolver-commit-hand--accuse-hostess
+    becomes: handed to deputies, becoming prosecutorial proof
+  - beat: beat:revolver-commit-hide--silent-hostess
+    becomes: concealed in secret compartment, kept from authorities
+  ends:
+  - path: path:hand-revolver
+    state: revolver in sheriff’s hands, used to build case
+  - path: path:hide-revolver
+    state: revolver hidden, investigation proceeds without it

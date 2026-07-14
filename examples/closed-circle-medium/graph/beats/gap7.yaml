@@ -1,0 +1,9 @@
+id: bridge:gap7
+created_by: grow
+summary: A solitary lantern flickers over the manuscript, then the scene shifts to Simon gliding
+  through the lodge corridors, unnoticed.
+beat_class: structural
+purpose: bridge
+entities:
+- location:library
+- character:butler

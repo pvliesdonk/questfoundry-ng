@@ -1,0 +1,16 @@
+id: beat:revolver-post1-hide--silent-hostess
+created_by: grow
+summary: With Marta’s alibi intact, the investigator conceals the revolver, shielding the
+  implicated guest from immediate arrest while the forensic link to the miner remains a silent
+  undercurrent.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

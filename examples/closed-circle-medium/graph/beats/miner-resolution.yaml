@@ -1,0 +1,15 @@
+id: beat:miner-resolution
+summary: Investigator releases Cole, allowing him to vanish into the storm rather than forcing
+  a violent confrontation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: commits
+entities:
+- character:miner
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:release-miner

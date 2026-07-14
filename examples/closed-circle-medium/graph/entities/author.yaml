@@ -1,0 +1,21 @@
+id: character:author
+name: Jordan Blythe
+concept: Celebrated mystery novelist seeking inspiration, gender‑fluid
+pronouns: they/them
+base:
+  appearance: slim, round glasses, notebook always in hand
+  manner: observant, cryptic
+arc:
+  begins: celebrated mystery novelist, observant and cryptic, seeking inspiration
+  pivots:
+  - beat: beat:author-pre1
+    becomes: shares controversial theory, becoming a vocal influencer of the case
+  - beat: beat:author-commit-publish
+    becomes: publishes theory, turning public opinion against the heiress
+  - beat: beat:author-commit-suppress
+    becomes: suppresses theory, keeping the investigation unbiased
+  ends:
+  - path: path:publish-theory
+    state: author's theory published, public pressure mounts
+  - path: path:suppress-theory
+    state: author's theory remains unpublished, investigation stays methodical

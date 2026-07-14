@@ -1,0 +1,7 @@
+Jordan stepped back as the sheriff's copper cuffs clanged against the oak desk. The sound cut through the thin laughter that had lingered after the fire, and the mirth snapped into a brittle hush. The sheriff drew the handcuffs, his fingers closing around Jordan's wrists; the cold steel bit into skin and left a metallic taste of resignation on his tongue. A deputy nearby said, "Orders are clear," and Hale said, "You're under arrest."
+
+Jordan watched Hale flip the fresh ledger he had just signed; a fresh line penciled beneath the final entry noted new evidence, overturning the earlier statement that the case was closed. The sheriff's seal pressed into the paper, the ink drying as the storm hammered the lodge's cracked windows. The fire in the hearth sputtered, its glow dimming under the sudden chill.
+
+Jordan's notebook lay open, its pages fluttering in the draft that seeped through the broken panes. The rare manuscripts on the nearby table still smelled of warmed pine, but their heat faded as the room grew colder. Guests shifted, their murmurs low, eyes darting between the deputies and the restrained investigator.
+
+The sheriff guided Jordan toward the waiting truck, his badge flashing in the lantern light. As they passed the central table, the revolver remained untouched, its presence a silent reminder of the unfinished inquiry. Jordan felt the weight of his halted probe settle like ash in his lungs, while the lodge settled back into uneasy quiet.

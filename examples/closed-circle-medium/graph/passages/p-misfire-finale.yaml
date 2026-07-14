@@ -1,0 +1,25 @@
+id: passage:p-misfire-finale
+summary: The miner’s revolver malfunctions and kills him, and moments later Cole’s own gun
+  backfires as he tries to flee, ending his life; the investigator has already turned the
+  weapon over to the sheriff, and Marta’s reputation shatters.
+entities:
+- character:miner
+- object:old-revolver
+ending:
+  id: e-misfire-finale
+  title: The Final Misfire
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan Blythe watches as storm rages; sheriff keeps warm revolver on crate.
+  Marta Valen stands near brass tray. Cole Duvall lifts revolver, hammer slips, flash kills
+  him; cylinder explodes, he dies and gun clatters. Investigator hands smoking revolver to
+  sheriff, who seals it in leather case, orders doors stay sealed and evidence logged. Marta’s
+  reputation collapses.
+beats:
+- beat:revolver-post5-hand-ending--accuse-hostess
+- bridge:gap51

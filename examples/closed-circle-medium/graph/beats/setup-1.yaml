@@ -1,0 +1,10 @@
+id: beat:setup-1
+summary: A blizzard cuts off Highpine Lodge, sealing the guests inside the snow‑bound mountain
+  retreat.
+beat_class: structural
+purpose: setup
+entities:
+- location:lodge
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author

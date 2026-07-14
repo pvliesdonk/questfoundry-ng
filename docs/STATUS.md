@@ -47,8 +47,11 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
    zero rotating-POV machinery failures; the fixes are on this branch and
    the stall journal is the record. NOT exercised: first-person interludes
    (the voice declared the register but annotate marked no beats — open
-   follow-up) and DRESS. A kimi-k2.5 A/B of the same premise is still
-   running for the tier comparison.
+   follow-up) and DRESS. The finished project is checked in as
+   [`examples/closed-circle-medium/`](../examples/closed-circle-medium/)
+   (at FILL — no codex/art; exports stay out of the repo per AGENTS.md,
+   the author has the generated HTML/PDF). A kimi-k2.5 A/B of the same
+   premise is still running for the tier comparison.
 1. **Land the rotating-POV PR** (this branch), then:
 2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
    FILL at scale on a weak tier is now demonstrated (step 0); the missing half

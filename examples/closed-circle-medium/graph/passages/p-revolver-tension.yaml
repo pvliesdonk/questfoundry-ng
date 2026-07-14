@@ -1,0 +1,22 @@
+id: passage:p-revolver-tension
+summary: Marta frets that the revolver’s appearance will ignite the lodge’s simmering tension,
+  unaware the investigator is about to publicly undermine her. Sheriff deputies then confront
+  the investigator, accusing him of overreach and putting Marta’s reputation on the line.
+entities:
+- character:hostess
+- object:old-revolver
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta watches a warm revolver on the table. The investigator stands by the
+  fire and announces accusations that threaten her honor. Two deputies enter, one badges the
+  light and declares her overreach ends, the other grips the revolver case. Their gaze shifts
+  from the investigator to Marta, leaving her reputation hanging between legal authority and
+  frightened guests.
+beats:
+- beat:revolver-pre5--accuse-hostess
+- bridge:gap57
+- bridge:gap59
+choices:
+- label: Refuse the arrest and stare the deputies down
+  to: passage:p-sheriff-confrontation

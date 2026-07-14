@@ -1,0 +1,15 @@
+id: beat:sheriff-post3-defy--silent-hostess
+created_by: grow
+summary: A lockdown is declared; the investigator, who kept Marta’s alibi quiet, moves through
+  the claustrophobic lodge under heightened tension.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

@@ -1,0 +1,19 @@
+id: passage:p-library-inspection
+summary: Jordan insists on retrieving the manuscript for his research, raising the stakes,
+  and the sheriff’s deputies order an immediate safety inspection, fearing the blaze could
+  mask further crimes.
+entities:
+- character:author
+- faction:local-sheriff
+prose_summary: Jordan Blythe moves to the oak library door, slips manuscript into coat, tells
+  senior deputy they must take it. Senior deputy starts safety sweep, snaps lantern, probes
+  vent grates; partner unrolls rope to secure iron railing. Deputies spread lanterns, test
+  stone temperature, seal service‑tunnel doors. Jordan resolves to protect manuscript as fire
+  looms.
+beats:
+- beat:library-pre4
+- beat:library-pre5
+- bridge:gap33
+choices:
+- label: Follow Cole into the howling blizzard
+  to: passage:p-blizzard-aftermath

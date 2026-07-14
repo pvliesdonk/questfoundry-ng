@@ -1,0 +1,23 @@
+id: passage:p-revolver-accusation
+summary: The investigator hurls an old revolver into the deputies’ hands and publicly denounces
+  Marta’s alibi as a fabrication, shattering the hostess’s reputation and igniting chaotic
+  uproar throughout the lodge.
+entities:
+- faction:local-sheriff
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan lifts the revolver, accuses Marta Valen of fabricating her alibi, and
+  throws gun to Deputies Hale and his partner. Hale seizes gun, partner takes case; Marta
+  trembles with note. Guests rush, chaos erupts. Deputies place gun on table, leaving fingerprints.
+  Jordan holds notebook, resolves to continue investigation despite sheriff, while hostess’s
+  reputation shatters.
+beats:
+- beat:revolver-commit-hand--accuse-hostess
+choices:
+- label: present the fingerprint‑stained revolver
+  to: passage:p-revolver-accuse-duvall

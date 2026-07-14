@@ -1,0 +1,13 @@
+id: beat:author-post2-publish
+summary: Marta receives anonymous threats demanding she withdraw the heiress’s name.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: complicates
+entities:
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:publish-theory

@@ -1,0 +1,19 @@
+id: passage:p-dash-door
+summary: Cole dashes for the back service door as the wind howls, but his escape fails; meanwhile
+  the investigator masks the sabotage and the dinner table erupts with Jordan’s incendiary
+  theory about the heiress.
+entities:
+- character:author
+- character:miner
+- character:hostess
+prose_summary: Simon Kade covers the furnace intake with a metal sheet and claims the heating
+  system is under control, concealing sabotage he discovered. Cole Duvall tries the back service
+  door, but Marta Valen has bolted it from inside; his attempt fails and the door slams shut.
+  Jordan Blythe declares the heiress ignited the tragedy, prompting guest accusations.
+beats:
+- beat:miner-lead1
+- bridge:gap38
+- bridge:gap40
+choices:
+- label: Raise Jordan’s accusation against the heiress
+  to: passage:p-theory-hysteria

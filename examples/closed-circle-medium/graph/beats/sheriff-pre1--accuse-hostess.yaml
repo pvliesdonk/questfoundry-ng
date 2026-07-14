@@ -1,0 +1,16 @@
+id: beat:sheriff-pre1--accuse-hostess
+created_by: grow
+summary: Sheriff’s deputies bark that the investigator has overstepped jurisdiction and must
+  be arrested; the investigator, having already accused Marta, braces for confrontation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest
+- path:defy-sheriff

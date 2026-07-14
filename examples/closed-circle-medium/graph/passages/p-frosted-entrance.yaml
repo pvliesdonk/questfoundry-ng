@@ -1,0 +1,21 @@
+id: passage:p-frosted-entrance
+summary: The investigator arrives at the lodge, noting the tight, nervous tension among the
+  remaining guests and staff, then steps inside to feel a sharp, unwelcoming chill as the
+  sputtering heating system lets the storm‑driven cold flood the interior.
+entities:
+- character:author
+- character:butler
+- character:miner
+- character:hostess
+- location:lodge
+prose_summary: Jordan arrives at Highpine Lodge doorway. Inside, Simon stands beside fire,
+  Marta near bar, Cole shifts, guests sit on benches. The iron stove sputters, fire dies,
+  draft cuts neck, temperature drops sharply. Blizzard intensifies outside, windows thud.
+  Guests draw blankets, grip mugs, and the room freezes.
+beats:
+- beat:lodge-lead1
+- beat:setup-3
+- bridge:gap62
+choices:
+- label: Ask the engineer about the missing valve
+  to: passage:p-valve-tamper

@@ -1,0 +1,8 @@
+id: bridge:gap84
+created_by: grow
+summary: Marta’s soft counsel is eclipsed by protesting miners clamoring for accountability.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- character:miner

@@ -1,0 +1,19 @@
+id: passage:p-lodge-blizzard-murder
+summary: A blizzard cuts off Highpine Lodge, sealing the guests inside, and when the storm
+  eases the next morning the heiress is found dead in the study with an antique revolver lying
+  beside her.
+entities:
+- location:lodge
+- object:old-revolver
+- character:hostess
+prose_summary: Jordan Blythe surveys the blizzard‑sealed Highpine Lodge, then moves to the
+  study at dawn. He finds the heiress dead at the desk, blood on her sleeve, and a 1876 Vermont
+  revolver with fresh fingerprints on the barrel on the carpet. He notes no struggle, examines
+  the bullet path, and feels the lodge’s confinement.
+beats:
+- beat:setup-1
+- beat:setup-2
+- bridge:gap61
+choices:
+- label: Step into the lodge and brace against the sudden blast of cold
+  to: passage:p-frosted-entrance

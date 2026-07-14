@@ -1,0 +1,24 @@
+id: passage:p-marta-accusation
+summary: The investigator hides the old revolver in a secret compartment and publicly declares
+  Marta’s alibi false, disgracing the hostess; the concealed gun protects the suspect while
+  the case becomes even more tangled.
+entities:
+- object:old-revolver
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan hides the revolver in the oak table’s false bottom, then accuses Marta
+  Valen of a false alibi. Deputy Hale attempts to seize the gun but finds the table empty.
+  The hostess’s composure cracks. The concealed revolver remains known only to Jordan, shielding
+  Marta and increasing the case’s complexity.
+beats:
+- beat:revolver-commit-hide--accuse-hostess
+- beat:revolver-post1-hide--accuse-hostess
+- bridge:gap43
+choices:
+- label: step toward the deputies as they block my exit
+  to: passage:p-revolver-confrontation

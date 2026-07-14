@@ -1,0 +1,7 @@
+id: path:publish-theory
+name: Publish Theory
+explores: answer:publish-theory
+consequences:
+- id: consequence:theory-published
+  text: The author’s incendiary article shapes public opinion, pressuring the heiress and
+    skewing the investigation.

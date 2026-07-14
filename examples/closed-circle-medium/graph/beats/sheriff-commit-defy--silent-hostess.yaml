@@ -1,0 +1,15 @@
+id: beat:sheriff-commit-defy--silent-hostess
+created_by: grow
+summary: The investigator refuses the sheriff’s arrest, persisting covertly on the case while
+  maintaining silence on Marta’s alibi.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: commits
+entities:
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

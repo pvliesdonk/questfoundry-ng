@@ -1,0 +1,13 @@
+id: beat:author-post2-suppress
+summary: Journalists sense a story and start probing the lodge, uncovering minor rumors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:suppress-theory

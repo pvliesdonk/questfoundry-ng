@@ -1,0 +1,15 @@
+id: passage:p-butler-lead2
+summary: Cole corners Simon in the pantry, demanding repayment and accusing him of never intending
+  to repay the loan, heightening the tension between them.
+entities:
+- character:butler
+- character:miner
+prose_summary: Cole closes pantry door, hears hinges. Simon stands with wrench, hidden pouch
+  in Cole’s coat. Cole accuses Simon of not repaying loan, mentions cash hidden in coat. Simon
+  says he did what he could. Cole threatens to leave via back service door if debt not settled,
+  gripping wrench. Tension set; choice will affect future.
+beats:
+- beat:butler-lead2
+choices:
+- label: Slip into the pantry doorway and listen
+  to: passage:p-quiet-deception

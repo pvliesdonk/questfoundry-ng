@@ -1,0 +1,15 @@
+id: beat:hostess-pre5
+summary: The old revolver found nearby bears fingerprints that could belong to Marta’s hand.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: reveals
+entities:
+- object:old-revolver
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:accuse-hostess
+- path:silent-hostess

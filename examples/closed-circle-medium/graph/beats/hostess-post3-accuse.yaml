@@ -1,0 +1,14 @@
+id: beat:hostess-post3-accuse
+summary: Simon Kade, cornered, pulls the old revolver and shoots himself, ending his own secret.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: advances
+entities:
+- character:butler
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:accuse-hostess

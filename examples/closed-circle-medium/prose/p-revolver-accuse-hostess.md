@@ -1,0 +1,9 @@
+Simon Kade surveyed the room from the shadow behind the oak table. The revolver’s barrel, still warm from the recent pull, caught the lantern light and glimmered like a thin blade. He noted the deputies’ rifles aimed toward the crowd, their boots thudding against the stone as the storm battered the shutters. Jordan Blythe’s accusation had just echoed across the hall, naming Marta Valen’s alibi as a lie, and the murmurs rose in a thin, angry swell. Simon felt the tension coil around the faces of the guests, their eyes darting between the accused and the weapon now revealed.
+
+He lifted the gun with deliberate calm, the polished walnut case pressing against his palm. "Silence," he said, his voice low, and the words settled over the room as a weight. The deputy’s hand hovered near his holster, but Simon kept the iron sight trained toward the nearest dissenting whisper. He observed Marta’s shoulders stiffen, her grip on the rail tightening, and he understood the fear that now lined her eyes.
+
+Simon turned his gaze to the men who had begun to argue, their words spilling like cold wind through the doorway. He pressed the trigger guard against his thumb, feeling the click of potential danger. "Anyone who questions the charge will hear the barrel’s warning," he said, and the accusation fell silent as the revolver’s presence claimed authority. The clatter of boots halted, and the crowd’s murmur faded to a thin hum.
+
+He watched the sheriff’s deputy shift his weight, the badge glinting under the lantern, and he sensed the sheriff’s resolve waver for a moment. The revolver gave Simon a power he had not possessed before, a quiet strength that forced the room to obey. He kept the gun steady, its cold iron a promise that the night would not betray him.
+
+Cold iron settled in his palm, a quiet promise that silence would not be broken.

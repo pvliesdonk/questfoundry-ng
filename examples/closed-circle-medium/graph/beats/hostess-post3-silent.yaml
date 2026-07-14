@@ -1,0 +1,13 @@
+id: beat:hostess-post3-silent
+summary: Simon tightens security, sealing the hidden passage and monitoring all exits.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: advances
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:silent-hostess

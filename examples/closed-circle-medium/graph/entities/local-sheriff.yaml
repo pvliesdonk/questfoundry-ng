@@ -1,0 +1,22 @@
+id: faction:local-sheriff
+name: County Sheriff’s Office
+concept: Official law‑enforcement authority that arrived after the storm
+base:
+  appearance: uniformed deputies, cramped trucks
+  manner: by the book
+  lodge_locked: 'true'
+  finalReportFiled: 'true'
+arc:
+  begins: official law‑enforcement, by‑the‑book, uniformed deputies
+  pivots:
+  - beat: beat:sheriff-pre1--accuse-hostess
+    becomes: asserts jurisdiction, threatens investigator with arrest
+  - beat: beat:sheriff-post1-accept--accuse-hostess
+    becomes: takes case control, moves to arrest investigator
+  - beat: beat:sheriff-post1-defy--accuse-hostess
+    becomes: investigator evades, sheriff's authority challenged
+  ends:
+  - path: path:accept-arrest
+    state: investigator arrested, sheriff maintains order
+  - path: path:defy-sheriff
+    state: investigator flees, sheriff's grip weakened

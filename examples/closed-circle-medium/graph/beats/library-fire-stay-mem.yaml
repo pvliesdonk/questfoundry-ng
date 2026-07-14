@@ -1,0 +1,10 @@
+id: beat:library-fire-stay-mem
+created_by: polish
+summary: Smoke curls lazily around the overturned stacks, and the investigator feels a lingering
+  pulse of hope from the fragment he salvaged.
+beat_class: structural
+purpose: residue
+entities:
+- location:library
+requires_flags:
+- flag:clue-recovered

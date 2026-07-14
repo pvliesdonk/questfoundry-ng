@@ -1,0 +1,18 @@
+id: passage:p-evacuation-blame
+summary: Guests cough and spill into a cold, smoke‑filled hallway while rescued books are
+  carried away, and the sheriff’s deputies stride in, immediately laying blame on the investigator.
+entities:
+- character:miner
+- character:hostess
+- faction:local-sheriff
+prose_summary: Jordan drives a cart of rare manuscripts down a frost‑slick stone hallway while
+  coughing guests follow. Smoke lingers near the doorway. Two uniformed deputies enter; one
+  shows a badge and accuses Investigator Blythe of negligence causing the fire. The accusation
+  adds reputational cost to Jordan.
+beats:
+- beat:library-post2-evac
+- bridge:gap22
+- bridge:gap24
+choices:
+- label: Pull the discarded file from the hallway floor and slip into the side passage
+  to: passage:p-evac-accusation

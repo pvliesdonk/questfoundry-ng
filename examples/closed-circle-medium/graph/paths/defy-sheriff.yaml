@@ -1,0 +1,6 @@
+id: path:defy-sheriff
+name: Defy Sheriff
+explores: answer:defy-sheriff
+consequences:
+- id: consequence:investigator-rogue
+  text: Defying the sheriff forces the protagonist to work clandestinely, deepening the investigation.

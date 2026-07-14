@@ -1,0 +1,18 @@
+id: passage:p-cuffed-resignation
+summary: The sheriff cuffs the investigator, whose resignation settles like a metallic taste
+  as the lodge’s laughter turns brittle.
+entities:
+- faction:local-sheriff
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan is handcuffed by the sheriff; a deputy states orders are clear and Hale
+  arrests him. Hale signs a fresh ledger adding new evidence that overturns the closed‑case
+  status. The sheriff’s seal stamps the ledger. Jordan’s notebook remains open. The sheriff
+  escorts Jordan to the waiting truck; the untouched revolver marks the stalled investigation,
+  costing Jordan his probe.
+beats:
+- beat:sheriff-accuse-accept-mem
+choices:
+- label: Hand the revolver over to the deputies
+  to: passage:p-hand-or-hide

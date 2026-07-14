@@ -1,0 +1,15 @@
+id: beat:author-pre5
+summary: A rare manuscript in the library hints at a similar unsolved case, deepening the
+  intrigue.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- location:library
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory
+- path:suppress-theory

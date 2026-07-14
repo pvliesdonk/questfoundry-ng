@@ -1,0 +1,9 @@
+id: bridge:gap12
+created_by: grow
+summary: While Simon monitors the sealed passage, the investigator later uncovers a discarded
+  scrap linking the revolver to an unseen hand.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- object:old-revolver

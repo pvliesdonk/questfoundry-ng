@@ -1,0 +1,15 @@
+id: passage:p-theory-published-mine
+summary: The investigator walks the echoing mine shafts as a cold wind whistles, the published
+  theory ringing in his mind while the miners cast uneasy glances, heightening suspicion and
+  the pressure of confinement.
+entities:
+- character:miner
+prose_summary: Jordan Blythe enters the damp tunnel toward the silver vein, clutching his
+  notebook. He meets miners and Cole Duvall by a rusted lantern. He states his theory that
+  a hidden conduit can divert furnace airflow and warns that a fire collapse kills everyone.
+  A metal latch clangs, tightening the tunnel, raising miners’ suspicion and tension.
+beats:
+- beat:author-interview-publish-mem
+choices:
+- label: Free Cole and hear Marta claim she was alone in the library
+  to: passage:p-resolution-marta

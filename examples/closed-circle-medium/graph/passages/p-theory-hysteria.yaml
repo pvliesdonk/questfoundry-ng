@@ -1,0 +1,18 @@
+id: passage:p-theory-hysteria
+summary: Jordan Blythe accuses the heiress, the Investigator considers how publishing the
+  theory could sway public opinion and bias the case, and Marta enters to warn that the article
+  may spark hysteria.
+entities:
+- character:author
+- character:hostess
+prose_summary: Jordan Blythe stands, accuses heiress of orchestrating murder to protect a
+  secret. Simon Kade warns publication will shape town judgment and cloud investigation, sips
+  coffee, places mug on study desk. Marta Valen enters, says publishing article may cause
+  hysteria, watches notebook. Decision to publish looms, tension rises.
+beats:
+- beat:author-pre1
+- beat:author-pre2
+- bridge:gap4
+choices:
+- label: Shove the manuscript into the desk drawer
+  to: passage:p-marta-warning

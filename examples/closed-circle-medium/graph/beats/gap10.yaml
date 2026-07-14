@@ -1,0 +1,9 @@
+id: bridge:gap10
+created_by: grow
+summary: Cole's low threat hangs in the air, prompting Simon to reinforce the locked passage
+  and surveil every exit.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:butler

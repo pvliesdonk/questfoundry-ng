@@ -1,0 +1,9 @@
+id: bridge:gap11
+created_by: grow
+summary: The echo of Simon's gunshot fades as the lodge's furnace sputters, heralding a sudden
+  loss of heat.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- location:lodge

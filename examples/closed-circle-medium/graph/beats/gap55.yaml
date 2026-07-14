@@ -1,0 +1,9 @@
+id: bridge:gap55
+created_by: grow
+summary: The investigator hesitates, fearing the revolver's transfer could expose an innocent
+  guest.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- faction:local-sheriff

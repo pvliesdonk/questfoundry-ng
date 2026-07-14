@@ -1,0 +1,14 @@
+id: beat:author-commit-publish
+summary: Jordan signs the article and sends it to the leading newspaper, letting the theory
+  hit the press.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: commits
+entities:
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory

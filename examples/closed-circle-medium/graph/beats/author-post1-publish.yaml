@@ -1,0 +1,15 @@
+id: beat:author-post1-publish
+summary: The article spreads like wildfire, turning public opinion against the heiress and
+  pressuring the investigation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: complicates
+entities:
+- character:author
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory

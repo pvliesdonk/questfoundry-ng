@@ -1,0 +1,14 @@
+id: beat:butler-lead1
+summary: Simon Kade slips a pouch of cash into Cole Duvall’s coat, settling an overdue debt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: reveals
+entities:
+- character:butler
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:avoid-confront

@@ -1,0 +1,9 @@
+id: bridge:gap13
+created_by: grow
+summary: The frigid air thickens as the storm howls outside, setting the final, grim tableau
+  for the murder's resolution.
+beat_class: structural
+purpose: bridge
+entities:
+- location:lodge
+- character:hostess

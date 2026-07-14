@@ -1,0 +1,15 @@
+id: beat:hostess-post5-silent-ending
+summary: The investigation stalls and the murderer evades justice while Marta’s reputation
+  stays intact; the investigator still must choose between delivering the revolver to the
+  sheriff or concealing it, leaving that choice open.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: advances
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:silent-hostess

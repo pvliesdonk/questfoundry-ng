@@ -1,0 +1,14 @@
+id: beat:lodge-aftermath2
+summary: Later, a burst pipe freezes, sending icy water through the corridors and nearly trapping
+  a guest.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:lodge-sabotage
+  effect: reveals
+entities:
+- location:lodge
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:conceal-sabotage

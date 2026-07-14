@@ -1,0 +1,7 @@
+Jordan Blythe stared at the brass clock above the mantle. The minute hand lingered on three thirty‑two while the log she had copied from the library desk recorded three thirty‑seven. The five‑minute gap sat stark against the steady rhythm of the storm outside. She pressed a fingertip to the paper, the ink still wet, and felt the contradiction settle like cold in her chest. The timeline she had built for the night now contained a crack.
+
+Marta Valen stood nearby, her gray hair pulled back, eyes fixed on the same face of copper. She lifted a hand and said, “The tick is uneven today.” The sound of the clock lingered, a stutter that did not belong to its usual steady beat. She turned toward the rows of dust‑laden volumes that lined the far wall. Her steps were measured, the floorboards creaking under her weight.
+
+From the shadow of the stacks, Simon Kade emerged. He moved close enough that his breath misted in the air between them. He said, “There is a door behind those rows, a passage the old maps marked but never used.” His words dropped into the stone room, absorbed by the dim light of the hearth. Jordan watched the flicker of the fire catch the brass hands, momentarily highlighting the misaligned numbers.
+
+Jordan tucked the notebook back into her coat and noted the implication of a hidden space. If the clock had been tampered to hide the exact moment of a movement, the secret door could provide a means to slip unseen. She resolved to follow the aisle, to test the shelves for any give, while the storm hammered the lodge walls.

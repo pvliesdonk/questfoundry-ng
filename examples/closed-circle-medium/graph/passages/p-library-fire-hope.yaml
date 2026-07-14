@@ -1,0 +1,15 @@
+id: passage:p-library-fire-hope
+summary: Smoke coils around the charred library stacks as the investigator clutches the salvaged
+  fragment, its faint pulse rekindling a sliver of hope.
+entities:
+- location:library
+prose_summary: Jordan leaves the ruined library, pockets the warm fragment seal, and scans
+  the hall. Deputies angle lanterns at the ceiling, fire reduces lower shelves to ash, smoke
+  lingers. Marta holds a blanket, Simon watches the stove, Cole stands by the doorway with
+  an abandoned wrench. Sheriff orders no one leaves until the storm clears; Jordan nods, ready
+  to question.
+beats:
+- beat:library-fire-stay-mem
+choices:
+- label: Step back into the gathering, fragment clutched
+  to: passage:bridge-gap30

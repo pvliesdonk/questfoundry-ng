@@ -1,0 +1,20 @@
+id: passage:p-defy-silent-hostess
+summary: The investigator rejects the sheriff’s arrest and keeps Marta’s alibi hidden, slipping
+  deeper into secrecy while still pursuing the case. Moving unseen, they discover Simon waiting
+  to lead them through hidden passages.
+entities:
+- character:author
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan refuses Deputy Hale’s order, evades arrest, and slips into the main
+  hall’s shadows. Jordan keeps the blank notebook. Jordan meets butler Simon Kade, follows
+  his lantern to a hidden doorway, and enters a secret passage beneath the lodge. The investigation
+  continues secretly, risk increases, and the sheriff’s reach is temporarily held at bay.
+beats:
+- beat:sheriff-commit-defy--silent-hostess
+- beat:sheriff-post1-defy--silent-hostess
+- bridge:gap64
+choices:
+- label: Follow Simon through the hidden corridors
+  to: passage:p-lockdown-corridors

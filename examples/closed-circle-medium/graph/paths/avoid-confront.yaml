@@ -1,0 +1,6 @@
+id: path:avoid-confront
+name: Avoid Confrontation
+explores: answer:avoid-confront
+consequences:
+- id: consequence:butler-debt-unknown
+  text: The butler’s debt to the miner remains undisclosed, leaving a hidden motive.

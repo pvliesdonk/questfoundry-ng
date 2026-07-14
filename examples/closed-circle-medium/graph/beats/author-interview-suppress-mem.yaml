@@ -1,0 +1,10 @@
+id: beat:author-interview-suppress-mem
+created_by: polish
+summary: The silence in the miners’ break room feels heavier, a shared secret hanging thick
+  as the investigator watches them avoid the topic.
+beat_class: structural
+purpose: residue
+entities:
+- character:miner
+requires_flags:
+- flag:theory-suppressed

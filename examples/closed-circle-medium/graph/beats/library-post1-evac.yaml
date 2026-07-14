@@ -1,0 +1,13 @@
+id: beat:library-post1-evac
+summary: Rare manuscripts are saved, but the hidden envelope is consumed by flames.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- location:library
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library

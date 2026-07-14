@@ -1,0 +1,16 @@
+id: beat:sheriff-post4-defy--accuse-hostess
+created_by: grow
+summary: Collected clues now point to the true killer lurking among the guests; the investigator,
+  having destroyed Marta’s alibi, prepares to confront the hidden threat.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:author
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

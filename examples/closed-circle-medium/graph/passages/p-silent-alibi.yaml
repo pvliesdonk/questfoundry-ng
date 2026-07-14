@@ -1,0 +1,19 @@
+id: passage:p-silent-alibi
+summary: The investigator accepts Marta’s alibi, preventing a public scandal, and the gathering
+  remains tense as guests cast mistrustful glances, leaving no clear accusation.
+entities:
+- character:hostess
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan stands by iron stove as blizzard rattles shutters; Marta leans on brass
+  rail, Simon nods, Cole holds pipe wrench. Jordan feels sealed envelope containing a name
+  that contradicts Marta’s alibi. Jordan declares Marta’s account stands; deputy’s lantern
+  scans room finding no dispute. The decision averts scandal but leaves lingering distrust
+  among guests.
+beats:
+- beat:hostess-commit-silent
+- beat:hostess-post1-silent
+choices:
+- label: Watch Cole’s eyes narrow on Marta while Simon seals the exits
+  to: passage:p-vengeance-lock

@@ -1,0 +1,9 @@
+id: bridge:gap9
+created_by: grow
+summary: Marta's scream ricochets through the hall, the frantic scramble revealing a concealed
+  doorway behind the pantry.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- location:lodge

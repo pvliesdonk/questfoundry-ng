@@ -1,0 +1,15 @@
+id: beat:miner-lead2
+summary: Simon Kade blocks the door, his grip firm, warning Cole that leaving now would endanger
+  everyone.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: complicates
+entities:
+- character:butler
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:release-miner

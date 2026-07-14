@@ -1,0 +1,20 @@
+id: passage:p-evac-accusation
+summary: The sheriff accuses the investigator of losing vital evidence, and the investigator,
+  feeling the weight of the missed clue, steels themselves and vows to pursue an alternative
+  route to uncover the truth.
+entities:
+- faction:local-sheriff
+- character:author
+prose_summary: Sheriff Hale accuses Investigator Blythe of negligence for the fire and missing
+  evidence. Blythe acknowledges the charge, clutches notebook, and vows to continue the inquiry.
+  Blythe scans the corridor, locates the narrow door to hidden service tunnels, and proceeds
+  toward them, leaving the rescued manuscripts and lingering ember behind.
+beats:
+- beat:library-post3-evac
+- beat:library-post4-evac
+- bridge:gap26
+choices:
+- label: Step out of the stone doors, the rescued manuscripts echoing behind me
+  requires:
+  - flag:manuscripts-saved
+  to: passage:p-library-fire-evacuate

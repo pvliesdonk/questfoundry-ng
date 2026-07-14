@@ -1,0 +1,9 @@
+id: bridge:gap48
+created_by: grow
+summary: The butler stumbles upon the hidden revolver, brandishing it quietly while the investigator
+  maintains Marta's silence.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- object:old-revolver

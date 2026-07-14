@@ -1,0 +1,15 @@
+id: passage:p-confront-marta
+summary: Cole confronts Marta, accusing her of hating the miners and possibly having framed
+  them.
+entities:
+- character:miner
+- character:hostess
+prose_summary: Cole enters the common room, sees Marta with a tea mug, holds his pipe wrench,
+  accuses her of stealing miners’ share. Marta stays silent. Cole notices a warm revolver
+  on the table, plans to use it as proof, remembers the hidden passage behind library shelves,
+  grabs the revolver and heads to the library, risking fire spread.
+beats:
+- beat:hostess-pre4
+choices:
+- label: Snatch the revolver and stride toward the library
+  to: passage:p-fingerprint-revolver

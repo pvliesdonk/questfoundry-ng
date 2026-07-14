@@ -1,0 +1,20 @@
+id: passage:p-sheriff-warning
+summary: The sheriff warns the investigator of jurisdictional overreach, deepening the investigator’s
+  dread as they struggle to preserve Marta’s alibi while fearing retribution.
+entities:
+- faction:local-sheriff
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Two deputies enter hallway, stop at fire‑worn table where hidden old revolver
+  lies, senior deputy flashes badge. Deputy warns Jordan Blythe that sheriff jurisdiction
+  overrides any investigator. Jordan recalls Marta Valen’s untouched alibi for hostess, notes
+  it now risks exposure. Jordan steadies leather notebook, meets deputy gaze, resolves to
+  comply with sheriff’s demand.
+beats:
+- beat:sheriff-pre1--silent-hostess
+- beat:sheriff-pre2--silent-hostess
+- bridge:gap80
+choices:
+- label: Hear Marta’s whispered warning
+  to: passage:p-marta-caution

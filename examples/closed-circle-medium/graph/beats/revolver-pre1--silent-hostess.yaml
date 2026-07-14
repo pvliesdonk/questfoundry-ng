@@ -1,0 +1,16 @@
+id: beat:revolver-pre1--silent-hostess
+created_by: grow
+summary: The antique revolver lies on the study desk, smudged with prints, while the investigator
+  opts to let Marta’s story stand, keeping the tension low for now.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

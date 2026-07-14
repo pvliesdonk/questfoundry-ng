@@ -1,0 +1,24 @@
+id: location:library
+name: Highpine Library
+concept: A small, dust‑laden library adjoining the lodge, full of rare volumes
+base:
+  appearance: wooden shelves, dim lamp light, locked back room
+  manner: silent
+  clock_tick: irregular
+  alarm_status: inoperative
+  hasFireRisk: 'true'
+  fire_extinguished: 'true'
+arc:
+  begins: small dust‑laden library, wooden shelves, dim lamp, silent atmosphere
+  pivots:
+  - beat: beat:library-pre1
+    becomes: fire alarm inoperative, hidden danger present
+  - beat: beat:library-commit-evacuate
+    becomes: evacuates, rare manuscripts saved, clue lost
+  - beat: beat:library-commit-stay
+    becomes: stays, retrieves concealed envelope, risking fire spread
+  ends:
+  - path: path:evacuate-library
+    state: manuscripts saved, key clue destroyed
+  - path: path:stay-for-clue
+    state: clue recovered, fire spreads, manuscripts damaged

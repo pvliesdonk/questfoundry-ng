@@ -1,0 +1,9 @@
+id: bridge:gap77
+created_by: grow
+summary: In the wake of the investigator’s fatal sacrifice, the revolver is either thrust
+  into deputies’ hands or hidden away.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- object:old-revolver

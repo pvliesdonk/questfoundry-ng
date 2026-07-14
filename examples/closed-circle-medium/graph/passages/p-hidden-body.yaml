@@ -1,0 +1,17 @@
+id: passage:p-hidden-body
+summary: The chaos uncovers a hidden passage, and behind the false wall a concealed body is
+  revealed, deepening suspicion and the claustrophobic atmosphere.
+entities:
+- location:lodge
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan stands by the crowd as the pantry wall collapses, iron latch swings,
+  and a hidden stair appears. He lifts a lantern, finds a frost seam, pries open a false stone
+  slab, and discovers a dead body with a revolver and bloodstains. He records the find in
+  his notebook, raising suspicion and forcing the deputy to confront a new truth.
+beats:
+- beat:hostess-post2-accuse
+choices:
+- label: Watch Simon draw his revolver
+  to: passage:p-simon-reveal

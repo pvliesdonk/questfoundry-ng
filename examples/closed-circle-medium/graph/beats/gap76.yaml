@@ -1,0 +1,9 @@
+id: bridge:gap76
+created_by: grow
+summary: After the final report, the investigator weighs delivering the revolver to the sheriff
+  or keeping it hidden.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- object:old-revolver

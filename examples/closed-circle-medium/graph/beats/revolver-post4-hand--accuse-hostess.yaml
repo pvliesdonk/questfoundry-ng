@@ -1,0 +1,16 @@
+id: beat:revolver-post4-hand--accuse-hostess
+created_by: grow
+summary: The sheriff imposes a lockdown, sealing exits as panic spreads, while the revolver
+  stays in official custody and the investigator’s earlier smear of Marta fuels the disordered
+  panic.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

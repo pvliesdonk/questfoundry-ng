@@ -1,0 +1,10 @@
+id: beat:setup-2
+summary: The body of the heiress is found in the study, an antique revolver lying nearby.
+beat_class: structural
+purpose: setup
+entities:
+- object:old-revolver
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author

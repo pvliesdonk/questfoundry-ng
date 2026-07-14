@@ -1,0 +1,25 @@
+id: passage:p-sheriff-or-veil
+summary: Jordan's trembling note urges the investigator to hold steady while Marta's story
+  remains unheard, and the investigator must decide whether to surrender to the sheriff or
+  continue covertly.
+entities:
+- character:author
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan writes a trembling note in a notebook saying “hold steady.” Sheriff’s
+  men enter; Deputy Hale places his hand on a revolver and orders Jordan to come with them.
+  Jordan reads the note, weighs surrender (ends covert search) versus continuing covertly
+  (increases danger). Jordan steps toward Hale, decision pending.
+beats:
+- beat:sheriff-pre5--silent-hostess
+- bridge:gap88
+choices:
+- label: Allow the sheriff to cuff you and step out of the lodge
+  grants:
+  - flag:investigator-detained
+  to: passage:p-sheriff-accepts
+- label: Slip past the sheriff’s grasp and melt into the shadows
+  grants:
+  - flag:investigator-rogue
+  to: passage:p-defy-silent-hostess

@@ -1,0 +1,8 @@
+id: bridge:gap82
+created_by: grow
+summary: The investigator’s anxiety is met by Marta’s hushed warning to stay cautious.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:hostess

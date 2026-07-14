@@ -1,0 +1,15 @@
+id: beat:sheriff-post4-accept--silent-hostess
+created_by: grow
+summary: Cole’s desperate escape ends in a puzzling death, with Marta’s reputation untouched,
+  leaving the investigator to puzzle over the outcome.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:accept-arrest

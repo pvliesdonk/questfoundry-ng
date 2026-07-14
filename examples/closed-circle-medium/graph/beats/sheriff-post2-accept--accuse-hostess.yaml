@@ -1,0 +1,15 @@
+id: beat:sheriff-post2-accept--accuse-hostess
+created_by: grow
+summary: Evidence is reviewed sluggishly by the sheriff’s office, while the investigator’s
+  public denouncement of Marta hangs over the slow‑moving file.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

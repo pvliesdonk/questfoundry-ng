@@ -1,0 +1,23 @@
+id: passage:p-hand-or-hide
+summary: The investigator, having officially closed the case, weighs the choice between handing
+  the revolver over to the deputies and concealing it for personal safety.
+entities:
+- faction:local-sheriff
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: 'Jordan, cuffed in stone hallway, sees warm revolver on table and ledger in
+  sheriff’s hand. Deputies demand the gun. He considers two actions: hand gun to deputies,
+  losing personal control; or hide gun in library shelf compartment behind hidden door, risking
+  concealment of clue and protecting a guest. He grips notebook, storm rattles lodge.'
+beats:
+- bridge:gap75
+choices:
+- label: Hand the revolver to the deputies
+  grants:
+  - flag:revolver-in-custody
+  to: passage:p-revolver-accusation
+- label: Stash the revolver in the secret compartment
+  grants:
+  - flag:revolver-concealed
+  to: passage:p-marta-accusation

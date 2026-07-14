@@ -1,0 +1,21 @@
+id: passage:bridge-gap30
+summary: The investigator returns to the gathering with fresh proof, ready either to confront
+  Marta with the evidence or to keep her alibi intact.
+entities:
+- character:author
+- character:hostess
+prose_summary: Jordan steps from the ruined library into the main hall, coat damp. Marta Valen
+  stands by the brass rail, Simon Kade holds a mug, Cole Duvall lingers by the doorway, his
+  wrench abandoned, and a sheriff’s deputy sweeps a lantern. Jordan holds a warm‑sealed envelope
+  naming a person contradicting Marta’s claim; the proof threatens the uneasy truce.
+beats:
+- bridge:gap30
+choices:
+- label: Raise my voice and accuse Marta's alibi
+  grants:
+  - flag:hostess-ruined
+  to: passage:p-accuse-marta
+- label: Nod and affirm Marta's alibi
+  grants:
+  - flag:hostess-untouched
+  to: passage:p-silent-alibi

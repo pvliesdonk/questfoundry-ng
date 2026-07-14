@@ -92,7 +92,15 @@ repaired), micro-details held to note form, a richer Voice (imagery
 palette, dialogue rules), a rolling utility-summarized story-so-far in
 every write context, and POLISH's character-arc metadata pass — so each
 scene paces one aspect of a character instead of restating every known
-fact.
+fact. On top of it, **rotating limited POV** landed: per-beat viewpoint
+heads settled at the GROW freeze (one head per passage — invariant I14),
+a collapse cut at every head switch, and per-passage POV enforcement in
+FILL's write and review — live-validated by
+["Closed Circle (medium)"](examples/closed-circle-medium/), a fresh
+medium-scope run of the same premise on the unbilled `gpt-oss:120b`
+tier that finished FILL gate-clean rotating four heads across 112
+passages (checked in at FILL: prose complete, DRESS enrichment not yet
+run) — the first weak-tier medium to clear FILL.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch), the residue diamond, a tensored

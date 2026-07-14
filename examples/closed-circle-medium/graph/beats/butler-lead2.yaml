@@ -1,0 +1,14 @@
+id: beat:butler-lead2
+summary: Cole confronts Simon in the pantry, accusing him of never planning to repay the loan.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: complicates
+entities:
+- character:butler
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:avoid-confront

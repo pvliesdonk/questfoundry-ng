@@ -1,0 +1,16 @@
+id: passage:p-no-outrage
+summary: With the public silent, hidden motives begin to fester among the confined group,
+  heightening suspicion and internal tension.
+entities:
+- character:miner
+prose_summary: Storm hammers lodge, fire sputters. Jordan observes silent guests, no town
+  protest. Cole Duvall moves to back service door; Simon Kade stops him, claims furnace failing,
+  prevents exit. Cole drops wrench, door slams shut. Jordan notes fleeing miner would end
+  grievance and debt; notebook grows heavier, suspicion rises.
+beats:
+- beat:author-post4-suppress
+choices:
+- label: lean closer, listening to the miners' strained silence
+  requires:
+  - flag:theory-suppressed
+  to: passage:p-silenced-breakroom

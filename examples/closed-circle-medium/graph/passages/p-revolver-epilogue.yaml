@@ -1,0 +1,24 @@
+id: passage:p-revolver-epilogue
+summary: The concealed revolver either fires a second victim or misfires, killing the investigator,
+  while Marta’s alibi remains unchallenged and the weapon stays hidden, leaving the darkly
+  comic resolution hanging.
+entities:
+- object:old-revolver
+- character:author
+ending:
+  id: e-revolver-epilogue
+  title: Silence Holds the Gun
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan hides a revolver in the desk niche, decides not to reveal it while Marta
+  Valen maintains her alibi, and slides the gun back. A stray spark ignites the revolver,
+  it fires, and Jordan is shot in the chest; the notebook falls and blurs the alibi note.
+  Marta’s reputation stays intact, the revolver remains concealed, and the investigation stalls.
+beats:
+- beat:revolver-post4-hide--silent-hostess
+- beat:revolver-post5-hide-ending--silent-hostess

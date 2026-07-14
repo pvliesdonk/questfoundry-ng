@@ -1,0 +1,16 @@
+id: dilemma:library-fire
+question: Do you order the evacuation of the library to save the rare manuscripts, abandoning
+  the clue hidden inside, or stay to retrieve the clue, risking fire spread?
+why_it_matters: Evacuating protects cultural heritage but may lose a key piece of evidence;
+  staying could secure the clue but endanger everyone.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:evacuate-library
+  text: Pull the fire alarm and empty the library.
+- id: answer:stay-for-clue
+  text: Keep the library open to retrieve the clue.
+anchored_to:
+- location:library
+- object:old-revolver

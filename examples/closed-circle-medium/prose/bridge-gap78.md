@@ -1,0 +1,7 @@
+The hall smelled of wet stone and ash as Deputy Hale's voice cut across the crackle of the fire. Jordan watched the deputy step forward, badge catching the dim light, and felt the cold weight of the revolver pressed against their ribs. The sheriff's order to surrender any weapon lingered in the air, and Jordan's eyes flicked briefly to the polished walnut case before the deputy's gaze swept the room. The deputies formed a thin line, rifles slung, breath fogging in the thin air.
+
+Jordan's hand tightened around the barrel, then loosened as they lowered the coat sleeve. Jordan slipped the gun into the inner pocket of the coat, the iron cylinder resting against their spine, hidden from the deputies' view. A thin scrape of fabric whispered against the wood as the revolver settled. The deputy's gaze lingered on Jordan's coat, then shifted to the empty table where the weapon had lain moments before. Hale raised his hand, his voice steady, demanding compliance.
+
+Jordan met the stare without wavering and gave a short nod. "It stays here," Jordan said, tone flat. The deputy's brow tightened, but he said nothing more, his rifle hand hovering near his own sidearm. The other guests shifted, murmurs rising like wind through the shutters.
+
+Marta clutched the brass rail, shoulders rigid, while Simon kept his lantern low, its flame trembling against the gloom. The decision held the room for the moment, the revolver's secret folded inside Jordan's coat, a silent promise that the sheriff might not obtain the evidence tonight.

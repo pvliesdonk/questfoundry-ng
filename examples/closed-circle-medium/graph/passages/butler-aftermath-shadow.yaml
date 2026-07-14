@@ -1,0 +1,15 @@
+id: passage:butler-aftermath-shadow
+summary: Cole watches the butler's steps from the shadows, his resentment simmering beneath
+  a forced calm.
+entities:
+- character:miner
+- character:butler
+prose_summary: Cole stands in corridor holding pipe wrench, watches butler Simon Kade pass
+  his intended doorway, recalls giving cash to miner, notes back service door with oak frame
+  and iron hinges, grips wrench, hears wind and furnace, decides to remain still and wait
+  for butler’s back, risking detection if he moves suddenly.
+beats:
+- beat:butler-aftermath2
+choices:
+- label: follow the butler's footsteps into the hallway
+  to: passage:p-debt-cold

@@ -1,0 +1,6 @@
+id: path:silent-hostess
+name: Silent Hostess
+explores: answer:silent-hostess
+consequences:
+- id: consequence:hostess-untouched
+  text: The hostess remains respected; suspicion lingers without a public showdown.

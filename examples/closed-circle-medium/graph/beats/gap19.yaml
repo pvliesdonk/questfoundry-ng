@@ -1,0 +1,9 @@
+id: bridge:gap19
+created_by: grow
+summary: The revolver's prints linger as the scene shifts to the library, where the dormant
+  fire alarm silently threatens the stacks.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- location:library

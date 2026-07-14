@@ -1,0 +1,9 @@
+id: bridge:gap51
+created_by: grow
+summary: In the chaotic climax, the miner's revolver malfunctions, firing back and ending
+  his life.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- object:old-revolver

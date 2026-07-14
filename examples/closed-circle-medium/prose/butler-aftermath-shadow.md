@@ -1,0 +1,9 @@
+The corridor beyond the common room stretched in a dim hush, stone walls swallowing the faint glow from the dying fire. Cole stood where the pantry door had closed behind him, his hands still raw around the pipe wrench, the weight of the metal a reminder of the looming escape he had promised himself. He kept his back to the wall, the cold seeping through the cracks in his overcoat, and watched the butler move past the doorway he had intended to use.
+
+Simon Kade's steps were soundless, the soft scrape of his polished shoes muffled by the thick rug. Each measured footfall seemed to echo a quiet defiance, the butler's posture immaculate even as the furnace sputtered low. Cole felt the old resentment rise, a bitter undercurrent to the calm he forced onto his face. He recalled the moment he had thrust the pocket of cash into the miner’s coat, the unspoken debt that still pressed against his ribs, and wondered whether the servant’s outward loyalty concealed a deeper strain.
+
+The back service door lay a few paces ahead, its heavy oak frame framed by iron hinges that had not moved all night. Cole's eyes flicked to it, measuring the distance between his resolve and the thin line of opportunity. He tightened his grip on the wrench, the metal biting into his palm, and forced his thoughts to settle. The wind outside hammered the lodge windows, a relentless drumming that seemed to mark the passing moments.
+
+For a second the only sound was the low hiss of the furnace, a reminder that the cold could become a weapon as readily as any gun. Cole let the fire's faint crackle fill the silence, and beneath the surface he kept a steady, restrained anger, waiting for the moment the butler would turn his back and the door would finally give.
+
+He knew that any sudden move would draw attention, and he steadied his breathing, letting the forced calm mask the simmering resolve within.

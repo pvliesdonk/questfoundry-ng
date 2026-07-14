@@ -1,0 +1,16 @@
+id: beat:revolver-post2-hand--accuse-hostess
+created_by: grow
+summary: Cole Duvall is dragged into custody, shouting he’s framed, as the investigator’s
+  earlier accusation of Marta fuels a crowd frenzy and the sheriff’s deputies hold the revolver
+  for further inquiry.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:miner
+belongs_to:
+- path:hand-revolver

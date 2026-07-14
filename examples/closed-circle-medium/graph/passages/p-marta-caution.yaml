@@ -1,0 +1,21 @@
+id: passage:p-marta-caution
+summary: Marta whispers a caution, urging the investigator to stay careful and warning that
+  opposing the sheriff could jeopardize every guest while her alibi remains solid, but her
+  soft counsel is quickly drowned out by the miners' clamorous demands for accountability.
+entities:
+- character:author
+- character:hostess
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Marta stands by the brass rail in the stone hallway, whispers to investigator
+  Jordan to stay careful and not defy the sheriff because her alibi remains intact. Miners
+  gather at the hearth, shout for accountability for the fire and missing clue, drown her
+  warning, brandish fists, and break the lodge’s fragile peace.
+beats:
+- beat:sheriff-pre3--silent-hostess
+- bridge:gap82
+- bridge:gap84
+choices:
+- label: Step into the square and shoulder the miners' demands
+  to: passage:p-miner-protest

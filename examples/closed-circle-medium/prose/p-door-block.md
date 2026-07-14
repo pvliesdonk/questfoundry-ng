@@ -1,0 +1,9 @@
+The stone corridor stretched ahead, its cold walls catching the faint glow of the dying fire. Simon Kade moved without a sound, his polished uniform brushing the rough plaster as he reached the back service door. The metal hinges clanged once, a thin echo that faded into the hush of the lodge. He placed a hand on the oak frame, feeling the grain beneath his palm, and then pressed his body against the door, his shoulders forming a barrier.
+
+Cole Duvall stood on the other side, a clenched wrench in his grip, the dust from his overalls swirling in the thin draft. The miner’s eyes flicked to Simon, then to the dark corridor beyond, where the storm hammered the windows. Simon’s breath steadied, his mind cataloguing the risk: the furnace sputtered, the fire struggled, the lodge’s heat waned, and a single escaped guest could bring a cascade of danger.
+
+"You can't leave now," Simon said, his voice low, almost a rustle against the stone. "If you go out, the cold will claim the others. The furnace is failing, and the doors are locked behind us. We need everyone together until the fire is steady again."
+
+Cole bristled, his jaw tightening, but the wrench slipped a fraction in his hand as the floorboards creaked under the shifting weight. Simon felt a knot tighten in his chest, a reminder of the debt he had slipped into the miner’s coat earlier—an obligation that now pressed harder than the cold.
+
+The butler’s grip did not waver. He tightened his stance, his forearm pressing the door closed, the iron hinges biting into the wood. A shiver rose from the stone floor, as if the corridor itself breathed a warning. Simon watched the miner’s shoulders slump, the desperation fading into resignation. The fire’s ember glowed brighter for a moment, casting a brief halo over Simon’s clenched jaw. He knew the night’s danger would not end with a single door, but for now the passage was sealed, and the lodge held its breath.

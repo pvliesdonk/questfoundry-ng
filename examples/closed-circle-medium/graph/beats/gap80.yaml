@@ -1,0 +1,9 @@
+id: bridge:gap80
+created_by: grow
+summary: The sheriff’s warning intensifies the investigator’s dread about preserving Marta’s
+  alibi.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

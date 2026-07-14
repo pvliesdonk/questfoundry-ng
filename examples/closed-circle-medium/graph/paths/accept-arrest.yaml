@@ -1,0 +1,6 @@
+id: path:accept-arrest
+name: Accept Arrest
+explores: answer:accept-arrest
+consequences:
+- id: consequence:investigator-detained
+  text: The protagonist is arrested, halting personal probing; official channels continue.

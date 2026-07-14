@@ -1,0 +1,20 @@
+id: dilemma:miner-escape
+question: Do you lock the miner in the basement as he threatens to flee, sacrificing his freedom,
+  or release him to avoid violence but risk he kills someone?
+why_it_matters: Locking curtails a possible murderer but violates rights; releasing preserves
+  liberty but may let a dangerous man walk free.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:lock-miner
+  text: Confine the miner in the basement.
+- id: answer:release-miner
+  text: Let the miner leave the lodge.
+anchored_to:
+- character:miner
+- location:lodge
+wraps:
+- dilemma:author-interview
+serial:
+- dilemma:hostess-alibi

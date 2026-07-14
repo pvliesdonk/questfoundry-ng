@@ -1,0 +1,14 @@
+id: beat:hostess-commit-accuse
+summary: Investigator confronts the group, loudly declaring Marta’s alibi false.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: commits
+entities:
+- character:hostess
+- character:author
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accuse-hostess

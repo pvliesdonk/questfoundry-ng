@@ -1,0 +1,16 @@
+id: beat:sheriff-post4-defy--silent-hostess
+created_by: grow
+summary: Evidence converges on the actual murderer; the investigator, who preserved Marta’s
+  reputation, readies to reveal the unseen assailant.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: reveals
+entities:
+- character:author
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:defy-sheriff

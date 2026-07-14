@@ -1,0 +1,14 @@
+id: beat:library-post2-evac
+summary: Guests cough in the cold hallway, their anxiety mounting as smoke drifts in.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: complicates
+entities:
+- character:miner
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library

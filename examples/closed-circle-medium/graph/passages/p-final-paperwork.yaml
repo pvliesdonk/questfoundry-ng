@@ -1,0 +1,19 @@
+id: passage:p-final-paperwork
+summary: The sheriff files the final paperwork, closing the case with a lukewarm report; Marta’s
+  position stays secure, but the lodge remains tense and uneasy.
+entities:
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan stands by hearth; Deputy Hale places ledger on stone table and reads
+  entry that miner’s body was found beside sealed service door with no malice evidence. Marta
+  Valen leans on brass rail, grips steaming mug, alibi holds. Deputies stamp report, slide
+  final page onto ledge, announce case closed. Jordan stores warm notebook, case filed, lodge
+  tension remains.
+beats:
+- beat:sheriff-post5-accept--silent-hostess
+choices:
+- label: hand the deputy the final report
+  requires:
+  - flag:investigator-detained
+  to: passage:p-deputy-silent

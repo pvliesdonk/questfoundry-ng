@@ -1,0 +1,18 @@
+id: beat:revolver-post5-hand-ending--accuse-hostess
+created_by: grow
+summary: In a darkly comic climax, Cole’s own revolver backfires, killing him as he tries
+  to flee; the investigator had turned the gun over to the sheriff, and Marta’s reputation
+  lies in ruins, setting the final tableau.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- character:miner
+- object:old-revolver
+is_ending: true
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

@@ -1,0 +1,14 @@
+id: beat:miner-aftermath2
+summary: Days later, a frozen body is found near the trail, presumed to be the miner, sparking
+  rumors of retribution.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:miner-escape
+  effect: reveals
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:release-miner

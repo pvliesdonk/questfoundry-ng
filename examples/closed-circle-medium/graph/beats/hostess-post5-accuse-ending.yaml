@@ -1,0 +1,15 @@
+id: beat:hostess-post5-accuse-ending
+summary: The storm rages as the murder is solved in a grim tableau; the investigator has already
+  denounced Marta’s alibi, but the decision whether to hand over or hide the revolver remains
+  unresolved.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: advances
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accuse-hostess

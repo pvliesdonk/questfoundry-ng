@@ -1,0 +1,9 @@
+id: bridge:gap72
+created_by: grow
+summary: The lockdown presses the investigator to focus, and evidence begins to converge on
+  the actual killer.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

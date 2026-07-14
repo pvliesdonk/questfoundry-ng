@@ -1,0 +1,16 @@
+id: passage:p-furnace-whisper
+summary: Cole Duvall hangs near the furnace immediately before it malfunctions, and his proximity
+  gives Simon a reason to gripe about the cold, hinting that the fire may have been tampered
+  with.
+entities:
+- character:miner
+- character:butler
+prose_summary: Cole monitors furnace, feeling its weakening flame; Simon Kade arrives, notes
+  cold seeping, warns guests of freezing; Cole recalls engineer’s missing valve, holds wrench,
+  suspects deliberate sabotage; furnace fire dims, cold spreads, becoming potential weapon.
+beats:
+- beat:lodge-lead3
+- bridge:gap37
+choices:
+- label: Watch Simon slip a pouch of cash into Cole’s coat
+  to: passage:p-cold-sabotage-debt

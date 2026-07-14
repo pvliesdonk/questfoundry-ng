@@ -1,0 +1,9 @@
+id: bridge:gap60
+created_by: grow
+summary: Deputies issue a jurisdictional warning, noting the investigator's restraint regarding
+  Marta's alibi.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- faction:local-sheriff

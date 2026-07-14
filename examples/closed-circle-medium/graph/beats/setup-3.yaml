@@ -1,0 +1,12 @@
+id: beat:setup-3
+summary: Investigator arrives, noting the tension among the remaining guests and staff.
+beat_class: structural
+purpose: setup
+entities:
+- character:author
+- character:butler
+- character:miner
+- character:hostess
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author

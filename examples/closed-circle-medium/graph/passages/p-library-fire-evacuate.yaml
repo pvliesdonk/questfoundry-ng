@@ -1,0 +1,13 @@
+id: passage:p-library-fire-evacuate
+summary: The investigator steps out as the flames die behind the stone doors, hearing the
+  echo of the rescued manuscripts and feeling the heavy loss of the ruined library.
+entities:
+- location:library
+prose_summary: Jordan closes stone library doors, extinguishes fire, moves rescued manuscript
+  cart onto frost‑slick floor, notes missing hidden clue, keeps notebook, feels cold iron
+  ache, returns to main hall, prepares to address guest tension and pursue investigation.
+beats:
+- beat:library-fire-evacuate-mem
+choices:
+- label: Enter the main hall, confronting Marta
+  to: passage:p-resolute-hall

@@ -1,0 +1,16 @@
+id: beat:revolver-post4-hide--accuse-hostess
+created_by: grow
+summary: A second murder erupts when the concealed revolver fires on a stunned guest, the
+  investigator’s prior accusation of Marta has already fractured trust, and the hidden weapon
+  remains the source of new chaos.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

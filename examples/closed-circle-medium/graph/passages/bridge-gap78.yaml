@@ -1,0 +1,23 @@
+id: passage:bridge-gap78
+summary: The investigator, after the costly revelation, either hands the old revolver to the
+  deputies or hides it, altering the balance of power.
+entities:
+- character:author
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Deputy Hale orders surrender; Jordan slips revolver into coat pocket, declares
+  it stays, hiding it from deputies. Hale watches, rifle hand near sidearm. Marta grips brass
+  rail, Simon keeps lantern low. Revolver remains concealed, preventing sheriff from obtaining
+  evidence tonight.
+beats:
+- bridge:gap78
+choices:
+- label: Hand the old revolver to the deputies
+  grants:
+  - flag:revolver-in-custody
+  to: passage:p-revolver-silence
+- label: Slip the old revolver into the concealed niche
+  grants:
+  - flag:revolver-concealed
+  to: passage:p-hide-revolver

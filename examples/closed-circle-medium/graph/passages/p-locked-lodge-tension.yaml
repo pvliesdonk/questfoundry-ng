@@ -1,0 +1,25 @@
+id: passage:p-locked-lodge-tension
+summary: The crowd vilifies the miner as the investigator keeps Marta’s alibi hidden, the
+  sheriff holds the revolver, and the deputies lock down the lodge, containing the anger but
+  leaving the conflict unresolved.
+entities:
+- character:miner
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Crowd turns knives on Cole Duvall, shouts accusations; Jordan notes revolver
+  on sheriff’s desk under lantern light awaiting forensic analysis; Marta claims she was alone
+  in library but Jordan hides alibi; Cole clenches pipe wrench; deputies seal doors, bolts
+  slam; Sheriff Hale orders lockdown; deputies position rifles at entries and secure revolver;
+  Jordan stays silent about Marta’s alibi.
+beats:
+- beat:revolver-post3-hand--silent-hostess
+- beat:revolver-post4-hand--silent-hostess
+- bridge:gap50
+choices:
+- label: Grip the revolver and pull the trigger
+  to: passage:p-sparked-fate

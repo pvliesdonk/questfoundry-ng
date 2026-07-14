@@ -1,0 +1,9 @@
+id: bridge:gap56
+created_by: grow
+summary: Choosing caution, the investigator shields Marta's alibi, declining to hand over
+  the weapon.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- faction:local-sheriff

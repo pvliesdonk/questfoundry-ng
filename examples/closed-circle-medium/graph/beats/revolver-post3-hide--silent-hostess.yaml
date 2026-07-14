@@ -1,0 +1,17 @@
+id: beat:revolver-post3-hide--silent-hostess
+created_by: grow
+summary: Simon the butler finds the concealed revolver and brandishes it against challengers,
+  even as the investigator refrains from accusing Marta, preserving her image while the hidden
+  gun escalates danger.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:butler
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:hide-revolver

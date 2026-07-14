@@ -1,0 +1,18 @@
+id: passage:p-fingerprint-revolver
+summary: The revolver uncovered nearby carries fingerprints that could belong to Marta, and
+  the narrative shifts to the library, where a silent, dormant fire alarm hovers ominously
+  over the book stacks.
+entities:
+- object:old-revolver
+- character:hostess
+- location:library
+prose_summary: Marta observes revolver prints matching her own, feels shaken. She walks to
+  Highpine Library, opens creaking door, notes dormant brass fire alarm that could spark blaze.
+  She scans shelves, uncovers envelope sealed like earlier note, wax warm, containing the
+  sought clue. The lamp flickers, alarm’s red eye flashes, then darkness returns.
+beats:
+- beat:hostess-pre5
+- bridge:gap19
+choices:
+- label: Pull the sealed envelope from the rare volume
+  to: passage:p-library-spark

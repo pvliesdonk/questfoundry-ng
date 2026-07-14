@@ -1,0 +1,7 @@
+The study’s stone floor was cold beneath Simon Kade’s boots as he approached the central table. He lifted the walnut‑cased revolver, its iron cylinder catching the thin light that slipped through the storm‑blackened windows. “This piece has belonged to the lodge’s founder since the first winter,” he said, his voice even. “It is a family heirloom, passed down through generations.” The words settled over the gathered guests like a breath of frost.
+
+Jordan Blythe watched the barrel, his notebook already open. He set his pen down, his gaze shifting to Marta Valen standing by the rail, and he spoke, “The prints on the gun match Marta’s hand, and the weapon was still warm when found. That proved her claim of being elsewhere cannot hold.” Simon felt the tension tighten around the stone walls.
+
+Deputy Hale moved forward, his badge catching the weak glow of the lantern. He said, “We will take the revolver into our custody.” Two other deputies followed, their boots echoing on the flagstones as they placed a leather case on the table and slipped the revolver inside. Simon noted the iron hinges of the case creaked as it closed, sealing the metal cold against the stone.
+
+The storm rattled the panes, and the fire in the hearth hissed low. Simon steadied his posture, his mind cataloguing what had just unfolded: the heirloom’s revelation, the investigator’s accusation, the deputies’ claim of jurisdiction. He watched Marta’s shoulders tighten, the room’s murmurs falling to a hush, and the revolver lay silent, a cold promise of what the night might yet demand.

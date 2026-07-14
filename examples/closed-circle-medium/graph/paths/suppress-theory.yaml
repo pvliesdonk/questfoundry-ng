@@ -1,0 +1,7 @@
+id: path:suppress-theory
+name: Suppress Theory
+explores: answer:suppress-theory
+consequences:
+- id: consequence:theory-suppressed
+  text: The theory remains unpublished, keeping the investigation unbiased but losing a potential
+    lead.

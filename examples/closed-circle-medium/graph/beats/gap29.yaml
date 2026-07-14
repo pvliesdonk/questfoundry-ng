@@ -1,0 +1,9 @@
+id: bridge:gap29
+created_by: grow
+summary: Within the lockdown, the investigator pores over the newly uncovered evidence, feeling
+  the stakes rise.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:author

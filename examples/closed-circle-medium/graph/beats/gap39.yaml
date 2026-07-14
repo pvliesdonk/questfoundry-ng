@@ -1,0 +1,9 @@
+id: bridge:gap39
+created_by: grow
+summary: The discovery of the frozen corpse sends murmurs through the lodge, amplifying suspicion
+  of who aided his escape.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:author

@@ -1,0 +1,8 @@
+id: character:detective
+name: Elliot Graves
+concept: World‑weary private investigator with a penchant for detail
+pronouns: he/him
+base:
+  appearance: tall, trench coat, scar above left eye
+  manner: dry, methodical
+retained: false

@@ -1,0 +1,15 @@
+id: beat:sheriff-post5-accept--accuse-hostess
+created_by: grow
+summary: The official report closes the case with a bland conclusion, the lodge’s dark humor
+  echoing as Marta’s ruined reputation lingers in the background.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:sheriff-pressure
+  effect: advances
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:accept-arrest

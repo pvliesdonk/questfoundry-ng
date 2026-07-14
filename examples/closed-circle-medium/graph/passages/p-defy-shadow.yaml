@@ -1,0 +1,20 @@
+id: passage:p-defy-shadow
+summary: The investigator evades the sheriff’s capture, slips into the lodge’s shadowed corridors,
+  persists in accusing Marta of fabricating an alibi, and encounters Simon, who offers clandestine
+  aid.
+entities:
+- character:author
+- character:butler
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan slips past deputy, evades sheriff’s shout, hides behind column, enters
+  western passage. Simon Kade appears, shows hidden seam behind tapestry, reveals narrow door.
+  Jordan accepts lead, passes through door into moist stone corridor, clutching notebook and
+  badge. He pursues Marta Valen’s alleged false alibi away from sheriff, increasing risk.
+beats:
+- beat:sheriff-commit-defy--accuse-hostess
+- beat:sheriff-post1-defy--accuse-hostess
+- bridge:gap63
+choices:
+- label: Slip through Simon’s secret passage into the lodge
+  to: passage:p-simon-lockdown

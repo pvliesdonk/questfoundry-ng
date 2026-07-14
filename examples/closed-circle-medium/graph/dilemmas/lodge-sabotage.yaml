@@ -1,0 +1,21 @@
+id: dilemma:lodge-sabotage
+question: Do you expose the sabotage of the lodge's heating system as a murder attempt, alerting
+  everyone and causing panic, or conceal it to maintain calm while the killer remains free?
+why_it_matters: Exposing may force the saboteur into the open but incite chaos; concealment
+  preserves order but lets danger linger.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:expose-sabotage
+  text: Reveal the heating sabotage to the group.
+- id: answer:conceal-sabotage
+  text: Keep the sabotage secret for now.
+anchored_to:
+- character:detective
+- location:lodge
+- character:heiress
+wraps:
+- dilemma:butler-secret
+serial:
+- dilemma:miner-escape

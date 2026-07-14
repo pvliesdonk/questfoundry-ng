@@ -1,0 +1,25 @@
+id: passage:p-note-stand-firm
+summary: Jordan leaves a trembling note urging the investigator to stand firm after Marta’s
+  alibi collapses, and the investigator, bolstered by the note, chooses either to submit to
+  the sheriff’s arrest or to slip away and continue the investigation in secret.
+entities:
+- character:author
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan writes a folded note with a terse encouragement and gives it to the
+  investigator. The investigator reads it, then a deputy arrests him, demanding he surrender
+  the inquiry. Jordan watches as the investigator can either submit to the deputy and end
+  the probe, or flee into the lodge’s corridors to continue secretly, risking arrest.
+beats:
+- beat:sheriff-pre5--accuse-hostess
+- bridge:gap87
+choices:
+- label: Submit to the sheriff’s arrest
+  grants:
+  - flag:investigator-detained
+  to: passage:p-sheriff-arrest
+- label: Slip into the lodge’s shadowed corridors
+  grants:
+  - flag:investigator-rogue
+  to: passage:p-defy-shadow

@@ -1,0 +1,9 @@
+Jordan Blythe stood beside the iron stove, the ember's weak glow tracing thin veins of light across the cold stones. The blizzard hammered the shutters, and a faint scent of pine sap clung to the coat that still felt damp from the storm. Guests huddled under wool blankets, their faces half‑lit by the fire, eyes shifting between the revolver on the central table and the hostess who kept her gaze fixed on the flames.
+
+Marta Valen leaned on the brass rail, the gray hair pulled into a tight knot, her expression guarded as she listened to the murmurs. Simon Kade lifted his mug, the metal cool against his hand, and gave a brief nod toward the hearth. Near the doorway, Cole Duvall kept his pipe wrench within reach, his stance rigid as he watched Marta's movements.
+
+Jordan felt the sealed envelope press warm against the inner pocket, the wax still faintly softened by the earlier heat. The paper inside named a name that directly contradicted the claim of solitary presence, a fact that could topple the fragile truce. With a measured breath, Jordan raised a hand and said, “Marta’s account stands as given.” The deputy’s lantern swept the room, its beam steady, finding nothing to dispute.
+
+The words settled over the crowd. A murmur rose, then fell back into a low hum. Guests exchanged wary glances, eyebrows lifting in silent question, hands tightening on mugs as if the wood might crack under their grip. The atmosphere held a chill that went beyond the winter wind, a collective hesitation that clung to the stone walls.
+
+Jordan watched the scene hold, aware that the choice to uphold the alibi had averted an open scandal but left a thread of distrust taut among the assembled. The ember flickered, the stone floor echoed faint footfalls, and the night stretched onward, the tension lingering like a breath held in the cold air.

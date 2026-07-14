@@ -1,0 +1,9 @@
+id: bridge:gap38
+created_by: grow
+summary: Even as the investigator masks the sabotage, Cole makes a desperate dash for the
+  back service door.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:miner

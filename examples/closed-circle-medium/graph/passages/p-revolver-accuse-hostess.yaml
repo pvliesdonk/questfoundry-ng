@@ -1,0 +1,22 @@
+id: passage:p-revolver-accuse-hostess
+summary: Simon the butler uncovers the concealed revolver and begins using it to threaten
+  anyone who dares dissent, while the investigator’s accusation against Marta inflames the
+  room and gives Simon’s newfound weapon a deadly authority.
+entities:
+- character:butler
+- object:old-revolver
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Simon Kade holds warm revolver behind oak table, declares silence, warns anyone
+  questioning charge; deputies aim rifles, boots thud, Jordan Blythe accuses Marta Valen of
+  lying alibi; crowd mutters; Simon trains revolver at dissenters, deputy hesitates, sheriff's
+  resolve wavers; revolver now enforces authority, costing silence for challengers.
+beats:
+- beat:revolver-post3-hide--accuse-hostess
+choices:
+- label: Pull the trigger of the hidden revolver
+  to: passage:p-revolver-finale

@@ -1,0 +1,18 @@
+id: beat:revolver-post5-hide-ending--accuse-hostess
+created_by: grow
+summary: The concealed gun accidentally shoots the investigator, sealing a grimly comic fate;
+  the revolver stays hidden to shield the guest, and Marta’s exposed false alibi fuels the
+  tragedy’s irony.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- character:author
+- object:old-revolver
+is_ending: true
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hide-revolver

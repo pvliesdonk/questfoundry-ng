@@ -1,0 +1,9 @@
+id: bridge:gap31
+created_by: grow
+summary: The hidden envelope is slipped from its volume, just as Simon appears, cautioning
+  about the volatile stove behind the shelves.
+beat_class: structural
+purpose: bridge
+entities:
+- location:library
+- character:butler

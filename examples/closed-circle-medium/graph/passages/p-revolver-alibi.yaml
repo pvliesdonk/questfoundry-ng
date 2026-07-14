@@ -1,0 +1,18 @@
+id: passage:p-revolver-alibi
+summary: The investigator declines to hand over the revolver, shielding Marta’s alibi and
+  staying silent about the weapon’s custody.
+entities:
+- faction:local-sheriff
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Deputies request revolver custody; Jordan refuses, keeping weapon hidden in
+  false drawer; Marta’s alibi remains unrecorded; Jordan’s refusal prevents sheriff from probing
+  Marta; tension rises; Jordan incurs personal risk; room stays silent.
+beats:
+- beat:revolver-pre3--silent-hostess
+- beat:revolver-pre4--silent-hostess
+- bridge:gap56
+choices:
+- label: Silently protect Marta’s alibi
+  to: passage:p-gun-unrest

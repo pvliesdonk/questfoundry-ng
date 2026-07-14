@@ -1,0 +1,8 @@
+id: bridge:gap25
+created_by: grow
+summary: Amid the charred remains, a hidden ledger surfaces, revealing Simon's concealed debt.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- location:library

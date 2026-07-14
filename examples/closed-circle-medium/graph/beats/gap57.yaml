@@ -1,0 +1,9 @@
+id: bridge:gap57
+created_by: grow
+summary: Marta worries the revolver's reveal will inflame tensions, unaware the accusation
+  looms.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- object:old-revolver

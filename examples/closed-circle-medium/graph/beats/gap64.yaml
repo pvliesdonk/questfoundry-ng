@@ -1,0 +1,9 @@
+id: bridge:gap64
+created_by: grow
+summary: Moving unseen, the investigator finds Simon awaiting to guide them through secret
+  passages.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:butler

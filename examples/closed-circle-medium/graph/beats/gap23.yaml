@@ -1,0 +1,9 @@
+id: bridge:gap23
+created_by: grow
+summary: As the fire consumes the stacks, the investigator clutches the torn page, while guests
+  shout in outrage.
+beat_class: structural
+purpose: bridge
+entities:
+- object:old-revolver
+- location:library

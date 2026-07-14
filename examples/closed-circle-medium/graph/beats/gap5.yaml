@@ -1,0 +1,9 @@
+id: bridge:gap5
+created_by: grow
+summary: Marta's warning drifts off as the night deepens, and later the sheriff's deputies
+  exchange low murmurs in the common room.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- faction:local-sheriff

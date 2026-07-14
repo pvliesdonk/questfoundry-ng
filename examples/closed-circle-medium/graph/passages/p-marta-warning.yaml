@@ -1,0 +1,17 @@
+id: passage:p-marta-warning
+summary: Marta Valen cautions that publishing the lurid story will send the lodge’s guests
+  into panic, and as night deepens the sheriff’s deputies exchange low murmurs in the common
+  room.
+entities:
+- character:hostess
+- faction:local-sheriff
+prose_summary: Marta Valen warns that rumors leaving the lodge will cause panic; a deputy
+  in sheriff’s uniform says they will maintain order but notes guests’ rising fear; guests
+  tighten blankets; deputies exchange hushed words about patrol routes and rumor containment;
+  the fire in the common room dims, leaving tension in the stone room.
+beats:
+- beat:author-pre3
+- bridge:gap5
+choices:
+- label: Walk down the hallway toward the dim library
+  to: passage:p-library-manuscript

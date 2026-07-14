@@ -1,0 +1,16 @@
+id: beat:revolver-pre3--silent-hostess
+created_by: grow
+summary: Deputies press for the gun’s custody, but the investigator declines to leverage it,
+  keeping Marta’s alibi untouched.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: complicates
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver
+- path:hide-revolver

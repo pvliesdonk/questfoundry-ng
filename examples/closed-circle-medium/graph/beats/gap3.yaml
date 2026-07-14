@@ -1,0 +1,9 @@
+id: bridge:gap3
+created_by: grow
+summary: Marta's gratitude fades into the lodge's hushed corridors, where the lack of outcry
+  lets the miner's hidden grievances linger.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- character:miner

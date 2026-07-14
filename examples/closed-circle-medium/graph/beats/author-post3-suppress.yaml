@@ -1,0 +1,14 @@
+id: beat:author-post3-suppress
+summary: Marta thanks the investigator, sharing a previously hidden detail about the night
+  of the murder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:suppress-theory

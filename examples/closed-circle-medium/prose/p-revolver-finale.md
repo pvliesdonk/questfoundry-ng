@@ -1,0 +1,9 @@
+Jordan stood beneath the vaulted stone ceiling, the lantern’s dim glow catching the iron hinges of the heavy oak doors. The revolver lay on the central table, its polished walnut case still warm from the earlier pull. Their accusation that Marta Valen had fabricated an alibi had just echoed through the hall, and the room already divided, guests casting wary glances at the accused and the weapon.
+
+A sudden report cracked the air as the concealed cylinder discharged again. The bullet found the miner, who had been lying stunned on the floor after the first shock. Crimson blossomed across his shirt and pooled on the cold stone, the crowd’s murmur snapping into a startled roar.
+
+In the confusion the gun slipped from Simon’s hand, the hammer striking the table edge. A second report rang, and the projectile struck Jordan’s side. Pain flared through their ribs, hot blood staining the notebook they clutched. Their vision narrowed to the flickering flame, the faces of the guests blurring into a haze of fear.
+
+Marta stepped forward, her hands trembling as she gripped the brass tray holding the anonymous note. "I was alone in the library," she said, her voice cracked. The deputy’s badge glinted as he moved to seize the revolver, but the deputies wrested the gun back into the concealed niche behind the desk, the metal cooling as it settled into its hidden cradle.
+
+Around them the murmurs rose again, then fell to a strained silence. The storm howled outside, rattling the shutters, while the surviving guests stared at the barrel that still held the weight of unanswered questions. Jordan’s breath came in shallow pulls, the cold air biting the wound, and they realized the night had turned into a grim comedy of accidental deaths, the revolver’s quiet promise lingering in the shadows.

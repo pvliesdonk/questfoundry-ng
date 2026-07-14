@@ -1,0 +1,8 @@
+id: bridge:gap65
+created_by: grow
+summary: Amid the sluggish review, Marta decides to take matters into her own hands.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:hostess

@@ -1,0 +1,9 @@
+id: bridge:gap34
+created_by: grow
+summary: While deputies conduct checks, the howling blizzard forces Cole to vanish into the
+  white night.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:local-sheriff
+- character:miner

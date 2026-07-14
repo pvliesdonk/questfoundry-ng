@@ -1,0 +1,6 @@
+id: path:evacuate-library
+name: Evacuate Library
+explores: answer:evacuate-library
+consequences:
+- id: consequence:manuscripts-saved
+  text: All rare manuscripts are secured; the hidden clue is lost, leaving a gap in evidence.

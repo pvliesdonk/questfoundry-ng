@@ -1,0 +1,17 @@
+id: passage:p-accuse-marta
+summary: The investigator confronts the group, loudly declaring Marta’s alibi false, and the
+  atmosphere turns tense.
+entities:
+- character:hostess
+- character:author
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan enters main hall, sees stone walls, iron doors, smoke, guests, Simon
+  Kade with mug, Marta Valen by rail, revolver on table, broken seal note, deputy patrolling.
+  Jordan accuses Marta of lying about alibi, claims note demands her name withdrawn. Marta
+  reacts surprise, Simon tenses, deputy hand on holster, crowd falls silent, decision pending.
+beats:
+- beat:hostess-commit-accuse
+choices:
+- label: Call out Marta’s false alibi
+  to: passage:p-panic-door

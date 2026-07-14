@@ -1,0 +1,9 @@
+id: bridge:gap1
+created_by: grow
+summary: The winter wind rattles the lodge eaves as the press retreats to their notes, giving
+  Marta a quiet moment to speak with the investigator.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- character:hostess

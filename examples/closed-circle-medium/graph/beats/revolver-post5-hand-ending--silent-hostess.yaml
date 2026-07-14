@@ -1,0 +1,18 @@
+id: beat:revolver-post5-hand-ending--silent-hostess
+created_by: grow
+summary: Cole’s revolver catastrophically misfires, ending his life; the investigator has
+  handed the weapon to the sheriff, yet Marta’s alibi remains unblemished, leaving the lodge’s
+  bleak humor lingering.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: advances
+entities:
+- character:miner
+- object:old-revolver
+is_ending: true
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

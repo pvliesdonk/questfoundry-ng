@@ -1,0 +1,16 @@
+id: beat:butler-resolution
+summary: Investigator decides to let the secret stay hidden, fearing a panic would cripple
+  the fragile investigation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:butler-secret
+  effect: commits
+entities:
+- character:author
+- character:butler
+- character:miner
+scene_type: scene
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:avoid-confront

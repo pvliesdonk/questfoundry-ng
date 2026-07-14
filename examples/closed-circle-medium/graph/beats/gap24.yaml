@@ -1,0 +1,9 @@
+id: bridge:gap24
+created_by: grow
+summary: Sheriff deputies stride in behind the coughing guests, immediately casting blame
+  on the investigator.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- faction:local-sheriff

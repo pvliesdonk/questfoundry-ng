@@ -1,0 +1,19 @@
+id: passage:p-sheriff-accepts
+summary: The sheriff arrests the investigator, removes them from the lodge, and the formal
+  inquiry continues with Marta’s alibi unchallenged, leaving the case in limbo.
+entities:
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: 'Sheriff Hale arrests Jordan, folds Jordan’s investigation into his docket,
+  and leaves Marta’s alibi unchallenged. Jordan nods, loses notebook as deputies escort them
+  to the truck. Staff collect evidence: leather‑bound manuscript, notebook, revolver, torn
+  envelope, photograph items, and record no claim against Marta’s alibi. The formal inquiry
+  pauses, investigation stalls.'
+beats:
+- beat:sheriff-commit-accept--silent-hostess
+- beat:sheriff-post1-accept--silent-hostess
+- beat:sheriff-post2-accept--silent-hostess
+choices:
+- label: Marta breaks from the sheriff’s investigation
+  to: passage:p-marta-alone-cole-fate

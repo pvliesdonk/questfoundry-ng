@@ -1,0 +1,9 @@
+id: bridge:gap62
+created_by: grow
+summary: The investigator steps into the lodge, feeling the chill as the heating system sputters
+  ominously.
+beat_class: structural
+purpose: bridge
+entities:
+- character:author
+- location:lodge

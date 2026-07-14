@@ -1,0 +1,15 @@
+id: beat:hostess-pre3
+summary: Simon whispers about a hidden passage that could let someone slip in and out of the
+  library unnoticed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:hostess-alibi
+  effect: complicates
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:accuse-hostess
+- path:silent-hostess

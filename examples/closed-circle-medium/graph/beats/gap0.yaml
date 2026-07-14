@@ -1,0 +1,9 @@
+id: bridge:gap0
+created_by: grow
+summary: Night deepens as the anonymous notes sit unopened, while the sheriff's men file paperwork
+  in the next town, marking the quiet interval between threats and accusations.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- faction:local-sheriff

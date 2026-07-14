@@ -1,0 +1,13 @@
+id: beat:library-post1-stay
+summary: Flames lick the shelves, but the envelope is recovered, its torn page naming a suspect.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- object:old-revolver
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:stay-for-clue

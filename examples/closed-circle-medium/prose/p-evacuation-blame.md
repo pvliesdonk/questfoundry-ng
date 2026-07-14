@@ -1,0 +1,7 @@
+The stone hallway smelled of ash and pine sap as the rescued volumes were set on the cold table. Jordan guided the cart of rare manuscripts toward the exit, the leather spines thudding against the frost‑slick floor. A cluster of guests stumbled past, their throats raw, coughing into the thin veil of smoke that curled from the abandoned fire. The hallway seemed to widen with each breath, the flicker of lanterns casting trembling shadows on the walls.
+
+The coughing grew louder, a ragged chorus that rose with the wind howling outside. Jordan watched the blankets tighten around shoulders, the guests' eyes darting toward the dim doorway. Anxiety settled like frost on the stone, each exhale a plume that disappeared before it could settle. He noted the way the smoke lingered near the doorway, the heat of the hearth already a memory.
+
+Two uniformed deputies entered behind the coughing crowd, their boots cracking the thin ice on the floorboards. One of them lifted a hand, the badge glinting in the lantern light, and his voice cut through the murmur. "Investigator Blythe," he said, "your negligence let the fire spread." The accusation landed on Jordan like a cold stone. He felt the weight of the claim settle around his shoulders as the deputies turned their gazes toward the fleeing guests.
+
+The hallway, slick with the breath of the storm, held its silence like a verdict waiting to be read.

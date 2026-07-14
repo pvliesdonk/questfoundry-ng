@@ -1,0 +1,25 @@
+premise: An Agatha Christie closed circle murder mystery that escalates Fargo style.
+genre: Mystery
+subgenre: Closed‑circle whodunit with noir escalation
+tone: claustrophobic, methodical, slow‑burn that crescendos into stark, darkly comic fatalism
+themes:
+- justice versus self‑preservation
+- order versus chaos
+- trust versus suspicion
+audience: Adult readers who enjoy classic Agatha Christie puzzles blended with the macabre
+  irony of Fargo
+content_notes:
+  include:
+  - rigorous clue‑fairness
+  - layered subplots that intersect with the main murder
+  - sharp, dark humor
+  - gradual escalation of danger
+  - distinctive character voices
+  avoid:
+  - supernatural explanations
+  - overly graphic gore
+  - excessive profanity
+  - overly sentimental romance
+pov_hint: Third-person limited rotating among the key suspects, with occasional first-person
+  journal entries from the lead investigator
+scope: medium

@@ -1,0 +1,9 @@
+id: bridge:gap17
+created_by: grow
+summary: Marta notes the clock's irregular tick, then steps toward the stacks where Simon
+  whispers of a secret passage.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- location:library

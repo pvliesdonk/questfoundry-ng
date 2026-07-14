@@ -1,0 +1,21 @@
+id: passage:p-lockdown-evidence
+summary: The sheriff orders a lockdown as smoke thickens, and the investigator pores over
+  the freshly uncovered evidence, pressing the inquiry harder while the stakes climb with
+  each breath of smoke.
+entities:
+- faction:local-sheriff
+- character:author
+prose_summary: Sheriff locks down lodge, boards exits, slips file into coat; Jordan spreads
+  envelope, reads sealed paper listing names, dates, missing furnace valve; connects ledger
+  fragment to heiress sabotage; sheriff reasserts lockdown until storm ends; Jordan confronts
+  sheriff, questions guests, demands hidden intake valve, orders deputy to sweep furnace,
+  increasing investigation pressure.
+beats:
+- beat:library-post4-stay
+- beat:library-post5-stay
+- bridge:gap29
+choices:
+- label: Clutch the pulsing fragment amid the curling smoke
+  requires:
+  - flag:clue-recovered
+  to: passage:p-library-fire-hope

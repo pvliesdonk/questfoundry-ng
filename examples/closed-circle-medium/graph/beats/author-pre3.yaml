@@ -1,0 +1,14 @@
+id: beat:author-pre3
+summary: Marta Valen warns that a sensational article may drive the lodge’s guests into hysteria.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: complicates
+entities:
+- character:hostess
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:hostess
+belongs_to:
+- path:publish-theory
+- path:suppress-theory

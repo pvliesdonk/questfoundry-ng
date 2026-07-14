@@ -1,0 +1,16 @@
+id: beat:revolver-post3-hand--accuse-hostess
+created_by: grow
+summary: Public outrage crowns the miner as the killer, the investigator’s earlier denunciation
+  of Marta amplifies the chaos, and the revolver stays under the sheriff’s control for ongoing
+  investigation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:miner
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:hand-revolver

@@ -1,0 +1,17 @@
+id: beat:revolver-post3-hide--accuse-hostess
+created_by: grow
+summary: Butler Simon discovers the hidden gun and begins using it to threaten dissenters,
+  while the investigator’s accusation of Marta fuels a volatile atmosphere and the concealed
+  weapon empowers the butler.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:revolver-choice
+  effect: reveals
+entities:
+- character:butler
+- object:old-revolver
+scene_type: scene
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:hide-revolver

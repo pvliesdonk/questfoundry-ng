@@ -1,0 +1,9 @@
+id: bridge:gap32
+created_by: grow
+summary: Simon's alarm about the stove meets Jordan's insistence on retrieving the manuscript,
+  raising the stakes.
+beat_class: structural
+purpose: bridge
+entities:
+- character:butler
+- character:author

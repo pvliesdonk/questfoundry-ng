@@ -1,0 +1,9 @@
+id: bridge:gap42
+created_by: grow
+summary: With Cole let go into the storm, Marta steps forward, insisting she was alone in
+  the library at the murder hour.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:hostess

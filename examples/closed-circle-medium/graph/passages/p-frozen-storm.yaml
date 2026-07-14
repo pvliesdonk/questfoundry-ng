@@ -1,0 +1,21 @@
+id: passage:p-frozen-storm
+summary: The lodge’s heating collapses, sending the guests scrambling in mismatched coats
+  as the cold and smoke fill the hall, while the raging storm outside presses in. In the ensuing
+  frozen tableau the investigator exposes Marta’s false alibi and the murder is solved, leaving
+  the fate of the revolver undecided.
+entities:
+- location:lodge
+- character:hostess
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Jordan watches fire die, guests blanket up as storm rages. Jordan steps forward,
+  declares the murderer identified, points to Simon’s dropped revolver on the central table,
+  and declares Marta Valen’s alibi false. Guests fall silent. Jordan leaves the fate of the
+  revolver—hand it over or conceal it—to the player.
+beats:
+- beat:hostess-post4-accuse
+- beat:hostess-post5-accuse-ending
+- bridge:gap13
+choices:
+- label: Grab the warm revolver from the desk
+  to: passage:p-revolver-denounce

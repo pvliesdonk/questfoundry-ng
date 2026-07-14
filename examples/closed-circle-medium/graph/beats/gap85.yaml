@@ -1,0 +1,9 @@
+id: bridge:gap85
+created_by: grow
+summary: Amid the miners’ chant, Jordan hurriedly scribes a terse note urging the investigator
+  to stand firm.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- character:author

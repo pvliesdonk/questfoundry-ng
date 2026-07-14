@@ -1,0 +1,14 @@
+id: beat:library-pre4
+summary: Jordan insists on retrieving the manuscript for his research, raising the stakes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- character:author
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:evacuate-library
+- path:stay-for-clue

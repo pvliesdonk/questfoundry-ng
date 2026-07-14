@@ -1,0 +1,22 @@
+id: passage:p-marta-alone-cole-fate
+summary: Marta breaks from the sheriff’s investigation and proceeds independently, her alibi
+  intact. Cole makes a desperate bid to flee and is violently stopped, heightening the danger
+  for everyone.
+entities:
+- faction:local-sheriff
+- character:hostess
+- character:miner
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Deputies file reports at oak table; Marta holds anonymous note, trusts her
+  alibi, decides to act alone, walks to library hallway, notes stone walls, pine sap scent,
+  remembers hidden compartment behind third shelf and revolver click, opens heavy oak door,
+  scans books for missing clue. Cole Duvall carries pipe wrench, tries service entrance, deputy
+  grabs him, wrench falls.
+beats:
+- beat:sheriff-post3-accept--silent-hostess
+- bridge:gap66
+- bridge:gap70
+choices:
+- label: Slip the evidence to the sheriff
+  to: passage:p-sheriff-closure

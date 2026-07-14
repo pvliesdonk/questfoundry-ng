@@ -1,0 +1,11 @@
+id: beat:sheriff-silent-accept-mem
+created_by: polish
+summary: The deputy’s notebook records the quiet, and the investigator senses a hollow calm
+  as the investigation folds into bureaucracy.
+beat_class: structural
+purpose: residue
+entities:
+- faction:local-sheriff
+- location:lodge
+requires_flags:
+- flag:investigator-detained

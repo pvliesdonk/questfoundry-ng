@@ -1,0 +1,9 @@
+id: bridge:gap15
+created_by: grow
+summary: At dawn, the revolver rests on the desk, its barrel still warm from recent handling,
+  awaiting the investigator's denouncement.
+beat_class: structural
+purpose: bridge
+entities:
+- character:hostess
+- object:old-revolver

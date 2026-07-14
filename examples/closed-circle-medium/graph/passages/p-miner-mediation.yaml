@@ -1,0 +1,16 @@
+id: passage:p-miner-mediation
+summary: Jordan Blythe mediates, weighing the danger of the volatile miner against the lodge’s
+  fragile peace and raising the cost of any misstep.
+entities:
+- character:author
+- character:miner
+- character:butler
+prose_summary: Jordan confronts Cole and Simon in the hall, warns that opening the door lets
+  storm flood the lodge, reveals Simon hid a debt in his coat, threatens force if Cole leaves,
+  orders Cole to stay until the fire steadies, Cole drops his pipe wrench, the furnace sputters,
+  the door stays locked, tension remains.
+beats:
+- beat:miner-lead3
+choices:
+- label: Push the scandalous article onto the press
+  to: passage:p-cart-jam-choice

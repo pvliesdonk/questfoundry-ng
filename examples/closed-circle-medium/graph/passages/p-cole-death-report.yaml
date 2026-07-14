@@ -1,0 +1,19 @@
+id: passage:p-cole-death-report
+summary: Miner Cole tries to escape but is later found dead under mysterious circumstances,
+  and the investigator’s earlier smear of Marta fuels the chaos; the sheriff then files a
+  bland report that seals the case.
+entities:
+- character:miner
+- faction:local-sheriff
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Cole Duvall scans crowd after investigator claims Marta Valen fabricated alibi,
+  spots back service door, slips on ice, drops pipe wrench, a pistol fires behind him, flash
+  blinds, he falls onto door. Deputies gather, sheriff arrives, places ledger, records Cole
+  Duvall, location, investigation closed, seals page with stamp. Revolver remains warm.
+beats:
+- beat:sheriff-post4-accept--accuse-hostess
+- bridge:gap73
+choices:
+- label: file the final report
+  to: passage:p-case-closed-marta

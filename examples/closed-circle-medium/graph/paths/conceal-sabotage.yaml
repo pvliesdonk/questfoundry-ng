@@ -1,0 +1,6 @@
+id: path:conceal-sabotage
+name: Conceal Sabotage
+explores: answer:conceal-sabotage
+consequences:
+- id: consequence:sabotage-unknown
+  text: The heating sabotage stays secret, preserving calm but the danger lingers.

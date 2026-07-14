@@ -1,0 +1,16 @@
+id: passage:p-cold-sabotage-debt
+summary: Simon Kade notes the lodge’s growing complaints about the cold, hinting at possible
+  sabotage, and slips a pouch of cash into Cole Duvall’s coat, settling Cole’s overdue debt.
+entities:
+- character:butler
+- character:miner
+prose_summary: Simon Kade observes guests complain about cold after furnace fails; hears engineer
+  mention missing intake valve and suspects sabotage. He slips his leather pouch containing
+  debt payment into miner Cole Duvall’s overcoat, balancing the debt. He notes pantry door
+  hinges vibrate and hidden passageways, and resolves to monitor the furnace.
+beats:
+- beat:butler-lead1
+- beat:lodge-lead4
+choices:
+- label: Corner Simon in the pantry
+  to: passage:p-butler-lead2

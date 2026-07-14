@@ -1,0 +1,24 @@
+id: passage:p-revolver-finale
+summary: The concealed revolver fires, killing a stunned guest and then the investigator,
+  while Marta’s fabricated alibi is revealed, shattering the fragile trust among the survivors.
+entities:
+- object:old-revolver
+- character:author
+ending:
+  id: e-revolver-finale
+  title: A Shot in the Dark
+irrelevant_flags:
+- flag:clue-recovered
+- flag:investigator-detained
+- flag:investigator-rogue
+- flag:manuscripts-saved
+- flag:theory-published
+- flag:theory-suppressed
+prose_summary: Jordan stands under vaulted ceiling; revolver sits on central table. Accusation
+  that Marta Valen fabricated alibi divides guests. Concealed cylinder fires, killing stunned
+  miner. Gun slips from Simon, hammer strikes table, a shot wounds Jordan’s side. Marta presents
+  brass tray with anonymous note, claims she was alone. Deputy tries to seize revolver; deputies
+  return it to hidden niche behind desk.
+beats:
+- beat:revolver-post4-hide--accuse-hostess
+- beat:revolver-post5-hide-ending--accuse-hostess

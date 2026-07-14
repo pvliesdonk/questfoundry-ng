@@ -1,0 +1,20 @@
+id: passage:p-simon-reveal
+summary: Simon Kade, cornered, pulls his old revolver and shoots himself, exposing his secret.
+  The lodge’s furnace sputters and the heat dies, leaving the room in an abrupt, chilling
+  darkness.
+entities:
+- character:butler
+- object:old-revolver
+- location:lodge
+irrelevant_flags:
+- flag:clue-recovered
+prose_summary: Simon Kade stands by the iron hearth, draws his revolver, and pulls the trigger,
+  shooting himself. The revolver clatters to the hearth, the fire sputters and dies, the room
+  cools rapidly, darkness falls, murmurs arise but no guest approaches, and silence settles,
+  confirming his secret and debt are now known.
+beats:
+- beat:hostess-post3-accuse
+- bridge:gap11
+choices:
+- label: Grab a coat and rush toward the dying furnace
+  to: passage:p-frozen-storm

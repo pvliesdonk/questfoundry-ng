@@ -1,0 +1,13 @@
+id: beat:library-post3-stay
+summary: The clue points to Simon’s hidden debt, linking him more tightly to the murder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:library-fire
+  effect: reveals
+entities:
+- character:butler
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:butler
+belongs_to:
+- path:stay-for-clue

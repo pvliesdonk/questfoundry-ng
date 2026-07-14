@@ -1,0 +1,14 @@
+id: beat:author-pre4
+summary: Sheriff’s deputies murmur about the media’s power to tip the scales of justice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:author-interview
+  effect: reveals
+entities:
+- faction:local-sheriff
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:author
+belongs_to:
+- path:publish-theory
+- path:suppress-theory

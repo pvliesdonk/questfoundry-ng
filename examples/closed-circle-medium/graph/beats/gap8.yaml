@@ -1,0 +1,9 @@
+id: bridge:gap8
+created_by: grow
+summary: The conversation about debt dissolves into a cold draft, and the guests huddle under
+  thin blankets in the lodge's chill.
+beat_class: structural
+purpose: bridge
+entities:
+- character:miner
+- location:lodge

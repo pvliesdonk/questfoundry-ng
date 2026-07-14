@@ -100,7 +100,12 @@ FILL's write and review — live-validated by
 medium-scope run of the same premise on the unbilled `gpt-oss:120b`
 tier that finished FILL gate-clean rotating four heads across 112
 passages (checked in at FILL: prose complete, DRESS enrichment not yet
-run) — the first weak-tier medium to clear FILL.
+run) — the first weak-tier medium to clear FILL. Its first reading then
+exposed a structural gap the gates had let through as advisory: the run
+ignored POLISH's cadence budget and shipped nearly flat (10 branch
+points across those 112 passages), so the engine-computed false-branch
+budget is now mandatory at apply — the exemplar predates that
+enforcement and doubles as its cautionary baseline.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch), the residue diamond, a tensored

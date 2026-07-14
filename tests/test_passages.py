@@ -556,6 +556,61 @@ def test_finalize_splices_false_branches_against_pristine_topology(vision, tmp_p
     assert isinstance(g.node("beat:detour"), Beat)
 
 
+def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypatch):
+    """The cadence budget is mandatory: the live 2026-07-14 gpt-oss medium
+    proposed `false_branches: []` against a full budget in four straight
+    rounds and nothing objected — the shipped structure had 10 branch
+    points over 112 passages. An under-filled budget must be a repairable
+    ApplyError naming the short run and both counts, raised before any
+    splice mutates the graph."""
+    import questfoundry.pipeline.stages.polish as polish_mod
+
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    budget = [
+        {"beats": run, "edges": [(run[0], run[1]), (run[1], run[2])]},
+    ]
+    monkeypatch.setattr(polish_mod, "_cadence", lambda _p: budget)
+
+    before = {b.id for b in g.nodes_of(Beat)}
+    with pytest.raises(ApplyError, match="mandatory.*needs 2 site\\(s\\), this proposal places 1"):
+        _finalize_apply(
+            FinalizeProposal(
+                false_branches=[
+                    FalseBranchSpec(
+                        before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
+                    )
+                ]
+            ),
+            project,
+        )
+    assert {b.id for b in g.nodes_of(Beat)} == before  # shortfall spliced nothing
+
+    # the same budget, filled, applies clean — one site per required edge
+    _finalize_apply(
+        FinalizeProposal(
+            residue=[
+                ResidueSpec(dilemma="dilemma:sub", path="path:sub-a", id="beat:mem-a", summary="s"),
+                ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
+            ],
+            false_branches=[
+                FalseBranchSpec(
+                    before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
+                ),
+                FalseBranchSpec(
+                    before=run[1], after=run[2], arms=[ArmSpec(id="beat:detour-2", summary="s")]
+                ),
+            ]
+        ),
+        project,
+    )
+    assert isinstance(g.node("beat:detour"), Beat)
+    assert isinstance(g.node("beat:detour-2"), Beat)
+
+
 def test_finalize_false_branch_id_collision_is_repairable(vision, tmp_path):
     """The exact asymmetry the PR fixes: the false-branch splice once let a
     colliding new-beat id escape as an uncaught KeyError and crash the run

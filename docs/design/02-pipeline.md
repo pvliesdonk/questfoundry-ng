@@ -300,7 +300,13 @@ Two phases:
    (one arm, an optional detour the reader may decline) per site and
    writes the arms. The real choices are the dilemmas; cadence sites
    are safe dressing precisely because the structure guarantees the
-   real ones.
+   real ones. Each run's site count is **mandatory** — the apply rejects
+   a proposal that leaves any run short, with the shortfall named
+   (before enforcement a weak tier proposed zero sites against a full
+   budget across four repair rounds and shipped an essentially flat
+   book: 10 branch points over 112 passages, words-per-choice ~4x over
+   the B6 band — live *Closed Circle* medium, 2026-07-14; the count is
+   engine-computed precisely so the model cannot under-sample it).
 2. **Build the passage layer:** collapse maximal linear runs into
    passages (boundaries at forks/joins; runs split at the scope's
    `passage_beats_max` — the choice-free cutter, 01 §6 — **and at every

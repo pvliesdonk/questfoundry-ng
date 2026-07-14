@@ -83,7 +83,13 @@ weak tier can't. Findings by stage (H/M/L severity):
   plan passages-chunking.md) doesn't require passage/variant ids distinct,
   though the mutation layer rejects a duplicate id repairably. [L]
   arcs "in story order" unenforced; cadence "fill each run's count"
-  overstates an advisory budget.
+  overstates an advisory budget. **Both [L] items fixed 2026-07-14** —
+  and both graduated from [L] the hard way before the fix landed: the
+  advisory cadence budget produced the flat-book exemplar (10 branch
+  points / 112 passages; decision log "flat-book post-mortem") and the
+  restated-rule arcs brief exhausted a live kimi-k2.5 POLISH. The budget
+  is now mandatory at `_finalize_apply`; the arcs brief names the listed
+  and the required pivot order.
 - **DRESS/voice**: [H] `fill_voice.j2` pov `NAME` never validated against
   the cast (the Maren/Marin bug — prompt-fixed, not enforced; cheapest
   finite-set check in the pipeline). [H] `dress_codex_review.j2` lacks the
@@ -169,5 +175,12 @@ prompt-bounded; enumerable ones can be made unrepresentable.
       shared `format_validation_error` (owned by `llm/adapter.py`,
       re-exported by `pipeline/types.py`, so the adapter's schema-retry
       brief and the apply-layer errors share one renderer and never drift).
+- [x] The sweep's two [L] items closed by live escalation (2026-07-14):
+      the cadence budget is enforced at `_finalize_apply` (a shortfall is a
+      named, repairable rejection — the advisory budget shipped the flat
+      `closed-circle-medium` exemplar first) and the arc pivot-order brief
+      names the listed vs required order (a restated rule exhausted a live
+      kimi-k2.5 POLISH; the fixed brief cleared the same stall in one
+      repair round, `arcs done attempts=2`).
 - [ ] Live validation of the two prompt fixes (a completing FILL run on both
       tiers; the runs that surfaced the failures died before completing).

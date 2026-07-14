@@ -19,16 +19,19 @@ _Last updated: 2026-07-14._
 
 ## Current epic
 
-**Rotating limited POV** (built offline-green, PR pending on
-`claude/rotating-limited-pov-hikty0`): the author answered the five design
-questions directly (2026-07-14 — per-passage head, GROW-annotate assignment,
-no cadence engine constraint, first-person interludes in v1, golden coverage
-via keepers-bargain's constant head + the e2e fixture) and the engine half is
-built per [`plans/rotating-pov-build.md`](plans/rotating-pov-build.md):
-per-beat `viewpoint`/`interlude` settled at the freeze, invariant **I14** (one
-head per passage) + a G3 referential check, the collapse head-switch cut,
-per-passage POV enforcement in FILL's write/review, `Voice.interlude`, and
-mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
+**Prose quality at scale** (roadmap "Now"): FILL at medium is demonstrated
+(the *Closed Circle* run, gate-clean on `gpt-oss:120b`, author-read prose
+verdict "good for a 120b model"); the open half is **DRESS**. The same
+reading found the run "essentially a flat story" (10 branch points / 112
+passages, zero false-branch beats — finalize proposed `false_branches: []`
+four rounds straight against a full budget, unchallenged). The immediate
+fix shipped: the cadence budget is **mandatory at `_finalize_apply`**
+(design 02; decision log "flat-book post-mortem"). The deeper work — the
+author's stretching diagnosis, material density, brainstorm-surplus
+feedstock, tensored texture worlds, the different-context lever — is
+combined as the **next milestone**: roadmap "Next" → *Structural depth —
+material density & texture worlds* (author-directed, 2026-07-14).
+Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
 
@@ -50,14 +53,26 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
    follow-up) and DRESS. The finished project is checked in as
    [`examples/closed-circle-medium/`](../examples/closed-circle-medium/)
    (at FILL — no codex/art; exports stay out of the repo per AGENTS.md,
-   the author has the generated HTML/PDF). A kimi-k2.5 A/B of the same
+   the author has the generated HTML/PDF). **Caveat discovered on first
+   reading (same day):** gate-clean but structurally flat — see "Current
+   epic"; the exemplar predates the cadence-budget enforcement and stays
+   checked in as the cautionary baseline. The prose itself passed the same
+   author reading ("good for a 120b model" — the first author-ratified
+   weak-tier prose verdict): the gap is confined to POLISH's choice layer. A kimi-k2.5 A/B of the same
    premise is still running for the tier comparison.
-1. **Land the rotating-POV PR** (this branch), then:
-2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
-   FILL at scale on a weak tier is now demonstrated (step 0); the missing half
-   of the exit is **DRESS** — no weak tier has yet completed a clean DRESS at
-   scale. Natural next kick: `qf run dress` on the finished *Closed Circle*
-   project (or a successor run that also exercises interludes).
+1. **The epic's next run — DRESS at scale, proving the enforced cadence
+   budget on the way:** a fresh weak-tier medium run whose finalize fills
+   the budget (or halts honestly trying), whose passage layer lands in the
+   B6 band, and which then completes DRESS gate-clean. Watch for repair
+   exhaustion: a ~60-site budget in one proposal is untested at the weak
+   tier; if it exhausts, the fix is decomposing the finalize pass (per-run
+   calls), not softening the requirement. (DRESS purely as machinery
+   exercise could also run on the flat exemplar.)
+2. **Then the next milestone** (roadmap "Next"): *Structural depth —
+   material density & texture worlds* — the author's stretching diagnosis
+   turned into engine work (dilemma budget coupled to words budget, bridge
+   share bounded, brainstorm surplus retained as branching feedstock,
+   tensored texture worlds over whole runs, the different-context lever).
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

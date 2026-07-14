@@ -16,6 +16,38 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (the cadence budget becomes mandatory — the flat-book
+  post-mortem):** Reading the checked-in `closed-circle-medium` exemplar, the
+  author found it "essentially a flat story ... not interactive fiction" —
+  heritage built false branching / passage collapse / soft dilemmas exactly
+  against this. The numbers agree: 10 branch points over 112 passages (M8's
+  `closed-circle`: 62 over 148), zero `false_branch`-purpose beats (M8: 70),
+  words-per-choice 3352 vs the 250–800 B6 band. Root cause is architectural,
+  not a model verdict (author, same session: even if kimi fills the budget
+  where gpt-oss didn't, "it's still a prompting/architecture issue"): POLISH
+  finalize's false-branch site counts are engine-computed (`cadence_plan`
+  sizes them to bring words-per-choice into band — post-hoc it wants 63
+  sites on this project) but were only *requested in prose*; the schema
+  accepts `false_branches: []` and the apply validated only the placement
+  of sites actually proposed. The live run's cache shows all four finalize
+  rounds proposed zero sites, unchallenged — while the kimi-k2.5 A/B filled
+  the same-shaped budget, confirming the heritage floor-count finding (a
+  count a prompt merely states is a tier-dependent knob). Fix on the
+  follow-up branch: `_finalize_apply` now rejects any proposal that leaves
+  a run short of its site count (pre-splice, ApplyError naming run and both
+  counts), the prompt says the counts are mandatory, design doc 02 records
+  the contract, with a violating-construction test. The B6 gate itself stays
+  advisory — the *budget* is the enforcement point because it is exact and
+  actionable. The exemplar predates the fix and stays checked in as the
+  cautionary baseline. The same author reading split the verdict cleanly:
+  "the actual prose is good (for a 120b model)" (author, 2026-07-14) — the
+  first author-ratified prose judgment on a weak-tier run, so the
+  prose-quality engine half (echo guard, story-so-far, review contract,
+  per-passage POV) held at FILL and the defect was purely structural, in
+  POLISH's choice layer. (Same reading also surfaced a mechanical `qf graph`
+  defect: per-world beat ids carry `--`, which Mermaid parses as an edge —
+  ids are now sanitized, labels untouched.)
+
 - **2026-07-14 (rotating-POV live validation: PASSED — first weak-tier medium
   FILL, gate-clean):** The fresh *Closed Circle* medium on `gpt-oss:120b`
   completed FILL with 0 gate errors (6 advisory warnings: 5× B5 near-band

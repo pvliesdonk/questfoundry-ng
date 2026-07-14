@@ -62,7 +62,10 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   compound through weave and collapse: live 2026-07-14, the same medium
   premise produced a ~40% larger passage layer on kimi-k2.5 than on
   gpt-oss:120b. Calibration must state per-tier expectations or tighten the
-  bands it wants respected. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  bands it wants respected. First knob settled by enforcement instead
+  (2026-07-14, the flat-book post-mortem in the decision log): finalize's
+  false-branch site counts are now mandatory at apply — the precedent when
+  a knob's target is engine-computed and exact. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
   yet in a decision-log entry) — treat as an unverified agent observation until

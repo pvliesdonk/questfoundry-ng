@@ -34,6 +34,7 @@ scene_type — graph/validate.py check_b8_pacing).
 
 from __future__ import annotations
 
+from collections import Counter
 from collections.abc import Callable
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
@@ -131,7 +132,9 @@ def _long_runs(project: Project) -> list[list[str]]:
 def _cadence(project: Project) -> list[dict]:
     """The words-aware diamond budget per long run (M8): the engine sizes
     the cadence and suggests the seam edges; the model writes the arms
-    (and may move a site along its run — the budget is advisory)."""
+    and may move a site along its run — but each run's site COUNT is
+    mandatory, enforced by _finalize_apply (a weak tier proposed zero
+    sites against a full budget and shipped a flat book, 2026-07-14)."""
     runs = pc.collapse_groups(project.graph)
     plan = pc.cadence_plan(project.graph, project.vision.preset)
     return [{"beats": runs[i], "edges": edges} for i, edges in sorted(plan.items())]
@@ -188,6 +191,32 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     # semantic one.
     needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
     long_run_beats = {b for run in _long_runs(project) for b in run}
+    # The cadence budget is a requirement, not a suggestion: it is sized to
+    # bring words-per-choice into the B6 band, and a proposal that leaves it
+    # unfilled ships a book-shaped story (live gpt-oss:120b, 2026-07-14: four
+    # finalize rounds each proposed zero sites against a full budget — the
+    # medium landed at 10 branch points over 112 passages). Checked before
+    # any splice so a shortfall mutates nothing.
+    cadence = _cadence(project)
+    run_of = {b: i for i, run in enumerate(cadence) for b in run["beats"]}
+    placed: Counter[int] = Counter(
+        run_of[spec.before] for spec in proposal.false_branches if spec.before in run_of
+    )
+    short = [
+        (run, placed[i]) for i, run in enumerate(cadence) if placed[i] < len(run["edges"])
+    ]
+    if short:
+        detail = "; ".join(
+            f"the run {run['beats'][0]} -> {run['beats'][-1]} needs "
+            f"{len(run['edges'])} site(s), this proposal places {got}"
+            for run, got in short
+        )
+        raise ApplyError(
+            f"the cadence budget is mandatory, not advisory: {detail} — add the "
+            "missing site(s) on each named run (any suggested seam edge listed "
+            "under CADENCE for that run is valid; a diamond takes 2 arms, a "
+            "sidetrack 1), keeping every site you already placed"
+        )
     lines = []
     for spec in proposal.false_branches:
         if spec.before not in long_run_beats or spec.after not in long_run_beats:

@@ -48,8 +48,12 @@ The built milestones. Their contracts are authoritative in the design docs
 Post-M8 structural/prose efforts (each a plan doc + decision-log entry): the
 prose-quality-at-scale engine, `scene_type` and `narration_scope` beat
 annotations + the B8 pacing report, the review contract, reference-pinning
-(`refpin.py`), the Ollama backend (A20), and the POLISH passages-pass
-decomposition (A21). See `docs/plans/` and the decision log.
+(`refpin.py`), the Ollama backend (A20), the POLISH passages-pass
+decomposition (A21), and **rotating limited POV** (A22, PR #74: per-beat
+`viewpoint`/`interlude` settled at the freeze, I14 one-head-per-passage, the
+collapse head-switch cut, per-passage FILL enforcement, `Voice.interlude`;
+live-validated by the first weak-tier medium to finish FILL gate-clean —
+`examples/closed-circle-medium`). See `docs/plans/` and the decision log.
 
 ## Now
 
@@ -65,19 +69,17 @@ decomposition (A21). See `docs/plans/` and the decision log.
   weak-tier story completes FILL and DRESS gate-clean, exports round-trip, and
   reads without prose-quality rework.
 
-- **Rotating limited POV.** A wanted, previously-mis-deferred feature: the
-  viewpoint character changes across the book while each unit stays in one head.
-  The author answered the design questions directly (2026-07-14: per-passage
-  head, GROW-annotate assignment, no cadence engine constraint, first-person
-  interludes in v1) and the engine half is **built offline-green** (per-beat
-  `viewpoint`/`interlude`, the collapse cut, I14, per-passage FILL enforcement,
-  `Voice.interlude`). **Open:** the live *Closed Circle* validation on a
-  fresh medium project (the prior session's project died with its container;
-  a surviving pre-viewpoint project would resume at `qf rerun grow`, since
-  heads are minted at GROW's annotate pass and a POLISH checkpoint is
-  headless by construction) — the acceptance test is FILL clearing the
-  rotating-scheme passages, with the rotation reading deliberately.
-  → [`../plans/rotating-pov-build.md`](../plans/rotating-pov-build.md).
+- **Structural interactivity holds at every tier.** Opened by the first
+  reading of `examples/closed-circle-medium` (author, 2026-07-14): the run was
+  gate-clean yet "essentially a flat story" — 10 branch points over 112
+  passages against M8's 62/148, because finalize's engine-computed cadence
+  budget went unfilled (four rounds of `false_branches: []`, unchallenged)
+  and B6 is advisory. The budget is now **mandatory at apply** (design 02).
+  **Open:** a fresh weak-tier medium run proving the enforced budget yields
+  an in-band, played-not-read structure end-to-end; whether the remaining
+  floor-phrased within-band knobs (scaffold shape bands, intersection group
+  counts, residue fork uptake) need the same treatment (see the BACKLOG
+  tier-confound item — enforced counts beat calibrated expectations).
 
 ## Next
 

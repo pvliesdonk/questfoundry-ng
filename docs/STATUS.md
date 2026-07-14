@@ -19,16 +19,18 @@ _Last updated: 2026-07-14._
 
 ## Current epic
 
-**Rotating limited POV** (built offline-green, PR pending on
-`claude/rotating-limited-pov-hikty0`): the author answered the five design
-questions directly (2026-07-14 — per-passage head, GROW-annotate assignment,
-no cadence engine constraint, first-person interludes in v1, golden coverage
-via keepers-bargain's constant head + the e2e fixture) and the engine half is
-built per [`plans/rotating-pov-build.md`](plans/rotating-pov-build.md):
-per-beat `viewpoint`/`interlude` settled at the freeze, invariant **I14** (one
-head per passage) + a G3 referential check, the collapse head-switch cut,
-per-passage POV enforcement in FILL's write/review, `Voice.interlude`, and
-mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
+**Structural interactivity holds at every tier** (roadmap "Now"; opened by
+the author's first reading of the checked-in exemplar, 2026-07-14): the
+gate-clean *Closed Circle* medium turned out "essentially a flat story" —
+10 branch points over 112 passages (M8's run: 62/148), zero false-branch
+beats, 3352 words per genuine choice vs the 250–800 band. Root cause found
+and fixed the same day: finalize's engine-computed cadence budget was
+requested in prose but never enforced — the live run proposed
+`false_branches: []` four rounds straight, unchallenged (the kimi A/B
+filled the same budget: a tier-dependent knob, hence an architecture bug —
+author framing). The budget is now **mandatory at `_finalize_apply`**
+(design 02; decision log 2026-07-14 "flat-book post-mortem"). Previous
+epic **Rotating limited POV shipped in PR #74** (A22; roadmap "Shipped").
 
 ## Immediate next steps
 
@@ -50,14 +52,22 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
    follow-up) and DRESS. The finished project is checked in as
    [`examples/closed-circle-medium/`](../examples/closed-circle-medium/)
    (at FILL — no codex/art; exports stay out of the repo per AGENTS.md,
-   the author has the generated HTML/PDF). A kimi-k2.5 A/B of the same
+   the author has the generated HTML/PDF). **Caveat discovered on first
+   reading (same day):** gate-clean but structurally flat — see "Current
+   epic"; the exemplar predates the cadence-budget enforcement and stays
+   checked in as the cautionary baseline. A kimi-k2.5 A/B of the same
    premise is still running for the tier comparison.
-1. **Land the rotating-POV PR** (this branch), then:
+1. **Prove the enforced cadence budget live:** a fresh weak-tier medium run
+   whose finalize fills the budget (or halts honestly trying) and whose
+   passage layer lands in the B6 band — the acceptance test for the current
+   epic. Watch for repair exhaustion: a 60-site budget in one proposal is
+   untested at the weak tier; if it exhausts, the fix is decomposing the
+   finalize pass (per-run calls), not softening the requirement.
 2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
    FILL at scale on a weak tier is now demonstrated (step 0); the missing half
    of the exit is **DRESS** — no weak tier has yet completed a clean DRESS at
-   scale. Natural next kick: `qf run dress` on the finished *Closed Circle*
-   project (or a successor run that also exercises interludes).
+   scale. Worth running on a post-enforcement project rather than the flat
+   exemplar (or on it, purely to exercise the DRESS machinery).
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

@@ -487,9 +487,13 @@ that rejoins). May grant cosmetic flags for later flavor callbacks.
 **Texture world** — the false branch generalized to scene scale
 (structural-depth W3, author-directed 2026-07-14): a diamond laid over a
 whole choice-free *stretch* of the DAG, temporarily creating a parallel
-world — "one where the next events happen in the forest, another where
-they happen in the mountains" — that converges exactly where the stretch
-does. Same contract as false branches (different textures, never
+rendering — **the same events against another backdrop** — that converges
+exactly where the stretch does. "Backdrop" is deliberately wide (author
+clarification, 2026-07-14): any consequence-free axis — the place ("the
+next events happen in the forest / in the mountains"), the means ("go by
+bus or train"), the company, or the small facts of things and people
+("the car is blue / yellow", "the innkeeper has a son / a daughter") —
+not location only. Same contract as false branches (different textures, never
 different consequences), different economics: a beat-scale diamond buys
 one choice for one texture arm's traversed words, while a texture fork
 buys one at near-zero traversed words — the reader walks one world of

@@ -315,14 +315,19 @@ def test_finalize_states_coined_ids_must_be_fresh():
     assert "colliding id is rejected" in source
 
 
-def test_finalize_texture_premise_forbids_borrowing_from_instructions():
+def test_finalize_texture_premise_is_anchored_and_uncontaminated():
     """Texture-premise contamination (author-caught, texture-trial live run
     2026-07-14): the template quoted the doctrine's forest/mountains example
-    and the model echoed it as 2 of 3 premises. The fence and the mechanical
-    id example (a place name was the second vector) must stay."""
+    and the model echoed it as 2 of 3 premises. The template must carry no
+    copyable scenery (the id example stays mechanical), and the premise
+    constraint is positive and structural — anchor in a story element and
+    name it — not a negative fence (author correction, same day: texture is
+    any consequence-free axis, 'same events against another backdrop', not
+    location only)."""
     source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
-    flat = " ".join(source.split())  # the fence wraps across template lines
-    assert "never take a setting from these instructions" in flat
+    flat = " ".join(source.split())
+    assert "the premise names that element" in flat
+    assert "never different consequences" in flat
     assert "beat:tw0-1" in flat  # mechanical, not a place name
     assert "forest" not in flat and "mountain" not in flat
 

@@ -533,10 +533,11 @@ def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[s
     raw, a twin's unset annotation would fall back asymmetrically) and
     records the twin in ``mirrors``, the evidence I15 checks. ``entities``
     is deliberately NOT copied: the arm's whole point is a different
-    texture — different places, different passers-by — so its entities
-    belong to whoever words the arm (PR-4's proposal); ``_twin_chain``'s
-    fresh cadence twins copy them only as verbatim placeholders for that
-    same wording pass."""
+    backdrop — a different place, company, or detail of things and people
+    (any consequence-free axis; 01 §6) — so its entities belong to
+    whoever words the arm (PR-4's proposal); ``_twin_chain``'s fresh
+    cadence twins copy them only as verbatim placeholders for that same
+    wording pass."""
     if not arm:
         raise mutations.MutationError("a texture arm needs at least one beat")
     if len(arm) != len(stretch):

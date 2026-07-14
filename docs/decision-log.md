@@ -46,6 +46,30 @@ history; the decisions it recorded are captured below and in the design docs.
   (counts a prompt merely states are tier knobs) and for the B4-style
   band drift the structural-depth milestone's coupled budget addresses.
 
+- **2026-07-14 (texture worlds: contamination caught and the definition
+  widened — author corrections on the live run):** Two corrections from
+  the author reading the texture-trial's first finalize output. (1)
+  **Prompt contamination**: `polish_finalize.j2` quoted the doctrine's
+  forest/mountains example verbatim and the model echoed it as 2 of 3
+  premises (the third, un-anchored premise grounded correctly in the
+  story's own brainstormed material — the mechanism works when not
+  anchored). The example and the place-named id example are gone. The
+  session's first replacement — a "never take a setting from these
+  instructions" fence — was itself rejected (author, same exchange):
+  self-referential negation with no visible referent is bad prompt
+  engineering; what shipped instead is the positive, structural
+  constraint — the premise must anchor in a story element the beats,
+  cast, or reserved material already carry, *and name it*. (2) **The
+  definition was read too narrowly**: the session had equated texture
+  with *setting*; the author's intent is *same events against another
+  backdrop* on ANY consequence-free axis — place (forest/mountains),
+  means (bus/train), company, or the small facts of things and people
+  (a car blue/yellow, an innkeeper's son/daughter). Recorded in 01 §6;
+  prompts (`polish_finalize.j2`, `fill_write.j2`), the premise field's
+  comment, and the splice docstring now carry the wide reading. The
+  running trial keeps its prompt-tinted forest/mountain premises; the
+  fix is validated by the next run's premises.
+
 - **2026-07-14 (structural depth PR-4: finalize plants texture worlds;
   FILL grounds them):** the milestone's pipeline wiring, completing
   W3/W4 (all four PRs now built; the live validation run is the open

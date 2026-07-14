@@ -631,31 +631,31 @@ def graph(
     """Render the beat DAG or passage graph as Mermaid (stdout)."""
     project = load_project(directory)
     g = project.graph
+
+    def mm_id(node_id: str) -> str:
+        # Mermaid reads '--' inside a node id as the start of an edge, so the
+        # world separator in per-world beat ids must not reach the output.
+        return node_id.split(":", 1)[1].replace("--", "__")
+
     lines = ["flowchart TD"]
     if layer == "beats":
         for beat in sorted(g.nodes_of(Beat), key=lambda b: b.id):
-            slug = beat.id.split(":", 1)[1]
             shape = ("([", "])") if beat.is_ending else ("[", "]")
             label = beat.summary[:40].replace('"', "'")
-            lines.append(f'    {slug}{shape[0]}"{label}"{shape[1]}')
+            lines.append(f'    {mm_id(beat.id)}{shape[0]}"{label}"{shape[1]}')
         for e in g.edges:
             if e.kind == EdgeKind.PREDECESSOR:
-                lines.append(
-                    f"    {e.src.split(':', 1)[1]} --> {e.dst.split(':', 1)[1]}"
-                )
+                lines.append(f"    {mm_id(e.src)} --> {mm_id(e.dst)}")
     elif layer == "passages":
         for passage in sorted(g.nodes_of(Passage), key=lambda p: p.id):
-            slug = passage.id.split(":", 1)[1]
             shape = ("([", "])") if passage.ending else ("[", "]")
             label = passage.summary[:40].replace('"', "'")
-            lines.append(f'    {slug}{shape[0]}"{label}"{shape[1]}')
+            lines.append(f'    {mm_id(passage.id)}{shape[0]}"{label}"{shape[1]}')
         for e in g.edges:
             if e.kind == EdgeKind.CHOICE:
                 label = e.payload.get("label", "")[:30].replace('"', "'")
                 gate = f" 🔒{','.join(e.payload['requires'])}" if e.payload.get("requires") else ""
-                lines.append(
-                    f'    {e.src.split(":", 1)[1]} -->|"{label}{gate}"| {e.dst.split(":", 1)[1]}'
-                )
+                lines.append(f'    {mm_id(e.src)} -->|"{label}{gate}"| {mm_id(e.dst)}')
     else:
         console.print(f"[red]unknown layer {layer!r}[/red]")
         raise typer.Exit(2)

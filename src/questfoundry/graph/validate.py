@@ -671,8 +671,15 @@ def check_i11_grouping(ctx: Context) -> None:
                     break
 
 
+# I12's hard cap on ambiguous states one passage's prose must honor —
+# shared with POLISH's audit apply, which enforces it repairably at the
+# pass that can still fix it (mark more flags irrelevant); the gate here
+# is the unrepairable backstop.
+I12_AMBIGUOUS_CAP = 3
+
+
 def check_i12_feasibility(ctx: Context) -> None:
-    cap = 3
+    cap = I12_AMBIGUOUS_CAP
     for passage in ctx.g.nodes_of(Passage):
         beats = queries.beats_of_passage(ctx.g, passage.id)
         relevant = set(queries.ambiguous_flags(ctx.g, beats)) - set(passage.irrelevant_flags)

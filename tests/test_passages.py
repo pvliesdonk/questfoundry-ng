@@ -794,6 +794,48 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
     _audit_apply(proposal, project)  # normalized, no ApplyError
 
 
+def test_audit_apply_enforces_the_i12_cap_repairably(vision, tmp_path):
+    """Texture-trial live run (2026-07-14, the first 4-soft story): the
+    prompt's 'you MUST bring the relevant count within cap' was stated
+    and trusted, the model under-marked five passages, and I12 exploded
+    at the unrepairable gate. The audit apply now enforces the cap where
+    a repair can still fix it."""
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    d2, p2a, p2b = make_dilemma(g, "sub1", role=DilemmaRole.SOFT)
+    d3, p3a, p3b = make_dilemma(g, "sub2", role=DilemmaRole.SOFT)
+    scaffold(g, "main", d1, p1a, p1b)
+    scaffold(g, "sub1", d2, p2a, p2b, endings=False)
+    scaffold(g, "sub2", d3, p3a, p3b, endings=False)
+    planned = weave.plan(g)
+    order = [
+        "pre:beat:main-pre0",
+        "pre:beat:sub1-pre0",
+        "pre:beat:sub1-pre1",
+        "resolve:dilemma:sub1",
+        "pre:beat:sub2-pre0",
+        "pre:beat:sub2-pre1",
+        "resolve:dilemma:sub2",
+        "pre:beat:main-pre1",
+        "resolve:dilemma:main",
+    ]
+    weave.realize(g, planned, order)
+    _derive_flags(g)
+    mutations.add_passage(
+        g,
+        Passage(id="passage:p-trunk", created_by=Stage.POLISH, summary="s"),
+        ["beat:main-pre1"],  # 4 ambiguous states, cap is 3
+    )
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    under_marked = AuditProposal(audit=[AuditEntry(passage="passage:p-trunk", irrelevant=[])])
+    with pytest.raises(ApplyError, match="at most 3 in one passage .I12.*irrelevant list"):
+        _audit_apply(under_marked, project)
+    fixed = AuditProposal(
+        audit=[AuditEntry(passage="passage:p-trunk", irrelevant=["flag:sub1-a"])]
+    )
+    _audit_apply(fixed, project)  # within cap: accepted
+
+
 # -- arcs pass (plan: docs/plans/prose-quality.md W5) --------------------------
 
 

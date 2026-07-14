@@ -41,7 +41,7 @@ from collections.abc import Callable
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
-from questfoundry.graph.validate import run_checks
+from questfoundry.graph.validate import I12_AMBIGUOUS_CAP, run_checks
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
@@ -130,7 +130,7 @@ class TextureWorldSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     site: int  # index into the offered TEXTURE WORLDS sites
-    premise: str  # the alternate texture in one line ("over the mountain pass")
+    premise: str  # what differs in this rendering, one line (any consequence-free axis)
     beats: list[TextureBeatSpec] = Field(min_length=1)
 
 
@@ -283,8 +283,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
         if not spec.premise.strip():
             raise ApplyError(
                 f"texture world at site {spec.site} has an empty premise; state "
-                "the alternate texture in one line (where or how these events "
-                "now happen)"
+                "in one line what differs in this rendering — name a story "
+                "element the beats, cast, or reserved material already carry "
+                "and how this rendering varies it (any consequence-free axis)"
             )
         if len(spec.beats) != len(sites[spec.site]):
             raise ApplyError(
@@ -826,7 +827,7 @@ def _audit_context(project: Project) -> dict:
             {"passage": p, "active": [(f, flag_text[f]) for f in flags]}
             for p, flags in _audited_passages(project)
         ],
-        "cap": 3,
+        "cap": I12_AMBIGUOUS_CAP,
     }
 
 
@@ -853,6 +854,23 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
             raise ApplyError(
                 f"{entry.passage}: {sorted(stray)} are not active there; "
                 f"active flags are {expected[entry.passage]}"
+            )
+        # The prompt's "you MUST bring the relevant count within cap" was
+        # stated and trusted; the texture-trial live run (2026-07-14, the
+        # first 4-soft story — the words-target coupling raises state
+        # pressure at late shared scenes) under-marked five passages and
+        # I12 exploded at the unrepairable gate. Enforce at the pass that
+        # can still fix it (the cadence precedent: engine-computed, exact,
+        # in-pass repairable).
+        remaining = [f for f in expected[entry.passage] if f not in set(entry.irrelevant)]
+        if len(remaining) > I12_AMBIGUOUS_CAP:
+            over = len(remaining) - I12_AMBIGUOUS_CAP
+            raise ApplyError(
+                f"{entry.passage} leaves {len(remaining)} states relevant "
+                f"({sorted(remaining)}); a writer can honor at most "
+                f"{I12_AMBIGUOUS_CAP} in one passage (I12) — move at least "
+                f"{over} more of them into this entry's irrelevant list, "
+                "choosing the ones this scene genuinely doesn't touch"
             )
         mutations.set_passage_irrelevant_flags(g, entry.passage, entry.irrelevant)
         if entry.irrelevant:

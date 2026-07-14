@@ -1047,8 +1047,10 @@ def test_review_prompt_carries_the_choice_grounding_rule(golden_fill):
 
 
 def test_review_prompt_omits_choice_grounding_on_endings(golden_fill):
+    # the rule block is absent (no outgoing choices); the schema recap's
+    # mention of the empty-quote case renders unconditionally and is fine
     rendered = _render_review(golden_fill, "passage:p-long-watch")
-    assert "choice_grounding" not in rendered
+    assert "- choice_grounding —" not in rendered
 
 
 def test_review_rules_pin_choice_grounding():

@@ -65,7 +65,16 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   bands it wants respected. First knob settled by enforcement instead
   (2026-07-14, the flat-book post-mortem in the decision log): finalize's
   false-branch site counts are now mandatory at apply — the precedent when
-  a knob's target is engine-computed and exact. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  a knob's target is engine-computed and exact. Author reframe (2026-07-14,
+  same session): the deeper miscalibration is **material density, not site
+  counts** — the flat run was "stretching" (8 dilemmas across 239 beats, 89
+  of them bridges vs 27/33 in the healthy runs); a scope whose words budget
+  outruns its dilemma budget cannot be textured back into interactivity
+  (kimi's budget-saturated structure still projects 1020 words/choice).
+  Recalibration should couple the dilemma/explored-path count to the words
+  budget and bound the bridge-beat share (the stretching signal); owned by
+  the "Structural interactivity" roadmap epic, tracked here as the scale
+  item it grew from. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
   medium run reached POLISH at **59 passages against the 90–160 band** (its B3
   advisory). Provenance: observed live in that scratch run (not committed, not
   yet in a decision-log entry) — treat as an unverified agent observation until

@@ -338,10 +338,16 @@ Two phases:
    planning reads stay uncut — a head-switch chunks prose, not choices);
    merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
-   audit** on every passage — for each possibly-active flag decide
-   *irrelevant here* (annotate "don't address"), *compatible* (poly-state
-   prose, ≤3 states), *light* (residue beat covers it), or *heavy*
-   (variant passages); wire choices with labels/gates/grants; synthesize
+   audit** on every passage — ambiguity is presented and capped in
+   *dilemma states* (a dilemma's per-path flags are one binary
+   uncertainty, I12), and for each state the model decides *irrelevant
+   here* (annotate "don't address" — all of the state's flags), keeps it
+   for poly-state prose (≤3 states), or **splits** the passage on the
+   dilemma (`split_on`, at most 2): the engine re-presents the moment as
+   flag-gated variants whose arrivals hold a known side — the honest
+   resolution when a state matters, enforced repairably at the apply
+   with every violation batched into one error; wire choices with
+   labels/gates/grants; synthesize
    character-arc metadata ("begins X, pivots at beat Y, ends Z per
    path") for FILL's benefit.
 

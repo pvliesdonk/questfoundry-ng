@@ -671,10 +671,15 @@ def check_i11_grouping(ctx: Context) -> None:
                     break
 
 
-# I12's hard cap on ambiguous states one passage's prose must honor —
-# shared with POLISH's audit apply, which enforces it repairably at the
-# pass that can still fix it (mark more flags irrelevant); the gate here
-# is the unrepairable backstop.
+# I12's hard cap on ambiguous DILEMMA states one passage's prose must
+# honor — a dilemma's per-path flags are one binary uncertainty (any of
+# them identifies the path), so the unit is the dilemma, not the flag
+# (unit corrected 2026-07-14: seven flags at a live passage were two
+# dilemmas). Shared with POLISH's audit apply, which enforces it
+# repairably at the pass that can still fix it (mark a state's flags
+# irrelevant, or split the passage into variants keyed on a dilemma —
+# arrivals at a gated variant hold a known side, honestly removing that
+# state); the gate here is the unrepairable backstop.
 I12_AMBIGUOUS_CAP = 3
 
 
@@ -682,13 +687,19 @@ def check_i12_feasibility(ctx: Context) -> None:
     cap = I12_AMBIGUOUS_CAP
     for passage in ctx.g.nodes_of(Passage):
         beats = queries.beats_of_passage(ctx.g, passage.id)
-        relevant = set(queries.ambiguous_flags(ctx.g, beats)) - set(passage.irrelevant_flags)
+        gates = queries.passage_gate_flags(ctx.g, passage.id)
+        groups = queries.ambiguous_dilemma_groups(ctx.g, beats, gates)
+        # a state stays relevant while ANY of its flags is unmarked
+        relevant = [
+            grp for grp in groups if not set(grp) <= set(passage.irrelevant_flags)
+        ]
         if len(relevant) > cap:
             ctx.error(
                 "I12",
-                f"passage {passage.id} must honor {len(relevant)} ambiguous states "
-                f"{sorted(relevant)}; cap is {cap} "
-                f"(mark irrelevant flags or split into variants)",
+                f"passage {passage.id} must honor {len(relevant)} ambiguous "
+                f"dilemma states {relevant}; cap is {cap} "
+                f"(mark a state's flags irrelevant, or split into variants "
+                f"keyed on a dilemma)",
             )
 
 

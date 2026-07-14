@@ -581,15 +581,28 @@ design.
 - **I11** Every beat is grouped into exactly one passage (variants may
   re-present the same beat behind disjoint gates).
 - **I12** Prose feasibility: no passage requires FILL to honor more than
-  3 *ambiguous* flag states simultaneously; incompatible heavy states
-  force variants, not hedged prose. A flag is ambiguous at a passage
-  when readers arrive holding either value — its grant is upstream on
-  some route and the opposing path's commit is upstream on another (a
-  reconverged soft dilemma). A flag granted on every route there (only
-  its own side upstream — e.g. this world's hard commits at an ending)
-  is a fact the prose may simply assume: one state, not two, no load.
-  Flags of a dilemma the passage is gated on are likewise determined
-  for everyone who arrives.
+  3 *ambiguous dilemma states* simultaneously; incompatible heavy states
+  force variants, not hedged prose. **The unit is the dilemma, not the
+  flag** (corrected 2026-07-14, texture-trial live run: a path derives
+  one flag per consequence and any of them identifies the path, so seven
+  flags at one passage were two binary uncertainties): a dilemma's
+  ambiguous flags count together as one state. A flag is ambiguous at a
+  passage when readers arrive holding either value — its grant is
+  upstream on some route and the opposing path's commit is upstream on
+  another (a reconverged soft dilemma). A flag granted on every route
+  there (only its own side upstream — e.g. this world's hard commits at
+  an ending) is a fact the prose may simply assume: one state, not two,
+  no load. Flags of a dilemma the passage is gated on — beat-level gates
+  (residue) and passage-level gates alike (a variant's gate rides every
+  in-choice; `passage_gate_flags`) — are likewise determined for
+  everyone who arrives. When more states genuinely matter at a passage
+  than the cap allows (the expected regime at medium/long, where several
+  soft dilemmas overlap), the honest resolution is **splitting**: the
+  audit keys the passage on a dilemma (`split_on`) and the engine
+  re-presents the moment as flag-gated variants — each variant's
+  arrivals hold a known side, removing that state — never marking a
+  load-bearing state irrelevant to satisfy a budget (author-directed
+  2026-07-14).
 - **I13** The passage graph has no dead ends: every non-ending passage
   has ≥1 always-satisfiable choice; every ending is reachable.
 - **I14** One head per passage: among a passage's member beats that carry

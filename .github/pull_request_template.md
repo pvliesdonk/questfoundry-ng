@@ -10,7 +10,10 @@
 
 <!-- Check honestly. "N/A because …" is fine; silence is not. See AGENTS.md. -->
 
-- [ ] `docs/STATUS.md` updated (state, next steps, decision log if applicable)
+- [ ] `docs/STATUS.md` (current epic + next steps) updated, if this PR changes them
+- [ ] `docs/design/05-roadmap.md` — epic moved between Shipped/Now/Next/Later, if applicable
+- [ ] `docs/BACKLOG.md` — loose ends opened/closed, if applicable
+- [ ] `docs/adr/NNNN-*.md` — new record if a decision worth keeping was made
 - [ ] Affected `docs/design/*` sections updated — or none apply because: …
 - [ ] README status section still true (milestones, sample transcripts)
 - [ ] Golden story still green (`uv run qf validate examples/keepers-bargain`),

@@ -325,7 +325,15 @@ def test_spread_keeps_ends_and_order():
     assert spread == sorted(spread)
 
 
-# -- annotate (scene_type) ----------------------------------------------------
+# -- annotate (scene_type / narration_scope / viewpoint) -----------------------
+
+VIEWPOINT = "character:main-anchor"  # seeded_story's hard-dilemma anchor
+
+
+def _scene(beat: str, scene_type=SceneType.SCENE, scope=NarrationScope.LIMITED, **kw) -> BeatScene:
+    kw.setdefault("viewpoint", "" if scope == NarrationScope.WIDE else VIEWPOINT)
+    kw.setdefault("interlude", False)
+    return BeatScene(beat=beat, scene_type=scene_type, narration_scope=scope, **kw)
 
 
 def _annotate_all(
@@ -334,11 +342,7 @@ def _annotate_all(
     scope=NarrationScope.LIMITED,
 ) -> AnnotateProposal:
     beats = queries.topological_order(project.graph) or []
-    return AnnotateProposal(
-        annotations=[
-            BeatScene(beat=b, scene_type=scene_type, narration_scope=scope) for b in beats
-        ]
-    )
+    return AnnotateProposal(annotations=[_scene(b, scene_type, scope) for b in beats])
 
 
 def test_annotate_apply_sets_scene_type_on_every_beat(project):
@@ -359,57 +363,89 @@ def test_annotate_apply_sets_narration_scope_on_every_beat(project):
 
 def test_annotate_requires_full_coverage(project):
     beats = queries.topological_order(project.graph)
-    partial = AnnotateProposal(
-        annotations=[
-            BeatScene(beat=b, scene_type=SceneType.SCENE, narration_scope=NarrationScope.LIMITED)
-            for b in beats[:-1]
-        ]
-    )
+    partial = AnnotateProposal(annotations=[_scene(b) for b in beats[:-1]])
     with pytest.raises(ApplyError, match="missing"):
         _annotate_apply(partial, project)
     # a failed apply set nothing (the loop validates before mutating)
     assert project.graph.node(beats[0]).scene_type is None
     assert project.graph.node(beats[0]).narration_scope is None
+    assert project.graph.node(beats[0]).viewpoint is None
 
 
 def test_annotate_rejects_unknown_beat(project):
-    proposal = AnnotateProposal(
-        annotations=[
-            BeatScene(
-                beat="beat:invented",
-                scene_type=SceneType.SCENE,
-                narration_scope=NarrationScope.LIMITED,
-            )
-        ]
-    )
+    proposal = AnnotateProposal(annotations=[_scene("beat:invented")])
     with pytest.raises(ApplyError, match="not a beat to annotate"):
         _annotate_apply(proposal, project)
 
 
 def test_annotate_rejects_duplicate_beat(project):
     beats = queries.topological_order(project.graph)
-    proposal = AnnotateProposal(
-        annotations=[
-            BeatScene(beat=b, scene_type=SceneType.SCENE, narration_scope=NarrationScope.LIMITED)
-            for b in beats
-        ]
-        + [
-            BeatScene(
-                beat=beats[0],
-                scene_type=SceneType.SCENE,
-                narration_scope=NarrationScope.LIMITED,
-            )
-        ]
-    )
+    proposal = AnnotateProposal(annotations=[_scene(b) for b in beats] + [_scene(beats[0])])
     with pytest.raises(ApplyError, match="annotated twice"):
         _annotate_apply(proposal, project)
 
 
-def test_annotate_schema_pins_beats(project):
+def test_annotate_apply_sets_viewpoint_on_every_beat(project):
+    lines = _annotate_apply(_annotate_all(project), project)
+    beats = queries.topological_order(project.graph)
+    assert all(project.graph.node(b).viewpoint == VIEWPOINT for b in beats)
+    assert "heads: main-anchor" in lines[0]
+
+
+def test_annotate_limited_without_viewpoint_is_repairable(project):
+    beats = queries.topological_order(project.graph)
+    proposal = AnnotateProposal(
+        annotations=[_scene(beats[0], viewpoint="")] + [_scene(b) for b in beats[1:]]
+    )
+    with pytest.raises(ApplyError, match="names no viewpoint"):
+        _annotate_apply(proposal, project)
+    assert project.graph.node(beats[0]).viewpoint is None  # validated before mutating
+
+
+def test_annotate_wide_beat_carries_no_head(project):
+    # a coda has no head, whatever the proposal supplied
+    beats = queries.topological_order(project.graph)
+    proposal = AnnotateProposal(
+        annotations=[_scene(beats[0], scope=NarrationScope.WIDE, viewpoint=VIEWPOINT)]
+        + [_scene(b) for b in beats[1:]]
+    )
+    _annotate_apply(proposal, project)
+    assert project.graph.node(beats[0]).viewpoint is None
+
+
+def test_annotate_wide_interlude_is_repairable(project):
+    beats = queries.topological_order(project.graph)
+    proposal = AnnotateProposal(
+        annotations=[
+            _scene(beats[0], scope=NarrationScope.WIDE, viewpoint="", interlude=True)
+        ]
+        + [_scene(b) for b in beats[1:]]
+    )
+    with pytest.raises(ApplyError, match="both wide and interlude"):
+        _annotate_apply(proposal, project)
+
+
+def test_annotate_interlude_beat_is_recorded(project):
+    beats = queries.topological_order(project.graph)
+    proposal = AnnotateProposal(
+        annotations=[_scene(beats[0], interlude=True)] + [_scene(b) for b in beats[1:]]
+    )
+    lines = _annotate_apply(proposal, project)
+    assert project.graph.node(beats[0]).interlude is True
+    assert "1 interlude" in lines[0]
+
+
+def test_annotate_schema_pins_beats_and_viewpoints(project):
     schema = annotate_proposal_schema(project)
     beats = queries.topological_order(project.graph)
-    enum = schema.model_json_schema()["$defs"]["BeatScene"]["properties"]["beat"]["enum"]
-    assert set(enum) == set(beats)
+    props = schema.model_json_schema()["$defs"]["BeatScene"]["properties"]
+    assert set(props["beat"]["enum"]) == set(beats)
+    # viewpoint: the retained character ids plus "" (wide codas have no head)
+    assert set(props["viewpoint"]["enum"]) == {
+        "character:main-anchor",
+        "character:sub-anchor",
+        "",
+    }
     with pytest.raises(ValidationError):  # a beat outside the story is unrepresentable
         schema.model_validate(
             {
@@ -418,6 +454,22 @@ def test_annotate_schema_pins_beats(project):
                         "beat": "beat:invented",
                         "scene_type": "scene",
                         "narration_scope": "limited",
+                        "viewpoint": VIEWPOINT,
+                        "interlude": False,
+                    }
+                ]
+            }
+        )
+    with pytest.raises(ValidationError):  # a non-character head is unrepresentable
+        schema.model_validate(
+            {
+                "annotations": [
+                    {
+                        "beat": beats[0],
+                        "scene_type": "scene",
+                        "narration_scope": "limited",
+                        "viewpoint": "character:invented",
+                        "interlude": False,
                     }
                 ]
             }

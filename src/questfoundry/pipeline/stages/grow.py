@@ -18,12 +18,13 @@ Five passes sharing gate G3:
    earlier hard forks' de-ended tails to leave the climax question open.
    Skipped when nothing was cloned (single hard dilemma).
 4. *annotate* — the LLM tags every beat with its `scene_type` (Swain
-   scene/sequel/micro_beat), the intrinsic prose-intensity signal FILL
-   reads to modulate prose across the story (design doc 01 §10.3). Runs
-   pre-freeze because scene_type is intrinsic beat content (why the beat
-   exists), settled at the freeze like a summary; beats a later stage
-   adds (bridge here, POLISH's residue/false-branch) ride the purpose
-   fallback (`effective_scene_type`).
+   scene/sequel/micro_beat), its `narration_scope` (limited/wide coda),
+   and its `viewpoint` head (+ interlude mark) — the intrinsic per-beat
+   signals FILL reads to modulate prose and frame the POV (design doc 01
+   §5). Runs pre-freeze because these are intrinsic beat content (why the
+   beat exists), settled at the freeze like a summary; beats a later
+   stage adds (bridge here, POLISH's residue/false-branch) ride the
+   purpose fallback (`effective_scene_type`) and are viewpoint wildcards.
 5. *bridge* — for adjacent beats sharing no entities, the LLM writes
    structural bridge beats the engine splices in — before the whole fork
    frontier when the gap runs into a commit beat (a bridge is shared, so
@@ -55,7 +56,12 @@ from questfoundry.models.structure import (
     StructuralPurpose,
 )
 from questfoundry.pipeline import weave
-from questfoundry.pipeline.refpin import entity_ref_ids, pin, retained_entity_ids
+from questfoundry.pipeline.refpin import (
+    entity_ref_ids,
+    pin,
+    retained_character_ids,
+    retained_entity_ids,
+)
 from questfoundry.pipeline.types import (
     ApplyError,
     PassSpec,
@@ -448,6 +454,10 @@ class BeatScene(BaseModel):
     beat: str
     scene_type: SceneType
     narration_scope: NarrationScope
+    # pinned to the retained character ids plus "" (= no head: wide codas
+    # carry no viewpoint by construction — rotating-pov-build.md)
+    viewpoint: str
+    interlude: bool
 
 
 class AnnotateProposal(BaseModel):
@@ -469,12 +479,15 @@ def _annotate_beats(project: Project) -> list[dict]:
 
 
 def _annotate_context(project: Project) -> dict:
-    return {"vision": project.vision, "beats": _annotate_beats(project)}
+    g = project.graph
+    characters = [g.node(cid) for cid in retained_character_ids(g)]
+    return {"vision": project.vision, "beats": _annotate_beats(project), "characters": characters}
 
 
 def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
     g = project.graph
     expected = set(queries.topological_order(g) or [])
+    characters = set(retained_character_ids(g))
     seen: set[str] = set()
     for spec in proposal.annotations:
         if spec.beat not in expected:
@@ -485,23 +498,48 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
         if spec.beat in seen:
             raise ApplyError(f"{spec.beat} annotated twice")
         seen.add(spec.beat)
+        if spec.narration_scope == NarrationScope.WIDE and spec.interlude:
+            raise ApplyError(
+                f"{spec.beat} is marked both wide and interlude — an interlude is "
+                "narrated inside one head; make it limited with a viewpoint, or "
+                "drop the interlude mark"
+            )
+        if spec.narration_scope == NarrationScope.LIMITED and not spec.viewpoint:
+            raise ApplyError(
+                f"{spec.beat} is limited but names no viewpoint; set viewpoint to "
+                "the character whose head narrates it — one of "
+                f"{sorted(characters)}"
+            )
     missing = expected - seen
     if missing:
         raise ApplyError(
-            "every beat needs a scene_type and narration_scope — the writer paces "
-            f"and frames the whole story from them; missing {sorted(missing)}"
+            "every beat needs a scene_type, narration_scope, and viewpoint — the "
+            f"writer paces and frames the whole story from them; missing {sorted(missing)}"
         )
     counts = {SceneType.SCENE: 0, SceneType.SEQUEL: 0, SceneType.MICRO_BEAT: 0}
     scopes = {NarrationScope.LIMITED: 0, NarrationScope.WIDE: 0}
+    heads: dict[str, int] = {}
+    interludes = 0
     for spec in proposal.annotations:
         mutations.set_beat_scene_type(g, spec.beat, spec.scene_type)
         mutations.set_beat_narration_scope(g, spec.beat, spec.narration_scope)
+        # a wide coda has no head, whatever the proposal carried
+        viewpoint = spec.viewpoint or None
+        if spec.narration_scope == NarrationScope.WIDE:
+            viewpoint = None
+        mutations.set_beat_viewpoint(g, spec.beat, viewpoint, interlude=spec.interlude)
         counts[spec.scene_type] += 1
         scopes[spec.narration_scope] += 1
+        if viewpoint is not None:
+            heads[viewpoint.split(":", 1)[1]] = heads.get(viewpoint.split(":", 1)[1], 0) + 1
+        interludes += spec.interlude
+    head_note = ", ".join(f"{h} {n}" for h, n in sorted(heads.items(), key=lambda x: -x[1]))
     return [
         f"annotated {len(seen)} beats: {counts[SceneType.SCENE]} scene, "
         f"{counts[SceneType.SEQUEL]} sequel, {counts[SceneType.MICRO_BEAT]} micro_beat; "
-        f"{scopes[NarrationScope.LIMITED]} limited, {scopes[NarrationScope.WIDE]} wide"
+        f"{scopes[NarrationScope.LIMITED]} limited, {scopes[NarrationScope.WIDE]} wide; "
+        f"heads: {head_note or 'none'}"
+        + (f"; {interludes} interlude{'s' if interludes != 1 else ''}" if interludes else "")
     ]
 
 
@@ -662,10 +700,19 @@ def contextualize_proposal_schema(project: Project) -> type[ContextualizeProposa
 def annotate_proposal_schema(project: Project) -> type[AnnotateProposal]:
     """Pin `annotations[].beat` to every beat present pre-freeze (the
     annotatable set — SEED scaffold + GROW clones; bridge/residue/
-    false-branch are added later and ride the purpose fallback). Resolved
-    after weave/contextualize rewire the graph (PassSpec.schema_for)."""
+    false-branch are added later and ride the purpose fallback) and
+    `viewpoint` to the retained character ids plus "" (no head — wide
+    codas). Resolved after weave/contextualize rewire the graph
+    (PassSpec.schema_for)."""
     beats = queries.topological_order(project.graph) or []
-    return pin(AnnotateProposal, "AnnotateProposal", {("BeatScene", "beat"): beats})
+    return pin(
+        AnnotateProposal,
+        "AnnotateProposal",
+        {
+            ("BeatScene", "beat"): beats,
+            ("BeatScene", "viewpoint"): retained_character_ids(project.graph) + [""],
+        },
+    )
 
 
 def bridge_proposal_schema(project: Project) -> type[BridgeProposal]:

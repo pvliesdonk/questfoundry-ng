@@ -33,7 +33,7 @@ from typing import Any, Literal, Union, get_args, get_origin
 
 from pydantic import BaseModel, create_model
 
-from questfoundry.models.world import Entity
+from questfoundry.models.world import Entity, EntityCategory
 
 
 def enum_type(ids: list[str]) -> Any:
@@ -114,6 +114,16 @@ def retained_entity_ids(g: Any) -> list[str]:
     field validated by *exact* membership (`g.get(id)` / `id in retained`),
     which does not accept the bare slug."""
     return [e.id for e in g.nodes_of(Entity) if e.retained]
+
+
+def retained_character_ids(g: Any) -> list[str]:
+    """Every retained *character* entity's exact id — the valid set for a
+    viewpoint field (a head is always a character; rotating-pov-build.md)."""
+    return [
+        e.id
+        for e in g.nodes_of(Entity)
+        if e.retained and e.category == EntityCategory.CHARACTER
+    ]
 
 
 def entity_ref_ids(g: Any) -> list[str]:

@@ -348,3 +348,16 @@ def test_voice_banned_field_forbids_word_and_vague_bans():
     assert "enforces these VERBATIM" in source
     assert "ban a common word" in source
     assert "not a simile" in source  # the "as" example
+
+
+def test_fill_review_said_plus_speaker_is_never_a_banned_tag():
+    """Closed Circle live run (2026-07-14): the reviewer read '"…," said
+    Jordan' as a "dialogue tag other than 'said'" and demanded the
+    ungrammatical fix 'replace with just "said"' — a fabricated rule that
+    stalled the passage. The banned_pattern clarifier now states a tag ban
+    is about the verb, and a named speaker with a plain said IS the plain
+    tag; the voice prompt forbids complement-form bans at the source."""
+    review = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
+    assert "said Jordan" in review and "never violates a tags-are-said rule" in review
+    voice = " ".join((PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8").split())
+    assert "NEVER phrase a ban as a complement" in voice

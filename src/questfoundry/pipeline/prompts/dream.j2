@@ -11,8 +11,18 @@ SCOPE: "{{ scope.name }}" — the finished story will have {{ scope.hard_dilemma
 
 Decide: genre and subgenre; the emotional tone; 2-4 themes the story explores
 (phrased as tensions or questions, e.g. "duty against desire"); the intended
-audience; content notes (what to embrace, what to avoid); and a point-of-view
-hint (advisory — the prose stage decides finally).
+audience; content notes (what to embrace, what to avoid){% if not pov_hint %}; and a point-of-view
+hint (advisory — the prose stage decides finally){% endif %}.
+{% if pov_hint %}
+
+THE AUTHOR HAS ALREADY SET THE POINT OF VIEW — it is a constraint, not a
+suggestion, and the engine keeps the author's wording regardless of what you
+emit here (echo it or leave pov_hint empty):
+{{ pov_hint }}
+Shape everything you decide to SERVE that scheme (a rotating-viewpoint story
+needs a cast whose members can carry chapters; a journal-interlude scheme needs
+a character positioned to write one). Never restate it as a different scheme.
+{% endif %}
 
 Every later stage will be held to this contract, so be specific and opinionated:
 "windswept, intimate, slow-burning" is a tone; "atmospheric" is not.

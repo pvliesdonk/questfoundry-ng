@@ -26,11 +26,21 @@ class DreamProposal(BaseModel):
 
 def _context(project: Project) -> dict:
     preset = project.vision.preset
-    return {"premise": project.vision.premise, "scope": preset}
+    return {
+        "premise": project.vision.premise,
+        "scope": preset,
+        "pov_hint": project.vision.pov_hint,
+    }
 
 
 def _apply(proposal: DreamProposal, project: Project) -> list[str]:
-    # premise and scope are the author's; everything else is the model's
+    # premise, scope, and an authored pov_hint are the author's; everything
+    # else is the model's. The pov_hint guard is engine-side, not prompt-side:
+    # two live runs (2026-07-14, gpt-oss:120b and kimi-k2.5) replaced an
+    # authored rotating scheme with an invented single-head one, because the
+    # prompt never saw the authored value and unconditionally asked the model
+    # to "decide" one — the scheme (rotation, heads, interludes) is a
+    # structural commitment later stages build on, never DREAM's to rewrite.
     project.vision = Vision(
         premise=project.vision.premise,
         scope=project.vision.scope,
@@ -42,7 +52,7 @@ def _apply(proposal: DreamProposal, project: Project) -> list[str]:
         content_notes=ContentNotes(
             include=proposal.content_include, avoid=proposal.content_avoid
         ),
-        pov_hint=proposal.pov_hint,
+        pov_hint=project.vision.pov_hint or proposal.pov_hint,
     )
     return [f"vision: {proposal.genre} / {proposal.tone} / {len(proposal.themes)} theme(s)"]
 

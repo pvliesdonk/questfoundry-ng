@@ -414,3 +414,39 @@ def test_fill_review_matches_beat_actors_by_identity_not_epithet():
     assert "Match actors by WHO they are" in source
     assert "resolve the role against the cast before flagging" in source
     assert "DIFFERENT person performs the event" in source
+
+
+def test_dream_keeps_an_authored_pov_hint(tmp_path):
+    """Two live DREAM runs (gpt-oss:120b and kimi-k2.5, 2026-07-14) replaced
+    an authored rotating pov_hint with an invented single-head scheme: the
+    context never carried the authored value, the prompt unconditionally said
+    'decide a point-of-view hint', and apply overwrote from the proposal. Now
+    the authored hint is engine-kept, rendered as a constraint, and the
+    decide-list only asks for a hint when none was authored."""
+    from questfoundry.pipeline.stages.dream import DreamProposal, _apply
+    from questfoundry.project.io import scaffold_project
+
+    project = scaffold_project(tmp_path, "t", "micro")
+    project.vision.pov_hint = "third-person limited rotating among the suspects"
+    context = dream_context(project)
+    env = runner._environment()
+    rendered = _render(env, "dream.j2", "", **context)
+    assert "THE AUTHOR HAS ALREADY SET THE POINT OF VIEW" in rendered
+    assert "rotating among the suspects" in rendered
+    assert "point-of-view\nhint (advisory" not in rendered
+
+    proposal = DreamProposal(
+        genre="g", subgenre="s", tone="t", themes=["a v b", "c v d"], audience="adult",
+        content_include=[], content_avoid=[],
+        pov_hint="single fixed head — an invented replacement",
+    )
+    _apply(proposal, project)
+    assert project.vision.pov_hint == "third-person limited rotating among the suspects"
+
+    # no authored hint -> the model's proposal wins, as before
+    project2 = scaffold_project(tmp_path / "p2", "t2", "micro")
+    context2 = dream_context(project2)
+    rendered2 = _render(env, "dream.j2", "", **context2)
+    assert "ALREADY SET THE POINT OF VIEW" not in rendered2
+    _apply(proposal, project2)
+    assert project2.vision.pov_hint == "single fixed head — an invented replacement"

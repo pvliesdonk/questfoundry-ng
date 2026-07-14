@@ -32,45 +32,29 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
 
 ## Immediate next steps
 
-0. **Live validation: PASSED** (2026-07-14, ~13:30Z). The fresh medium *Closed
-   Circle* on `gpt-oss:120b` completed FILL **gate-clean (0 errors)** — the
-   first weak-tier medium ever to finish FILL — with the rotating scheme
-   real at every level: 4 heads over 98 headed passages (60/14/12/12) + 14
-   headless texture/coda passages, one head per passage (I14 in the passing
-   gate set), 112 passages / 239 beats, 844 calls, ~2.8M in / 1.0M out,
-   unbilled. Six advisory warnings (5× B5 near-band, 1× B6 pacing). ~15
-   halts along the way, every one a pre-existing prompt/review defect or
-   honest 2-round non-convergence — zero rotating-POV machinery failures;
-   the fixes are on this branch and the stall journal is the record. NOT
-   exercised: first-person interludes (the voice declared the register but
-   annotate marked no beats — open follow-up) and DRESS (the full
-   prose-at-scale exit also wants DRESS clean). A kimi-k2.5 A/B of the same
-   premise is still running for the tier comparison.
+0. **Live validation: PASSED** (2026-07-14, ~13:30Z). A fresh medium *Closed
+   Circle* project on the unbilled tier (`gpt-oss:120b`, ollama.com; premise +
+   rotating+journal `pov_hint` pinned verbatim, the hint re-pinned by editing
+   the DREAM artifact post-DREAM per A17 — DREAM translates, it is not
+   micromanaged; author decision 2026-07-14, decision log) completed FILL
+   **gate-clean (0 errors)** — the first weak-tier medium ever to finish FILL
+   — with the rotating scheme real at every level: 4 heads over 98 headed
+   passages (60/14/12/12) + 14 headless texture/coda passages, one head per
+   passage (I14 in the passing gate set), 112 passages / 239 beats, 844
+   calls, ~2.8M in / 1.0M out, unbilled. Six advisory warnings (5× B5
+   near-band, 1× B6 pacing). ~15 halts along the way, every one a
+   pre-existing prompt/review defect or honest 2-round non-convergence —
+   zero rotating-POV machinery failures; the fixes are on this branch and
+   the stall journal is the record. NOT exercised: first-person interludes
+   (the voice declared the register but annotate marked no beats — open
+   follow-up) and DRESS. A kimi-k2.5 A/B of the same premise is still
+   running for the tier comparison.
 1. **Land the rotating-POV PR** (this branch), then:
-2. **Live *Closed Circle* validation on a fresh medium project** on the
-   unbilled tier (`gpt-oss:120b`, ollama.com) — fresh because the prior
-   session's medium project died with its ephemeral container (the checked-in
-   `examples/closed-circle` is the older *completed* M8 project, not the one
-   that hit the FILL blocker). The new vision pins the same premise and the
-   rotating+journal `pov_hint` verbatim. The DREAM quirk this surfaced —
-   envision rewrote the authored hint to an invented single-head scheme,
-   twice, on two model tiers — resolved per the author (2026-07-14): DREAM
-   **translates** the vision and is not micromanaged; the only engine
-   guarantee is *visibility* (the authored hint now renders in the dream
-   prompt as vision input — both rewrites happened because the prompt never
-   saw it), and the override path when a scheme must be pinned (as in this
-   validation) is the existing one: edit the DREAM artifact after DREAM,
-   before BRAINSTORM (A17; the validation's operator loop automates the
-   stop-and-check). Acceptance: FILL clears the rotating-scheme passages, with the
-   rotation reading deliberately (one head per passage, journal interludes
-   where the scheme asks). (For a project that *does* survive, the resume
-   point is `qf rerun grow` — heads are minted at annotate; a pre-viewpoint
-   POLISH checkpoint is headless by construction.)
-3. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
-   the engine half is built and offline-green; no weak tier has yet completed a
-   full clean FILL/DRESS at scale. The *Closed Circle* medium run (2026-07-14)
-   got POLISH clean at medium (validating the A21 passages decomposition); its
-   FILL blocker was the rotating-POV gap this epic closes.
+2. **Prose quality at scale — the remaining live validation** (roadmap "Now"):
+   FILL at scale on a weak tier is now demonstrated (step 0); the missing half
+   of the exit is **DRESS** — no weak tier has yet completed a clean DRESS at
+   scale. Natural next kick: `qf run dress` on the finished *Closed Circle*
+   project (or a successor run that also exercises interludes).
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

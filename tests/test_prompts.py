@@ -315,6 +315,17 @@ def test_finalize_states_coined_ids_must_be_fresh():
     assert "colliding id is rejected" in source
 
 
+def test_finalize_texture_premise_forbids_borrowing_from_instructions():
+    """Texture-premise contamination (author-caught, texture-trial live run
+    2026-07-14): the template quoted the doctrine's forest/mountains example
+    and the model echoed it as 2 of 3 premises. The fence and the mechanical
+    id example (a place name was the second vector) must stay."""
+    source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
+    assert "never take a setting from these instructions" in source
+    assert "beat:tw0-1" in source  # mechanical, not a place name
+    assert "forest" not in source and "mountain" not in source
+
+
 def test_contextualize_renders_the_entities_it_requires():
     """GROW HIGH: the rule 'keep the exact entities' now has the entities in
     context, not withheld."""

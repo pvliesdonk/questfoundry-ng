@@ -129,6 +129,17 @@ looks like a model limit when it is a prompt defect. So:
   not write until you have *read the prompt and the error message and shown
   they are already correct and complete*. Absent that proof, the honest
   diagnosis is always *prompt defect, not yet fixed* — never *weak model*.
+- **Model strength is not the axis at all** (author correction,
+  2026-07-14). An under-determined prompt makes EVERY tier sample the gap:
+  a strong model does not "reconstruct the intent", it fills the gap
+  *plausibly and confidently*, which hides the defect instead of fixing
+  it — the same variance, delivered more fluently. Two consequences:
+  strong-tier success is never evidence a prompt is correct (only
+  constraint completeness is — schemas, pinned sets, mechanical checks,
+  explicit self-verification steps); and "stochastic weak-tier behavior"
+  is as much a red-flag phrase as "weak model" — variance across samples
+  is the *prompt's* under-determination showing, on any tier. The weak
+  tier surfaces defects first only because it fails less persuasively.
 - **When a pass fails (repair exhaustion, a bad proposal, a review that
   fabricates or misapplies a rule), the prompt or the message is the
   first suspect, not the model.** Assume the prompt is blunt until you

@@ -32,7 +32,13 @@ history; the decisions it recorded are captured below and in the design docs.
   uncut), per-passage POV keying in `fill_write.j2`/`fill_review.j2` with window
   head-switch notes, and `Voice.interlude` (+ required `VoiceProposal.interlude`,
   cast-validated). Architecture row A22 (03 §9). Open: the live *Closed Circle*
-  re-run from its POLISH checkpoint on the unbilled tier.
+  validation on the unbilled tier — a **fresh medium project** (author-directed,
+  2026-07-14): the prior session's medium project died with its container (only
+  the old M8 `examples/closed-circle` survives in git, a different, completed
+  project), and the old POLISH checkpoint would have been headless anyway (heads
+  are minted at GROW's annotate; `qf rerun grow` is the resume point when a
+  project *does* survive). The fresh vision pins the same premise and the
+  rotating+journal `pov_hint` verbatim.
 
 - **2026-07-13 (don't blame the weak model — a standing agent rule + two POLISH
   prompt fixes it forced):** During the narration_scope live runs two POLISH passes

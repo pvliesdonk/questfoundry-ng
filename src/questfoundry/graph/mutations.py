@@ -257,9 +257,14 @@ def set_entity_arc(g: StoryGraph, entity_id: str, arc: EntityArc) -> None:
             raise MutationError(f"arc pivot {pivot.beat!r} is not a beat")
         positions.append(order[pivot.beat])
     if positions != sorted(positions):
+        listed = [p.beat for p in arc.pivots]
+        wanted = [b for _, b in sorted(zip(positions, listed, strict=True))]
         raise MutationError(
-            f"{entity_id}: arc pivots must be listed in story order "
-            f"(topological order of their beats)"
+            f"{entity_id}: arc pivots are out of story order — listed as "
+            f"{listed}, but their beats occur as {wanted} (story order is the "
+            f"beat-by-beat sequence shown in the prompt, which fixes the order "
+            f"even between parallel branches); keep every pivot and re-list "
+            f"them exactly in that second order"
         )
     for end in arc.ends:
         if not isinstance(g.get(end.path), Path):

@@ -114,7 +114,14 @@ def test_set_entity_arc_validates_references_and_order():
             "character:sleeper",
             EntityArc(begins="asleep", ends=[PathEnd(path="path:no-such", state="x")]),
         )
-    with pytest.raises(MutationError, match="story order"):
+    # the repair brief names the listed order AND the required order — a
+    # model cannot recover from a restated rule when the offense is the
+    # engine's own linearization (live kimi-k2.5 exhaustion, 2026-07-14)
+    with pytest.raises(
+        MutationError,
+        match=r"listed as \['beat:offer', 'beat:storm-glass'\].*"
+        r"occur as \['beat:storm-glass', 'beat:offer'\]",
+    ):
         set_entity_arc(
             g,
             "character:sleeper",

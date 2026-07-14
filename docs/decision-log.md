@@ -16,6 +16,32 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-14 (structural depth PR-4: finalize plants texture worlds;
+  FILL grounds them):** the milestone's pipeline wiring, completing
+  W3/W4 (all four PRs now built; the live validation run is the open
+  exit). `_texture_and_cadence` computes both fork budgets together —
+  texture sites first (capped by the words budget: `texture_plan` admits
+  a fork only while the projected story total fits `words_target` or the
+  band top, closing PR-3's as-built note #3), then cadence sized on a
+  scratch graph carrying probe arms, so the numbers the model sees are
+  the numbers apply enforces; the schema, context, and apply all share
+  it. The finalize proposal gains `texture_worlds` — site index, a
+  one-line premise, one model-worded beat per trunk beat — with
+  mandatory coverage checked before any splice (the cadence precedent)
+  and the empty-list schema discipline when no sites are offered. Apply
+  order: texture → false branches → residue, the cadence splices
+  dispatching through the mirroring variants so a diamond inside a
+  mirrored stretch lands in both worlds. The premise persists on arm
+  beats (`Beat.texture_premise`, justified by the `Passage.variant_flag`
+  persist-for-a-later-pass precedent, A21) and FILL's write prompt
+  names it — the W4 context lever — with an explicit never-compare
+  instruction (the parallel rendering must not leak into prose).
+  Recorded fixtures stay green: their stories offer no texture sites,
+  so the new mandatory check is vacuous there. Noted for the validation
+  run: the texture entry is finalize's largest single proposal yet
+  (~15 beats); weak-tier repair exhaustion there means decomposing the
+  pass per-site (A21), never softening the requirement.
+
 - **2026-07-14 (structural depth PR-3: the texture-worlds engine — I15,
   mirrored arms, mirrored cadence):** W3's engine half, built and probed
   on the structural simulation; A23 records the architecture decision.

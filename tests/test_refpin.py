@@ -160,17 +160,26 @@ def test_polish_finalize_rejects_the_live_invented_world(golden):
 def test_polish_finalize_forbids_false_branches_without_long_runs(golden, monkeypatch):
     # a false branch splices only into a long linear run; with none, the
     # list must be empty (the enum can't say "no items") — the live
-    # gpt-oss:120b cloud failure was a proposed diamond where none fit
+    # gpt-oss:120b cloud failure was a proposed diamond where none fit.
+    # texture_worlds gets the same list discipline when no sites are offered.
     with_runs = polish.finalize_proposal_schema(golden)
     assert "maxItems" not in with_runs.model_json_schema()["properties"]["false_branches"]
 
-    monkeypatch.setattr(polish, "_long_runs", lambda project: [])
+    monkeypatch.setattr(polish, "_texture_and_cadence", lambda project: ([], [], set()))
     without = polish.finalize_proposal_schema(golden)
-    assert without.model_json_schema()["properties"]["false_branches"]["maxItems"] == 0
+    props = without.model_json_schema()["properties"]
+    assert props["false_branches"]["maxItems"] == 0
+    assert props["texture_worlds"]["maxItems"] == 0
     with pytest.raises(ValidationError):
         without.model_validate(
             {"residue": [], "false_branches": [
                 {"before": "a", "after": "b", "arms": [{"id": "x", "summary": "s"}]}
+            ]}
+        )
+    with pytest.raises(ValidationError):
+        without.model_validate(
+            {"texture_worlds": [
+                {"site": 0, "premise": "p", "beats": [{"id": "x", "summary": "s"}]}
             ]}
         )
 

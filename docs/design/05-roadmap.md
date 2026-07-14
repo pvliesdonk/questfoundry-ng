@@ -88,12 +88,13 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   **the context lever** (FILL's per-world context makes parallel beats
   read as genuinely different scenes). Design, mechanics, and PR slicing
   live in [`../plans/structural-depth.md`](../plans/structural-depth.md)
-  — the authoritative contract. **Status:** PR-1 (words-target budget
-  coupling + B9, merged #77), PR-2 (the `reserve` triage disposition,
-  merged #78), and PR-3 (the texture-worlds engine: the mirrored
-  parallel-world splice, invariant I15, sites/sizing, cadence diamonds
-  mirrored into arms) are built; PR-4 (finalize integration, FILL
-  context lever, live validation) completes the milestone per the plan. **Exit:** a fresh weak-tier medium at a band-top words
+  — the authoritative contract. **Status:** all four PRs built — PR-1
+  (words-target budget coupling + B9, #77), PR-2 (the `reserve` triage
+  disposition, #78), PR-3 (the texture-worlds engine: mirrored
+  parallel-world splice, invariant I15, #79), PR-4 (finalize
+  integration: mandatory texture sites, words-budget cap, the FILL
+  context lever). **Open: the live validation run** — the milestone's
+  exit criterion below. **Exit:** a fresh weak-tier medium at a band-top words
   target derives its budget, plants texture forks, lands B6 mid-band with
   B9 quiet, and an author read finds actual interactivity.
 

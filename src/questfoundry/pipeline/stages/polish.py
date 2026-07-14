@@ -34,6 +34,7 @@ scene_type — graph/validate.py check_b8_pacing).
 
 from __future__ import annotations
 
+import copy
 from collections import Counter
 from collections.abc import Callable
 
@@ -113,37 +114,83 @@ class FalseBranchSpec(BaseModel):
     arms: list[ArmSpec] = Field(min_length=1, max_length=2)
 
 
+class TextureBeatSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    summary: str
+    entities: list[str] = []
+
+
+class TextureWorldSpec(BaseModel):
+    """A parallel texture world over an offered stretch (structural-depth
+    W3, invariant I15): the same events re-textured — one beat per trunk
+    beat, in order; the engine mirrors annotations and wires the fork."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    site: int  # index into the offered TEXTURE WORLDS sites
+    premise: str  # the alternate texture in one line ("over the mountain pass")
+    beats: list[TextureBeatSpec] = Field(min_length=1)
+
+
 class FinalizeProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     residue: list[ResidueSpec] = []
     false_branches: list[FalseBranchSpec] = []
+    texture_worlds: list[TextureWorldSpec] = []
 
 
 def _light_needs(project: Project) -> list[pc.ConvergenceNeed]:
     return [n for n in pc.convergence_needs(project.graph) if n.weight == "light"]
 
 
-def _long_runs(project: Project) -> list[list[str]]:
-    groups = pc.collapse_groups(project.graph)
-    return [groups[i] for i in pc.long_linear_runs(groups)]
-
-
-def _cadence(project: Project) -> list[dict]:
-    """The words-aware diamond budget per long run (M8): the engine sizes
-    the cadence and suggests the seam edges; the model writes the arms
-    and may move a site along its run — but each run's site COUNT is
-    mandatory, enforced by _finalize_apply (a weak tier proposed zero
-    sites against a full budget and shipped a flat book, 2026-07-14)."""
-    runs = pc.collapse_groups(project.graph)
-    plan = pc.cadence_plan(project.graph, project.vision.preset)
-    return [{"beats": runs[i], "edges": edges} for i, edges in sorted(plan.items())]
+def _texture_and_cadence(project: Project) -> tuple[list[list[str]], list[dict], set[str]]:
+    """The two engine-sized fork budgets, computed together so they agree
+    (context and apply both call this — deterministic either way):
+    texture sites first (structural-depth W3 — the cheapest choices in
+    reader-words, capped by the words budget), then the words-aware
+    diamond budget (M8) sized on a scratch graph already carrying probe
+    arms, so the cadence the model sees accounts for the worlds it is
+    asked to write. Returns (texture stretches, cadence table, the beats
+    of long runs false branches may target — arm beats excluded: theirs
+    arrive mirrored from the trunk). Both budgets' counts are mandatory,
+    enforced by _finalize_apply (a weak tier proposed zero sites against
+    a full budget and shipped a flat book, 2026-07-14)."""
+    g = project.graph
+    preset = project.vision.preset
+    sites = pc.texture_plan(g, preset, words_target=project.vision.words_target)
+    scratch = copy.deepcopy(g)
+    for k, run in enumerate(sites):
+        arm = [
+            Beat(
+                id=f"beat:texture-probe-{k}-{i}",
+                created_by=Stage.POLISH,
+                summary="probe",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.TEXTURE_WORLD,
+            )
+            for i in range(len(run))
+        ]
+        pc.insert_texture_world(scratch, arm, run)
+    runs = pc.collapse_groups(scratch)
+    plan = pc.cadence_plan(scratch, preset)
+    cadence = [{"beats": runs[i], "edges": edges} for i, edges in sorted(plan.items())]
+    arm_ids = {
+        b.id for b in scratch.nodes_of(Beat) if b.purpose == StructuralPurpose.TEXTURE_WORLD
+    }
+    long_run_beats = {
+        b for i in pc.long_linear_runs(runs) for b in runs[i]
+    } - arm_ids
+    return sites, cadence, long_run_beats
 
 
 def _finalize_skip(project: Project) -> str | None:
-    if _light_needs(project) or _cadence(project):
+    sites, cadence, _ = _texture_and_cadence(project)
+    if _light_needs(project) or cadence or sites:
         return None
-    return "no light-residue convergences and no cadence budget"
+    return "no light-residue convergences, no texture sites, and no cadence budget"
 
 
 def _finalize_context(project: Project) -> dict:
@@ -175,10 +222,14 @@ def _finalize_context(project: Project) -> dict:
         for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id)
         if d.reserved
     ]
+    sites, cadence, _ = _texture_and_cadence(project)
     return {
         "vision": project.vision,
         "needs": needs,
-        "cadence": _cadence(project),
+        "cadence": cadence,
+        "texture_sites": [
+            {"index": i, "beats": [g.node(b) for b in run]} for i, run in enumerate(sites)
+        ],
         "reserve": reserve,
     }
 
@@ -209,14 +260,39 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
     # convergence rejoins — so the order is a consistency choice, not a
     # semantic one.
     needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
-    long_run_beats = {b for run in _long_runs(project) for b in run}
-    # The cadence budget is a requirement, not a suggestion: it is sized to
-    # bring words-per-choice into the B6 band, and a proposal that leaves it
-    # unfilled ships a book-shaped story (live gpt-oss:120b, 2026-07-14: four
-    # finalize rounds each proposed zero sites against a full budget — the
-    # medium landed at 10 branch points over 112 passages). Checked before
-    # any splice so a shortfall mutates nothing.
-    cadence = _cadence(project)
+    # Both fork budgets are requirements, not suggestions: they are sized
+    # to bring words-per-choice into the B6 band, and a proposal that
+    # leaves either unfilled ships a book-shaped story (live gpt-oss:120b,
+    # 2026-07-14: four finalize rounds each proposed zero sites against a
+    # full budget — the medium landed at 10 branch points over 112
+    # passages). Checked before any splice so a shortfall mutates nothing.
+    sites, cadence, long_run_beats = _texture_and_cadence(project)
+    proposed_sites = sorted(spec.site for spec in proposal.texture_worlds)
+    if proposed_sites != list(range(len(sites))):
+        wanted = "; ".join(
+            f"site {i}: {run[0]} .. {run[-1]} ({len(run)} beats)"
+            for i, run in enumerate(sites)
+        )
+        raise ApplyError(
+            "the texture-world budget is mandatory, not advisory: emit exactly "
+            f"one texture_worlds entry per offered site — {wanted or 'none'}; "
+            f"this proposal covers sites {proposed_sites}. Each entry names its "
+            "site index, a one-line premise, and one beat per trunk beat, in order"
+        )
+    for spec in proposal.texture_worlds:
+        if not spec.premise.strip():
+            raise ApplyError(
+                f"texture world at site {spec.site} has an empty premise; state "
+                "the alternate texture in one line (where or how these events "
+                "now happen)"
+            )
+        if len(spec.beats) != len(sites[spec.site]):
+            raise ApplyError(
+                f"texture world at site {spec.site} has {len(spec.beats)} beat(s) "
+                f"against a {len(sites[spec.site])}-beat stretch; the arm mirrors "
+                "the trunk beat-for-beat (I15) — write exactly one beat per trunk "
+                "beat, in order"
+            )
     run_of = {b: i for i, run in enumerate(cadence) for b in run["beats"]}
     placed: Counter[int] = Counter(
         run_of[spec.before] for spec in proposal.false_branches if spec.before in run_of
@@ -237,6 +313,38 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             "sidetrack 1), keeping every site you already placed"
         )
     lines = []
+    # Texture worlds splice first: the cadence table was sized on a graph
+    # carrying them, and a diamond landing inside a mirrored stretch needs
+    # the real arms present to mirror into (pc.insert_cadence_diamond).
+    for spec in sorted(proposal.texture_worlds, key=lambda s: s.site):
+        try:
+            arm = [
+                Beat(
+                    id=b.id,
+                    created_by=Stage.POLISH,
+                    summary=b.summary,
+                    beat_class=BeatClass.STRUCTURAL,
+                    purpose=StructuralPurpose.TEXTURE_WORLD,
+                    texture_premise=spec.premise.strip(),
+                    entities=[resolve_entity_ref(g, e) for e in b.entities],
+                )
+                for b in spec.beats
+            ]
+        except ValidationError as e:
+            raise ApplyError(
+                f"invalid texture-world beat at site {spec.site}: "
+                f"{format_validation_error(e)}"
+            ) from e
+        try:
+            pc.insert_texture_world(g, arm, sites[spec.site])
+        except (mutations.MutationError, KeyError) as e:
+            # duplicate ids arrive pre-converted by add_beat; MutationError
+            # messages from the splice carry their own correctives
+            raise ApplyError(f"texture world at site {spec.site}: {e}") from e
+        lines.append(
+            f"texture world '{spec.premise.strip()}' parallels "
+            f"{sites[spec.site][0]} .. {sites[spec.site][-1]} ({len(arm)} beats)"
+        )
     for spec in proposal.false_branches:
         if spec.before not in long_run_beats or spec.after not in long_run_beats:
             raise ApplyError(
@@ -263,10 +371,13 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
         except ValidationError as e:
             raise ApplyError(f"invalid false-branch arm: {format_validation_error(e)}") from e
         try:
+            # the cadence splices mirror themselves into any texture arm
+            # paralleling the edge (structural-depth W3; both worlds keep
+            # the same choice topology)
             if len(chains) == 1:
-                pc.insert_sidetrack(g, chains[0], spec.before, spec.after)
+                pc.insert_cadence_sidetrack(g, chains[0], spec.before, spec.after)
             else:
-                pc.insert_false_branch(g, chains[0], chains[1], spec.before, spec.after)
+                pc.insert_cadence_diamond(g, chains[0], chains[1], spec.before, spec.after)
         except (mutations.MutationError, KeyError) as e:
             # add_beat already converts a duplicate-id KeyError into an
             # actionable MutationError; the KeyError arm here catches the
@@ -853,10 +964,14 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
     is the reference discipline's list cousin: a reference *list* whose
     valid target set is empty must itself be empty. Without it a model
     (live gpt-oss:120b cloud, 2026-07-11) proposed a cadence diamond where
-    none was structurally possible and exhausted repairs."""
+    none was structurally possible and exhausted repairs. `texture_worlds`
+    gets the same treatment when no sites are offered; its `site` index
+    is an int the pin machinery cannot enum, so exact coverage stays the
+    apply's job (checked before any splice, with the sites named)."""
     needs = _light_needs(project)
     entities = entity_ref_ids(project.graph)
-    long_beats = [b for run in _long_runs(project) for b in run]
+    sites, _, long_run_beats = _texture_and_cadence(project)
+    long_beats = sorted(long_run_beats)
     schema = pin(
         FinalizeProposal,
         "FinalizeProposal",
@@ -868,16 +983,18 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
             ("FollowupSpec", "entities"): entities,
             ("ForkSpec", "entities"): entities,
             ("ArmSpec", "entities"): entities,
+            ("TextureBeatSpec", "entities"): entities,
             ("FalseBranchSpec", "before"): long_beats,
             ("FalseBranchSpec", "after"): long_beats,
         },
     )
+    overrides: dict = {}
     if not long_beats:
-        schema = create_model(
-            "FinalizeProposal",
-            __base__=schema,
-            false_branches=(list[FalseBranchSpec], Field(default=[], max_length=0)),
-        )
+        overrides["false_branches"] = (list[FalseBranchSpec], Field(default=[], max_length=0))
+    if not sites:
+        overrides["texture_worlds"] = (list[TextureWorldSpec], Field(default=[], max_length=0))
+    if overrides:
+        schema = create_model("FinalizeProposal", __base__=schema, **overrides)
     return schema
 
 

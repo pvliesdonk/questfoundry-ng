@@ -606,11 +606,12 @@ def _arm_pairs(g: StoryGraph, before: str, after: str) -> list[tuple[str, str]]:
     )
 
 
-def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int) -> list[Beat]:
+def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int, premise: str) -> list[Beat]:
     """Texture twins of freshly spliced trunk false-branch beats: same
     summary for now (words for texture worlds are the wording pass's job —
     structure is copied by the engine, words are rewritten per world,
-    A14's doctrine), mirrored annotations, engine-suffixed ids."""
+    A14's doctrine), mirrored annotations, the host arm's premise,
+    engine-suffixed ids."""
     return [
         Beat(
             id=f"{fb.id}--tw{k}",
@@ -620,6 +621,7 @@ def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int) -> list[Beat]:
             purpose=StructuralPurpose.TEXTURE_WORLD,
             entities=list(fb.entities),
             mirrors=fb.id,
+            texture_premise=premise,
             scene_type=effective_scene_type(fb),
             narration_scope=effective_narration_scope(fb),
             viewpoint=fb.viewpoint,
@@ -643,7 +645,8 @@ def insert_cadence_diamond(
     pairs = _arm_pairs(g, before, after)
     insert_false_branch(g, arm_a, arm_b, before, after)
     for k, (ai, aj) in enumerate(pairs):
-        twins = [_twin_chain(g, chain, k) for chain in (arm_a, arm_b)]
+        premise = _beat(g, ai).texture_premise
+        twins = [_twin_chain(g, chain, k, premise) for chain in (arm_a, arm_b)]
         for chain in twins:
             for beat in chain:
                 mutations.add_beat(g, beat, [])
@@ -662,7 +665,7 @@ def insert_cadence_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, af
     pairs = _arm_pairs(g, before, after)
     insert_sidetrack(g, arm, before, after)
     for k, (ai, aj) in enumerate(pairs):
-        twins = _twin_chain(g, arm, k)
+        twins = _twin_chain(g, arm, k, _beat(g, ai).texture_premise)
         for beat in twins:
             mutations.add_beat(g, beat, [])
         prev = ai
@@ -672,18 +675,39 @@ def insert_cadence_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, af
         mutations.add_ordering(g, prev, aj)
 
 
-def texture_plan(g: StoryGraph, preset) -> list[list[str]]:
+def projected_total_words(g: StoryGraph, preset) -> int:
+    """Projected prose words for the whole story: every passage group's
+    projection summed — the structural estimate of what B7 will measure."""
+    groups = collapse_groups(g, max_beats=preset.passage_beats_max, split_viewpoints=True)
+    return sum(projected_group_words(g, group, preset) for group in groups)
+
+
+def _stretch_words(g: StoryGraph, stretch: Sequence[str], preset) -> int:
+    """What one texture arm adds to the story's projected words: the
+    stretch's own projection, chunked at the cap like the arm will be."""
+    cap = preset.passage_beats_max
+    chunks = [list(stretch[i : i + cap]) for i in range(0, len(stretch), cap)]
+    return sum(projected_group_words(g, chunk, preset) for chunk in chunks)
+
+
+def texture_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[list[str]]:
     """Run-scale fork budget: the stretches finalize parallels, sized by
     the same iterated projection as ``cadence_plan`` but budgeted FIRST —
     a texture fork adds a decision at near-zero traversed words, so it
     takes the cheap wins before beat diamonds spend arm-words on the
     rest. Longest qualifying runs first (the most scene-scale substance),
     until the projected mean reaches the same upper-middle B6 target,
-    the cap (TEXTURE_WORLDS_MAX) is hit, or sites run out."""
+    the cap (TEXTURE_WORLDS_MAX) is hit, or sites run out. A fork also
+    costs *story* words the reader never traverses twice (the stretch is
+    written and printed twice), so each is admitted only while the
+    projected story total stays inside the words budget — the author's
+    ``words_target`` when set, the scope band's top otherwise (a scope
+    earns its length; structural-depth W1/W3)."""
     from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
 
     lo, hi = B6_WORDS_PER_CHOICE
     target = (lo + 2 * hi) // 3
+    limit = words_target if words_target is not None else preset.words_total[1]
     sites = sorted(texture_sites(g, preset), key=lambda run: (-len(run), run[0]))
     if not sites:
         return []
@@ -693,10 +717,14 @@ def texture_plan(g: StoryGraph, preset) -> list[list[str]]:
         return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
 
     scratch = copy.deepcopy(g)
+    total_words = projected_total_words(g, preset)
     chosen: list[list[str]] = []
     for run in sites:
         if len(chosen) >= TEXTURE_WORLDS_MAX or projected_mean(scratch) <= target:
             break
+        marginal = _stretch_words(g, run, preset)
+        if total_words + marginal > limit:
+            continue  # a shorter site may still fit the words budget
         arm = [
             Beat(
                 id=f"beat:texture-probe-{len(chosen)}-{i}",
@@ -708,6 +736,7 @@ def texture_plan(g: StoryGraph, preset) -> list[list[str]]:
             for i in range(len(run))
         ]
         insert_texture_world(scratch, arm, run)
+        total_words += marginal
         chosen.append(run)
     return chosen
 

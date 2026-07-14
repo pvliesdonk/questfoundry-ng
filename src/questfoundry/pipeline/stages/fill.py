@@ -536,6 +536,13 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
         )
         story_so_far, story_elided = _story_so_far(project, passage.id)
         viewpoint, interlude = _passage_head(g, passage.id)
+        # W4, the context lever (structural-depth): a passage inside a
+        # texture-world arm names its world's premise, the way world
+        # truths are named after hard forks — the writer grounds the
+        # alternate texture instead of inferring it from summaries alone.
+        # An arm's beats share one premise by construction; sorted-first
+        # is a deterministic guard, not an expected case.
+        premises = sorted({b.texture_premise for b in beats if b.texture_premise})
         return {
             "vision": project.vision,
             "voice": project.voice,
@@ -557,6 +564,7 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             # POV), a wide beat is a detached coda the writer may narrate beyond the
             # viewpoint character's horizon (design doc 01 §Beat annotations)
             "beat_scope": {b.id: effective_narration_scope(b).value for b in beats},
+            "texture_premise": premises[0] if premises else None,
             "entities": entities,
             "arcs": _arc_positions(g, passage.id),
             "flags": flags,

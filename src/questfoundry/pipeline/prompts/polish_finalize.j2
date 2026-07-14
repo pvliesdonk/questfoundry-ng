@@ -44,6 +44,44 @@ slug from the path or dilemma so it stays distinct, e.g. "beat:hand-locket-after
 {% endif %}
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}
+{% if reserve and (texture_sites or cadence) %}
+RESERVED MATERIAL (advisory). Triage set these dilemmas aside as unwoven
+feedstock — real material from this story's brainstorm. Where a texture
+world or a false-branch arm wants substance, prefer grafting from them (a
+place, a tension, a rumor they name) over inventing texture from nothing.
+They stay unwoven: an arm may echo their material as texture, never
+advance, reveal, or decide them.
+{% for r in reserve %}
+- {{ r.dilemma.question }} (stakes: {{ r.dilemma.why_it_matters }}{% if r.entities %}; touches {{ r.entities | join(", ") }}{% endif %})
+{% endfor %}
+{% endif %}
+{% if texture_sites %}
+TEXTURE WORLDS (required). Each stretch below runs several scenes with no
+choice; lay a PARALLEL WORLD over it — the SAME story events rendered in a
+genuinely different texture ("one where the next events happen in the
+forest, another where they happen in the mountains"). The reader chooses a
+world where the stretch begins and both worlds converge exactly where it
+ends: different textures, never different consequences — nothing may
+happen in one world that changes what is true after the convergence.
+For EACH site: declare a one-line "premise" (where or how these events now
+happen — graft from the RESERVED MATERIAL above when it fits), then write
+exactly ONE beat per trunk beat, IN ORDER: the same event the trunk beat
+carries, re-expressed in the premise's texture. Summaries in plain
+declarative present tense (a brief for the writer, never the prose).
+{% for site in texture_sites %}
+- site {{ site.index }} ({{ site.beats | length }} beats to mirror):
+{% for b in site.beats %}
+    {{ b.id }} — "{{ b.summary }}"
+{% endfor %}
+{% endfor %}
+Each entry: {"site": the site index above, "premise": one line, "beats":
+[{"id": "beat:slug", "summary", "entities": [...]}] — exactly one per trunk
+beat, in order}. Every "id" names a NEW beat: coin fresh, unique
+"beat:slug"s no existing beat uses (a colliding id is rejected); derive
+them from the premise, e.g. "beat:mountain-crossing-1". The site counts
+are MANDATORY: a proposal that skips a site, doubles one, or writes a
+different beat count than the stretch is rejected whole.
+{% endif %}
 {% if cadence %}
 FALSE BRANCHES (cadence). The story's real choices — its dilemmas — are
 guaranteed elsewhere; these stretches run several scenes without ANY choice,
@@ -66,16 +104,6 @@ flavor genuinely needs a breath more room.
     {{ before }} -> {{ after }}
 {% endfor %}
 {% endfor %}
-{% if reserve %}
-RESERVED MATERIAL (advisory). Triage set these dilemmas aside as unwoven
-feedstock — real material from this story's brainstorm. Where a site wants
-flavor, prefer grafting from them (a place, a tension, a rumor they name)
-over inventing texture from nothing. They stay unwoven: an arm may echo
-their material as texture, never advance, reveal, or decide them.
-{% for r in reserve %}
-- {{ r.dilemma.question }} (stakes: {{ r.dilemma.why_it_matters }}{% if r.entities %}; touches {{ r.entities | join(", ") }}{% endif %})
-{% endfor %}
-{% endif %}
 Each entry: {"before": beat id, "after": its successor in the same run,
 "arms": [{"id": "beat:slug", "summary", "entities", "followup": {"id":
 "beat:slug", "summary", "entities"} or omit}] — 2 arms for a diamond, 1 for a

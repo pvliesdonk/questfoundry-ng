@@ -38,10 +38,14 @@ mini-ADR **A22**. Unblocks closed-circle-of-suspects mysteries at FILL.
    session's medium project died with its ephemeral container (the checked-in
    `examples/closed-circle` is the older *completed* M8 project, not the one
    that hit the FILL blocker). The new vision pins the same premise and the
-   rotating+journal `pov_hint` verbatim; one DREAM quirk already observed:
-   envision rewrote the hint to a single-head scheme once and the authored
-   wording had to be restored (worth watching as a possible dream-prompt
-   defect). Acceptance: FILL clears the rotating-scheme passages, with the
+   rotating+journal `pov_hint` verbatim. The DREAM quirk this surfaced —
+   envision rewrote the authored hint to an invented single-head scheme,
+   twice, on two model tiers — is **fixed**: the authored hint reaches the
+   dream prompt as a constraint and the engine never overwrites it, while
+   the model's own decision lands in the separate `pov_hint_decided` field
+   (freely re-decided per run, so a hint-less first run's guess never
+   masquerades as an author mandate on rerun); consumers read
+   `effective_pov_hint`. Acceptance: FILL clears the rotating-scheme passages, with the
    rotation reading deliberately (one head per passage, journal interludes
    where the scheme asks). (For a project that *does* survive, the resume
    point is `qf rerun grow` — heads are minted at annotate; a pre-viewpoint

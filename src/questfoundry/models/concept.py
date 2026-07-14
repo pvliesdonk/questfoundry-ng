@@ -235,8 +235,19 @@ class Vision(BaseModel):
     themes: list[str] = []
     audience: str = ""
     content_notes: ContentNotes = ContentNotes()
+    # POV provenance is two fields, not a non-emptiness guess (PR #74 review):
+    # `pov_hint` is the AUTHOR's — the engine never writes it, so on a DREAM
+    # rerun (vision.yaml deliberately unrestored, A17) an earlier model guess
+    # can never masquerade as an author mandate. `pov_hint_decided` is DREAM's
+    # own decision, freely re-decided every run like genre/tone. Consumers
+    # read `effective_pov_hint`.
     pov_hint: str = ""
+    pov_hint_decided: str = ""
     scope: str = "micro"
+
+    @property
+    def effective_pov_hint(self) -> str:
+        return self.pov_hint or self.pov_hint_decided
 
     @property
     def preset(self) -> ScopePreset:

@@ -4,7 +4,7 @@ prose-INTENSITY (where the prose rises vs. stays plain), its narration SCOPE
 detached coda), and its VIEWPOINT (whose head narrates it).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
-POINT OF VIEW SCHEME (advisory): {{ vision.pov_hint or "one limited viewpoint" }}.
+POINT OF VIEW SCHEME (advisory): {{ vision.effective_pov_hint or "one limited viewpoint" }}.
 
 THE CHARACTERS (viewpoint values are these exact ids):
 {% for c in characters %}

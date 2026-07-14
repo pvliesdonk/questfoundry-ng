@@ -378,6 +378,25 @@ def set_beat_narration_scope(g: StoryGraph, beat_id: str, scope: NarrationScope)
     beat.narration_scope = scope
 
 
+def set_beat_viewpoint(
+    g: StoryGraph, beat_id: str, viewpoint: str | None, *, interlude: bool = False
+) -> None:
+    """GROW's annotate write path: the character entity whose head narrates
+    this beat, plus its interlude mark (the two travel together —
+    rotating-pov-build.md). Like the other annotations, intrinsic beat
+    content settled at the freeze, so a frozen beat is rejected. Referential
+    existence of the id is the gate's job (G3), not the mutation's."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if g.frozen and beat_id in g.frozen.beats:
+        raise MutationError(f"beat {beat_id} is frozen; viewpoint is settled at the freeze")
+    if interlude and viewpoint is None:
+        raise MutationError(f"beat {beat_id}: an interlude beat must name a viewpoint")
+    beat.viewpoint = viewpoint
+    beat.interlude = interlude
+
+
 def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:
     """GROW's realization: a nested hard fork de-ends the first-forking
     dilemma's tails (the story continues into the climax fork)."""

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from enum import StrEnum
+from typing import NamedTuple
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
@@ -109,6 +110,15 @@ class Beat(Node):
     # effective_narration_scope).
     scene_type: SceneType | None = None
     narration_scope: NarrationScope | None = None
+    # GROW's annotate pass, pre-freeze: the character entity whose head
+    # narrates this beat (design doc 01 §5; rotating-pov-build.md). None =
+    # not annotated — a wildcard at POLISH collapse and in passage_viewpoint,
+    # never guessed beat-locally. A `wide` beat carries no viewpoint by
+    # construction (the coda register has no head). `interlude` marks a beat
+    # of the Voice's marked deviant register (first-person journal etc.);
+    # meaningful only with a viewpoint.
+    viewpoint: str | None = None
+    interlude: bool = False
 
     @model_validator(mode="after")
     def _class_consistency(self) -> Beat:
@@ -122,6 +132,12 @@ class Beat(Node):
                 raise ValueError(f"narrative beat {self.id} must carry >=1 dilemma_impact")
             if self.purpose is not None:
                 raise ValueError(f"narrative beat {self.id} must not declare a structural purpose")
+        return self
+
+    @model_validator(mode="after")
+    def _interlude_needs_viewpoint(self) -> Beat:
+        if self.interlude and self.viewpoint is None:
+            raise ValueError(f"beat {self.id} is an interlude but names no viewpoint")
         return self
 
     @property
@@ -189,6 +205,30 @@ def effective_narration_scope(beat: Beat) -> NarrationScope:
     if beat.purpose == StructuralPurpose.EPILOGUE:
         return NarrationScope.WIDE
     return NarrationScope.LIMITED
+
+
+class PassageViewpoint(NamedTuple):
+    viewpoint: str | None  # character entity id; None = no head assigned
+    interlude: bool
+
+
+def passage_viewpoint(beats: Iterable[Beat]) -> PassageViewpoint:
+    """A passage's viewpoint head, derived from its member beats — the
+    single derivation authority (rotating-pov-build.md), computed at
+    consumption and never stored on the passage. The unique
+    ``(viewpoint, interlude)`` among beats that carry one; beats without
+    (bridge/residue/false-branch, ``wide`` codas) are wildcards. No beat
+    annotated -> ``(None, False)``: FILL degrades to the book-wide
+    ``Voice.pov`` rule. Uniqueness is invariant I14's guarantee (one head
+    per passage, gate G4); a conflict here is an engine bug, not a
+    repairable model error."""
+    heads = {(b.viewpoint, b.interlude) for b in beats if b.viewpoint is not None}
+    if not heads:
+        return PassageViewpoint(None, False)
+    if len(heads) > 1:
+        raise ValueError(f"passage beats disagree on viewpoint (I14): {sorted(heads)}")
+    ((viewpoint, interlude),) = heads
+    return PassageViewpoint(viewpoint, interlude)
 
 
 def passage_intensity(beats: Iterable[Beat]) -> SceneType:

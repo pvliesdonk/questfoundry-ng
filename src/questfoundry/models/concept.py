@@ -215,6 +215,12 @@ class Voice(BaseModel):
     dialogue: str = ""
     banned: list[str] = []
     notes: str = ""
+    # The scheme's marked deviant register in one description — form, person,
+    # tense, whose voice ("first-person past-tense journal entries in
+    # Eleanor's voice"); empty when the scheme has none. An interlude passage
+    # (beats annotated `interlude` at GROW) is written and reviewed against
+    # this instead of the book-default pov/tense (rotating-pov-build.md).
+    interlude: str = ""
 
 
 class Vision(BaseModel):

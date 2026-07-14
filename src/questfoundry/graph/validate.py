@@ -1,4 +1,4 @@
-"""The invariant registry (I1-I13) and gate runner.
+"""The invariant registry (I1-I14) and gate runner.
 
 Each check cites the invariant it enforces (design doc 01 §8) and the
 gate it belongs to (design doc 02). `run_checks` runs every gate at or
@@ -30,7 +30,7 @@ from questfoundry.models.structure import (
     effective_scene_type,
     passage_intensity,
 )
-from questfoundry.models.world import Entity
+from questfoundry.models.world import Entity, EntityCategory
 
 
 class Severity(StrEnum):
@@ -425,6 +425,28 @@ def check_i7_convergence_by_role(ctx: Context) -> None:
                         )
 
 
+def check_g3_viewpoint_refs(ctx: Context) -> None:
+    """G3: a beat's viewpoint, when set, resolves to a retained character
+    entity (rotating-pov-build.md). Referential integrity fails loud at
+    the gate, not downstream in FILL's head derivation (same class as
+    G3-FLAGS / the G4 arc-reference check); hand-edited files face the
+    same rule as the annotate pass."""
+    for beat in ctx.g.nodes_of(Beat):
+        if beat.viewpoint is None:
+            continue
+        node = ctx.g.get(beat.viewpoint)
+        if not isinstance(node, Entity) or node.category != EntityCategory.CHARACTER:
+            ctx.error(
+                "G3",
+                f"beat {beat.id}: viewpoint {beat.viewpoint!r} is not a character entity",
+            )
+        elif not node.retained:
+            ctx.error(
+                "G3",
+                f"beat {beat.id}: viewpoint {beat.viewpoint!r} is not retained",
+            )
+
+
 def check_g3_flag_derivation(ctx: Context) -> None:
     """G3: flag derivation is total over branched paths — every
     consequence of a branched explored path yields at least one state
@@ -704,6 +726,31 @@ def check_g4_residue_coverage(ctx: Context) -> None:
                             f"heavy-residue dilemma {d.id} converges at {beat_id}"
                             f"{suffix} without variant passages",
                         )
+
+
+def check_i14_passage_viewpoint(ctx: Context) -> None:
+    """I14: one head per passage — among a passage's member beats that
+    carry a viewpoint, all agree on (viewpoint, interlude). The head never
+    switches inside a passage (author-confirmed 2026-07-14; design doc 01
+    §8); beats without a viewpoint (bridge/residue/false-branch, wide
+    codas) are wildcards. Collapse guarantees this for pipeline output;
+    the gate holds hand-edited files to the same rule."""
+    for passage in ctx.g.nodes_of(Passage):
+        heads: dict[tuple[str, bool], list[str]] = {}
+        for bid in queries.beats_of_passage(ctx.g, passage.id):
+            beat = ctx.g.node(bid)
+            assert isinstance(beat, Beat)
+            if beat.viewpoint is not None:
+                heads.setdefault((beat.viewpoint, beat.interlude), []).append(bid)
+        if len(heads) > 1:
+            named = "; ".join(
+                f"{'interlude ' if interlude else ''}{vp}: {sorted(bids)}"
+                for (vp, interlude), bids in sorted(heads.items())
+            )
+            ctx.error(
+                "I14",
+                f"passage {passage.id} mixes viewpoints ({named}) — one head per passage",
+            )
 
 
 def check_g4_arc_references(ctx: Context) -> None:
@@ -1047,6 +1094,7 @@ GATES: dict[Stage, list] = {
         check_i7_convergence_by_role,
         check_i8_intersections,
         check_i9_freeze,
+        check_g3_viewpoint_refs,
         check_g3_flag_derivation,
         check_budget_arc_beats,
     ],
@@ -1055,6 +1103,7 @@ GATES: dict[Stage, list] = {
         check_i11_grouping,
         check_i12_feasibility,
         check_i13_passage_graph,
+        check_i14_passage_viewpoint,
         check_g4_choice_labels,
         check_g4_residue_coverage,
         check_g4_arc_references,

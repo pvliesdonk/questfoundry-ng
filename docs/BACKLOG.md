@@ -14,10 +14,13 @@ decision it settled gets an [ADR](adr/).
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens
   sequel/micro passages, so the `words_total`/`passages` (B3/B7) bands read
-  high. Now has data: the *Closed Circle* medium run came out **59 passages vs
-  the 90–160 band**. Re-measure the preset bands against a modulated live run
+  high. Now has a data point: the 2026-07-14 *Closed Circle* `gpt-oss:120b`
+  medium run reached POLISH at **59 passages against the 90–160 band** (its B3
+  advisory). Provenance: observed live in that scratch run (not committed, not
+  yet in a STATUS/ADR entry) — treat as an unverified agent observation until
+  reproduced. Re-measure the preset bands against a modulated live run
   (`tests/scale.py`) and adjust. (Flagged when `scene_type` landed; no longer
-  hypothetical.)
+  purely hypothetical.)
 - [ ] **Intersections over post-commit (exclusive) beats** — M2 only groups
   shared pre-commit beats; exclusive-beat intersections are meaningful but
   interact with arc membership in ways the spine model doesn't cover. Same for

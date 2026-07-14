@@ -138,4 +138,8 @@ decomposition (A21). See `docs/plans/` and the decision log.
 Retired risks, for the record: GROW interleaving quality and prose coherence
 across convergences (seven+ live runs across four provider families produced
 gate-clean, seam-free stories); the weave's 64-candidate spread at scale
-(measured and fixed in M8 PR-1, exercised live at 40+ units in run 8).
+(measured and fixed in M8 PR-1, exercised live at 40+ units in run 8); deep
+scaffolds stretching choice-less runs faster than false branches close them
+(addressed in M8 PR-1 — the collapse cap cuts deep runs into pages and POLISH's
+diamond budget is sized by iterated playthrough projection against the B6 band;
+the live exit run confirmed).

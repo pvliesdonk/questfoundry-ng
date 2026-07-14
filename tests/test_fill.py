@@ -1017,6 +1017,46 @@ def test_review_prompt_judges_an_interlude_against_its_register(golden_fill):
     assert "required POV:" not in rendered
 
 
+# -- choice grounding (author finding, 2026-07-14) -----------------------------
+
+
+def test_write_prompt_demands_planted_choice_referents(golden_fill):
+    # labels are minted at POLISH from beat summaries, so without this
+    # contract they read as connective tissue to the NEXT passage ("open the
+    # door" with no door on the page)
+    context, rendered = _render_write(golden_fill, "passage:p-arrival")
+    assert context["choices"], "p-arrival should have outgoing choices"
+    assert "PLANT THEIR REFERENTS" in rendered
+    for label in context["choices"]:
+        assert f'"{label}"' in rendered
+
+
+def test_write_prompt_ending_lands_instead_of_planting(golden_fill):
+    context, rendered = _render_write(golden_fill, "passage:p-long-watch")
+    assert not context["choices"]
+    assert "PLANT THEIR REFERENTS" not in rendered
+    assert "This is an ending: land it completely." in rendered
+
+
+def test_review_prompt_carries_the_choice_grounding_rule(golden_fill):
+    rendered = _render_review(golden_fill, "passage:p-arrival")
+    assert "choice_grounding" in rendered
+    assert "QUOTE them in `quote`" in rendered
+    # the corrective goes to the prose, never the label
+    assert "never a change to the label" in rendered
+
+
+def test_review_prompt_omits_choice_grounding_on_endings(golden_fill):
+    rendered = _render_review(golden_fill, "passage:p-long-watch")
+    assert "choice_grounding" not in rendered
+
+
+def test_review_rules_pin_choice_grounding():
+    from questfoundry.pipeline.stages.fill import FILL_REVIEW_RULES
+
+    assert "choice_grounding" in FILL_REVIEW_RULES
+
+
 def test_voice_proposal_requires_an_interlude_decision(golden_fill):
     with pytest.raises(ValidationError):
         VoiceProposal(

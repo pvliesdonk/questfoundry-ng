@@ -266,6 +266,12 @@ FILL_REVIEW_RULES = (
     "state_dishonesty",
     "leakage",
     "pronoun",
+    # every concrete thing an outgoing choice label names must be present in
+    # this passage's prose — labels are minted at POLISH from beat summaries,
+    # so ungrounded ones read as connective tissue to the NEXT passage ("open
+    # the door" with no door on the page; author finding, 2026-07-14). The
+    # corrective is to the prose, never the label.
+    "choice_grounding",
     # the writer may add or update a micro-detail; the reviewer judges whether
     # it holds — a contradiction of an established fact is a defect, a
     # gratuitous restatement a concern (author-directed, 2026-07-12).

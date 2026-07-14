@@ -48,6 +48,19 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   own PR. Until then the operator move is a fresh re-roll of the stuck
   passage's cached call chain.
 
+- [ ] **Re-ground choice labels from finished prose (FILL-end relabel pass).**
+  The direct reading of the author's expectation (2026-07-14: "the choice
+  mentions something that was introduced in the prose") — the shipped fix
+  makes the prose plant each label's referents (write contract +
+  `choice_grounding` review rule), which fixes the reader experience but
+  keeps labels authored blind at POLISH from beat summaries. The stronger
+  design is a small FILL-end pass that rewrites each edge's label from the
+  now-existing source prose (labels are edge payload, not topology — no
+  freeze interaction); gates/tone constraints as in `polish_labels.j2`.
+  Weigh against: an extra pass per passage-with-choices, and labels drifting
+  from the destination summaries they currently lean on. Do after the
+  planting contract has a live run's evidence.
+
 ## Structure & scale
 
 - [ ] **Scale recalibration after modulation.** `scene_type` shortens

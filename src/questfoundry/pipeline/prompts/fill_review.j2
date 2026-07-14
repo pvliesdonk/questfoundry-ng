@@ -119,6 +119,22 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   In-world objects and events that flags merely describe are story, not
   leakage — and ordinary English uses of those words ("her heart beats", "the
   garden path") are just words.
+{% if choices %}
+- choice_grounding — the fixed choice labels leaving this page are:
+{% for c in choices %}
+  - "{{ c }}"
+{% endfor %}
+  Each concrete thing a label names (an object, a door or exit, a person, an
+  act in motion) must be present in THIS passage's prose. Check each label
+  mechanically: find the words in the prose that introduce its referent, and
+  QUOTE them in `quote`; if the prose never shows the referent, that label's
+  finding is a "fail" with `quote` empty and the absent referent named in
+  `reason`. The corrective is always to the PROSE — introduce the referent —
+  never a change to the label. A referent present under another of its names
+  counts (resolve against the cast above); a label naming only an abstract
+  act with no prop ("press on", "stand firm") needs no referent and is not a
+  finding.
+{% endif %}
 {% if entities | selectattr("pronouns") | list %}
 - pronoun — a character is referred to with pronouns other than their stated
   ones (a defect only on an actual wrong pronoun in the text, quoted; a name

@@ -187,7 +187,19 @@ WHAT AWAITS (already written — land so it follows naturally, without echoing i
 {% include "_craft.j2" %}
 {% endif %}
 {% if choices %}
-The passage ends where these choices can naturally follow: {{ choices | join(" / ") }}.
+THE CHOICES LEAVING THIS PAGE (fixed labels the player reads next — you do
+not write or change them):
+{% for c in choices %}
+- "{{ c }}"
+{% endfor %}
+PLANT THEIR REFERENTS. Each concrete thing a choice names — an object, a
+door or exit, a person, an act already in motion — must exist on this page:
+introduced in this passage's prose before the end. Prose that describes the
+old revolver on the desk gives "pick up the revolver" something to pick up;
+a choice that says "open the door" when no door was ever on the page is a
+defect in the prose, not the label. Work each referent into the scene where
+it sits naturally — it need not be the closing image, it must simply be
+there. Then end the passage where these choices can naturally follow.
 {% else %}
 This is an ending: land it completely.
 {% endif %}

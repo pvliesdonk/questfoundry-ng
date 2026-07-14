@@ -112,9 +112,12 @@ $ uv run qf play examples/keepers-bargain     # or play it in the terminal
 $ uv run qf export twee --dir examples/keepers-bargain   # take it to Twine
 ```
 
-Live progress, milestone state, and the decision log are tracked in
-[`docs/STATUS.md`](docs/STATUS.md). Working instructions for contributors
-— human or AI agent — live in [`AGENTS.md`](AGENTS.md) (imported by
+The working administration is split by lifecycle: the current hand-off in
+[`docs/STATUS.md`](docs/STATUS.md), the epic-scale arc in
+[`docs/design/05-roadmap.md`](docs/design/05-roadmap.md), loose ends in
+[`docs/BACKLOG.md`](docs/BACKLOG.md), and the dated decision log in
+[`docs/decision-log.md`](docs/decision-log.md). Working instructions for
+contributors — human or AI agent — live in [`AGENTS.md`](AGENTS.md) (imported by
 `CLAUDE.md`); automated-review norms in [`REVIEW.md`](REVIEW.md).
 
 The design lives in [`docs/design/`](docs/design/):

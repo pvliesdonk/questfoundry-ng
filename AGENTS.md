@@ -14,12 +14,25 @@ structural rails enforced by a deterministic engine.
 
 ## Orientation order (do this at session start)
 
-1. **[`docs/STATUS.md`](docs/STATUS.md)** — where the project stands,
-   what is in flight, what's next. Start here, always.
-2. **[`docs/design/05-roadmap.md`](docs/design/05-roadmap.md)** — the
-   milestone plan and exit criteria.
-3. The **design doc for the area you're touching** (table below).
-4. Skim the code you'll change — the package map below tells you where.
+The working administration is split by lifecycle so no single file grows
+unbounded — and all of it is written and maintained by coding agents for
+hand-off (read the caveat under "Documentation contract"):
+
+1. **[`docs/STATUS.md`](docs/STATUS.md)** — the hand-off note: the current epic
+   and the immediate next steps. A page, not a scroll. Start here.
+2. **[`docs/design/05-roadmap.md`](docs/design/05-roadmap.md)** — the epic-scale
+   roadmap (Shipped / Now / Next / Later): where the current work sits in the arc.
+3. **[`docs/BACKLOG.md`](docs/BACKLOG.md)** — the working backlog: sub-epic loose
+   ends not owned by a roadmap epic.
+4. **[`docs/decision-log.md`](docs/decision-log.md)** — the dated session
+   decision log: a provenance archive, **search it** for *why* something changed;
+   don't read it end-to-end. (Architecture decisions proper are the mini-ADR
+   table in design doc 03 §9.)
+5. The **design doc for the area you're touching** (table below) — the
+   authoritative rules, including its Departures section and (for 03) the
+   mini-ADR table. This, not the decision log, is where an agent reliably gets
+   the history for its area into context.
+6. Skim the code you'll change — the package map below tells you where.
 
 | Design doc | Owns |
 |---|---|
@@ -28,7 +41,7 @@ structural rails enforced by a deterministic engine.
 | `docs/design/02-pipeline.md` | Stage contracts, gates G0–G6, backtracking, review model |
 | `docs/design/03-architecture.md` | Stack, package layout, LLM adapter, project format, mini-ADRs |
 | `docs/design/04-export-and-play.md` | Runtime JSON semantics, export formats, play/QA tooling |
-| `docs/design/05-roadmap.md` | Milestones M0–M5, risks |
+| `docs/design/05-roadmap.md` | Epic-scale roadmap (Shipped/Now/Next/Later), top risks |
 
 **The design docs are authoritative.** Code follows docs. If an
 implementation must deviate, change the doc *in the same PR* and record
@@ -40,7 +53,7 @@ derive from first principles: consult `docs/heritage/` (the original
 QuestFoundry source documents, reference-only — see its README) and the
 danger zones in design doc 01 §9 first, then bring the answer into the
 NG docs. Free derivation in doc-silent territory produced a confidently
-wrong invariant claim once already (STATUS decision log, 2026-07-08).
+wrong invariant claim once already (decision log, 2026-07-08).
 
 ## Commands
 
@@ -139,24 +152,38 @@ looks like a model limit when it is a prompt defect. So:
 
 ## Documentation contract
 
-A PR that changes behavior must leave the documentation true. Concretely,
-every PR:
+**This administration is written and maintained entirely by coding agents**, for
+hand-off to the next session — every roadmap line, backlog item, and decision
+record. Read it as such: a recorded decision is *an agent's* write-up, not
+author-ratified ground truth, unless it cites an explicit author instruction. An
+agent recording its own scope-cut as the author's call has burned a whole session
+before ([`docs/plans/rotating-pov.md`](docs/plans/rotating-pov.md)). So attribute
+decisions to the agent that made them; call a choice author-directed only with a
+direct reference to the author saying so. (Real provenance arrives when the
+backlog moves to GitHub issues; until then this caveat is the guard.)
 
-- **Updates [`docs/STATUS.md`](docs/STATUS.md)** — current state, next
-  steps, the decision log if a decision was made. This is the file that
-  lets the next session (possibly a different agent) pick up where you
-  left off; treat it as your hand-off note.
-- **Updates affected `docs/design/*` sections** — or explicitly states
-  in the PR body why none apply.
-- **Keeps the README status section true** (milestone claims, sample
-  transcripts must match actual output).
-- **Keeps the golden story green** — and when you implement something
-  the golden story could represent (a new node kind, a new gate), extend
-  the fixture to exercise it.
+A PR that changes behavior must leave the documentation true. Update whichever of
+these it touches — each is deliberately small, so none becomes a single growing
+file:
 
-The PR template (`.github/pull_request_template.md`) carries this as a
-checklist. Check items honestly; "N/A because …" is an acceptable answer,
-silence is not.
+- **[`docs/STATUS.md`](docs/STATUS.md)** — the hand-off note: current epic +
+  next steps. Keep it a page; history does not accrete here.
+- **[`docs/design/05-roadmap.md`](docs/design/05-roadmap.md)** — move an epic
+  between Shipped / Now / Next / Later when it starts or finishes.
+- **[`docs/BACKLOG.md`](docs/BACKLOG.md)** — add a loose end you open; delete one
+  you close (git history keeps it).
+- **A decision worth keeping** — an *architecture* decision gets a new row in the
+  mini-ADR table (design doc 03 §9) and the durable rule lands in the relevant
+  design-doc section (so a by-area reader gets it in context); a notable session
+  decision/effort gets a dated entry in [`docs/decision-log.md`](docs/decision-log.md)
+  (the searchable provenance archive — never the primary source of a rule).
+- **Affected `docs/design/*` sections** — or state in the PR body why none apply.
+- **The README status section** stays true (milestone claims, sample transcripts).
+- **The golden story stays green** — extend the fixture when you add something it
+  could represent (a new node kind, a new gate).
+
+The PR template (`.github/pull_request_template.md`) carries this as a checklist.
+Check items honestly; "N/A because …" is acceptable, silence is not.
 
 ## Workflow conventions
 
@@ -204,8 +231,8 @@ and escalate rather than guess.
 
 **Small tier (Haiku-class) — mechanical work:**
 
-- Renames, formatting, doc-link fixes, YAML fixture typing, STATUS.md
-  checkbox upkeep, changelog-style edits.
+- Renames, formatting, doc-link fixes, YAML fixture typing, BACKLOG.md and
+  STATUS.md upkeep, decision-log entries, changelog-style edits.
 
 **Session pattern for expensive models:** act as architect + integrator.
 Sharpen the contract first (design-doc section, module interface,
@@ -218,8 +245,8 @@ always loses.
 
 **Escalation rule for cheaper models:** if a task turns out to require
 changing an invariant, a gate, a design doc, or anything in the iron
-rules, stop and flag it for a frontier session (note it in
-`docs/STATUS.md` under open items) instead of improvising.
+rules, stop and flag it for a frontier session (add it to
+`docs/BACKLOG.md`, or the roadmap if it's epic-scale) instead of improvising.
 
 ## Live-run budget discipline (billed API calls are scarce)
 

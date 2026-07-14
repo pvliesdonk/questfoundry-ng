@@ -321,7 +321,9 @@ def test_triage_locked_allowance_enforced(tmp_path):
             _path("h1", "answer:herring1-b"),
         ],
     )
-    with pytest.raises(ApplyError, match="at most 1 locked"):
+    # the repair message names the budget's derivation (the scope alone
+    # when uncoupled; scope + words_target when coupled — B1's label)
+    with pytest.raises(ApplyError, match="scope 'micro' allows at most 1 locked"):
         _triage_apply(proposal, project)
 
 

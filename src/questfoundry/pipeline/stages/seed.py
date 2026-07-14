@@ -196,15 +196,16 @@ def _triage_apply(proposal: TriageProposal, project: Project) -> list[str]:
                 "(one path + a locked entry)"
             )
     want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
+    label = project.vision.budget_label
     for role, count in branched.items():
         if count != want[role]:
             raise ApplyError(
                 f"exactly {want[role]} {role.value} dilemma(s) must be branched "
-                f"(both answers explored); got {count}"
+                f"(both answers explored) for {label}; got {count}"
             )
     if len(locked_reasons) > budget.locked:
         raise ApplyError(
-            f"this project allows at most {budget.locked} locked "
+            f"{label} allows at most {budget.locked} locked "
             f"dilemma(s); got {len(locked_reasons)}"
         )
 

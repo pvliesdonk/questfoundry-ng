@@ -296,3 +296,13 @@ class Vision(BaseModel):
         """The dilemma budget B1 gates against — coupled to words_target
         when set, the scope table's counts otherwise."""
         return self.preset.budget_for(self.words_target)
+
+    @property
+    def budget_label(self) -> str:
+        """How the budget's counts were arrived at, for model-facing B1
+        messages (gate and repair alike): the bare scope when uncoupled
+        (no words_target, or a coupling-exempt scope), scope + words_target
+        when the budget derives from it."""
+        if self.words_target is None or self.preset.anchor_words is None:
+            return f"scope '{self.scope}'"
+        return f"scope '{self.scope}' at words_target {self.words_target}"

@@ -139,15 +139,6 @@ def check_g1_shared_entity(ctx: Context) -> None:
     ctx.error("G1", "no two dilemmas share an anchored entity (parallel-novels risk)")
 
 
-def _budget_label(ctx: Context) -> str:
-    """How B1's counts were arrived at, for actionable messages: the bare
-    scope when uncoupled, scope + words_target when the budget derives
-    from it (docs/plans/structural-depth.md, W1)."""
-    if ctx.vision.words_target is None:
-        return f"scope '{ctx.vision.preset.name}'"
-    return f"scope '{ctx.vision.preset.name}' at words_target {ctx.vision.words_target}"
-
-
 def check_budget_dilemmas(ctx: Context) -> None:
     """B1: branched dilemmas match the budget's role counts exactly; up
     to the locked allowance extra may lock at triage (single explored
@@ -157,7 +148,7 @@ def check_budget_dilemmas(ctx: Context) -> None:
     exists, so the same totals are checked as a range: BRAINSTORM
     overgenerates, triage disposes."""
     budget = ctx.vision.budget
-    label = _budget_label(ctx)
+    label = ctx.vision.budget_label
     want = {DilemmaRole.HARD: budget.hard, DilemmaRole.SOFT: budget.soft}
     dilemmas = ctx.g.nodes_of(Dilemma)
     explored = {d.id: len(queries.explored_paths(ctx.g, d.id)) for d in dilemmas}

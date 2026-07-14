@@ -321,9 +321,10 @@ def test_finalize_texture_premise_forbids_borrowing_from_instructions():
     and the model echoed it as 2 of 3 premises. The fence and the mechanical
     id example (a place name was the second vector) must stay."""
     source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
-    assert "never take a setting from these instructions" in source
-    assert "beat:tw0-1" in source  # mechanical, not a place name
-    assert "forest" not in source and "mountain" not in source
+    flat = " ".join(source.split())  # the fence wraps across template lines
+    assert "never take a setting from these instructions" in flat
+    assert "beat:tw0-1" in flat  # mechanical, not a place name
+    assert "forest" not in flat and "mountain" not in flat
 
 
 def test_contextualize_renders_the_entities_it_requires():

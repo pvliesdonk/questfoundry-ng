@@ -41,7 +41,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import run_checks
-from questfoundry.models.base import Stage
+from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
 from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
@@ -161,7 +161,26 @@ def _finalize_context(project: Project) -> dict:
                 },
             }
         )
-    return {"vision": project.vision, "needs": needs, "cadence": _cadence(project)}
+    # Reserved dilemmas are POLISH's texture feedstock (structural-depth
+    # W2): real story material for false-branch arms, so the model grafts
+    # instead of inventing. Advisory context only — never woven.
+    reserve = [
+        {
+            "dilemma": d,
+            "entities": [
+                g.node(e).name  # type: ignore[union-attr]
+                for e in g.out_ids(d.id, EdgeKind.ANCHORED_TO)
+            ],
+        }
+        for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id)
+        if d.reserved
+    ]
+    return {
+        "vision": project.vision,
+        "needs": needs,
+        "cadence": _cadence(project),
+        "reserve": reserve,
+    }
 
 
 def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, str]:

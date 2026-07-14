@@ -38,6 +38,7 @@ class DilemmaBudget(BaseModel):
     hard: int
     soft: int
     locked: int  # an allowance, not a floor (design doc 01 §4)
+    reserve: int  # allowance for unwoven feedstock dilemmas (W2)
 
 
 class ScopePreset(BaseModel):
@@ -54,6 +55,10 @@ class ScopePreset(BaseModel):
     # B1: how many extra dilemmas triage may lock (single explored path —
     # fork-less woven storylines; design doc 01 §4). An allowance, not a floor.
     locked_dilemmas: int
+    # B1: how many further dilemmas triage may reserve — kept as unwoven
+    # texture feedstock, no path (structural-depth W2). BRAINSTORM's
+    # requested total includes it; an allowance, not a floor.
+    reserve_dilemmas: int
     cast_min: int
     cast_max: int
     passages_min: int
@@ -94,7 +99,12 @@ class ScopePreset(BaseModel):
             delta = words_target - self.anchor_words
             shift = (2 * delta + self.words_per_soft) // (2 * self.words_per_soft)
             soft = max(1, min(self.soft_dilemmas + 2, self.soft_dilemmas + shift))
-        return DilemmaBudget(hard=self.hard_dilemmas, soft=soft, locked=self.locked_dilemmas)
+        return DilemmaBudget(
+            hard=self.hard_dilemmas,
+            soft=soft,
+            locked=self.locked_dilemmas,
+            reserve=self.reserve_dilemmas,
+        )
 
     def words_for(self, *, intensity: SceneType, ending: bool = False) -> tuple[int, int]:
         """The word band a passage writes toward, from its aggregate prose
@@ -138,6 +148,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             hard_dilemmas=1,
             soft_dilemmas=1,
             locked_dilemmas=1,
+            reserve_dilemmas=1,
             cast_min=3,
             cast_max=5,
             passages_min=8,
@@ -161,6 +172,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             hard_dilemmas=1,
             soft_dilemmas=2,
             locked_dilemmas=2,
+            reserve_dilemmas=2,
             cast_min=5,
             cast_max=8,
             passages_min=24,
@@ -186,6 +198,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             hard_dilemmas=2,
             soft_dilemmas=3,
             locked_dilemmas=3,
+            reserve_dilemmas=3,
             cast_min=8,
             cast_max=12,
             passages_min=90,
@@ -211,6 +224,7 @@ SCOPE_PRESETS: dict[str, ScopePreset] = {
             hard_dilemmas=2,
             soft_dilemmas=4,
             locked_dilemmas=4,
+            reserve_dilemmas=4,
             cast_min=10,
             cast_max=16,
             passages_min=140,

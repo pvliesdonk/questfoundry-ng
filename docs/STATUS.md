@@ -29,13 +29,17 @@ kimi-k2.5 A/B of the same premise runs in a parallel session.
 2026-07-14, started same day): the flat-book reading's deeper fix. The
 milestone design is in
 [`plans/structural-depth.md`](plans/structural-depth.md) — the
-authoritative contract, PR-sliced. **PR-1 is built on this branch**:
+authoritative contract, PR-sliced. **PR-1 merged** (#77):
 `Vision.words_target` couples the soft-dilemma budget to the words budget
-(a scope earns its length or shrinks; calibrated against the structural
-simulation — one soft ≈ 9k story words at medium), and **B9** warns when
-bridges exceed 25% of beats (the stretching tripwire; the flat exemplar
-now trips it at 37%, by design). Uncoupled projects (no `words_target`)
-behave exactly as before; every exemplar stays green.
+(a scope earns its length or shrinks), and **B9** warns when bridges
+exceed 25% of beats (the stretching tripwire; the flat exemplar trips it
+at 37%, by design). **PR-2 is built on this branch**: the `reserve`
+triage disposition — BRAINSTORM overgenerates by a per-scope reserve
+allowance, triage keeps the surplus as unwoven texture feedstock
+(`Dilemma.reserved`, no path, invisible to weave/order/arcs/shadows/
+codex, I2-exempt), and POLISH finalize's prompt surfaces it as advisory
+graft stock for false-branch arms. Uncoupled/unreserved projects behave
+exactly as before; every exemplar stays green.
 Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
@@ -76,12 +80,13 @@ Previous epic **Rotating limited POV shipped in PR #74** (A22).
    band-top `--words-target` on that run would also exercise PR-1's
    coupling live.
 2. **Structural depth, next slices** (contracts in
-   [`plans/structural-depth.md`](plans/structural-depth.md)): **PR-2**
-   brainstorm-surplus retention (the `reserve` triage disposition —
-   mid-tier work against the written contract); **PR-3** tensored texture
-   worlds engine (frontier: annotation mirroring, arc invisibility, freeze
-   compliance — read the plan's starred seams first); **PR-4** finalize
-   integration + FILL context lever + live validation.
+   [`plans/structural-depth.md`](plans/structural-depth.md)): **PR-3**
+   tensored texture worlds engine (frontier: annotation mirroring, arc
+   invisibility, freeze compliance — read the plan's starred seams
+   first); **PR-4** finalize integration + FILL context lever + live
+   validation. PR-1 (words-target coupling, B9) and PR-2 (reserve
+   feedstock) are done — a fresh weak-tier run now exercises both by
+   setting `--words-target` at `qf new`.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

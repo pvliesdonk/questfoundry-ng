@@ -26,6 +26,7 @@ from questfoundry.pipeline.stages.seed import (
     PathScaffold,
     PathSpec,
     RelationSpec,
+    ReserveSpec,
     ScaffoldProposal,
     TriageProposal,
     _order_apply,
@@ -294,6 +295,65 @@ def test_triage_undisposed_dilemma_rejected(tmp_path):
     project = _triage_project(tmp_path)
     proposal = TriageProposal(paths=[*_branch_both("main"), *_branch_both("sub")])
     with pytest.raises(ApplyError, match="has no path"):
+        _triage_apply(proposal, project)
+
+
+# -- reserve disposition (unwoven feedstock; structural-depth W2) -------------
+
+
+def test_triage_reserve_disposition_applies(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(
+        reserve=[ReserveSpec(dilemma="dilemma:herring0", reason="feedstock")],
+        paths=[*_branch_both("main"), *_branch_both("sub")],
+    )
+    lines = _triage_apply(proposal, project)
+    dilemma = project.graph.node("dilemma:herring0")
+    assert dilemma.reserved
+    assert queries.explored_paths(project.graph, "dilemma:herring0") == []
+    assert queries.locked_dilemmas(project.graph) == []
+    assert any("reserved: dilemma:herring0" in line for line in lines)
+
+
+def test_triage_reserved_with_a_path_rejected(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(
+        reserve=[ReserveSpec(dilemma="dilemma:herring0", reason="r")],
+        paths=[
+            *_branch_both("main"),
+            *_branch_both("sub"),
+            _path("h", "answer:herring0-a"),
+        ],
+    )
+    with pytest.raises(ApplyError, match="listed in reserve but has 1 path"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_locked_and_reserved_conflict_rejected(tmp_path):
+    project = _triage_project(tmp_path)
+    proposal = TriageProposal(
+        locked=[LockSpec(dilemma="dilemma:herring0", reason="r")],
+        reserve=[ReserveSpec(dilemma="dilemma:herring0", reason="r")],
+        paths=[
+            *_branch_both("main"),
+            *_branch_both("sub"),
+            _path("h", "answer:herring0-a"),
+        ],
+    )
+    with pytest.raises(ApplyError, match="both locked and reserve"):
+        _triage_apply(proposal, project)
+
+
+def test_triage_reserve_allowance_enforced(tmp_path):
+    project = _triage_project(tmp_path, extra_soft=2)  # micro allows 1 reserved
+    proposal = TriageProposal(
+        reserve=[
+            ReserveSpec(dilemma="dilemma:herring0", reason="r"),
+            ReserveSpec(dilemma="dilemma:herring1", reason="r"),
+        ],
+        paths=[*_branch_both("main"), *_branch_both("sub")],
+    )
+    with pytest.raises(ApplyError, match="at most 1 reserved"):
         _triage_apply(proposal, project)
 
 

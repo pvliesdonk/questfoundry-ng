@@ -54,12 +54,12 @@ collapse, and cadence machinery — never against stories generated under
 the old bands), then padded for live-run inflation (bridges; models
 exceeding minimums).
 
-| Preset | Words (total) | Dilemmas (hard+soft, branched) | Locked (max) | Cast | Passages (derived) |
-|---|---|---|---|---|---|
-| `micro` | 2.4–9k | 1 + 1 | 1 | 3–5 | 8–24 |
-| `short` | 9–22k | 1 + 2 | 2 | 5–8 | 24–64 |
-| `medium` | 20–55k | 2 + 3 | 3 | 8–12 | 90–160 |
-| `long` | 45–95k | 2 + 4 | 4 | 10–16 | 140–280 |
+| Preset | Words (total) | Dilemmas (hard+soft, branched) | Locked (max) | Reserve (max) | Cast | Passages (derived) |
+|---|---|---|---|---|---|---|
+| `micro` | 2.4–9k | 1 + 1 | 1 | 1 | 3–5 | 8–24 |
+| `short` | 9–22k | 1 + 2 | 2 | 2 | 5–8 | 24–64 |
+| `medium` | 20–55k | 2 + 3 | 3 | 3 | 8–12 | 90–160 |
+| `long` | 45–95k | 2 + 4 | 4 | 4 | 10–16 | 140–280 |
 
 Scaffold depth is scope data too (`ScaffoldShape` — before M8 the
 depths were universal prompt literals, so `micro` and `long` got the
@@ -88,8 +88,10 @@ passages (residue and false-branch arms) write toward a short band,
 about a third of the scene band above the floor, because an arm written
 at scene weight is the false-choice tax in word form. Ending passages
 get headroom above the scene band (climax resolutions run long). The
-locked column is an allowance, not a floor: BRAINSTORM overgenerates by
-up to that many dilemmas and triage locks the surplus (B1).
+locked and reserve columns are allowances, not floors: BRAINSTORM
+overgenerates by up to their sum and triage locks or reserves the surplus
+(B1) — locked becomes fork-less woven storylines, reserve becomes unwoven
+texture feedstock (§4, structural-depth W2).
 
 **A scope earns its length — the words-target coupling** (structural-depth
 milestone W1, [`docs/plans/structural-depth.md`](../plans/structural-depth.md)):
@@ -198,20 +200,32 @@ path is a **shadow** — the road not taken. Shadows are not dead data: FILL
 is given them as context so the prose can make the reader feel what the
 chosen path cost.
 
-**Disposition** — decided at SEED triage and derived from topology, never
-stored as a marker: a dilemma with two explored paths is **branched**
-(the fork the player chooses); a dilemma with exactly one is **locked** —
-the story canonizes one answer as a fork-less storyline woven through
-every playthrough, and the unexplored answer is a permanent
+**Disposition** — decided at SEED triage. Two dispositions are derived
+from topology, never stored: a dilemma with two explored paths is
+**branched** (the fork the player chooses); a dilemma with exactly one is
+**locked** — the story canonizes one answer as a fork-less storyline woven
+through every playthrough, and the unexplored answer is a permanent
 *locked-dilemma shadow* (the heritage term; identifiable as an answer no
-path explores). Branched counts match the scope's role budget exactly;
-at most the scope's allowance may lock (B1). A locked path still carries
-consequences, but they are facts of the world on every arc — never
-gateable flags — and its `commits` beat is the **resolution**: the
-moment the story, not the player, settles the question. Locked
-storylines buy plot volume and world texture with no fork, no arc
-multiplication, and no prose-feasibility pressure; in a mystery they are
-the red herrings, and extra cast earns its place by anchoring them.
+path explores). The third disposition, **reserve** (structural-depth W2),
+is the one that *needs* a stored marker (`Dilemma.reserved`), because its
+topology — zero explored paths — is also the pre-triage state: a reserved
+dilemma is kept in the graph as **unwoven texture feedstock**. No path, no
+beats, never woven; it is invisible to the weave, ordering, arcs, budgets
+(beyond its own allowance), anchoring (I2 — its anchors may legitimately
+be cut), shadows, and the codex, and surfaces in exactly one place: POLISH
+finalize sees reserved material as advisory graft stock for texture (and,
+from W3, texture-world) arms — real brainstormed material instead of
+invented flavor. A reserved dilemma with an explored path is a gate error.
+It is also the author's shelf: a rerun that raises `words_target` can
+promote a reserve at triage instead of re-brainstorming. Branched counts
+match the budget's role counts exactly; at most the scope's allowance may
+lock, at most its reserve allowance may be reserved (B1). A locked path
+still carries consequences, but they are facts of the world on every arc —
+never gateable flags — and its `commits` beat is the **resolution**: the
+moment the story, not the player, settles the question. Locked storylines
+buy plot volume and world texture with no fork, no arc multiplication, and
+no prose-feasibility pressure; in a mystery they are the red herrings, and
+extra cast earns its place by anchoring them.
 
 **Consequence** — a narrative outcome of a path, phrased as world state
 ("the cartographer knows the truth"), not player action. Each consequence

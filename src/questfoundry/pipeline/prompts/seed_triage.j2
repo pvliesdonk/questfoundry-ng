@@ -25,17 +25,26 @@ YOUR TASKS:
    entity that would leave a dilemma with no retained anchor. Cutting nothing is fine.
 2. Give every dilemma a disposition. Exactly {{ budget.hard }} hard and
    {{ budget.soft }} soft dilemma(s) are BRANCHED: both answers get paths and the
-   player chooses between them. Every other dilemma is LOCKED: exactly one answer
+   player chooses between them. A dilemma may instead be LOCKED: exactly one answer
    gets a path — the story explores that answer as a subplot woven through every
    playthrough, the player never chooses, and the unexplored answer stays a
    permanent shadow the prose can invoke (in a mystery, the red herrings; the
    suspicion that resolves without a fork). Branch the questions whose BOTH sides
    deserve to be lived; lock the ones whose drama enriches the world either way.
    List each locked dilemma in "locked": {"dilemma", "reason"} (one line).
-   At most {{ budget.locked }} may be locked; locking none is allowed only if the
-   dilemma counts already match the branched budget exactly.
+   At most {{ budget.locked }} may be locked.
+   Every remaining dilemma is RESERVED: kept out of the story's structure
+   entirely — no path, no beats, never woven — as raw feedstock later stages
+   may graft texture from (an alternate setting, a rumor, a tension the prose
+   can echo without deciding). Reserve the material that is vivid but does not
+   belong in THIS story's weave. List each in "reserve": {"dilemma", "reason"}
+   (one line); at most {{ budget.reserve }} may be reserved. Reserving and
+   locking none is allowed only if the dilemma counts already match the
+   branched budget exactly. Every dilemma appears in exactly one of: branched
+   (its two paths), locked, or reserve.
 3. paths: create exactly one path per EXPLORED answer — both answers of every
-   branched dilemma, the one canonized answer of every locked dilemma.
+   branched dilemma, the one canonized answer of every locked dilemma. A
+   reserved dilemma gets NO path.
    Each path: id (path:slug), an optional short name, explores (exactly one of the
    answer ids listed above, verbatim — the schema enumerates the only legal values), and
    1-2 consequences. A consequence is the narrative outcome of the choice, phrased

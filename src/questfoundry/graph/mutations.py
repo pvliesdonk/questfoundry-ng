@@ -69,6 +69,17 @@ def set_entity_disposition(g: StoryGraph, entity_id: str, *, retained: bool) -> 
     entity.retained = retained
 
 
+def set_dilemma_disposition(g: StoryGraph, dilemma_id: str, *, reserved: bool) -> None:
+    """SEED triage: mark a dilemma reserved — kept in the graph as unwoven
+    texture feedstock, no path, never woven (structural-depth W2). Reserved
+    dilemmas stop counting for role budgets (B1) and anchoring (I2); a
+    reserved dilemma with an explored path is a gate error."""
+    dilemma = g.get(dilemma_id)
+    if not isinstance(dilemma, Dilemma):
+        raise MutationError(f"{dilemma_id!r} is not a dilemma")
+    dilemma.reserved = reserved
+
+
 def add_dilemma_relation(g: StoryGraph, kind: EdgeKind, a: str, b: str) -> None:
     if kind not in (EdgeKind.WRAPS, EdgeKind.SERIAL, EdgeKind.CONCURRENT):
         raise MutationError(f"{kind} is not a dilemma ordering relation")

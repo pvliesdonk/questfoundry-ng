@@ -249,7 +249,11 @@ class CodexProposal(BaseModel):
 
 
 def _anchoring_entities(g) -> set[str]:
-    anchored = {e.dst for e in g.edges if e.kind == EdgeKind.ANCHORED_TO}
+    # a reserved dilemma is unwoven feedstock — its anchors earn no codex
+    reserved = {d.id for d in g.nodes_of(Dilemma) if d.reserved}
+    anchored = {
+        e.dst for e in g.edges if e.kind == EdgeKind.ANCHORED_TO and e.src not in reserved
+    }
     return {e.id for e in g.nodes_of(Entity) if e.retained and e.id in anchored}
 
 

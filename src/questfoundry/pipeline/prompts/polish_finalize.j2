@@ -66,6 +66,16 @@ flavor genuinely needs a breath more room.
     {{ before }} -> {{ after }}
 {% endfor %}
 {% endfor %}
+{% if reserve %}
+RESERVED MATERIAL (advisory). Triage set these dilemmas aside as unwoven
+feedstock — real material from this story's brainstorm. Where a site wants
+flavor, prefer grafting from them (a place, a tension, a rumor they name)
+over inventing texture from nothing. They stay unwoven: an arm may echo
+their material as texture, never advance, reveal, or decide them.
+{% for r in reserve %}
+- {{ r.dilemma.question }} (stakes: {{ r.dilemma.why_it_matters }}{% if r.entities %}; touches {{ r.entities | join(", ") }}{% endif %})
+{% endfor %}
+{% endif %}
 Each entry: {"before": beat id, "after": its successor in the same run,
 "arms": [{"id": "beat:slug", "summary", "entities", "followup": {"id":
 "beat:slug", "summary", "entities"} or omit}] — 2 arms for a diamond, 1 for a

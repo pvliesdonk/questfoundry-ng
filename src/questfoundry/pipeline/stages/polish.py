@@ -226,6 +226,13 @@ def _finalize_context(project: Project) -> dict:
     sites, cadence, _ = _texture_and_cadence(project)
     return {
         "vision": project.vision,
+        # The roster of ids every `entities` field must draw from. Texture
+        # sites are shown as beat summaries only, so without this a summary
+        # naming "Sheriff Harold Finch" leads the model to coin
+        # `character:finch` when the id is `character:marshal` (the live
+        # weak-tier finalize halt, 2026-07-15): the schema pins entities to
+        # these ids but the prompt never showed them.
+        "cast": _arc_entities(g),
         "needs": needs,
         "cadence": cadence,
         "texture_sites": [

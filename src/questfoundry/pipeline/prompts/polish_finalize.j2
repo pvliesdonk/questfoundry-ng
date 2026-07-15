@@ -3,6 +3,14 @@ Finalize the story's structure before it becomes passages. Two jobs, both additi
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 
+CAST — the only entities you may reference. Every "entities" value anywhere
+below MUST be an id copied verbatim from this list (the id in parentheses).
+An entity's id often differs from its name — copy the id, never derive one
+from a name, and never coin an id for a person or place not listed here.
+{% for e in cast %}
+- {{ e.name }} ({{ e.id }}): {{ e.concept }}
+{% endfor %}
+
 {% if needs %}
 RESIDUE ARMS (required). Where a subplot's paths rejoin, the choice must still be
 felt: the story visibly remembers whichever side the player took. For EACH

@@ -1226,3 +1226,40 @@ def test_finalize_context_exposes_the_entity_roster(vision, tmp_path):
     retained = {e.id for e in g.nodes_of(Entity) if e.retained}
     assert retained, "the woven story should retain at least one entity"
     assert {e.id for e in ctx["cast"]} == retained
+
+
+def test_audit_decomposes_per_passage(vision, tmp_path):
+    """The joint audit call over every ambiguous-state passage degenerated
+    into wholesale repetition at medium scale (137 passages doubled, live
+    2026-07-15). It is now decomposed: a planner skips the joint call and
+    expands one `audit:<pid>` pass per passage, each an independent I12
+    resolution (the cap is per-passage; a split leaves variants <= cap)."""
+    from questfoundry.pipeline.stages.polish import (
+        POLISH_STAGE,
+        _audit_expand,
+        _audit_one_apply,
+    )
+
+    g, project = _four_soft_trunk(vision, tmp_path)
+    # the planner makes no LLM call and names the decomposition
+    audit_spec = next(p for p in POLISH_STAGE.passes if p.name == "audit")
+    assert audit_spec.skip_if is not None
+    reason = audit_spec.skip_if(project)
+    assert reason and "2 per-passage" in reason
+    # one pass per ambiguous-state passage, deterministically id-sorted
+    assert [p.name for p in _audit_expand(project)] == [
+        "audit:passage:p-feeder",
+        "audit:passage:p-trunk",
+    ]
+    # a per-passage apply enforces the cap for ITS OWN passage in isolation
+    # (the over-cap p-trunk, under-marked, still fails repairably) ...
+    over_cap = AuditProposal(audit=[AuditEntry(passage="passage:p-trunk", irrelevant=[])])
+    with pytest.raises(ApplyError) as exc:
+        _audit_one_apply("passage:p-trunk")(over_cap, project)
+    assert "4 dilemma states relevant" in str(exc.value)
+    # ... and resolves it WITHOUT the other audited passage in the proposal
+    # (the joint apply demanded full coverage; per-passage does not)
+    resolved = AuditProposal(
+        audit=[AuditEntry(passage="passage:p-trunk", irrelevant=["flag:sub1-a", "flag:sub1-b"])]
+    )
+    _audit_one_apply("passage:p-trunk")(resolved, project)

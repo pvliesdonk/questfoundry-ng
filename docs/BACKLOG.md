@@ -104,11 +104,17 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   trembling in my grasp" — the just-declined act, re-worded. Topology is
   correct (an arm rejoins the trunk's destination by design); the labels
   pass words each menu blind to the trunk label its arm edge parallels, and
-  the distinct-labels rule only spans one passage's menu. Fix direction: a
-  single-exit detour page is a CONTINUATION, not a choice — tell the labels
-  pass (it isn't told the page is single-exit or a detour arm today), and/or
-  show it the parallel trunk label with "the reader declined this wording
-  one page ago". Covers the diamond rejoin case too.
+  the distinct-labels rule only spans one passage's menu. Mechanism
+  (confirmed against polish_labels.j2): not copying (no channel carries the
+  trunk label into the arm's call) and not chance — both calls get the SAME
+  destination summary and the same "concrete present-tense action" task, so
+  independent samples converge; it will recur at every sidetrack/diamond
+  rejoin on any tier. Fix direction: the call must see what it must differ
+  FROM — show it the parallel label(s) already worded onto the same
+  destination ("the reader declined this wording one page ago"). Note the
+  prompt already forbids meta-labels ("continue" is a failure; even a single
+  onward choice gets a diegetic line), so the fix is a DIFFERENT diegetic
+  line, not a bare continuation.
 
 ## Prose & annotations
 

@@ -1,0 +1,14 @@
+id: beat:tw1-legacy-aftermath
+created_by: polish
+summary: The queen’s peace proposal lies untouched, the parchment pristine against the cold
+  stone.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:brother-legacy-aftermath-2
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

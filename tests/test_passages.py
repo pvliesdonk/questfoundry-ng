@@ -12,7 +12,7 @@ from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import DilemmaRole, ResidueWeight
-from questfoundry.models.presentation import Passage
+from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
 from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
@@ -176,11 +176,25 @@ def test_heavy_residue_creates_gated_variants(vision, tmp_path):
     non_variant = next(p for p in g.nodes_of(Passage) if p.id not in holders)
     assert non_variant.variant_flag is None
 
+    # the variants themselves carry NO ambiguous state — their gate
+    # determines the dilemma for everyone who arrives (passage_gate_flags
+    # feeds the I12 conditioning), so the audit does not list them
+    for vid in holders:
+        assert (
+            queries.ambiguous_dilemma_groups(
+                g, queries.beats_of_passage(g, vid), queries.passage_gate_flags(g, vid)
+            )
+            == []
+        )
     proposal = AuditProposal(
         audit=[
             AuditEntry(passage=p.id, irrelevant=[])
             for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
-            if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+            if queries.ambiguous_dilemma_groups(
+                g,
+                queries.beats_of_passage(g, p.id),
+                queries.passage_gate_flags(g, p.id),
+            )
         ]
     )
     _audit_apply(proposal, project)
@@ -272,7 +286,9 @@ def test_tensored_residue_arm_is_a_gated_choice_on_one_side(vision, tmp_path):
         audit=[
             AuditEntry(passage=p.id, irrelevant=[])
             for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
-            if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+            if queries.ambiguous_flags(
+                g, queries.beats_of_passage(g, p.id), queries.passage_gate_flags(g, p.id)
+            )
         ]
     )
     _audit_apply(proposal, project)
@@ -690,7 +706,7 @@ def test_b6_choice_cadence_measures_feel(golden):
     assert len(warns) == 1 and "words per genuine choice" in warns[0].message
 
 
-def test_active_flags_mirrors_i12(golden):
+def test_ambiguous_flags_mirrors_i12(golden):
     g = golden.graph
     group = next(
         grp for grp in pc.collapse_groups(g) if "beat:keep-ending" in grp
@@ -698,7 +714,7 @@ def test_active_flags_mirrors_i12(golden):
     # flag:bound-to-light is granted on every route here (its commit is
     # the only side upstream) — a fact, not a state to honor (I12);
     # the reconverged soft dilemma's pair stays ambiguous
-    assert pc.active_flags(g, group) == [
+    assert queries.ambiguous_flags(g, group) == [
         "flag:elias-knows",
         "flag:lie-between",
     ]
@@ -757,16 +773,16 @@ def test_i12_counts_only_ambiguous_flags(vision):
     mutations.add_ordering(g, "beat:main-pre1", "beat:afterglow")
     assert queries.ambiguous_flags(g, ["beat:afterglow"]) == ["flag:sub2-a", "flag:sub2-b"]
 
-    # I12 fires on the 4 ambiguous states and clears when one is audited away
+    # 4 ambiguous FLAGS are 2 dilemma STATES (the unit correction,
+    # 2026-07-14: a path derives one flag per consequence, any of them
+    # identifies the path) — two states sit within the cap, no error
     mutations.add_passage(
         g,
         Passage(id="passage:p-trunk", created_by=Stage.POLISH, summary="s"),
         ["beat:main-pre1"],
     )
-    issues = run_checks(g, vision, Stage.POLISH)
-    i12 = [i for i in issues if i.check == "I12"]
-    assert len(i12) == 1 and "4 ambiguous states" in i12[0].message
-    g.node("passage:p-trunk").irrelevant_flags = ["flag:sub1-a"]
+    groups = queries.ambiguous_dilemma_groups(g, ["beat:main-pre1"])
+    assert groups == [["flag:sub1-a", "flag:sub1-b"], ["flag:sub2-a", "flag:sub2-b"]]
     issues = run_checks(g, vision, Stage.POLISH)
     assert [i for i in issues if i.check == "I12"] == []
 
@@ -782,7 +798,9 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
     flagged = [
         p.id
         for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
-        if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+        if queries.ambiguous_flags(
+                g, queries.beats_of_passage(g, p.id), queries.passage_gate_flags(g, p.id)
+            )
     ]
     assert flagged
     proposal = AuditProposal(
@@ -792,6 +810,146 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
         ]
     )
     _audit_apply(proposal, project)  # normalized, no ApplyError
+
+
+def _four_soft_trunk(vision, tmp_path):
+    """A trunk passage after FOUR soft convergences: 4 ambiguous dilemma
+    states, one over the I12 cap — the medium/long regime the audit must
+    resolve honestly (irrelevant where true, split_on where not)."""
+    g = StoryGraph()
+    d1, p1a, p1b = make_dilemma(g, "main", role=DilemmaRole.HARD)
+    softs = [make_dilemma(g, f"sub{i}", role=DilemmaRole.SOFT) for i in range(1, 5)]
+    scaffold(g, "main", d1, p1a, p1b)
+    for i, (d, pa, pb) in enumerate(softs, start=1):
+        scaffold(g, f"sub{i}", d, pa, pb, endings=False)
+    planned = weave.plan(g)
+    order = ["pre:beat:main-pre0"]
+    for i in range(1, 5):
+        order += [f"pre:beat:sub{i}-pre0", f"pre:beat:sub{i}-pre1", f"resolve:dilemma:sub{i}"]
+    order += ["pre:beat:main-pre1", "resolve:dilemma:main"]
+    weave.realize(g, planned, order)
+    _derive_flags(g)
+    mutations.add_passage(
+        g,
+        Passage(id="passage:p-feeder", created_by=Stage.POLISH, summary="s"),
+        ["beat:sub4-pre1"],
+    )
+    mutations.add_passage(
+        g,
+        Passage(id="passage:p-trunk", created_by=Stage.POLISH, summary="s"),
+        ["beat:main-pre1"],
+    )
+    mutations.add_choice(
+        g, "passage:p-feeder", "passage:p-trunk", Choice(label="on", requires=[], grants=[])
+    )
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    return g, project
+
+
+def test_audit_apply_enforces_the_i12_cap_repairably(vision, tmp_path):
+    """Texture-trial live run (2026-07-14): the prompt's cap rule was
+    stated and trusted, the model under-marked, and I12 exploded at the
+    unrepairable gate; the repair loop then got ONE violation per round
+    and exhausted playing whack-a-mole. The apply now enforces the cap in
+    the honest unit (dilemma states) with ALL violations batched."""
+    g, project = _four_soft_trunk(vision, tmp_path)
+    groups = queries.ambiguous_dilemma_groups(g, ["beat:main-pre1"])
+    assert len(groups) == 4  # one over the cap
+    feeder = AuditEntry(passage="passage:p-feeder", irrelevant=[])  # 3 states: at cap
+    under_marked = AuditProposal(
+        audit=[feeder, AuditEntry(passage="passage:p-trunk", irrelevant=[])]
+    )
+    with pytest.raises(ApplyError) as exc:
+        _audit_apply(under_marked, project)
+    msg = str(exc.value)
+    assert "4 dilemma states relevant" in msg
+    assert "split_on" in msg and "fix ALL" in msg
+    # honest resolution 1: a state the scene doesn't touch, fully marked
+    fixed = AuditProposal(
+        audit=[
+            feeder,
+            AuditEntry(
+                passage="passage:p-trunk", irrelevant=["flag:sub1-a", "flag:sub1-b"]
+            ),
+        ]
+    )
+    _audit_apply(fixed, project)
+
+
+def test_audit_split_on_creates_gated_variants_and_clears_i12(vision, tmp_path):
+    """The escape valve when every state genuinely matters: split_on keys
+    the passage on a dilemma — the engine re-presents it as gated
+    variants, arrivals hold a known side, and I12 clears without a single
+    dishonest irrelevance mark."""
+    g, project = _four_soft_trunk(vision, tmp_path)
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage="passage:p-feeder", irrelevant=[]),
+            AuditEntry(passage="passage:p-trunk", irrelevant=[], split_on=["dilemma:sub1"]),
+        ]
+    )
+    lines = _audit_apply(proposal, project)
+    assert any("split on" in line for line in lines)
+    sibling = g.node("passage:p-trunk--s1")
+    assert sibling is not None and sibling.variant_flag == "flag:sub1-b"
+    assert g.node("passage:p-trunk").variant_flag == "flag:sub1-a"
+    # in-choices gated per side; each variant's arrivals hold a known side
+    gates = sorted(
+        tuple(e.payload["requires"])
+        for e in g.edges
+        if e.kind == EdgeKind.CHOICE and e.dst.startswith("passage:p-trunk")
+    )
+    assert gates == [("flag:sub1-a",), ("flag:sub1-b",)]
+    # the keyed state is determined inside each variant: 3 remain, at cap
+    for pid in ("passage:p-trunk", "passage:p-trunk--s1"):
+        remaining = queries.ambiguous_dilemma_groups(
+            g, queries.beats_of_passage(g, pid), queries.passage_gate_flags(g, pid)
+        )
+        assert len(remaining) == 3
+    issues = run_checks(g, vision, Stage.POLISH)
+    assert [i for i in issues if i.check == "I12"] == []
+
+
+def test_audit_split_on_rejects_a_non_ambiguous_dilemma(vision, tmp_path):
+    g, project = _four_soft_trunk(vision, tmp_path)
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage="passage:p-feeder", irrelevant=[]),
+            AuditEntry(passage="passage:p-trunk", irrelevant=[], split_on=["dilemma:main"]),
+        ]
+    )
+    with pytest.raises(ApplyError, match="name no ambiguous state"):
+        _audit_apply(proposal, project)
+    del g
+
+
+def test_audit_split_on_rejects_an_ending(vision, tmp_path):
+    """Endings never split — variants would multiply the story's ending
+    set, fixed at the freeze (I12's documented exception). The refusal
+    must give that reason, not the false 'already determined' claim."""
+    from questfoundry.models.presentation import Ending
+
+    g, project = _four_soft_trunk(vision, tmp_path)
+    mutations.add_passage(
+        g,
+        Passage(
+            id="passage:p-final",
+            created_by=Stage.POLISH,
+            summary="s",
+            ending=Ending(id="ending:p-final", title="t"),
+        ),
+        ["beat:main-post-a"],
+    )
+    assert queries.ambiguous_dilemma_groups(g, ["beat:main-post-a"])
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage="passage:p-feeder", irrelevant=[]),
+            AuditEntry(passage="passage:p-trunk", irrelevant=[], split_on=["dilemma:sub1"]),
+            AuditEntry(passage="passage:p-final", irrelevant=[], split_on=["dilemma:sub2"]),
+        ]
+    )
+    with pytest.raises(ApplyError, match="ending set, fixed at the freeze"):
+        _audit_apply(proposal, project)
 
 
 # -- arcs pass (plan: docs/plans/prose-quality.md W5) --------------------------

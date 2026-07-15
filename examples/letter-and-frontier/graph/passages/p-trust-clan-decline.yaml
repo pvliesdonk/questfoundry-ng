@@ -1,0 +1,29 @@
+id: passage:p-trust-clan-decline
+summary: Elara turns down the Clan’s protection and sets out on her own, only to be caught
+  in a sudden raid by desert marauders. She drives them off but suffers injuries that postpone
+  her journey to the rival court.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara declines River Clan protection, rides toward dunes alone, is ambushed
+  by desert raiders who demand a letter, she fights with short blade, is wounded, leans on
+  rock, notes scarlet seal, writes plea on emergency note, gives it to lingering rider, requests
+  council to send alternate envoys, journey to rival court now delayed.
+beats:
+- beat:trust-clan-decline-1
+- beat:trust-clan-decline-2
+- beat:trust-clan-decline-commit
+choices:
+- label: Brace my back and march onward, the empty space where a shield should be
+  to: passage:p-emptied-alliance
+- label: Press the council to send alternate envoys
+  to: passage:p-trust-clan-decline-3

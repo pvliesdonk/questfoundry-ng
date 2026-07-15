@@ -37,11 +37,12 @@ from __future__ import annotations
 import copy
 from collections import Counter
 from collections.abc import Callable
+from itertools import product
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, create_model
 
 from questfoundry.graph import mutations, queries
-from questfoundry.graph.validate import run_checks
+from questfoundry.graph.validate import I12_AMBIGUOUS_CAP, run_checks
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
@@ -130,7 +131,7 @@ class TextureWorldSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     site: int  # index into the offered TEXTURE WORLDS sites
-    premise: str  # the alternate texture in one line ("over the mountain pass")
+    premise: str  # what differs in this rendering, one line (any consequence-free axis)
     beats: list[TextureBeatSpec] = Field(min_length=1)
 
 
@@ -283,8 +284,9 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
         if not spec.premise.strip():
             raise ApplyError(
                 f"texture world at site {spec.site} has an empty premise; state "
-                "the alternate texture in one line (where or how these events "
-                "now happen)"
+                "in one line what differs in this rendering — name a story "
+                "element the beats, cast, or reserved material already carry "
+                "and how this rendering varies it (any consequence-free axis)"
             )
         if len(spec.beats) != len(sites[spec.site]):
             raise ApplyError(
@@ -799,6 +801,12 @@ class AuditEntry(BaseModel):
 
     passage: str
     irrelevant: list[str] = []
+    # dilemma ids to SPLIT this passage on (I12's escape valve, author-
+    # directed 2026-07-14): when more states genuinely matter than the cap
+    # allows, the engine re-presents the moment as flag-gated variants —
+    # arrivals at each variant hold a known side, so the state honestly
+    # stops counting, instead of being marked irrelevant to meet a budget.
+    split_on: list[str] = []
 
 
 class AuditProposal(BaseModel):
@@ -807,60 +815,165 @@ class AuditProposal(BaseModel):
     audit: list[AuditEntry]
 
 
-def _audited_passages(project: Project) -> list[tuple[Passage, list[str]]]:
+def _audited_passages(project: Project) -> list[tuple[Passage, list[list[str]]]]:
+    """Passages carrying ambiguous state, with their I12 dilemma groups —
+    a dilemma's per-path flags are ONE binary state (the unit correction,
+    2026-07-14); passage-level gates (variants) condition arrivals."""
     g = project.graph
     result = []
     for passage in sorted(g.nodes_of(Passage), key=lambda p: p.id):
-        flags = pc.active_flags(g, queries.beats_of_passage(g, passage.id))
-        if flags:
-            result.append((passage, flags))
+        groups = queries.ambiguous_dilemma_groups(
+            g,
+            queries.beats_of_passage(g, passage.id),
+            queries.passage_gate_flags(g, passage.id),
+        )
+        if groups:
+            result.append((passage, groups))
     return result
 
 
 def _audit_context(project: Project) -> dict:
     g = project.graph
     flag_text = {f.id: f.description for f in g.nodes_of(StateFlag)}
+
+    def dilemma_of(group: list[str]) -> str:
+        flag = g.node(group[0])
+        assert isinstance(flag, StateFlag) and flag.path is not None
+        return queries.dilemma_of_path(g, flag.path)
+
+    passages = []
+    for p, groups in _audited_passages(project):
+        states = [
+            {
+                "dilemma": dilemma_of(grp),
+                "question": g.node(dilemma_of(grp)).question,  # type: ignore[union-attr]
+                "flags": [(f, flag_text[f]) for f in grp],
+            }
+            for grp in groups
+        ]
+        passages.append(
+            {
+                "passage": p,
+                "states": states,
+                "over": max(0, len(groups) - I12_AMBIGUOUS_CAP),
+            }
+        )
     return {
         "vision": project.vision,
-        "passages": [
-            {"passage": p, "active": [(f, flag_text[f]) for f in flags]}
-            for p, flags in _audited_passages(project)
-        ],
-        "cap": 3,
+        "passages": passages,
+        "cap": I12_AMBIGUOUS_CAP,
     }
 
 
 def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
+    """Two-phase, all violations batched into ONE repairable error (the
+    scaffold precedent — raising the first violation of a ~40-entry joint
+    proposal fed the repair loop one problem per round, and the live
+    texture-trial exhausted repairs playing whack-a-mole). The I12 cap is
+    enforced here, at the pass that can still fix it, in the honest unit
+    (dilemma states, not flags) and with the honest escape (split_on —
+    variants keyed on a dilemma — never irrelevance as budget-filler)."""
     g = project.graph
-    expected = {p.id: flags for p, flags in _audited_passages(project)}
-    seen = set()
-    lines = []
+    audited = _audited_passages(project)
+    expected = {p.id: groups for p, groups in audited}
+    endings = {p.id for p, _ in audited if p.ending is not None}
+
+    def dilemma_of(group: list[str]) -> str:
+        flag = g.node(group[0])
+        assert isinstance(flag, StateFlag) and flag.path is not None
+        return queries.dilemma_of_path(g, flag.path)
+
+    problems: list[str] = []
+    seen: set[str] = set()
     for entry in proposal.audit:
         # live models drop the id namespace ("p-x" for "passage:p-x");
         # the prefix is unambiguous here, so accept the slug form
         if entry.passage not in expected and f"passage:{entry.passage}" in expected:
             entry.passage = f"passage:{entry.passage}"
         if entry.passage not in expected:
-            raise ApplyError(
-                f"{entry.passage} is not a passage with active flags; "
+            problems.append(
+                f"{entry.passage} is not a passage with ambiguous states; "
                 f"audit exactly these ids: {sorted(expected)}"
             )
+            continue
         if entry.passage in seen:
-            raise ApplyError(f"{entry.passage} audited twice — keep one audit entry per passage")
-        seen.add(entry.passage)
-        stray = set(entry.irrelevant) - set(expected[entry.passage])
-        if stray:
-            raise ApplyError(
-                f"{entry.passage}: {sorted(stray)} are not active there; "
-                f"active flags are {expected[entry.passage]}"
+            problems.append(
+                f"{entry.passage} audited twice — keep one audit entry per passage"
             )
+            continue
+        seen.add(entry.passage)
+        groups = expected[entry.passage]
+        flat = {f for grp in groups for f in grp}
+        stray = set(entry.irrelevant) - flat
+        if stray:
+            problems.append(
+                f"{entry.passage}: {sorted(stray)} are not ambiguous there — "
+                f"drop them from irrelevant; the ambiguous flags are {sorted(flat)}"
+            )
+        relevant = [grp for grp in groups if not set(grp) <= set(entry.irrelevant)]
+        relevant_dilemmas = {dilemma_of(grp) for grp in relevant}
+        bad_split = [d for d in entry.split_on if d not in relevant_dilemmas]
+        if bad_split:
+            problems.append(
+                f"{entry.passage}: split_on {bad_split} name no ambiguous state "
+                f"here — split only on {sorted(relevant_dilemmas)}, or drop the split"
+            )
+            continue
+        if len(entry.split_on) != len(set(entry.split_on)):
+            problems.append(f"{entry.passage}: split_on lists a dilemma twice")
+            continue
+        if len(entry.split_on) > 2:
+            problems.append(
+                f"{entry.passage}: split on at most 2 dilemmas (4 variants); "
+                "mark more states irrelevant instead"
+            )
+            continue
+        if entry.split_on and entry.passage in endings:
+            problems.append(
+                f"{entry.passage} is an ending and cannot split (variants would "
+                "multiply the story's ending set, fixed at the freeze); drop its "
+                "split_on and mark only the states this final scene genuinely "
+                "does not address as irrelevant"
+            )
+            continue
+        left = len(relevant) - len(entry.split_on)
+        if left > I12_AMBIGUOUS_CAP:
+            over = left - I12_AMBIGUOUS_CAP
+            states = [f"{dilemma_of(grp)}: {grp}" for grp in relevant]
+            problems.append(
+                f"{entry.passage} leaves {len(relevant)} dilemma states relevant "
+                f"({states}) and splits {len(entry.split_on)}; a writer can honor "
+                f"at most {I12_AMBIGUOUS_CAP} states in one passage (I12) — for at "
+                f"least {over} more state(s), either mark ALL of that state's "
+                "flags irrelevant (only if the scene genuinely doesn't touch it) "
+                "or add its dilemma to split_on (the engine then re-presents this "
+                "moment as gated variants — the honest choice when the state matters)"
+            )
+    missing = set(expected) - seen
+    if missing:
+        problems.append(f"audit must cover every listed passage; missing {sorted(missing)}")
+    if problems:
+        raise ApplyError(
+            "audit rejected — fix ALL of the following in one corrected "
+            "proposal, keeping every entry that is not named:\n- " + "\n- ".join(problems)
+        )
+
+    lines = []
+    for entry in proposal.audit:
         mutations.set_passage_irrelevant_flags(g, entry.passage, entry.irrelevant)
         if entry.irrelevant:
             lines.append(f"{entry.passage}: don't address {', '.join(entry.irrelevant)}")
-    missing = set(expected) - seen
-    if missing:
-        raise ApplyError(f"audit must cover every listed passage; missing {sorted(missing)}")
-    return lines or ["all active flags judged relevant"]
+        if entry.split_on:
+            sides = [
+                [flags[0] for _, flags in sorted(queries.dilemma_flags(g, d).items())]
+                for d in sorted(entry.split_on)
+            ]
+            gate_sets = [list(combo) for combo in product(*sides)]
+            ids = mutations.split_passage(g, entry.passage, gate_sets)
+            lines.append(
+                f"{entry.passage}: split on {sorted(entry.split_on)} -> {', '.join(ids)}"
+            )
+    return lines or ["all ambiguous states judged relevant"]
 
 
 # -- pass 4: arcs -------------------------------------------------------------
@@ -1027,18 +1140,31 @@ def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
 
 
 def audit_proposal_schema(project: Project) -> type[AuditProposal]:
-    """Pin `audit[].passage` to the passages that have active flags (both
-    exact ids and their unambiguous slugs, which the apply also accepts)
-    and `irrelevant[]` to the flags active in those passages. Resolved
-    after the passages pass mints the passages (PassSpec.schema_for)."""
+    """Pin `audit[].passage` to the passages that have ambiguous states
+    (both exact ids and their unambiguous slugs, which the apply also
+    accepts), `irrelevant[]` to those passages' ambiguous flags, and
+    `split_on[]` to the dilemmas those states belong to. Resolved after
+    the passages pass mints the passages (PassSpec.schema_for)."""
+    g = project.graph
     audited = _audited_passages(project)
     ids = sorted(p.id for p, _ in audited)
     passage_refs = ids + [i.split(":", 1)[1] for i in ids]
-    flags = list(dict.fromkeys(f for _, fl in audited for f in fl))
+    flags = list(dict.fromkeys(f for _, groups in audited for grp in groups for f in grp))
+    dilemmas = sorted(
+        {
+            queries.dilemma_of_path(g, g.node(grp[0]).path)  # type: ignore[union-attr]
+            for _, groups in audited
+            for grp in groups
+        }
+    )
     return pin(
         AuditProposal,
         "AuditProposal",
-        {("AuditEntry", "passage"): passage_refs, ("AuditEntry", "irrelevant"): flags},
+        {
+            ("AuditEntry", "passage"): passage_refs,
+            ("AuditEntry", "irrelevant"): flags,
+            ("AuditEntry", "split_on"): dilemmas,
+        },
     )
 
 

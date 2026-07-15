@@ -1,0 +1,15 @@
+id: beat:tw0-lt1
+created_by: polish
+summary: Elara studies the sealed letter under a leaf‑filtered light, noting the queen’s seal
+  might be challenged.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+mirrors: beat:letter-tamper-pre-1
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

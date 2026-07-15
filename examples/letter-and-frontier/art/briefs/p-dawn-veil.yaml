@@ -1,0 +1,10 @@
+passage: passage:p-dawn-veil
+priority: 9
+caption: Standing before the great hall’s doors, Elara feels the vague promise of a shared
+  dawn in the sealed parchment.
+prompt: Elara in travel cloak, hand gripping a crimson‑sealed letter, before massive stone
+  doors of a vaulted hall, soft dawn light filtering, pastel warm earth tones, subtle crimson
+  highlight on wax.
+entities:
+- character:elara
+- object:sealed-letter

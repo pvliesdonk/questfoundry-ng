@@ -1,0 +1,20 @@
+id: passage:p-wind-betrayal
+summary: A cold wind stirs the dust and carries rumors of courier treachery as Elara balances
+  her oath to the queen’s seal against the practical need to secure the letter, then steadies
+  herself by turning the parchment over to let its vague wording settle in her mind.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara stands on the Silver Plain holding a queen‑sealed letter; the cold wind
+  stirs its scarlet wax seal and hints at courier betrayal. She weighs her oath against the
+  risk of patrols and forged stamps, considering the fort’s iron seal for safety, costing
+  her duty’s certainty.
+beats:
+- beat:brother-legacy-lean-3
+- beat:letter-tamper-pre-3
+- bridge:5
+choices:
+- label: watch the fireflies settle upon the parchment
+  to: passage:p-firefly-glance
+- label: trace the ambiguous lines of the peace text
+  to: passage:p-ambiguous-tweak

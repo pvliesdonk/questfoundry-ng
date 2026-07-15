@@ -1,0 +1,12 @@
+id: beat:trust-clan-agree-commit
+summary: Elara swears to the Clan that she will owe them a favor, sealing the pact with a
+  nod.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side

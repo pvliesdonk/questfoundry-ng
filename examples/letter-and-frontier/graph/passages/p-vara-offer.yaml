@@ -1,0 +1,19 @@
+id: passage:p-vara-offer
+summary: Vara meets the messenger in a shadowed alcove and proposes exchanging the sealed
+  letter for a pact that would steady the volatile trade routes, binding the messenger’s secret
+  to a fragile hope for peace.
+entities:
+- character:vara
+- object:sealed-letter
+prose_summary: Vara Shadowmantle enters the hilltop alcove; a messenger delivers a sealed,
+  scarlet‑waxed letter and places it on the stone altar. Vara proposes to hand over the letter
+  in exchange for a pact that steadies trade routes, binding both parties and revealing hidden
+  secrets. The letter now serves as bargaining chip; the messenger waits.
+beats:
+- beat:tw0-sd1
+- beat:tw0-sd2
+choices:
+- label: Lay the sealed letter on the stone altar, asking for her pact
+  to: passage:p-varas-laugh
+- label: Study the seal’s glint, probing Vara’s eyes for a lie
+  to: passage:p-bridge-suspicion

@@ -19,7 +19,7 @@ and the stages interchangeable to the engine:
 context = build_context(graph, vision, stage_config)   # deterministic
 proposal = llm.generate(prompt(context), schema)       # typed, validated JSON
 issues   = validate(proposal, graph)                   # invariant checks
-if issues: proposal = llm.repair(proposal, issues)     # ≤2 repair rounds
+if issues: proposal = llm.repair(proposal, issues)     # ≤2 repair rounds (a pass may widen its own budget)
 apply(proposal, graph)                                 # mutation layer only
 gate(graph)                                            # stage exit gate
 checkpoint(stage)                                      # snapshot + review
@@ -42,7 +42,13 @@ Key properties:
   `GraphError` (a duplicate/missing reference), the runner catches it as
   repairable alongside `ApplyError`/`MutationError`, and no model-reachable
   graph write can escape as an uncaught crash. See `AGENTS.md` §"Prompt and
-  error-message quality".
+  error-message quality". **Feedback is batched**: an apply reports every
+  violation it can see in ONE error, never the first found — with ≤2
+  repair rounds, one-at-a-time feedback is a budget the model spends
+  fixing exactly what was quoted while the next violation waits (learned
+  twice on the texture-trial live run: the audit's scaffold-precedent
+  batching, then FILL's echo check exhausting repairs one lift per
+  round).
 - **Deterministic where possible.** Anything computable — DAG assembly
   bookkeeping, flag derivation, passage collapse boundaries, arc
   enumeration, all validation — is code, not model. The LLM is reserved
@@ -338,10 +344,16 @@ Two phases:
    planning reads stay uncut — a head-switch chunks prose, not choices);
    merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
-   audit** on every passage — for each possibly-active flag decide
-   *irrelevant here* (annotate "don't address"), *compatible* (poly-state
-   prose, ≤3 states), *light* (residue beat covers it), or *heavy*
-   (variant passages); wire choices with labels/gates/grants; synthesize
+   audit** on every passage — ambiguity is presented and capped in
+   *dilemma states* (a dilemma's per-path flags are one binary
+   uncertainty, I12), and for each state the model decides *irrelevant
+   here* (annotate "don't address" — all of the state's flags), keeps it
+   for poly-state prose (≤3 states), or **splits** the passage on the
+   dilemma (`split_on`, at most 2): the engine re-presents the moment as
+   flag-gated variants whose arrivals hold a known side — the honest
+   resolution when a state matters, enforced repairably at the apply
+   with every violation batched into one error; wire choices with
+   labels/gates/grants; synthesize
    character-arc metadata ("begins X, pivots at beat Y, ends Z per
    path") for FILL's benefit.
 
@@ -376,7 +388,7 @@ is exhaustive over the collapse groups.
 |---|---|
 | In | Passage graph + everything (entities w/ overlays, flags, arc metadata, shadows, vision) |
 | Out | **Voice** record; prose per passage (and per variant); universal entity micro-details (note register, length-capped); a rolling story-so-far note per passage (utility-summarized) |
-| Gate G5 | Every passage has prose within its word budget — per-passage since M8, keyed off the passage's aggregate `scene_type` (01 §Beat annotations): a `scene` passage takes the full band, a `sequel` the middle band, a `micro_beat` the short band (residue/false-branch arms fall back to `micro_beat`, so texture passages keep exactly their prior short band), and an ending gets headroom above all of them — enforced as a **graded review finding** (`word_budget`), not a hard apply gate: confidence scales with distance outside the band, so a near-miss with good prose and a real reason is a low-confidence finding the engine weighs rather than a forced rework, while a large miss blocks (author-directed 2026-07-12; models cannot hit exact windows and the review owns quality); a second mechanical finding, **`overwriting`** (coined hyphen-compound density — warn ~8/1k, fail ~15/1k, graded by distance), rides beside it, the one modulation red flag that survived a genre-diverse study with zero false positives (fragmentation is deliberately not gated — it false-positives on good noir — the modulation-variance half being the B8 pacing report); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; ≤2 revision rounds per passage |
+| Gate G5 | Every passage has prose within its word budget — per-passage since M8, keyed off the passage's aggregate `scene_type` (01 §Beat annotations): a `scene` passage takes the full band, a `sequel` the middle band, a `micro_beat` the short band (residue/false-branch arms fall back to `micro_beat`, so texture passages keep exactly their prior short band), and an ending gets headroom above all of them — enforced as a **graded review finding** (`word_budget`), not a hard apply gate: confidence scales with distance outside the band, so a near-miss with good prose and a real reason is a low-confidence finding the engine weighs rather than a forced rework, while a large miss blocks (author-directed 2026-07-12; models cannot hit exact windows and the review owns quality); a second mechanical finding, **`overwriting`** (coined hyphen-compound density — warn ~8/1k, fail ~15/1k, graded by distance), rides beside it, the one modulation red flag that survived a genre-diverse study with zero false positives (fragmentation is deliberately not gated — it false-positives on good noir — the modulation-variance half being the B8 pacing report); B6 (advisory) measures words per choice along a deterministic playthrough walk, not an arc view (a walk traverses one diamond arm — the arc-view sum counted words no single reader sees); B7 (advisory) checks total prose words against the scope's `words_total`; automated review (voice drift, continuity, beat-summary fidelity) clean or explicitly waived; write passes carry a repair budget of 4 rounds (a write faces several independent checks — echoes, review findings, grounding — that surface serially; the pipeline-default 2 halted a live run whose loop was converging, every shown finding fixed, texture-trial 2026-07-15) |
 
 Order matters: FILL locks the Voice first, then picks a **reference
 arc** — one arbitrary complete playthrough, chosen by seeded selection
@@ -490,6 +502,21 @@ defect). `revision_notes` are reviewer-facing only — never applied, so
 replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
 account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
 halted a live run.)
+
+**When the rework loop still fails, do not add more rules**
+(author-directed, 2026-07-15): first check the existing *write* prompt
+for clarity, then the existing *review* prompt for over-strictness — the
+urge to fix a failing loop by adding a fence, a self-check step, or an
+engine mechanism is micromanagement, and both were built and reverted on
+a texture-trial halt before the author named the real defect. There, the
+reviewer was too strict: it re-rejected hedged inference as interiority
+and demanded an explicit possessive for a referent the context had already
+attributed (one masked character on stage; "the mask" is theirs). Each
+pedantic rejection forces another rewrite, and rewrites churn new nits —
+the loop's non-convergence was manufactured by the review. The review
+rules therefore lean permissive at the margins: context-supplied
+attribution grounds a label's referent, and an explicit observed
+inference ("as if weighing") is the narrator's own mind.
 
 ### DRESS — art and codex
 

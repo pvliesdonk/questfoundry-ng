@@ -1,0 +1,10 @@
+id: bridge:3
+created_by: grow
+summary: Turning west, the track opens onto the exposed stretch of the Silver Plain where
+  the River Clan’s riders are whispered about.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- location:silver-plain
+- faction:river-clan

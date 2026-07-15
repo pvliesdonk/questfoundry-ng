@@ -1,0 +1,21 @@
+id: passage:p-vara-anticipation
+summary: Vara's grin widens, sending a ripple of anticipation through the room as the assembled
+  delegates sense a turning point. The atmosphere tightens, indicating that a consequential
+  decision looms.
+entities:
+- character:vara
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara receives council assent; the chancellor announces the trade pact with
+  the River Clan, activating the iron stamp that glows to confirm the queen's oath is unbroken.
+  Vara Shadowmantle appears in the alcove, smiles, and causes anticipation among delegates.
+  A sealed letter with an intact scarlet seal rests on the slab.
+beats:
+- beat:fb-edge-14
+choices:
+- label: watch Vara's grin widen
+  to: passage:p-spymaster-hand-3

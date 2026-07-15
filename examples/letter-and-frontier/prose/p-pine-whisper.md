@@ -1,0 +1,5 @@
+The pine line murmured, each needle brushing the cold wind as if whispering a question. Elara paused, the sound stirring the memory of the crossroads she had taken days before, when the queen’s seal had felt heavier than the armor of the River Clan. The rustle traced the edge of her resolve, reminding her that the path she chose had been one of duty edged with a quiet curiosity. She tightened the cloak around the sealed letter, feeling the wax pulse faintly under her palm.
+
+Beyond the clearing, the stones of a low arch rose toward the hilltop hall, its wooden doors darkened by dusk. A faint ember glowed from within, casting a thin line of light across the moss‑slick floor. She could see the narrow corridor that led from the hall toward the open plain, where bark on a twisted tree hinted at a map hidden beneath its age‑gray skin.
+
+Elara inhaled the pine‑scented air, the whisper fading as she steadied her grip on the parchment. The decision weighed beside the rustling pine, a promise of secrecy against the lure of hidden routes.

@@ -1,0 +1,5 @@
+The queen's peace proposal lay untouched, its wax‑sealed parchment hidden beneath Elara's cloak. The scarlet seal pressed cold against the fabric, a silent promise she guarded.
+
+The sun slid low behind the hills, staining the plain with muted amber. Elara felt the weight of the sealed oath and let her mind drift from the intact seal toward the stone‑lined road that led south. Along the road a line of weather‑worn markers faded into the dusk, their shapes barely catching the wan light.
+
+She surveyed the southern road, its low stone wall rising toward Stonegate Fort. Soldiers marched in disciplined rows beside the wall, spears catching the last gleam of day. Near a bend the border camp held an envoy in a dull green tabard, his eyes scanning the passing riders. Elara stepped forward toward the envoy, the wind tugging at the hem of her cloak as she closed the distance. The frontier's weight settled on her shoulders, the sealed letter a pulse beneath her skin.

@@ -1,0 +1,15 @@
+id: beat:letter-tamper-pre-3
+summary: Elara feels the tension between duty to the queen’s seal and the pragmatic need for
+  security.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:accept-seal
+- path:refuse-seal

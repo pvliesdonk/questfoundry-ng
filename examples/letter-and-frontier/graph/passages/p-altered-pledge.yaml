@@ -1,0 +1,21 @@
+id: passage:p-altered-pledge
+summary: Elara adjusts the treaty wording to stress mutual stewardship, and the rival lord
+  reads the change, nods, and calls it a step toward lasting peace; she feels a pang of guilt
+  as she realizes she has rewritten the queen’s words.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara uses a quill to replace the treaty’s dominion clause with mutual stewardship,
+  signs the scarlet wax seal bearing the queen’s emblem. Lord Varian reads the new line aloud,
+  nods, and declares it a step toward lasting peace. Meros whispers that her counsel is a
+  boon. The altered treaty now costs shared rulership.
+beats:
+- beat:peace-interpret-adjust-1
+- beat:peace-interpret-adjust-2
+- beat:peace-interpret-adjust-commit
+choices:
+- label: I straighten my posture, feeling their gazes upon me
+  to: passage:p-courtwatch
+- label: I bow low, listening to the advisor's whispered gratitude
+  to: passage:p-peace-interpret-adjust-3

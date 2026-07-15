@@ -1,0 +1,19 @@
+id: location:stonegate-fort
+name: Stonegate Fort
+concept: A stone‑clad outpost that controls the southern road, its walls a symbol of law and
+  surveillance.
+arc:
+  begins: Stonegate Fort is a stone‑clad outpost symbolizing law and surveillance.
+  pivots:
+  - beat: beat:setup-fort-approach
+    becomes: the fort looms as a checkpoint, heightening tension for the courier.
+  - beat: beat:letter-tamper-accept-1
+    becomes: the fort enforces the official seal, granting safe passage after stamp.
+  - beat: beat:route-choice-fort-1
+    becomes: the garrison greets Elara, providing smooth passage under official seal.
+  - beat: beat:route-choice-fort-2
+    becomes: the fort becomes a place of interrogation, scrutinizing loyalty and extracting
+      concessions.
+  ends:
+  - path: path:fort-route
+    state: the fort subjects her to interrogation, forcing partial compromise of trust.

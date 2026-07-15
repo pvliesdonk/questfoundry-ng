@@ -163,6 +163,16 @@ looks like a model limit when it is a prompt defect. So:
 - Distinguish **model-facing/repairable** errors (need a recovery_action)
   from **engine-internal invariant failures** (signal a code bug, not a
   model action) — only the former are prompt-quality surface.
+- **When a repair/rework loop fails, do not add MORE rules** (author
+  correction, 2026-07-15, after two reverted fixes in one day). The urge
+  to fix a failing loop by adding a fence, a self-check step, or an
+  engine-side mechanism is micromanagement — the same reflex as blaming a
+  weak model, pointed at the writer instead. First check the *existing*
+  write prompt for clarity, then the *existing* review prompt for being
+  overly strict: a pedantic reviewer manufactures non-convergence (every
+  rejection forces a rewrite; every rewrite churns fresh nits), and no
+  amount of new writer-side instruction fixes that. Prompt accretion is
+  itself a prompt defect.
 
 ## Documentation contract
 

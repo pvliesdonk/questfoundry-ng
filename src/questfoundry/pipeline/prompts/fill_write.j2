@@ -14,7 +14,13 @@ VOICE (binding — this owns how everything sounds):
 {% if voice.dialogue %}
 - Dialogue: {{ voice.dialogue }}
 {% endif %}
-- Banned: {{ voice.banned | join("; ") }}
+{% if voice.banned %}
+- Banned — never in your prose, in any sentence, including text you add on a
+  rework:
+{% for b in voice.banned %}
+  - {{ b }}
+{% endfor %}
+{% endif %}
 - Notes: {{ voice.notes }}
 When you need a description, reach for the voice's imagery palette — sparingly,
 at the charged moments named below, never as the default texture of every
@@ -131,11 +137,11 @@ state as their thoughts (see POINT OF VIEW above):
 
 {% if texture_premise %}
 TEXTURE WORLD: this passage lies in a parallel rendering of the story's
-events — the reader chose this texture at the fork: {{ texture_premise }}.
-Ground every scene in that texture (its places, weather, passers-by); the
-beat summaries carry the events, this line carries the world. The other
+events — the reader chose this version at the fork: {{ texture_premise }}.
+Keep that difference present and honest in every scene it touches; the
+beat summaries carry the events, this line carries what differs. The other
 rendering exists on a parallel path the reader declined — never reference
-it, compare against it, or hint the world could have been otherwise.
+it, compare against it, or hint that things could have been otherwise.
 {% endif %}
 WORLD STATE AT THIS PASSAGE — only CERTAIN facts may be stated as true:
 {% for f in flags %}

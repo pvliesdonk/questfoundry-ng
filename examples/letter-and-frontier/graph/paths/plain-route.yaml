@@ -1,0 +1,8 @@
+id: path:plain-route
+name: Plain Route
+explores: answer:plain-route
+consequences:
+- id: consequence:exposed-plains
+  text: Elara traverses the open Silver Plain, exposed to the elements and wandering eyes.
+- id: consequence:river-clan-guard
+  text: The River Clan escorts her across the plain, offering covert protection.

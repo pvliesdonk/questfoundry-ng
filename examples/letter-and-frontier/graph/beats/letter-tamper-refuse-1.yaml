@@ -1,0 +1,14 @@
+id: beat:letter-tamper-refuse-1
+summary: Malrik frowns, eyes narrowing, and orders a thorough search of Elara's pack.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: complicates
+entities:
+- character:malrik
+- character:elara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:refuse-seal

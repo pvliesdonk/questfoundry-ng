@@ -1,0 +1,5 @@
+Elara moved through the narrow passage, each step echoing against the cold stone. The corridor narrowed until a low arch opened onto a courtyard where the fort’s outer walls rose, their granite faces catching the wan light. Their height pressed down on her, a stark reminder that safety lived in the shadow of unending watch. Behind her, the garrison’s lanterns flickered, their glow tracking her retreat.
+
+Ahead, a massive iron gate marked the threshold to the main keep. Its bars were spaced wide enough for her horse, yet the weight of the bar across the opening seemed to measure every intention. She felt the scarlet wax of the queen’s seal thrum against her palm, the promise of the letter pulling at her resolve. The guard at the gate lifted his visor, eyes narrowing as he noted the sealed parchment tucked beneath her cloak.
+
+She breathed the scent of pine resin that drifted from the courtyard, steadied her grip on the reins, and stepped forward, the gate looming as the final barrier before the fort’s interior.

@@ -1,0 +1,15 @@
+id: passage:p-varas-laugh
+summary: Vara lets out a light laugh, the sound a fragile veil that cloaks her concealed motives,
+  tightening the uneasy tension between duty and doubt.
+entities:
+- character:vara
+prose_summary: Vara steps back from stone altar, incense curls, sealed parchment with scarlet
+  wax lies on slab. Vara laughs, masking motives; Elara feels oath pressure. Vara shows brief
+  doubt then resumes poise. Candle flame quivers, shadows highlight seal edge. Elara touches
+  seal, notes resin and rust dust scent, hears river. Elara knows next step depends on seal
+  content and mask expression.
+beats:
+- beat:fb-edge-5--tw0
+choices:
+- label: Examine the wax seal and Vara’s expression
+  to: passage:p-bridge-suspicion

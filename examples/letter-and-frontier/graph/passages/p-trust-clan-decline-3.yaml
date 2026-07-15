@@ -1,0 +1,25 @@
+id: passage:p-trust-clan-decline-3
+summary: The council, irritated by the messenger’s delay, debates sending alternative envoys,
+  endangering the relevance of the peace proposal.
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara enters council chamber, sees queen’s seal scarlet wax, Captain Malrik
+  places iron stamp, reports messenger delay and rival court restlessness. Grey‑haired lord
+  warns treaty loss if waiting; Lady Mirela warns envoys signal doubt. Council debates. Elara
+  notices doorway to wind‑swept plain, feels River Clan’s shield absence, steps onto plain,
+  abandoning stalled peace proposal.
+beats:
+- beat:trust-clan-decline-3
+choices:
+- label: Walk the wind‑swept plain alone
+  requires:
+  - flag:exposed-risk
+  to: passage:p-wind-alone

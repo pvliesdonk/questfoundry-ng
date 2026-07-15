@@ -1,0 +1,31 @@
+id: passage:p-letter-weight
+summary: Elara feels the hidden letter grow heavier in her satchel, a secret that sharpens
+  the knot of lost trust among the allies.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara carries a satchel containing a hidden letter sealed with scarlet wax;
+  the River Clan rider with spear awaits, offering concealed routes. Council murmurs beyond
+  stone doors. The secret binds her trust with the rival court, recalls Vara's stare, risks
+  the alliance, and upholds the queen’s oath. She can escort via hidden trails or walk alone
+  to the rival hall.
+beats:
+- beat:residue-spymaster-demand-decline
+choices:
+- label: Accept the Clan’s hidden escort
+  grants:
+  - flag:clan-favor
+  - flag:clan-protection
+  to: passage:p-clan-trust
+- label: Walk alone toward the rival court
+  grants:
+  - flag:exposed-risk
+  - flag:solo-journey
+  to: passage:p-trust-clan-decline

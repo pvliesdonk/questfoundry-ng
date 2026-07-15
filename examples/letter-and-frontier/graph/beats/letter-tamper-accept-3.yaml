@@ -1,0 +1,13 @@
+id: beat:letter-tamper-accept-3
+summary: The altered phrasing subtly hints at concessions the queen never intended.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: complicates
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:accept-seal

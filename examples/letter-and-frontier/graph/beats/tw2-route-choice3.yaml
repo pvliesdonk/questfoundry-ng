@@ -1,0 +1,15 @@
+id: beat:tw2-route-choice3
+created_by: polish
+summary: Supplies dwindle and a sandstorm threatens, while the fort offers shelter but close
+  scrutiny.
+beat_class: structural
+purpose: texture_world
+entities:
+- location:silver-plain
+- location:stonegate-fort
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:route-choice-pre-3
+texture_premise: Across the open steppe, the wind sweeps the grasses as Elara faces the exposed
+  plain.

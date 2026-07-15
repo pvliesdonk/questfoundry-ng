@@ -1,0 +1,14 @@
+id: passage:p-wax-doubt
+summary: The candle's wavering flame casts uneasy shadows on the sealed wax, mirroring the
+  messenger's rising doubt about their duty.
+entities:
+- object:sealed-letter
+prose_summary: Elara holds a sealed parchment with scarlet wax; the candle flickers; a River
+  Clan rider enters, offers to guide her across the plain in exchange for a future favor;
+  she lowers the letter, looks at the rider, and must choose between the oath of the dying
+  queen and the promised aid.
+beats:
+- beat:fb-edge-6
+choices:
+- label: Study the queen’s wax‑sealed letter
+  to: passage:p-river-protection

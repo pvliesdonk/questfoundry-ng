@@ -1,0 +1,14 @@
+id: passage:p-firefly-glance
+summary: Elara watches fireflies settle on the parchment, their soft glow highlighting the
+  words and stirring a quiet, fragile hope.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara examines a sealed peace proposal letter; fireflies briefly highlight
+  its ink. She notes clauses about a lasting truce and shared harvests, and considers changing
+  a single word, weighing hope against duty. The decision could alter the queen’s intent.
+beats:
+- beat:fb-edge-3
+choices:
+- label: Trace the wording for a subtle shift
+  to: passage:p-ambiguous-tweak

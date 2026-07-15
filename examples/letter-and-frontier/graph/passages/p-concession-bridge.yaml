@@ -1,0 +1,19 @@
+id: passage:p-concession-bridge
+summary: The guard’s low murmur fades as the letter slides to the next hand, and the altered
+  wording now hints at concessions the queen never meant to grant. The implication deepens
+  the messenger’s conflict between duty and conscience.
+entities:
+- character:malrik
+- object:sealed-letter
+prose_summary: Elara stands at the stone gateway, uses the queen’s seal to alter a parchment’s
+  wording, adding false concessions. The guard receives the altered letter, reads the new
+  passage, and places the missive in his satchel. The seal hums, glows, and vibrates, signaling
+  a hidden promise that weighs on Elara.
+beats:
+- beat:letter-tamper-accept-3
+- bridge:4
+choices:
+- label: slide the humming seal back into the letter
+  requires:
+  - flag:official-seal
+  to: passage:p-elara-seal-cooperation

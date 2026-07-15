@@ -596,8 +596,12 @@ def _resolve_entity(g, ref: str) -> str:
 def _check_echoes(g, passage_id: str, prose: str) -> None:
     """The deterministic floor under the input-role framing (plan W1):
     a rendered fact performed verbatim, or a run lifted from adjacent
-    prose, is the stamping failure live run 8 read at book scale."""
+    prose, is the stamping failure live run 8 read at book scale. All
+    echoes are batched into ONE error (texture-trial live run: a draft
+    carried several lifts from one neighbor, and raising the first per
+    round fed the repair loop one lift at a time until it exhausted)."""
     passage = g.node(passage_id)
+    fact_echoes: list[str] = []
     for entity_id in passage.entities:
         entity = g.get(entity_id)
         if not isinstance(entity, Entity):
@@ -607,27 +611,38 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
             facts.update(o.details)
         for key, value in facts.items():
             if echo.contains_phrase(prose, value, echo.FACT_ECHO_TOKENS):
-                raise ApplyError(
+                fact_echoes.append(
                     f'prose restates an established fact verbatim: "{value}" '
-                    f"({entity_id}.{key}). Facts are constraints, not choreography — "
-                    "the reader already knows this; keep it true in fresh words or "
-                    "leave it in the background"
+                    f"({entity_id}.{key})"
                 )
+    lifts: list[str] = []
     for direction in ("in", "out"):
         for w in _neighbor_prose(g, passage_id, direction):
-            run = echo.longest_shared_run(
-                prose, w["passage"].prose, echo.WINDOW_ECHO_TOKENS
-            )
-            if run:
-                raise ApplyError(
-                    f'prose repeats {w["passage"].id} verbatim: "{run}". Adjacent '
-                    "prose is continuity, not a style template — the reader just "
-                    "read those words; write fresh ones. If a character is "
-                    "restating something said there (a theory repeated to the "
-                    "room, a callback), have them say it in NEW words, or narrate "
-                    "the repetition (\"she said it again, the same words\") — "
-                    "never re-transcribe the line"
-                )
+            for run in echo.shared_runs(prose, w["passage"].prose, echo.WINDOW_ECHO_TOKENS):
+                line = f'prose repeats {w["passage"].id} verbatim: "{run}"'
+                if line not in lifts:
+                    lifts.append(line)
+    if not fact_echoes and not lifts:
+        return
+    parts = [
+        f"{len(fact_echoes) + len(lifts)} verbatim echo(es) — remove every one "
+        "in a single revision (the whole draft is re-checked each round):"
+    ]
+    parts.extend(f"- {p}" for p in fact_echoes + lifts)
+    if fact_echoes:
+        parts.append(
+            "Facts are constraints, not choreography — the reader already knows "
+            "them; keep them true in fresh words or leave them in the background."
+        )
+    if lifts:
+        parts.append(
+            "Adjacent prose is continuity, not a style template — the reader just "
+            "read those words; write fresh ones. If a character is restating "
+            "something said there (a theory repeated to the room, a callback), "
+            "have them say it in NEW words, or narrate the repetition "
+            '("she said it again, the same words") — never re-transcribe the line.'
+        )
+    raise ApplyError("\n".join(parts))
 
 
 def _write_apply_for(
@@ -1019,6 +1034,12 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 build_context=_write_context_for(passage_id, last_draft),
                 apply=_write_apply_for(passage_id, prior_facts, last_draft),
                 review=_review_for(passage_id, prior_facts),
+                # A write faces several independent checks (echoes, review
+                # findings, grounding) that surface serially; the default
+                # budget of 2 halted a live run with every shown finding
+                # fixed and one never-shown echo left. Room to converge,
+                # not license to thrash: arbitration still gates round 2+.
+                max_repairs=4,
             )
         )
         # the rolling story-so-far entry rides right behind the accepted

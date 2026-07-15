@@ -1,0 +1,17 @@
+id: dilemma:letter-tamper
+question: Should Elara allow Malrik to stamp the sealed letter with an official seal that
+  may alter its wording but guarantees safe passage?
+why_it_matters: Accepting could ensure the letter isn’t stopped, yet it risks corrupting the
+  queen’s true intent.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:accept-seal
+  text: Let Malrik seal the letter.
+- id: answer:refuse-seal
+  text: Refuse the seal and keep the letter unchanged.
+anchored_to:
+- character:elara
+- character:malrik
+- object:sealed-letter

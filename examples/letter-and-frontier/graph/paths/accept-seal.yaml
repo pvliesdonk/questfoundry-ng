@@ -1,0 +1,8 @@
+id: path:accept-seal
+name: Accept Official Seal
+explores: answer:accept-seal
+consequences:
+- id: consequence:official-seal
+  text: Malrik stamps the letter, legitimizing its transport but potentially altering wording.
+- id: consequence:trust-boost
+  text: Guards trust the sealed letter, reducing inspections.

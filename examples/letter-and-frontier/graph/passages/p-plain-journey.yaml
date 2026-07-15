@@ -1,0 +1,35 @@
+id: passage:p-plain-journey
+summary: Elara rides with the River Clan across the western plain; their riders ward off bandits,
+  guide her through hidden steppe paths, and shelter her from a sudden storm, letting her
+  reach the rival court before the fortified convoy.
+entities:
+- faction:river-clan
+- character:elara
+- location:silver-plain
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara turns west onto Silver Plain, joins River Clan riders, ties rope; bandits
+  appear, riders push them, steer her onto hidden track, storm drives them to stone cairn
+  where they stand guard; she feels queen’s scarlet seal. After storm she reaches rival court’s
+  stone chambers, passes armored wagons, enters great doors ahead of column.
+beats:
+- beat:route-choice-plain-1
+- beat:route-choice-plain-2
+- beat:route-choice-plain-commit
+choices:
+- label: Raise my cloak as the wind tears at the plain
+  to: passage:p-sand-gust
+- label: Step into the rival court's chambers
+  to: passage:p-accord-at-dawn

@@ -1,0 +1,5 @@
+Elara stepped from the marble archway onto the courtyard's flagstones. A faint wind rose from the western plain, thin as pine resin, and slipped between the folds of her travel‑worn cloak. It curled around the scarlet wax, a barely perceptible breath that seemed to press the seal tighter against her skin. The sensation settled like a promise, a silent pact that the hidden truth would remain bound to her.
+
+The murmurs from the hall drifted behind her, their arguments now muffled by the stone walls. She tightened the knot of her cloak, feeling the weight of the letter press firm beneath the fabric. The wax did not give. The River Clan rider at her flank shifted his spear, a quiet reminder of the oath she had taken, yet the wind's curl held the secret fast.
+
+She pressed the cloak tighter against her chest, the sealed letter a cold pulse beneath her palm, the wind still whispering at its edge. The choice lay before her: to bear the crushing weight of secrecy, lest the queen’s voice be lost.

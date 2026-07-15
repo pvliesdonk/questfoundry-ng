@@ -1,0 +1,11 @@
+id: beat:tw1-bridge9
+created_by: polish
+summary: The southern road unfolds toward the border camp, flags fluttering under the high
+  wind.
+beat_class: structural
+purpose: texture_world
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:9
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

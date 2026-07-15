@@ -1,0 +1,20 @@
+id: passage:p-clan-promise
+summary: Elara tallies her dwindling supplies while the clan chief's promise echoes, reminding
+  her that accepting aid will entwine her with clan politics. She weighs the looming indebtedness
+  against the clan's loyalty, fearing the cost of future obligations.
+entities:
+- faction:river-clan
+- character:elara
+prose_summary: She receives a binding promise from the clan chief, sealing it with a scarlet
+  seal. She counts dried meat and cracked water skins, noting a thin supply and future debt.
+  War drums signal impending conflict beyond the ridge. She silently vows to call riders against
+  the war, balancing duty with the cost of the favor.
+beats:
+- beat:trust-clan-pre-2
+- beat:trust-clan-pre-3
+- bridge:13
+choices:
+- label: Seal the pact with a quiet vow
+  to: passage:p-owl-hoots
+- label: Call for their aid against the looming war
+  to: passage:p-war-drums

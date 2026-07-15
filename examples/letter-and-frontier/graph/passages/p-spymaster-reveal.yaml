@@ -1,0 +1,18 @@
+id: passage:p-spymaster-reveal
+summary: Vara breaks the wax seal, studies the hidden letter, and then presents the missive
+  to the council, leveraging his authority to make the contents count.
+entities:
+- character:vara
+- object:sealed-letter
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Vara stands by low table with sealed parchment; Elara places the letter, scarlet
+  wax warm. Vara breaks seal with steel tip, shard falls, exposing hidden script and phrasing
+  shift. Council watches. Vara lifts parchment, declares queen’s oath remains but frontier
+  accord needed. Senior elder signals deliberation; Vara places letter on stone slab as bargaining
+  chip; council response pending.
+beats:
+- beat:spymaster-hand-1
+choices:
+- label: Address the council with the sealed letter
+  to: passage:p-spymaster-deal

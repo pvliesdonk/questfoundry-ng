@@ -1,0 +1,8 @@
+id: path:decline-position
+name: Decline Court Position
+explores: answer:decline-position
+consequences:
+- id: consequence:courier-returns
+  text: Elara returns to her life as a courier, preserving her autonomy.
+- id: consequence:peace-fragile
+  text: The peace remains tentative, dependent on future negotiations.

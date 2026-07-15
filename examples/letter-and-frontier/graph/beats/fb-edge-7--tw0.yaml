@@ -1,0 +1,12 @@
+id: beat:fb-edge-7--tw0
+created_by: polish
+summary: The clan’s banner flutters, a promise threading through the dust.
+beat_class: structural
+purpose: texture_world
+entities:
+- faction:river-clan
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-7
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

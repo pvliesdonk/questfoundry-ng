@@ -1,0 +1,16 @@
+id: passage:p-spymaster-conceal
+summary: Vara narrows her eyes, suspecting hidden motives, and departs with a thin smile,
+  her guarded demeanor signalling rising distrust.
+entities:
+- character:vara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Vara stands in the alcove; Elara hides a letter in her cloak, its scarlet wax
+  flashing briefly. Courtiers murmur. Vara reads Elara’s tension, rests a hand on the polished
+  iron table, smiles guardedly, notes rising distrust, and turns toward the heavy oak door
+  to the council chamber. Vara exits, closing the door.
+beats:
+- beat:spymaster-conceal-1
+choices:
+- label: Enter the council chamber
+  to: passage:p-conceal-court

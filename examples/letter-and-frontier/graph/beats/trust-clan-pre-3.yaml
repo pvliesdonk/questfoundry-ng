@@ -1,0 +1,14 @@
+id: beat:trust-clan-pre-3
+summary: Elara weighs her dwindling supplies against the clan’s loyalty, fearing indebtedness.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side
+- path:decline-side

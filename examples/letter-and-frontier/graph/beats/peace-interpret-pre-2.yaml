@@ -1,0 +1,15 @@
+id: beat:peace-interpret-pre-2
+summary: The wording is vague, mentioning “the dawn of shared fields” without specifics, leaving
+  room for multiple readings.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: reveals
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle
+- path:present-unchanged

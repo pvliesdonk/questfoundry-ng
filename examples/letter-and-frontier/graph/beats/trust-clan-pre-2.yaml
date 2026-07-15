@@ -1,0 +1,15 @@
+id: beat:trust-clan-pre-2
+summary: The promise hints at possible entanglement in clan politics, pulling her into their
+  web.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: complicates
+entities:
+- faction:river-clan
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side
+- path:decline-side

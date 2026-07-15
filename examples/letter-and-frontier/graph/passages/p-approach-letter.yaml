@@ -1,0 +1,23 @@
+id: passage:p-approach-letter
+summary: Elara receives the dying queen's messenger's sealed letter, feels its heavy wax,
+  rides toward Stonegate Fort aware of the vigilant gatekeeper Malrik, and studies the seal,
+  recalling the queen's brother who concealed maps inside such letters.
+entities:
+- character:elara
+- object:sealed-letter
+- character:malrik
+- location:stonegate-fort
+prose_summary: Elara receives a sealed letter with scarlet wax from a messenger, tucks it
+  under her cloak, rides to Stonegate Fort, passes gate where Malrik inspects riders, examines
+  the seal recalling the queen’s brother cartographer who hid maps in such letters, notices
+  a forest clerk nearby, and weighs presenting the letter to Malrik or the clerk, feeling
+  uncertain.
+beats:
+- beat:brother-legacy-lean-1
+- beat:setup-fort-approach
+- beat:setup-intro
+choices:
+- label: Hand the sealed letter to Malrik
+  to: passage:p-bridge-letter
+- label: Offer the sealed letter to the forest clerk
+  to: passage:p-forest-seal

@@ -1,0 +1,7 @@
+id: beat:fb-edge-15
+created_by: polish
+summary: The clan chief’s nod settles like a stone, sealing the pact.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:river-clan

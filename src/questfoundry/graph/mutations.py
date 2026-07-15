@@ -374,6 +374,69 @@ def add_variant(g: StoryGraph, variant: str, base: str) -> None:
     g._add_edge(Edge(kind=EdgeKind.VARIANT_OF, src=variant, dst=base))
 
 
+def split_passage(g: StoryGraph, passage_id: str, gate_sets: list[list[str]]) -> list[str]:
+    """POLISH audit's I12 escape valve (structural-depth follow-up,
+    author-directed 2026-07-14): split a wired passage into flag-gated
+    variants — the same moment re-presented behind disjoint gates, so
+    each variant's arrivals hold a KNOWN side of the keyed dilemma(s) and
+    that state honestly stops counting against the prose (I12), instead
+    of being marked irrelevant to satisfy a budget.
+
+    ``gate_sets`` is one flag-set per variant (the caller enumerates the
+    keyed dilemmas' path-flag combinations — every arriving reader holds
+    exactly one combination). The passage itself becomes the first
+    variant: its in-choices gain that gate; each additional set gets a
+    sibling passage (same beats, same summary — FILL differentiates from
+    flag context, like any variant) with copies of every in-choice
+    (gate added) and out-choice, linked ``variant_of`` the original.
+    Returns the variant ids, original first."""
+    passage = g.get(passage_id)
+    if not isinstance(passage, Passage):
+        raise MutationError(f"{passage_id!r} is not a passage")
+    if len(gate_sets) < 2:
+        raise MutationError(f"splitting {passage_id} needs >=2 gate sets, got {len(gate_sets)}")
+    seen_sets = [tuple(sorted(s)) for s in gate_sets]
+    if len(set(seen_sets)) != len(seen_sets) or any(not s for s in seen_sets):
+        raise MutationError(f"splitting {passage_id} needs distinct, non-empty gate sets")
+    for flag_id in {f for s in gate_sets for f in s}:
+        if not isinstance(g.get(flag_id), StateFlag):
+            raise MutationError(f"split gate references unknown flag {flag_id!r}")
+    if passage.ending is not None:
+        raise MutationError(
+            f"{passage_id} is an ending; endings are not split — variants "
+            "would multiply the story's ending set, fixed at the freeze"
+        )
+    beats = [e.src for e in g.in_edges(passage_id, EdgeKind.GROUPED_IN)]
+    in_choices = list(g.in_edges(passage_id, EdgeKind.CHOICE))
+    out_choices = list(g.out_edges(passage_id, EdgeKind.CHOICE))
+
+    ids = [passage_id]
+    for k, gates in enumerate(gate_sets[1:], start=1):
+        sibling = Passage(
+            id=f"{passage_id}--s{k}",
+            created_by=passage.created_by,
+            summary=passage.summary,
+            entities=list(passage.entities),
+            variant_flag=sorted(gates)[0],
+            irrelevant_flags=list(passage.irrelevant_flags),
+        )
+        add_passage(g, sibling, beats)
+        add_variant(g, sibling.id, passage_id)
+        for e in in_choices:
+            choice = Choice(**e.payload)
+            choice.requires = sorted({*choice.requires, *gates})
+            add_choice(g, e.src, sibling.id, choice)
+        for e in out_choices:
+            add_choice(g, sibling.id, e.dst, Choice(**e.payload))
+        ids.append(sibling.id)
+    # the original takes the first gate set: its existing in-choices are
+    # narrowed in place (edge payloads are the mutation layer's surface)
+    passage.variant_flag = passage.variant_flag or sorted(gate_sets[0])[0]
+    for e in in_choices:
+        e.payload["requires"] = sorted({*e.payload.get("requires", []), *gate_sets[0]})
+    return ids
+
+
 def set_beat_summary(g: StoryGraph, beat_id: str, summary: str) -> None:
     """GROW's contextualize write path: rewrite a beat's summary for its
     world (per-world clones, de-ended first-fork tails). Frozen beats'

@@ -1,0 +1,14 @@
+id: beat:peace-interpret-adjust-2
+summary: Elara feels a pang as she realizes she has reshaped the queen’s words, a secret gnawing
+  at her conscience.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle

@@ -1,0 +1,7 @@
+Elara stood before the River Clan chief, the rust‑stained banner fluttering against the stone corridor. She felt the scarlet wax of the queen’s seal press against her cloak as she spoke, "I will owe you a favor, and I seal my word with a nod." Her head dipped, the motion sealing the promise. The chief’s spear rested in the dust, his gloved hand steady on the haft. She watched his eyes flick to her satchel, then she bowed, the gesture sealing the pact.
+
+She stepped back, her shoulders tightening, and raised her chin. "Your aid is granted, but I must know the price before I bind myself fully," she said, challenging the clan’s demand. The chief’s brow tightened, yet he raised a hand, signalling his riders to move.
+
+The riders slipped forward, lining a narrow arch that led beneath the market arches. Their horses' hooves whispered over cold stone, spears low, keeping any shadow at bay. Bandits prowling the streets could not follow the concealed route, and Elara felt the hidden path shield her from their eyes.
+
+At the mouth of the rival court, a guard paused, eyes catching the clan’s emblem on the chief’s banner. He stepped aside, the emblem recognized, and the doors opened. Inside, council members turned as Elara entered, the sealed letter pressed against her breast, the pact with the River Clan granting her audience.

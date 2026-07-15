@@ -315,6 +315,23 @@ def test_finalize_states_coined_ids_must_be_fresh():
     assert "colliding id is rejected" in source
 
 
+def test_finalize_texture_premise_is_anchored_and_uncontaminated():
+    """Texture-premise contamination (author-caught, texture-trial live run
+    2026-07-14): the template quoted the doctrine's forest/mountains example
+    and the model echoed it as 2 of 3 premises. The template must carry no
+    copyable scenery (the id example stays mechanical), and the premise
+    constraint is positive and structural — anchor in a story element and
+    name it — not a negative fence (author correction, same day: texture is
+    any consequence-free axis, 'same events against another backdrop', not
+    location only)."""
+    source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
+    flat = " ".join(source.split())
+    assert "the premise names that element" in flat
+    assert "never different consequences" in flat
+    assert "beat:tw0-1" in flat  # mechanical, not a place name
+    assert "forest" not in flat and "mountain" not in flat
+
+
 def test_contextualize_renders_the_entities_it_requires():
     """GROW HIGH: the rule 'keep the exact entities' now has the entities in
     context, not withheld."""
@@ -377,6 +394,27 @@ def test_fill_review_said_plus_speaker_is_never_a_banned_tag():
     assert "said Jordan" in review and "never violates a tags-are-said rule" in review
     voice = " ".join((PROMPTS_DIR / "fill_voice.j2").read_text(encoding="utf-8").split())
     assert "NEVER phrase a ban as a complement" in voice
+
+
+def test_fill_write_renders_each_ban_as_its_own_bullet(golden):
+    """Texture-trial stall 7 (2026-07-15): the review prompt explains the
+    dialogue-tag ban in a paragraph while the write prompt showed the bans
+    as one semicolon-joined line — the judge understood the rule better
+    than the writer. Each existing ban renders as its own bullet."""
+    from questfoundry.models.concept import Voice
+
+    env = runner._environment()
+    context = _write_context_for("passage:p-arrival")(golden)
+    context["voice"] = Voice(
+        pov="third person limited",
+        tense="past",
+        diction="spare",
+        banned=["exclamation marks", "dialogue tags other than 'said'"],
+    )
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "- Banned — never in your prose, in any sentence" in rendered
+    assert "\n  - exclamation marks\n" in rendered
+    assert "\n  - dialogue tags other than 'said'\n" in rendered
 
 
 def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden):

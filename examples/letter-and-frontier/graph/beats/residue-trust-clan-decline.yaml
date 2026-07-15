@@ -1,0 +1,11 @@
+id: beat:residue-trust-clan-decline
+created_by: polish
+summary: A cold wind brushes the plain, the absence of the clan’s aid echoing in Elara’s solitary
+  stride.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- faction:river-clan
+requires_flags:
+- flag:exposed-risk

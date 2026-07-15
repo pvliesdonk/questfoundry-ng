@@ -1,0 +1,33 @@
+id: passage:p-border-approach
+summary: Elara reaches the border camp, where the rival queen's envoy greets her and lauds
+  her abilities, while she feels the heavy weight of leaving the courier life that has defined
+  her.
+entities:
+- character:vara
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara rides the southern road to the border camp, dismounts, and places the
+  scarlet‑sealed letter against her cloak. Vara Shadowmantle, envoy of the rival queen, emerges,
+  gestures to a seat, and praises Elara’s speed. Elara sits, feels her lifelong oath weight,
+  then tightens the seal, stands, and walks away from the fire, keeping the letter close,
+  costing her life’s certainty.
+beats:
+- beat:tw1-bridge9
+- beat:tw1-final-lean1
+- beat:tw1-final-lean2
+choices:
+- label: Clutch the sealed letter and stride away
+  to: passage:p-final-choice

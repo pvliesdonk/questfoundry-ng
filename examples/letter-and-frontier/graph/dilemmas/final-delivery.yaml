@@ -1,0 +1,17 @@
+id: dilemma:final-delivery
+question: Should Elara accept the rival queen’s offer of a permanent role in her court, meaning
+  she abandons her identity as a courier?
+why_it_matters: Accepting ties her future to the rival power, potentially securing lasting
+  peace; refusing preserves her autonomy but may leave the peace fragile.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:accept-position
+  text: Accept the court position.
+- id: answer:decline-position
+  text: Decline and walk away.
+anchored_to:
+- character:elara
+- character:vara
+- object:sealed-letter

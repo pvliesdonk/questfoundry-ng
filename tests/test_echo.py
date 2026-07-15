@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from questfoundry.pipeline.echo import contains_phrase, longest_shared_run, tokens
+from questfoundry.pipeline.echo import contains_phrase, longest_shared_run, shared_runs, tokens
 
 
 def test_tokens_normalize_case_and_punctuation():
@@ -41,3 +41,27 @@ def test_longest_shared_run_none_below_threshold():
     a = "the lamp room was cold"
     b = "a cold lamp room greeted her"
     assert longest_shared_run(a, b, 4) is None
+
+
+def test_shared_runs_finds_every_independent_lift():
+    """A draft can lift several runs from one neighbor; the texture-trial
+    live run exhausted repairs because only the first was reported per
+    round. Both maximal runs must surface at once."""
+    a = (
+        "morning found the lamp room cold and the brass dull. later, "
+        "the promise of safety tugged at the edge of her resolve"
+    )
+    b = (
+        "she recalled how morning found the lamp room cold while "
+        "the promise of safety tugged at the edge of her mind"
+    )
+    assert shared_runs(a, b, 4) == [
+        "morning found the lamp room cold",
+        "the promise of safety tugged at the edge of her",
+    ]
+
+
+def test_shared_runs_drops_contained_sub_runs():
+    a = "morning found the lamp room cold and the brass dull with salt"
+    b = "she remembered how morning found the lamp room cold and the brass shining"
+    assert shared_runs(a, b, 4) == ["morning found the lamp room cold and the brass"]

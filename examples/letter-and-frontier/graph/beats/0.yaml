@@ -1,0 +1,10 @@
+id: bridge:0
+created_by: grow
+summary: Elara walks the scarred passes of the Silver Plain, the wind stirring a loose strip
+  of parchment that hints at the sealed letter she carries.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- location:silver-plain
+- object:sealed-letter

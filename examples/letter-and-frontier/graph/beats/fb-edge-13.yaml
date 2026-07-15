@@ -1,0 +1,7 @@
+id: beat:fb-edge-13
+created_by: polish
+summary: A hidden breath of wind curls around the cloak, sealing the secret.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

@@ -1,0 +1,14 @@
+id: passage:p-flicker-wax
+summary: The candlelight flickers, casting wavering shadows over the sealed wax and sowing
+  doubt in the messenger’s resolve.
+entities:
+- object:sealed-letter
+prose_summary: Elara stands in a stone alcove with a low candle, touches the sealed wax bearing
+  a scarlet seal and the queen’s emblem, and feels the flame flicker. Pine resin scent fills
+  the air. A River Clan rider with a short spear watches the parchment, his presence shielding
+  her despite the seal risking her trust.
+beats:
+- beat:fb-edge-6--tw0
+choices:
+- label: Present the waxed seal to the River Clan rider
+  to: passage:p-seal-and-alliance

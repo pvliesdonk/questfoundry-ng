@@ -1,0 +1,20 @@
+id: passage:p-dawn-veil
+summary: Elara weighs the vague promise of a shared dawn, feeling each ambiguous line settle
+  on her like dew, and recognizes that a subtle shift could sway the court toward acceptance,
+  though it would betray her queen.
+entities:
+- object:sealed-letter
+- character:elara
+prose_summary: Elara stands in the corridor to the great hall, holding the queen’s sealed
+  letter. The courier reports the rumored phrase “dawn of shared fields.” She considers altering
+  the phrase to sway courtiers but fears betraying the queen’s seal. Courtiers murmur inside;
+  wind and dust stir outside. She pauses, ready to act or listen.
+beats:
+- beat:tw0-bridge7
+- beat:tw0-pi2
+- beat:tw0-pi3
+choices:
+- label: Listen to the sighing wind outside
+  to: passage:p-hall-wind
+- label: Step into the great hall before the courtiers
+  to: passage:p-courtiers-await

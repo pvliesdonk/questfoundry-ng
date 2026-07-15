@@ -1,27 +1,45 @@
-Prose-feasibility audit. At each passage below, the listed world-states are
-ambiguous when the player arrives — some players hold them, some don't, and the
-prose must work for both. A writer can honor at most {{ cap }} such states in one
-passage. For each passage, decide which states its prose should NOT address —
-states that may hold but are irrelevant to this scene ("don't mention the romance
-in the vault heist"). What you leave relevant, the writer must honor.
+Prose-feasibility audit. At each passage below, some world-states are
+ambiguous when the player arrives — some players hold them, some don't, and
+the prose must read true for both. A STATE is one dilemma's open question;
+its flags below are sides and facets of that ONE uncertainty — they count
+together, as one state. A writer can honor at most {{ cap }} such states in
+one passage.
+
+For each passage, two honest tools:
+1. "irrelevant": flags the prose should NOT address — states that may hold
+   but don't touch this scene ("don't mention the romance in the vault
+   heist"). Marking a state irrelevant means listing ALL of its flags.
+   What you leave relevant, the writer must honor.
+2. "split_on": dilemmas this scene genuinely turns on, when too many
+   matter to fit the cap. The engine re-presents the passage as gated
+   variant pages — each variant's readers arrive holding a KNOWN side, so
+   that state stops counting and each variant's prose commits to its side.
+   Split on at most 2 dilemmas per passage.
+
+The audit is about honesty, not budget: never mark a state irrelevant just
+to hit the number — if the scene turns on it, split on it instead. Where a
+passage is over the cap, you MUST resolve the excess (irrelevant where
+honest, split_on where not): states − splits ≤ {{ cap }}.
 
 VISION: {{ vision.genre }}, {{ vision.tone }}.
 
 PASSAGES:
 {% for p in passages %}
 - {{ p.passage.id }}: {{ p.passage.summary }}
-  possibly active:
-{% for flag, text in p.active %}
-  - {{ flag }}: {{ text }}
+  ambiguous states: {{ p.states | length }}{% if p.over %} — {{ p.over }} over the cap: resolve at least {{ p.over }} (irrelevant or split_on){% endif %}
+
+{% for s in p.states %}
+  - state {{ s.dilemma }} ("{{ s.question }}"), its flags:
+{% for flag, text in s.flags %}
+    - {{ flag }}: {{ text }}
+{% endfor %}
 {% endfor %}
 {% endfor %}
 
 REQUIREMENTS:
-- One entry per passage above: {"passage": id, "irrelevant": [flag ids]}. An empty
-  list means every active state matters in that scene.
-- Mark a state irrelevant only when the scene genuinely doesn't touch it — the
-  audit is about honesty, not budget. But where more than {{ cap }} states are
-  active, you MUST bring the relevant count within {{ cap }}.
+- One entry per passage above: {"passage": id, "irrelevant": [flag ids],
+  "split_on": [dilemma ids] or omit}. An empty irrelevant list means every
+  state matters in that scene.
 - A state that the passage's own beats grant or directly pay off is never
   irrelevant there.
 {% include "_shared.j2" %}

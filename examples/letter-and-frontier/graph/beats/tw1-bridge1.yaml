@@ -1,0 +1,11 @@
+id: beat:tw1-bridge1
+created_by: polish
+summary: The sun slides behind the ridge, and Elara’s thoughts turn to the stone‑lined road
+  toward Stonegate Fort.
+beat_class: structural
+purpose: texture_world
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:1
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

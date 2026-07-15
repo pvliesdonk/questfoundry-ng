@@ -1,0 +1,21 @@
+id: passage:spymaster-conceal-3
+summary: Elara bears the crushing weight of secrecy, fearing the queen’s voice will be lost.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara stands at the stone threshold of the council hall, feeling the queen's
+  scarlet wax seal against her cloak and a hidden letter folded beneath it. She adjusts her
+  satchel, inhales pine‑resin scent, feels fear, steadies her trembling hand, and notes a
+  River Clan rider beside her, spear ready, scanning the torchlight.
+beats:
+- beat:spymaster-conceal-3
+choices:
+- label: Press the satchel tighter, feeling the hidden letter pulse
+  requires:
+  - flag:letter-hidden
+  to: passage:p-letter-weight

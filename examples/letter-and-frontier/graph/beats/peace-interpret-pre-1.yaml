@@ -1,0 +1,16 @@
+id: beat:peace-interpret-pre-1
+summary: Upon reaching the rival court’s hall, the sealed letter’s parchment trembles in Elara’s
+  hands.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: reveals
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle
+- path:present-unchanged

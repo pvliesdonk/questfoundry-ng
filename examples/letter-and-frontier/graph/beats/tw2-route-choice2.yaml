@@ -1,0 +1,13 @@
+id: beat:tw2-route-choice2
+created_by: polish
+summary: The plain stretches, exposed yet rumored defended by swift River Clan riders.
+beat_class: structural
+purpose: texture_world
+entities:
+- location:silver-plain
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:route-choice-pre-2
+texture_premise: Across the open steppe, the wind sweeps the grasses as Elara faces the exposed
+  plain.

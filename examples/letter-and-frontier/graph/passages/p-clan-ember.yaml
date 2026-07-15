@@ -1,0 +1,25 @@
+id: passage:p-clan-ember
+summary: The clan huddles around a warm ember, its glow a quiet oath as they reaffirm their
+  promise to protect the messenger, strengthening the fragile trust between them.
+entities:
+- character:elara
+- faction:river-clan
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: River Clan riders circle an ember and repeat their oath to protect the messenger.
+  Elara touches the ember, feels heat, and notes a sealed missive under her breastplate. She
+  recalls an uncovered map promising a mountain shortcut, decides not to use it, seals the
+  map with a scarlet wax seal, and the clan reaffirms guarding her across the Silver Plain.
+beats:
+- beat:residue-trust-clan-agree
+choices:
+- label: Seal the map and stride onto the Silver Plain
+  to: passage:p-legacy-plain

@@ -1,0 +1,12 @@
+passage: passage:p-approach-letter
+priority: 1
+caption: Elara arrives at Stonegate Fort, the scarlet‑sealed letter clenched in her hand as
+  the gate looms behind her.
+prompt: Line drawing with pastel washes showing Elara in a travel‑worn cloak, tucked hair
+  peeking, holding a parchment with a crimson beeswax seal; behind her Stonegate Fort’s stone‑clad
+  walls and a stern guard with a scar across his left cheek, muted steely gray sky.
+entities:
+- character:elara
+- object:sealed-letter
+- character:malrik
+- location:stonegate-fort

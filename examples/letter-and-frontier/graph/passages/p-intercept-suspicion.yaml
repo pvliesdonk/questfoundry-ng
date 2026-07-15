@@ -1,0 +1,23 @@
+id: passage:p-intercept-suspicion
+summary: Elara senses the thin veil of suspicion that clings to the untouched seal, its weight
+  pressing on her conscience as she balances duty against an uneasy doubt.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: 'Elara stands in a vaulted hall with a sealed letter, a treaty, a quill and
+  inkpot on a table, and a stone altar. She places the letter on the altar, feels the queen’s
+  emblem, and weighs three options: rewrite the treaty, alter its phrasing, or leave it unchanged,
+  noting risk of rival twists, chance to steer peace, and ambiguous impact.'
+beats:
+- beat:residue-letter-tamper-refuse
+choices:
+- label: rewrite the treaty to stress mutual stewardship
+  grants:
+  - flag:ethical-doubt
+  - flag:subtle-influence
+  to: passage:p-altered-pledge
+- label: place the sealed letter on the altar
+  grants:
+  - flag:ambiguous-interpretation
+  - flag:faithful-delivery
+  to: passage:p-peace-interpret

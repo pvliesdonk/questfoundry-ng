@@ -1,0 +1,11 @@
+id: beat:tw0-bridge6
+created_by: polish
+summary: The hall doors creak shut, and the forest path beyond merges with a rugged road cutting
+  across the plain.
+beat_class: structural
+purpose: texture_world
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:6
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

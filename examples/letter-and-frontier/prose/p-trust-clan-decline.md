@@ -1,0 +1,7 @@
+The wind over the silver plain carried rust‑colored dust. Elara tightened her travel‑worn cloak, feeling the hollow where a River Clan shield had rested. The chief’s hand had brushed her shoulder, his spear leaning against the banner, but she had stepped back and lowered her head. She declined the clan’s protection and set out alone.
+
+She rode toward the distant dunes, the muted dusk light slanting across the cold stone of the road. The river’s murmur was a low echo beneath the horse’s hooves. Without the clan’s shield, a sudden clatter of hooves rose from a rise of dunes. A band of desert raiders surged forward, spears catching the wan light. Their leader sneered and said, "Give the letter and turn back." Elara drew her short blade, the metal ringing against the empty space where a shield should have been.
+
+She pressed her back against the void, feeling the absence as a cold pressure, then urged the horse forward. Steel sang, dust rose, and the clash rang across the plain like a brief storm. When the last shout faded, a sharp sting bloomed at her side. Blood seeped into the hem of her cloak, slowing her stride. She leaned against a lone rock, the scarlet seal pressing against her cheek, and understood that the journey to the rival court would be longer than hoped.
+
+She reached for the folded note she kept for emergencies, wrote a brief plea, and slipped it to the rider who lingered behind her, urging the council to dispatch alternate envoys. The thought of the council’s promised aid lingered as she steadied herself for the road ahead.

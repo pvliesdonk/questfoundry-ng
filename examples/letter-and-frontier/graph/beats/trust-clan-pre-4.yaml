@@ -1,0 +1,12 @@
+id: beat:trust-clan-pre-4
+summary: The wind carries distant war drums, reminding her of the stakes beyond personal favors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: reveals
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side
+- path:decline-side

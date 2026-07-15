@@ -1,0 +1,15 @@
+id: beat:spymaster-hand-1
+summary: Vara uncovers the seal, examining the wax, then presents the letter to the council,
+  leveraging its authority.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: advances
+entities:
+- character:vara
+- object:sealed-letter
+scene_type: scene
+narration_scope: limited
+viewpoint: character:vara
+belongs_to:
+- path:hand-letter

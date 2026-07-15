@@ -1,0 +1,19 @@
+id: passage:p-conceal-court
+summary: The court convenes without the messenger's letter, debating peace on rumor alone
+  while their resolve begins to waver.
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara hides sealed scarlet‑wax letter under cloak; council debates peace without
+  proof; Vara Shadowmantle questions queen’s oath; chief of River Clan shifts spear reminding
+  Elara’s pact; Elara feels pressure, risk of losing queen’s voice if letter exposed.
+beats:
+- beat:spymaster-conceal-2
+choices:
+- label: Let the wind curl around my cloak, sealing the hidden truth
+  to: passage:p-sealed-whisper
+- label: Press the secret to my chest, fearing the queen’s voice will vanish
+  to: passage:spymaster-conceal-3

@@ -1,0 +1,16 @@
+id: beat:route-choice-pre-3
+summary: Supplies are low, and the weather threatens a sandstorm across the plain, while the
+  fort offers shelter but scrutiny.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: complicates
+entities:
+- location:silver-plain
+- location:stonegate-fort
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route
+- path:plain-route

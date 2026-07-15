@@ -1,0 +1,9 @@
+id: bridge:5
+created_by: grow
+summary: Elara steadies herself, turning the parchment over once more to let the vague wording
+  settle in her mind.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- object:sealed-letter

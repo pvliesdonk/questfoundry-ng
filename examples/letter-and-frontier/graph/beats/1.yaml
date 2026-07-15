@@ -1,0 +1,10 @@
+id: bridge:1
+created_by: grow
+summary: The sun slides low behind the hills, and Elara’s thoughts drift from the untouched
+  seal toward the stone‑lined road that leads to Stonegate Fort.
+beat_class: structural
+purpose: bridge
+entities:
+- object:sealed-letter
+- location:stonegate-fort
+- character:elara

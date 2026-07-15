@@ -1,0 +1,13 @@
+id: beat:spymaster-conceal-1
+summary: Vara narrows her eyes, suspecting hidden motives, and departs with a thin smile.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: complicates
+entities:
+- character:vara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:vara
+belongs_to:
+- path:conceal-letter

@@ -1,0 +1,18 @@
+id: passage:p-spymaster-demand
+summary: Spymaster Vara confronts the messenger in a shadowed alcove of the rival court, proposing
+  to exchange the sealed letter for a pact that could steady the volatile frontier trade routes.
+entities:
+- character:vara
+- character:elara
+prose_summary: Vara steps into alcove behind great hall; Elara stands holding sealed parchment
+  with scarlet seal. Vara offers a border‑trade pact in exchange for the letter, places hand
+  on parchment then chest, and gives thin laugh. The decision to hand over the sealed letter
+  determines the future of border trade.
+beats:
+- beat:spymaster-demand-pre-1
+- beat:spymaster-demand-pre-2
+choices:
+- label: listen to Vara's laugh
+  to: passage:p-vara-laugh
+- label: inspect Vara's face and the sealed letter
+  to: passage:p-suspicion-letter

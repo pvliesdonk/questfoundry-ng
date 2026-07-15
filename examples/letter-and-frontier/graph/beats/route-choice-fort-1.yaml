@@ -1,0 +1,15 @@
+id: beat:route-choice-fort-1
+summary: The garrison greets her, and Malrik grants her smooth passage, noting the official
+  seal on her letter.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: advances
+entities:
+- character:malrik
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:fort-route

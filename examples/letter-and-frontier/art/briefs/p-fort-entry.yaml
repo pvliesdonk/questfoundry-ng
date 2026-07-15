@@ -1,0 +1,10 @@
+passage: passage:p-fort-entry
+priority: 4
+caption: Malrik greets Elara at the garrison gate, his iron‑edged armor glinting as soldiers
+  line the stone entrance.
+prompt: Illustration of a broad‑shouldered man in iron‑edged armor with a scar across his
+  left cheek (Malrik) standing beside the stone gate of Stonegate Fort, greeting a cloaked
+  Elara; stone walls, muted gray, soldiers in uniform, pastel earth tones.
+entities:
+- character:malrik
+- character:elara

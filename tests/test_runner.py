@@ -182,6 +182,39 @@ def test_review_exhaustion_names_the_structure(tmp_path, monkeypatch):
     assert project.vision.audience != "2"  # nothing from the failed drafts stuck
 
 
+def test_exhaustion_message_reports_review_and_apply_counts_separately(tmp_path, monkeypatch):
+    """Texture-trial stall 7 (2026-07-15): a shared budget spent 2 rounds on
+    echoes and 2 on review read as 'failed review 4 times'. The operator
+    must see true per-channel counts."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    calls = {"n": 0}
+
+    def apply_fails_once(proposal, project):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise ApplyError("apply rejection")
+        project.vision.audience = proposal.audience
+        return ["ok"]
+
+    spec = PassSpec(
+        name="vision",
+        role="writer",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=apply_fails_once,
+        review=lambda proposal, project, adapter: ["still wrong"],
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda p: [])
+    adapter = FakeAdapter([VisionProposal(audience=str(i)) for i in range(4)])
+
+    report = runner.run_stage(project, impl, adapter, max_repairs=2)
+
+    assert not report.success
+    assert "2 review rejection(s), 1 apply rejection(s)" in (report.error or "")
+
+
 def test_dynamic_pass_lists_are_computed_from_the_project(tmp_path, monkeypatch):
     _use_test_templates(monkeypatch)
     project = _scaffold(tmp_path)
@@ -441,6 +474,41 @@ def test_progress_reports_failed_pass(tmp_path, monkeypatch):
 
     assert not report.success
     assert [e.status for e in events] == ["start", "failed"]
+
+
+def test_pass_level_max_repairs_overrides_the_runner_default(tmp_path, monkeypatch):
+    """A pass facing several independent checks may need more rounds than
+    the runner default (texture-trial live run, 2026-07-15: a write pass
+    exhausted with every shown finding fixed and one never-shown echo
+    left). The override widens ONLY that pass's budget."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    calls = {"n": 0}
+
+    def flaky_apply(proposal, project):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise ApplyError(f"round {calls['n']} rejection")
+        project.vision.audience = proposal.audience
+        return ["ok"]
+
+    spec = PassSpec(
+        name="flaky",
+        role="utility",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=flaky_apply,
+        max_repairs=4,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda project: [])
+    adapter = FakeAdapter([VisionProposal(audience="x")] * 3)
+
+    # the runner default (0) would halt on the first rejection; the pass
+    # override gives the loop room to converge on round 3
+    report = runner.run_stage(project, impl, adapter, max_repairs=0)
+    assert report.success
+    assert report.passes[0].attempts == 3
 
 
 def test_progress_reports_kept_pass(tmp_path, monkeypatch):

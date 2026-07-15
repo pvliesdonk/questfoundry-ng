@@ -1,0 +1,12 @@
+id: beat:fb-edge-6--tw0
+created_by: polish
+summary: The candlelight flickers, casting doubts on the sealed wax.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:sealed-letter
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-6
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

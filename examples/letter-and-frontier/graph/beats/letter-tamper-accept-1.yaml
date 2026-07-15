@@ -1,0 +1,16 @@
+id: beat:letter-tamper-accept-1
+summary: The stamped seal glints, and the garrison guards step aside, nodding at the official
+  mark.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: advances
+entities:
+- character:malrik
+- character:elara
+- location:stonegate-fort
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:accept-seal

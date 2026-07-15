@@ -1,0 +1,20 @@
+id: passage:p-seal-and-alliance
+summary: The queen’s seal glints in the fading light, a tangible reminder of trust, while
+  a River Clan rider emerges from the trees and the clan chief promises a hidden shield across
+  the plain in exchange for a future favor.
+entities:
+- object:sealed-letter
+- faction:river-clan
+prose_summary: Elara receives the queen’s scarlet seal. A River Clan rider offers her hidden
+  protection from bandits on the Silver Plain. The clan chief places his hand on the rust‑stained
+  banner, then on Elara’s shoulder, granting a covert shield across the plain in exchange
+  for a future favor. Player may reach for the banner or bow to the chief.
+beats:
+- beat:tw0-bridge12
+- beat:tw0-sd4
+- beat:tw0-tc1
+choices:
+- label: Reach for the banner as it ripples in the wind
+  to: passage:p-dust-banners
+- label: Bow to the chief, feeling the weight of his oath
+  to: passage:p-promise-entanglement

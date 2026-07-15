@@ -1,0 +1,8 @@
+id: path:refuse-seal
+name: Refuse Official Seal
+explores: answer:refuse-seal
+consequences:
+- id: consequence:unmarked-letter
+  text: Elara refuses the stamp, preserving the queen's original seal but attracting suspicion.
+- id: consequence:risk-intercept
+  text: Border patrols become wary and may detain her.

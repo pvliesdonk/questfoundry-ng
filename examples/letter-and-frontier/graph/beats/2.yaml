@@ -1,0 +1,10 @@
+id: bridge:2
+created_by: grow
+summary: As dusk settles, the courier’s pack is passed along the trail, delivering the sealed
+  letter from Elara’s hands to Malrik’s desk.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter

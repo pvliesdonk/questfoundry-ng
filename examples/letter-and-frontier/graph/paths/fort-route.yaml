@@ -1,0 +1,8 @@
+id: path:fort-route
+name: Fort Route
+explores: answer:fort-route
+consequences:
+- id: consequence:safe-passage
+  text: Stonegate Fort grants Elara unhindered travel through the southern road.
+- id: consequence:under-surveillance
+  text: The garrison watches her movements, recording every step.

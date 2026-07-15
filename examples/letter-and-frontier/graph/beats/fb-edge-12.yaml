@@ -1,0 +1,7 @@
+id: beat:fb-edge-12
+created_by: polish
+summary: The distant chime of a bell marks the moment Elara steadies the letter.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

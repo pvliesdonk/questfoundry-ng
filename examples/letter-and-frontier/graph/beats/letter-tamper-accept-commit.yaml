@@ -1,0 +1,11 @@
+id: beat:letter-tamper-accept-commit
+summary: Elara nods, allowing Malrik to press his stamp onto the sealed letter.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:accept-seal

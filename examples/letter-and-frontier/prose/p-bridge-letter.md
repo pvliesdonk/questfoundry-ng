@@ -1,0 +1,7 @@
+Twilight draped the stone walls of Stonegate Fort in muted gray, the border wind sighing through the narrow gap between the gate and the pine line beyond. The courier approached, her travel‑worn cloak brushing the dust as she laid the heavy pack on the desk and slipped the sealed parchment into his palm. He felt the cool wax against his thumb, the scarlet seal dulled by rust‑colored dust.
+
+He lifted the letter, the queen’s emblem pressed into the wax, and studied it with the practical eye that had kept the gate orderly for years. The seal was unmistakable, yet its crisp edge hinted that a challenge could be made if the mark were broken. He recalled the countless disputes that began with a single wax fragment, and his mind measured the risk against the need for smooth passage.
+
+"I can add the official Stonegate seal," he said, his voice low against the stone. "It will grant safe passage, but the wording may shift when the ink meets the stamp." The offer hung in the dusk air, a promise of order wrapped in the possibility of alteration. He placed the letter beside the iron‑edged armor, the faint ember glow from the inner hearth catching the edge of the parchment.
+
+Beyond the doorway, the great hall stood, its wooden doors half‑open to the night. A soft rustle rose from the pine trees, a whisper that seemed to tug at the thoughts of duty and pragmatism. He steadied his grip on the letter, aware that the choice ahead would echo through the border’s cold stone.

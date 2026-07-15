@@ -1,0 +1,5 @@
+Elara stood beneath the stone arch, the border wind drifting cool over the muted dusk. The scarlet wax on the queen’s seal vibrated faintly, a low hum that steadied her breathing. She pressed her thumb against the altered imprint, feeling a calm certainty settle like cold stone against her spine. The iron stamp of the fort had pressed its emblem beside the royal sigil, the two marks sharing a hesitant pulse.
+
+On the rough table beside her, a rolled treaty parchment lay beside the sealed letter, its edges frayed by travel. The parchment bore the same altered wording the stamp had introduced, hinting at concessions the queen had never voiced. Across the room, a low stone altar rose from the floor, its surface darkened by the smoke of past candles.
+
+Elara traced the line where the two seals met, aware that each choice would echo beyond the plain. The treaty waited, its ink ready to be revised, while the altar offered a place to present the untouched letter to the assembled lords. She tightened the strap of her satchel, the rust‑colored dust clinging to the leather, and let the humming seal guide her hand.

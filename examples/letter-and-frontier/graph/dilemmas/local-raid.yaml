@@ -1,0 +1,18 @@
+id: dilemma:local-raid
+question: When raiders attack the caravan on the plain, should Elara stay to defend the letter
+  or flee with it hidden among supplies?
+why_it_matters: Staying may protect the letter but endangers her life; fleeing preserves her,
+  yet the letter could be lost in the chaos.
+role: soft
+residue_weight: light
+ending_salience: low
+reserved: true
+answers:
+- id: answer:stay-fight
+  text: Stay and fight to shield the letter.
+- id: answer:flee-hide
+  text: Flee, hiding the letter among supplies.
+anchored_to:
+- character:elara
+- location:silver-plain
+- faction:river-clan

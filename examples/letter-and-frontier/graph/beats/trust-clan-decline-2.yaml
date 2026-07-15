@@ -1,0 +1,13 @@
+id: beat:trust-clan-decline-2
+summary: She repels the raiders but sustains injuries, delaying her arrival at the rival court.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-side

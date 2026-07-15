@@ -1,0 +1,16 @@
+id: passage:p-courtwatch
+summary: A faint rustle of robes signals the court’s watchful eyes turning toward the messenger,
+  a silent reminder that every movement is observed.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara stands in stone hall, messenger delivers sealed scarlet-waxed parchment
+  with queen’s emblem; Meros, the court advisor, thanks her as courier; Elara bows, the court
+  murmurs; drums sound outside, pine resin and rust-colored dust scent hints at Silver Plain;
+  she feels tightening chest, moral conflict about altered oath versus realm safety.
+beats:
+- beat:fb-edge-11
+choices:
+- label: Bow slightly as the advisor thanks you
+  to: passage:p-peace-interpret-adjust-3

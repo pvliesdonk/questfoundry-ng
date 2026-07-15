@@ -1,0 +1,21 @@
+id: passage:p-river-protection
+summary: Elara studies the queen’s wax‑sealed letter, its mark a stark reminder of trust,
+  as a River Clan rider steps forward; the clan chief offers her a hidden crossing of the
+  plain in exchange for a future favor.
+entities:
+- object:sealed-letter
+- faction:river-clan
+- character:elara
+prose_summary: Elara holds the queen’s scarlet wax seal, signifying her oath. A River Clan
+  rider arrives, offers a hidden dune path in exchange for a future service, and the clan
+  chief repeats the terms. Elara shows her satchel’s dried meat and cracked water skin, counts
+  the scarce rations, and accepts the debt.
+beats:
+- beat:spymaster-demand-pre-4
+- beat:trust-clan-pre-1
+- bridge:12
+choices:
+- label: Step beneath the fluttering banner
+  to: passage:p-banner-promise
+- label: Count my dwindling supplies
+  to: passage:p-clan-promise

@@ -1,0 +1,11 @@
+passage: passage:p-alliancespark
+priority: 2
+caption: In the low vaulted alcove, Elara places the sealed parchment into Vara’s waiting
+  hand, a flicker of a smile crossing her face.
+prompt: Restrained line drawing of Elara with sharp eyes, travel‑worn cloak, handing a crimson‑sealed
+  parchment to Vara, whose half‑mask frames silvery hair and curls of incense, pastel earth
+  tones, soft crimson wax highlighted.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter

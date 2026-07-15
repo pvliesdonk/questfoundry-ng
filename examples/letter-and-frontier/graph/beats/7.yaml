@@ -1,0 +1,9 @@
+id: bridge:7
+created_by: grow
+summary: The ambiguous lines linger, and Elara feels the weight of each syllable as she considers
+  a subtle tweak.
+beat_class: structural
+purpose: bridge
+entities:
+- object:sealed-letter
+- character:elara

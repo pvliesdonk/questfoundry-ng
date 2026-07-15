@@ -16,6 +16,56 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (the texture-trial: COMPLETE — the first project through
+  DRESS, structural depth validated at short scope):** "The Letter and
+  the Frontier" (short, `gpt-oss:120b` unbilled) ran DREAM→DRESS
+  gate-clean: **0 errors, 41 advisories** — 32× B4 (arc beat-band) + 1×
+  B3 (93 passages vs the 24–64 short band): the known post-modulation
+  band recalibration (BACKLOG), the same drift the kimi A/B showed; 8×
+  B8 pacing; **B6, B7, B9 all silent** (words-per-choice in band, total
+  words in band, bridge share under the tripwire). The milestone's
+  levers all fired live: W1 — 1 hard + 4 soft from the coupled budget;
+  W2 — 2 dilemmas reserved at triage and used as texture feedstock; W3 —
+  finalize planted 3 texture worlds (34 arm beats, tw0–tw2) in ONE
+  proposal plus mirrored cadence (19 false-branch/sidetrack splices, 8
+  residue arms); W4 — arm prose grounds its premise (the tw0 twins:
+  plains/dust trunk vs pines/moonlight arm, same events, no lifts).
+  Structure: 155 beats / 93 passages / 32 arcs (all complete) / 20
+  flags / 2 endings / ~18.1k prose words. Spend: 784 calls, 2.55M in /
+  1.02M out, all unbilled. Operator record: seven halts, every one a
+  real defect fixed at root (the stall journal is the session record;
+  the fixes are PR #81's commits — I12's unit + split_on, batched
+  echoes, the twice-corrected rework diagnosis ending in loosened
+  review margins, the write-pass repair budget, legible bans). The last
+  ~60 passages wrote with zero halts. Open for the milestone exit: the
+  author's read, and the medium run with a band-top words target.
+
+- **2026-07-15 (the write prompt gets legible bans; the exhaustion message
+  gets honest channel counts — agent decision on the live run):** The
+  texture-trial's seventh halt (`write:p-border-approach`) reported
+  "failed review 4 times" but the cache showed 2 legitimate
+  banned-dialogue-tag review rejections plus 2 echo apply repairs — the
+  shared budget's channels were conflated in the message. The standing
+  no-more-rules check found a clarity asymmetry, not a rule gap: the
+  review prompt explains the tag ban in a paragraph while the write
+  prompt handed the writer the bans as one semicolon-joined line.
+  `fill_write.j2` now renders each existing ban as its own bullet (no new
+  rules), and the runner's exhaustion message reports review and apply
+  rejections separately so the operator reads true counts.
+
+- **2026-07-15 (tier is the fluency knob, not the structure knob — author
+  hypotheses on the kimi A/B):** Reading `examples/closed-circle-k2` against
+  the gpt-oss baseline, the author's read (verbatim intent): a weaker model
+  can be made to do anything *structurally* correct — write the *correct*
+  prose — but the sheer creativity and quality of prose (fluency) cannot
+  (easily) be mitigated; and (hypothesis 2) a very large exemplar of the
+  specific style wanted might let a small model do better by copying.
+  Hypothesis 2 is a BACKLOG experiment (Validation & experiments) — it sits
+  in deliberate tension with the M6 exemplar rule and needs design first.
+  This refines, not contradicts, the prompt doctrine: enforcement makes
+  structure tier-independent; fluency is the residual axis where tier
+  legitimately buys quality.
+
 - **2026-07-15 (the kimi-k2.5 A/B: COMPLETE — gate-clean FILL, structure
   in band, and the tier-confound made concrete):** the parallel *Closed
   Circle* medium (same premise, same pinned rotating `pov_hint`, kimi-k2.5
@@ -45,6 +95,133 @@ history; the decisions it recorded are captured below and in the design docs.
   the strongest single piece of evidence for the enforcement doctrine
   (counts a prompt merely states are tier knobs) and for the B4-style
   band drift the structural-depth milestone's coupled budget addresses.
+
+- **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
+  author-directed on the live run):** The texture-trial's second halt
+
+- **2026-07-15 (FILL rework rounds are edit-based, engine-merged — agent
+  decision on the texture-trial live run):** The run's fifth halt
+  (`write:p-vara-laugh`, "failed review 2 times") traced to wholesale
+  rewriting under a prompt-stated "REVISE, DON'T REWRITE": the cached
+  drafts prove the writer fixed exactly the quoted findings each round,
+  rewrote everything else, and regressed a grounded referent ("Vara's
+  mask" → "the mask") that no finding touched — a fresh sample per round
+  keeps the violation probability constant and the loop never converges.
+  Stated-and-trusted became structurally enforced: the rework round's
+  schema requires `edits: [{find, replace}]` and forbids `prose`
+  (max_length=0); `_merge_edits` applies them engine-side (unique-match,
+  all failures batched), and the apply fills `prose`/clears `edits` before
+  recording so replay artifacts stay self-contained. Durable rule in
+  design doc 02 (FILL, rework-convergence levers). Same session, earlier
+  halts: the echo check batched all lifts into one error (design doc 02
+  repair model gained the batch-all-violations rule), and the review's
+  ending+split_on refusal was reworded to the honest reason (frozen
+  ending set) with the I12 exception documented.
+
+- **2026-07-15 (rework convergence is a prompting concern — author-corrected):**
+  The texture-trial's fifth halt (`write:p-vara-laugh`, "failed review 2
+  times") was wholesale rewriting under REVISE-DON'T-REWRITE: the cached
+  drafts prove the writer fixed exactly the quoted findings each round,
+  rewrote everything else, and regressed a grounded possessive ("Vara's
+  mask" → "the mask") no finding touched. The agent first shipped an
+  engine-side fix — rework rounds schema-forced to `edits: [{find,
+  replace}]`, engine-merged — and the author rejected it the same day:
+  *"this is a prompting issue … not something you must micromanage from
+  the engine"* (573c318, reverted in full). The prompt-level fix that
+  stands: the rework block ends with an explicit self-check (diff your
+  revision against the shown draft sentence by sentence; restore any
+  sentence no finding required changing, watching small anchors like
+  possessives). Same halt cluster, earlier fixes that DID stand: the echo
+  check batches every lift into one error, and the ending+split_on
+  refusal gives the honest frozen-ending-set reason (I12 exception
+  documented).
+
+- **2026-07-15 (write passes get a repair budget of 4 — agent decision):**
+  The texture-trial's sixth halt (`write:p-ambiguous-tweak`, "exhausted
+  repairs") had a different shape from the fifth: the cache trace shows
+  every round fixed exactly what it was shown (an echo, then two grounding
+  findings), each fix added fresh text that tripped the next independent
+  check, and the pipeline-default budget of 2 exhausted the moment a
+  second echo surfaced — the writer never got a round to fix it. Nothing
+  structural, no non-compliance: ordinary convergence across serial
+  independent checks, one round short. `PassSpec.max_repairs` (per-pass
+  override, None inherits the default) and FILL's write passes set 4.
+  The default stays 2 everywhere else; arbitration still gates repeat
+  review rejections.
+
+- **2026-07-15 (over-strict review, not writer compliance — twice
+  author-corrected):** The texture-trial's fifth halt (`write:p-vara-laugh`,
+  "failed review 2 times" on choice_grounding) drew two wrong fixes in a
+  row, both reverted the same day. The agent first read the cache trace as
+  a writer defect (a rework regressed "Vara's mask" → "the mask" while
+  fixing other findings) and shipped an engine-side edit-merge (rework
+  rounds schema-forced to `edits`, 573c318); the author: *"this is a
+  prompting issue … not something you must micromanage from the engine"*
+  (reverted, ac9284e). The agent then added a writer-prompt self-check
+  step (ab76fa9); the author again: *"you still sound like you are feeling
+  you should micromanage a weak model in the prompts … the problems come
+  from being too strict in your prompts"* (removed). The standing fix
+  loosens the REVIEW where the halt was actually manufactured: the
+  reviewer had re-rejected a hedged inference ("as if weighing") that the
+  voice_pov rule's own carve-out permits, and demanded an explicit
+  possessive for a gesture context already attributed — each pedantic
+  rejection forced another rewrite, and rewrites churn new nits.
+  choice_grounding now counts a context-identifiable referent as grounded;
+  voice_pov names explicit observed inference as the narrator's own mind.
+  Durable rule (author's words, refined 2026-07-15; design doc 02 FILL +
+  AGENTS.md prompt-quality): when the rework loop fails, do NOT add more
+  rules — first check the existing write prompt for clarity, then the
+  existing review prompt for being overly strict. Same halt cluster,
+  earlier fixes that DID stand: the echo check batches every lift into one
+  error, and the ending+split_on refusal gives the honest
+  frozen-ending-set reason (I12 exception documented).
+
+- **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
+  author-directed on the live run):** The texture-trial's second halt
+  (five spymaster passages "over the I12 cap") unwound into two author
+  corrections. (1) The session's cap-enforcement-at-apply was wrong in
+  spirit: a hard irrelevance budget pressures the model to mark
+  load-bearing states irrelevant — the model was *right* to keep the
+  letter-state flags relevant at a scene about surrendering the letter.
+  (2) The count was a unit error: the "7 ambiguous states" were per-path
+  flags of TWO dilemmas (a path derives one flag per consequence; any of
+  them identifies the path), i.e. two binary uncertainties. I12 now
+  counts **ambiguous dilemma states** (`ambiguous_dilemma_groups`), and
+  passage-level gates condition arrivals (`passage_gate_flags`, the
+  intersection of in-choice requires — incidentally fixing a latent
+  heavy-residue variant over-count). And because a genuine >cap overlap
+  is the *expected* regime at medium/long (author: "this is going to
+  happen... so let's immediately address"), the escape valve named in
+  I12's own message since M3 ships: the audit's **`split_on`** keys a
+  passage on up to 2 dilemmas and `mutations.split_passage` re-presents
+  the wired moment as flag-gated variants — arrivals hold a known side,
+  the state honestly stops counting. Audit violations batch into one
+  repairable error (the run's third halt was whack-a-mole: one violation
+  surfaced per repair round). 01 §8 and 02 carry the durable rules.
+
+- **2026-07-14 (texture worlds: contamination caught and the definition
+  widened — author corrections on the live run):** Two corrections from
+  the author reading the texture-trial's first finalize output. (1)
+  **Prompt contamination**: `polish_finalize.j2` quoted the doctrine's
+  forest/mountains example verbatim and the model echoed it as 2 of 3
+  premises (the third, un-anchored premise grounded correctly in the
+  story's own brainstormed material — the mechanism works when not
+  anchored). The example and the place-named id example are gone. The
+  session's first replacement — a "never take a setting from these
+  instructions" fence — was itself rejected (author, same exchange):
+  self-referential negation with no visible referent is bad prompt
+  engineering; what shipped instead is the positive, structural
+  constraint — the premise must anchor in a story element the beats,
+  cast, or reserved material already carry, *and name it*. (2) **The
+  definition was read too narrowly**: the session had equated texture
+  with *setting*; the author's intent is *same events against another
+  backdrop* on ANY consequence-free axis — place (forest/mountains),
+  means (bus/train), company, or the small facts of things and people
+  (a car blue/yellow, an innkeeper's son/daughter). Recorded in 01 §6;
+  prompts (`polish_finalize.j2`, `fill_write.j2`), the premise field's
+  comment, and the splice docstring now carry the wide reading. The
+  running trial keeps its prompt-tinted forest/mountain premises; the
+  fix is validated by the next run's premises.
 
 - **2026-07-14 (structural depth PR-4: finalize plants texture worlds;
   FILL grounds them):** the milestone's pipeline wiring, completing

@@ -1,0 +1,8 @@
+id: beat:fb-edge-18
+created_by: polish
+summary: The fort’s walls rise, a looming reminder of scrutiny and safety.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara
+- location:stonegate-fort

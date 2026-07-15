@@ -1,0 +1,28 @@
+id: passage:p-forked-road
+summary: The messenger walks a stone‑marked road that blurs beneath their feet, suggesting
+  that several divergent futures now lie ahead.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara moves along stone-marked road that may fork; she tightens satchel strap
+  with scarlet wax seal, feels cold wind; she sees border camp with tents, lanterns, and a
+  lone rider at fire; she remembers oath to River Clan; she decides to keep the letter hidden,
+  trusting the seal; the road ahead remains unfixed, presenting choices.
+beats:
+- beat:fb-edge-17--tw0
+choices:
+- label: Enter the border camp
+  to: passage:p-border-approach

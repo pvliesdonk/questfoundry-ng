@@ -1,0 +1,21 @@
+id: passage:p-clearance-road
+summary: Elara steps into a clearing inside the rival court’s hilltop hall, the parchment
+  trembling in her hands as the doors close behind her. The forest trail gives way to a rough
+  road across the plain, where a faintly glinting map is revealed beneath bark, offering possible
+  shortcuts.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara enters the clearing, holds sealed parchment, oak doors close, road merges
+  into rugged plain, stones jut, she discovers hidden map etched under bark, notices ceremonial
+  drum beating, smells rust-colored dust, hears distant river, feels queen’s seal on cheek,
+  oath weighs, she considers using the map’s shortcuts.
+beats:
+- beat:tw0-bl2
+- beat:tw0-bridge6
+- beat:tw0-pi1
+choices:
+- label: Listen to the ceremonial drum echo
+  to: passage:p-pulse-legacy
+- label: Study the moonlit parchment
+  to: passage:p-moonlit-betrayal

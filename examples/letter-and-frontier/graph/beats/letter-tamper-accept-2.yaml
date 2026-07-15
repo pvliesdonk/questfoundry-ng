@@ -1,0 +1,14 @@
+id: beat:letter-tamper-accept-2
+summary: Later, a guard whispers that the wording may have shifted, but the letter passes
+  without inspection.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: reveals
+entities:
+- character:malrik
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:accept-seal

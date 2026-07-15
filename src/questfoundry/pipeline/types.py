@@ -88,6 +88,14 @@ class PassSpec:
     apply: Callable[[BaseModel, Project], list[str]]
     skip_if: Callable[[Project], str | None] | None = None
     review: Callable[[BaseModel, Project, Any], list[str]] | None = None
+    # Per-pass repair budget override; None inherits the runner's default
+    # (2). A write pass faces several independent checks (echoes, review
+    # findings, grounding) that surface serially — each round fixes what it
+    # was shown and new text can trip the next check, so the default
+    # conflates ordinary convergence with a structural halt (texture-trial
+    # live run, 2026-07-15: exhausted with every shown finding fixed and one
+    # never-shown echo left).
+    max_repairs: int | None = None
     # After this pass completes (run OR skipped), the runner calls
     # `expand(project)` and splices the returned passes in right after it.
     # Lets a pass whose successors depend on its output enumerate them from

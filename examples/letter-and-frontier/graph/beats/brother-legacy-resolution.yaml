@@ -1,0 +1,14 @@
+id: beat:brother-legacy-resolution
+summary: Elara resists the urge, preserving the seal; the hidden map remains secret.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: commits
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

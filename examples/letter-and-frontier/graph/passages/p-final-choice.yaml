@@ -1,0 +1,33 @@
+id: passage:p-final-choice
+summary: Elara's oath echoes brighter as she rejects the throne's promise, clutching the sealed
+  letter, and walks away, preserving her autonomy while the road ahead stays uncertain.
+entities:
+- character:elara
+- object:sealed-letter
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara receives the queen’s sealed parchment from the envoy, refuses the throne
+  seat, and accepts the oath. River Clan riders follow her. She leaves the fire, heads west
+  across the Silver Plain, tightens her satchel, rides ahead with her mount, and keeps the
+  sealed letter intact, marking her independent course.
+beats:
+- beat:final-delivery-aftermath-1
+- beat:final-delivery-lean-3
+- beat:final-delivery-resolution
+choices:
+- label: Ride west across the exposed Silver Plain
+  to: passage:p-silver-plain-choice
+- label: Lead the party west across the exposed Silver Plain
+  to: passage:p-silver-plain

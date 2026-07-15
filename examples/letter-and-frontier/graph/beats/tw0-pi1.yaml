@@ -1,0 +1,15 @@
+id: beat:tw0-pi1
+created_by: polish
+summary: Reaching a clearing in the rival court’s hilltop hall, the parchment trembles in
+  Elara’s hands.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:peace-interpret-pre-1
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

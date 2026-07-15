@@ -1,0 +1,21 @@
+id: passage:p-hall-road
+summary: Elara arrives at the rival court’s great hall, the sealed letter trembling in her
+  grasp as the doors close behind her; she steps onto the rough road across the plain, aware
+  that a hidden map could offer a risky shortcut.
+entities:
+- character:elara
+- object:sealed-letter
+- location:silver-plain
+prose_summary: Elara enters the rival court’s great hall, the doors shut behind her, and feels
+  the sealed parchment trembling. She reads the vague peace promise bearing the dying queen’s
+  sigil, hears a frontier drumbeat, recalls a rumor of a hidden map under the seal, tightens
+  the letter and steps onto the road.
+beats:
+- beat:brother-legacy-lean-2
+- beat:peace-interpret-pre-1
+- bridge:6
+choices:
+- label: Listen to the distant drumbeat echoing across the frontier
+  to: passage:p-legacy-drum
+- label: Turn the sealed parchment over and study its vague wording
+  to: passage:p-wind-betrayal

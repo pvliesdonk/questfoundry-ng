@@ -1,0 +1,21 @@
+id: passage:p-distant-drums
+summary: The distant war drums pulse through the air, pulling her thoughts from personal favors
+  to the looming conflict beyond. The sound reminds her that the stakes extend far beyond
+  any private bargain.
+prose_summary: Elara stands on the platform outside the fort holding a sealed letter; Malrik
+  holds the iron stamp with wax. She feels the queen’s seal on her thumb as drums echo. She
+  can either refuse the stamp, leaving the seal untouched, or press it, binding the letter
+  to fort authority while war looms beyond the border.
+beats:
+- beat:tw0-tc4
+choices:
+- label: Press the seal onto the letter
+  grants:
+  - flag:official-seal
+  - flag:trust-boost
+  to: passage:p-letter-stamp
+- label: Step back and refuse the seal
+  grants:
+  - flag:risk-intercept
+  - flag:unmarked-letter
+  to: passage:p-letter-refuse

@@ -1,0 +1,26 @@
+id: character:vara
+name: Vara Shadowmantle
+concept: Spymaster of the rival court, keen to twist any diplomatic chance to the court’s
+  advantage.
+pronouns: they/them
+base:
+  appearance: Silvery hair, half‑mask, ever‑present whisper of incense.
+  manner: Calculating, soft‑spoken, always measuring.
+  breaks_seal: 'true'
+arc:
+  begins: Vara is a calculating spymaster, always measuring advantage.
+  pivots:
+  - beat: beat:spymaster-demand-pre-1
+    becomes: she becomes intent on leveraging the letter for a trade pact.
+  - beat: beat:spymaster-demand-pre-2
+    becomes: she becomes assertive, offering the pact in exchange for the sealed letter.
+  - beat: beat:spymaster-conceal-commit
+    becomes: she becomes thwarted by Elara's refusal, forcing her to reassess her approach.
+  - beat: beat:spymaster-hand-commit
+    becomes: she becomes in possession of the letter, preparing to use it as a bargaining
+      chip.
+  ends:
+  - path: path:conceal-letter
+    state: she fails to obtain the letter, left without her intended leverage.
+  - path: path:hand-letter
+    state: she holds the sealed letter, ready to broker the trade agreement.

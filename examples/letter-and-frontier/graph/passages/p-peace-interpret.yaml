@@ -1,0 +1,20 @@
+id: passage:p-peace-interpret
+summary: Elara sets the sealed, unaltered letter on the altar; the rival lords read its ambiguous
+  phrasing, murmuring about surrender, and a heated debate erupts, threatening the fragile
+  peace as she watches, heart racing.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara places sealed letter with untouched scarlet wax on stone altar. Lords
+  gather, one reads ambiguous line, prompting debate. Elder warns against haste; nobles argue.
+  Bell toll silences clamor. Lords pause, weighing decisions against the seal’s promise.
+beats:
+- beat:peace-interpret-present-1
+- beat:peace-interpret-present-2
+- beat:peace-interpret-present-commit
+choices:
+- label: Steady the sealed letter as the bell tolls
+  to: passage:p-bell-chime
+- label: Consider the elder's cautious counsel
+  to: passage:p-peace-elder

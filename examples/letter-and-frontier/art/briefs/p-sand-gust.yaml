@@ -1,0 +1,9 @@
+passage: passage:p-sand-gust
+priority: 15
+caption: A sudden gust lifts pale sand across the Silver Plain, brushing Elara’s cloak as
+  she rides.
+prompt: Elara on horseback riding across the exposed Silver Plain, a wind gust swirling pale
+  sand, cloak flapping, background of flat bone‑white steppe, pastel ochre dust.
+entities:
+- character:elara
+- location:silver-plain

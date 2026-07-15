@@ -9,6 +9,7 @@ flags' grant beats are in view.
 from __future__ import annotations
 
 from collections import deque
+from collections.abc import Iterable
 from itertools import product
 
 from questfoundry.graph.store import StoryGraph
@@ -288,7 +289,9 @@ def arc_view(g: StoryGraph, selection: dict[str, str]) -> set[str]:
     return view
 
 
-def ambiguous_flags(g: StoryGraph, group: list[str]) -> list[str]:
+def ambiguous_flags(
+    g: StoryGraph, group: list[str], gated_flags: Iterable[str] = ()
+) -> list[str]:
     """Flags whose value varies among readers arriving at a passage
     holding ``group`` — the I12 computation. A flag is ambiguous when
     its grant is upstream on some route while the opposing path's
@@ -297,18 +300,23 @@ def ambiguous_flags(g: StoryGraph, group: list[str]) -> list[str]:
     own side upstream — a world fact) is certain, costs the writer
     nothing, and does not count; nor do flags of a dilemma the group
     is gated on (arrivals are conditioned: one side certain, the
-    other foreclosed)."""
+    other foreclosed). ``gated_flags`` adds passage-level gates the
+    beats cannot see — a variant's gate lives on its in-choice edges
+    (``passage_gate_flags``), and it conditions arrivals exactly like
+    a beat-level gate."""
     ancestry = set(group)
     for b in group:
         ancestry |= ancestors(g, b)
     gated_dilemmas = set()
+    gate_sources = list(gated_flags)
     for b in group:
         beat = g.node(b)
         assert isinstance(beat, Beat)
-        for flag_id in beat.requires_flags:
-            flag = g.node(flag_id)
-            if isinstance(flag, StateFlag) and flag.path is not None:
-                gated_dilemmas.add(dilemma_of_path(g, flag.path))
+        gate_sources.extend(beat.requires_flags)
+    for flag_id in gate_sources:
+        flag = g.node(flag_id)
+        if isinstance(flag, StateFlag) and flag.path is not None:
+            gated_dilemmas.add(dilemma_of_path(g, flag.path))
     result = []
     for flag in g.nodes_of(StateFlag):
         if flag.path is None:
@@ -327,6 +335,39 @@ def ambiguous_flags(g: StoryGraph, group: list[str]) -> list[str]:
         if any(c in ancestry for c in others):
             result.append(flag.id)
     return sorted(result)
+
+
+def passage_gate_flags(g: StoryGraph, passage_id: str) -> list[str]:
+    """The gate a passage itself sits behind: the flags required by EVERY
+    choice into it (variant gates ride each fanned in-edge, so the
+    intersection is exactly the variant's own gate; an ungated passage,
+    or one with no in-choices yet, yields nothing). Feeds I12's arrival
+    conditioning (``ambiguous_flags``): a gated dilemma is determined for
+    everyone who arrives."""
+    requires = [
+        set(e.payload.get("requires", []))
+        for e in g.in_edges(passage_id, EdgeKind.CHOICE)
+    ]
+    if not requires:
+        return []
+    return sorted(set.intersection(*requires))
+
+
+def ambiguous_dilemma_groups(
+    g: StoryGraph, group: list[str], gated_flags: Iterable[str] = ()
+) -> list[list[str]]:
+    """I12's ambiguous flags grouped into *states*: a dilemma's per-path
+    flags are ONE binary uncertainty — a path derives one flag per
+    consequence and any of them identifies the path (``dilemma_flags``),
+    so counting flags over-counts the prose load (live texture-trial,
+    2026-07-14: seven flags at one passage were two dilemmas). One group
+    per dilemma, sorted by dilemma id; flags sorted within."""
+    by_dilemma: dict[str, list[str]] = {}
+    for flag_id in ambiguous_flags(g, group, gated_flags):
+        flag = g.node(flag_id)
+        assert isinstance(flag, StateFlag) and flag.path is not None
+        by_dilemma.setdefault(dilemma_of_path(g, flag.path), []).append(flag_id)
+    return [sorted(by_dilemma[d]) for d in sorted(by_dilemma)]
 
 
 def projected_flags(g: StoryGraph) -> list[str]:

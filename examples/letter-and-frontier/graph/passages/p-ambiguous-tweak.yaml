@@ -1,0 +1,20 @@
+id: passage:p-ambiguous-tweak
+summary: Elara studies the vague wording of the proposed peace, feeling the weight of each
+  ambiguous line, and realizes a slight alteration could swing the court toward acceptance,
+  yet she fears it would betray her queen’s intent.
+entities:
+- object:sealed-letter
+- character:elara
+prose_summary: Elara stands in the great hall holding a sealed letter that mentions a dawn
+  of shared fields; she reads ambiguous clauses, considers changing the word dawn to morning
+  to sway the council, notes the queen’s seal purpose, weighs altering it as betrayal, walks
+  to a narrow window, feels cold draft, and balances duty against survival.
+beats:
+- beat:peace-interpret-pre-2
+- beat:peace-interpret-pre-3
+- bridge:7
+choices:
+- label: step toward the window, feeling the draft stir the leaves outside
+  to: passage:p-sigh-wind
+- label: turn toward the courtiers, letting my words unfurl
+  to: passage:p-peace-interpret-pre-4

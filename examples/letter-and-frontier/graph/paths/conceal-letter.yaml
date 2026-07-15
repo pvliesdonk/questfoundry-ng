@@ -1,0 +1,8 @@
+id: path:conceal-letter
+name: Conceal Letter from Vara
+explores: answer:conceal-letter
+consequences:
+- id: consequence:letter-hidden
+  text: Elara hides the letter, keeping it secret from the rival court.
+- id: consequence:lost-trust
+  text: Vara suspects deceit, souring future relations.

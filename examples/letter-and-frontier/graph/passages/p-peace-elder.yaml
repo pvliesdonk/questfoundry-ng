@@ -1,0 +1,15 @@
+id: passage:p-peace-elder
+summary: The elder advocates a cautious acceptance, extending the time available for negotiations.
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara listens as the elder urges the council to pause the dispute and avoid
+  a hasty oath, citing ambiguous phrasing and war risk. Lords focus on the scarlet seal on
+  the altar. Elara senses the queen’s promise, lifts the warm seal, and extends the sealed
+  letter to the chief marshal as a trust token.
+beats:
+- beat:peace-interpret-present-3
+choices:
+- label: Offer the sealed letter
+  requires:
+  - flag:ambiguous-interpretation
+  to: passage:p-steady-grip

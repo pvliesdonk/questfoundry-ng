@@ -1,0 +1,14 @@
+id: beat:brother-legacy-aftermath-1
+summary: The journey extends, forcing Elara to navigate the scarred passes without guidance.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: complicates
+entities:
+- character:elara
+- location:silver-plain
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

@@ -1,0 +1,5 @@
+The wind that slipped across the plain grew colder, stirring a thin veil of rust‑colored dust that rose from the steppe. It carried low murmurs among the courier routes, rumors that some riders had turned coat, that letters were being intercepted. Elara felt the breath of those whispers settle on her cloak.
+
+She stood with the sealed letter pressed against her chest, the scarlet wax a cold weight. The oath to the queen pressed firm in her mind, yet the practical need for safety pressed harder. Each step toward the southern road meant exposing the seal to scrutiny, each hesitation invited another rider’s curiosity. The balance between duty and prudence pressed against her ribs like a tightened rope.
+
+Elara steadied herself, her fingers finding the seam of the parchment. She turned the folded sheet over once more, letting the vague wording of the peace proposal settle in her mind. In the dimming dusk a few fireflies drifted down, their gentle glow landing on the parchment, outlining the ambiguous lines as if highlighting a hidden path. The tiny lights flickered over the ink, a quiet promise that the words might yet be shaped by a careful hand.

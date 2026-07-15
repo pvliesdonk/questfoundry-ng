@@ -1,0 +1,13 @@
+id: beat:tw0-tc1
+created_by: polish
+summary: The clan chief promises covert shield across the plain in exchange for a future favor.
+beat_class: structural
+purpose: texture_world
+entities:
+- faction:river-clan
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:trust-clan-pre-1
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

@@ -1,0 +1,22 @@
+id: passage:p-suspicion-letter
+summary: Elara examines Vara’s face after the proposal, recalling whispers of his manipulations,
+  and her suspicion sharpens as she fixates on the still‑sealed, wax‑glinting letter in the
+  dim light.
+entities:
+- character:vara
+- character:elara
+- object:sealed-letter
+prose_summary: Elara watches Vara's half‑masked face for deceit as the great hall remains
+  silent after Vara's offer. She recalls rumors of Vara's betrayals. She examines a sealed
+  parchment with scarlet wax, seal intact, bearing the dying queen's promise. A River Clan
+  rider enters, dust‑covered cloak, inclines his head toward her; candle shadows flicker over
+  the wax.
+beats:
+- beat:spymaster-demand-pre-3
+- bridge:10
+- bridge:11
+choices:
+- label: Watch the candle's wavering flame
+  to: passage:p-wax-doubt
+- label: Study the queen’s wax‑sealed letter as the rider approaches
+  to: passage:p-river-protection

@@ -1,0 +1,15 @@
+id: beat:route-choice-plain-1
+summary: The Clan’s riders shield her from bandits, guiding her through hidden paths across
+  the wind‑blown steppe.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: advances
+entities:
+- faction:river-clan
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:plain-route

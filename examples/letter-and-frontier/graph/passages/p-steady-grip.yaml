@@ -1,0 +1,26 @@
+id: passage:p-steady-grip
+summary: She steadies her hand and extends the sealed letter, embodying a fragile trust that
+  the promise of stability will endure.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara presses her palm to the scarlet wax seal, lifts the queen’s oath parchment,
+  and turns to the mute marshal whose gauntlet hand rests on his sword pommel. Vara emerges
+  from the alcove, half‑masked, and warns that stability costs something. Elara can hide the
+  letter deeper in her cloak or give it to Vara.
+beats:
+- beat:residue-peace-interpret-hand
+choices:
+- label: Stow the sealed letter in my cloak
+  grants:
+  - flag:letter-hidden
+  - flag:lost-trust
+  to: passage:p-conceal-commit
+- label: Hand the sealed letter to Vara
+  grants:
+  - flag:risk-exposure
+  - flag:vara-ally
+  to: passage:p-spymaster-hand-commit

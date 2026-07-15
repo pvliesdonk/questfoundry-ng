@@ -1,0 +1,13 @@
+id: beat:spymaster-conceal-3
+summary: Elara feels the weight of secrecy, fearing the loss of the queen’s voice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:conceal-letter

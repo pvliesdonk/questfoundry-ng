@@ -1,0 +1,11 @@
+passage: passage:p-bridge-suspicion
+priority: 7
+caption: Elara watches Vara’s masked face, the sealed letter catching a thin beam of light
+  as doubt rises.
+prompt: Illustration of Elara in cloaked travel gear, looking at Vara whose half‑mask catches
+  a sliver of light, the crimson wax seal glinting; incense curls visible, muted background
+  of stone hall, pastel tones.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter

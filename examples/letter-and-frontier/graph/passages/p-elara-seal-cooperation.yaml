@@ -1,0 +1,23 @@
+id: passage:p-elara-seal-cooperation
+summary: Elara feels a calm certainty as the altered official seal hums, offering a tentative
+  promise of cooperation.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara stands under stone arch, presses thumb to altered queen’s seal, notes
+  iron fort stamp beside it humming; sees rolled treaty parchment with same altered wording;
+  notes stone altar for presenting untouched letter to lords; tightens satchel strap with
+  rust‑colored dust; prepares to revise treaty or present letter guided by humming seal.
+beats:
+- beat:residue-letter-tamper-accept
+choices:
+- label: Rewrite the treaty to stress mutual stewardship
+  grants:
+  - flag:ethical-doubt
+  - flag:subtle-influence
+  to: passage:p-altered-pledge
+- label: Set the sealed letter upon the altar
+  grants:
+  - flag:ambiguous-interpretation
+  - flag:faithful-delivery
+  to: passage:p-peace-interpret

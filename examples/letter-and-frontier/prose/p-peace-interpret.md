@@ -1,0 +1,7 @@
+Elara stepped to the stone altar and set the sealed letter down without shifting the wax. The scarlet seal rested untouched, its faint hum merging with the cold air that slipped through the high windows. She felt the weight of the queen’s oath pressing against the cold stone and resisted any thought of altering the phrasing.
+
+The assembled lords gathered around the altar, eyes fixed on the crimson wax. One of them read the ambiguous line aloud and asked, “Did she mean surrender?” said, and the hall filled with low murmurs. Their voices rose, thin with uncertainty, as they tried to parse the hidden intent.
+
+The elder of the council, his beard dusted with dried ash, spoke with measured tone, warning that haste could betray the fragile accord. The other nobles countered, their arguments sharpening like blades. Heated debate crackled, each claim threatening to unravel the tentative peace that clung to the room. Elara’s heart thudded against her ribs, a drum echoing the distant bell that tolled beyond the stone walls, marking the hour with a solemn chime.
+
+A bell toll rang, steady and clear, cutting through the clamor. The echo settled over the altar, and the elder’s cautious counsel lingered in the hushed air as the lords paused, weighing their words against the seal’s silent promise.

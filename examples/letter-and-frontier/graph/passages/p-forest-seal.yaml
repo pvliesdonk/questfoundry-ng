@@ -1,0 +1,21 @@
+id: passage:p-forest-seal
+summary: At dusk Elara hands the sealed letter to a forest clerk by a moss‑covered stone,
+  then studies the queen’s seal in the filtered light; a forest ranger offers to press an
+  official sigil onto it, promising safe passage while hinting the wording might be changed.
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter
+prose_summary: Malrik stands by moss stone; Elara gives sealed parchment to forest clerk,
+  who takes it. Elara lifts seal, notes queen’s emblem, frowns. Forest ranger offers to press
+  fort’s sigil on parchment to guarantee passage, warning seal may change. Malrik considers
+  the offer. A path leads to low stone doorway.
+beats:
+- beat:tw0-bridge2
+- beat:tw0-lt1
+- beat:tw0-lt2
+choices:
+- label: listen to the rustling pine
+  to: passage:p-pine-whisper
+- label: enter the hilltop hall’s clearing
+  to: passage:p-clearance-road

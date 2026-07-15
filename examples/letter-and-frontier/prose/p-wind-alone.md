@@ -1,0 +1,5 @@
+A cold wind brushed the scarred Silver Plain, pulling at the hem of Elara’s cloak. The River Clan’s riders had turned back at the river’s bend, their banners fading into the rust‑colored dust. She walked alone, the cracked stones cracking under her boots, the sealed letter pressed against her breastbone like a quiet oath. The weight of the promise settled deeper with each step, a reminder that trust had thinned.
+
+She reached into the satchel and felt the corner of the secret map, its parchment still crisp despite the heat of the day. The map lay folded beside the wax‑sealed letter, its inked trails invisible until she unfolded it. The wind hissed through the troughs of low stone, carrying the distant murmur of the river that seemed to mock her solitude.
+
+The sky dimmed to a muted dusk, and the scent of pine resin rose from the scattered pines that dotted the horizon. Elara tightened the strap of her satchel, the seal against her skin a silent pressure. With a steady breath she turned eastward, the plain stretching ahead, the hidden map and the sealed missive her only companions.

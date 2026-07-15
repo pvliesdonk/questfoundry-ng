@@ -1,0 +1,15 @@
+id: beat:peace-interpret-pre-3
+summary: Elara knows a subtle tweak could nudge the court toward acceptance, but fears betraying
+  her queen’s intent.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle
+- path:present-unchanged

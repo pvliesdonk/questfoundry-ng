@@ -1,0 +1,7 @@
+id: beat:fb-edge-17
+created_by: polish
+summary: The road’s stone markers blur, hinting at divergent futures ahead.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

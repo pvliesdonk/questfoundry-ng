@@ -1,0 +1,10 @@
+passage: passage:p-clan-ember
+priority: 6
+caption: Around a low stone slab, the River Clan riders huddle close to a warm ember, Elara’s
+  palm resting on the fire.
+prompt: Line drawing of a small ember glowing on a stone slab, surrounded by River Clan riders
+  in rust‑colored spears, Elara standing with travel‑worn cloak, warm pastel orange against
+  cool steely gray, dust in air.
+entities:
+- character:elara
+- faction:river-clan

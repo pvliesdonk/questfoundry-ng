@@ -1,0 +1,11 @@
+passage: passage:p-bridge-letter
+priority: 14
+caption: At twilight, Malrik examines the queen’s seal and adds his official stamp to the
+  parchment.
+prompt: Twilight inside Stonegate Fort, Malrik in iron‑edged armor with scar, holding a stamp,
+  the crimson‑sealed letter on a desk, soft pastel shadows, stone walls, hint of deep crimson
+  wax.
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter

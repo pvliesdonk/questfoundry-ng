@@ -1,0 +1,32 @@
+id: passage:p-fort-interrogation
+summary: Elara is brought before the fort’s council, where her loyalty is examined and she
+  is forced to reveal a fragment of the secret letter, trading its trust for the council’s
+  political leverage.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara enters council chamber; chief lifts iron stamp (crest) and asks purpose.
+  Elara shows scarlet‑sealed parchment; councilwoman touches wax. Elara reveals one line “The
+  dawn of shared fields”. Chief stamps parchment, declares fragment will be used to negotiate
+  with rival court. Elara accepts leverage for safe passage south, guards record her, she
+  leaves shaken.
+beats:
+- beat:route-choice-fort-2
+choices:
+- label: step onto the rising walls of Stonegate Fort
+  to: passage:p-fort-loom
+- label: press my back against the cold stone corridor
+  to: passage:p-stonegate-imprisonment

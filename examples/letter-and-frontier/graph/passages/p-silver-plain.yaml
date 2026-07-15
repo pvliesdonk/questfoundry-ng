@@ -1,0 +1,41 @@
+id: passage:p-silver-plain
+summary: The party turns west onto the exposed Silver Plain, where swift River Clan riders
+  are rumored to patrol; as supplies wane and a sandstorm approaches, a distant fort offers
+  shelter, but only under close scrutiny.
+entities:
+- location:silver-plain
+- faction:river-clan
+- location:stonegate-fort
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: She turns west onto the Silver Plain, meets a River Clan rider in a cloak who
+  offers to ride with her. Her satchel holds biscuits and a water skin. A fire glows, sand
+  swirls as a storm approaches. The road left leads to Stonegate Fort, whose gate will scrutinize
+  travelers. She feels queen’s scarlet wax seal cold, recalling her oath.
+beats:
+- beat:tw2-bridge3
+- beat:tw2-route-choice2
+- beat:tw2-route-choice3
+choices:
+- label: Step onto the southern road and enter Stonegate Fort
+  grants:
+  - flag:safe-passage
+  - flag:under-surveillance
+  to: passage:p-southern-route-fort
+- label: Ride west with the River Clan across the plain
+  grants:
+  - flag:exposed-plains
+  - flag:river-clan-guard
+  to: passage:p-plain-journey

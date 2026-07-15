@@ -1,0 +1,8 @@
+id: beat:fb-edge-10
+created_by: polish
+summary: A cold draft brushes the sealed parchment, echoing Elara’s hesitation.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara
+- object:sealed-letter

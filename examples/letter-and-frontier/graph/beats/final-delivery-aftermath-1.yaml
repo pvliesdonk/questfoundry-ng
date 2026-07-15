@@ -1,0 +1,13 @@
+id: beat:final-delivery-aftermath-1
+summary: She resumes her path, the road ahead uncertain but her autonomy intact.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-delivery
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-position

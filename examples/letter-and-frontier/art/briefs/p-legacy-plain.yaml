@@ -1,0 +1,11 @@
+passage: passage:p-legacy-plain
+priority: 8
+caption: Elara rides across the scarred Silver Plain, the sealed letter pressed against her
+  breast as wind lifts rust‑colored dust.
+prompt: Wide view of the windswept Silver Plain with bleached bones scattered, Elara on horseback
+  wearing a travel cloak, the crimson‑sealed parchment visible at her chest, dust swirling,
+  pastel ochre and muted grays.
+entities:
+- character:elara
+- object:sealed-letter
+- location:silver-plain

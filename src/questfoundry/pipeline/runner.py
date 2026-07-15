@@ -147,8 +147,11 @@ def _run_pass(
     human-readable error string once repairs are exhausted."""
     template = env.get_template(spec.template)
     context = spec.build_context(project)
+    if spec.max_repairs is not None:
+        max_repairs = spec.max_repairs
     repair_errors: list[str] = []
     repairs_used = 0
+    review_fails = 0
     while True:
         rendered = template.render(
             **context,
@@ -178,11 +181,18 @@ def _run_pass(
                 _restore(project, backup)
                 repair_errors.extend(issues)
                 repairs_used += 1
+                review_fails += 1
                 if repairs_used > max_repairs:
+                    # Report the two channels separately: the budget is shared
+                    # with apply repairs, and "failed review N times" overstated
+                    # the review's share on a live halt (a 4-round budget spent
+                    # 2 on echoes, 2 on review read as 4 review failures).
                     return (
-                        f"pass {spec.name!r} failed review {max_repairs} times — the "
-                        f"structure is wrong, not the words (design doc 02, FILL): "
-                        f"{'; '.join(issues)}"
+                        f"pass {spec.name!r} exhausted its repair budget of "
+                        f"{max_repairs} ({review_fails} review rejection(s), "
+                        f"{repairs_used - review_fails} apply rejection(s)) — a "
+                        f"repeated review failure means the structure is wrong, "
+                        f"not the words (design doc 02, FILL): {'; '.join(issues)}"
                     )
                 continue
         return PassReport(

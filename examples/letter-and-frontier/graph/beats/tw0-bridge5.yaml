@@ -1,0 +1,13 @@
+id: beat:tw0-bridge5
+created_by: polish
+summary: She steadies herself, turning the parchment over once more as a single beam of moonlight
+  settles on the words.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:sealed-letter
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:5
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

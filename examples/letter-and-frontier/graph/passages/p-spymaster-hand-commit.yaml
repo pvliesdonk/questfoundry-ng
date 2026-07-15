@@ -1,0 +1,14 @@
+id: passage:p-spymaster-hand-commit
+summary: Elara places the sealed letter into Vara’s hands, trusting the promise of stability
+  and risking her own safety on the messenger’s loyalty.
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara places the queen’s scarlet wax‑sealed letter on the stone floor and gives
+  it to spymaster Vara Shadowmantle. Vara breaks the seal with his sword tip, reads the hidden
+  message, folds the paper, and hides it in his cloak. Elara accepts the spymaster’s trust,
+  costing her political stability.
+beats:
+- beat:spymaster-hand-commit
+choices:
+- label: Watch Vara break the wax seal
+  to: passage:p-spymaster-reveal

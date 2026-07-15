@@ -1,0 +1,13 @@
+id: passage:p-sigh-wind
+summary: A gust of wind stirs the leaves outside, echoing the growing tension inside the hall.
+entities:
+- character:elara
+prose_summary: Elara stands at the window with sealed parchment bearing the queen’s unaltered
+  seal; she approaches the council in the great hall; she reads the letter aloud, stating
+  the queen’s promise remains; courtiers focus on her; tension rises but no choice is made
+  yet.
+beats:
+- beat:fb-edge-4
+choices:
+- label: Speak the sealed letter's truth
+  to: passage:p-peace-interpret-pre-4

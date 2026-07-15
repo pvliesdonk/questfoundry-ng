@@ -1,0 +1,19 @@
+id: passage:p-promise-entanglement
+summary: Elara sees the promise pull her into the clan's political web; the chief’s oath echoes
+  while she counts dwindling supplies, and she feels the growing weight of debt as she weighs
+  loyalty against scarcity.
+entities:
+- faction:river-clan
+prose_summary: Elara receives the chief’s oath as he ties a rough cord around her shoulder,
+  binding her to the River Clan pact; the rider stands with spear. She counts cracked biscuits
+  and a water skin from satchel, confirming scarce supplies. She notices the rider’s horse
+  dusty. The pact increases her debt and obligations. Distant drums and an owl sound.
+beats:
+- beat:tw0-bridge13
+- beat:tw0-tc2
+- beat:tw0-tc3
+choices:
+- label: Follow the owl’s echo
+  to: passage:p-final-owl
+- label: Brace myself as war drums thunder
+  to: passage:p-distant-drums

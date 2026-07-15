@@ -1,0 +1,132 @@
+flags:
+- id: flag:ambiguous-interpretation
+  description: The rival court reads the ambiguous wording, risking misinterpretation.
+  source: dilemma
+  path: path:present-unchanged
+  codeword: VEIL
+  derived_from:
+  - consequence:ambiguous-interpretation
+- id: flag:clan-favor
+  description: Elara promises a future favor, binding her to the River Clan.
+  source: dilemma
+  path: path:agree-side
+  codeword: RAVEN
+  derived_from:
+  - consequence:clan-favor
+- id: flag:clan-protection
+  description: Clan riders shield her from plain bandits.
+  source: dilemma
+  path: path:agree-side
+  derived_from:
+  - consequence:clan-protection
+- id: flag:ethical-doubt
+  description: Her deception raises personal moral conflict.
+  source: dilemma
+  path: path:adjust-subtle
+  codeword: LAMENT
+  derived_from:
+  - consequence:ethical-doubt
+- id: flag:exposed-plains
+  description: Elara traverses the open Silver Plain, exposed to the elements and wandering
+    eyes.
+  source: dilemma
+  path: path:plain-route
+  derived_from:
+  - consequence:exposed-plains
+- id: flag:exposed-risk
+  description: Without Clan assistance she faces greater danger on the plain.
+  source: dilemma
+  path: path:decline-side
+  codeword: HOLLOW
+  derived_from:
+  - consequence:exposed-risk
+- id: flag:faithful-delivery
+  description: Elara remains true to the queen's intent.
+  source: dilemma
+  path: path:present-unchanged
+  derived_from:
+  - consequence:faithful-delivery
+- id: flag:letter-hidden
+  description: Elara hides the letter, keeping it secret from the rival court.
+  source: dilemma
+  path: path:conceal-letter
+  codeword: MIST
+  derived_from:
+  - consequence:letter-hidden
+- id: flag:lost-trust
+  description: Vara suspects deceit, souring future relations.
+  source: dilemma
+  path: path:conceal-letter
+  derived_from:
+  - consequence:lost-trust
+- id: flag:official-seal
+  description: Malrik stamps the letter, legitimizing its transport but potentially altering
+    wording.
+  source: dilemma
+  path: path:accept-seal
+  codeword: GLIMMER
+  derived_from:
+  - consequence:official-seal
+- id: flag:risk-exposure
+  description: The letter's contents may be compromised.
+  source: dilemma
+  path: path:hand-letter
+  codeword: BREACH
+  derived_from:
+  - consequence:risk-exposure
+- id: flag:risk-intercept
+  description: Border patrols become wary and may detain her.
+  source: dilemma
+  path: path:refuse-seal
+  codeword: SABLE
+  derived_from:
+  - consequence:risk-intercept
+- id: flag:river-clan-guard
+  description: The River Clan escorts her across the plain, offering covert protection.
+  source: dilemma
+  path: path:plain-route
+  derived_from:
+  - consequence:river-clan-guard
+- id: flag:safe-passage
+  description: Stonegate Fort grants Elara unhindered travel through the southern road.
+  source: dilemma
+  path: path:fort-route
+  derived_from:
+  - consequence:safe-passage
+- id: flag:solo-journey
+  description: Elara travels alone, forgoing clan aid.
+  source: dilemma
+  path: path:decline-side
+  derived_from:
+  - consequence:solo-journey
+- id: flag:subtle-influence
+  description: Elara tweaks phrasing, nudging the rival court toward peace.
+  source: dilemma
+  path: path:adjust-subtle
+  derived_from:
+  - consequence:subtle-influence
+- id: flag:trust-boost
+  description: Guards trust the sealed letter, reducing inspections.
+  source: dilemma
+  path: path:accept-seal
+  derived_from:
+  - consequence:trust-boost
+- id: flag:under-surveillance
+  description: The garrison watches her movements, recording every step.
+  source: dilemma
+  path: path:fort-route
+  derived_from:
+  - consequence:under-surveillance
+- id: flag:unmarked-letter
+  description: Elara refuses the stamp, preserving the queen's original seal but attracting
+    suspicion.
+  source: dilemma
+  path: path:refuse-seal
+  derived_from:
+  - consequence:unmarked-letter
+- id: flag:vara-ally
+  description: Vara gains the sealed letter, offering political leverage.
+  source: dilemma
+  path: path:hand-letter
+  derived_from:
+  - consequence:vara-ally

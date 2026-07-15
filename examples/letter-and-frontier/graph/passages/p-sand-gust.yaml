@@ -1,0 +1,29 @@
+id: passage:p-sand-gust
+summary: A sudden gust lifts the sand, its fierce howl echoing the plain’s unforgiving breath
+  and underscoring the harsh frontier.
+entities:
+- location:silver-plain
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara rides toward the rival court’s great doors as western wind lifts sand;
+  a River Clan rider warns, she tightens her cloak, cups her eyes, spurs her mount, and keeps
+  the queen’s scarlet wax seal pressed to her cheek. Clan spears clank as riders press forward,
+  defending against bandits.
+beats:
+- beat:fb-edge-19
+choices:
+- label: Ride hard toward the rival court
+  to: passage:p-accord-at-dawn

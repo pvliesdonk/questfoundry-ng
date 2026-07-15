@@ -1,0 +1,17 @@
+id: dilemma:trust-clan
+question: Should Elara promise the River Clan a side favor in exchange for hidden protection
+  on the plain?
+why_it_matters: A promise could secure safe passage, but may bind her to future obligations
+  that conflict with her mission.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:agree-side
+  text: Agree to the Clan’s side favor.
+- id: answer:decline-side
+  text: Decline and travel alone.
+anchored_to:
+- character:elara
+- faction:river-clan
+- object:sealed-letter

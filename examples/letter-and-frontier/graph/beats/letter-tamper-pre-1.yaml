@@ -1,0 +1,15 @@
+id: beat:letter-tamper-pre-1
+summary: Malrik examines the sealed letter, noting the queen's seal could be challenged.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: reveals
+entities:
+- character:malrik
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:accept-seal
+- path:refuse-seal

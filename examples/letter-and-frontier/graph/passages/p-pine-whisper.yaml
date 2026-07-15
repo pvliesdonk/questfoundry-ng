@@ -1,0 +1,15 @@
+id: passage:p-pine-whisper
+summary: Elara hears a soft rustle of pine, a whisper that reminds her of the path she chose,
+  underscoring her lingering inner conflict.
+entities:
+- character:elara
+prose_summary: Elara stops beneath pines, examines a sealed letter with scarlet wax, recalling
+  a promised hidden map and her oath. She views the low stone doorway of the hilltop hall
+  and the plain road beyond, feels conflict between curiosity and duty, then steps through
+  the doorway, enters the hall, candlelight flickers, parchment trembles, doors close behind
+  her.
+beats:
+- beat:fb-edge-1--tw0
+choices:
+- label: Step into the hilltop hall
+  to: passage:p-clearance-road

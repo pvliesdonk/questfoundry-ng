@@ -1,0 +1,11 @@
+id: beat:residue-letter-tamper-accept
+created_by: polish
+summary: Elara senses a calm certainty, the altered seal humming with a tentative promise
+  of cooperation.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- object:sealed-letter
+requires_flags:
+- flag:official-seal

@@ -1,0 +1,19 @@
+id: passage:p-spymaster-hand-3
+summary: Elara watches Vara's smile widen, realizing the letter is now poised to become a
+  pawn in the unfolding intrigue.
+entities:
+- character:vara
+- character:elara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara stands by stone slab holding warm scarlet wax seal. She observes spymaster
+  Vara Shadowmantle in alcove. The spymaster smiles as sealed letter lies between them. Elara
+  realizes letter is now a negotiable token, not just queen's oath messenger. She grips cloak
+  and seal, decides to give parchment to Vara, changing the path. She feels determined.
+beats:
+- beat:spymaster-hand-3
+choices:
+- label: hand the demanded letter to Vara
+  requires:
+  - flag:risk-exposure
+  to: passage:p-alliancespark

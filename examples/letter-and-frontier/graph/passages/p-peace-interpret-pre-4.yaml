@@ -1,0 +1,11 @@
+id: passage:p-peace-interpret-pre-4
+summary: The courtiers stare at her, their eyes sharp and expectant, as she readies herself
+  to present the fragile truth she carries.
+prose_summary: Elara presents the sealed parchment bearing the queen’s seal to the courtiers,
+  declares the seal remains untouched and the queen’s words unchanged. Courtiers tighten their
+  faces in silent reaction. Spymaster Vara watches from a shadowed alcove, eyes calculating.
+beats:
+- beat:peace-interpret-pre-4
+choices:
+- label: Enter the shadowed alcove to confront Spymaster Vara
+  to: passage:p-spymaster-demand

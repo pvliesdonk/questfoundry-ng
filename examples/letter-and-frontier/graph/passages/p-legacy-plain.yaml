@@ -1,0 +1,36 @@
+id: passage:p-legacy-plain
+summary: Elara rejects the temptation to read the secret map, sealing it away, and continues
+  alone across the scarred passes of the Silver Plain, forced to navigate the treacherous
+  terrain without its guidance. A cold wind lifts a stray strip of parchment, reminding her
+  of the hidden letter she bears and the fragile hope it represents.
+entities:
+- character:elara
+- object:sealed-letter
+- location:silver-plain
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara tightens satchel strap, feels scarlet wax seal on hidden letter. She
+  steps east onto Silver Plain, drops parchment but returns it. She sees soldiers marching
+  by stone wall toward Stonegate Fort, keeps letter sealed and the unread map remains sealed,
+  and continues forward alone.
+beats:
+- beat:brother-legacy-aftermath-1
+- beat:brother-legacy-resolution
+- bridge:0
+choices:
+- label: Walk south toward Stonegate Fort, eyes tracing the stone walls
+  to: passage:p-legacy-road
+- label: Turn my gaze southward, following the soldiers along the road to Stonegate Fort
+  to: passage:p-legacy-aftermath-bridge

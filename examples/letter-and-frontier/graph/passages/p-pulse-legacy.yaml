@@ -1,0 +1,14 @@
+id: passage:p-pulse-legacy
+summary: The distant echo of a ceremonial drum resounds, a heartbeat of the messenger's family
+  legacy that presses upon him, tying his present duty to the weight of generations.
+entities:
+- character:elara
+prose_summary: 'Elara remains in the stone hall, feeling the queen’s wax seal and hearing
+  the drum oath. Moonlight reveals a hidden map under bark on the sealed parchment, showing
+  shortcuts across the Silver Plain. She lifts the parchment and must decide—study the map,
+  risking her pledge to the queen. Choice1: study the moonlit parchment.'
+beats:
+- beat:fb-edge-2--tw0
+choices:
+- label: Study the sealed letter
+  to: passage:p-moonlit-betrayal

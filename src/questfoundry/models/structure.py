@@ -131,10 +131,12 @@ class Beat(Node):
     # it cannot be recomputed unambiguously once several forks share
     # endpoints, which is why it is stored (cf. A14's world-suffixed ids).
     mirrors: str | None = None
-    # texture_world beats only (W4, the context lever): the parallel
-    # world's one-line premise ("the crossing goes over the mountain
-    # pass"), declared in the finalize proposal and persisted so FILL's
-    # write prompt can name the world it is grounding — the same
+    # texture_world beats only (W4, the context lever): the rendering's
+    # one-line premise — what differs against the trunk, on any
+    # consequence-free axis: place, means, company, or a detail of
+    # things and people (01 §6, author clarification 2026-07-14).
+    # Declared in the finalize proposal and persisted so FILL's write
+    # prompt can name the difference it is grounding — the same
     # persist-for-a-later-pass precedent as Passage.variant_flag (A21).
     texture_premise: str = ""
 

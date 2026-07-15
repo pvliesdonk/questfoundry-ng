@@ -1,0 +1,14 @@
+id: beat:tw0-lt3
+created_by: polish
+summary: Elara balances duty to the queen’s seal against the practical need for security,
+  the pine scent thickening around her.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:letter-tamper-pre-3
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

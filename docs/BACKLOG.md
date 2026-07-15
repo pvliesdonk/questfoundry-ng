@@ -81,10 +81,33 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   move). Revisit when a generated story demands one.
 - [ ] **Cosmetic flags on false branches / locked storylines** — the machinery
   exists (`FlagSource.COSMETIC`); wire grants when a residue beat or print
-  codeword actually wants one.
+  codeword actually wants one. **Author extension (2026-07-15):** the cadence
+  structures themselves should be able to grant a (probably cosmetic) keyword
+  — taking a detour or a diamond arm leaves a mark the book can acknowledge
+  later; ties into DRESS codewords for the print projection.
+- [ ] **Cadence vocabulary follow-ons (author ideas, 2026-07-15, reading the
+  texture-trial passage graph).** The live run's finalize chose almost only
+  sidetracks (1-arm `FalseBranchSpec`: direct edge stays, optional detour) —
+  the author: fine, but *not a diamond*; a true diamond gives TWO new
+  passages that immediately converge (the 2-arm shape the schema already
+  offers). Follow-ons to design: (a) make the sidetrack/diamond mix
+  deliberate rather than a model whim; (b) the two-worlds pattern at small
+  scale — a parallel stretch over just a couple of beats, not only run-scale
+  texture arms (same machinery, shorter stretch); (c) these shapes should
+  work RECURSIVELY (a diamond inside a texture arm, a world inside a world);
+  (d) forks may offer THREE OR MORE choices — dilemmas are binary by design
+  (tension), but a cosmetic fork's choice menu need not be exactly two.
 
 ## Prose & annotations
 
+- [ ] **Shadows: prompt what explicitly did NOT happen (author idea,
+  2026-07-15, prose-quality scope).** FILL's write context already carries
+  `_shadows` (every dilemma's answers, explored/unexplored, global to the
+  book) with "let their weight color the prose, never name them". Worth
+  exploring a route-local sharpening: at THIS passage, on THIS reader's
+  route, the events that did not occur (the rival path's commits, the
+  foreclosed flags' descriptions) stated explicitly as absences the prose
+  can honestly shade around — negative space as a prose-quality lever.
 - [ ] **Head-scheme conformance is ungated (live kimi A/B, 2026-07-15).**
   GROW annotate assigned the *victim* (Bernard Croft) as viewpoint head for
   4 passages while `Voice.pov` declares a four-head rotation without him —
@@ -124,3 +147,15 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   preserving schema-validation + determinism? A small targeted spike.
 - [ ] **Corpus curation** — `corpus/interactive-fiction/` is the author's
   ongoing add/trim pass; `style-exemplars` stays out until M9 can consume it.
+- [ ] **Large style exemplar for weak-tier prose (author hypothesis,
+  2026-07-15).** Reading the kimi-k2.5 A/B against the gpt-oss baseline:
+  structure can be forced correct on any tier (the enforcement doctrine),
+  but prose fluency — the sheer creativity and quality kimi shows — cannot
+  (easily) be mitigated by prompts/engine. Hypothesis 2: a very LARGE
+  exemplar of the specific style wanted might lift a small model by giving
+  it something to copy. Note the deliberate tension with the M6 craft rule
+  (exemplars are a contrasting spread, never a nearest-match target — the
+  taste-laundering guard, design doc 02 §Craft context): this experiment
+  would need an author-provided target style, distinct from the corpus
+  channel, so conformance is the author's choice rather than laundered
+  taste. Design the experiment before building anything.

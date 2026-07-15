@@ -298,6 +298,39 @@ def test_triage_undisposed_dilemma_rejected(tmp_path):
         _triage_apply(proposal, project)
 
 
+def test_scaffold_beat_id_kind_confusion_gets_a_rename_corrective(tmp_path):
+    """The texture-trial live stall (2026-07-14): a weak tier organized
+    beat ids by dilemma ('route-choice:pre-1') and the raw pattern
+    diagnostic couldn't recover it — the repair message must carry the
+    literal-prefix corrective, and the suggested rename must itself pass
+    validation (lowercased)."""
+    from questfoundry.models.structure import BeatClass, StructuralPurpose
+    from questfoundry.pipeline.stages.seed import _make_beat
+
+    g = StoryGraph()
+
+    def make(beat_id):
+        return _make_beat(
+            g,
+            BeatSpec(id=beat_id, summary="s"),
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.SETUP,
+        )
+
+    with pytest.raises(
+        ApplyError, match="rename 'route-choice:pre-1' to 'beat:route-choice-pre-1'"
+    ):
+        make("route-choice:pre-1")
+    with pytest.raises(ApplyError, match="rename 'Route:My-Slug' to 'beat:route-my-slug'"):
+        make("Route:My-Slug")
+    # underscores are legal in a kind but not a slug — the suggestion
+    # must collapse them too, or it fails validation itself
+    with pytest.raises(
+        ApplyError, match="rename 'route_choice:pre_1' to 'beat:route-choice-pre-1'"
+    ):
+        make("route_choice:pre_1")
+
+
 # -- reserve disposition (unwoven feedstock; structural-depth W2) -------------
 
 

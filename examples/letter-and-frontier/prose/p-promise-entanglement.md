@@ -1,0 +1,7 @@
+The banner fell back against the post as a gust pulled it, the cloth whispering. Elara felt the weight of the chief’s oath settle in her chest, the sound of his words lingering like river mud. The River Clan rider stood beside her, his hand still on the spear, and the chief pressed a rough cord around her shoulder, a signal that the pact was more than words. It hinted that her promise had sewn her into the clan’s network, a web of obligations she could not untie.
+
+She opened the satchel, counted the cracked biscuits and the shallow water skin. The last biscuit crumbled in her palm; the skin sloshed a thin ripple. Each item marked how thin the supply line had become, each count a reminder of the debt the oath imposed.
+
+She turned her gaze to the rider’s horse, its flank dusted with rust‑colored dust from the plain. The thought of traveling alone sharpened; the clan’s shield could keep bandits at bay, but the favor she owed grew heavier with every step. The promise tugged at her resolve, the scarcity pressing against the loyalty she felt for the clan’s silent promise.
+
+A low drumbeat rolled from the distant hills, thudding like a heart of war. An owl hooted once from the pine canopy, its echo cutting the night.

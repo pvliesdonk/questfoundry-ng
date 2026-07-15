@@ -1,0 +1,5 @@
+Elara felt the scarlet wax still warm against her palm as the council's assent settled like a breath in the stone hall. The lords rose together, their cloaks rustling softly, and the chancellor's voice declared the trade pact with the River Clan. A faint glow lingered on the iron stamp, a thin reminder that the queen's oath had not been broken.
+
+She turned toward the shadowed alcove where Vara Shadowmantle lingered. Silvery strands caught the torchlight, and the half‑mask hid a calculating stare. A thin smile curved their mouth, then widened, sending a quiet ripple of anticipation through the gathered delegates. The sealed letter rested on the slab, its scarlet seal unmarred, and the room seemed to hold its breath.
+
+A cool wind slipped through the high windows, bringing the scent of pine resin. The torch flames flickered on the flagstones, each light trembling like the tension that now threaded the council.

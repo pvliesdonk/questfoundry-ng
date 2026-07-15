@@ -1,0 +1,16 @@
+id: passage:p-bell-chime
+summary: A distant bell tolls as Elara steadies the sealed letter, the sound cutting through
+  the silence and anchoring her resolve.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara holds the sealed letter with warm scarlet wax as a low tower bell tolls;
+  the bell’s sound stops the lords’ murmurs. The elder advises patience to preserve the seal.
+  Elara tightens her satchel, keeps the seal unblemished, and decides to protect the parchment,
+  accepting the burden of responsibility.
+beats:
+- beat:fb-edge-12
+choices:
+- label: Accept the elder’s counsel
+  to: passage:p-peace-elder

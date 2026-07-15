@@ -1,0 +1,29 @@
+id: passage:p-fort-loom
+summary: The messenger sees the fortress walls rise, a stark reminder that safety comes with
+  unrelenting scrutiny.
+entities:
+- character:elara
+- location:stonegate-fort
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara moves through a narrow passage into a courtyard, reaches a massive iron
+  gate to the main keep, and presents a sealed queen’s letter under her cloak; the guard lifts
+  his visor and notes the parchment. She steadies her horse, feels pine resin scent, and steps
+  toward the gate, the final barrier before the fort interior.
+beats:
+- beat:fb-edge-18
+choices:
+- label: Cross the gate into Stonegate Fort
+  to: passage:p-stonegate-imprisonment

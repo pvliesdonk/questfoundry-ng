@@ -1,0 +1,9 @@
+id: bridge:9
+created_by: grow
+summary: The southern road rolls onward toward the border camp, where flags flutter and a
+  rival queen’s envoy awaits.
+beat_class: structural
+purpose: bridge
+entities:
+- location:stonegate-fort
+- character:elara

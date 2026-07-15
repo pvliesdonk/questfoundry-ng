@@ -566,6 +566,24 @@ def test_window_echo_fails_apply(golden_fill):
     assert "say it in NEW words" in str(exc.value)
 
 
+def test_window_echoes_are_batched_into_one_error(golden_fill):
+    """Several independent lifts from one neighbor surface in ONE error
+    (texture-trial live run: raising the first per round fed the repair
+    loop one lift at a time until it exhausted — the model fixed exactly
+    the quoted run each round and never saw the next one)."""
+    apply = _write_apply_for("passage:p-tremor")
+    prose = _padded(
+        "She waits for slack tide, when the water holds its breath. Around "
+        "them the room is brass and salt-bloom, the lamp itself turning."
+    )
+    with pytest.raises(ApplyError) as exc:
+        apply(WriteProposal(prose=prose), golden_fill)
+    message = str(exc.value)
+    assert "2 verbatim echo(es)" in message
+    assert '"she waits for slack tide when the water holds its breath"' in message
+    assert '"the room is brass and salt bloom the lamp itself turning"' in message
+
+
 def test_micro_detail_capped_at_one(golden_fill):
     """At most one micro-detail per passage (author-directed redesign): the
     standing 'up to 2' invitation made a capable writer coin a re-observation

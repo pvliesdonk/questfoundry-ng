@@ -1,0 +1,21 @@
+id: passage:p-sealed-whisper
+summary: A faint wind curls around the messenger’s cloak, silently sealing the hidden truth
+  they bear and reinforcing the knot of secrecy that binds them to their charge.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara steps from the marble archway onto courtyard flagstones; a western wind
+  curls around the scarlet wax seal on her concealed letter, tightening it. The River Clan
+  rider shifts his spear, reminding her oath. She tightens her cloak, feeling the cold pulse
+  of the sealed letter and chooses to bear the secret's crushing weight to preserve the queen’s
+  voice.
+beats:
+- beat:fb-edge-13
+choices:
+- label: Press the sealed cloak tighter against my chest
+  to: passage:spymaster-conceal-3

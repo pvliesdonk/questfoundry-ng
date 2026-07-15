@@ -1,0 +1,19 @@
+id: character:malrik
+name: Malrik Stonehand
+concept: The pragmatic gatewarden of Stonegate Fort who values order over sentiment.
+pronouns: he/him
+base:
+  appearance: Broad shoulders, scar across left cheek, iron‑edged armor.
+  manner: Gruff but fair, offers practical solutions.
+arc:
+  begins: Malrik is a pragmatic gatewarden who values order over sentiment.
+  pivots:
+  - beat: beat:letter-tamper-pre-1
+    becomes: he becomes analytical of the queen's seal, weighing authority against flexibility.
+  - beat: beat:letter-tamper-pre-2
+    becomes: he becomes willing to stamp the letter, shifting from inspection to alteration.
+  ends:
+  - path: path:accept-seal
+    state: he has authorized the official stamp, facilitating safe passage.
+  - path: path:refuse-seal
+    state: he denies the stamp, heightening scrutiny of the courier.

@@ -100,6 +100,28 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
 
 ## Next
 
+- **Cosmetic forks — one branching mechanism, renderings as peers, residue
+  keywords** (author-directed 2026-07-15; shape ratified same day). The
+  author's unification of the day's three branching ideas: "diamonds,
+  sidetracks and texture worlds are all intrinsically the exact same
+  mechanism" — one construct (k ≥ 2 renderings of a trunk segment), with
+  renderings as *peers* ("one arm should not have a different treatment
+  than the other": a premise per rendering including the trunk segment, an
+  engine-minted cosmetic keyword per non-empty rendering), finalize as a
+  fixed-point **loop** of the one splice (recursion "basically means
+  running the same phase several times in a loop"; choice parity between
+  renderings becomes budget-derived — every walk in the B6 band — retiring
+  the mirrored-cadence twinning), and **residue keywords** consumable by
+  later keyword-gated renderings (obligation boundary made structural:
+  I16). Contract, ratified decisions, and PR slicing in
+  [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md) (mini-ADR
+  A24). PR-0 (the exit-label residue fix) ships ahead of the epic; the
+  structural-depth medium validation runs before the engine rework so it
+  measures the machinery as shipped. **Exit:** a generated story plants
+  nested/mixed cosmetic forks from the loop, mints and consumes keywords,
+  every walk lands in the B6 band, and an author read finds the fake
+  branching leaves felt residue.
+
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved
   exemplar mechanism**: style exemplars belong at the voice pass as a contrasting

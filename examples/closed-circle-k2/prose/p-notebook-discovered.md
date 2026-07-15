@@ -1,0 +1,11 @@
+Teddy moved from the mantelpiece to the settle where the personal effects lay in ordered disarray. Bernard's livery had been folded with precision that mocked the frozen state of its owner. Among these items, a leather-bound book had been concealed, its spine pressed against a silver cigarette case, the leather darkened at the corners like oxidized silver.
+
+He lifted it without intention. The cover fell open under his thumb to a page where ink had crystallized into dendritic frost, but earlier pages remained intact. His eyes tracked the vertical lines of Marion's hand—precise as iron bars—until they reached an entry dated three months prior.
+
+The review began with inventory language: venue, date, seat number. Then the description shifted. Helena Vance had moved across the stage not as a living performer but as a mechanism stiffened by rigor mortis, her gestures held in postures that suggested the embalmer's art rather than the actress's craft. The voice Marion described emerged as cracked crystal vibrating in a void, a parody of genius that preserved only the external form of theatricality while the internal heat had expired. The critic had noted each frayed hemline and tarnished gesture with the clinical detachment of a coroner documenting mortality in a subject still nominally breathing.
+
+Teddy read the assessment twice. The sentences arranged themselves with the same administrative malice he had observed in ledger columns and cellar accounts, reducing Helena's final performance to a post-mortem examination conducted while the body remained upright. The precision of the observation left no room for the merciful blindness that might have allowed the aging actress her dignity.
+
+He closed the book. The leather had warmed against his palm, but the words retained their temperature. He understood now that the household's frostbitten civility served not as insulation against cruelty but as its preservation medium, keeping malice intact and visible beneath the surface like a specimen in clear ice. The ordered manners he had mistaken for mercy revealed themselves as something else entirely: a systematized contempt maintained with archival exactitude.
+
+He set the notebook back among the personal effects, positioning it as he had found it. The gesture of concealment felt redundant. The damage was already documented.

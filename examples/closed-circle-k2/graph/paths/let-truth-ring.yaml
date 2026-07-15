@@ -1,0 +1,8 @@
+id: path:let-truth-ring
+name: Let Truth Ring
+explores: answer:let-truth-ring
+consequences:
+- id: consequence:helena-savaged
+  text: Helena's final performance is publicly savaged by the critic
+- id: consequence:marion-exposed
+  text: Marion's adultery becomes common knowledge among the guests

@@ -1,0 +1,15 @@
+id: beat:forced-sobriety
+summary: She begins the autopsy under duress and pain, forcing herself to focus through the
+  withdrawal to examine the frozen corpse.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: advances
+entities:
+- character:dr-elspeth-mott
+- character:bernard-croft
+scene_type: scene
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:destroy-the-supply

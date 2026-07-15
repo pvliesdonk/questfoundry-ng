@@ -1,0 +1,11 @@
+Helena stood by the frost-rimed window. The snow had ceased its assault on the glass; the storm had broken. Through the clearing dimness she observed figures approaching across the white expanse, their feet strapped to snowshoes that lifted and fell with the mechanical rhythm of obsolete account books being shelved.
+
+She turned from the glass. Marion stood by the settle where Bernard's form still lay beneath frayed damask. The safe stood open, its oiled leather portfolio visible within. Marion's hand moved to her bodice. She withdrew the key and crossed the room. The constable met her at the threshold. He extended his hand. Marion placed the key upon his palm. She did not speak.
+
+The constable commanded the archive be opened and catalogued. Helena watched as officers removed the portfolio from the safe. They handled the brass corners with the neutrality of ledger-keepers. The portfolio passed from hand to hand until it reached the investigation room.
+
+In the investigation room, the officers spread the alphabetized pages across a table scarred with ink stains and water rings. A man in a serge coat read aloud from the first page. His voice was flat and exact, enumerating figures of embezzlement and dates of prescription fraud. The room held seventeen heirs who had maintained postures of civil restraint. As the words accumulated, the postures fractured. A gentleman dropped his pocket watch; it struck the marble and shattered. A lady gripped the escritoire until her knuckles matched the oxidized silver of the ruined chandelier that lay in the hall beyond.
+
+The sergeant named two heirs. Officers produced irons. The arrested parties extended their wrists with the mechanical compliance of those who had long rehearsed this moment in private terror. The remaining heirs stepped back from the accused, abandoning the alliance of mutual protection. The civil pretense that had governed the household since the storm's beginning dissolved like ice upon the Persian rug.
+
+Helena observed the arrests without movement. The archive had passed from Marion's bodice to police custody, and with it the last protection against exposure. She calculated the cost of the revelations against the weight of the silence that had preceded them, and found the ledger balanced in favor of chaos.

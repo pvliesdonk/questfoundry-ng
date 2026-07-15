@@ -1,0 +1,22 @@
+id: passage:p-parquet-gunshot
+summary: Droplets accumulate on the parquet as the afternoon fails and the assembly spends
+  hours trading accusations without identifying the killer. The chandelier crashes to the
+  floor with a report like a gunshot, halting the arguments in shocked silence.
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+prose_summary: Seventeen heirs abandon card play. Hours pass. Killer remains unidentified.
+  Heirs accuse one another of forged prescriptions, disturbed cellar entries, embezzlement,
+  adultery, fraudulent identity, concealed weapons. Fire dies to embers. Frozen key plummets
+  from chandelier to parquet with gunshot sound. Assembly flinches. Marion's papers slip.
+  Dr. Mott's bag tips. Arguments halt. Bernard lies beneath damask.
+beats:
+- beat:bridge-17
+- beat:bridge-20
+- beat:tension-mounts
+choices:
+- label: Tilt your chin toward the footsteps now traversing the ceiling plaster
+  to: passage:p-shadow-shift
+- label: Turn your heel toward the cellar and the dripping below
+  to: passage:p-thaw-and-descent

@@ -1,0 +1,24 @@
+id: passage:p-concealed-indulgences
+summary: Teddy discovers the whiskey flask concealed in Dr. Mott's medical bag and evidence
+  that Bernard occupied the wine cellar during the murder to steal vintage port. These discoveries
+  expose professional competence and respectable innocence as performances masking alcohol
+  dependency and petty larceny, forcing Teddy to confront that the household's drawing-room
+  civility conceals only commonplace entropy, not violence.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- character:bernard-croft
+- location:the-cellars
+prose_summary: Teddy opens Dr. Mott's medical bag and discovers her concealed flask. Dr. Mott
+  returns and hides her trembling hands. Teddy enters wine cellars and finds Bernard's glass
+  of port with his grease prints, a corkscrew, and disturbed dust between the 1874 and 1876
+  vintages. He deduces Bernard was stealing wine during the murder, creating an alibi. The
+  household's respectability dissolves.
+beats:
+- beat:cellar-presence
+- beat:the-hidden-flask
+choices:
+- label: Press your ear to the cold stone and hold your breath
+  to: passage:p-cellar-resonance
+- label: Trace the frost glyphs with a trembling fingertip
+  to: passage:p-frost-patterns

@@ -1,0 +1,30 @@
+id: passage:p-exposed
+summary: Marion stands in the drawing room with the architecture of her performance collapsed,
+  and every gesture she makes now exposes her underlying fear rather than concealing it.
+entities:
+- character:marion-ashworth
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth stands exposed in the drawing room. She filed devastating review,
+  circulated foolscap with assignations among seventeen heirs, and removed wedding ring. She
+  sets aside kid gloves beside wrecked chandelier on Persian rug. Her hands tremble. Helena
+  sits at the escritoire, averting gaze from documents that failed to silence Marion. Heirs
+  inventory Marion's assets as her composure fails.
+beats:
+- beat:residue-naked-exposure
+choices:
+- label: Step back as the smoke begins to rise
+  grants:
+  - flag:archive-ash
+  - flag:motives-buried
+  to: passage:p-cremation-and-interment
+- label: Slip the key beneath your corset until it freezes
+  grants:
+  - flag:archive-survives
+  - flag:scandal-erupts
+  to: passage:p-secure-archive

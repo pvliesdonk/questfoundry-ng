@@ -1,0 +1,17 @@
+id: beat:helenas-demand
+summary: Helena insists the examination happen tonight before the body freezes completely,
+  threatening to lock Dr. Mott in the cellars until she complies.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: advances
+entities:
+- character:helena-vance
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:destroy-the-supply
+- path:hide-the-booze

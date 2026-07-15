@@ -1,0 +1,15 @@
+id: beat:ascend-the-ice
+summary: Helena mounts the frozen chandelier, her boots slipping on the slick crystal as she
+  climbs toward the key.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: commits
+entities:
+- character:helena-vance
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom

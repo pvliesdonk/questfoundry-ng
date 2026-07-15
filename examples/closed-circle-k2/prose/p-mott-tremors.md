@@ -1,0 +1,7 @@
+The irons on Dr. Mott's wrists had settled into a rhythm of pressure and release that matched the tremor in her metacarpals. She stood at the settle beside Bernard's form and requested her medical bag. The constable released her elbow. She reached for the brass clasp, but her fingers oscillated against the metal before she touched it. The bag swung open, revealing the instruments nested in frayed damask.
+
+She reached for the scalpel. The handle was silver, oxidized to a dull grey. Her thumb and forefinger closed around it. The tremor traveled up her arm and the blade described a small arc in the air. She tightened her grip. The oscillation continued, fine and relentless as the archival dust settling on the obsolete account books in the corridor beyond.
+
+Sweat formed at her hairline despite the freezing temperature in the hall. A bead traveled down her temple, paused at her jaw, and chilled there against her skin, a frozen node that documented her body's rebellion. Her stomach contracted with a nausea that bent her forward at the waist. The scalpel handle bit into her palm, but the tremor persisted, oxidizing her precision into something visible and tarnished. She had not held a blade with such uncertainty since her first year of apprenticeship.
+
+The constable shifted his weight. She straightened and held the blade before her face, watching the tip vibrate against the backdrop of Bernard's still form. The instrument that had signed her authority now broadcast its revocation in a language of millimeters and arc.

@@ -1,0 +1,7 @@
+id: beat:frozen-condensation
+created_by: polish
+summary: The windows weep frozen tears, obscuring the view of the snowbound grounds.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

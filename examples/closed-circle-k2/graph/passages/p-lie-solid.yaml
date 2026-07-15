@@ -1,0 +1,27 @@
+id: passage:p-lie-solid
+summary: The protagonist recognizes that the deception reflected in the mirror has congealed
+  into solid fact through sheer repetition. The performance becomes indistinguishable from
+  authenticity, and the cost of this confusion is the immediate necessity of an act that can
+  no longer be concealed.
+entities:
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena completes a signature forgery on a succession document. The false identity
+  congeals into administrative fact requiring physical maintenance. She retrieves oxidized
+  estate keys from the escritoire and takes a half-full decanter of 1874 embezzled vintage.
+  She descends to the cellar to verify records against stored bottles, her silence becoming
+  a weight demanding placement.
+beats:
+- beat:reflection-lie-solid
+choices:
+- label: Descend to the cellars with the decanter and the estate keys
+  to: passage:p-the-empty-grate

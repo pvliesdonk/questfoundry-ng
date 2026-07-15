@@ -1,0 +1,15 @@
+id: beat:apply-flames
+summary: The ice block is held near the flames, melting rapidly and dripping onto the floor
+  as the will within is gradually exposed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: commits
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

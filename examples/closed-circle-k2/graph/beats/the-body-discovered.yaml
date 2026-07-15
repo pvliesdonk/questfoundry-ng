@@ -1,0 +1,12 @@
+id: beat:the-body-discovered
+summary: Bernard Croft discovers the patriarch's corpse in the cellars, skull cracked against
+  the wine racks, and quietly notes that the body is already stiffening in the subzero temperatures.
+beat_class: structural
+purpose: setup
+entities:
+- character:bernard-croft
+- location:the-cellars
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:bernard-croft

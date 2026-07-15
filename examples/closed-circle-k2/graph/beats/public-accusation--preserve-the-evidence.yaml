@@ -1,0 +1,18 @@
+id: beat:public-accusation--preserve-the-evidence
+created_by: grow
+summary: Helena displays the forged papers to the snowbound heirs, her voice steady against
+  the mantel clock as upstairs Marion guards the key to Bernard's portfolio; the knowledge
+  that their secrets will follow them to court silences the room.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: commits
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud

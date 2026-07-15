@@ -1,0 +1,7 @@
+id: beat:vision-sharp
+created_by: polish
+summary: Her vision sharpens, revealing details she wishes remained blurred.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:dr-elspeth-mott

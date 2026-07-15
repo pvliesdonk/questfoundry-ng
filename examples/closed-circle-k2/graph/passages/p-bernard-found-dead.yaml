@@ -1,0 +1,18 @@
+id: passage:p-bernard-found-dead
+summary: Bernard Croft lies dead in the pantry, his throat frozen shut, confirming the storm
+  has trapped his murderer inside. The guests abandon their performed civility as they realize
+  the violence concealed beneath their manners has surfaced among them.
+entities:
+- character:bernard-croft
+- location:the-cellars
+- faction:the-snowbound-heirs
+prose_summary: Teddy, Helena, Dr. Mott and Marion Ashworth discover Bernard frozen dead in
+  the pantry. His throat wound is frost-sealed, blood crystallized on his livery, ivory cigarette
+  holder snapped beside him. The storm sealed the valley three days ago, trapping the murderer
+  inside. Helena turns silent, Marion strikes the stair rod, Dr. Mott sets down her bag. Footprints
+  mark the frost.
+beats:
+- beat:bernard-found-dead
+choices:
+- label: Propose we convene in the Great Hall with Bernard present
+  to: passage:p-bernard-suspected

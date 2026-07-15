@@ -1,0 +1,19 @@
+id: passage:p-teddy-testifies
+summary: Teddy steps forward to testify, forcing the exposure of the archive's comprehensive
+  indictments. The documents contain evidence of embezzlement, adultery, and forged prescriptions
+  that could imprison half the assembly, and the room's civility collapses into panic.
+entities:
+- character:teddy-bryant
+- object:bernard-blackmail-archive
+- faction:the-snowbound-heirs
+prose_summary: Teddy testifies beside Bernard's corpse that Bernard kept a leather portfolio
+  alphabetically listing victims. He has grease on trousers. Marion retrieves it from beneath
+  Bernard's mattress in servant's cell and opens it on escritoire. Pages reveal embezzlement
+  in primary ledger, adultery in gelatin prints under damask napkins, and forged prescriptions
+  in medical correspondence. The assembly panics; someone knocks over glass.
+beats:
+- beat:bridge-21
+- beat:the-power-of-secrets
+choices:
+- label: Consign the documents to the flames
+  to: passage:p-pressure-to-destroy

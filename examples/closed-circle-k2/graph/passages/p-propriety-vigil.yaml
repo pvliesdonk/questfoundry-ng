@@ -1,0 +1,25 @@
+id: passage:p-propriety-vigil
+summary: Helena refuses to climb and commands the assembly to maintain proper conduct while
+  waiting for the ice to melt naturally. The guests comply with rigid formality, playing cards
+  and making polite conversation as they watch the chandelier drip, and the frozen key descends
+  so gradually over the following hours that the temperature rises only fractionally, costing
+  them time and composure.
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+- location:the-great-hall
+- object:the-frozen-will
+prose_summary: Helena declares heirs will await thaw and maintain propriety without ascending.
+  A gentleman deals account cards to four others at the escritoire; they discuss ledgers while
+  avoiding brass near Bernard’s form. Dr. Mott retrieves medical bag. Marion Ashworth conceals
+  papers with gloves. The fire dies. Hours pass. The chandelier drips as temperature rises.
+  The key descends, encased in thawing ice.
+beats:
+- beat:maintain-propriety
+- beat:rigid-vigil
+- beat:slow-thaw
+choices:
+- label: Count the intervals between drips in measured whispers
+  to: passage:p-drip-metronome
+- label: Trace the outline of the damp patch with my gaze
+  to: passage:p-wall-stain

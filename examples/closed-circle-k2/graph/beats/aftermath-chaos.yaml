@@ -1,0 +1,16 @@
+id: beat:aftermath-chaos
+summary: The Great Hall is damaged but the key is free, and Helena stands amid the wreckage
+  holding the frozen metal aloft.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: complicates
+entities:
+- character:helena-vance
+- location:the-great-hall
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom

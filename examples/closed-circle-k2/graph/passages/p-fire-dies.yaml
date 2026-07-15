@@ -1,0 +1,26 @@
+id: passage:p-fire-dies
+summary: The fire dies in the grate, leaving the drawing room in bitter cold and grey half-light.
+  The company forfeits its last warmth and must maintain their civility while their breath
+  shows in the freezing air.
+entities:
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth watches the fire die. Burnt leather and foolscap cool in the
+  grate. Water drips from the ceiling. The drawing room freezes; the inkwell ices, fittings
+  contract, floor stiffens. Seventeen heirs stand against the walls, breathing vapor. Marion
+  stands gloveless, gloves upon the bench, fingers aching, refusing to stoke the fire or seek
+  warmth first. No heir moves.
+beats:
+- beat:fire-glow-dim
+choices:
+- label: Stoke the grate while the ceiling drips
+  to: passage:p-buried-sins

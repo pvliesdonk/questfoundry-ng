@@ -1,0 +1,30 @@
+id: passage:p-evidence-survives-thaw
+summary: Helena and Teddy stand in the great hall under guard as the constable preserves the
+  portfolio in the safe and the cousin's agents catalog the chandeliers. The estate passes
+  from their control and will not survive the thaw, but Bernard's blackmail archive remains
+  to testify against his killers.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- location:the-great-hall
+ending:
+  id: e-evidence-survives-thaw
+  title: Preserved Against the Thaw
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Teddy kneels on the rug with hands flat while the constable guards. Helena
+  holds cousin's eviction notice with broken seal. The constable locks Bernard's portfolio—the
+  alphabetized blackmail archive—into the wall safe between obsolete account books. Thaw frees
+  roads by morning to transport the archive to court. Cousin's agents catalogue chandeliers.
+  Estate collapses, but archive survives to testify against Bernard's killers.
+beats:
+- beat:ending-tyranny--preserve-the-evidence
+- beat:final-desolation--preserve-the-evidence

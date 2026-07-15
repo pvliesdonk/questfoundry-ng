@@ -1,0 +1,31 @@
+id: passage:p-forged-recognition
+summary: Teddy signs the ledger as the snowbound heirs acknowledge his claim, yet Marion holds
+  the key to Bernard's safe upstairs and Helena watches the wavering forged signature, aware
+  that the birth records within will unmake his inheritance.
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Teddy thaws the ice block against the andiron; the patronymic is legible. Seventeen
+  heirs witness the will designating Teddy heir but await Marion, who holds the safe key upstairs
+  where the birth record that invalidates his claim rests. Helena Vance observes Teddy forging
+  the signature while water pools on the Persian rug and the storm seals the roads.
+beats:
+- beat:recognized-heir--preserve-the-evidence
+- beat:the-mask-tightens--preserve-the-evidence
+choices:
+- label: Watch the investigator’s portfolio grow heavy with each sealed document
+  to: passage:p-portfolio-weight
+- label: Clench the safe key until its teeth puncture your palm
+  to: passage:p-key-bite

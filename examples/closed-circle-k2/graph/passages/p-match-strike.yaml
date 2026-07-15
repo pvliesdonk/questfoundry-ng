@@ -1,0 +1,16 @@
+id: passage:p-match-strike
+summary: The match flares with a sulfurous smell. The light illuminates the frightened faces
+  of the assembled company, and their performance of civilized composure collapses into visible
+  panic.
+entities:
+- location:the-great-hall
+prose_summary: Helena strikes a match and advances toward an ice block. Seventeen heirs stand
+  revealed around a dripping chandelier after six hours of pretense. A gentleman shatters
+  his pocket watch. Marion Ashworth’s pince-nez slips. Teddy Bryant stands rigid. Dr. Mott
+  trembles against her medical bag. Someone drops a glass. Composure cracks, exposing embezzlements,
+  assignations, ledgers. Sulfur flame burns toward Helena’s fingers.
+beats:
+- beat:match-strike
+choices:
+- label: Subject the frozen block to the sulfur flame
+  to: passage:p-thawed-reckoning

@@ -1,0 +1,28 @@
+id: passage:p-accusation-evidence
+summary: Helena displays the forged papers to the snowbound heirs, and the room falls silent
+  at the certainty that secrets will reach the courts. Marion guards the key upstairs as the
+  mantel clock marks the collapse of their performed composure.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena Vance displays fraudulent documents upon the escritoire before seventeen
+  heirs who recognize their imminent exposure in court with Bernard's indiscretions. Marion
+  Ashworth guards a key upstairs while a portfolio in the wall safe holds seventeen months
+  of evidence. Teddy Bryant risks imprisonment for fraud. Mantel clock strikes twelve and
+  Helena places papers down. Mutual threat binds Helena and Marion.
+beats:
+- beat:public-accusation--preserve-the-evidence
+choices:
+- label: Step into the pantry to verify the safe
+  to: passage:p-pantry-captivity

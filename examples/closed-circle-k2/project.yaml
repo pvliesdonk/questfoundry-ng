@@ -1,0 +1,22 @@
+name: Closed Circle K2
+stage: fill
+llm:
+  provider: ollama
+  host: https://ollama.com
+  models:
+    architect: kimi-k2.5
+    writer: kimi-k2.5
+    utility: kimi-k2.5
+craft:
+  corpus: /home/user/questfoundry-ng/corpus/interactive-fiction
+  folders:
+  - audience-and-access
+  - craft-foundations
+  - emotional-design
+  - genre-conventions
+  - narrative-structure
+  - prose-and-language
+  - scope-and-planning
+  - world-and-setting
+  search_mode: keyword
+print_seed: 1

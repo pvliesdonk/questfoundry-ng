@@ -1,0 +1,16 @@
+id: beat:affair-exposed
+summary: Helena retaliates by revealing Marion's adultery to the assembly, producing love
+  letters from the solicitor's desk.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: reveals
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring

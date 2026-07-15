@@ -1,0 +1,16 @@
+id: beat:review-published
+summary: The scathing critique is read aloud to the assembled guests, describing Helena's
+  performance as an embarrassment that should have died unrecorded.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:marion-ashworth
+- character:helena-vance
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:let-truth-ring

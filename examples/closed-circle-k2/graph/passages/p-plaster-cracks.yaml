@@ -1,0 +1,17 @@
+id: passage:p-plaster-cracks
+summary: Marion traces the plaster cracks and notes they form an almost alphabetical pattern.
+  The pattern implies deliberate design behind the damage, and the cold plaster draws heat
+  from her skin.
+entities:
+- character:marion-ashworth
+- location:the-great-hall
+prose_summary: Marion traces a plaster crack with her ink-stained finger. The fracture forms
+  glyphs in obsolete accounting shorthand. The wall freezes her finger; frost coats the plaster.
+  She maps the pattern against Bernard's handwriting for three seconds, then withdraws. The
+  cracks are an intentional message. She realizes the house keeps records. The assembly is
+  silent behind her.
+beats:
+- beat:plaster-cracks
+choices:
+- label: Step back from the wall and brush the frost from my gloves
+  to: passage:p-yielded-center

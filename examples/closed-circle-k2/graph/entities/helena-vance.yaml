@@ -1,0 +1,35 @@
+id: character:helena-vance
+name: Helena Vance
+concept: The aging hostess, a once-grand theatrical icon clinging to the remnants of her glamour
+  while her estate crumbles around her
+pronouns: she/her
+base:
+  appearance: emerald velvet gown with frayed hem
+  manner: voice like cracked crystal, gestures held too long
+arc:
+  begins: aging theatrical icon clinging to glamour while her estate crumbles, hostess maintaining
+    performance
+  pivots:
+  - beat: beat:helena-recognition
+    becomes: recognizer of Teddy's true identity, bound to him by past troupe membership
+  - beat: beat:decision-imminent
+    becomes: forced to choose between decorum and desperate action, climber or waiter
+  - beat: beat:the-confrontation
+    becomes: mutual hostage with Marion, each holding documents of the other's ruin
+  - beat: beat:mutually-assured-destruction
+    becomes: aware of reciprocal vulnerability, locked in silence pact or ruinous exposure
+  ends:
+  - path: path:seal-the-pact
+    state: preserved in false civility, her theatrical legacy intact but dependent on Marion's
+      silence
+  - path: path:let-truth-ring
+    state: publicly savaged by Marion's review, her legacy destroyed by honest critique
+  - path: path:burn-the-secrets
+    state: protector of the living, her own secrets ash but murder technically unsolved
+  - path: path:preserve-the-evidence
+    state: exposed to scandal alongside other guests, her privacy violated by Bernard's surviving
+      records
+  - path: path:climb-for-freedom
+    state: risk-taker who ascended the ice, retriever of the key
+  - path: path:wait-with-decorum
+    state: maintainer of propriety who refused the climb, waiting for natural thaw

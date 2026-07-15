@@ -1,0 +1,17 @@
+id: beat:notebook-discovered
+summary: Teddy discovers Marion's notebook containing a devastating review of Helena's final
+  theatrical performance, describing it as a corpse-like parody of her former genius.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: reveals
+entities:
+- character:teddy-bryant
+- character:marion-ashworth
+- character:helena-vance
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

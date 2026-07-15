@@ -1,0 +1,7 @@
+id: beat:stain-spread
+created_by: polish
+summary: The water stain spreads across the document, rendering a crucial word illegible.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:the-frozen-will

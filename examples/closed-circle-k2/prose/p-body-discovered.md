@@ -1,0 +1,7 @@
+Bernard descended the stairs with the inventory ledger clamped beneath his arm. The steps wore a skin of ice that crackled under his oxfords, each tread surrendering its archive of dust and frozen condensation. He reached the bottom corridor where barrels stood in ranks like obsolete account books awaiting audit. The single bulb described its arc on the wire, casting shadows that moved across ice-crusted staves. His breath hung visible, a white notation in the air, warmth itemized and expended.
+
+The patriarch lay between the third and fourth rack, skull split against the iron bracket that held the ninety-two port. Bernard approached without hurry. He noted the angle of the neck, the way the right arm had frozen mid-gesture, reaching toward the lowest shelf as if to correct a misaligned bottle. The blood had darkened on the flagged stone, congealing into a secondary ledger, an entry that could not be erased with polite discretion.
+
+The body had stiffened. Bernard observed this with the same attention he applied to discrepancies in the wine accounts: the rigor had set in early, accelerated by the subzero vault. The fingers curled like oxidized silver against the thigh. The jaw had locked in its final consultation, the mouth slightly open.
+
+Frost jeweled the eyelashes, crystals catching the sick light. Bernard inhaled. Beneath the iron and the cellar damp, a sweet medicinal ghost rose from the collar, laudanum or something older, a tincture preserved in the blood like a secret kept past its useful date.

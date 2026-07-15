@@ -1,0 +1,34 @@
+id: character:marion-ashworth
+name: Marion Ashworth
+concept: The feared theater critic whose notebook contains devastating reviews and whose memory
+  holds everyone's most embarrassing secrets
+pronouns: she/her
+base:
+  appearance: pince-nez spectacles, ink-stained fingers
+  manner: sharp inhalations before delivering judgments
+  injury: palm welt in key bow shape
+arc:
+  begins: feared critic whose notebook holds devastating power, memory keeper of embarrassing
+    secrets
+  pivots:
+  - beat: beat:notebook-discovered
+    becomes: exposed critic, her savage review of Helena discovered and weaponized
+  - beat: beat:affair-revealed
+    becomes: exposed adulteress, her indiscretion with the solicitor catalogued in Bernard's
+      archive
+  - beat: beat:the-confrontation
+    becomes: mutual hostage with Helena, each capable of destroying the other's social standing
+  - beat: beat:mutually-assured-destruction
+    becomes: locked in reciprocal blackmail, her marriage and Helena's legacy mutually threatened
+  ends:
+  - path: path:seal-the-pact
+    state: preserved in marriage but bound to Helena by shared silence, her critique burned
+      unspoken
+  - path: path:let-truth-ring
+    state: marriage ended in disgrace, her righteous critique published but her own secrets
+      exposed
+  - path: path:preserve-the-evidence
+    state: guardian of the archive key, her secrets locked in the safe but threatened by police
+      arrival
+  - path: path:burn-the-secrets
+    state: relieved of evidence but potentially exposed by other means, her affair still whispered

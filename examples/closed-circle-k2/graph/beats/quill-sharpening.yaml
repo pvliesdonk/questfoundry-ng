@@ -1,0 +1,7 @@
+id: beat:quill-sharpening
+created_by: polish
+summary: Dr. Mott sharpens her quill with surgical precision, the sound like bones grinding.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:dr-elspeth-mott

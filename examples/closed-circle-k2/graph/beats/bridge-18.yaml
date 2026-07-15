@@ -1,0 +1,9 @@
+id: beat:bridge-18
+created_by: grow
+summary: Bernard withdraws from the center of the room, yielding the floor to Teddy, who argues
+  for immediate action against the ice.
+beat_class: structural
+purpose: bridge
+entities:
+- character:bernard-croft
+- character:teddy-bryant

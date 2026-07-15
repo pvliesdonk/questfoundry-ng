@@ -1,0 +1,9 @@
+id: beat:bridge-20
+created_by: grow
+summary: The accusations reach a temporary lull; overhead, the chandelier releases its burden
+  to the parquet with a sound like a gunshot.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:the-snowbound-heirs
+- object:the-frozen-will

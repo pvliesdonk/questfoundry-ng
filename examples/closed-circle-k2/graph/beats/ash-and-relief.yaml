@@ -1,0 +1,15 @@
+id: beat:ash-and-relief
+summary: The guests watch their sins turn to smoke, experiencing simultaneous relief and nausea
+  as the evidence of their lives vanishes up the chimney.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- faction:the-snowbound-heirs
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

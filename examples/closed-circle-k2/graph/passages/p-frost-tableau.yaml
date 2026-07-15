@@ -1,0 +1,15 @@
+id: passage:p-frost-tableau
+summary: The ice on the windows reflects the scene as a frozen tableau of accusation. The
+  gathering preserves its civility only at the cost of remaining trapped in rigid, breathless
+  stasis.
+entities:
+- location:the-great-hall
+prose_summary: Helena Vance holds the portfolio containing Marion's ruin and observes seventeen
+  heirs frozen in a tableau by interior ice thickened to a lens. Bernard's corpse lies on
+  the settle with a broken cigarette holder. They trade justice for frozen order and await
+  thaw or ceiling collapse. Helena does not lower the portfolio.
+beats:
+- beat:ice-reflection-scene
+choices:
+- label: Descend the unheated stairs to the lower regions
+  to: passage:p-mutual-destruction

@@ -1,0 +1,17 @@
+id: beat:ending-false-salvation--preserve-the-evidence
+created_by: grow
+summary: Teddy inventories fixtures in the great hall while calculating which creditors will
+  flee when Bernard's files surface from the estate safe upstairs; the preservation of blackmail
+  materials threatens the estate he fought to save.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- location:the-great-hall
+is_ending: true
+scene_type: sequel
+narration_scope: wide
+belongs_to:
+- path:preserve-the-fiction

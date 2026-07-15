@@ -1,0 +1,8 @@
+id: intersection:assembly-crisis
+location: faction:the-snowbound-heirs
+rationale: The assembled heirs gather to simultaneously hear testimony clearing Bernard of
+  murder and demand proof of Teddy's identity, forcing multiple revelations into the open
+  at once.
+members:
+- beat:the-moment-of-truth
+- beat:the-moment-of-truth-locked

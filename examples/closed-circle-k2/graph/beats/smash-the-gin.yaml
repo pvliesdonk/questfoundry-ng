@@ -1,0 +1,16 @@
+id: beat:smash-the-gin
+summary: Teddy shatters the bottles against the cellar wall, destroying the alcohol and forcing
+  Dr. Mott to face the autopsy sober.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: commits
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:destroy-the-supply

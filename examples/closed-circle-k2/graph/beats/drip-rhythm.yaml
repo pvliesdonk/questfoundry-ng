@@ -1,0 +1,7 @@
+id: beat:drip-rhythm
+created_by: polish
+summary: The dripping has developed a rhythm like a metronome.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

@@ -1,0 +1,22 @@
+id: passage:p-key-entombed
+summary: The estate key is visible within the massive ice chandelier, but its frozen mass
+  would require days to thaw naturally; the assembly stares upward knowing the killer counts
+  the hours remaining until escape.
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+- faction:the-snowbound-heirs
+prose_summary: Helena Vance calculates 74 centimeters of ice contain a testament and the estate
+  key within a frozen chandelier. 72 hours remain until natural thaw. The key unlocks a city
+  safe deposit box with a codicil; succession is unresolved without it. Marion Ashworth traced
+  a crack revealing deliberate placement. Bernard's murderer stands among the four heirs,
+  awaiting storm abatement.
+beats:
+- beat:bridge-9
+- beat:ice-too-large
+- beat:key-visible
+choices:
+- label: Withdraw to the drawing room and examine the dust motes suspended in the gaslight
+  to: passage:p-suspended-witnesses
+- label: Remain beneath the chandelier and watch the frozen key begin to weep
+  to: passage:p-killer-loose

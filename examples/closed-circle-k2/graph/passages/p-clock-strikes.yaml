@@ -1,0 +1,16 @@
+id: passage:p-clock-strikes
+summary: The clock strikes the hour. The chimes dismantle the protective performance of civility
+  and expose the assembled company to raw panic, costing them the shelter of etiquette and
+  confirming that time has run out on their pretense.
+entities:
+- location:the-great-hall
+prose_summary: Clock strikes twelve. Marion's hand holds portfolio. Heirs stand around Bernard's
+  corpse. Dr. Mott traces frozen circle in marble. Teddy Bryant stands apart with greasy cuffs.
+  Helena Vance holds removed glove. Key plummets; ice arrests. Assembly flinches. Gentleman
+  drops pocket watch; it shatters. Lady strikes escritoire; inkwell rattles. Heirs lose composure,
+  cluster. Echo dies. Portfolio dampens. Room becomes sealed vault.
+beats:
+- beat:clock-strikes
+choices:
+- label: Descend to the lower regions to find Teddy
+  to: passage:p-mutual-destruction

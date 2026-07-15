@@ -1,0 +1,27 @@
+id: passage:p-rejection-published
+summary: Marion rejects Helena's bargain and reads her scathing review aloud to the assembled
+  guests, describing Helena's performance as an embarrassment that should have died unrecorded.
+  The cost is the immediate shattering of social order into public mortification, and the
+  mood is one of drawing-room manners curdling into panic.
+entities:
+- character:marion-ashworth
+- character:helena-vance
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion reads aloud a negative review of Helena's Imperial Theatre performance
+  to seventeen heirs. Documentation of Marion's assignations lies spread among them. Helena
+  arrests her hand at her throat. A gentleman's pocket watch shatters; a lady strikes the
+  escritoire; heirs cluster in panic. Marion places the review beside the damp portfolio.
+  Silence no longer purchases value.
+beats:
+- beat:refuse-the-pact
+- beat:review-published
+choices:
+- label: Polish my spectacles with glacial precision
+  to: passage:p-affair-exposed

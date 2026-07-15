@@ -1,0 +1,16 @@
+id: passage:p-cellar-resonance
+summary: A drip of water strikes the cellar floor and echoes with impossible volume through
+  the frostbitten vaults. The sound shatters the silence and exposes the suffocating isolation
+  of the underground space.
+entities:
+- location:the-cellars
+prose_summary: Helena descends into a cellar. The staircase seals and extinguishes her match.
+  She touches limestone wall and cobwebs with emerald velvet glove. A drip falls from ceiling
+  ice. The impact reveals chamber is a quarter acre without exit. She identifies the wine
+  racks where Bernard died. She understands vault logs all entries including her breath. She
+  stands motionless twelve seconds.
+beats:
+- beat:drip-echo
+choices:
+- label: Snap one's gloves against the wrist
+  to: passage:p-helena-ultimatum

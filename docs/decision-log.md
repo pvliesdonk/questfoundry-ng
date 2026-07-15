@@ -16,6 +16,36 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (the kimi-k2.5 A/B: COMPLETE — gate-clean FILL, structure
+  in band, and the tier-confound made concrete):** the parallel *Closed
+  Circle* medium (same premise, same pinned rotating `pov_hint`, kimi-k2.5
+  on ollama.com, pre-enforcement prompts throughout for comparability)
+  finished FILL gate-clean: **0 errors, 41 advisory warnings** (32× B4 —
+  every arc 151–161 beats vs the 80–150 band, the ~40% larger structure;
+  6× B5 near-band; 3× B8 pacing; **no B6** — words-per-choice landed IN
+  the 250–800 band). Side by side (gpt-oss:120b baseline → kimi-k2.5):
+  beats 239→222 (bridge 89→27, false-branch 0→**63** — kimi filled the
+  then-advisory cadence budget voluntarily), passages 112→159, prose
+  words 30.6k→47.9k, branch points 10→**54**, endings 4→4, dilemmas 8→8;
+  heads: both rotated 4 declared heads per passage (I14 clean), kimi
+  additionally headed 4 passages with the *victim* (Bernard Croft — not
+  in the declared voice rotation; scheme-conformance is ungated, noted in
+  BACKLOG) and left 72 texture/coda passages headless (its 63 grafted
+  diamonds are unannotated wildcards); **interludes 0 on both tiers** —
+  the annotate gap is tier-independent, not a weak-model artifact.
+  Operator load: 7 journaled stalls (5 echo-guard lifts, 2 honest 2-round
+  review non-convergences with high-quality quoted findings) — all
+  cleared by re-rolls, **zero prompt defects surfaced** (the baseline's
+  ~15 stalls surfaced five); 4 transport drops auto-resumed by the
+  bounded-retry operator loop; 2 container restarts resumed free from
+  the ledger. Spend: 969 calls, 3.00M in / 3.98M out (vs 844 / 2.77M /
+  1.04M — kimi's 4× output is its long-form generation), unbilled. Net
+  reading: the same prompts produced a flat book on gpt-oss and a
+  played-in-band structure on kimi purely through the advisory budgets —
+  the strongest single piece of evidence for the enforcement doctrine
+  (counts a prompt merely states are tier knobs) and for the B4-style
+  band drift the structural-depth milestone's coupled budget addresses.
+
 - **2026-07-14 (structural depth PR-4: finalize plants texture worlds;
   FILL grounds them):** the milestone's pipeline wiring, completing
   W3/W4 (all four PRs now built; the live validation run is the open

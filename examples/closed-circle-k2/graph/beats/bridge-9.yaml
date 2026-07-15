@@ -1,0 +1,9 @@
+id: beat:bridge-9
+created_by: grow
+summary: The assembly stares upward at the encased key, acutely aware that the killer stands
+  among them measuring the hours until escape.
+beat_class: structural
+purpose: bridge
+entities:
+- object:the-frozen-will
+- faction:the-snowbound-heirs

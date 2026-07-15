@@ -1,0 +1,16 @@
+id: beat:maintain-propriety
+summary: Helena refuses to climb, insisting the assembly maintain proper conduct and wait
+  for the ice to melt naturally.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: commits
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:wait-with-decorum

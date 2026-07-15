@@ -1,0 +1,17 @@
+id: passage:p-killer-loose
+summary: The murderer remains hidden among the trapped guests as the thaw approaches and the
+  temperature climbs. Each hour of preserved etiquette costs the destruction of physical evidence
+  and guarantees the killer’s escape when the ice breaks.
+entities:
+- faction:the-snowbound-heirs
+- character:bernard-croft
+prose_summary: Helena notes three hours pass since Bernard's body moves to settle. Temperature
+  rises two degrees. Ice block with testament melts as cracks widen. Marion refolds certificates
+  thrice. Dr. Mott moves glass two meters. Teddy unclasps hands. Seventeen minutes pass. Killer
+  matches posture. Silence grants killer time to destroy evidence. Forty-eight hours remain
+  until thaw breaks seal. Helena brushes crystal.
+beats:
+- beat:killer-loose
+choices:
+- label: Accompany the heirs to the temporary state
+  to: passage:p-mott-conscripted

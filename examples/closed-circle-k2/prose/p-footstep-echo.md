@@ -1,0 +1,9 @@
+The cousin turned from the settle. His boots struck the marble with a rhythm that measured the distance between order and collapse. Helena counted seven paces to the escritoire. Each footfall claimed the floor with the authority of a ledger entry sealing a bankruptcy; the sound carried the specific gravity of ice accumulating on a burdened branch.
+
+Seventeen heirs adjusted their stance. Marion Ashworth removed her pince-nez and polished the lenses against her sleeve, her hands steady in a manner that suggested deliberate suppression of tremor. Teddy Bryant stood near the escritoire with his wrists that still bore the faint impression of curtain cords, though the bindings had been severed. He did not flex his fingers.
+
+The cousin paused at the center of the hall. His gloves remained on his hands, the leather darkening where meltwater had seeped into the seams. He surveyed the perimeter with the flat assessment of a coroner measuring a body against available shelf space. The chandelier lay ruined on the Persian rug, its oxidized silver armature twisted into configurations that suggested frozen gestures of supplication.
+
+Helena felt the temperature drop in the space between her ribs. The heirs had maintained their masks through accusation and exposure, but the cousin's presence dissolved the pretense that their civility had ever functioned as protection. His boots continued their measured advance. Each step declared that the violence they had choreographed in whispers and mutual blackmail had merely awaited a conductor to render it official.
+
+She did not reach for her portfolio. The draft from the east wing touched her frayed hem, and she understood that exemption had ended.

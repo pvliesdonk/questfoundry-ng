@@ -1,0 +1,17 @@
+id: beat:demand-for-justice
+summary: Marion insists the archive is evidence of Bernard's murder and must be preserved
+  for the police, regardless of the scandal that follows.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+- character:bernard-croft
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:burn-the-secrets
+- path:preserve-the-evidence

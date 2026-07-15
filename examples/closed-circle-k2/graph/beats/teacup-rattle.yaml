@@ -1,0 +1,7 @@
+id: beat:teacup-rattle
+created_by: polish
+summary: A teacup rattles in its saucer, though no one has touched it.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

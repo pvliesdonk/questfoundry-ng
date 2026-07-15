@@ -1,0 +1,13 @@
+The mattress lay against the north wall, its ticking stained with the sweat of decades. Marion placed her ink-stained fingers on the coarse wool and felt the cold radiate upward. The frost had penetrated even here, into the servant's cell. The cold had preserved the indentations where Bernard had slept with his back to the wall.
+
+She lifted the edge. Beneath it, wedged between the ticking and the slats, rested a portfolio of oiled leather with brass corners. The leather had darkened where hands had gripped it, polished by nervous oils. She withdrew it. The weight exceeded that of empty binding.
+
+She opened the clasp. Inside, the contents were arranged with bureaucratic precision. Photographs emerged first, gelatin prints that showed the household in moments of private collapse: Dr. Mott accepting a flask from a distillery courier, Teddy burning papers in the grate, Helena concealing correspondence beneath the trestle. The images were dated in Bernard's hand, initialed with the care of ledger entries.
+
+Beneath the photographs lay account books, their pages filled with entries that tracked debts and payments in currencies of silence. Letters followed, folded tight as evidence, their wax seals broken and resealed with cheaper tallow. Each document bore a tab marking its alphabetical place.
+
+Marion found her own name among the entries. The documentation spanned fourteen months, mapping her assignations with the solicitor through dates and hotel registers that she had believed erased by time. The precision of the record—each hour accounted, each payment noted—suggested a system that predated her particular indiscretion and would survive her exposure. The cold in the room seemed to concentrate in her chest, a frost that did not thaw with breath.
+
+She turned pages. The violence beneath their performed civility lay here in paper and emulsion, catalogued with the dispassion of a coroner’s report. Every guest stood exposed in these pages, their standing reduced to negotiable commodities. The archive represented absolute power over the household, now dangerous to possess.
+
+She closed the portfolio. The leather creaked like ice settling on a frozen lake. She understood that privacy had collapsed among them, and that mutual blackmail was now the only currency that retained value in this freezing vault. The portfolio seemed to grow heavier in her hands, an obsolete account book whose entries condemned them all to a debtor’s prison of shared guilt.

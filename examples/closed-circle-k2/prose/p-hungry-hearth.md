@@ -1,0 +1,7 @@
+Helena withdrew from the grate. She crossed the Great Hall's frozen floor, entered the drawing room, and engaged the latch. The hearth burned with an unnatural intensity, as hungry as the silence. The flames cast sharp shadows against the damask drapes and turned the rime on the windows into silver tarnish.
+
+Marion stood beside the escritoire, holding the ledger against her chest with fingers stained with ink. Dr. Mott had retrieved her glass from the carved mantelpiece and held it empty at her side, three paces from the medical bag. Teddy stood with his hands clasped behind his back, grease visible on his cuffs. No one sat. The furniture remained arranged for conversation that had ceased seventeen minutes prior, when the scream had echoed from the pantry.
+
+The silence hungered. It occupied the space between them with a physical weight that pressed against the walls. The fire cracked; a coal shifted and sent sparks against the screen. No one flinched. The rigidity of their postures suggested a stage direction performed beyond its natural duration. Their locked knees and fixed gazes revealed the strain of maintaining rigid civility against the room's contraction.
+
+The pretense of order had become an unsustainable performance against the entropy of the moment. The fire burned lower but brighter, consuming the last pretense of warmth from the room and leaving only the clarity of ice.

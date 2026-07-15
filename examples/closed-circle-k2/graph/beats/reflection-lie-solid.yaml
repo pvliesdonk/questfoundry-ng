@@ -1,0 +1,7 @@
+id: beat:reflection-lie-solid
+created_by: polish
+summary: The mirror reflects the lie so long it appears solid.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:helena-vance

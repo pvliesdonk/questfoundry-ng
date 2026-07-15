@@ -1,0 +1,14 @@
+id: beat:compromised-results
+summary: Her findings are contradictory and unreliable, suggesting death by poisoning when
+  the wound clearly indicates blunt force trauma.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: reveals
+entities:
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:hide-the-booze

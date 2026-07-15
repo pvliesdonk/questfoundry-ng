@@ -1,0 +1,19 @@
+id: passage:p-mutual-destruction
+summary: Helena realizes that Marion possesses a review that ensures mutual professional destruction
+  should either woman act against the other. She descends to the lower regions and finds Teddy
+  rehearsing his statement in anticipation of the authorities.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- character:teddy-bryant
+prose_summary: Helena Vance holds documentation of Marion Ashworth's Pimlico assignations
+  while Marion holds an unpublished review; both face mutual destruction. Helena leaves portfolio
+  unplaced, wears an emerald velvet glove, and descends twenty-three steps to the wine cellar.
+  She observes Teddy Bryant in borrowed tweed holding a trembling paper with greasy fingerprints,
+  rehearsing his name and former occupation without revealing herself.
+beats:
+- beat:bridge-11
+- beat:mutually-assured-destruction
+choices:
+- label: Descend to the wine cellars to hear Teddy rehearse
+  to: passage:p-teddy-testimony

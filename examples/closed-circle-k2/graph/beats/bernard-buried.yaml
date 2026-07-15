@@ -1,0 +1,15 @@
+id: beat:bernard-buried
+summary: The butler is interred in the frozen earth without explanation for his death, his
+  knowledge buried with him.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- character:bernard-croft
+- faction:the-snowbound-heirs
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

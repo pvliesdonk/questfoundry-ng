@@ -1,0 +1,39 @@
+id: passage:p-naked-truth
+summary: Marion secures the portfolio in the estate safe and pockets the key, ensuring Bernard's
+  blackmail survives to fuel the coming scandal; Helena remains below in the drafty great
+  hall, alone with the tools arranged before the ice, while the frozen will upstairs waits
+  to determine which heir will inherit the ruins.
+entities:
+- location:the-great-hall
+- object:bernard-blackmail-archive
+- character:marion-ashworth
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Marion locks the portfolio in the wall safe behind frayed damask, archiving
+  Bernard's indiscretions, and stores the key in her bodice against the bow-shaped welt. The
+  frozen will waits in ice behind a locked door. Helena stands at the escritoire below, seventeen
+  heirs wait at the perimeter, Bernard lies covered on the settle, and chandelier armature
+  rests on Persian rug.
+beats:
+- beat:bridge-6
+- beat:ending-naked-truth
+choices:
+- label: Brace the frozen will against the mantel as the iron descends
+  grants:
+  - flag:impostor-wins
+  - flag:teddy-legitimized
+  to: passage:p-the-iron-bites
+- label: Display the forged papers above the cold hearth where the light catches the seals
+  grants:
+  - flag:cousin-inherits
+  - flag:teddy-imprisoned
+  to: passage:p-accusation-evidence

@@ -1,0 +1,19 @@
+id: passage:p-thawed-reckoning
+summary: The investigator holds the ice block to the flames until the will within is exposed,
+  the meltwater draining through the floorboards as the assembly is summoned for the final
+  accounting. The mood is frostbitten dread calcifying into darkly absurd ceremony.
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+- faction:the-snowbound-heirs
+prose_summary: Helena uses match to thaw ice block containing Bernard's will. Ice melts on
+  andiron, water pools on Persian rug and drains through floorboards. Preliminary clauses
+  become illegible, signatures remain distinguishable. Teddy Bryant, Marion Ashworth, Dr.
+  Mott, and seventeen heirs witness thaw near Bernard's body on settle. Chandelier drips.
+  Helena announces will shall be read before storm breaks. The accounting proceeds.
+beats:
+- beat:apply-flames
+- beat:bridge-2
+choices:
+- label: Expose Dr. Mott and reject the false confession
+  to: passage:p-mott-exposed

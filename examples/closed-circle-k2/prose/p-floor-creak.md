@@ -1,0 +1,7 @@
+Helena Vance remained beside the settle. The portfolio pressed against her ribs. Seventeen heirs occupied the Great Hall, some near the smoking hearth, others against the velvet walls where rime sealed the casements. The cold had mapped the assembly's divisions onto the floorboards, creating zones of proximity and withdrawal that no one had declared.
+
+She shifted her weight. The board beneath her left heel cracked like the snap of ice shearing on a winter lake. The assembly froze. Marion Ashworth's fingers stilled above the smudged ledger. Dr. Mott's empty glass halted three centimeters above the oak mantelpiece, trembling slightly. Teddy Bryant's shoulders ceased their rotation. The distant cousin's patent leather shoe remained arrested mid-step, the sole still lifted from the parquet, his balance uncommitted.
+
+The creak persisted in the silence, a warning issued by structural decay. Helena felt the documentation's weight press against her stays. Her emerald velvet hem had frayed further; she observed the threads without moving to conceal them. Above, the chandelier dripped, each drop striking the floor with the regularity of a clerk's stamp upon obsolete account paper. The assembly had marked her position. Concealment collapsed. She stood exposed before the faction demanding fracture and the faction insisting upon thaw, her grip unchanged upon the portfolio that contained Marion Ashworth's fourteen-month assignation record.
+
+The frozen key above shifted three millimeters in its icy housing.

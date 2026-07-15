@@ -1,0 +1,17 @@
+id: beat:teddy-papers-found
+summary: Marion Ashworth discovers inconsistencies in Teddy Bryant's identity papers, revealing
+  his birthplace and age do not match the true heir's records.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: reveals
+entities:
+- character:marion-ashworth
+- character:teddy-bryant
+- object:bernard-blackmail-archive
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

@@ -1,0 +1,26 @@
+id: passage:p-portfolio-weight
+summary: The investigator carries the portfolio through the estate, and each added document
+  increases the physical weight and the certainty of imminent violence.
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Marion Ashworth carries Bernard's heavy portfolio from study. She pauses at
+  landing to observe seventeen heirs shift around Persian rug since constable left. Helena
+  Vance tracks her without eye contact; Teddy Bryant stays by andiron without looking up.
+  Marion feels key against her bodice. She reaches marble floor and turns toward oxidized
+  silver wall fixture with combination dial. Documents settle.
+beats:
+- beat:evidence-weight-heavy
+choices:
+- label: Secure the portfolio in the estate safe
+  to: passage:p-the-preserved-estate

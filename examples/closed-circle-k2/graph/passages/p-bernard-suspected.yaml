@@ -1,0 +1,21 @@
+id: passage:p-bernard-suspected
+summary: Bernard becomes the primary suspect after circumstantial evidence places him near
+  the cellars at the time of the murder. The assembly escorts him to the Great Hall, where
+  the frozen obstruction has supplanted all legal procedure with a grotesque stasis of civilized
+  dread.
+entities:
+- character:bernard-croft
+- faction:the-snowbound-heirs
+- location:the-great-hall
+prose_summary: Marion follows Helena as they carry Bernard's corpse to the Great Hall and
+  place it on settle by the frozen ice block with the will. Marion realizes Bernard is primary
+  suspect per the ledger's eleven o'clock entry placing him in cellars at patriarch's death.
+  The heirs wait in civilized dread. Justice remains suspended until thaw or confession.
+beats:
+- beat:bernard-suspected
+- beat:bridge-3
+choices:
+- label: Trace the irregular seam disrupting the ice with a gloved finger
+  to: passage:p-crack-in-ice
+- label: Catch your reflection in the frozen surface and hold its gaze
+  to: passage:p-ice-reflection

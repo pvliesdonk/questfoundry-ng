@@ -1,0 +1,15 @@
+id: beat:inheritance-settled
+summary: The inheritance is resolved before the storm breaks, preventing the creditor claims
+  that threatened to dismantle the estate.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: advances
+entities:
+- object:the-frozen-will
+- character:helena-vance
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

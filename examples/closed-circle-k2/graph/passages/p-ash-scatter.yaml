@@ -1,0 +1,16 @@
+id: passage:p-ash-scatter
+summary: Ash scatters across the Persian rug and delineates a path toward the inevitable.
+  The characters confront the evidence that entropy has breached their meticulous setting,
+  and the cost of maintaining civil appearances becomes the acknowledgment of concealed violence.
+entities:
+- location:the-great-hall
+prose_summary: Marion steps back from the poker, leaving tarnish. Helena holds singed documentation.
+  Dr. Mott places her bag by Bernard's corpse; brass aligns with ash on the rug. Teddy's fingers
+  bear grease and soot. Marion weighs cleaning cost against silence. Dr. Mott's glass leaves
+  a frozen ring on marble. Seventeen people hold their breath. The fire dies; order cannot
+  be restored.
+beats:
+- beat:ash-scatter
+choices:
+- label: Brush the ash from your sleeve and step toward the voices
+  to: passage:p-mutual-ruin

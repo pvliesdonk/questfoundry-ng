@@ -1,0 +1,29 @@
+id: passage:p-tyrant-arrives
+summary: The distant cousin enters the great hall on a dogsled's momentum and orders immediate
+  inventory of Helena's theatrical memorabilia for sale. Helena watches the pricing of her
+  history, the burned secrets having cleared the way for his uncontested authority.
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: The cousin arrives by dogsled with a folio. Seventeen heirs surround Bernard's
+  body on the settle. The cousin inventories Helena's theatrical correspondence and effects
+  for liquidation, valuing her emerald gown below repair cost. Bernard's archive is ash. The
+  cousin inherits the estate. Helena cannot access her portfolio. He schedules removal before
+  the thaw.
+beats:
+- beat:the-tyrant-arrives--burn-the-secrets
+choices:
+- label: Count the rhythm of his boots across the frozen parquet
+  to: passage:p-footstep-echo
+- label: Watch the mahogany groan toward the waiting sleds
+  to: passage:estate-seizure

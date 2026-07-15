@@ -1,0 +1,7 @@
+id: beat:ring-glitter
+created_by: polish
+summary: A wedding ring catches the light, suddenly meaningless and bright.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:helena-vance

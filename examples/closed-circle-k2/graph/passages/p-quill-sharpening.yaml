@@ -1,0 +1,16 @@
+id: passage:p-quill-sharpening
+summary: Dr. Mott sharpens her quill at the escritoire with surgical precision, producing
+  a rasp like bone grinding against bone. The gesture establishes a mood of meticulous dread
+  and civilized concealment.
+entities:
+- character:dr-elspeth-mott
+prose_summary: Dr. Elspeth Mott sharpens a quill surgically and draws a line in a freeze-thaw-damaged
+  ledger. Her hands tremble. Her medical bag with gin sits on the floor; she requires the
+  gin before touching Bernard's stiffened corpse again. Teddy Bryant stands by the settle,
+  Marion Ashworth steps back from escritoire, Helena Vance stands at the rime-sealed window.
+  The assembly is motionless.
+beats:
+- beat:quill-sharpening
+choices:
+- label: Slide the dossier into the circle of lamplight
+  to: passage:p-teddy-testifies

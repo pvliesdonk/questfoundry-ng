@@ -1,0 +1,16 @@
+id: dilemma:fire-thaw-or-natural-thaw
+question: Do you accelerate the thawing of the frozen will with fire, risking water damage
+  to the text, or let it melt naturally, delaying the reading for days?
+why_it_matters: Determines whether the inheritance is resolved tonight or if the snowbound
+  heirs remain in limbo, and whether the document remains legible
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:hasten-with-flames
+  text: Hold the ice block near the fire to speed the revelation regardless of damage
+- id: answer:wait-for-nature
+  text: Place it in the snow room and let time take its course
+anchored_to:
+- object:the-frozen-will
+- character:helena-vance

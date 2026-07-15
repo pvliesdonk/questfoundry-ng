@@ -1,0 +1,7 @@
+id: beat:drip-echo
+created_by: polish
+summary: A single drip of water echoes with impossible loudness in the cellar vaults.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

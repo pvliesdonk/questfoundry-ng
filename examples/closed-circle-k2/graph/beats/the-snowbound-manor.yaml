@@ -1,0 +1,13 @@
+id: beat:the-snowbound-manor
+summary: The storm of the century encases Vance House in ice, severing all roads and telephone
+  lines; the lake freezes solid, trapping the will of the late patriarch inside a massive
+  block of ice hauled into the Great Hall.
+beat_class: structural
+purpose: setup
+entities:
+- location:the-great-hall
+- object:the-frozen-will
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance

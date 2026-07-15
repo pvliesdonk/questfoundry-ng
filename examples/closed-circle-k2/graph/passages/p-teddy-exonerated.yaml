@@ -1,0 +1,19 @@
+id: passage:p-teddy-exonerated
+summary: Teddy's false confession unravels, and investigators release him from suspicion.
+  The assembly maintains frostbitten politeness toward him, but his reputation remains permanently
+  stained.
+entities:
+- character:teddy-bryant
+prose_summary: 'Teddy stands exonerated; irons fall. Investigator records correction: confession
+  fabricated, residue lacks particulate, timeline fails; documentation rejected, grease-marked
+  alibi insufficient. Dr. Mott wears irons, departs, leaving medical bag beside Bernard''s
+  form. Seventeen heirs witness exchange. Helena Vance stands by escritoire with ledger. Teddy
+  adjusts his borrowed tweed, reveals frayed damask lining, and waits for accusation of fraudulent
+  identity.'
+beats:
+- beat:teddy-exonerated
+choices:
+- label: Study the mechanical withdrawal of his fingers from Helena's grasp
+  to: passage:p-hand-withdrawal
+- label: Observe the grotesque glint of the matrimonial band
+  to: passage:p-ring-glitter

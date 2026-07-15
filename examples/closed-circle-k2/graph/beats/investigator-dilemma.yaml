@@ -1,0 +1,15 @@
+id: beat:investigator-dilemma
+summary: The investigator faces the choice to accept Teddy's noble sacrifice or pursue the
+  truth regardless of the romantic tragedy.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: advances
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

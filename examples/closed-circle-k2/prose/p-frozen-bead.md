@@ -1,0 +1,7 @@
+Dr. Elspeth Mott walked between the constables. The irons on her wrists pulled her arms into a posture she had never assumed in surgery. Her medical bag remained on the settle beside Bernard's form, but the peppermint oil had transferred to her gloves, marking her passage through the corridor with a scent that mixed with the dust of obsolete account books shelved along the walls.
+
+A bead of sweat formed at her temple. It trembled against her skin, then froze there, hardening into a crystalline node that clung to her temple like a grotesque jewel. This frozen salt announced her withdrawal to the empty passages with a precision no ledger could match.
+
+She did not lift her hands to remove it. The irons permitted no gesture toward vanity. The constables maintained their pace, unaware of the witness that documented her body's rebellion against the deprivation she had delayed for seventeen years. Her step faltered where the marble joined the parquet. The constable on her right adjusted his grip, guiding her forward as the frost-locked doors approached with their tarnished handles.
+
+The bead remained, a public exhibition of her private disintegration, until the corridor turned and the great hall's last warmth dissolved behind her into archival silence.

@@ -1,0 +1,15 @@
+id: beat:bernard-suspected
+summary: Circumstantial evidence places Bernard near the cellars at the time of the murder,
+  making him the primary suspect.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: advances
+entities:
+- character:bernard-croft
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:clear-the-butler

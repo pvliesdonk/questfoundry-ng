@@ -1,0 +1,21 @@
+id: passage:p-ledger-and-testimony
+summary: The hidden ledger documenting Bernard's embezzlement of estate wine surfaces. Teddy
+  prepares to testify to Bernard's presence in the cellars, knowing this testimony secures
+  his own innocence while ensuring Bernard's ruin.
+entities:
+- character:bernard-croft
+- location:the-cellars
+- character:teddy-bryant
+prose_summary: Teddy stands in the vault with Marion, who holds a ledger documenting Bernard's
+  fourteen-month embezzlement. Teddy removes his tweed jacket and folds it over the settle
+  beside Bernard's body. He prepares to testify about finding lip prints on a glass, a corkscrew,
+  and disturbed dust. Testimony clears his false murder confession but ruins Bernard for larceny,
+  voiding his blackmail archive.
+beats:
+- beat:embezzlement-found
+- beat:testimony-prepared
+choices:
+- label: Slide the ledger toward Dr. Mott's grinding quill
+  to: passage:p-quill-sharpening
+- label: Step back as Teddy clears his throat
+  to: passage:p-teddy-testifies

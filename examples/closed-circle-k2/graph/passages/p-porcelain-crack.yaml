@@ -1,0 +1,24 @@
+id: passage:p-porcelain-crack
+summary: The teacup handle snaps under too-tight fingers. The break marks the end of composed
+  performance and the beginning of visible panic, revealing the violence that civility concealed.
+entities:
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena retrieves a porcelain cup from the sideboard. The handle breaks off
+  in her rigid grip; the cup falls and shatters on the Persian rug, mixing with ash. She places
+  the handle on the open ledger. The remaining heirs observe. The silence shifts from civil
+  restraint to acknowledged violence. Her composure cracks.
+beats:
+- beat:porcelain-crack
+choices:
+- label: Set the fractured cup upon the ledger
+  to: passage:p-estate-museum

@@ -1,0 +1,16 @@
+id: passage:p-curling-proof
+summary: The document curls at the edges from the hearth's radiant heat before the flame touches
+  it, and the proof of the arrangement warps toward illegibility while they maintain their
+  frozen pleasantries.
+entities:
+- object:bernard-blackmail-archive
+prose_summary: Bernard's leather portfolio rests near heat. Helena observes but does not retrieve
+  it. It contains seventeen failures, debts, assignations, and Marion's resealed gelatin prints.
+  Marion grips an unpublished review. The page edge curls, fibers contract, ink softens toward
+  illegibility. Teddy Bryant stands ready to intercept. Seventeen heirs wait as the proof
+  curls toward ash without ignition.
+beats:
+- beat:paper-curl
+choices:
+- label: Hold the ice to the flame while the company gathers
+  to: passage:p-thawed-reckoning

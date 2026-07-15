@@ -1,0 +1,26 @@
+id: passage:p-pact-of-ashes
+summary: The women consign the devastating theater review and the love letters to the drawing
+  room fire, agreeing to bury each other's secrets. Helena retains her stature as a theatrical
+  grand dame, and the cost is their new bond of mutual complicity.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena Vance and Marion Ashworth burn compromising documents simultaneously.
+  Marion holds a review that would end Helena's legacy; Helena holds documentation of Marion's
+  assignation with a Pimlico solicitor. Helena strikes match from the mantel tinder box. They
+  burn documents in the grate. Mutual complicity binds them in unbreakable pact. They preserve
+  each other's secrets at cost of mutual obligation.
+beats:
+- beat:review-suppressed
+- beat:shake-on-silence
+choices:
+- label: Draw the screen across the grate
+  to: passage:p-intact-facade

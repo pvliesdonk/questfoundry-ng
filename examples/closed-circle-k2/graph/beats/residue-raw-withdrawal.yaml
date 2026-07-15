@@ -1,0 +1,11 @@
+id: beat:residue-raw-withdrawal
+created_by: polish
+summary: Dr. Mott's fingers tremble against her empty pockets, and every creak of the manor's
+  timbers sounds like a bone snapping; the clarity of sobriety renders the drawing room's
+  civility unbearably vivid.
+beat_class: structural
+purpose: residue
+entities:
+- character:dr-elspeth-mott
+requires_flags:
+- flag:autopsy-sound

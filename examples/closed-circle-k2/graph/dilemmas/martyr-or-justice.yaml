@@ -1,0 +1,16 @@
+id: dilemma:martyr-or-justice
+question: When Teddy attempts to confess to the murder to protect the real killer, do you
+  accept his sacrifice and let him hang, or expose the truth and damn the actual murderer?
+why_it_matters: Decides whether an innocent man dies for love and preserves a romantic tragedy,
+  or whether justice exposes the guilty party among the remaining guests
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:accept-the-martyr
+  text: Let Teddy take the fall and preserve the illusion of his nobility
+- id: answer:expose-the-truth
+  text: Reveal the real killer and destroy the tragic romance with harsh reality
+anchored_to:
+- character:teddy-bryant
+- faction:the-snowbound-heirs

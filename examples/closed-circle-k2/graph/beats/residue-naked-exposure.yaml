@@ -1,0 +1,12 @@
+id: beat:residue-naked-exposure
+created_by: polish
+summary: Marion stands in the drawing room acutely aware that every gesture now reveals rather
+  than conceals; the architecture of her performance has collapsed, leaving her architecture
+  of bone and fear exposed to the cold.
+beat_class: structural
+purpose: residue
+entities:
+- character:marion-ashworth
+- character:helena-vance
+requires_flags:
+- flag:helena-savaged

@@ -1,0 +1,15 @@
+id: passage:p-frozen-bead
+summary: A bead of sweat freezes on her temple, transforming into a grotesque jewel that exposes
+  her private suffering.
+entities:
+- character:dr-elspeth-mott
+prose_summary: Dr. Elspeth Mott wears irons as constables escort her. Her medical bag remains
+  beside Bernard's form. Peppermint oil marks her gloves. Sweat freezes on her temple into
+  a crystal; irons prevent removal, marking bodily rebellion after seventeen-year delay. Constables
+  do not notice. She falters; a constable guides her toward frost-locked doors. They leave
+  the great hall's warmth behind.
+beats:
+- beat:sweat-bead
+choices:
+- label: Watch the bead tremble loose from her temple
+  to: passage:p-mott-tremors

@@ -1,0 +1,34 @@
+id: passage:p-helena-retrieves-irons
+summary: Helena retrieves the fire irons from their stand as the ashes of Bernard's materials
+  settle in the grate. The last evidence of the documents burns away, and the instruments
+  of domestic propriety become potential weapons in her grip.
+entities:
+- character:helena-vance
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena retrieves the poker from the fireplace stand, choosing it over the tongs.
+  She grips the iron as a weapon. The grate holds carbonized remains of Bernard's alphabetical
+  divisions. Her emerald velvet glove frays at the wrist. Seventeen heirs maintain perimeter
+  around the settle. She turns toward them, assessing distance to Teddy Bryant near the escritoire.
+beats:
+- beat:bridge-5
+choices:
+- label: Offer Teddy the fire iron's heft
+  grants:
+  - flag:impostor-wins
+  - flag:teddy-legitimized
+  to: passage:p-shattering-the-frozen-will
+- label: Extend the certificates toward the assembled heirs
+  grants:
+  - flag:cousin-inherits
+  - flag:teddy-imprisoned
+  to: passage:p-public-accusation

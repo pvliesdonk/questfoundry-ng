@@ -1,0 +1,9 @@
+id: beat:bridge-8
+created_by: grow
+summary: The key lies forgotten on the oak floor as attention shifts downward to the liquid
+  necessities hidden among the wine racks.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- location:the-cellars

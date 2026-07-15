@@ -1,0 +1,16 @@
+id: beat:the-tyrant-cousin
+summary: A telegram arrives revealing the distant cousin, next in line, is a notorious slumlord
+  who has vowed to demolish the estate for quarried stone.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: reveals
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

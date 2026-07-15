@@ -1,0 +1,16 @@
+id: passage:p-portrait-eyes
+summary: Marion absorbs the accusation while the portrait's eyes track her movement. She loses
+  the protection of composed silence and the drawing room's civility reveals its underlying
+  hostility.
+entities:
+- character:marion-ashworth
+prose_summary: Marion refolds a ledger corner to align with plaster crack. A patriarch's portrait
+  tracks her. Teddy holds his confession pose with greasy hands near the untouched poker.
+  The assembly turns when Marion inhales. Helena conceals frayed documentation in damask napkins
+  within her portfolio. Marion's Bath visits to a Pimlico solicitor stand exposed. The room's
+  civility collapses. She drops her pince-nez.
+beats:
+- beat:portrait-eyes
+choices:
+- label: Examine the tear stains that have blurred the lines of his written confession
+  to: passage:p-romantic-revelation

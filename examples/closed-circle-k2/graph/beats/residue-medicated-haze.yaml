@@ -1,0 +1,11 @@
+id: beat:residue-medicated-haze
+created_by: polish
+summary: A warm fog cushions Dr. Mott's perception, turning the harsh gaslight into something
+  golden and forgiving; the medical uncertainty feels comfortably distant, wrapped in layers
+  of controlled delirium.
+beat_class: structural
+purpose: residue
+entities:
+- character:dr-elspeth-mott
+requires_flags:
+- flag:autopsy-compromised

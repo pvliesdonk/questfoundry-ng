@@ -1,0 +1,17 @@
+id: beat:reputations-destroyed
+summary: Helena, Marion, and Dr. Mott face public ruin as the newspapers print Bernard's meticulous
+  records of their indiscretions.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- character:dr-elspeth-mott
+- object:bernard-blackmail-archive
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:preserve-the-evidence

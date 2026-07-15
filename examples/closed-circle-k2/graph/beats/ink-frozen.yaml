@@ -1,0 +1,7 @@
+id: beat:ink-frozen
+created_by: polish
+summary: The ink in the pen has frozen, rendering the last entry incomplete and cryptic.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:bernard-blackmail-archive

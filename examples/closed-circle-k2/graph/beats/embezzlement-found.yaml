@@ -1,0 +1,15 @@
+id: beat:embezzlement-found
+summary: Inventory records show Bernard has been selling estate wine for years, documenting
+  his embezzlement in a hidden ledger.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: reveals
+entities:
+- character:bernard-croft
+- location:the-cellars
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:clear-the-butler

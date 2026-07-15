@@ -1,0 +1,19 @@
+id: passage:p-assembly-watches
+summary: The snowbound heirs gather below while ice drips overhead, divided between a faction
+  demanding violent action and a faction insisting on propriety, and the cost of maintaining
+  their civilized order rises as the assembly splinters into open opposition.
+entities:
+- faction:the-snowbound-heirs
+- location:the-great-hall
+prose_summary: 'Helena Vance holds the portfolio. Seventeen heirs assemble. Teddy Bryant occupies
+  center. Marion Ashworth touches ledger. Dr. Mott holds empty glass. Two factions form: one
+  beneath dripping chandelier demands ice fracture; the other at walls insists on natural
+  thaw. A pocket watch consults seventeen times; a teacup shatters. Ice water pools as boundary.
+  No one mediates. Helena shifts portfolio.'
+beats:
+- beat:assembly-watches
+choices:
+- label: Study the fog of their pretense condense
+  to: passage:p-breath-clouds
+- label: Let your heel discover the loose plank
+  to: passage:p-floor-creak

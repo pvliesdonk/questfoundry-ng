@@ -1,0 +1,20 @@
+id: passage:p-teddy-sacrifice
+summary: Teddy begs the investigator to accept his death as the final solution, arguing that
+  truth will annihilate two lives rather than one. The investigator must choose between honoring
+  this sacrifice or pursuing the facts regardless of the romantic tragedy.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+prose_summary: Teddy confesses beside Bernard's body, offers to die to save two lives, and
+  demands certificates burn. Dr. Mott holds bag with scalpel and peppermint; she abstained
+  before examination. Helena holds portfolio with docs destroying Marion. Marion holds ledger
+  and has photo, certs, and ice crack evidence to hang both. The chandelier ice cracks. Marion
+  decides.
+beats:
+- beat:investigator-dilemma
+- beat:sacrifice-offered
+choices:
+- label: Touch the trembling china
+  to: passage:p-teacup-rattle
+- label: Step toward the dying embers
+  to: passage:p-cold-draft

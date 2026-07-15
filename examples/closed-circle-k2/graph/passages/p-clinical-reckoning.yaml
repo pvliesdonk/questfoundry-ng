@@ -1,0 +1,24 @@
+id: passage:p-clinical-reckoning
+summary: Her medical training overcomes her addiction to yield precise findings on the murder
+  weapon and time of death. She surrenders her remaining hidden flasks to Helena and begins
+  a painful sobriety.
+entities:
+- character:dr-elspeth-mott
+- character:helena-vance
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott states time of death four hours pre-binding in east wing; blood on
+  cuff confirms scalpel entered living tissue before incision. Teddy withdraws hand from chloroform
+  bottle. Helena enters after observing through cellar grille, retrieves three gin flasks
+  concealed behind anatomical manuals from medical bag, empties them into basin. Dr. Mott
+  remains bound, enters withdrawal. Helena references vinegar-for-antiseptic substitution.
+beats:
+- beat:clear-findings
+- beat:path-to-recovery
+choices:
+- label: Smooth my skirts and feel the floorboards articulate beneath my heels
+  requires:
+  - flag:autopsy-sound
+  to: passage:p-residue-withdrawal

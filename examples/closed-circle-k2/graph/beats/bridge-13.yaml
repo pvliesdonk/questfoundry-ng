@@ -1,0 +1,9 @@
+id: beat:bridge-13
+created_by: grow
+summary: The constables depart with their prisoner; in the silence that follows, Teddy's shackles
+  are struck and the record corrected.
+beat_class: structural
+purpose: bridge
+entities:
+- character:dr-elspeth-mott
+- character:teddy-bryant

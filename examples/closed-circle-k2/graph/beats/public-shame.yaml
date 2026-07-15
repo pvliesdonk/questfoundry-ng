@@ -1,0 +1,15 @@
+id: beat:public-shame
+summary: The wine thefts become common knowledge among the guests, and Bernard's decades of
+  service end in disgrace.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: reveals
+entities:
+- character:bernard-croft
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:bernard-croft
+belongs_to:
+- path:clear-the-butler

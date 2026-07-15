@@ -1,0 +1,15 @@
+id: beat:risk-discussed
+summary: The assembly debates the risks of fire damage to the document inside the ice, weighing
+  legibility against urgency.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: advances
+entities:
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:hasten-with-flames

@@ -1,0 +1,19 @@
+id: passage:p-thermal-calculus
+summary: The assembly debates fire damage to the ice-locked document, weighing legibility
+  against urgency, while Bernard circles the chandelier calculating load-bearing tensions
+  and stress tolerances, the room’s genteel order curdling into structural panic.
+entities:
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+- character:bernard-croft
+prose_summary: Marion observes the melting ice block blurs the document. Helena proposes moving
+  ice to dying grate, trading legibility for speed against creditors' filings. Dr. Mott objects,
+  citing thermal shock and water damage through southeast face cracks. Teddy offers no method.
+  Bernard announces the chandelier will collapse tonight; assembly falls quiet. Room’s order
+  curdles. Chandelier sways, shifting frozen key inside.
+beats:
+- beat:bridge-15
+- beat:risk-discussed
+choices:
+- label: Ask Bernard to calculate aloud the strain on the corroded hooks
+  to: passage:p-structural-instability

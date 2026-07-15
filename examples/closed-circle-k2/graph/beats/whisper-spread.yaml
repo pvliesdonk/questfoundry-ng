@@ -1,0 +1,7 @@
+id: beat:whisper-spread
+created_by: polish
+summary: Whispers spread through the guests like a contagion.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

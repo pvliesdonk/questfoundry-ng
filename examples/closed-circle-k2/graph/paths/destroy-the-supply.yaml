@@ -1,0 +1,8 @@
+id: path:destroy-the-supply
+name: Destroy the Supply
+explores: answer:destroy-the-supply
+consequences:
+- id: consequence:mott-withdrawal
+  text: Dr. Mott suffers acute withdrawal but retains sobriety
+- id: consequence:autopsy-sound
+  text: The autopsy findings are medically reliable

@@ -1,0 +1,17 @@
+id: beat:teddy-plea
+summary: Teddy begs Helena to remain silent while he attempts to crack the ice encasing the
+  will, claiming he can prove his identity if given until morning.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- character:helena-vance
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

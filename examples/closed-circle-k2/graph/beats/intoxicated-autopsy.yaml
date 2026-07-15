@@ -1,0 +1,15 @@
+id: beat:intoxicated-autopsy
+summary: She performs the examination while clearly drunk, slurring measurements and dropping
+  instruments onto the frozen flesh.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: reveals
+entities:
+- character:dr-elspeth-mott
+- character:bernard-croft
+scene_type: scene
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:hide-the-booze

@@ -1,0 +1,17 @@
+id: dilemma:silence-or-truth-between-women
+question: Do you persuade Marion to suppress her devastating review of Helena's last performance
+  in exchange for Helena's silence about Marion's affair, or let the truth about both come
+  out?
+why_it_matters: Determines whether Helena's reputation survives the night and whether Marion
+  retains her power to destroy others through her pen
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:seal-the-pact
+  text: Trade silence for silence and let both women keep their masks intact
+- id: answer:let-truth-ring
+  text: Refuse the bargain and let the reviews and revelations fly regardless of consequence
+anchored_to:
+- character:marion-ashworth
+- character:helena-vance

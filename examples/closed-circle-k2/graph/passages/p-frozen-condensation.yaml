@@ -1,0 +1,16 @@
+id: passage:p-frozen-condensation
+summary: Frozen condensation coats the drawing-room windows and obscures the snowbound grounds.
+  The household loses its last view of the exterior, completing the physical isolation of
+  the occupants.
+entities:
+- location:the-great-hall
+prose_summary: Helena touches the drawing-room window's ice; the cold penetrates her glove
+  and the frost remains undisturbed. The grounds outside have vanished behind opaque ice.
+  Rime seals the sash shut. The scream from the corridor has ceased. She turns from the view.
+  The drawing-room contracts into a vault; the house turns inward and loses its exterior compass.
+  No vista remains.
+beats:
+- beat:frozen-condensation
+choices:
+- label: Descend to the pantry to seek out Croft
+  to: passage:p-bernard-found-dead

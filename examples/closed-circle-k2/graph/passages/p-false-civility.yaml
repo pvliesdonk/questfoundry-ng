@@ -1,0 +1,31 @@
+id: passage:p-false-civility
+summary: The women maintain polite masks over tea despite mutual knowledge of each other's
+  vulnerabilities, and the suffocating intimacy of shared secrets prevents either from leaving
+  without fear.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena Vance pours tea for Marion Ashworth. Marion wears kid leather gloves
+  hiding ink stains and a key-shaped welt; Helena displays a tan line on her palm. They exchange
+  silent acknowledgment of burned documents and assignation dates. Neither rings for service
+  nor stands. The oxidized silver tea service cools. They remain seated in stalemate, unable
+  to leave without mutual destruction.
+beats:
+- beat:false-civility
+- beat:weight-of-secrets
+choices:
+- label: Extend the saucer until your fingers graze hers
+  requires:
+  - flag:helena-protected
+  to: passage:p-mutual-hostage
+- label: Smile and taste the metal on your tongue
+  requires:
+  - flag:helena-protected
+  to: passage:p-gilded-cage

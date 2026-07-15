@@ -1,0 +1,7 @@
+Dr. Mott climbed the cellar steps. The limestone grit transferred to her soles, each particle a ledger entry marking her ascent from the vault to the drawing room's contaminated atmosphere. She paused at the threshold. Her fingers moved to her coat pockets and found only the silk lining, empty of the metal weight that had anchored her previous hours. The irons on her wrists prevented her from thrusting her hands deeper, so she pressed her trembling fingertips against the void where the gin had rested.
+
+The drawing room maintained its arrangement of settees and escritoires, the heirs distributed among the furniture with the rigid spacing of obsolete account books on a shelf. Dr. Mott entered. A floorboard creaked beneath her heel, and the sound cracked through her nerves like the snap of bone breaking clean. She flinched. The motion sent a tremor through her shoulders that the irons could not anchor.
+
+The clarity of her sobriety rendered the scene with brutal exactitude. She observed the tarnish on the silver teapot, the frayed damask on the chair arms, the dust motes suspended in the still air. Every gesture of the assembled guests appeared grotesque in its precision, their manners a performance recorded in a ledger she could now read without the blur of alcohol. The cold resided in the oxidized metal and the archival silence that greeted her entrance, never in the temperature of the room.
+
+She stood amid their civility, her empty pockets trembling against her hips, broadcasting her condition to the assembly without need of medical interpretation.

@@ -1,0 +1,26 @@
+id: passage:p-letter-flutter
+summary: The love letter flutters to the floor and lies open, its contents visible to the
+  assembled guests. The revelation of this secret attachment destroys the evening's careful
+  performance and the gathering calculates the cost of scandal.
+entities:
+- object:bernard-blackmail-archive
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-frozen
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena steps near a fallen shattered pocket watch. Marion's trembling hand
+  releases a letter; the vellum falls to Persian rug. The heirs shift gazes to the document.
+  The dedication reveals an uncatalogued attachment and handwriting matching cellar ledger.
+  A gentleman's shadow obscures signature. Marion does not retrieve it and no one destroys
+  it. Administrative neutrality cracks. Assembly shares mutual knowledge.
+beats:
+- beat:letter-flutter
+choices:
+- label: Smooth your lapels and step over the fallen paper
+  to: passage:p-estate-museum

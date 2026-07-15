@@ -1,0 +1,17 @@
+id: passage:p-helena-ultimatum
+summary: Helena demands the examination happen tonight before the body freezes completely,
+  threatening to lock Dr. Mott in the cellars until she complies.
+entities:
+- character:helena-vance
+- character:dr-elspeth-mott
+- location:the-cellars
+prose_summary: Helena confronts Dr. Mott at the cellar threshold and demands immediate examination
+  of the stiffening body. Helena threatens to imprison Dr. Mott in the cellar using empty
+  barrels and a functioning lock if she refuses. Dr. Mott capitulates and descends. The match
+  is extinguished and dropped. The emerald velvet gown hem is frayed. Dr. Mott carries a medical
+  bag.
+beats:
+- beat:helenas-demand
+choices:
+- label: Descend to audit the wine cellar inventory
+  to: passage:p-ledger-and-testimony

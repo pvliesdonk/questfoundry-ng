@@ -1,0 +1,9 @@
+id: beat:bridge-0
+created_by: grow
+summary: Helena descends from the attic archive and enters the Great Hall where the assembled
+  heirs have gathered around the suspended ice block.
+beat_class: structural
+purpose: bridge
+entities:
+- character:helena-vance
+- location:the-great-hall

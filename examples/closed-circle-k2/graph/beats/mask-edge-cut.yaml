@@ -1,0 +1,7 @@
+id: beat:mask-edge-cut
+created_by: polish
+summary: The mask cuts into the skin, drawing blood that freezes before it falls.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:helena-vance

@@ -1,0 +1,9 @@
+Marion Ashworth stood before the library door. The brass handle wore a sleeve of ice, condensation frozen to the plate beneath, blackening the metal with tarnish. She extended her hand. The cold bit through her glove and registered as pain, then as spreading numbness. She withdrew.
+
+She had left the escritoire ten minutes prior. The inkwell remained overturned where she had placed it. The stain spread across page eleven of the ledger, erasing the notation of Bernard's cellar entry. Seventeen heirs stood in the freezing vault behind her, motionless among the ash and ice. The temperature had dropped twelve degrees since the fire died in the grate.
+
+She turned the handle. It held fast against her pressure. She applied force with her wrist. The ice groaned but did not yield. She shifted her stance and tried again. The mechanism remained fixed. The portfolio in her bag knocked against her thigh with each attempt, the weight of the alphabetized pages a constant reminder.
+
+She gripped the handle with both hands. The oxidized brass offered no warmth, no purchase. She wrenched downward with savage force. The ice cracked audibly. Metal shrieked against metal. The door lurched inward.
+
+She stumbled across the threshold into the passage. The warmer air touched her face. She stood with the bag still clasped against her side, her breath visible in the corridor. She had abandoned the careful notation, the alphabetical indexing, the archival precision of three decades. She entered the corridor with ink-stained fingers and the smell of rust on her palms. The cost was the final collapse of the civilized restraint that had governed her movements since morning. She proceeded toward the drawing room.

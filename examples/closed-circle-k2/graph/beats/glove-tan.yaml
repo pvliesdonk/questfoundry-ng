@@ -1,0 +1,7 @@
+id: beat:glove-tan
+created_by: polish
+summary: Marion notices a tan line on her finger where her glove ends, a small exposure.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

@@ -1,0 +1,26 @@
+id: passage:p-key-bite
+summary: Marion clutches the safe key so tightly that its teeth break the skin of her palm,
+  drawing blood. The wound signals that her performed civility is giving way to the panic
+  she has concealed.
+entities:
+- character:marion-ashworth
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion stands in the study overlooking the Great Hall and grips the safe key
+  from her bodice. The key bites her scarred palm and draws blood onto her skirt. Her pince-nez
+  slips. She removed her wedding ring and abandoned administrative neutrality. She knows the
+  safe holds a portfolio with her indiscretions between embezzlement and fraud. The constable
+  approaches the stairs.
+beats:
+- beat:key-bite-palm
+choices:
+- label: Twist the key while the east wall sheds its molding
+  to: passage:p-the-preserved-estate

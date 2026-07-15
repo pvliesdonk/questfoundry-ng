@@ -1,0 +1,9 @@
+Marion Ashworth withdrew the notebook from beneath her coat. The leather binding had absorbed the temperature of the room and pressed against her palm like a block of archive wax. She settled onto the settle's edge, keeping her back to the corpse that lay three feet behind her. The certificates remained folded in her left pocket, their edges sharp against her thigh.
+
+She opened the book to the current page. The entries above her final line documented inventory discrepancies and cellar temperatures in her usual hand: precise, unadorned, the letters vertical as iron bars. She touched her pen to the paper to record the position of the crack she had observed in the ice block's southeast face, and the alignment of the center of mass that suggested deliberate placement rather than natural thaw.
+
+The ink flowed for three words. Then it stopped.
+
+She pressed harder. The nib scratched against the paper and produced a sound like dry bone against stone. A dark line began to form, then fractured into a crystalline scrawl that spread across the page in dendritic patterns. The final letter of the word she had intended—evidence, or perhaps conspiracy—solidified into an illegible blot that resembled a tarnished silver stain more than language.
+
+Marion lifted the pen. The ink reservoir had frozen solid, the liquid transformed into opaque gel that would not yield to pressure. She set the instrument down upon the page. The incomplete entry sat upon the line, a truncated declaration that ended in frost rather than fact. She closed the book. The gap between what she had proven and what she could document now yawned wider than the crack in the ice.

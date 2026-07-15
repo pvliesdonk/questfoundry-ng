@@ -1,0 +1,21 @@
+id: passage:p-teddy-deception
+summary: Teddy confesses to the patriarch's murder and supplies incorrect details about the
+  weapon. The investigator notes the factual errors and recognizes that Teddy performs guilt
+  to protect the true killer, and the cost of this deception is the assembly's recognition
+  of conspiracy.
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+prose_summary: Teddy Bryant confesses killing Bernard with poker in cellars at eleven, claiming
+  he wiped it with handkerchief and hid it behind port. Marion Ashworth holds ledger page
+  eleven showing Bernard's cellar presence yet sees poker untouched on mantelpiece, his cuffs
+  lack blood, his fingernails bear grease. Dr. Mott observes grease and reaches for bag. Assembly
+  recognizes deception. Teddy maintains stance.
+beats:
+- beat:suspicion-raised
+- beat:teddy-confesses
+choices:
+- label: Study Marion beneath the patriarch's painted scrutiny
+  to: passage:p-portrait-eyes
+- label: Probe the inconsistencies in Teddy's weapon description
+  to: passage:p-romantic-revelation

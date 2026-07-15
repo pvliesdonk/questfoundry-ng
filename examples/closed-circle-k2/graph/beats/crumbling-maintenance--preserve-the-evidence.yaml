@@ -1,0 +1,17 @@
+id: beat:crumbling-maintenance--preserve-the-evidence
+created_by: grow
+summary: Teddy initials ledgers in the great hall as the east wall sheds its molding, the
+  forged signature wavering while upstairs the constable examines Marion's key to the safe;
+  the collapse of the estate accelerates alongside the exposure of its guests.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:preserve-the-fiction

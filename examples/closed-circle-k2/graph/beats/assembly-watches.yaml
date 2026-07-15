@@ -1,0 +1,16 @@
+id: beat:assembly-watches
+summary: The snowbound heirs gather below, watching the ice drip slowly, divided between those
+  who demand action and those who insist on propriety.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- faction:the-snowbound-heirs
+- location:the-great-hall
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

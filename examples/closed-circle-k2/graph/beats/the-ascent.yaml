@@ -1,0 +1,16 @@
+id: beat:the-ascent
+summary: The climb is perilous, ice cracking with each movement, and the assembly gasps as
+  she reaches toward the frozen key.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- character:helena-vance
+- location:the-great-hall
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom

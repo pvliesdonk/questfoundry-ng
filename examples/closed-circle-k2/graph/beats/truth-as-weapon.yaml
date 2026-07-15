@@ -1,0 +1,16 @@
+id: beat:truth-as-weapon
+summary: Honesty proves more destructive than any lie, leaving both women isolated in the
+  frozen house, their reputations shattered.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: complicates
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring

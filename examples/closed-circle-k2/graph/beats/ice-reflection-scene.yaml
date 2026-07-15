@@ -1,0 +1,7 @@
+id: beat:ice-reflection-scene
+created_by: polish
+summary: The ice on the windows reflects the scene within, a frozen tableau of accusation.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

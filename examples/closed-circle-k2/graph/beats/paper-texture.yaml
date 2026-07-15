@@ -1,0 +1,7 @@
+id: beat:paper-texture
+created_by: polish
+summary: The paper is oddly textured, suggesting it was submerged and frozen.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:bernard-blackmail-archive

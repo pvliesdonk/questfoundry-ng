@@ -1,0 +1,9 @@
+id: beat:bridge-1
+created_by: grow
+summary: Hours pass as the household disperses from the ruined hall; below stairs, the cellars
+  harbor their own desperate calculations.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- location:the-cellars

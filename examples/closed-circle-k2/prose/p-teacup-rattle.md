@@ -1,0 +1,9 @@
+Dr. Mott's hand had not moved. The glass remained on the mantelpiece, two meters from its original position, but her fingers rested at her sides, curled against the tweed of her skirt. The frozen key in the chandelier dripped. Another drop struck the parquet. Then the china rattled.
+
+The sound came from the sideboard. A teacup, half-full of cold tea, trembled in its saucer. The porcelain moved in a tight circle, grinding against the glaze with a noise like bone settling in socket. No hand had touched it. The room's temperature had dropped another degree, but the cold had never before moved objects.
+
+Marion stopped speaking. The ledger hung against her chest, the page eleven entry visible to no one. Helena's grip on the portfolio shifted; the damask napkins rustled. Teddy's hands opened and closed at his sides. The seventeen heirs stood around the settle where Bernard's body lay, and their silence was not the silence of listening but the silence of a ledger whose columns no longer sum.
+
+Dr. Mott observed the teacup. It rotated fifteen degrees, then stilled. The tea inside had frozen to slush, and the cup's motion had left a faint circular tarnish on the silver tray beneath it. She understood that the house had abandoned the pretense of natural law. The cold was not merely a condition of the air but an active principle, a creditor compiling debts against the estate.
+
+The assembly did not move. They maintained their postures of composure, but the effort had become visible. Marion's shoulders rose and fell with mechanical precision. Helena's gloved hand whitened at the knuckles. The performance of calm now required more energy than panic, and the room offered no stable coordinates against which to measure their remaining time. The teacup ceased its motion, but the silence persisted, freighted with the weight of archives that had begun to move of their own accord.

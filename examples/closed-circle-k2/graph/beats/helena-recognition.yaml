@@ -1,0 +1,16 @@
+id: beat:helena-recognition
+summary: Helena Vance recognizes Teddy as a former student from her theatrical troupe twenty
+  years prior, complicating his claim of being the long-lost heir.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: complicates
+entities:
+- character:helena-vance
+- character:teddy-bryant
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

@@ -1,0 +1,17 @@
+id: beat:the-confrontation
+summary: The two women face each other in the drawing room, each holding documents capable
+  of destroying the other's social standing.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

@@ -1,0 +1,21 @@
+id: passage:p-teddy-exposed
+summary: Marion Ashworth examines the stranger's luggage for the patriarch's papers and discovers
+  that Teddy Bryant's identity documents falsify his birthplace and age. The revelation voids
+  the stranger's claim to legitimacy and costs Marion the protection of the household's performed
+  order, as she now possesses proof that threatens to unravel the estate's fragile civility.
+entities:
+- character:bernard-croft
+- character:marion-ashworth
+- character:teddy-bryant
+- object:bernard-blackmail-archive
+prose_summary: She searches Teddy Bryant's portmanteau and finds birth certificates revealing
+  he is three years younger than the heir registry requires and born at St. Jude's Whitechapel
+  not Somerset, invalidating his inheritance claim. Teddy stands by the mantelpiece, his deception
+  exposed to her. She holds documentary proof of his fraud and decides whether to present
+  or conceal the evidence.
+beats:
+- beat:bridge-22
+- beat:teddy-papers-found
+choices:
+- label: Present the documents to Helena Vance
+  to: passage:p-helena-recognition

@@ -1,0 +1,21 @@
+id: passage:p-risk-of-compromise
+summary: Teddy realizes that Dr. Mott’s intoxication risks the destruction of forensic evidence
+  and a false diagnosis. She stands over the hidden supply with a fire iron, weighing the
+  cost of destroying it against the complicity of keeping it for leverage.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+prose_summary: Teddy observes Dr. Mott's intoxication and tremor, which risk destroying forensic
+  proof and causing false determination of cause. He descends to the wine cellar, locates
+  disturbed dust between port bottles, finds a metal flask concealed by frayed damask, and
+  sets it down. He grips a fire iron and weighs smashing the supply against retaining it for
+  leverage. The iron trembles.
+beats:
+- beat:risk-of-compromise
+- beat:the-choice-presents
+choices:
+- label: Press your handkerchief to your lips and hold your breath
+  to: passage:p-copper-breath
+- label: Bar the cellar door and smooth your gloves
+  to: passage:p-sealed-cellar

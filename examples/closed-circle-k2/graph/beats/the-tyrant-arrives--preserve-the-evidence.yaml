@@ -1,0 +1,18 @@
+id: beat:the-tyrant-arrives--preserve-the-evidence
+created_by: grow
+summary: The distant cousin enters on a dogsled and surveys the snowbound heirs with contempt,
+  ordering immediate inventory of Helena's theatrical collection while his gaze drifts to
+  the study; the preserved evidence threatens his authority, and Helena calculates the worth
+  of her past against the power of the files upstairs.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: reveals
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud

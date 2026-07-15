@@ -1,0 +1,14 @@
+id: passage:p-mott-tremors
+summary: Dr. Mott exhibits withdrawal symptoms—tremors, nausea, and sweating in the freezing
+  temperatures—costing her the manual precision required to hold the scalpel.
+entities:
+- character:dr-elspeth-mott
+prose_summary: Dr. Mott stands at settle beside Bernard's body with irons on her wrists. The
+  constable releases her elbow. She opens her medical bag and grips the scalpel, but a persistent
+  tremor causes the blade to vibrate. Sweat chills on her skin as nausea bends her forward.
+  She straightens and holds blade before her face; its shake broadcasts her revoked authority.
+beats:
+- beat:withdrawal-observed
+choices:
+- label: Lift the fire iron from the frost-rimed grate
+  to: passage:p-risk-of-compromise

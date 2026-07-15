@@ -1,0 +1,17 @@
+id: beat:guest-panic
+summary: Dr. Mott and Helena realize their secrets are catalogued in Bernard's handwriting,
+  and they demand the archive be destroyed immediately.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- character:dr-elspeth-mott
+- character:helena-vance
+- object:bernard-blackmail-archive
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:burn-the-secrets
+- path:preserve-the-evidence

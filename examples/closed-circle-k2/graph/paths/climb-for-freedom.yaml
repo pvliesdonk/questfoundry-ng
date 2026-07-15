@@ -1,0 +1,8 @@
+id: path:climb-for-freedom
+name: Climb for Freedom
+explores: answer:climb-for-freedom
+consequences:
+- id: consequence:key-recovered
+  text: The frozen key is recovered from the chandelier
+- id: consequence:chandelier-destabilized
+  text: The great hall's icy centerpiece is destabilized

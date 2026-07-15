@@ -1,0 +1,17 @@
+id: location:the-great-hall
+name: The Great Hall
+concept: The frozen heart of the house where a chandelier hangs encased in ice and the guests
+  assemble for their final performances
+base:
+  atmosphere: frost on inside of windows, dying fire
+  feature: ash scattered across Persian rug marking path toward escritoire
+  chandelier-composition: oxidized silver armature with tarnished chain
+arc:
+  begins: frozen heart of the house with chandelier encased in ice, site of final performances
+  pivots:
+  - beat: beat:key-visible
+    becomes: site of suspended key, the chandelier transformed from decoration to obstacle
+  - beat: beat:apply-flames
+    becomes: site of forced thawing, flames licking at frozen testament
+  - beat: beat:the-crash
+    becomes: ruined chamber, chandelier smashed across the parquet floor

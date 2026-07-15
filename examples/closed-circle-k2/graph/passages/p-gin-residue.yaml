@@ -1,0 +1,18 @@
+id: passage:p-gin-residue
+summary: Marion detects the sweet medicinal smell of gin rising from the body and recognizes
+  it from her father’s study, collapsing the professional distance between investigator and
+  crime. The association links the murder to her private history and confirms that the violence
+  beneath civilized surfaces has infiltrated her own past, forcing a confrontation between
+  her performative detachment and authentic grief.
+entities:
+- character:marion-ashworth
+prose_summary: Marion descends icy stairs holding her notebook. Bernard stands by racks with
+  his inventory ledger. The patriarch's body lies between the third and fourth rack. Marion
+  approaches and smells aged gin residue on the collar, recognizing her father's supply from
+  his locked cabinet. Her professional composure breaks. She acknowledges the violence connecting
+  her past to this death.
+beats:
+- beat:scent-of-gin
+choices:
+- label: Unfasten the brass clasps of the stranger's portmanteau
+  to: passage:p-teddy-exposed

@@ -1,0 +1,18 @@
+id: location:the-cellars
+name: The Cellars
+concept: The icy underworld beneath the house where wine, secrets, and occasionally people
+  are stored and forgotten
+base:
+  atmosphere: ice-crusted barrels, breath visible
+  feature: single exposed bulb swinging in drafts
+  ceiling_condition: coated in black ice with water accumulating to critical droplet mass
+arc:
+  begins: icy underworld beneath the house where wine, secrets, and people are stored and
+    forgotten
+  pivots:
+  - beat: beat:the-body-discovered
+    becomes: scene of patriarch's murder, skull cracked against wine racks
+  - beat: beat:bernard-found-dead
+    becomes: site of second death, pantry corridor holding frozen murder victim
+  - beat: beat:the-hidden-flask
+    becomes: site of addiction exposure, medical bag searched and secrets revealed

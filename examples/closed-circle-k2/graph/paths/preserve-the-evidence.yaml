@@ -1,0 +1,8 @@
+id: path:preserve-the-evidence
+name: Preserve the Evidence
+explores: answer:preserve-the-evidence
+consequences:
+- id: consequence:archive-survives
+  text: Bernard's blackmail materials survive as court evidence
+- id: consequence:scandal-erupts
+  text: Guest secrets are exposed to scandal and investigation

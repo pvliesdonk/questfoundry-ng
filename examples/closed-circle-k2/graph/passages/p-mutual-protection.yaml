@@ -1,0 +1,18 @@
+id: passage:p-mutual-protection
+summary: Helena locates Marion in the drawing room after Bernard's departure seals the house.
+  She proposes they destroy each other's evidence—the review for the affair proof—to bind
+  themselves in mutual protection.
+entities:
+- character:bernard-croft
+- character:marion-ashworth
+- character:helena-vance
+prose_summary: Helena Vance enters the drawing room after Bernard Croft departs. Marion Ashworth
+  holds an unpublished review of Helena's final performance; Helena holds documentation of
+  Marion's affair. They agree to burn both documents simultaneously. They stand before the
+  fire, portfolios extended, waiting to see who releases first.
+beats:
+- beat:bridge-4
+- beat:the-offer
+choices:
+- label: Descend to the cold marble of the hall below
+  to: passage:p-the-deadline

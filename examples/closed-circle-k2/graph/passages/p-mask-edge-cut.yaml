@@ -1,0 +1,25 @@
+id: passage:p-mask-edge-cut
+summary: The mask edge cuts the skin, freezing the blood before it falls. The wearer bears
+  the first laceration of the evening, and the cold entombs the evidence as red ice.
+entities:
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena tightens a silver mask cutting her cheek; the blood freezes. She deposits
+  the pellet into a port glass on the escritoire. Seventeen heirs avoid her gaze, aware succession
+  was fixed by forgery and damaged testament. She descends the cellar stairs, suppressing
+  smile to prevent deeper laceration. Frozen blood melts on her glove; the first laceration
+  marks her as wearer.
+beats:
+- beat:mask-edge-cut
+choices:
+- label: Tighten the mask and descend to the cellars
+  to: passage:p-the-empty-grate

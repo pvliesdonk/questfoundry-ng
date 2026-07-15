@@ -1,0 +1,14 @@
+id: passage:p-suspended-witnesses
+summary: Dust motes hang suspended in the drawing room's gaslight, microscopic witnesses to
+  the violence that has disrupted the household's meticulous order.
+entities:
+- location:the-great-hall
+prose_summary: Bernard lies dead with frozen throat beneath the frozen testament. Marion holds
+  certificates stiff with cold. Dr. Mott's medical bag sits on the spreading frost. Teddy
+  stands with hands clasped awaiting discovery. Helena brushes ice from her emerald velvet.
+  The estate thaws. Four survivors maintain rigid silence around the corpse.
+beats:
+- beat:dust-motes
+choices:
+- label: Brush the dust from my sleeve and feel the thaw seeping in
+  to: passage:p-killer-loose

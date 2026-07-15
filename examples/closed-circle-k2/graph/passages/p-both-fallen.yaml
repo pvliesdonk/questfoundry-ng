@@ -1,0 +1,33 @@
+id: passage:p-both-fallen
+summary: Helena's theatrical legacy is publicly savaged and Marion's marriage ends in disgrace.
+  Both women are ruined by the exchange of truths and remain isolated in the frozen house
+  with shattered reputations.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena stands beside the escritoire; Marion remains at the settle's edge; seventeen
+  heirs stand fixed around perimeter. Marion removed her wedding ring and placed it on escritoire
+  beside Pimlico foolscap; heirs observed. Helena's negative review lies exposed; heirs have
+  read it. Neither retains leverage. The portfolios remain open. The chandelier lies fallen
+  on the Persian rug. Both reputations are ruined.
+beats:
+- beat:both-women-fall
+- beat:truth-as-weapon
+choices:
+- label: Press your palms together until the kid leather creaks
+  requires:
+  - flag:helena-savaged
+  to: passage:p-exposed
+- label: Slide your hand into your pocket and trace the manuscript's folded edge
+  requires:
+  - flag:helena-savaged
+  to: passage:p-hollow-vindication

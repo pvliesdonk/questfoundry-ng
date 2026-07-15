@@ -1,0 +1,8 @@
+id: path:hasten-with-flames
+name: Hasten with Flames
+explores: answer:hasten-with-flames
+consequences:
+- id: consequence:will-damaged
+  text: The frozen will is water-damaged but legible tonight
+- id: consequence:inheritance-resolved
+  text: The inheritance is resolved before the storm breaks

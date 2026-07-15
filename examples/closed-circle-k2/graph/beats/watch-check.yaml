@@ -1,0 +1,7 @@
+id: beat:watch-check
+created_by: polish
+summary: Someone checks a pocket watch, the click of the mechanism loud as a gunshot.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

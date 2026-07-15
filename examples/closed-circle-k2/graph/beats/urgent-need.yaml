@@ -1,0 +1,15 @@
+id: beat:urgent-need
+summary: The will must be read urgently to settle the inheritance and prevent the estate's
+  assets from being claimed by creditors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: advances
+entities:
+- character:helena-vance
+- object:the-frozen-will
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

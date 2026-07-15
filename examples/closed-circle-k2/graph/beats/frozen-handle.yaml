@@ -1,0 +1,7 @@
+id: beat:frozen-handle
+created_by: polish
+summary: The door handle is frozen, requiring a violent twist to escape.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

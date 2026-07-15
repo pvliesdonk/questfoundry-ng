@@ -1,0 +1,9 @@
+Teddy remained with his hands open at his sides while the constable locked the irons around Dr. Mott's wrists. The metal clicked with the finality of a ledger closing. She did not look at him. Her medical bag rested on the settle beside Bernard's covered form, the brass fixtures aligned with the ash stains on the rug. The peppermint odor had dissipated, leaving only the cold smell of oxidized silver and archival dust.
+
+She turned toward the cellar door and paused. Her shoulders squared, but the tremor in her hands had ceased, arrested by the metal or by the withdrawal that would follow. Teddy observed that her posture retained the rigid authority of a physician even as the authority itself dissolved. He stood motionless. The grease in his knuckles had congealed, marking the creases with a darkness that matched the tarnish on the escritoire. His sacrifice had been entered in the record and struck through.
+
+The constable escorted her past the seventeen heirs. Their faces turned to track her movement, then returned to settle upon Teddy with the weight of recalculated inventory. He understood that his confession had been filed under false entry and corrected. The space between him and Dr. Mott widened with each step she took toward the vestibule, carrying the distance of revoked licenses and voided contracts.
+
+He shifted his gaze to the andiron where the ice block rested. Water pooled on the Persian rug and drained through the floorboards, carrying the testament toward illegibility. The document within the thawing mass had begun to blur, the signatures dissolving like obsolete account entries. The cracks in the ice admitted more meltwater, and the paper succumbed to the entropy of the room's collapsing order.
+
+Teddy adjusted his borrowed tweed jacket. The frayed damask lining brushed his wrist. He stood alone with his unaccepted guilt, while the frozen water completed its ruinous work upon the text that might have named him.

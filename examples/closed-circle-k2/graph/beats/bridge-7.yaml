@@ -1,0 +1,9 @@
+id: beat:bridge-7
+created_by: grow
+summary: The legal formalities conclude in the Great Hall; elsewhere in the house, the physician
+  retreats to confront her private deprivation.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- character:dr-elspeth-mott

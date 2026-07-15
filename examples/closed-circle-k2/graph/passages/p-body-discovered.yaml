@@ -1,0 +1,20 @@
+id: passage:p-body-discovered
+summary: Bernard Croft discovers the patriarch's corpse in the wine cellar, skull cracked
+  against the racks, and quietly notes that the body has already stiffened in the subzero
+  temperatures. The murder exposes the violence beneath the household's performed civility
+  and imposes a mood of frostbitten restraint giving way to panic.
+entities:
+- character:bernard-croft
+- location:the-cellars
+- faction:the-snowbound-heirs
+prose_summary: Bernard descends to the cellar holding the inventory ledger. He discovers the
+  patriarch dead between wine racks, skull split against an iron bracket. The body has stiffened
+  from subzero cold. Blood congeals on the stone floor. The right arm reaches toward the lowest
+  shelf. Bernard smells laudanum or medicinal tincture on the collar.
+beats:
+- beat:the-body-discovered
+choices:
+- label: Study the frost jeweling his eyelashes
+  to: passage:p-frost-jewelry
+- label: Inhale the sweet medicinal ghost from the body
+  to: passage:p-gin-residue

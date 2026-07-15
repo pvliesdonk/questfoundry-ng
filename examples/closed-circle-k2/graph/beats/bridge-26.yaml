@@ -1,0 +1,9 @@
+id: beat:bridge-26
+created_by: grow
+summary: The urgency of the document reading is interrupted by a servant's scream from the
+  pantry corridor.
+beat_class: structural
+purpose: bridge
+entities:
+- object:the-frozen-will
+- character:bernard-croft

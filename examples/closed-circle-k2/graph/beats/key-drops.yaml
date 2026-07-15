@@ -1,0 +1,15 @@
+id: beat:key-drops
+summary: Eventually the ice melts enough for the key to fall naturally, clattering onto the
+  floorboards, but precious investigative time is lost.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:wait-with-decorum

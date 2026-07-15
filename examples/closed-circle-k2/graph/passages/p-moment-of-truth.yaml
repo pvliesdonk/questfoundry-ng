@@ -1,0 +1,17 @@
+id: passage:p-moment-of-truth
+summary: The assembly gathers to hear Teddy deliver the testimony. Bernard braces for exposure
+  as the gathering's maintained order collapses.
+entities:
+- character:bernard-croft
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+prose_summary: Bernard Croft holds the cellar ledger. Seventeen heirs surround him. Teddy
+  Bryant accuses Bernard of theft when the patriarch died, citing a glass with lip prints
+  between the 1874 and 1876 ports. Marion Ashworth grips certificates. Dr. Mott reaches for
+  her bag. Helena Vance shifts her portfolio. Bernard considers burning the ledger but accepts
+  exposure. Chandelier key descends.
+beats:
+- beat:the-moment-of-truth-locked
+choices:
+- label: Interpose yourself between Bernard and the cabinet
+  to: passage:p-marion-demands-justice

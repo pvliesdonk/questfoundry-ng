@@ -1,0 +1,8 @@
+id: path:expose-the-fraud
+name: Expose the Fraud
+explores: answer:expose-the-fraud
+consequences:
+- id: consequence:teddy-imprisoned
+  text: Teddy faces imprisonment for fraudulent identity
+- id: consequence:cousin-inherits
+  text: The tyrannical cousin inherits the crumbling estate

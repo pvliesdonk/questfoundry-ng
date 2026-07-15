@@ -1,0 +1,9 @@
+id: beat:bridge-16
+created_by: grow
+summary: The lovers separate in the aftermath; in the hall, the document continues its ruinous
+  soak in the meltwater.
+beat_class: structural
+purpose: bridge
+entities:
+- character:teddy-bryant
+- object:the-frozen-will

@@ -1,0 +1,14 @@
+id: passage:p-metal-cold-burn
+summary: Marion grips the key. The metal burns her palm with supernatural cold, leaving a
+  welt and confirming the frostbitten hostility of the locked room.
+entities:
+- character:marion-ashworth
+prose_summary: Marion catches a falling key. The frozen metal burns her palm through the glove
+  and leaves a welt shaped like the bow. She displays the injury to seventeen heirs. She learns
+  the cold is a hostile entity inhabiting objects. She transfers the key to her left hand.
+  The locked room demands flesh as collateral.
+beats:
+- beat:metal-cold-burn
+choices:
+- label: Cast the frozen key from your burning palm
+  to: passage:p-chandelier-crash

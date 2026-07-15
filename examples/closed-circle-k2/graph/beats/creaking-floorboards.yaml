@@ -1,0 +1,7 @@
+id: beat:creaking-floorboards
+created_by: polish
+summary: The floorboards creak under someone's shifting weight, a sound like a warning.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

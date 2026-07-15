@@ -1,0 +1,22 @@
+id: passage:p-gin-smash
+summary: Teddy smashes the gin bottles against the cellar wall, destroying the alcohol. Dr.
+  Mott must face the autopsy sober as the protective performance of gentlemanly composure
+  falls away into raw confrontation.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Teddy smashes concealed gin bottles against the wall, destroying Dr. Mott's
+  anesthesia and evidence. Dr. Mott, wearing irons beside Bernard's body on the settle, enters
+  withdrawal, trembling. She requests clarity for the examination. Teddy holds an iron poker
+  and agrees. She faces him sober, accepting the examination proceeds without anesthesia.
+  Her open medical bag and scalpel remain beside the settle.
+beats:
+- beat:smash-the-gin
+choices:
+- label: Wind your scarf tight around her wrists
+  to: passage:p-bound-examination

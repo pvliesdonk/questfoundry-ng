@@ -1,0 +1,9 @@
+Teddy reached the pantry corridor third, behind Helena and Dr. Mott. The doorway framed a tableau that arrested his stride. Bernard sat against the wall beneath the preserves shelf, his legs splayed in the attitude of a man who had slid down the plaster. The single bulb swung in drafts from the broken casement, casting his shadow across the ice-crusted barrels in a rhythm that mimicked respiration. But Bernard did not breathe.
+
+The cold bit through Teddy's trouser cuffs with the specificity of a tax assessment. Bernard's eyes stared at the ceiling, unblinking and pale as they had been in life, but now the skin of his throat wore a sheen of frost that sealed the wound beneath a layer of frozen tissue. The blood had not pooled; it had crystallized on the collar of his livery. The ivory cigarette holder lay snapped beside his liver-spotted hand. Teddy recognized the temperature of the cellars, the exact degree at which biological processes halt and preserve the evidence of violence.
+
+The storm had sealed the valley three days prior. No door had opened since. The murderer remained in the house, breathing the same air as the heirs, drinking from the same stock of wine that cooled in the racks behind the corpse.
+
+Helena turned from the body. Her gloves—one leather, one velvet—hung at her sides. She did not speak. Behind her, Marion Ashworth took a step backward and her heel struck the stair rod with a sound like a gavel. Dr. Mott set down her medical bag. The frost on the floor recorded their footprints as they shifted, a ledger of positions that would not hold. The silence had cracked like ice under pressure.
+
+The cold had finished what manners had postponed; the house now held a corpse and a killer in equal stillness, and the accounts were coming due.

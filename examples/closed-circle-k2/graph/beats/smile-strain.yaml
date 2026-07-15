@@ -1,0 +1,7 @@
+id: beat:smile-strain
+created_by: polish
+summary: Helena's smile strains at the corners, a crack in the porcelain.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:helena-vance

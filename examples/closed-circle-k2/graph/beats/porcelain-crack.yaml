@@ -1,0 +1,7 @@
+id: beat:porcelain-crack
+created_by: polish
+summary: A teacup handle snaps under too-tight fingers.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

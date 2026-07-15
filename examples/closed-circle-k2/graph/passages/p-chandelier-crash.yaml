@@ -1,0 +1,29 @@
+id: passage:p-chandelier-crash
+summary: The chandelier crashes into the Great Hall and shatters, freeing the frozen key.
+  Helena retrieves it from the wreckage as the household disperses, and the cellars below
+  harbor desperate calculations.
+entities:
+- location:the-great-hall
+- character:helena-vance
+- faction:the-snowbound-heirs
+- location:the-cellars
+prose_summary: The chain snaps. The chandelier falls onto the Persian rug. Ice explodes. Marion
+  falls and drops the key. Helena falls and crushes her gloved hand beneath ice. She retrieves
+  the wet key and holds it aloft. Seventeen heirs step back. Hours pass. The household disperses
+  to corridors and freezing cellars. Bernard remains beneath frayed damask. The chandelier
+  lies ruined.
+beats:
+- beat:aftermath-chaos
+- beat:bridge-1
+- beat:the-crash
+choices:
+- label: Dash the gin bottles against the frost-slicked cellar wall
+  grants:
+  - flag:autopsy-sound
+  - flag:mott-withdrawal
+  to: passage:p-gin-smash
+- label: Tuck the bottles behind the dust-furred vintage port
+  grants:
+  - flag:autopsy-compromised
+  - flag:mott-intoxicated
+  to: passage:p-stash-behind-port

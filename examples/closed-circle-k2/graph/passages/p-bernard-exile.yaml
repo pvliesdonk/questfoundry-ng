@@ -1,0 +1,24 @@
+id: passage:p-bernard-exile
+summary: Bernard is cleared of homicide but dismissed from his post and stripped of his livery.
+  The wine thefts become common knowledge among the guests, ending his decades of service
+  in public disgrace, and he departs the estate on foot into the breaking storm, ruined, carrying
+  only his blackmail archive and his shame.
+entities:
+- character:bernard-croft
+- character:helena-vance
+- faction:the-snowbound-heirs
+- object:bernard-blackmail-archive
+prose_summary: The constable confirms Bernard's alibi via the cellar ledger and disturbed
+  dust. Helena Vance dismisses him for larceny, denies settlement, and demands the livery.
+  Bernard surrenders the coat before seventeen heirs. Wine thefts spanning fourteen years
+  are revealed. Bernard retrieves his portfolio of alphabetized pages, exits into the snowstorm,
+  and walks toward the gateposts marking thirty-seven years of employment.
+beats:
+- beat:bernard-dismissed
+- beat:departure
+- beat:public-shame
+choices:
+- label: Brush the snow from your coat with mechanical precision
+  to: passage:p-coat-brushing
+- label: Wrench the frozen handle with savage force
+  to: passage:p-frozen-handle

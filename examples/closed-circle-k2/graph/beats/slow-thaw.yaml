@@ -1,0 +1,15 @@
+id: beat:slow-thaw
+summary: The ice drips gradually, the key descending slowly over hours as the temperature
+  in the hall rises fractionally.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- location:the-great-hall
+- object:the-frozen-will
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:wait-with-decorum

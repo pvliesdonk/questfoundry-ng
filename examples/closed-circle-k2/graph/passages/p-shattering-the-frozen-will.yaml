@@ -1,0 +1,28 @@
+id: passage:p-shattering-the-frozen-will
+summary: Helena positions the fire irons for Teddy to strike the frozen will. The ice splits
+  to reveal validating text; the ash in the grate secures their conspiracy while the storm
+  seals the estate, trapping them with the evidence.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- object:the-frozen-will
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena hands Teddy the poker. She lifts the frozen will from the andiron using
+  tongs and positions it above the ash. Teddy strikes the ice. The block splits. Water dissolves
+  fragments among Bernard's carbonized records. The document exposes a legible patronymic
+  validating succession. The heirs witness the validation. Storm blocks roads with snow, trapping
+  heirs with evidence of their complicity.
+beats:
+- beat:aid-the-impostor--burn-the-secrets
+choices:
+- label: Slide your hand from the poker to his coat sleeve
+  to: passage:p-burn-the-secrets

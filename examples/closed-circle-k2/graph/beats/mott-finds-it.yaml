@@ -1,0 +1,15 @@
+id: beat:mott-finds-it
+summary: Dr. Mott discovers the hidden stash and drinks deeply before beginning the examination,
+  her hands steadying with the familiar burn.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: advances
+entities:
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:hide-the-booze

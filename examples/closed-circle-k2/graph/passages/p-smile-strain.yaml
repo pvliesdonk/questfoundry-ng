@@ -1,0 +1,23 @@
+id: passage:p-smile-strain
+summary: Helena's composure develops a visible crack at the corners of her smile. This fracture
+  costs her the room's trust and confirms that the social order is collapsing into panic.
+entities:
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena Vance turns toward the seventeen heirs and attempts a hostess smile,
+  but her facial muscles tremble and the smile fractures. The nearest heir steps backward,
+  his heel striking the marble. Another heir drops a tarnished silver card case. The heirs
+  exchange glances calculating exits. Helena’s composure cracks visibly, transmitting panic.
+  The social arrangement dissolves and the maintained facade shatters.
+beats:
+- beat:smile-strain
+choices:
+- label: Reach for the sugar tongs with steady fingers
+  to: passage:p-false-civility

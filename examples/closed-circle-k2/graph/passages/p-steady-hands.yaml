@@ -1,0 +1,24 @@
+id: passage:p-steady-hands
+summary: Dr. Mott discovers the hidden stash and drinks deeply to steady her hands. She performs
+  the examination while intoxicated, slurring measurements and dropping instruments onto the
+  frozen flesh at the cost of procedural integrity.
+entities:
+- character:dr-elspeth-mott
+- location:the-cellars
+- character:bernard-croft
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott, bound in iron manacles, finds gin hidden behind 1876 port bottles
+  where dust between 1874 and 1876 vintages is disturbed. She drinks. She examines Bernard’s
+  frozen body with calipers and scalpel from her medical bag, dropping both. Her speech slurs,
+  handwriting fails, and measurements blur. Her findings become unreliable. She is intoxicated.
+beats:
+- beat:intoxicated-autopsy
+- beat:mott-finds-it
+choices:
+- label: Catch the flask tumbling toward the frozen slab
+  to: passage:p-gin-flask-gleam
+- label: Enter her ruling of poisoning in the case log
+  to: passage:p-contradictory-autopsy

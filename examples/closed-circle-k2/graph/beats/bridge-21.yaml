@@ -1,0 +1,9 @@
+id: beat:bridge-21
+created_by: grow
+summary: Teddy steps forward to speak; his testimony, once begun, necessitates the exposure
+  of the archive's comprehensive indictments.
+beat_class: structural
+purpose: bridge
+entities:
+- character:teddy-bryant
+- object:bernard-blackmail-archive

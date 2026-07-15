@@ -1,0 +1,15 @@
+id: passage:p-ink-stain-spread
+summary: An ink stain spreads across the tablecloth. The breach costs the gathering its pretense
+  of control and marks the point where human error begins to dismantle the evening's performance.
+entities:
+- location:the-great-hall
+prose_summary: Marion touches escritoire; tipped inkwell stains linen, ledger page 11, erasing
+  Bernard's cellar entry. Ink touches her finger. Seventeen heirs know Teddy's testimony revealed
+  Bernard's embezzlement. Plaster cracks; gentleman's watch tangles; he strikes mantel. Helena
+  steps on Persian rug's ash trail, staggers against Bernard's body on settle, recovers; emerald
+  glove brushes inkwell cap. No one rights inkwell. Control dissolves.
+beats:
+- beat:ink-stain-spread
+choices:
+- label: Push your chair back from the spreading bruise
+  to: passage:p-bernard-exile

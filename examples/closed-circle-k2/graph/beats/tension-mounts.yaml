@@ -1,0 +1,14 @@
+id: beat:tension-mounts
+summary: Hours pass with the killer still unidentified, and accusations begin to fly between
+  guests as the wait stretches toward night.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: complicates
+entities:
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:wait-with-decorum

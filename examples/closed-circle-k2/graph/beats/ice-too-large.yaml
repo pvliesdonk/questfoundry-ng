@@ -1,0 +1,15 @@
+id: beat:ice-too-large
+summary: The ice block is too thick to melt naturally in time; natural thaw would delay the
+  reading for days, risking further deaths.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: complicates
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

@@ -1,0 +1,16 @@
+id: passage:p-hungry-hearth
+summary: The fire burns with unnatural intensity in the drawing-room hearth, consuming the
+  silence like fuel. The company holds their positions in rigid civility, and the pretense
+  of order becomes an unsustainable performance against the entropy of the moment.
+entities:
+- location:the-great-hall
+prose_summary: Helena enters the drawing room and engages the latch. Marion holds the ledger
+  with ink-stained fingers beside the escritoire. Dr. Mott holds an empty glass three paces
+  from the medical bag. Teddy stands with grease on his cuffs. Seventeen minutes have passed
+  since the pantry scream. No one sits. The unnatural fire burns intensely. The pretense of
+  order strains.
+beats:
+- beat:fire-glow-intense
+choices:
+- label: Leave the hungry glow and approach the drawing room
+  to: passage:p-mutual-ruin

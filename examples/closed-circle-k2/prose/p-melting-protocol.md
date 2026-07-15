@@ -1,0 +1,7 @@
+Marion nodded. The gesture terminated at the chin and held for three seconds, sufficient to communicate intent without expenditure of breath. Servants entered through the service arch bearing brass implements: tongs with oxidized grips, braziers that left trails of tarnish upon the damask they brushed against.
+
+The heirs rearranged their postures to accommodate the heat sources. The ice containing the testament was transferred from the trestle to a position three feet from the grate. Water dripped onto the rug, darkening the path Bernard had tracked toward the escritoire.
+
+Helena measured the distance with her eyes. The document inside remained visible through cracks that spidered across the southeast face. She directed the servants to shift the block two inches leftward, away from the direct confluence of rising heat. The ice would melt; the paper would not char. She calculated the rate of thaw against the remaining hours of darkness, noting how the water damage spread from the fissures in branching patterns that resembled obsolete ledger shorthand.
+
+The room settled into a rhythm of dripping and the occasional crack of expansion. Helena maintained her stance beside the fire, her frayed sleeve brushing the tongs where they rested. She did not look at Marion, who stood at the periphery of the heat's influence, nor at the chandelier above. The assembly breathed in unison as the ice surrendered its contents with the slow inevitability of archival decay.

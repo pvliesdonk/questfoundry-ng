@@ -1,0 +1,9 @@
+id: beat:bridge-17
+created_by: grow
+summary: Droplets accumulate on the floor as the afternoon light fades and the assembly's
+  patience frays into open hostility.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs

@@ -1,0 +1,18 @@
+id: passage:p-dissolution
+summary: The truth destroys the relationship between Teddy and Dr. Mott, leaving Teddy isolated
+  in the wreckage of his sacrifice. The lovers part in the hall; the document soaks in the
+  meltwater, order succumbing to entropy.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- object:the-frozen-will
+prose_summary: The constable locks irons on Dr. Mott and escorts her past seventeen heirs.
+  She leaves without looking at Teddy. Teddy stands alone. The ice block on andiron melts,
+  destroying the document within as water pools on rug. Signatures dissolve. Teddy wears borrowed
+  tweed. His sacrifice is voided. His confession is false. Dr. Mott loses license.
+beats:
+- beat:bridge-16
+- beat:romance-destroyed
+choices:
+- label: Smooth the bleeding testament across the frost-tray and decipher the dissolving claim
+  to: passage:p-water-damage

@@ -1,0 +1,16 @@
+id: beat:secure-the-archive
+summary: Marion locks the portfolio in the estate safe and hides the key in her bodice, ensuring
+  the documents survive for the authorities.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: commits
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:preserve-the-evidence

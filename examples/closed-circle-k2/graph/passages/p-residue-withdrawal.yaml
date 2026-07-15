@@ -1,0 +1,26 @@
+id: passage:p-residue-withdrawal
+summary: Dr. Mott presses trembling fingers to her empty pockets in the drawing room, and
+  the clarity of sobriety renders the surrounding civility grotesque while amplifying every
+  creak of the manor into the sound of snapping bone.
+entities:
+- character:dr-elspeth-mott
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott ascends from the cellar vault to the drawing room with irons on her
+  wrists. Her coat pockets lack gin. She enters among heirs. A floorboard creaks; she flinches
+  and trembles. Sobriety exposes details and her withdrawal to the assembly. She stands exposed.
+beats:
+- beat:residue-raw-withdrawal
+choices:
+- label: Read the review aloud, enunciating each damning phrase with drawing-room precision
+  grants:
+  - flag:helena-savaged
+  - flag:marion-exposed
+  to: passage:p-rejection-published
+- label: Feed the papers to the fire and watch the ink weep into ash
+  grants:
+  - flag:helena-protected
+  - flag:marion-concealed
+  to: passage:p-pact-of-ashes

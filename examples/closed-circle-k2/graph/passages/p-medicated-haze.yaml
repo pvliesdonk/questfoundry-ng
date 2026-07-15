@@ -1,0 +1,19 @@
+id: passage:p-medicated-haze
+summary: Dr. Mott drifts in a sedative haze that renders the gaslight golden and the medical
+  uncertainty comfortably abstract. The chemical cushion replaces professional vigilance with
+  synthetic serenity, and the cost is diagnostic clarity.
+entities:
+- character:dr-elspeth-mott
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Elspeth Mott stops examining the ledger. She decides not to resolve the
+  contradiction between arsenic and traumatic fracture. She abandons the audit of the seventeen
+  heirs. She leaves the calipers untouched. She accepts her negligence. She ignores Helena
+  Vance and Marion Ashworth. The iron remains on her wrist. The flask remains in her pocket.
+beats:
+- beat:residue-medicated-haze
+choices:
+- label: Trail the women into the salon's amber hush
+  to: passage:p-survival-negotiation

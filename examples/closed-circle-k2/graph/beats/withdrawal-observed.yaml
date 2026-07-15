@@ -1,0 +1,15 @@
+id: beat:withdrawal-observed
+summary: Dr. Mott exhibits clear withdrawal symptoms—nausea, shaking, and sweating in the
+  freezing temperatures—threatening her ability to hold the scalpel.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: reveals
+entities:
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:destroy-the-supply
+- path:hide-the-booze

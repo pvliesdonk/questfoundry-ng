@@ -1,0 +1,15 @@
+id: passage:p-copper-breath
+summary: Marion realizes she has been holding her breath. The copper taste confirms the violence
+  beneath the performance has surfaced, and the cost is her composure.
+entities:
+- character:marion-ashworth
+prose_summary: Marion releases breath held since Teddy descended. Seventeen heirs stand around
+  Bernard's body. Dr. Mott examines the body with trembling hands that compromise the findings.
+  Marion grips her concealed unpublished review. She understands violence has surfaced. She
+  acknowledges her composure has cracked and the cost is her fractured breath. She turns toward
+  the spectacle.
+beats:
+- beat:breath-held-copper
+choices:
+- label: Release the held breath and turn toward the spectacle
+  to: passage:p-sealed-cellar

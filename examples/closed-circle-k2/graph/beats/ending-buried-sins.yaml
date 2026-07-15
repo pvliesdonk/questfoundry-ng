@@ -1,0 +1,17 @@
+id: beat:ending-buried-sins
+summary: The fire consumes the last of Bernard's portfolio in the great hall grate, leaving
+  the room's surface immaculate and the murder technically unsolved but buried beneath ash;
+  the question of who will claim the estate remains frozen in the ice block upstairs, ticking
+  toward thaw.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- location:the-great-hall
+- character:bernard-croft
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

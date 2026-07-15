@@ -1,0 +1,8 @@
+id: beat:ice-in-stairwell
+created_by: polish
+summary: Ice has formed on the stairwell railing, creating a treacherous sculpture that reflects
+  the gaslight.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

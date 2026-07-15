@@ -1,0 +1,26 @@
+id: passage:p-affair-exposed
+summary: Helena produces the hidden love letters and reveals Marion's affair to the assembled
+  guests. The disclosure collapses the group's performed civility and eliminates the possibility
+  of retreat into polite formality.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena opens a portfolio and spreads fourteen months of solicitor-written assignation
+  dates on an escritoire before seventeen heirs. The heirs read the foolscap. Marion reaches
+  for a bell cord, stops, removes her pince-nez, and places it beside her review. The heirs
+  step back. A shattered pocket watch lies on marble. The assembly loses restraint. Marion's
+  marriage is exposed.
+beats:
+- beat:affair-exposed
+choices:
+- label: Step closer to brush ash from the solicitor's sleeve
+  to: passage:p-whispers-spread
+- label: Turn to study the frost branching across the glass
+  to: passage:p-averted-gazes

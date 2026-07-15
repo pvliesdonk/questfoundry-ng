@@ -1,0 +1,7 @@
+Dr. Mott’s fingers lay flat against the oxidized silver of the examination table. The silk straps held her wrists at full extension, and the irons above them provided a secondary gravity. Her shoulders still shook with the withdrawal, but the vibration no longer reached her hands. The scalpel handle fit against her palm without rotation.
+
+Teddy stood at the table’s edge. He had placed the second lamp closer to Bernard’s throat, and the light fell across the incision she had begun. The flesh parted under the blade’s pressure with the consistency of archival paper stored in damp conditions. She drew the cut downward, and the resistance translated precisely through her fingers without the blur of alcohol.
+
+She had forgotten the specific weight of unmediated perception. The cellar air carried the exact density of limestone dust and the volatile edge of broken spirits. Every sound in the vault—the drip of ceiling ice, the shift of Bernard’s weight against the table’s surface, the rustle of Teddy’s tweed sleeve—registered with ledger-line exactitude against the silence she had previously filled with gin.
+
+The incision reached the sternum. Dr. Mott paused. Without the chemical buffer, the brutality of the act assumed its proper proportions: the violation of the flesh, the indignity of the exposed organs, the irrevocable nature of the cut. Her hands remained steady, bound and iron-heavy, capable of the surgical precision she had trained for seventeen years to achieve. She could not look away from what she was doing.

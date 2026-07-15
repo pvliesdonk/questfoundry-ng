@@ -1,0 +1,28 @@
+id: passage:p-hollow-vindication
+summary: Marion touches the review manuscript in her pocket and feels the brittle satisfaction
+  of martyrdom. She recognizes that her righteousness burns with the same cold intensity as
+  the frost outside, leaving the vindication hollow.
+entities:
+- character:marion-ashworth
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion carries the manuscript of her published review exposing Helena's theatrical
+  failures and her own assignations, witnessed by the heirs. Helena's career ends. Marion's
+  marriage ends and her reputation suffers. She possesses hollow vindication.
+beats:
+- beat:residue-vindication-hollow
+choices:
+- label: Press the manuscript into Helena's gloved hands
+  grants:
+  - flag:archive-ash
+  - flag:motives-buried
+  to: passage:p-cremation-and-interment
+- label: Turn the safe's dial and slip the key beneath your corset
+  grants:
+  - flag:archive-survives
+  - flag:scandal-erupts
+  to: passage:p-secure-archive

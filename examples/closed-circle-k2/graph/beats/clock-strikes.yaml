@@ -1,0 +1,7 @@
+id: beat:clock-strikes
+created_by: polish
+summary: The clock strikes the hour, each chime a hammer blow against the fragile peace.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

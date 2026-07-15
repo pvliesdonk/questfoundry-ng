@@ -1,0 +1,31 @@
+id: passage:p-mutual-hostage
+summary: Marion serves Helena tea, and their fingers brush to acknowledge their shared culpability.
+  The unspoken pact binds them as mutual hostages, anchoring them together in the freezing
+  dark.
+entities:
+- character:marion-ashworth
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion serves Helena tea in a sealed room and states the arrangement holds.
+  They are mutual hostages bound by ashen documents and silent assignations regarding the
+  Pimlico solicitor; neither moves without destroying the other. Marion rotates her wedding
+  band; Helena observes. Objects include porcelain cup, oxidized silver service, pince-nez,
+  kid leather and velvet gloves, ruined chandelier, carbonized review.
+beats:
+- beat:residue-mutual-hostage
+choices:
+- label: Cast the portfolio into the flames
+  grants:
+  - flag:archive-ash
+  - flag:motives-buried
+  to: passage:p-cremation-and-interment
+- label: Lock the safe and slip the key into your bodice
+  grants:
+  - flag:archive-survives
+  - flag:scandal-erupts
+  to: passage:p-secure-archive

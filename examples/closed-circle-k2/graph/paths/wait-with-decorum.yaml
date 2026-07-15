@@ -1,0 +1,8 @@
+id: path:wait-with-decorum
+name: Wait with Decorum
+explores: answer:wait-with-decorum
+consequences:
+- id: consequence:key-frozen
+  text: The key remains frozen above the assembly
+- id: consequence:propriety-maintained
+  text: The snowbound heirs maintain rigid propriety despite mortal threat

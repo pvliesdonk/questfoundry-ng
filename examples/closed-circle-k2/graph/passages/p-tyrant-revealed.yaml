@@ -1,0 +1,24 @@
+id: passage:p-tyrant-revealed
+summary: The telegram reveals the distant cousin—next in line—is a notorious slumlord who
+  vows to demolish the estate for stone, forcing an immediate will reading to settle inheritance
+  before creditors claim the assets; the urgent ceremony halts when a servant screams from
+  the pantry corridor.
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+- character:bernard-croft
+prose_summary: 'Helena Vance receives a telegram: the heir plans estate demolition for stone.
+  She decides to read the will tonight before creditors file. Bernard reports the ice block
+  remains partially frozen and the document within threatens illegibility. Helena accepts
+  the damaged will over estate surrender. Dr. Mott, Teddy Bryant, and Marion Ashworth remain
+  present. A scream interrupts from the pantry.'
+beats:
+- beat:bridge-26
+- beat:the-tyrant-cousin
+- beat:urgent-need
+choices:
+- label: Descend the staircase, tracing the ice-sheathed banister
+  to: passage:p-ice-stairwell
+- label: Cross to the drawing-room window and touch the frozen glass
+  to: passage:p-frozen-condensation

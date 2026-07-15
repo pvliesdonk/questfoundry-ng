@@ -1,0 +1,7 @@
+id: beat:footstep-echo-weight
+created_by: polish
+summary: The tyrant's footsteps echo with the weight of law and entropy.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

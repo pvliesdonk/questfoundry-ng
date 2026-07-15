@@ -1,0 +1,15 @@
+id: passage:p-cold-draft
+summary: A cold draft enters through the fireplace and scatters ash across the hearth. The
+  flames gutter and die, the room temperature plummets, and the sealed integrity of the drawing-room
+  is breached.
+entities:
+- location:the-great-hall
+prose_summary: Marion holds ledger. Fire dies; draft descends, scatters ash. Temperature plummets.
+  Dr. Mott's glass stops trembling. Teddy stands rigid post-confession, grease on cuffs. Ash
+  dusts Helena's gown. Ice stops dripping; frozen key stabilizes. Barrier between rooms and
+  cellars dissolves. Marion wipes sleeve, turns to Helena.
+beats:
+- beat:cold-draft
+choices:
+- label: Brush the ash from my sleeve and appeal to Helena for a night's delay
+  to: passage:p-morning-reprieve

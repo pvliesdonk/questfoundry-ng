@@ -1,0 +1,15 @@
+id: passage:p-frozen-handle
+summary: The door handle is frozen. The protagonist wrenches it open with savage force, and
+  the cost of escape is the final collapse of civilized restraint.
+entities:
+- location:the-great-hall
+prose_summary: Marion Ashworth stands before the library's frozen brass handle. She recalls
+  the overturned inkwell stained page eleven, erasing Bernard's cellar entry. Seventeen heirs
+  stand motionless in the freezing vault behind her. She forces the door open. She carries
+  alphabetized pages. She abandons civilized restraint and archival precision. She enters
+  the corridor with ink-stained fingers and proceeds toward the drawing room.
+beats:
+- beat:frozen-handle
+choices:
+- label: Twist the handle until the ice cracks, then present yourself in the drawing room
+  to: passage:p-mutual-protection

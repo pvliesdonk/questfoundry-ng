@@ -1,0 +1,20 @@
+id: passage:p-whispers-spread
+summary: The guests whisper accusations that grow more elaborate as they circulate. The assembly
+  fragments into suspicion, and every pleasantry now masks an interrogation.
+entities:
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena snaps a fan on escritoire and withdraws glove. Gentleman whispers to
+  lady touches brooch. Whispers spread among heirs. Woman adjusts pince-nez addressing aunt
+  on rug. Assembly clusters. Marion stands by escritoire. Gentleman questions health; fingers
+  twitch to empty ring finger. Marion mentions roads. Room becomes suspicious; gestures interrogate.
+beats:
+- beat:whisper-spread
+choices:
+- label: Snap your fan shut and suggest the whispers be given voice
+  to: passage:p-both-fallen

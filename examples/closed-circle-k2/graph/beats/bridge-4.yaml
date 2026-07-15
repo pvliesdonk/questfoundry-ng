@@ -1,0 +1,9 @@
+id: beat:bridge-4
+created_by: grow
+summary: The outer door seals behind Bernard's departure; upstairs, Helena locates Marion
+  in the drawing room before the fire has settled.
+beat_class: structural
+purpose: bridge
+entities:
+- character:bernard-croft
+- character:marion-ashworth

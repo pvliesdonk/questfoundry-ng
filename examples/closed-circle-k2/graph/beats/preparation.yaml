@@ -1,0 +1,16 @@
+id: beat:preparation
+summary: Helena supervises the positioning of the ice block, ensuring it is close enough to
+  melt but not so close as to char the document.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: advances
+entities:
+- character:helena-vance
+- object:the-frozen-will
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

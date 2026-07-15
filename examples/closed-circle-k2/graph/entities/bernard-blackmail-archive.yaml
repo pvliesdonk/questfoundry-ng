@@ -1,0 +1,25 @@
+id: object:bernard-blackmail-archive
+name: Bernard's Blackmail Archive
+concept: The butler's leather portfolio containing photographs, letters, and ledgers that
+  could destroy every person in the house
+base:
+  appearance: oiled leather, brass corners
+  contents: arranged alphabetically by victim
+arc:
+  begins: comprehensive record of sins, tool of absolute power over the household
+  pivots:
+  - beat: beat:the-archive-discovered
+    becomes: discovered leverage, found beneath Bernard's mattress by Marion
+  - beat: beat:pressure-to-destroy
+    becomes: threatened evidence, demanded for the flames by panic-stricken guests
+  - beat: beat:demand-for-justice
+    becomes: required evidence for murder investigation, protected from destruction
+  - beat: beat:feed-the-flames
+    becomes: destroyed secrets, leather curling and papers blackening in the grate
+  - beat: beat:secure-the-archive
+    becomes: preserved evidence, locked in the estate safe against the chaos
+  ends:
+  - path: path:burn-the-secrets
+    state: ash in the grate, proof of motives turned to smoke and scattered
+  - path: path:preserve-the-evidence
+    state: locked in the safe, key hidden in Marion's bodice, awaiting police cataloguing

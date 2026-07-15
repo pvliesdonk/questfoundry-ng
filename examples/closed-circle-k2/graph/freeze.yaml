@@ -1,0 +1,179 @@
+beats:
+- beat:affair-concealed
+- beat:affair-exposed
+- beat:affair-revealed
+- beat:aftermath-chaos
+- beat:aid-the-impostor--burn-the-secrets
+- beat:aid-the-impostor--preserve-the-evidence
+- beat:apply-flames
+- beat:ascend-the-ice
+- beat:ash-and-relief
+- beat:assembly-watches
+- beat:bernard-buried
+- beat:bernard-dismissed
+- beat:bernard-found-dead
+- beat:bernard-suspected
+- beat:both-women-fall
+- beat:bridge-0
+- beat:bridge-1
+- beat:bridge-10
+- beat:bridge-11
+- beat:bridge-12
+- beat:bridge-13
+- beat:bridge-14
+- beat:bridge-15
+- beat:bridge-16
+- beat:bridge-17
+- beat:bridge-18
+- beat:bridge-19
+- beat:bridge-2
+- beat:bridge-20
+- beat:bridge-21
+- beat:bridge-22
+- beat:bridge-23
+- beat:bridge-24
+- beat:bridge-25
+- beat:bridge-26
+- beat:bridge-3
+- beat:bridge-4
+- beat:bridge-5
+- beat:bridge-6
+- beat:bridge-7
+- beat:bridge-8
+- beat:bridge-9
+- beat:cellar-presence
+- beat:clear-findings
+- beat:compromised-results
+- beat:continued-mystery
+- beat:crumbling-maintenance--burn-the-secrets
+- beat:crumbling-maintenance--preserve-the-evidence
+- beat:decision-imminent
+- beat:demand-for-justice
+- beat:departure
+- beat:embezzlement-found
+- beat:ending-buried-sins
+- beat:ending-false-salvation--burn-the-secrets
+- beat:ending-false-salvation--preserve-the-evidence
+- beat:ending-naked-truth
+- beat:ending-tyranny--burn-the-secrets
+- beat:ending-tyranny--preserve-the-evidence
+- beat:estate-seizure--burn-the-secrets
+- beat:estate-seizure--preserve-the-evidence
+- beat:false-civility
+- beat:feed-the-flames
+- beat:final-desolation--burn-the-secrets
+- beat:final-desolation--preserve-the-evidence
+- beat:forced-sobriety
+- beat:guest-panic
+- beat:helena-recognition
+- beat:helenas-demand
+- beat:ice-too-large
+- beat:inheritance-settled
+- beat:intoxicated-autopsy
+- beat:investigator-dilemma
+- beat:key-drops
+- beat:key-retrieved
+- beat:key-visible
+- beat:killer-loose
+- beat:maintain-propriety
+- beat:mott-finds-it
+- beat:mott-is-needed
+- beat:mutually-assured-destruction
+- beat:mystery-continues
+- beat:notebook-discovered
+- beat:path-to-recovery
+- beat:police-arrival
+- beat:preparation
+- beat:pressure-to-destroy
+- beat:public-accusation--burn-the-secrets
+- beat:public-accusation--preserve-the-evidence
+- beat:public-shame
+- beat:reading-proceeds
+- beat:real-killer-taken
+- beat:recognized-heir--burn-the-secrets
+- beat:recognized-heir--preserve-the-evidence
+- beat:refuse-the-pact
+- beat:reputations-destroyed
+- beat:review-published
+- beat:review-suppressed
+- beat:rigid-vigil
+- beat:risk-discussed
+- beat:risk-of-compromise
+- beat:risk-of-flight
+- beat:romance-destroyed
+- beat:romantic-revelation
+- beat:sacrifice-offered
+- beat:scandal-erupts
+- beat:secure-the-archive
+- beat:shake-on-silence
+- beat:slow-thaw
+- beat:smash-the-gin
+- beat:stash-behind-port
+- beat:structural-instability
+- beat:suspicion-raised
+- beat:teddy-confesses
+- beat:teddy-detained--burn-the-secrets
+- beat:teddy-detained--preserve-the-evidence
+- beat:teddy-exonerated
+- beat:teddy-papers-found
+- beat:teddy-plea
+- beat:tension-mounts
+- beat:testimony-given
+- beat:testimony-prepared
+- beat:the-archive-discovered
+- beat:the-ascent
+- beat:the-body-discovered
+- beat:the-choice-presents
+- beat:the-confrontation
+- beat:the-crash
+- beat:the-deadline
+- beat:the-estate-exposed
+- beat:the-gathering-gloom
+- beat:the-hidden-flask
+- beat:the-lie-consumes--burn-the-secrets
+- beat:the-lie-consumes--preserve-the-evidence
+- beat:the-mask-tightens--burn-the-secrets
+- beat:the-mask-tightens--preserve-the-evidence
+- beat:the-moment-of-truth
+- beat:the-moment-of-truth-locked
+- beat:the-offer
+- beat:the-power-of-secrets
+- beat:the-snowbound-manor
+- beat:the-thaw-accelerates
+- beat:the-tyrant-arrives--burn-the-secrets
+- beat:the-tyrant-arrives--preserve-the-evidence
+- beat:the-tyrant-cousin
+- beat:the-unspoken-weight
+- beat:tools-gathered
+- beat:truth-as-weapon
+- beat:truth-exposed
+- beat:urgent-need
+- beat:violent-withdrawal
+- beat:water-damage
+- beat:weight-of-secrets
+- beat:withdrawal-observed
+forks:
+  dilemma:burn-or-keep-secrets:
+  - beat:feed-the-flames
+  - beat:secure-the-archive
+  dilemma:clear-or-suspect-butler:
+  - beat:testimony-given
+  dilemma:climb-or-wait:
+  - beat:ascend-the-ice
+  - beat:maintain-propriety
+  dilemma:enable-or-confront-addiction:
+  - beat:smash-the-gin
+  - beat:stash-behind-port
+  dilemma:expose-or-preserve-heir:
+  - beat:aid-the-impostor--burn-the-secrets
+  - beat:aid-the-impostor--preserve-the-evidence
+  - beat:public-accusation--burn-the-secrets
+  - beat:public-accusation--preserve-the-evidence
+  dilemma:fire-thaw-or-natural-thaw:
+  - beat:apply-flames
+  dilemma:martyr-or-justice:
+  - beat:truth-exposed
+  dilemma:silence-or-truth-between-women:
+  - beat:refuse-the-pact
+  - beat:shake-on-silence
+convergences: {}

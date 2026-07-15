@@ -1,0 +1,11 @@
+Dr. Elspeth Mott stood at the escritoire. The ledger lay open before her, and the iron on her wrists pulled against the wood when she leaned to read her own handwriting. The slanted characters recorded two incompatible terminations for the same corpse.
+
+She had noted the gastric discoloration first. The tissue showed the characteristic staining of arsenic ingestion, a chemical signature she had recorded with the calipers still trembling in her other hand. Then she had turned to the cranial wound. The depression in the temporal bone measured three inches across, with radiating fractures that spoke of decisive impact. The two findings occupied adjacent pages but suggested different killers, different weapons, different minutes of death.
+
+She attempted to reconcile the chemical evidence with the physical trauma. The numbers refused to align. She stated that the discoloration indicated systemic poisoning, then amended that the fracture suggested homicide by blunt instrument. Her voice emerged flat and administrative, but the words contradicted each other before they reached the air.
+
+Helena Vance stood three feet distant. Her emerald gloves hung at her sides now, the fingers slightly curled. Marion Ashworth had turned from the andiron, and her stained fingers gripped the escritoire's edge. Seventeen heirs shifted their weight in unison. The movement transmitted through the floorboards as a single tremor that rattled the inkwell.
+
+Marion stepped forward. She placed her hand upon the ledger without obscuring the contradictory entries. She stated that the evidence supported no clear verdict. Dr. Mott removed her hand from the page and let it fall against her hip. The iron chafed.
+
+The investigation had stalled upon the threshold of certainty. Two incompatible diagnoses occupied the same ledger, and the true cause of death remained medically obscured behind the compound failures of tremor and gin. The heirs stood in arrested postures while the findings remained unresolved, suspended between irreconcilable causes in the gray light of the storm.

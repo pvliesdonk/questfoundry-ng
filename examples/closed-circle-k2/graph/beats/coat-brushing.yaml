@@ -1,0 +1,7 @@
+id: beat:coat-brushing
+created_by: polish
+summary: Marion brushes snow from her coat, the gesture feeling final and funereal.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

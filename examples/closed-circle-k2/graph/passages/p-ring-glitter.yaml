@@ -1,0 +1,16 @@
+id: passage:p-ring-glitter
+summary: The wedding ring catches the light and the protagonist realizes the marriage is a
+  hollow performance. The mood is one of grotesque futility and the illusion of social order
+  shatters.
+entities:
+- character:helena-vance
+prose_summary: Helena wears an oxidized silver ring signifying a contract now marked as inventory.
+  She removes her right glove and places her bare hand on the escritoire. Seventeen heirs
+  turn toward her. She does not speak. The performance of marriage ends. Documentation in
+  her portfolio—Marion's assignations and theatre receipts—becomes obsolete. Social order
+  dissolves.
+beats:
+- beat:ring-glitter
+choices:
+- label: Place the document where the snow melts
+  to: passage:p-dissolution

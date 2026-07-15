@@ -1,0 +1,17 @@
+id: beat:the-mask-tightens--preserve-the-evidence
+created_by: grow
+summary: Teddy signs the ledger with the forged signature wavering as Helena watches, both
+  aware that Bernard's files upstairs contain the proof of his birth that could unmake every
+  stroke; the pen scratches loud in the silence where the safe ticks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: complicates
+entities:
+- character:teddy-bryant
+- character:helena-vance
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:preserve-the-fiction

@@ -1,0 +1,16 @@
+id: passage:p-ice-reflection
+summary: She examines her reflection in the ice. The stretched, caricatured image costs her
+  the stability of her composure and exposes the grotesque distortion that polished manners
+  conceal.
+entities:
+- character:marion-ashworth
+prose_summary: 'Marion examines the melting ice block through her pince-nez. She sees her
+  distorted reflection: exaggerated features, ink-stained fingers resembling lesions. She
+  brushes her gloves against her frayed damask sleeve and recognizes her polished manners
+  conceal an underlying grotesquerie. She realizes she is as malformed as her subjects. She
+  leaves shaken.'
+beats:
+- beat:reflection-distortion
+choices:
+- label: Lift your gaze from the ice to the frozen chandelier
+  to: passage:p-key-entombed

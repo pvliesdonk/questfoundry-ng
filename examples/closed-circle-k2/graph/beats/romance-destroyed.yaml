@@ -1,0 +1,15 @@
+id: beat:romance-destroyed
+summary: The truth destroys the relationship between Teddy and Dr. Mott, leaving him alone
+  in the ruins of his sacrifice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: complicates
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

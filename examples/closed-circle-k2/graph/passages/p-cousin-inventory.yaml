@@ -1,0 +1,31 @@
+id: passage:p-cousin-inventory
+summary: The distant cousin arrives by dogsled and orders an immediate inventory of Helena's
+  theatrical collection while his attention fixes on the study door. Helena calculates the
+  depreciating value of her performed past against the protective power of the evidence preserved
+  upstairs, and the heirs recognize that his contempt conceals desperation to destroy the
+  files before they speak.
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: The cousin arrives and orders an inventory to mask his search for leverage.
+  He seeks the sealed study files recording debts that threaten his estate claim. He carries
+  a match case to burn documents. Seventeen heirs including Marion Ashworth and Teddy Bryant
+  witness his arrival. Helena remains seated, planning to use her voice to buy time against
+  evidence destruction.
+beats:
+- beat:the-tyrant-arrives--preserve-the-evidence
+choices:
+- label: Descend to unbar the front gate as the whistle pierces the frost
+  to: passage:p-whistle-distance
+- label: Adjust your gloves while the hatchets bite into the wainscoting
+  to: passage:p-estate-seizure

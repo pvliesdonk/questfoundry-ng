@@ -1,0 +1,9 @@
+id: beat:bridge-15
+created_by: grow
+summary: The debate continues as Bernard circles the chandelier, calculating loads and tensions
+  with the eye of a former engineer.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:the-snowbound-heirs
+- character:bernard-croft

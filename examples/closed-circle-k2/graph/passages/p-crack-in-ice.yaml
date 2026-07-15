@@ -1,0 +1,16 @@
+id: passage:p-crack-in-ice
+summary: Marion discovers a crack in the ice block that indicates artificial formation rather
+  than natural freezing. The incident shifts from apparent accident to suspected contrivance,
+  and the cost of certainty becomes exposure to a calculated design.
+entities:
+- character:marion-ashworth
+prose_summary: Marion examines ice block containing patriarch's frozen testament. She discovers
+  an artificial vertical crack on the southeast face made with metal tooling. She observes
+  the frozen key suspended in the chandelier. She realizes the crack aligns with center of
+  mass to accelerate thawing; the will is timed, not trapped. She removes and replaces her
+  right glove. No one observes her.
+beats:
+- beat:crack-in-ice
+choices:
+- label: Trace the crack upward to the frozen chandelier
+  to: passage:p-key-entombed

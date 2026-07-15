@@ -1,0 +1,27 @@
+id: passage:estate-seizure
+summary: The heirs scatter through the great hall as the cousin's men dismantle the walls
+  and lower mahogany paneling toward sleds in the snow. The empty fireplace marks the loss
+  of secrets that might have bought time, and the estate's order dissolves into plunder.
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: The cousin directs removal men with sleds through east arch. Seventeen heirs
+  disperse; Marion Ashworth stands at west window; Teddy Bryant waits by escritoire in frayed
+  coat. Workmen pry mahogany paneling with iron bars, scarring plaster, and lower sections
+  onto sleds beyond service entrance. Fireplace holds ash from Bernard's burned alphabetical
+  divisions, ending Helena's leverage. She watches the estate's liquidation.
+beats:
+- beat:estate-seizure--burn-the-secrets
+choices:
+- label: Watch the ash settle in the empty grate
+  to: passage:p-chains-and-ash

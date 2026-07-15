@@ -1,0 +1,16 @@
+id: beat:the-offer
+summary: 'Helena proposes a pact of mutual protection: she will burn the review if Marion
+  destroys the evidence of the affair.'
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:helena-vance
+- character:marion-ashworth
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

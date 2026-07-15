@@ -1,0 +1,7 @@
+The key bit into her palm. Marion had removed it from her bodice when the footsteps crossed the marble below, and now her fingers spasmed around the metal and pressed the teeth into the flesh that already bore their impression in welted scar tissue.
+
+She stood in the study overlooking the Great Hall. Below, seventeen heirs maintained their positions around Bernard's settle, but their attention had shifted toward the mahogany lectern where the investigator's boots left tracks of cellar dust across the polish. Marion understood that the portfolio inside the safe contained seventeen failures arranged alphabetically, and that her own indiscretions sat between the entries for embezzlement and fraud, indexed with archival precision.
+
+Blood warmed against her palm, then cooled. She watched a drop fall onto the frayed damask of her skirt, darkening the weave. Her pince-nez slipped; she did not adjust them. The pain radiated with bureaucratic exactitude, a ledger entry of nerve and membrane, documenting the collapse of her administrative neutrality. She had filed the devastating reviews, circulated the foolscap of assignations, and removed her wedding ring; now her body completed the record, perforating the skin with the same key that locked the evidence away.
+
+Marion inhaled. The sound was sharp, a precursor to judgment, but there was no one left to sentence. She opened her fingers. The key lay in the blood, tarnished now with iron as well as oxidation, and measured the time until the constable reached the stairs.

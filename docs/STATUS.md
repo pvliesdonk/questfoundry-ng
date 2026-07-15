@@ -119,10 +119,15 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    (k ≥ 2 renderings of a trunk segment, renderings as peers, finalize as
    a loop, residue keywords); contract + ratified decisions + PR slices in
    [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md) (mini-ADR A24,
-   roadmap "Next"). **PR-0 — the sidetrack exit-label residue fix — ships
-   ahead of the epic** and before/with the step-1/2 medium run; the engine
-   rework (PR-2+) waits until that run has measured the machinery as
-   shipped.
+   roadmap "Next"). **PR-0 — the exit-label residue fix (§5) — is built**
+   (finalize prompt: arm summaries must carry the mark the detour leaves;
+   labels pass: cosmetic-fork renderings are worded after their parallel
+   siblings and shown the labels already offered into the shared rejoin,
+   with a "carry residue, never re-offer" instruction; generalized past
+   sidetracks to every parallel edge set into a shared rejoin, per §5.3 —
+   `pc.cosmetic_rejoin_sources`). No validator (the fix is context, not a
+   fence). It should ride the step-1/2 medium run; the engine rework
+   (PR-2+) waits until that run has measured the machinery as shipped.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

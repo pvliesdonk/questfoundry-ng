@@ -503,21 +503,20 @@ replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
 account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
 halted a live run.)
 
-**When the rework loop still fails, suspect review strictness before
-writer compliance** (author-directed, 2026-07-15). A texture-trial halt
-("failed review 2 times" on a grounding nit) drew two wrong fixes in a
-row — an engine-side edit-merge mechanism, then a writer-prompt self-check
-step, both reverted — before the author named the real defect: the
-*reviewer* was too strict, re-rejecting hedged inference as interiority
-and demanding an explicit possessive for a referent context already
+**When the rework loop still fails, do not add more rules**
+(author-directed, 2026-07-15): first check the existing *write* prompt
+for clarity, then the existing *review* prompt for over-strictness — the
+urge to fix a failing loop by adding a fence, a self-check step, or an
+engine mechanism is micromanagement, and both were built and reverted on
+a texture-trial halt before the author named the real defect. There, the
+reviewer was too strict: it re-rejected hedged inference as interiority
+and demanded an explicit possessive for a referent context had already
 attributed (one masked character on stage; "the mask" is theirs). Each
-pedantic rejection forces another rewrite, and rewrites churn new nits:
-the loop's non-convergence was manufactured by the review, not the
-writer. The review rules therefore lean permissive at the margins —
-context-supplied attribution grounds a label's referent, and an explicit
-observed inference ("as if weighing") is the narrator's own mind — and
-new fences on the *writer* prompt are the wrong reflex for a rework that
-won't settle.
+pedantic rejection forces another rewrite, and rewrites churn new nits —
+the loop's non-convergence was manufactured by the review. The review
+rules therefore lean permissive at the margins: context-supplied
+attribution grounds a label's referent, and an explicit observed
+inference ("as if weighing") is the narrator's own mind.
 
 ### DRESS — art and codex
 

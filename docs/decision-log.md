@@ -118,8 +118,10 @@ history; the decisions it recorded are captured below and in the design docs.
   rejection forced another rewrite, and rewrites churn new nits.
   choice_grounding now counts a context-identifiable referent as grounded;
   voice_pov names explicit observed inference as the narrator's own mind.
-  Durable rule in design doc 02 (FILL): when the rework loop fails,
-  suspect review strictness before writer compliance. Same halt cluster,
+  Durable rule (author's words, refined 2026-07-15; design doc 02 FILL +
+  AGENTS.md prompt-quality): when the rework loop fails, do NOT add more
+  rules — first check the existing write prompt for clarity, then the
+  existing review prompt for being overly strict. Same halt cluster,
   earlier fixes that DID stand: the echo check batches every lift into one
   error, and the ending+split_on refusal gives the honest
   frozen-ending-set reason (I12 exception documented).

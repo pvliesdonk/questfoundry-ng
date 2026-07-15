@@ -492,27 +492,16 @@ Two writer-side levers make the rework *converge* rather than re-roll (the
 LLM adapter is stateless — each attempt is a fresh call with no memory of
 its prior draft, so a naive rework re-derives a losing draft under
 multi-finding load). On a rework the write prompt (1) shows the writer its
-**rejected prior draft** (stashed at apply time, so it covers a mechanical
-apply rejection like an echo as well as a review rejection), and (2)
-requires a per-finding **`revision_notes`** entry — the writer must state,
-for each finding, the exact change it made; the reviewer then verifies each
-claim against the prose (a claimed fix the prose doesn't deliver is itself
-a defect). `revision_notes` are reviewer-facing only — never applied, so
+**rejected prior draft** ("revise it, don't repeat it" — stashed at apply
+time, so it covers a mechanical apply rejection like a word-budget miss as
+well as a review rejection), and (2) requires a per-finding **`revision_notes`**
+entry — the writer must state, for each
+finding, the exact change it made; the reviewer then verifies each claim
+against the prose (a claimed fix the prose doesn't deliver is itself a
+defect). `revision_notes` are reviewer-facing only — never applied, so
 replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
 account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
 halted a live run.)
-
-**Rework rounds are edit-based, engine-merged** (texture-trial live run,
-2026-07-15): a prompt-stated "revise, don't rewrite" was ignored — a
-revision fixed exactly the quoted findings, rewrote the rest wholesale, and
-regressed a grounded referent no finding touched, failing the round and
-exhausting the loop. Per the prompt-quality doctrine (structurally enforce,
-never state-and-trust), the rework round's *schema* now requires
-`edits: [{find, replace}]` and forbids `prose`; the **engine** applies the
-edits to the prior draft (find must occur exactly once; all edit failures
-batched), so text no edit names is untouchable by construction. The apply
-fills `prose` with the merged text and consumes the edits before the
-proposal is recorded — replay artifacts stay self-contained full prose.
 
 ### DRESS — art and codex
 

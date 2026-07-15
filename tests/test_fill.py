@@ -9,14 +9,12 @@ from pydantic import ValidationError
 from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
-    DraftEdit,
     LabelRewrite,
     VoiceProposal,
     WriteProposal,
     _choice_menu,
     _fill_gate,
     _flag_status,
-    _merge_edits,
     _passes,
     _review_for,
     _voice_apply,
@@ -566,85 +564,6 @@ def test_window_echo_fails_apply(golden_fill):
     with pytest.raises(ApplyError, match="repeats passage:p-lamp-room") as exc:
         apply(WriteProposal(prose=_padded(lifted)), golden_fill)
     assert "say it in NEW words" in str(exc.value)
-
-
-# -- edit-based rework rounds (texture-trial live run, 2026-07-15) -------------
-
-
-def test_merge_edits_touches_only_the_named_text():
-    """The live regression: a rework fixed the quoted findings and lost a
-    grounded referent in a sentence no finding touched, because the model
-    rewrote wholesale despite REVISE-DON'T-REWRITE. Engine-side merging
-    makes the unnamed text untouchable by construction."""
-    prev = "A grin slipped beneath Vara's mask. The letter gleamed. She weighed it."
-    merged = _merge_edits(
-        prev, [DraftEdit(find="The letter gleamed.", replace="The seal glinted.")]
-    )
-    assert merged == "A grin slipped beneath Vara's mask. The seal glinted. She weighed it."
-
-
-def test_merge_edits_batches_every_problem():
-    prev = "The wind rose. The wind rose again."
-    with pytest.raises(ApplyError) as exc:
-        _merge_edits(
-            prev,
-            [
-                DraftEdit(find="The moon set.", replace="x"),
-                DraftEdit(find="The wind rose", replace="y"),
-            ],
-        )
-    message = str(exc.value)
-    assert "2 edit(s) did not apply" in message
-    assert "does not contain" in message and "appears 2 times" in message
-
-
-def test_merge_edits_rejects_a_no_op():
-    with pytest.raises(ApplyError, match="change nothing"):
-        _merge_edits("The wind rose.", [DraftEdit(find="wind", replace="wind")])
-
-
-def test_write_apply_merges_edits_and_records_full_prose(golden_fill):
-    """A rework proposal's edits are consumed at apply: prose is filled
-    with the merged text and edits cleared, so the recorded artifact is
-    self-contained (ledger replay revalidates against the fresh-round
-    schema, which forbids edits)."""
-    base = _padded("His cuffs carry old ink; the beard is going grey.")
-    box = {"prose": base}
-    apply = _write_apply_for("passage:p-arrival", last_draft=box)
-    proposal = WriteProposal(
-        edits=[DraftEdit(find="the beard is going grey", replace="the beard is silvering")]
-    )
-    apply(proposal, golden_fill)
-    assert "the beard is silvering" in proposal.prose and not proposal.edits
-    assert box["prose"] == proposal.prose
-
-
-def test_write_apply_rejects_edits_without_a_draft(golden_fill):
-    apply = _write_apply_for("passage:p-arrival", last_draft={"prose": None})
-    with pytest.raises(ApplyError, match="no previous draft"):
-        apply(WriteProposal(edits=[DraftEdit(find="a", replace="b")]), golden_fill)
-
-
-def test_write_schema_requires_edits_only_on_rework_rounds(golden_fill):
-    """The runner resolves a callable schema every round: a fresh round
-    demands prose and forbids edits; a rework round demands edits and
-    forbids prose — a wholesale rewrite is structurally impossible."""
-    from questfoundry.pipeline.stages.fill import _passes as make_passes
-
-    write = next(s for s in make_passes(golden_fill) if s.name.startswith("write:"))
-    fresh = write.schema_for(golden_fill)
-    with pytest.raises(ValidationError):
-        fresh.model_validate({"prose": ""})
-    with pytest.raises(ValidationError):
-        fresh.model_validate({"prose": "words", "edits": [{"find": "a", "replace": "b"}]})
-    fresh.model_validate({"prose": "words"})
-    # simulate the review stashing a rejected draft, then re-resolve
-    ctx = write.build_context(golden_fill)
-    ctx["previous_draft"]["prose"] = "a rejected draft"
-    rework = write.schema_for(golden_fill)
-    with pytest.raises(ValidationError):
-        rework.model_validate({"prose": "a wholesale rewrite"})
-    rework.model_validate({"edits": [{"find": "a", "replace": "b"}]})
 
 
 def test_window_echoes_are_batched_into_one_error(golden_fill):

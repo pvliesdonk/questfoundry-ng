@@ -408,8 +408,8 @@ def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden)
     source = " ".join((PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8").split())
     assert "BEFORE RETURNING, CHECK THE BEATS OFF" in source
     assert "performed by the character the summary names" in source
-    assert "This round you return EDITS, not prose" in source
-    assert "kept byte-for-byte" in source
+    assert "REVISE, DON'T REWRITE" in source
+    assert "keep every sentence the findings do not touch" in source
     # the head's pronouns render in the viewpoint line itself
     from questfoundry.pipeline.stages.fill import _write_context_for
     from tests.test_fill import _set_passage_head

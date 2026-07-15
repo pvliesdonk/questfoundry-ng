@@ -121,16 +121,11 @@ def test_every_stage_reference_pinned_schema_stays_inside_the_subset() -> None:
         polish.arcs_proposal_schema(project),
         *(spec.schema for spec in dress._passes(project)),
         *(
-            spec.schema_for(project)
+            spec.schema
             for spec in fill._passes(project)
             if spec.name.startswith("write:")
         ),
     ]
-    # the write pass's rework-round variant (edits required, prose forbidden)
-    # faces the same grammar as the fresh-round shape it replaces
-    write = next(s for s in fill._passes(project) if s.name.startswith("write:"))
-    write.build_context(project)["previous_draft"]["prose"] = "a rejected draft"
-    schemas.append(write.schema_for(project))
     bad: list[str] = []
     for schema in schemas:
         _check(schema.model_json_schema(), schema.__name__, bad)

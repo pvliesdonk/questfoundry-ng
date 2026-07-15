@@ -67,6 +67,9 @@ history; the decisions it recorded are captured below and in the design docs.
   repair model gained the batch-all-violations rule), and the review's
   ending+split_on refusal was reworded to the honest reason (frozen
   ending set) with the I12 exception documented.
+
+- **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
+  author-directed on the live run):** The texture-trial's second halt
   (five spymaster passages "over the I12 cap") unwound into two author
   corrections. (1) The session's cap-enforcement-at-apply was wrong in
   spirit: a hard irrelevance budget pressures the model to mark

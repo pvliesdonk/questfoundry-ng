@@ -16,6 +16,21 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (cosmetic-forks PR-1 reshaped — no target-state in the
+  authoritative docs):** The session building the epic's PR-1 flagged
+  that the slice as specced wrote an engine that doesn't exist into 01
+  (I15 restated before PR-5 retires the twinning; I16 stated without its
+  check, against iron rule 6; premise-per-rendering before PR-2 relaxes
+  the guard). Agent ruling (the slicing's author, question forwarded via
+  the author), applying existing rules rather than making a new call:
+  01/02 carry current-state truth only; each restatement rides the PR
+  whose code makes it true (freeze clarification + premise rule → PR-2;
+  I15 restatement + I16, with checks and violating tests → PR-5); PR-1
+  shrinks to the one-mechanism framing and vocabulary that is true of
+  today's code. Plans and mini-ADRs remain the forward-looking record —
+  a decision is a fact once made; a system description is not. The rule
+  now heads the plan's PR-slicing section.
+
 - **2026-07-15 (cosmetic forks PR-0 — exit-label residue built):**
   Implemented §5 of [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md),
   the standalone exit-label fix that ships ahead of the engine rework. The

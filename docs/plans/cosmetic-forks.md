@@ -292,6 +292,62 @@ item missed:
 No validator: a label-similarity check is the pedantic reviewer that
 manufactures non-convergence (AGENTS.md); the fix is context, not a fence.
 
+## 6. The loop, specified (PR-5's build spec)
+
+§3 gives the shape; this section pins the decisions a fresh session would
+otherwise have to derive (doc-silent derivation is the failure mode
+AGENTS.md warns about). Each ⭐ is a frontier seam.
+
+- **Round 0 is residue, unchanged.** Residue arms are obligation machinery
+  (§1's fence), not a budget round: `finalize:0` keeps today's semantics —
+  one flag-gated arm per path per light convergence, the existing
+  `ResidueSpec`/apply machinery, skipped when needs are empty. Obligations
+  land before decoration, which also dissolves today's splice-order
+  subtlety (texture → false branches → residue existed only because the
+  one-shot cadence table was sized on a probe scratch): residue's rerouted
+  frontier edges are already in place before any cosmetic round computes
+  segments, and gated residue chains never qualify as segments
+  (`qualifies()` rejects `requires_flags`).
+- **Budget rounds** `finalize:<n>` (n ≥ 1): the engine recomputes
+  qualifying segments and both budgets on the *current* graph — the same
+  graph-pure functions as today (`texture_sites` generalized to the
+  segment-length tiers of §1's table, `projected_walks` for the B6
+  projection, the words-admission rule of `texture_plan`) — assigns shape
+  and arm count per admitted site, and expands (A21 `PassSpec.expand`) into
+  one pass per site with deterministic names (`fork:<n>:<k>`, sites ordered
+  by segment-head beat id). ⭐ Admission per site: marginal projected story
+  words must fit the headroom (`words_target` or band top), scene-scale
+  segments (≥ cap beats) stay under the story-total `TEXTURE_WORLDS_MAX`;
+  smaller shapes are uncapped by count — words-bounded only.
+- **Termination**: a round admits no sites, the projected B6 mean reaches
+  the target, or the words headroom is smaller than the smallest site's
+  marginal cost. Each is checked before expansion, so the last round is an
+  empty expansion, not a wasted proposal.
+- **Per-site call contract**: the site (segment beats or the empty-segment
+  edge), its assigned shape/arm count, the reserve feedstock, and up to
+  **8** holdable, unconsumed keywords (grant strictly upstream of the
+  site's `before`; engine-computed; 8 is a context-bloat guard, revisit on
+  live evidence). The model words the premises (one per non-empty
+  rendering, rendering 0's extract-or-sharpen) and fresh-rendering beats,
+  and MAY attach one keyword-gated extra rendering consuming one offered
+  keyword — consumption is always optional, never assigned.
+- **Splice + mint at apply**: the engine splices, writes `grants_flags` on
+  each non-empty rendering's head (rendering 0's head included — the
+  frozen-beat annotation of §2), derives the flag description from the
+  premise, marks a consumed keyword consumed (one consumer per keyword,
+  ratified discipline §4), and the I16 check covers the gated rendering.
+- **Gates and resume**: rounds are ordinary POLISH passes — G4 runs at
+  stage end as today, the A16 ledger covers each pass, and resume
+  determinism holds iff the next-round expansion is a pure function of the
+  checkpointed graph (open question 4 — verify against `runner.py`).
+- **What retires**: the probe-scratch sizing in `_texture_and_cadence`,
+  the mirroring splice variants (`insert_cadence_diamond`/
+  `insert_cadence_sidetrack`), and the one-shot `FinalizeProposal`'s
+  false-branch/texture halves. **What stays**: `convergence_needs` and the
+  residue apply path (round 0), `insert_texture_world`'s mirror-content
+  splice for non-empty segments, I15's field and shape halves
+  (composition-closed per PR-1).
+
 ## PR slicing
 
 | PR | Contents | Tier |
@@ -299,16 +355,53 @@ manufactures non-convergence (AGENTS.md); the fix is context, not a fence.
 | PR-0 | Exit-label residue (§5): finalize-prompt sharpening, labels ordering + parallel-label context. Ships before everything; improves the pending medium validation run | frontier prompt design, small diff |
 | PR-1 | Docs: 01 §6 rewritten around the unified model (parameter table, content regimes, premise-per-rendering, the two non-unifying boundaries), I15 restated segment-relative and composition-closed, the freeze clarification, I16 stated (the A24 mini-ADR row landed with this plan) | frontier (doc-only) |
 | PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0 (relaxing `Beat._class_consistency`'s premise-only-on-`TEXTURE_WORLD` guard, §2), FILL/entry-labels reading it | frontier design, mid-tier typing |
-| PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5 | mid-tier against this contract |
+| PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5. Lands in the *one-shot* finalize (before the loop exists): `cadence_plan` gains the per-site shape, the prompt's CADENCE table states it, `_finalize_apply` enforces it like it enforces counts | mid-tier against this contract |
 | PR-4 | Grant model: `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10/round-trip + violating-construction tests; B6 held-note | mid-tier against this contract |
 | PR-5 | The loop: iterative finalize (`finalize:<n>` expansion), retire probe-scratch + mirrored cadence, small-segment admission, recursion enabled, minting + gated-rendering consumption + I16 | frontier (freeze/arc/I15 seams) |
 | PR-6 | DRESS print acknowledgment paragraphs | deferred until a live run mints keywords |
+
+**Acceptance criteria per PR** (what "done" means, checkable without this
+plan's authoring session):
+
+- **PR-0**: on a regenerated letter-and-frontier label layer, every cosmetic
+  rejoin exit label differs from — and does not re-offer — the parallel
+  label(s) onto the same destination; the labels-pass ordering is
+  deterministic (a test pins it); no schema or graph-model change.
+- **PR-1**: docs only. 01 §6 states the unified model (§1's table), the
+  premise-per-rendering rule, the freeze clarification (§2), and I16; I15
+  is restated segment-relative and composition-closed; 02's POLISH contract
+  names the loop.
+- **PR-2**: the golden story and all checked-in exemplars validate
+  unchanged (rendering-0 premises appear only on newly spliced forks); the
+  `Beat._class_consistency` premise guard is relaxed (premise legal on any
+  beat, engine-set only); a recorded-fixture test shows the trunk premise
+  reaching FILL's write context and the fork's entry-label context.
+- **PR-3**: the proposal schema accepts 3 arms; apply enforces the
+  engine-assigned shape and arm count with actionable repair messages
+  (reason, location, corrective); a violating construction per rule.
+- **PR-4**: violating-construction tests both ways — a keyword-gated beat
+  passes I10 when its grant is upstream and fails when it is not; runtime
+  JSON round-trips `grants_flags`; B6's over-holding caveat is documented
+  or fixed at the touch point.
+- **PR-5**: an offline (mock/replay) fixture runs the loop to a terminal
+  round; every walk's words-per-choice lands in the B6 band; every
+  non-empty rendering minted a keyword; at least one fixture round consumes
+  one (gated rendering, I16-checked, I13 intact); the retired machinery is
+  deleted, not stranded; violating-construction tests for I16.
 
 **Sequencing against the in-flight milestone:** the structural-depth medium
 validation run (band-top `words_target`, DRESS at scale) should run **before
 PR-2+** — it validates the machinery as shipped, and its author read informs
 the mix ratio and the small-segment appetite. PR-0 ships first regardless
 (the run then also validates the label fix). PR-1 (docs) can land any time.
+
+**Handoff note:** each PR is buildable from this plan plus the repo's own
+orientation order (AGENTS.md) — read 01 §5–6 and A23/A24 first, then the
+functions this plan names in `pipeline/passages.py`, `pipeline/stages/
+polish.py`, `graph/queries.py`, and `graph/validate.py`. Nothing needed to
+build lives only in the 2026-07-15 design session; if a seam turns out
+underspecified anyway, that is a plan bug — sharpen this doc in the same PR
+rather than deriving silently (AGENTS.md, doc-silent territory).
 
 ## Open questions (for the author or a later frontier session)
 

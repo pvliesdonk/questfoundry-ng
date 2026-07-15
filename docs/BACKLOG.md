@@ -84,7 +84,18 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   codeword actually wants one. **Author extension (2026-07-15):** the cadence
   structures themselves should be able to grant a (probably cosmetic) keyword
   — taking a detour or a diamond arm leaves a mark the book can acknowledge
-  later; ties into DRESS codewords for the print projection.
+  later; ties into DRESS codewords for the print projection. **Author
+  escalation (same day):** maybe EVERY fake branch grants a keyword, and
+  later-created fake branches and choice menus may consume it — residue as
+  a memory system (the pine detour grants a keyword; a later arm's prose or
+  label leans on it; a later menu may offer a keyword-gated variant).
+  Granting is engine-deterministic at splice time (`flag:cw-<arm>` on the
+  arm-entry choice edge); cosmetic flags derive from no dilemma so they
+  stay out of I12's state count (may color, never must). Contract to state
+  up front: a keyword-gated choice never gates a structurally different
+  destination — only a cosmetic variant of the same page or entry to
+  another fake detour (both converge by construction) — or consequence
+  sneaks back in through the cosmetic door.
 - [ ] **Cadence vocabulary follow-ons (author ideas, 2026-07-15, reading the
   texture-trial passage graph).** The live run's finalize chose almost only
   sidetracks (1-arm `FalseBranchSpec`: direct edge stays, optional detour) —

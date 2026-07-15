@@ -397,8 +397,9 @@ the mix ratio and the small-segment appetite. PR-0 ships first regardless
 
 **Handoff note:** each PR is buildable from this plan plus the repo's own
 orientation order (AGENTS.md) — read 01 §5–6 and A23/A24 first, then the
-functions this plan names in `pipeline/passages.py`, `pipeline/stages/
-polish.py`, `graph/queries.py`, and `graph/validate.py`. Nothing needed to
+functions this plan names in `pipeline/passages.py`,
+`pipeline/stages/polish.py`, `graph/queries.py`, and `graph/validate.py`.
+Nothing needed to
 build lives only in the 2026-07-15 design session; if a seam turns out
 underspecified anyway, that is a plan bug — sharpen this doc in the same PR
 rather than deriving silently (AGENTS.md, doc-silent territory).

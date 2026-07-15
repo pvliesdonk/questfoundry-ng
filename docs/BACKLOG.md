@@ -85,10 +85,22 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   structures themselves should be able to grant a (probably cosmetic) keyword
   — taking a detour or a diamond arm leaves a mark the book can acknowledge
   later; ties into DRESS codewords for the print projection. **Author
-  escalation (same day):** maybe EVERY fake branch grants a keyword, and
-  later-created fake branches and choice menus may consume it — residue as
-  a memory system (the pine detour grants a keyword; a later arm's prose or
-  label leans on it; a later menu may offer a keyword-gated variant).
+  design sketch (2026-07-15, ratified direction):** POLISH, when it adds a
+  false branch (sidetrack or diamond), MINTS a flag/keyword at creation;
+  the arm's own beat must reflect that residue immediately — which is what
+  makes the exit label right for free (labels are worded from this
+  passage's beats; the earlier label-convergence finding dissolves at the
+  root, the parallel-label visibility fix becomes a backstop). On a NEXT
+  turn, a new false branch MAY consume an existing keyword — creating a
+  keyword-GATED branch (holders see the detour; non-holders see only the
+  trunk edge; print gets a codeword paragraph) — or mints a new one.
+  Implies iterative per-site planting (the A21 decomposition precedent)
+  where each site call sees the keyword ledger minted so far; a consumer
+  must sit strictly downstream of its grant (engine-checkable). Author's
+  open question: same `FlagSource.COSMETIC` or a distinct type for
+  residue keywords — agent lean: reuse COSMETIC (its definition is
+  exactly this) and carry the printable keyword name as per-flag data
+  (the `codeword` field precedent), decide at build time.
   Granting is engine-deterministic at splice time (`flag:cw-<arm>` on the
   arm-entry choice edge); cosmetic flags derive from no dilemma so they
   stay out of I12's state count (may color, never must). Contract to state

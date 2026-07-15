@@ -16,6 +16,19 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (tier is the fluency knob, not the structure knob — author
+  hypotheses on the kimi A/B):** Reading `examples/closed-circle-k2` against
+  the gpt-oss baseline, the author's read (verbatim intent): a weaker model
+  can be made to do anything *structurally* correct — write the *correct*
+  prose — but the sheer creativity and quality of prose (fluency) cannot
+  (easily) be mitigated; and (hypothesis 2) a very large exemplar of the
+  specific style wanted might let a small model do better by copying.
+  Hypothesis 2 is a BACKLOG experiment (Validation & experiments) — it sits
+  in deliberate tension with the M6 exemplar rule and needs design first.
+  This refines, not contradicts, the prompt doctrine: enforcement makes
+  structure tier-independent; fluency is the residual axis where tier
+  legitimately buys quality.
+
 - **2026-07-15 (the kimi-k2.5 A/B: COMPLETE — gate-clean FILL, structure
   in band, and the tier-confound made concrete):** the parallel *Closed
   Circle* medium (same premise, same pinned rotating `pov_hint`, kimi-k2.5

@@ -124,3 +124,15 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   preserving schema-validation + determinism? A small targeted spike.
 - [ ] **Corpus curation** — `corpus/interactive-fiction/` is the author's
   ongoing add/trim pass; `style-exemplars` stays out until M9 can consume it.
+- [ ] **Large style exemplar for weak-tier prose (author hypothesis,
+  2026-07-15).** Reading the kimi-k2.5 A/B against the gpt-oss baseline:
+  structure can be forced correct on any tier (the enforcement doctrine),
+  but prose fluency — the sheer creativity and quality kimi shows — cannot
+  (easily) be mitigated by prompts/engine. Hypothesis 2: a very LARGE
+  exemplar of the specific style wanted might lift a small model by giving
+  it something to copy. Note the deliberate tension with the M6 craft rule
+  (exemplars are a contrasting spread, never a nearest-match target — the
+  taste-laundering guard, design doc 02 §Craft context): this experiment
+  would need an author-provided target style, distinct from the corpus
+  channel, so conformance is the author's choice rather than laundered
+  taste. Design the experiment before building anything.

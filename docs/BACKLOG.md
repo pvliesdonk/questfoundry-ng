@@ -95,7 +95,23 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   up front: a keyword-gated choice never gates a structurally different
   destination — only a cosmetic variant of the same page or entry to
   another fake detour (both converge by construction) — or consequence
-  sneaks back in through the cosmetic door.
+  sneaks back in through the cosmetic door. **Author design questions +
+  agent analysis (2026-07-15, unratified):** (1) vs soft dilemmas — the
+  boundary is OBLIGATION: a dilemma's flag is a promise the story must
+  keep (residue, I12 ambiguity, arc completion, B1 budget, GROW-frozen);
+  a keyword is permission (downstream MAY use, prose ignoring it is
+  correct; POLISH-added, presentation-layer). Test: anything downstream
+  DEPENDS on it → it's a dilemma in costume, belongs in GROW. (2)
+  explosion / omni prose — keywords must have ZERO shared-prose impact:
+  never referenced in unconditional prose, even as color (a shared "the
+  whisper returns" asserts a state some readers lack — state
+  dishonesty); consumption is always structurally gated (variant page,
+  gated menu entry, print codeword paragraph), so ungated writers never
+  see them, they stay out of I12 by construction, and 2^N combinatorics
+  never reach any single passage (each gated consumer sees exactly its
+  own gate). Budget consumption sites, not grants — grants are free;
+  unconsumed keywords simply don't print. The two answers interlock: a
+  soft dilemma's state colors shared prose; a keyword's never does.
 - [ ] **Cadence vocabulary follow-ons (author ideas, 2026-07-15, reading the
   texture-trial passage graph).** The live run's finalize chose almost only
   sidetracks (1-arm `FalseBranchSpec`: direct edge stays, optional detour) —

@@ -105,7 +105,12 @@ The current differential treatment of trunk vs arm, triaged:
   fork proposal declares one premise per rendering, **including rendering
   0**, constrained to extract-or-sharpen what the segment's beats already
   carry (ratified decision 2). FILL grounds both worlds; the fork's entry
-  labels can name both axis values; minting is symmetric.
+  labels can name both axis values; minting is symmetric. The asymmetry is
+  enforced in the model today: `Beat._class_consistency` rejects a
+  `texture_premise` on any beat whose `purpose != TEXTURE_WORLD`
+  (`models/structure.py`), and rendering 0's beats are GROW beats — PR-2
+  relaxes that guard (premise legal on any beat, still engine-set only)
+  along with the splice change (flagged by PR #84's automated review).
 - **Harmful, fixed here:** minting on "added arms" only (never shipped —
   caught at design time). Fix: mint per non-empty rendering.
 - **Harmless, kept:** `mirrors` pointing rendering→segment is provenance
@@ -293,7 +298,7 @@ manufactures non-convergence (AGENTS.md); the fix is context, not a fence.
 |---|---|---|
 | PR-0 | Exit-label residue (§5): finalize-prompt sharpening, labels ordering + parallel-label context. Ships before everything; improves the pending medium validation run | frontier prompt design, small diff |
 | PR-1 | Docs: 01 §6 rewritten around the unified model (parameter table, content regimes, premise-per-rendering, the two non-unifying boundaries), I15 restated segment-relative and composition-closed, the freeze clarification, I16 stated (the A24 mini-ADR row landed with this plan) | frontier (doc-only) |
-| PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0, FILL/entry-labels reading it | frontier design, mid-tier typing |
+| PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0 (relaxing `Beat._class_consistency`'s premise-only-on-`TEXTURE_WORLD` guard, §2), FILL/entry-labels reading it | frontier design, mid-tier typing |
 | PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5 | mid-tier against this contract |
 | PR-4 | Grant model: `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10/round-trip + violating-construction tests; B6 held-note | mid-tier against this contract |
 | PR-5 | The loop: iterative finalize (`finalize:<n>` expansion), retire probe-scratch + mirrored cadence, small-segment admission, recursion enabled, minting + gated-rendering consumption + I16 | frontier (freeze/arc/I15 seams) |

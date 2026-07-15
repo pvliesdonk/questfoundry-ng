@@ -16,6 +16,56 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (structural-depth medium validation run — machinery
+  measured, four findings, two prompt defects):** Ran DREAM→POLISH at
+  medium on `gpt-oss:120b-cloud` (unbilled, via the LAN daemon's cloud
+  proxy), band-top `--words-target 55000`, the *Closed Circle* premise (the
+  flat baseline's premise, for an apples-to-apples read). Purpose: measure
+  the texture/cadence/finalize machinery as shipped before PR-2+, per the
+  plan's sequencing. GROW froze 186 beats / 12 dilemmas / 64 arcs; finalize
+  grew it to 312 and produced its **whole proposal in one shot** — 3
+  scene-scale texture worlds (~12/18/29 beats, 76 arm beats mirroring 76
+  trunk beats), 44 cadence forks, 6 residue arms — **no ~60-site
+  exhaustion** (the plan's top finalize risk, retired for this run). The
+  passage layer built clean (203 passages, 276 choices; 399 summary/labels
+  passes). Scorecard (recovered by replaying the cached POLISH proposals
+  onto the GROW graph): B6 **971 words/choice** (band 250–800, above),
+  B7 **76,160 words** (target 55,000, **+38%**); B4×64 / B8×18 / B3×1 are
+  the known advisory bands (I12×71 is an artifact of the halted audit, not
+  a defect). Four findings recorded in BACKLOG:
+  1. **Finalize entity-roster halt — FIXED** (PR #92): the finalize schema
+     pins `entities` to the retained cast's ids but the prompt showed only
+     beat summaries, so the writer coined `character:finch` for the sheriff
+     whose id is `character:marshal`. Fix: pass the cast, list
+     `name (id): concept`. Live-validated (resume cleared finalize).
+  2. **Cadence prompt bias → 44/44 sidetracks, 0 diamonds.** NOT model
+     discretion (44 samples, zero variance = the prompt steering): the
+     `polish_finalize.j2` FALSE BRANCHES section undersells the diamond (no
+     hook, no "use it when", "look left / look right" booby-prize) and
+     oversells the sidetrack (evocative + near-universal "use it where
+     lingering is plausible" trigger). Confirms plan **PR-3** (engine-
+     assigned mandatory shape) is necessary — shape can't be left to the
+     prompt. (Corrects the earlier framing of this as "the run surfaces
+     weak-tier halts" and "model discretion", per the author 2026-07-15 —
+     both are the blame-the-tier reflex AGENTS.md forbids; the axis is the
+     prompt.)
+  3. **PR-0 residue-paragraph regression:** the exit-label paragraph PR-0
+     added to FALSE BRANCHES is written in sidetrack-only vocabulary ("the
+     detour", "declined", "rejoins the same road"), wrong for a diamond arm.
+  4. **Texture worlds overshoot the words budget** (B7 +38%, B6 above band):
+     3 max-size worlds written twice inflate past `words_target` and crowd
+     out choices — data for open-question 1 (mix ratio) and a possible
+     `texture_plan` admission bug.
+  The run **halted at the `polish_audit` pass** (undiagnosed: the audit is
+  a single call enumerating ~70 ambiguous-state passages, several near-
+  identical texture renderings, and produced duplicate entries; per AGENTS.md
+  the audit prompt clarity and the "audited twice" message actionability are
+  the first suspects, then the A21 giant-call decomposition). Resumable free
+  (399 passes journaled). **Process note (author, 2026-07-15): this repo does
+  NOT track work via GitHub issues** — the docs administration is the
+  backlog; issues opened this session (#86/#89/#91/#93) were the agent's
+  global-habit error, left as-is, no new ones.
+
 - **2026-07-15 (cosmetic forks PR-1 built — one-mechanism framing,
   current-state truth only):** Rewrote 01 §6's false-branch and
   texture-world entries into a single unified presentation — cosmetic forks

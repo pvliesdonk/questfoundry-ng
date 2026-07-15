@@ -119,22 +119,31 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    (k ≥ 2 renderings of a trunk segment, renderings as peers, finalize as
    a loop, residue keywords); contract + ratified decisions + PR slices in
    [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md) (mini-ADR A24,
-   roadmap "Next"). **PR-0 — the exit-label residue fix (§5) — is built**
-   (finalize prompt: arm summaries must carry the mark the detour leaves;
-   labels pass: cosmetic-fork renderings are worded after their parallel
-   siblings and shown the labels already offered into the shared rejoin,
-   with a "carry residue, never re-offer" instruction; generalized past
-   sidetracks to every parallel edge set into a shared rejoin, per §5.3 —
-   `pc.cosmetic_rejoin_sources`). No validator (the fix is context, not a
-   fence). It should ride the step-1/2 medium run. **PR-1 — docs,
-   current-state truth only — is built** (#87 merged PR-0; PR-1 rewrites
-   01 §6 to present false branches + texture worlds as one mechanism —
-   k ≥ 2 renderings of a trunk segment — with today's asymmetries
-   (premise on fresh arms only, mirrored-cadence parity) described as
-   current behavior carrying A24/plan pointers; NO I15 restatement, NO
-   I16, no freeze clarification — each rides the PR whose code makes it
-   true, per the plan's doc-truth rule). The engine rework (PR-2+) waits
-   until the step-1/2 medium run has measured the machinery as shipped.
+   roadmap "Next"). **PR-0 (exit-label residue, §5) and PR-1 (01 §6
+   one-mechanism framing, current-state truth) are merged** (#87, #90).
+   The engine rework (PR-2+) waits on the step-1/2 medium validation run.
+
+   **That validation run ran (2026-07-15, DREAM→POLISH, medium, band-top
+   `--words-target`, `gpt-oss:120b-cloud`, unbilled) and is the current
+   thread.** It measured the machinery as shipped (scorecard in the
+   decision log): finalize planted the whole proposal in one shot — 3
+   texture worlds + 44 cadence forks + 6 residue, no site-count exhaustion
+   (the plan's top risk retired for this run). It surfaced four
+   prompt/budget findings, now in [`BACKLOG.md`](BACKLOG.md): the finalize
+   entity-roster halt (**fixed, PR #92, awaiting merge**); a cadence
+   prompt bias that placed 44/44 sidetracks (→ plan PR-3 makes shape
+   engine-assigned); a PR-0 residue-paragraph regression (sidetrack-only
+   vocabulary); and texture worlds overshooting the words budget (+38%).
+   The run **halted at the audit pass** (undiagnosed — audit prompt +
+   "audited twice" message are first suspects, then the A21 giant-call
+   decomposition); it is resumable free (399 passes journaled).
+
+   **Next:** merge PR #92 → diagnose/fix the audit halt → resume the run
+   to a completed medium exemplar for the author read → then PR-2 → PR-3
+   (resolves the 44/44 shape finding) → PR-4 → PR-5. GitHub *issues* are
+   NOT used for this repo (author, 2026-07-15) — work is tracked here and
+   in the BACKLOG; the caveat under AGENTS.md §"Documentation contract"
+   holds until the backlog moves to issues.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

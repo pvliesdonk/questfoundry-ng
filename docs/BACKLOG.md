@@ -109,12 +109,18 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   trunk label into the arm's call) and not chance — both calls get the SAME
   destination summary and the same "concrete present-tense action" task, so
   independent samples converge; it will recur at every sidetrack/diamond
-  rejoin on any tier. Fix direction: the call must see what it must differ
-  FROM — show it the parallel label(s) already worded onto the same
-  destination ("the reader declined this wording one page ago"). Note the
-  prompt already forbids meta-labels ("continue" is a failure; even a single
-  onward choice gets a diegetic line), so the fix is a DIFFERENT diegetic
-  line, not a bare continuation.
+  rejoin on any tier. Author refinement (2026-07-15): the reader doesn't
+  *decline* the hall — they *choose* the pine path, so re-entering the hall
+  is expected; the identical label is what exposes the passage as a
+  mechanical sidestep. The durable principle is now in 01 §6: even fake
+  branching needs consequence, at minimum in the arm's own beat and in the
+  rejoin wording — the exit label carries the arm's residue ("reassured by
+  the pine's whisper, step into the hall"). Fix direction: show the arm's
+  labels call the parallel label(s) already worded onto the same
+  destination plus its own arm beats, and ask for the residue-carrying
+  line. The prompt already forbids meta-labels ("continue" is a failure),
+  so the fix is a different diegetic line, not a bare continuation.
+  Cosmetic flag grants (the item above) are the stronger form.
 
 ## Prose & annotations
 

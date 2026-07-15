@@ -483,6 +483,14 @@ passages and wires choices in separate passes
 **False branch** — POLISH-added cosmetic forks for the feel of agency:
 *diamond* (two choices, same destination) or *sidetrack* (a short detour
 that rejoins). May grant cosmetic flags for later flavor callbacks.
+**Even fake branching needs consequence** (author-directed, 2026-07-15,
+reading letter-and-frontier): a cosmetic arm is still *chosen* — the
+reader picks the pine path, they don't decline the hall — and the choice
+must leave a mark, at minimum in the arm's own beat and in how the rejoin
+is worded (the exit label carries the arm's residue: "reassured by the
+pine's whisper, step into the hall", never a re-offer of the trunk's
+label — an identical rejoin label exposes the passage as a mechanical
+sidestep). Cosmetic flags are the stronger form of the same rule.
 
 **Texture world** — the false branch generalized to scene scale
 (structural-depth W3, author-directed 2026-07-14): a diamond laid over a

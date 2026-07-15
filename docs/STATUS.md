@@ -126,8 +126,15 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    with a "carry residue, never re-offer" instruction; generalized past
    sidetracks to every parallel edge set into a shared rejoin, per §5.3 —
    `pc.cosmetic_rejoin_sources`). No validator (the fix is context, not a
-   fence). It should ride the step-1/2 medium run; the engine rework
-   (PR-2+) waits until that run has measured the machinery as shipped.
+   fence). It should ride the step-1/2 medium run. **PR-1 — docs,
+   current-state truth only — is built** (#87 merged PR-0; PR-1 rewrites
+   01 §6 to present false branches + texture worlds as one mechanism —
+   k ≥ 2 renderings of a trunk segment — with today's asymmetries
+   (premise on fresh arms only, mirrored-cadence parity) described as
+   current behavior carrying A24/plan pointers; NO I15 restatement, NO
+   I16, no freeze clarification — each rides the PR whose code makes it
+   true, per the plan's doc-truth rule). The engine rework (PR-2+) waits
+   until the step-1/2 medium run has measured the machinery as shipped.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

@@ -97,6 +97,18 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   work RECURSIVELY (a diamond inside a texture arm, a world inside a world);
   (d) forks may offer THREE OR MORE choices — dilemmas are binary by design
   (tension), but a cosmetic fork's choice menu need not be exactly two.
+- [ ] **Sidetrack exit labels re-offer the declined choice (author reading of
+  letter-and-frontier, 2026-07-15).** `p-bridge-letter` offers "Enter the
+  great hall, clutching the sealed letter" (direct) or the pine detour; the
+  detour page's ONLY exit is "Enter the great hall, the sealed letter
+  trembling in my grasp" — the just-declined act, re-worded. Topology is
+  correct (an arm rejoins the trunk's destination by design); the labels
+  pass words each menu blind to the trunk label its arm edge parallels, and
+  the distinct-labels rule only spans one passage's menu. Fix direction: a
+  single-exit detour page is a CONTINUATION, not a choice — tell the labels
+  pass (it isn't told the page is single-exit or a detour arm today), and/or
+  show it the parallel trunk label with "the reader declined this wording
+  one page ago". Covers the diamond rejoin case too.
 
 ## Prose & annotations
 

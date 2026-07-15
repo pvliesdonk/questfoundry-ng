@@ -68,6 +68,24 @@ history; the decisions it recorded are captured below and in the design docs.
   ending+split_on refusal was reworded to the honest reason (frozen
   ending set) with the I12 exception documented.
 
+- **2026-07-15 (rework convergence is a prompting concern — author-corrected):**
+  The texture-trial's fifth halt (`write:p-vara-laugh`, "failed review 2
+  times") was wholesale rewriting under REVISE-DON'T-REWRITE: the cached
+  drafts prove the writer fixed exactly the quoted findings each round,
+  rewrote everything else, and regressed a grounded possessive ("Vara's
+  mask" → "the mask") no finding touched. The agent first shipped an
+  engine-side fix — rework rounds schema-forced to `edits: [{find,
+  replace}]`, engine-merged — and the author rejected it the same day:
+  *"this is a prompting issue … not something you must micromanage from
+  the engine"* (573c318, reverted in full). The prompt-level fix that
+  stands: the rework block ends with an explicit self-check (diff your
+  revision against the shown draft sentence by sentence; restore any
+  sentence no finding required changing, watching small anchors like
+  possessives). Same halt cluster, earlier fixes that DID stand: the echo
+  check batches every lift into one error, and the ending+split_on
+  refusal gives the honest frozen-ending-set reason (I12 exception
+  documented).
+
 - **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
   author-directed on the live run):** The texture-trial's second halt
   (five spymaster passages "over the I12 cap") unwound into two author

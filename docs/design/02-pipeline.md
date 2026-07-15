@@ -501,7 +501,15 @@ against the prose (a claimed fix the prose doesn't deliver is itself a
 defect). `revision_notes` are reviewer-facing only — never applied, so
 replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
 account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
-halted a live run.)
+halted a live run.) A third, prompt-level lever guards against rework
+*regression* (texture-trial live run, 2026-07-15: a revision fixed the
+quoted findings, rewrote the rest, and dropped a grounded possessive no
+finding touched): the rework prompt ends with an explicit self-check —
+diff the revision against the shown draft sentence by sentence, restore
+any sentence no finding required changing. Rework convergence is a
+prompting concern; an engine-side edit-merge mechanism was built and
+reverted the same day (author-directed: don't micromanage the writer from
+the engine).
 
 ### DRESS — art and codex
 

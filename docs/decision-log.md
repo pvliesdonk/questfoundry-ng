@@ -16,6 +16,30 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (the texture-trial: COMPLETE — the first project through
+  DRESS, structural depth validated at short scope):** "The Letter and
+  the Frontier" (short, `gpt-oss:120b` unbilled) ran DREAM→DRESS
+  gate-clean: **0 errors, 41 advisories** — 32× B4 (arc beat-band) + 1×
+  B3 (93 passages vs the 24–64 short band): the known post-modulation
+  band recalibration (BACKLOG), the same drift the kimi A/B showed; 8×
+  B8 pacing; **B6, B7, B9 all silent** (words-per-choice in band, total
+  words in band, bridge share under the tripwire). The milestone's
+  levers all fired live: W1 — 1 hard + 4 soft from the coupled budget;
+  W2 — 2 dilemmas reserved at triage and used as texture feedstock; W3 —
+  finalize planted 3 texture worlds (34 arm beats, tw0–tw2) in ONE
+  proposal plus mirrored cadence (19 false-branch/sidetrack splices, 8
+  residue arms); W4 — arm prose grounds its premise (the tw0 twins:
+  plains/dust trunk vs pines/moonlight arm, same events, no lifts).
+  Structure: 155 beats / 93 passages / 32 arcs (all complete) / 20
+  flags / 2 endings / ~18.1k prose words. Spend: 784 calls, 2.55M in /
+  1.02M out, all unbilled. Operator record: seven halts, every one a
+  real defect fixed at root (the stall journal is the session record;
+  the fixes are PR #81's commits — I12's unit + split_on, batched
+  echoes, the twice-corrected rework diagnosis ending in loosened
+  review margins, the write-pass repair budget, legible bans). The last
+  ~60 passages wrote with zero halts. Open for the milestone exit: the
+  author's read, and the medium run with a band-top words target.
+
 - **2026-07-15 (the write prompt gets legible bans; the exhaustion message
   gets honest channel counts — agent decision on the live run):** The
   texture-trial's seventh halt (`write:p-border-approach`) reported

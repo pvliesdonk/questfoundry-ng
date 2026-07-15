@@ -38,17 +38,19 @@ disposition — brainstorm surplus kept as unwoven texture feedstock.
 **PR-3 merged** (#79): the texture-worlds *engine* — the mirrored
 parallel-world splice (`Beat.mirrors`, invariant **I15** with its
 edge-projection rule), cap-aligned sub-stretch sites, `texture_plan`,
-and cadence diamonds mirrored into arms. **PR-4 is built on this
-branch**: the pipeline wiring — POLISH finalize offers the texture sites
-and *requires* them filled (site index + one-line premise + one
-model-worded beat per trunk beat; splices texture → false branches →
-residue, cadence sized on a graph carrying the forks so both budgets
-agree), `texture_plan` is capped by the words budget (a parallel stretch
-is printed twice and must fit `words_target`), and FILL's write prompt
-names the passage's texture-world premise (W4 — persisted on the arm
-beats, the `variant_flag` precedent). Every exemplar and recorded
-fixture stays green (fixture stories offer no sites).
-Previous epic **Rotating limited POV shipped in PR #74** (A22).
+and cadence diamonds mirrored into arms. **PR-4 + the live-run fixes are on PR #81**: the pipeline wiring — POLISH
+finalize offers the texture sites and *requires* them filled, the
+words-budget cap on `texture_plan`, FILL's texture-premise lever (W4) —
+plus everything the validation run surfaced: the I12 unit correction
+(dilemma states, not flags) with the audit's `split_on` escape valve,
+batched echo/apply feedback, the loosened review margins (author-directed
+twice: never add more rules — check the existing write prompt for
+clarity, the existing review prompt for over-strictness), the per-pass
+repair budget (write passes get 4), and legible voice bans. **The live
+validation completed 2026-07-15: the short-scope texture-trial ("The
+Letter and the Frontier") is the first project ever through DRESS
+gate-clean** — 0 errors, W1–W4 all exercised (scorecard in the decision
+log). Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
 
@@ -94,18 +96,22 @@ Previous epic **Rotating limited POV shipped in PR #74** (A22).
    machinery exercise could also run on the flat exemplar.) Setting a
    band-top `--words-target` on that run would also exercise PR-1's
    coupling live.
-2. **Structural depth — only the live validation remains** (the
-   milestone's exit, plan §PR slicing): a fresh weak-tier medium with a
-   band-top `--words-target` — the budget derives more softs (W1),
-   triage reserves feedstock (W2), finalize plants texture worlds and
-   fills the cadence budget (W3), FILL grounds each world's premise
-   (W4); exit is B6 mid-band, B9 quiet, gate-clean through DRESS, and an
-   author read that finds actual interactivity. This run can double as
-   the prose epic's DRESS-at-scale validation (step 1). All four PRs are
-   built; watch the finalize pass closely on the weak tier — texture
-   arms are its largest single proposal yet (a ~15-beat site in one
-   entry) and repair exhaustion there means decomposing the pass
-   (per-site calls, the A21 precedent), not softening the requirement.
+2. **Structural depth — short-scope live validation DONE (2026-07-15)**:
+   the texture-trial (`gpt-oss:120b`, unbilled, short scope per author
+   choice — micro offers no texture sites) ran DREAM→DRESS gate-clean:
+   0 errors, 41 advisories (32× B4 arc-band + 1× B3 passage-band — the
+   known post-modulation recalibration, BACKLOG; 8× B8 pacing; **B6, B7,
+   B9 all silent**). W1 (1 hard + 4 soft coupled), W2 (2 reserved), W3
+   (3 texture worlds planted, 34 arm beats, mirrored cadence), W4
+   (premise-grounded arm prose — pines/moonlight vs plains/dust twins,
+   no lifts) all exercised live. Seven operator halts, each a real
+   defect fixed at root on PR #81 (stall journal + decision log). Still
+   open for the milestone's full exit: the author read of the generated
+   story (does it feel interactive?), and the **medium** run with a
+   band-top `--words-target` — which doubles as step 1's DRESS-at-scale
+   validation. Watch finalize there: texture arms are its largest
+   proposal yet; exhaustion means decomposing the pass (A21 precedent),
+   not softening the requirement.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

@@ -121,7 +121,8 @@ The current differential treatment of trunk vs arm, triaged:
   trunk" stands in its narrow sense while its framing (trunk as original)
   is superseded.
 
-**Freeze clarification (doc change, PR-1):** the freeze (I9, iron rule 4) is
+**Freeze clarification (doc change, rides PR-2 — the PR that first
+annotates a frozen beat):** the freeze (I9, iron rule 4) is
 *topological* — no beat deleted, no dilemma fork or convergence moved.
 Presentation-layer annotations added to frozen beats by POLISH through the
 mutation layer (`texture_premise` on rendering 0, `grants_flags` on a
@@ -346,18 +347,28 @@ AGENTS.md warns about). Each ⭐ is a frontier seam.
   false-branch/texture halves. **What stays**: `convergence_needs` and the
   residue apply path (round 0), `insert_texture_world`'s mirror-content
   splice for non-empty segments, I15's field and shape halves
-  (composition-closed per PR-1).
+  (restated composition-closed in PR-5, alongside the code that makes the
+  restatement true).
 
 ## PR slicing
+
+**Doc-truth rule for every slice** (settled 2026-07-15 after the PR-1 build
+session flagged the collision; agent ruling applying iron rule 6 and the
+AGENTS.md doc-truth contract, forwarded via the author): **01/02 carry
+current-state truth only — a restatement of the model rides the PR whose
+code makes it true, and an invariant's statement, check, and
+violating-construction test always land together.** The forward-looking
+record is this plan plus the A24 mini-ADR row (decisions are facts once
+made; system descriptions are not).
 
 | PR | Contents | Tier |
 |---|---|---|
 | PR-0 | Exit-label residue (§5): finalize-prompt sharpening, labels ordering + parallel-label context. Ships before everything; improves the pending medium validation run | frontier prompt design, small diff |
-| PR-1 | Docs: 01 §6 rewritten around the unified model (parameter table, content regimes, premise-per-rendering, the two non-unifying boundaries), I15 restated segment-relative and composition-closed, the freeze clarification, I16 stated (the A24 mini-ADR row landed with this plan) | frontier (doc-only) |
-| PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0 (relaxing `Beat._class_consistency`'s premise-only-on-`TEXTURE_WORLD` guard, §2), FILL/entry-labels reading it | frontier design, mid-tier typing |
+| PR-1 | Docs, **current-state truth only**: 01 §6 presents false branch + texture world as one mechanism *as parameterized today* — §1's table, the content regimes, the two non-unifying boundaries, the rendering/segment vocabulary later PRs' code will use — with today's asymmetries (premise on fresh arms only, mirrored-cadence parity) described as current behavior carrying A24/plan pointers for what changes. NO I15 restatement, NO I16, no freeze clarification (each rides the PR that makes it true; the A24 row landed with this plan) | frontier (doc-only) |
+| PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0 (relaxing `Beat._class_consistency`'s premise-only-on-`TEXTURE_WORLD` guard, §2), FILL/entry-labels reading it. Doc half in the same PR: the freeze clarification and the premise-per-rendering rule land in 01 §6 | frontier design, mid-tier typing |
 | PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5. Lands in the *one-shot* finalize (before the loop exists): `cadence_plan` gains the per-site shape, the prompt's CADENCE table states it, `_finalize_apply` enforces it like it enforces counts | mid-tier against this contract |
 | PR-4 | Grant model: `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10/round-trip + violating-construction tests; B6 held-note | mid-tier against this contract |
-| PR-5 | The loop: iterative finalize (`finalize:<n>` expansion), retire probe-scratch + mirrored cadence, small-segment admission, recursion enabled, minting + gated-rendering consumption + I16 | frontier (freeze/arc/I15 seams) |
+| PR-5 | The loop: iterative finalize (`finalize:<n>` expansion), retire probe-scratch + mirrored cadence, small-segment admission, recursion enabled, minting + gated-rendering consumption. Doc half in the same PR, per iron rule 6: I15 restated (segment-relative, composition-closed, budget parity) and I16 stated in 01 §8, each landing WITH its `graph/validate.py` check and violating-construction test; 02's POLISH contract names the loop | frontier (freeze/arc/I15 seams) |
 | PR-6 | DRESS print acknowledgment paragraphs | deferred until a live run mints keywords |
 
 **Acceptance criteria per PR** (what "done" means, checkable without this
@@ -367,15 +378,18 @@ plan's authoring session):
   rejoin exit label differs from — and does not re-offer — the parallel
   label(s) onto the same destination; the labels-pass ordering is
   deterministic (a test pins it); no schema or graph-model change.
-- **PR-1**: docs only. 01 §6 states the unified model (§1's table), the
-  premise-per-rendering rule, the freeze clarification (§2), and I16; I15
-  is restated segment-relative and composition-closed; 02's POLISH contract
-  names the loop.
+- **PR-1**: docs only, and every sentence added to 01 is true of the code
+  on that PR's merge day. 01 §6 presents the one-mechanism framing and the
+  rendering/segment vocabulary; today's asymmetries read as current
+  behavior with A24/plan pointers; no invariant text changes, no forward
+  claims.
 - **PR-2**: the golden story and all checked-in exemplars validate
   unchanged (rendering-0 premises appear only on newly spliced forks); the
   `Beat._class_consistency` premise guard is relaxed (premise legal on any
   beat, engine-set only); a recorded-fixture test shows the trunk premise
-  reaching FILL's write context and the fork's entry-label context.
+  reaching FILL's write context and the fork's entry-label context; 01 §6
+  gains the premise-per-rendering rule and the freeze clarification in the
+  same PR.
 - **PR-3**: the proposal schema accepts 3 arms; apply enforces the
   engine-assigned shape and arm count with actionable repair messages
   (reason, location, corrective); a violating construction per rule.
@@ -387,7 +401,9 @@ plan's authoring session):
   round; every walk's words-per-choice lands in the B6 band; every
   non-empty rendering minted a keyword; at least one fixture round consumes
   one (gated rendering, I16-checked, I13 intact); the retired machinery is
-  deleted, not stranded; violating-construction tests for I16.
+  deleted, not stranded; the I15 restatement and the I16 statement land in
+  01 §8 in this PR, each with its check and violating-construction test
+  (iron rule 6 — statement, check, and test travel together).
 
 **Sequencing against the in-flight milestone:** the structural-depth medium
 validation run (band-top `words_target`, DRESS at scale) should run **before

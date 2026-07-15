@@ -510,7 +510,7 @@ urge to fix a failing loop by adding a fence, a self-check step, or an
 engine mechanism is micromanagement, and both were built and reverted on
 a texture-trial halt before the author named the real defect. There, the
 reviewer was too strict: it re-rejected hedged inference as interiority
-and demanded an explicit possessive for a referent context had already
+and demanded an explicit possessive for a referent the context had already
 attributed (one masked character on stage; "the mask" is theirs). Each
 pedantic rejection forces another rewrite, and rewrites churn new nits —
 the loop's non-convergence was manufactured by the review. The review

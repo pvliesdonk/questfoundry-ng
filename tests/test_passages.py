@@ -923,6 +923,35 @@ def test_audit_split_on_rejects_a_non_ambiguous_dilemma(vision, tmp_path):
     del g
 
 
+def test_audit_split_on_rejects_an_ending(vision, tmp_path):
+    """Endings never split — variants would multiply the story's ending
+    set, fixed at the freeze (I12's documented exception). The refusal
+    must give that reason, not the false 'already determined' claim."""
+    from questfoundry.models.presentation import Ending
+
+    g, project = _four_soft_trunk(vision, tmp_path)
+    mutations.add_passage(
+        g,
+        Passage(
+            id="passage:p-final",
+            created_by=Stage.POLISH,
+            summary="s",
+            ending=Ending(id="ending:p-final", title="t"),
+        ),
+        ["beat:main-post-a"],
+    )
+    assert queries.ambiguous_dilemma_groups(g, ["beat:main-post-a"])
+    proposal = AuditProposal(
+        audit=[
+            AuditEntry(passage="passage:p-feeder", irrelevant=[]),
+            AuditEntry(passage="passage:p-trunk", irrelevant=[], split_on=["dilemma:sub1"]),
+            AuditEntry(passage="passage:p-final", irrelevant=[], split_on=["dilemma:sub2"]),
+        ]
+    )
+    with pytest.raises(ApplyError, match="ending set, fixed at the freeze"):
+        _audit_apply(proposal, project)
+
+
 # -- arcs pass (plan: docs/plans/prose-quality.md W5) --------------------------
 
 

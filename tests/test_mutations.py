@@ -179,3 +179,37 @@ def test_duplicate_edge_raises_graph_error():
     with pytest.raises(GraphError, match="already exists") as exc:
         mutations.add_ordering(g, "beat:a", "beat:b")
     assert "do not" in str(exc.value)  # recovery_action, not just a diagnostic
+
+
+def test_split_passage_rejects_an_ending():
+    """Endings never split — variants would multiply the story's ending
+    set, fixed at the freeze (I12's documented exception)."""
+    from questfoundry.models.presentation import Ending, Passage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    for flag_id, path in (("flag:one-a", pa), ("flag:one-b", pb)):
+        mutations.add_flag(
+            g,
+            StateFlag(
+                id=flag_id,
+                created_by=Stage.GROW,
+                description="d",
+                source=FlagSource.DILEMMA,
+                path=path,
+            ),
+        )
+    mutations.add_passage(
+        g,
+        Passage(
+            id="passage:p-final",
+            created_by=Stage.POLISH,
+            summary="s",
+            ending=Ending(id="ending:p-final", title="t"),
+        ),
+        ["beat:one-post-a"],
+    )
+    with pytest.raises(MutationError, match="ending set, fixed at the freeze"):
+        mutations.split_passage(g, "passage:p-final", [["flag:one-a"], ["flag:one-b"]])

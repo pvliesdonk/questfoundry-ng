@@ -900,16 +900,28 @@ def _audit_context(project: Project) -> dict:
     }
 
 
-def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
+def _audit_apply(
+    proposal: AuditProposal, project: Project, only: set[str] | None = None
+) -> list[str]:
     """Two-phase, all violations batched into ONE repairable error (the
-    scaffold precedent — raising the first violation of a ~40-entry joint
-    proposal fed the repair loop one problem per round, and the live
-    texture-trial exhausted repairs playing whack-a-mole). The I12 cap is
-    enforced here, at the pass that can still fix it, in the honest unit
-    (dilemma states, not flags) and with the honest escape (split_on —
-    variants keyed on a dilemma — never irrelevance as budget-filler)."""
+    scaffold precedent — raising the first violation of a joint proposal fed
+    the repair loop one problem per round, and the live texture-trial
+    exhausted repairs playing whack-a-mole). The I12 cap is enforced here,
+    at the pass that can still fix it, in the honest unit (dilemma states,
+    not flags) and with the honest escape (split_on — variants keyed on a
+    dilemma — never irrelevance as budget-filler).
+
+    ``only`` restricts the expected passage set to a subset — the audit runs
+    one passage per pass (``_audit_expand``), since each passage's I12
+    resolution is independent (``states − splits ≤ cap`` per passage) and a
+    single call over every audited passage (~137 at medium, many near-
+    identical texture renderings) degenerates into wholesale repetition (the
+    A21 giant-call defect, live 2026-07-15). None keeps the joint behavior
+    the unit tests exercise."""
     g = project.graph
     audited = _audited_passages(project)
+    if only is not None:
+        audited = [(p, groups) for p, groups in audited if p.id in only]
     expected = {p.id: groups for p, groups in audited}
     endings = {p.id for p, _ in audited if p.ending is not None}
 
@@ -1009,6 +1021,53 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
                 f"{entry.passage}: split on {sorted(entry.split_on)} -> {', '.join(ids)}"
             )
     return lines or ["all ambiguous states judged relevant"]
+
+
+def _audit_one_context(pid: str) -> Callable[[Project], dict]:
+    """One passage's slice of the audit context (the template loops over
+    ``passages``; here it is a single-element list)."""
+
+    def build(project: Project) -> dict:
+        ctx = _audit_context(project)
+        ctx["passages"] = [p for p in ctx["passages"] if p["passage"] == pid]
+        return ctx
+
+    return build
+
+
+def _audit_one_schema(pid: str) -> Callable[[Project], type[BaseModel]]:
+    def schema(project: Project) -> type[BaseModel]:
+        return audit_proposal_schema(project, only={pid})
+
+    return schema
+
+
+def _audit_one_apply(pid: str) -> Callable[[BaseModel, Project], list[str]]:
+    def apply(proposal: AuditProposal, project: Project) -> list[str]:
+        return _audit_apply(proposal, project, only={pid})
+
+    return apply
+
+
+def _audit_expand(project: Project) -> list[PassSpec]:
+    """Per-passage audit passes (A21 for the audit): one ``audit:<pid>`` per
+    ambiguous-state passage. Each passage's I12 resolution is independent
+    (``states − splits ≤ cap`` per passage, and a split leaves every variant
+    ``≤ cap`` by construction — no post-split re-audit), so per-passage is
+    exact; the single joint call degenerated into wholesale repetition at
+    medium scale (~137 near-identical passages doubled, live 2026-07-15).
+    Deterministic (``_audited_passages`` is id-sorted) for ledger resume."""
+    return [
+        PassSpec(
+            name=f"audit:{p.id}",
+            role="architect",
+            template="polish_audit.j2",
+            schema=_audit_one_schema(p.id),
+            build_context=_audit_one_context(p.id),
+            apply=_audit_one_apply(p.id),
+        )
+        for p, _ in _audited_passages(project)
+    ]
 
 
 # -- pass 4: arcs -------------------------------------------------------------
@@ -1174,14 +1233,19 @@ def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
     )
 
 
-def audit_proposal_schema(project: Project) -> type[AuditProposal]:
+def audit_proposal_schema(
+    project: Project, only: set[str] | None = None
+) -> type[AuditProposal]:
     """Pin `audit[].passage` to the passages that have ambiguous states
     (both exact ids and their unambiguous slugs, which the apply also
     accepts), `irrelevant[]` to those passages' ambiguous flags, and
     `split_on[]` to the dilemmas those states belong to. Resolved after
-    the passages pass mints the passages (PassSpec.schema_for)."""
+    the passages pass mints the passages (PassSpec.schema_for). ``only``
+    restricts to a single passage's audit pass (``_audit_expand``)."""
     g = project.graph
     audited = _audited_passages(project)
+    if only is not None:
+        audited = [(p, groups) for p, groups in audited if p.id in only]
     ids = sorted(p.id for p, _ in audited)
     passage_refs = ids + [i.split(":", 1)[1] for i in ids]
     flags = list(dict.fromkeys(f for _, groups in audited for grp in groups for f in grp))
@@ -1225,6 +1289,16 @@ POLISH_STAGE = StageImpl(
             schema=audit_proposal_schema,
             build_context=_audit_context,
             apply=_audit_apply,
+            # Decomposed per passage (A21): this planner makes no call; its
+            # expand splices one `audit:<pid>` pass per ambiguous-state
+            # passage. A single joint call over ~137 near-identical passages
+            # degenerated into wholesale repetition (live 2026-07-15).
+            skip_if=lambda project: (
+                f"decomposed into {len(_audited_passages(project))} per-passage audit(s)"
+                if _audited_passages(project)
+                else "no passage carries ambiguous state"
+            ),
+            expand=_audit_expand,
         ),
         PassSpec(
             name="arcs",

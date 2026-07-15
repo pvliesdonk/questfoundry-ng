@@ -14,7 +14,10 @@ For each passage, two honest tools:
    matter to fit the cap. The engine re-presents the passage as gated
    variant pages — each variant's readers arrive holding a KNOWN side, so
    that state stops counting and each variant's prose commits to its side.
-   Split on at most 2 dilemmas per passage.
+   Split on at most 2 dilemmas per passage. **An [ENDING] passage cannot
+   split** — variants would multiply the story's ending set, fixed at the
+   freeze — so resolve an over-cap ending ONLY by marking the state(s) it
+   does not address as irrelevant; leave its split_on empty.
 
 The audit is about honesty, not budget: never mark a state irrelevant just
 to hit the number — if the scene turns on it, split on it instead. Where a
@@ -25,8 +28,8 @@ VISION: {{ vision.genre }}, {{ vision.tone }}.
 
 PASSAGES:
 {% for p in passages %}
-- {{ p.passage.id }}: {{ p.passage.summary }}
-  ambiguous states: {{ p.states | length }}{% if p.over %} — {{ p.over }} over the cap: resolve at least {{ p.over }} (irrelevant or split_on){% endif %}
+- {{ p.passage.id }}{% if p.passage.ending %} [ENDING — resolve over-cap by irrelevant only, never split]{% endif %}: {{ p.passage.summary }}
+  ambiguous states: {{ p.states | length }}{% if p.over %} — {{ p.over }} over the cap: resolve at least {{ p.over }} ({% if p.passage.ending %}irrelevant only{% else %}irrelevant or split_on{% endif %}){% endif %}
 
 {% for s in p.states %}
   - state {{ s.dilemma }} ("{{ s.question }}"), its flags:

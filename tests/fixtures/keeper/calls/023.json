@@ -1,1 +1,1 @@
-{"text": "{\n \"audit\": [\n  {\n   \"passage\": \"passage:p-the-offer\",\n   \"irrelevant\": []\n  },\n  {\n   \"passage\": \"passage:p-long-watch\",\n   \"irrelevant\": [\n    \"flag:elias-knows\",\n    \"flag:lie-between\"\n   ]\n  },\n  {\n   \"passage\": \"passage:p-wide-water\",\n   \"irrelevant\": [\n    \"flag:elias-knows\",\n    \"flag:lie-between\"\n   ]\n  }\n ]\n}"}
+{"text": "{\n \"audit\": [\n  {\n   \"passage\": \"passage:p-long-watch\",\n   \"irrelevant\": [\n    \"flag:elias-knows\",\n    \"flag:lie-between\"\n   ]\n  }\n ]\n}"}

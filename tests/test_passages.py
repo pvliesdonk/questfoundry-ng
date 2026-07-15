@@ -1263,3 +1263,38 @@ def test_audit_decomposes_per_passage(vision, tmp_path):
         audit=[AuditEntry(passage="passage:p-trunk", irrelevant=["flag:sub1-a", "flag:sub1-b"])]
     )
     _audit_one_apply("passage:p-trunk")(resolved, project)
+
+
+def test_audit_prompt_marks_endings_as_unsplittable(vision):
+    """The apply forbids split_on for endings (variants would multiply the
+    fixed ending set), but that rule lived only in the error message — so the
+    weak-tier medium run tried to split an over-cap ending and exhausted its
+    repairs (live 2026-07-15). The prompt now marks endings and states the
+    rule up front, steering them to irrelevant-only."""
+    from questfoundry.models.presentation import Ending, Passage
+    from questfoundry.pipeline.runner import _environment
+
+    end = Passage(
+        id="passage:p-finale",
+        created_by=Stage.POLISH,
+        summary="the end",
+        ending=Ending(id="e-finale", title="The End"),
+    )
+    mid = Passage(id="passage:p-mid", created_by=Stage.POLISH, summary="a scene")
+    state = {"dilemma": "dilemma:d", "question": "q?", "flags": [("flag:f", "t")]}
+    out = _environment().get_template("polish_audit.j2").render(
+        vision=vision,
+        cap=3,
+        passages=[
+            {"passage": end, "states": [state] * 4, "over": 1},
+            {"passage": mid, "states": [state] * 2, "over": 0},
+        ],
+        notes=None,
+        repair_errors=None,
+        research=None,
+    )
+    # the ending is flagged in the passage list, with the rule at the point of use
+    assert "p-finale [ENDING — resolve over-cap by irrelevant only, never split]" in out
+    assert "irrelevant only" in out  # its over-cap note steers away from split_on
+    assert "p-mid [ENDING" not in out  # a non-ending passage is not marked
+    assert "passage cannot" in out  # the rule is also stated in the split_on body

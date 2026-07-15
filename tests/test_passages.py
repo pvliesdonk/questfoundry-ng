@@ -1298,3 +1298,24 @@ def test_audit_prompt_marks_endings_as_unsplittable(vision):
     assert "irrelevant only" in out  # its over-cap note steers away from split_on
     assert "p-mid [ENDING" not in out  # a non-ending passage is not marked
     assert "passage cannot" in out  # the rule is also stated in the split_on body
+def test_finalize_cadence_residue_instruction_is_shape_neutral(vision):
+    """PR-0's exit-label residue paragraph was written in sidetrack-only
+    vocabulary ("the detour", "declined", "rejoins the same road"), which
+    both biased shape selection and mis-instructed diamond arms (a diamond
+    has no detour and declines nothing). It now addresses both shapes."""
+    from questfoundry.pipeline.runner import _environment
+
+    out = _environment().get_template("polish_finalize.j2").render(
+        vision=vision,
+        cast=[],
+        needs=[],
+        reserve=[],
+        texture_sites=[],
+        cadence=[{"beats": ["beat:a", "beat:b"], "edges": [("beat:a", "beat:b")]}],
+        notes=None,
+        repair_errors=None,
+        research=None,
+    )
+    mark = out[out.index("Each arm's beat summaries") : out.index("which these are not")]
+    assert "diamond arm" in mark  # the mark rule speaks to both shapes
+    assert "detour" not in mark and "declined" not in mark  # not sidetrack-only

@@ -233,16 +233,21 @@ fencer-like"), never a sentence copied from your passage. Its shape is
 fact}. If nothing genuinely new surfaced, add nothing.
 {% if repair_errors %}
 {% if previous_draft and previous_draft.prose %}
-YOUR PREVIOUS DRAFT WAS REJECTED (do not repeat it — revise it so every finding
-below is resolved; a fresh draft that reintroduces the same problem will fail
-again). REVISE, DON'T REWRITE: keep every sentence the findings do not touch —
-the review re-checks EVERYTHING each round, so fixing one finding while
-regressing a constraint the draft already satisfied (a beat dropped, a pronoun
-slipped, a banned pattern reintroduced) fails the round exactly as hard.
-Targeted edits converge; fresh derivations whack-a-mole:
+YOUR PREVIOUS DRAFT WAS REJECTED. This round you return EDITS, not prose: the
+engine applies each edit to the draft below and re-checks the result. Text no
+edit names is kept byte-for-byte — that is the point: fixing one finding must
+not disturb what already passed (a rewritten draft regresses constraints at
+random and never converges).
 ---
 {{ previous_draft.prose }}
 ---
+Each edit is {"find": text copied EXACTLY, character for character, from the
+draft above — extend it with neighboring words until it occurs there exactly
+once — "replace": your new text}. Resolve EVERY blocking item below with an
+edit (several edits may serve one finding; one edit may serve several). A
+finding with no line to point at — a missing beat, a length shortfall — is
+still an edit: replace the sentence nearest the gap with a version that adds
+what is missing.
 {% endif %}
 The rejection list below carries the reasons this draft was rejected. Most are
 FINDINGS, labeled [rule · ASSESSMENT · confidence] — including a `word_budget`
@@ -256,8 +261,9 @@ name the item, "how_addressed": the exact change you make to THIS draft to
 resolve it}. Do not re-derive the prose and hope it lands: decide the change
 first — for a length finding, name WHICH beat or moment you expand or tighten
 and by roughly how much (a shortfall is fixed by deepening a beat the draft
-rushed, never by padding) — state it in the note, then write prose that delivers
-it. The reviewer checks each note against the text, so a claimed change your
-prose does not make is worse than none.
+rushed, never by padding) — state it in the note, then write the edit (or, on a
+first attempt, the prose) that delivers it. The reviewer checks each note
+against the text, so a claimed change your prose does not make is worse than
+none.
 {% endif %}
 {% include "_shared.j2" %}

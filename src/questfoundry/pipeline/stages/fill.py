@@ -245,10 +245,30 @@ class LabelRewrite(BaseModel):
     label: str
 
 
+class DraftEdit(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    find: str = Field(
+        description="text copied EXACTLY, character for character, from your "
+        "previous draft; extend with neighboring words until it occurs there "
+        "exactly once"
+    )
+    replace: str = Field(description="the new text that takes its place")
+
+
 class WriteProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    prose: str
+    prose: str = ""
+    # Rework rounds are edit-based: the schema variant for a round with a
+    # rejected draft REQUIRES `edits` and forbids `prose` (max_length=0), the
+    # engine merges the edits into the previous draft, then fills `prose` and
+    # clears `edits` before the proposal is recorded — so replay artifacts are
+    # always self-contained full prose. Stated-and-trusted "REVISE, DON'T
+    # REWRITE" was ignored (texture-trial live run: a revision fixed the
+    # quoted findings and regressed a grounded referent it rewrote past);
+    # engine-side merging makes untouched text untouchable.
+    edits: list[DraftEdit] = []
     # the writer may re-ground any outgoing label in the prose it just wrote
     # (author-directed, 2026-07-14) — destinations, gates, and grants are
     # fixed; empty means every POLISH label already fits. Optional so the
@@ -645,6 +665,39 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
     raise ApplyError("\n".join(parts))
 
 
+def _merge_edits(prev: str, edits: list[DraftEdit]) -> str:
+    """Engine-side application of a rework round's edits (all problems
+    batched, per the repair-feedback rule in design doc 02)."""
+    problems: list[str] = []
+    merged = prev
+    for i, e in enumerate(edits, start=1):
+        n = merged.count(e.find)
+        if n == 0:
+            problems.append(
+                f'edit {i}: your draft does not contain "{e.find}" — copy the '
+                "find text EXACTLY, character for character, from YOUR PREVIOUS "
+                "DRAFT shown above"
+            )
+        elif n > 1:
+            problems.append(
+                f'edit {i}: "{e.find}" appears {n} times in your draft — extend '
+                "it with neighboring words until it occurs exactly once"
+            )
+        else:
+            merged = merged.replace(e.find, e.replace)
+    if problems:
+        raise ApplyError(
+            f"{len(problems)} edit(s) did not apply — fix ALL in one corrected "
+            "proposal:\n" + "\n".join(f"- {p}" for p in problems)
+        )
+    if merged == prev:
+        raise ApplyError(
+            "these edits change nothing — every replace equals its find; "
+            "propose edits that actually resolve the findings"
+        )
+    return merged
+
+
 def _write_apply_for(
     passage_id: str,
     prior_facts: dict[tuple[str, str], str | None] | None = None,
@@ -654,6 +707,20 @@ def _write_apply_for(
 
     def apply(proposal: WriteProposal, project: Project) -> list[str]:
         g = project.graph
+        if proposal.edits:
+            prev = last_draft["prose"] if last_draft else None
+            if prev is None:
+                raise ApplyError(
+                    "edits arrived with no previous draft to edit — return the "
+                    "full prose instead"
+                )
+            # Merge before stashing: a failed merge keeps the old draft as the
+            # base the next round's edits are written against. Fill prose and
+            # consume the edits so the recorded proposal is self-contained
+            # full prose (ledger replay revalidates against the fresh-round
+            # schema, which forbids edits).
+            proposal.prose = _merge_edits(prev, proposal.edits)
+            proposal.edits = []
         # Stash this draft for the next rework round BEFORE any check can
         # raise, so an apply-stage rejection (word budget, echo) shows the
         # writer what it wrote just as a review rejection does — otherwise the
@@ -993,25 +1060,56 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
         WriteProposal, "WriteProposal", {("MicroDetail", "entity"): entity_ref_ids(project.graph)}
     )
 
-    def schema_for(passage_id: str) -> type[WriteProposal]:
+    def schema_for(passage_id: str, last_draft: dict):
         # Pin `label_rewrites[].choice` to this passage's menu numbers (the
         # reference discipline, refpin.py); an ending has no choices, so the
         # list is forbidden outright — the finalize empty-set precedent.
         menu = _choice_menu(project.graph, passage_id)
         if not menu:
-            return create_model(
+            pinned_base = create_model(
                 "WriteProposal",
                 __base__=write_schema,
                 label_rewrites=(list[LabelRewrite], Field(default=[], max_length=0)),
             )
-        pinned = create_model(
-            "LabelRewrite",
-            __base__=LabelRewrite,
-            choice=(Literal[tuple(m["n"] for m in menu)], ...),
+        else:
+            pinned = create_model(
+                "LabelRewrite",
+                __base__=LabelRewrite,
+                choice=(Literal[tuple(m["n"] for m in menu)], ...),
+            )
+            pinned_base = create_model(
+                "WriteProposal", __base__=write_schema, label_rewrites=(list[pinned], [])
+            )
+        # Two per-round variants (the runner resolves a callable schema every
+        # round): a fresh round demands full prose and forbids edits; a rework
+        # round demands edits and forbids prose, so a wholesale rewrite is
+        # structurally impossible — the engine merges the edits, keeping every
+        # unnamed sentence byte-identical. Replay always sees the fresh shape
+        # (apply fills prose and clears edits before recording).
+        fresh = create_model(
+            "WriteProposal",
+            __base__=pinned_base,
+            prose=(str, Field(min_length=1)),
+            edits=(list[DraftEdit], Field(default=[], max_length=0)),
         )
-        return create_model(
-            "WriteProposal", __base__=write_schema, label_rewrites=(list[pinned], [])
+        revision = create_model(
+            "WriteRevision",
+            __base__=pinned_base,
+            prose=(
+                str,
+                Field(
+                    default="",
+                    max_length=0,
+                    description="forbidden this round: edit, not rewrite",
+                ),
+            ),
+            edits=(list[DraftEdit], Field(min_length=1)),
         )
+
+        def resolve(project: Project) -> type[BaseModel]:
+            return revision if last_draft["prose"] else fresh
+
+        return resolve
 
     for passage_id in writing_order(project):
         slug = passage_id.split(":", 1)[1]
@@ -1030,7 +1128,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 name=f"write:{slug}",
                 role="writer",
                 template="fill_write.j2",
-                schema=schema_for(passage_id),
+                schema=schema_for(passage_id, last_draft),
                 build_context=_write_context_for(passage_id, last_draft),
                 apply=_write_apply_for(passage_id, prior_facts, last_draft),
                 review=_review_for(passage_id, prior_facts),

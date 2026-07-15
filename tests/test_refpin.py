@@ -203,7 +203,9 @@ def test_dress_direction_pins_exact_entity_ids_no_slug(golden):
 
 def test_fill_write_pins_micro_detail_entity_with_slug_affordance(golden):
     write = next(s for s in fill._passes(golden) if s.name.startswith("write:"))
-    entity = write.schema.model_json_schema()["$defs"]["MicroDetail"]["properties"]["entity"]
+    entity = write.schema_for(golden).model_json_schema()["$defs"]["MicroDetail"]["properties"][
+        "entity"
+    ]
     # resolve_entity_ref set: exact id and its unambiguous slug both allowed
     assert "character:keeper" in entity["enum"] and "keeper" in entity["enum"]
 

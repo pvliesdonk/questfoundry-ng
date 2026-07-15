@@ -48,6 +48,25 @@ history; the decisions it recorded are captured below and in the design docs.
 
 - **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
   author-directed on the live run):** The texture-trial's second halt
+
+- **2026-07-15 (FILL rework rounds are edit-based, engine-merged — agent
+  decision on the texture-trial live run):** The run's fifth halt
+  (`write:p-vara-laugh`, "failed review 2 times") traced to wholesale
+  rewriting under a prompt-stated "REVISE, DON'T REWRITE": the cached
+  drafts prove the writer fixed exactly the quoted findings each round,
+  rewrote everything else, and regressed a grounded referent ("Vara's
+  mask" → "the mask") that no finding touched — a fresh sample per round
+  keeps the violation probability constant and the loop never converges.
+  Stated-and-trusted became structurally enforced: the rework round's
+  schema requires `edits: [{find, replace}]` and forbids `prose`
+  (max_length=0); `_merge_edits` applies them engine-side (unique-match,
+  all failures batched), and the apply fills `prose`/clears `edits` before
+  recording so replay artifacts stay self-contained. Durable rule in
+  design doc 02 (FILL, rework-convergence levers). Same session, earlier
+  halts: the echo check batched all lifts into one error (design doc 02
+  repair model gained the batch-all-violations rule), and the review's
+  ending+split_on refusal was reworded to the honest reason (frozen
+  ending set) with the I12 exception documented.
   (five spymaster passages "over the I12 cap") unwound into two author
   corrections. (1) The session's cap-enforcement-at-apply was wrong in
   spirit: a hard irrelevance budget pressures the model to mark

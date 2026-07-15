@@ -16,6 +16,37 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (cosmetic forks unified — the branching ideas thought
+  through, shape ratified):** A design session took the day's three
+  branching threads (residue keywords, the cadence-vocabulary follow-ons,
+  the sidetrack exit-label convergence) from ideas to a contract, with two
+  author corrections steering it: **"diamonds, sidetracks and texture
+  worlds are all intrinsically the exact same mechanism"** (one construct:
+  k ≥ 2 renderings of a trunk segment; the code already whispered it —
+  `insert_texture_world` makes the trunk "conditionally traversed like a
+  diamond arm"), and **"one arm should not have a different treatment than
+  the other"** (the shipped texture world privileges the trunk: premise on
+  arm beats only, so W4 grounds half the readers — the harmful asymmetry).
+  Recursion reframed per the author as **running the same phase in a
+  loop** (iterative finalize; a segment inside a rendering is just a
+  segment next round) rather than mirror-of-mirror machinery. The agent's
+  analysis also surfaced: the missing cosmetic **grant model**
+  (`grant_beats()` returns `[]` for `path=None`, so the first
+  keyword-gated consumer would fail I10 — fix: `Beat.grants_flags`,
+  beat-layer like commit grants), the **I16 locality** enforcement of the
+  obligation boundary, the consumption ranking (gated rendering first;
+  keyword variants need gate-precedence semantics — deferred), and that
+  the exit-label bug generalizes to diamond sibling arms and texture
+  tails. Author ratified the whole shape ("I'm happy with this shape"),
+  explicitly including three flagged leans: **budget parity over
+  structural parity** (each rendering grows its own forks until its walks
+  hit B6 — amends I15, retires mirrored-cadence twinning), **rendering-0
+  premises may sharpen** a vague backdrop, and **the empty rendering stays
+  unmarked**. Recorded: mini-ADR **A24**, roadmap "Next" epic, contract in
+  `docs/plans/cosmetic-forks.md`; the three BACKLOG items folded in.
+  Sequencing: PR-0 (exit-label residue) ships ahead; the structural-depth
+  medium validation runs before the engine rework.
+
 - **2026-07-15 (the texture-trial: COMPLETE — the first project through
   DRESS, structural depth validated at short scope):** "The Letter and
   the Frontier" (short, `gpt-oss:120b` unbilled) ran DREAM→DRESS

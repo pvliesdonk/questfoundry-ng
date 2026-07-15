@@ -79,89 +79,16 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   interact with arc membership in ways the spine model doesn't cover. Same for
   **temporal hints inside atomic fork units** (a hint there has nothing to
   move). Revisit when a generated story demands one.
-- [ ] **Cosmetic flags on false branches / locked storylines** — the machinery
-  exists (`FlagSource.COSMETIC`); wire grants when a residue beat or print
-  codeword actually wants one. **Author extension (2026-07-15):** the cadence
-  structures themselves should be able to grant a (probably cosmetic) keyword
-  — taking a detour or a diamond arm leaves a mark the book can acknowledge
-  later; ties into DRESS codewords for the print projection. **Author
-  design sketch (2026-07-15, ratified direction):** POLISH, when it adds a
-  false branch (sidetrack or diamond), MINTS a flag/keyword at creation;
-  the arm's own beat must reflect that residue immediately — which is what
-  makes the exit label right for free (labels are worded from this
-  passage's beats; the earlier label-convergence finding dissolves at the
-  root, the parallel-label visibility fix becomes a backstop). On a NEXT
-  turn, a new false branch MAY consume an existing keyword — creating a
-  keyword-GATED branch (holders see the detour; non-holders see only the
-  trunk edge; print gets a codeword paragraph) — or mints a new one.
-  Implies iterative per-site planting (the A21 decomposition precedent)
-  where each site call sees the keyword ledger minted so far; a consumer
-  must sit strictly downstream of its grant (engine-checkable). Author's
-  open question: same `FlagSource.COSMETIC` or a distinct type for
-  residue keywords — agent lean: reuse COSMETIC (its definition is
-  exactly this) and carry the printable keyword name as per-flag data
-  (the `codeword` field precedent), decide at build time.
-  Granting is engine-deterministic at splice time (`flag:cw-<arm>` on the
-  arm-entry choice edge); cosmetic flags derive from no dilemma so they
-  stay out of I12's state count (may color, never must). Contract to state
-  up front: a keyword-gated choice never gates a structurally different
-  destination — only a cosmetic variant of the same page or entry to
-  another fake detour (both converge by construction) — or consequence
-  sneaks back in through the cosmetic door. **Author design questions +
-  agent analysis (2026-07-15, unratified):** (1) vs soft dilemmas — the
-  boundary is OBLIGATION: a dilemma's flag is a promise the story must
-  keep (residue, I12 ambiguity, arc completion, B1 budget, GROW-frozen);
-  a keyword is permission (downstream MAY use, prose ignoring it is
-  correct; POLISH-added, presentation-layer). Test: anything downstream
-  DEPENDS on it → it's a dilemma in costume, belongs in GROW. (2)
-  explosion / omni prose — keywords must have ZERO shared-prose impact:
-  never referenced in unconditional prose, even as color (a shared "the
-  whisper returns" asserts a state some readers lack — state
-  dishonesty); consumption is always structurally gated (variant page,
-  gated menu entry, print codeword paragraph), so ungated writers never
-  see them, they stay out of I12 by construction, and 2^N combinatorics
-  never reach any single passage (each gated consumer sees exactly its
-  own gate). Budget consumption sites, not grants — grants are free;
-  unconsumed keywords simply don't print. The two answers interlock: a
-  soft dilemma's state colors shared prose; a keyword's never does.
-- [ ] **Cadence vocabulary follow-ons (author ideas, 2026-07-15, reading the
-  texture-trial passage graph).** The live run's finalize chose almost only
-  sidetracks (1-arm `FalseBranchSpec`: direct edge stays, optional detour) —
-  the author: fine, but *not a diamond*; a true diamond gives TWO new
-  passages that immediately converge (the 2-arm shape the schema already
-  offers). Follow-ons to design: (a) make the sidetrack/diamond mix
-  deliberate rather than a model whim; (b) the two-worlds pattern at small
-  scale — a parallel stretch over just a couple of beats, not only run-scale
-  texture arms (same machinery, shorter stretch); (c) these shapes should
-  work RECURSIVELY (a diamond inside a texture arm, a world inside a world);
-  (d) forks may offer THREE OR MORE choices — dilemmas are binary by design
-  (tension), but a cosmetic fork's choice menu need not be exactly two.
-- [ ] **Sidetrack exit labels re-offer the declined choice (author reading of
-  letter-and-frontier, 2026-07-15).** `p-bridge-letter` offers "Enter the
-  great hall, clutching the sealed letter" (direct) or the pine detour; the
-  detour page's ONLY exit is "Enter the great hall, the sealed letter
-  trembling in my grasp" — the just-declined act, re-worded. Topology is
-  correct (an arm rejoins the trunk's destination by design); the labels
-  pass words each menu blind to the trunk label its arm edge parallels, and
-  the distinct-labels rule only spans one passage's menu. Mechanism
-  (confirmed against polish_labels.j2): not copying (no channel carries the
-  trunk label into the arm's call) and not chance — both calls get the SAME
-  destination summary and the same "concrete present-tense action" task, so
-  independent samples converge; it will recur at every sidetrack/diamond
-  rejoin on any tier. Author refinement (2026-07-15): the reader doesn't
-  *decline* the hall — they *choose* the pine path, so re-entering the hall
-  is expected; the identical label is what exposes the passage as a
-  mechanical sidestep. The durable principle is now in 01 §6: even fake
-  branching needs RESIDUE (the author's "needs consequence", in the
-  reader-felt sense — Drama-layer Consequence stays off false branches by
-  contract), at minimum in the arm's own beat and in the
-  rejoin wording — the exit label carries the arm's residue ("reassured by
-  the pine's whisper, step into the hall"). Fix direction: show the arm's
-  labels call the parallel label(s) already worded onto the same
-  destination plus its own arm beats, and ask for the residue-carrying
-  line. The prompt already forbids meta-labels ("continue" is a failure),
-  so the fix is a different diegetic line, not a bare continuation.
-  Cosmetic flag grants (the item above) are the stronger form.
+- [ ] *(moved)* **Cosmetic-fork threads — keywords, cadence vocabulary, exit
+  labels** — the three 2026-07-15 branching ideas (residue keywords, the
+  deliberate shape mix / small two-worlds / recursion / 3+ arms, the
+  sidetrack exit-label convergence) were thought through with the author
+  the same day, unified ("diamonds, sidetracks and texture worlds are all
+  intrinsically the exact same mechanism" — author), and are now owned by
+  the roadmap epic **Cosmetic forks** and its contract,
+  [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md). Delete this pointer
+  when the epic starts; the pre-unification analyses live in git history
+  (this file, 2026-07-15).
 
 ## Prose & annotations
 

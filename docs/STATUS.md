@@ -114,6 +114,15 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    validation. Watch finalize there: texture arms are its largest
    proposal yet; exhaustion means decomposing the pass (A21 precedent),
    not softening the requirement.
+3. **Next epic designed and ratified — cosmetic forks** (2026-07-15): the
+   author unified diamonds/sidetracks/texture worlds into one mechanism
+   (k ≥ 2 renderings of a trunk segment, renderings as peers, finalize as
+   a loop, residue keywords); contract + ratified decisions + PR slices in
+   [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md) (mini-ADR A24,
+   roadmap "Next"). **PR-0 — the sidetrack exit-label residue fix — ships
+   ahead of the epic** and before/with the step-1/2 medium run; the engine
+   rework (PR-2+) waits until that run has measured the machinery as
+   shipped.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

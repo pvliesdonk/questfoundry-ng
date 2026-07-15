@@ -14,7 +14,13 @@ VOICE (binding — this owns how everything sounds):
 {% if voice.dialogue %}
 - Dialogue: {{ voice.dialogue }}
 {% endif %}
-- Banned: {{ voice.banned | join("; ") }}
+{% if voice.banned %}
+- Banned — never in your prose, in any sentence, including text you add on a
+  rework:
+{% for b in voice.banned %}
+  - {{ b }}
+{% endfor %}
+{% endif %}
 - Notes: {{ voice.notes }}
 When you need a description, reach for the voice's imagery palette — sparingly,
 at the charged moments named below, never as the default texture of every

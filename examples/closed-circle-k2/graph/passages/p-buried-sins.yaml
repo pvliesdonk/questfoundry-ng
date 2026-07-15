@@ -1,0 +1,32 @@
+id: passage:p-buried-sins
+summary: The survivors retain their legal freedom but shoulder unspoken guilt that isolates
+  them from one another. The fire destroys Bernard's portfolio in the great hall grate, rendering
+  the murder technically unsolved but buried beneath ash while the estate's fate remains trapped
+  in the thawing ice block upstairs.
+entities:
+- faction:the-snowbound-heirs
+- character:bernard-croft
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena stands with seventeen heirs after Bernard's unsolved murder. Police
+  depart with incomplete records. Bernard's portfolio burns in the grate; ash settles in the
+  Persian rug's hidden weave. The killer remains unidentified among the heirs. Above, the
+  ice block containing the patriarch's testament thaws against the wall.
+beats:
+- beat:continued-mystery
+- beat:ending-buried-sins
+- beat:the-unspoken-weight
+choices:
+- label: Draw the curtain and watch the snow mount against the glass
+  to: passage:p-buried-world
+- label: Watch Helena lift the poker from its velvet-lined rest
+  to: passage:p-helena-retrieves-irons

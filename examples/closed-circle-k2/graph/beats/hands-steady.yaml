@@ -1,0 +1,7 @@
+id: beat:hands-steady
+created_by: polish
+summary: Dr. Mott's hands steady as the alcohol leaves her system.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:dr-elspeth-mott

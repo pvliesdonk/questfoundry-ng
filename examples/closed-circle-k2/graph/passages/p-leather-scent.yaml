@@ -1,0 +1,14 @@
+id: passage:p-leather-scent
+summary: The portfolio smells of aged leather and underlying decay. The odor reveals that
+  respectable surfaces here conceal physical corruption.
+entities:
+- object:bernard-blackmail-archive
+prose_summary: Marion lifts a leather portfolio containing ledgers in the servant's cell.
+  She smells organic decay and rotting paper. She realizes the household's civility conceals
+  physical corruption. She understands Bernard catalogued their disgrace in the cellars. She
+  holds evidence of their shared decay.
+beats:
+- beat:leather-scent
+choices:
+- label: Spread the papers across the mahogany
+  to: passage:p-guest-panic

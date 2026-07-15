@@ -1,0 +1,18 @@
+id: beat:ending-tyranny--preserve-the-evidence
+created_by: grow
+summary: Helena stands beside Teddy in the great hall as the constable reviews the preserved
+  portfolio, the irony that Bernard's files will outlast the house itself unspoken; the cousin's
+  agents catalog chandeliers while the blackmail archive waits to testify.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- character:helena-vance
+- location:the-great-hall
+is_ending: true
+scene_type: sequel
+narration_scope: wide
+belongs_to:
+- path:expose-the-fraud

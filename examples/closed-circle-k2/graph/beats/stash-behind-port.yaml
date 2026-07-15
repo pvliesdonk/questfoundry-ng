@@ -1,0 +1,16 @@
+id: beat:stash-behind-port
+summary: Teddy hides the gin bottles behind the vintage port where Dr. Mott can find them
+  later, preserving her supply.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: commits
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:hide-the-booze

@@ -1,0 +1,7 @@
+id: beat:crack-in-ice
+created_by: polish
+summary: Marion notices a crack in the ice block, suggesting it did not form naturally.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

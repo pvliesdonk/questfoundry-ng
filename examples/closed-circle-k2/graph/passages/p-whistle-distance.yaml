@@ -1,0 +1,25 @@
+id: passage:p-whistle-distance
+summary: A police whistle sounds beyond the frostbitten grounds. The guests acknowledge that
+  their performance of civility has failed to conceal the violence, and the arrival of external
+  order now costs them the protection of isolation.
+entities:
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion withdraws from the safe. A police whistle approaches. Seventeen heirs
+  lose composure. The cousin chooses flight over burning with sulfur. Helena rests her hand
+  on the chair arm. Teddy freezes mid-gesture. Marion holds documents under her corset, which
+  become police evidence. The heirs' isolation ends and they face legal scrutiny.
+beats:
+- beat:police-whistle-distance
+choices:
+- label: Descend to the great hall, counting each stroke of the axe
+  to: passage:p-estate-seizure

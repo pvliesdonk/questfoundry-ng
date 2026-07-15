@@ -1,0 +1,16 @@
+id: beat:killer-loose
+summary: The murderer remains among the trapped guests, and every hour of delay risks allowing
+  them to destroy evidence or escape when the thaw comes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- faction:the-snowbound-heirs
+- character:bernard-croft
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

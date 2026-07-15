@@ -1,0 +1,17 @@
+id: passage:p-climb-or-decorum
+summary: Helena must choose between scaling the frozen façade herself or preserving the gathering’s
+  etiquette. The climb risks her safety and social standing; the delay allows the killer to
+  escape.
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+prose_summary: Helena Vance retains a portfolio with assignations documentation. She stands
+  among seventeen heirs. Marion Ashworth holds a ledger beside Bernard's body on the settle.
+  A frozen key hangs in the dripping chandelier. Helena calculates climbing the fixture against
+  maintaining decorum. She removes her glove. She has twelve seconds to decide. Marion's standing
+  depends on Helena's silence. The killer remains present.
+beats:
+- beat:decision-imminent
+choices:
+- label: Remain by the fire and smooth my skirts
+  to: passage:p-teddy-deception

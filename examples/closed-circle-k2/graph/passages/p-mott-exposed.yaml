@@ -1,0 +1,21 @@
+id: passage:p-mott-exposed
+summary: The investigator exposes Dr. Mott as the true killer and rejects Teddy's false confession,
+  dismantling the performance that allowed the company to blame the weak. The group faces
+  the absurdity of their maintained pretenses and the chill of bare fact, left with the entropy
+  of exposed truth.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+prose_summary: Investigator exposes Dr. Mott as murderer. Reveals her prescription for patriarch,
+  Bernard's east wing delivery record, and scalpel in her bag matching autopsy incision. Rejects
+  Teddy's false confession; cellar residue on Teddy's hands lacks wound matter. Heirs block
+  Dr. Mott's flight to cellar door. She deposits bag on settle beside Bernard's form, clasps
+  hands behind back. Her medical authority shatters.
+beats:
+- beat:truth-exposed
+choices:
+- label: Drop the sugar tongs onto the silver tray
+  to: passage:p-silence-echo
+- label: Stand at attention while the sergeant amends his ledger
+  to: passage:p-apprehension

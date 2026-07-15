@@ -1,0 +1,17 @@
+id: beat:the-choice-presents
+summary: Teddy stands over the hidden stash with a fire iron in hand, forced to decide between
+  destroying the supply or concealing it for her use.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: advances
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:destroy-the-supply
+- path:hide-the-booze

@@ -1,0 +1,9 @@
+Helena held the match to the ice block. The sulfur flame licked the southeast face where the cracks spidered toward the center. Water beaded on the frozen surface and ran in channels down the brass binding. The ice groaned. A fissure widened along the grain. The testament became visible through the clear layer, the ink blurred but the signatures still distinguishable in Bernard's copperplate.
+
+She moved the flame closer. The heirs maintained their semicircle at four feet, their faces yellow in the chemical glow. Teddy Bryant's cuffs left dark smears on his trouser seams. Marion Ashworth held her ledger with ink-stained fingers. Dr. Mott stood beside the settle where Bernard's body lay, her medical bag clasped in both hands.
+
+The ice surrendered. Water pooled on the Persian rug, following the ash trail toward the escritoire. The chandelier dripped above them, though whether the frozen key had begun its descent she could not determine from below. She calculated the rate of thaw against the remaining hours of darkness. The document softened; water seeped through the cracks and bloomed across the uppermost page, rendering the preliminary clauses illegible.
+
+She withdrew the match. The diminished block sat on the andiron, the will exposed through translucent layers like a specimen in gel. Water found the gaps between the floorboards and drained into the cellar below. The assembly watched the last rivulets disappear.
+
+Helena stepped back. She observed seventeen heirs, their accounts and assignations now secondary to the testimony emerging from the thaw. The frozen will had yielded its contents. She addressed the room, stating that the document would be read before the storm broke. The heirs adjusted their postures. The accounting would proceed.

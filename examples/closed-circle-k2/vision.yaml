@@ -1,0 +1,27 @@
+premise: An Agatha Christie closed circle murder mystery that escalates Fargo style.
+genre: Mystery
+subgenre: Closed-circle neo-noir with absurdist escalation
+tone: meticulous, frostbitten, and darkly absurd; where drawing-room manners curdle into panic
+themes:
+- civility against the violence it conceals
+- order against the entropy of human error
+- performance against authenticity
+audience: Adult readers who enjoy fair-play puzzles laced with moral ambiguity and bone-dry
+  humor; fans of the collision between Golden Age mystery and Coen Brothers irony
+content_notes:
+  include:
+  - Ironic juxtaposition of genteel manners and grotesque mishap
+  - Cascading unintended consequences
+  - Snowbound isolation as pressure cooker
+  - Incompetent criminal improvisation
+  - Period-specific class anxiety
+  - Fair-play clueing with absurdist reveals
+  avoid:
+  - Supernatural explanations
+  - Sexual violence as titillation or primary motive
+  - Graphic torture
+  - Purely nihilistic endings
+  - Unmotivated cruelty
+pov_hint: Third-person limited rotating among the key suspects, with occasional first-person
+  journal entries from the lead investigator
+scope: medium

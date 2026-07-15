@@ -1,0 +1,16 @@
+id: dilemma:clear-or-suspect-butler
+question: Do you reveal that Bernard was hiding in the cellars during the murder, giving him
+  an alibi but exposing his embezzlement, or keep his secret and leave him as a suspect?
+why_it_matters: Clears an innocent man of murder but destroys his livelihood and reputation,
+  or leaves justice clouded while protecting his secret theft
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:clear-the-butler
+  text: Testify to his presence in the cellars and reveal the stolen wine
+- id: answer:protect-his-secret
+  text: Remain silent and let suspicion fall where it may upon the innocent servant
+anchored_to:
+- location:the-cellars
+- character:bernard-croft

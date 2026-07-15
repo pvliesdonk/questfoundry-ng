@@ -1,0 +1,22 @@
+id: passage:p-snowbound-manor
+summary: The storm encases Vance House in ice, severing roads and telephone lines and trapping
+  the late patriarch’s will inside a massive block in the Great Hall. Helena Vance serves
+  lukewarm tea to her assembled heirs beneath a chandelier sheathed in frozen condensation
+  as the heating fails, and the guests realize they are imprisoned until thaw, now subject
+  to the absurd spectacle of a testament they cannot access or read.
+entities:
+- location:the-great-hall
+- object:the-frozen-will
+- faction:the-snowbound-heirs
+- character:helena-vance
+prose_summary: Storm seals valley three days. Patriarch's will remains visible inside ice
+  block hauled from frozen lake and placed in Great Hall. Helena pours lukewarm tea from silver
+  pot; guests Marion Ashworth, Dr. Mott, and Teddy Bryant refuse cups. Heating pipes fail
+  and staircase blocks with snow. Temperature drops. Helena wears emerald velvet with frayed
+  hem. Helena decides to check cellars.
+beats:
+- beat:the-gathering-gloom
+- beat:the-snowbound-manor
+choices:
+- label: Excuse yourself to check the vintage below hasn't frozen in its casks
+  to: passage:p-body-discovered

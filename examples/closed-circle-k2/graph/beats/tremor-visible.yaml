@@ -1,0 +1,7 @@
+id: beat:tremor-visible
+created_by: polish
+summary: A tremor in Dr. Mott's hand is visible to all, a betrayal of her professional composure.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:dr-elspeth-mott

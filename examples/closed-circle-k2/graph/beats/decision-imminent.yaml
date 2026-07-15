@@ -1,0 +1,16 @@
+id: beat:decision-imminent
+summary: Helena must choose whether to risk the climb herself or maintain decorum while the
+  killer walks free.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- character:helena-vance
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

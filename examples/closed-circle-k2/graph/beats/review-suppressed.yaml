@@ -1,0 +1,15 @@
+id: beat:review-suppressed
+summary: The notebook page is burned, and the devastating critique is never spoken aloud,
+  preserving Helena's reputation as a grand dame of the theater.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:helena-vance
+- character:marion-ashworth
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:seal-the-pact

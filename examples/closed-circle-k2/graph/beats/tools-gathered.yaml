@@ -1,0 +1,15 @@
+id: beat:tools-gathered
+summary: Tongs and braziers are brought to the hall, and the ice is positioned near the great
+  fire in preparation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: advances
+entities:
+- location:the-great-hall
+- object:the-frozen-will
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

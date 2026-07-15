@@ -1,0 +1,14 @@
+id: passage:p-silence-echo
+summary: The revelation drops and the room stands frozen in silence. The pretense of order
+  shatters, and the cost is the immediate threat of authentic violence.
+entities:
+- location:the-great-hall
+prose_summary: Dr. Elspeth Mott stands with hands clasped. Marion Ashworth bends over a ledger;
+  Teddy Bryant leans against the mantelpiece; Helena Vance holds a portfolio at the escritoire.
+  Seventeen heirs freeze. The investigator stops speaking. A medical bag rests beside Bernard's
+  draped form. The frozen key in the chandelier drips. Ice cracks. No one moves. Silence dominates.
+beats:
+- beat:silence-echo
+choices:
+- label: Brush the frost from your sleeve
+  to: passage:p-apprehension

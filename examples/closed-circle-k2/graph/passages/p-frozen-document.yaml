@@ -1,0 +1,14 @@
+id: passage:p-frozen-document
+summary: The player examines the document and recognizes its warped, ridged fibers as evidence
+  of freezing and submersion, confirming the paper survived exposure to ice or thawing water.
+entities:
+- object:bernard-blackmail-archive
+prose_summary: Marion Ashworth examines a ledger with freeze-thaw water damage. She determines
+  the paper was frozen, submerged, and thawed, revealing something was taken from or dropped
+  into the lake. Dr. Mott examines the body. Helena stands at the window. Teddy flinches when
+  Marion snaps the ledger closed; he has returned from the upper corridor.
+beats:
+- beat:paper-texture
+choices:
+- label: Lift the ice-rimed notebook from among the personal effects
+  to: passage:p-notebook-discovered

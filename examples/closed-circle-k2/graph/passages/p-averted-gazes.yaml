@@ -1,0 +1,21 @@
+id: passage:p-averted-gazes
+summary: The assembly fixes attention on the chandelier and the frost-rimed glass, every gaze
+  avoiding the center of the room and each other. The imperative of courtesy now enforces
+  blindness, and the group fragments into isolated performers.
+entities:
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:key-recovered
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena stands beside the escritoire. Marion stands without her pince-nez. Seventeen
+  heirs avert their gazes from Marion and from documents upon the marble; all deny the documents'
+  contents. The portfolio lies open between them. The ruined chandelier rests on the Persian
+  rug. Marion does not ring the bell cord. Isolated silence persists.
+beats:
+- beat:gaze-averted
+choices:
+- label: State that the performance is ended
+  to: passage:p-both-fallen

@@ -1,0 +1,23 @@
+id: passage:p-melting-protocol
+summary: Marion signals her decision with a curt nod, and servants bring tongs and braziers
+  to the hall. Helena supervises the placement of the ice block at a precise distance from
+  the fire to melt without charring the document, and the room settles into a mood of meticulous
+  dread.
+entities:
+- character:marion-ashworth
+- location:the-great-hall
+- object:the-frozen-will
+- character:helena-vance
+prose_summary: Marion nods. Servants bring tongs and braziers. Heirs adjust postures. Ice
+  block with testament moves from trestle near the grate. Water drips on the rug. Helena orders
+  the block shifted two inches left from direct heat. She calculates thaw against darkness
+  hours. Ice cracks; water spreads. Document shows through southeast cracks. Assembly waits.
+beats:
+- beat:bridge-24
+- beat:preparation
+- beat:tools-gathered
+choices:
+- label: Strike the match and press it against the frozen seal
+  to: passage:p-match-strike
+- label: Step back to let the fire's breath warm the ice untouched
+  to: passage:p-curling-proof

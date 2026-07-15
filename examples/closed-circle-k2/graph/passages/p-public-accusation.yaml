@@ -1,0 +1,28 @@
+id: passage:p-public-accusation
+summary: Helena extends forged papers toward the assembled heirs as Bernard's blackmail materials
+  blacken to ash in the great hall fireplace; she names Teddy the impostor while the storm
+  seals the doors, trapping the inheritance assembly with her fabrication and the destroyed
+  truth.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: She accuses Teddy Bryant of imposture before seventeen heirs, displaying portfolio
+  documents. Bernard's blackmail materials burn in the andiron. Storm winds seal the great
+  hall, trapping the assembly with her fabrication and destroyed evidence. Teddy stands silent
+  near the escritoire. She maintains the accusatory pose.
+beats:
+- beat:public-accusation--burn-the-secrets
+choices:
+- label: Take Teddy firmly by the arm and steer him toward the pantry
+  to: passage:p-teddy-detained

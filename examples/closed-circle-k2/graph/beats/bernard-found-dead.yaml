@@ -1,0 +1,17 @@
+id: beat:bernard-found-dead
+summary: Bernard Croft is discovered in his pantry with his throat frozen shut, clearly murdered
+  after the storm trapped the killer inside.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: reveals
+entities:
+- character:bernard-croft
+- location:the-cellars
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:burn-the-secrets
+- path:preserve-the-evidence

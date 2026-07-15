@@ -1,0 +1,24 @@
+id: passage:p-bound-examination
+summary: Dr. Mott vomits into the ice sink and convulses until the others tie her to the examination
+  table to steady her hands; she begins the autopsy under duress, sacrificing bodily autonomy
+  for the continuation of professional ritual. The mood is grotesque, frostbitten necessity.
+entities:
+- character:dr-elspeth-mott
+- location:the-cellars
+- character:bernard-croft
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott, wearing irons and suffering withdrawal tremors at an ice sink, cannot
+  steady her hands to operate on Bernard's frozen corpse. She instructs Teddy to bind her
+  wrists with silk scarves from her medical bag to the examination table. Teddy moves Bernard's
+  body from the settle to the table. Dr. Mott makes the first incision.
+beats:
+- beat:forced-sobriety
+- beat:violent-withdrawal
+choices:
+- label: Sever the frozen tissue with shaking hands
+  to: passage:p-hands-steady
+- label: Study the white cuff across the room
+  to: passage:p-vision-sharp

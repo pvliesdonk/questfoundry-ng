@@ -1,0 +1,14 @@
+id: beat:suspicion-raised
+summary: The investigator notes that Teddy's confession contains factual errors about the
+  murder weapon, suggesting he is protecting the true killer.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: complicates
+entities:
+- character:teddy-bryant
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

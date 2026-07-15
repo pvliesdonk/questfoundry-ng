@@ -1,0 +1,7 @@
+id: beat:ink-stain-spread
+created_by: polish
+summary: An ink stain spreads across the tablecloth like a bruise.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

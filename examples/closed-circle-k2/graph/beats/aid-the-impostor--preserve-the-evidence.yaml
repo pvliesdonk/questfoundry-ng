@@ -1,0 +1,18 @@
+id: beat:aid-the-impostor--preserve-the-evidence
+created_by: grow
+summary: Helena steadies the frozen will while Teddy strikes, aware that Marion has locked
+  Bernard's portfolio upstairs and any error will feed the coming investigation; the iron
+  bites deep as legible text begins to emerge.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: commits
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:preserve-the-fiction

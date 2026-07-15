@@ -1,0 +1,7 @@
+id: beat:shadow-shift
+created_by: polish
+summary: The shadows shift as someone moves in the room above.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

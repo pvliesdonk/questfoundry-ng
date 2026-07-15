@@ -1,0 +1,18 @@
+id: passage:p-water-damage
+summary: The protagonist determines the rightful heir from the soaked and smudged document.
+  The resolution of the succession exposes the fragility of written order against the entropy
+  of frostbitten circumstance.
+entities:
+- object:the-frozen-will
+prose_summary: Helena Vance retrieves the patriarch's document from the fractured ice block.
+  Water has destroyed the first clause, fragmented the second, and left the third paragraph
+  legible. She reads the name aloud, determining the succession. She folds the document, places
+  it in her portfolio, and water seeps into the damask lining. Seventeen heirs watch; Teddy
+  stands apart.
+beats:
+- beat:water-damage
+choices:
+- label: Watch the ink weep across the heir's name
+  to: passage:p-stain-spread
+- label: Offer the damaged testament to the executor with a steady hand
+  to: passage:p-inheritance-settled

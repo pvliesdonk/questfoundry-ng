@@ -1,0 +1,7 @@
+id: beat:reflection-distortion
+created_by: polish
+summary: Her reflection in the ice appears stretched and wrong, like a caricature.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

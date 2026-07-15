@@ -1,0 +1,18 @@
+id: passage:p-the-moment-of-truth
+summary: The assembled guests demand Teddy present immediate documentary proof of his identity
+  or face formal accusations of fraud before the will becomes readable. The gathering abandons
+  its pretense of courtesy for open hostility, and the cost of hesitation is permanent disinheritance.
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- character:marion-ashworth
+prose_summary: Teddy confronts Marion Ashworth and seventeen heirs demanding birth record
+  or heir certificates. The will stays frozen in ice. Teddy has forged papers in his upper
+  corridor portmanteau but his hands bear cellar grease that smudges ink; his breast pocket
+  holds only grease stains. He calculates ice thickness against retrieval time. He advances,
+  risking forfeiture and fraud accusation without documents.
+beats:
+- beat:the-moment-of-truth
+choices:
+- label: Withdraw the corroborating documents with bloodless precision
+  to: passage:p-moment-of-truth

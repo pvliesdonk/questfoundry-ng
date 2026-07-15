@@ -1,0 +1,18 @@
+id: passage:p-the-deadline
+summary: Marion faces the final minutes before the solicitor reads the will and the guests
+  disperse. She chooses between accepting the hush bargain to maintain her station or releasing
+  the truth and forfeiting her claim.
+entities:
+- character:marion-ashworth
+- faction:the-snowbound-heirs
+prose_summary: Marion holds her review of faults; Helena holds matches and proof of Marion’s
+  assignations. Twelve chimes sound. The solicitor enters the Great Hall below where seventeen
+  heirs wait. Marion calculates that pulling the bell cord triggers mutual destruction. Both
+  portfolios survive. Marion opens her fingers.
+beats:
+- beat:the-deadline
+choices:
+- label: Count the chimes under your breath
+  to: passage:p-watch-check
+- label: Catch Helena's eye and nod
+  to: passage:p-melting-protocol

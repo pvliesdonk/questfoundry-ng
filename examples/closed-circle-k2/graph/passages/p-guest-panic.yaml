@@ -1,0 +1,18 @@
+id: passage:p-guest-panic
+summary: Dr. Mott and Helena discover their secrets catalogued in Bernard's handwriting and
+  demand the archive's immediate destruction. The drawing-room order dissolves into panic
+  as the maintenance of secrets now requires violence.
+entities:
+- character:dr-elspeth-mott
+- character:helena-vance
+- object:bernard-blackmail-archive
+prose_summary: Dr. Mott takes the brass-bound portfolio from Marion. Dr. Mott discovers entries
+  documenting her alcohol deliveries and peppermint masking. Helena discovers entries documenting
+  warehouse theatre receipts and Teddy's origins. Helena decides they must burn the portfolio
+  tonight. Dr. Mott agrees. The record threatens both their lives. They must destroy it to
+  survive.
+beats:
+- beat:guest-panic
+choices:
+- label: I inspect the wine cellar while they fixate on the archive
+  to: passage:p-concealed-indulgences

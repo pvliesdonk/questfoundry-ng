@@ -1,0 +1,8 @@
+id: path:hide-the-booze
+name: Hide the Booze
+explores: answer:hide-the-booze
+consequences:
+- id: consequence:mott-intoxicated
+  text: Dr. Mott remains functional but intoxicated
+- id: consequence:autopsy-compromised
+  text: The autopsy yields medically compromised findings

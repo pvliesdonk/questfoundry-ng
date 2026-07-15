@@ -1,0 +1,9 @@
+id: beat:bridge-14
+created_by: grow
+summary: Years pass; the estate passes into public hands, its preserved architecture offering
+  a stage for the morbid curiosity of strangers.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs

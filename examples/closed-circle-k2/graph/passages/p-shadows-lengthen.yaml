@@ -1,0 +1,16 @@
+id: passage:p-shadows-lengthen
+summary: Shadows lengthen across the carpet until the furniture appears to shift; the room's
+  fixed dimensions become unreliable, and the cost of maintaining composure rises as the static
+  environment betrays its permanence.
+entities:
+- location:the-great-hall
+prose_summary: Helena holds the portfolio with brass corners and velvet against her ribs;
+  its leather warms while brass stays cold. Room geometry destabilizes as light fades. A key
+  is suspended in the frozen chandelier. Marion adjusts her pince-nez. Dr. Mott sets down
+  an empty glass. Teddy's shoulders rise. Frost advances on the windows, sealing the chamber.
+  Maintaining posture costs effort.
+beats:
+- beat:shadows-lengthen
+choices:
+- label: Circle the chandelier to verify its tension
+  to: passage:p-thermal-calculus

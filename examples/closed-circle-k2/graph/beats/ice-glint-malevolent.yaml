@@ -1,0 +1,7 @@
+id: beat:ice-glint-malevolent
+created_by: polish
+summary: The ice glints with a malevolent sheen as she ascends.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

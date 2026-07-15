@@ -105,7 +105,12 @@ exposed a structural gap the gates had let through as advisory: the run
 ignored POLISH's cadence budget and shipped nearly flat (10 branch
 points across those 112 passages), so the engine-computed false-branch
 budget is now mandatory at apply — the exemplar predates that
-enforcement and doubles as its cautionary baseline.
+enforcement and doubles as its cautionary baseline. Its A/B twin
+["Closed Circle K2"](examples/closed-circle-k2/) — the same premise on
+kimi-k2.5 under the same then-advisory prompts — filled that budget
+voluntarily and landed words-per-choice in band (54 branch points
+across 159 passages), the tier contrast that motivated the
+enforcement.
 The golden story ["The Keeper's Bargain"](examples/keepers-bargain/)
 carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch), the residue diamond, a tensored

@@ -1,0 +1,16 @@
+id: passage:p-coat-brushing
+summary: 'Marion brushes snow from her coat. The gesture marks her funereal arrival and establishes
+  the cost of entry: the performance of warmth and order is now mandatory, and the cold residue
+  becomes evidence she must conceal.'
+entities:
+- character:marion-ashworth
+prose_summary: Marion Ashworth brushes snow from her damp wool coat in the vestibule where
+  Bernard stood. She removes darkened kid gloves, revealing ink-stained fingers. Beyond the
+  arch, seventeen heirs remain rigid since the constable closed his notebook. The escritoire
+  holds dried pools and tarnished braid of removed livery. She adjusts her pince-nez, assumes
+  administrative neutrality, and steps onto the marble.
+beats:
+- beat:coat-brushing
+choices:
+- label: Smooth the damp wool and turn from the window
+  to: passage:p-mutual-protection

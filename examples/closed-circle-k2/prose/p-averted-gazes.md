@@ -1,0 +1,9 @@
+Helena's hand rested at her side. The seventeen heirs had turned from the escritoire to examine the frost-rimed glass of the windows, or to study the chandelier that lay ruined upon the Persian rug. No one looked at the documents spread across the marble. No one looked at Marion.
+
+The assembly stood in isolated postures. A gentleman traced the branching frost across the window with excessive attention. A lady in watered silk studied the tarnished braid of her reticule. Their movements ceased. The room held seventeen distinct silences, each sealed behind politeness that had become cowardice.
+
+Helena remained beside the escritoire. She did not look at Marion. She looked at the chandelier's oxidized silver armature, at the ice melting in its broken crystal, at any object that would not meet her eye with the knowledge of what the foolscap contained. The emerald velvet of her glove rested upon the escritoire's edge, motionless.
+
+Marion stood without her pince-nez. Her fingers hung at her sides. She did not reach for the bell cord. She did not look at Helena, or at the heirs, or at the portfolio that lay open between them. Her gaze fixed upon the obsolete account books stacked in the settle's shadow, as if inventorying a dead man's assets required immediate attention.
+
+The seventeen heirs fragmented into separate performers. Each executed the routine of not-seeing. They turned their shoulders toward the room's perimeter and found urgent interest in the frayed damask of the curtains, in the frozen water pooling beneath the fallen chandelier, in any archival dust that might confirm they were alone with their secrets.

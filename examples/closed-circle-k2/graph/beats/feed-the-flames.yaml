@@ -1,0 +1,16 @@
+id: beat:feed-the-flames
+summary: Helena seizes the portfolio and hurls it into the great fireplace, where the leather
+  curls and the papers blacken irreversibly.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: commits
+entities:
+- character:helena-vance
+- object:bernard-blackmail-archive
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

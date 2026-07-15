@@ -1,0 +1,18 @@
+id: beat:final-desolation--preserve-the-evidence
+created_by: grow
+summary: Teddy kneels in the great hall under guard while Helena receives her eviction notice,
+  the portfolio in the safe ensuring Bernard's death will be investigated long after the estate
+  is rubble; the constable checks his watch against the thaw.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: complicates
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- location:the-great-hall
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-fraud

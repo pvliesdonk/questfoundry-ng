@@ -1,0 +1,16 @@
+id: beat:risk-of-flight
+summary: Teddy argues that if they wait for natural thaw, the killer could strike again or
+  the evidence could be lost to melting ice.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

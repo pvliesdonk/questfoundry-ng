@@ -1,0 +1,11 @@
+id: beat:residue-vindication-hollow
+created_by: polish
+summary: Marion touches the review manuscript in her pocket and feels the brittle satisfaction
+  of martyrdom, knowing that righteousness burns with the same cold intensity as the frost
+  outside.
+beat_class: structural
+purpose: residue
+entities:
+- character:marion-ashworth
+requires_flags:
+- flag:helena-savaged

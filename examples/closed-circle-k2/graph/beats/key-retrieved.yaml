@@ -1,0 +1,15 @@
+id: beat:key-retrieved
+summary: Helena grasps the key and yanks it free, causing the ice to fracture along hidden
+  fault lines.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: reveals
+entities:
+- character:helena-vance
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom

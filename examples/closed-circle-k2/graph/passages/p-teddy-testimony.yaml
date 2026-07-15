@@ -1,0 +1,22 @@
+id: passage:p-teddy-testimony
+summary: Teddy testifies that Bernard was in the cellars during the murder, confirming his
+  alibi while revealing the wine thefts to the entire party. The revelation clears Bernard
+  of suspicion but exposes the household's collective tolerance for theft, and the gathering's
+  composure fractures under the absurd weight of prosecuting small crimes while ignoring the
+  larger one.
+entities:
+- character:teddy-bryant
+- character:bernard-croft
+- faction:the-snowbound-heirs
+prose_summary: Teddy Bryant proves Bernard Croft embezzled £400 over fourteen years but is
+  innocent of homicide. He places glass with lip prints on stone ledge. Marion Ashworth holds
+  the ledger at page eleven. Dr. Mott stands by Bernard’s body on the settle. Helena Vance
+  removes her glove, revealing a tan line. Seventeen heirs realize their silence about theft
+  concealed the murderer.
+beats:
+- beat:testimony-given
+choices:
+- label: Press your thumb into the wet stain
+  to: passage:p-ink-stain-spread
+- label: Watch him walk into the whitening storm
+  to: passage:p-bernard-exile

@@ -1,0 +1,7 @@
+id: beat:ash-scatter
+created_by: polish
+summary: Ash scatters across the Persian rug, marking a path toward the inevitable.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

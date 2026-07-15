@@ -1,0 +1,7 @@
+id: beat:wall-stain
+created_by: polish
+summary: A new stain appears on the wall, spreading with the thaw.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

@@ -1,0 +1,15 @@
+id: beat:mystery-continues
+summary: The true cause of death remains medically obscured, and the investigation stalls
+  on conflicting evidence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: complicates
+entities:
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:hide-the-booze

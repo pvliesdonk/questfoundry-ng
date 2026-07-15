@@ -1,0 +1,7 @@
+id: beat:portrait-eyes
+created_by: polish
+summary: The eyes of a portrait seem to follow Marion as she processes the accusation.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

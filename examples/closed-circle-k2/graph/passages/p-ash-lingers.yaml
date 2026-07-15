@@ -1,0 +1,26 @@
+id: passage:p-ash-lingers
+summary: The scent of ash permeates the drawing-room curtains and confirms that the violence
+  of the previous evening persists in the physical record. The household's effort to restore
+  polite order now bears the indelible cost of this combustion residue.
+entities:
+- location:the-great-hall
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion brushes ash from stained kid leather gloves. Seventeen heirs watch her
+  in Great Hall. A chandelier lies fallen on the Persian rug. Fire destroyed Bernard's archive
+  and evidence. The butler's hands and house secrets lie buried beneath the frozen garden.
+  The household attempts restoration but residue remains. Gloves fray; fingers tremble at
+  bell cords. Destruction is irreversible.
+beats:
+- beat:ash-scent-lingers
+choices:
+- label: Brush the ash from your cuffs with gloved precision
+  to: passage:p-buried-sins

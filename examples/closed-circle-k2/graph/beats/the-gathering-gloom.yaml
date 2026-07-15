@@ -1,0 +1,13 @@
+id: beat:the-gathering-gloom
+summary: Helena Vance receives her guests beneath the chandelier sheathed in frozen condensation,
+  serving lukewarm tea while the heating fails; the assembled heirs learn they are trapped
+  until the thaw.
+beat_class: structural
+purpose: setup
+entities:
+- character:helena-vance
+- location:the-great-hall
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance

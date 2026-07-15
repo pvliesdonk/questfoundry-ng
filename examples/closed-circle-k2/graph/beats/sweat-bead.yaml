@@ -1,0 +1,7 @@
+id: beat:sweat-bead
+created_by: polish
+summary: A bead of sweat freezes on her temple, a grotesque jewel of suffering.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:dr-elspeth-mott

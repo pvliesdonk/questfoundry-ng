@@ -1,0 +1,7 @@
+id: beat:key-bite-palm
+created_by: polish
+summary: The safe key bites into Marion's palm.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

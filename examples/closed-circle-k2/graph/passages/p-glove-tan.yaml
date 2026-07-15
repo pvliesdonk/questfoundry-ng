@@ -1,0 +1,16 @@
+id: passage:p-glove-tan
+summary: Marion notices a tan line on her finger where her glove ends, exposing that her maintained
+  propriety has failed to cover her completely. The breach costs her the certainty that her
+  civilized performance remains intact.
+entities:
+- character:marion-ashworth
+prose_summary: Marion withdraws her hand from a kid leather glove revealing a tan line proving
+  unrecorded assignations. She extends the finger toward Dr. Mott near Bernard's body, and
+  toward Helena at the escritoire and seventeen heirs in the freezing hall with an ice block
+  on the andiron. The exposed skin confirms collapsed propriety. Marion holds the glove while
+  displaying irreversible evidence.
+beats:
+- beat:glove-tan
+choices:
+- label: Remove the glove and thrust your two-toned hand into the center of the gathering
+  to: passage:p-the-moment-of-truth

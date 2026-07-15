@@ -1,0 +1,9 @@
+id: beat:frost-on-eyelashes
+created_by: polish
+summary: Marion notes how ice crystals have formed on Bernard's lashes, a grotesque jewelry
+  that makes her think of winter weddings.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth
+- character:bernard-croft

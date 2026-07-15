@@ -1,0 +1,29 @@
+id: passage:p-secure-archive
+summary: Marion locks the portfolio in the estate safe and hides the key in her bodice, ensuring
+  the documents survive for the authorities. She becomes the archive's sole guardian, her
+  body the vulnerable new lock and her composure the only shield against the violence the
+  papers conceal.
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-frozen
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth locks a portfolio in a wall safe, arranging it alphabetically
+  by victim for authorities, not extortion. She hides the safe key in her bodice against a
+  welt matching the key's bow. She becomes the archive's sole guardian; her body is the vulnerable
+  lock, her composure the only shield. The ruined hall has a fallen chandelier and frost-sealed
+  windows.
+beats:
+- beat:secure-the-archive
+choices:
+- label: Rest your forehead against the frost-rimed glass
+  to: passage:p-exposure

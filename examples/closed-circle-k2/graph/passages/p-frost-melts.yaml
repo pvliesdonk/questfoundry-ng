@@ -1,0 +1,26 @@
+id: passage:p-frost-melts
+summary: The frost on the drawing-room window melts to reveal the gray truth outside and destroys
+  the room's protective barrier, confirming that isolation is temporary. The cost is the loss
+  of comfortable ignorance and the arrival of unavoidable external reality.
+entities:
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena watches frost melt from the window, revealing the outside world. Meltwater
+  breaches sill seal and stains wainscoting permanently. The room’s isolation ends. Unfiltered
+  light reveals chandelier wreckage on Persian rug and damp newspapers on escritoire recording
+  seventeen indiscretions in permanent ink. Helena turns toward stairs before water breaches
+  floorboards. The world outside will judge.
+beats:
+- beat:frost-melt-gray
+choices:
+- label: Mount the stairs before the meltwater pools
+  to: passage:p-naked-truth

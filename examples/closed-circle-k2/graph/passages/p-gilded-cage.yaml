@@ -1,0 +1,31 @@
+id: passage:p-gilded-cage
+summary: Marion smiles at Helena and recognizes the metallic taste of fear in their arrangement.
+  The silence they maintain as protection has become a gilded cage whose bars are courtesy
+  and mutual destruction.
+entities:
+- character:marion-ashworth
+- character:helena-vance
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth and Helena Vance sit opposite. The papers incinerated; the
+  record of Marion's assignation is ash. Marion rotates her surviving wedding band. The chandelier
+  lies wrecked on the floor. They surrender simultaneously, preserving each other with matches
+  and mutual cowardice. Frost seals the windows and door. They remain trapped in administrative
+  civility.
+beats:
+- beat:residue-gilded-cage
+choices:
+- label: I step back from the flames with a hostess's composure
+  grants:
+  - flag:archive-ash
+  - flag:motives-buried
+  to: passage:p-cremation-and-interment
+- label: I secure the documents and tuck the key beneath my stays
+  grants:
+  - flag:archive-survives
+  - flag:scandal-erupts
+  to: passage:p-secure-archive

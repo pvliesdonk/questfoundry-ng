@@ -1,0 +1,15 @@
+id: passage:p-drip-metronome
+summary: The dripping has developed a steady metronomic rhythm. The guests track this pulse,
+  and the cost is the collapse of their belief that the house proceeds by accident rather
+  than design.
+entities:
+- location:the-cellars
+prose_summary: Helena measures the chandelier drip interval at seventeen seconds. Seventeen
+  heirs including Marion Ashworth and Dr. Mott synchronize breathing to the metronome. Temperature
+  rises fractionally. Heirs abandon pretense of accidental entropy, accepting the house proceeds
+  by design. The cost is their visible stillness and compulsory submission to the pulse.
+beats:
+- beat:drip-rhythm
+choices:
+- label: Match my breathing to the metronome overhead
+  to: passage:p-parquet-gunshot

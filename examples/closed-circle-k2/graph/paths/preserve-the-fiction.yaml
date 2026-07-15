@@ -1,0 +1,8 @@
+id: path:preserve-the-fiction
+name: Preserve the Fiction
+explores: answer:preserve-the-fiction
+consequences:
+- id: consequence:teddy-legitimized
+  text: Teddy secures recognition as the legitimate heir
+- id: consequence:impostor-wins
+  text: The estate passes to the impostor rather than the distant cousin

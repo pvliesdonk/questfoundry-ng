@@ -1,0 +1,7 @@
+id: beat:snow-fall-burying
+created_by: polish
+summary: Snow falls against the window, burying the world in white silence.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

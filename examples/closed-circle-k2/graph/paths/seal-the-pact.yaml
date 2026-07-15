@@ -1,0 +1,8 @@
+id: path:seal-the-pact
+name: Seal the Pact
+explores: answer:seal-the-pact
+consequences:
+- id: consequence:helena-protected
+  text: Helena's reputation remains intact through suppressed criticism
+- id: consequence:marion-concealed
+  text: Marion's affair remains concealed from public knowledge

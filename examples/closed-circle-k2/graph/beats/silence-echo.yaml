@@ -1,0 +1,7 @@
+id: beat:silence-echo
+created_by: polish
+summary: The silence after the revelation echoes like a physical presence.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

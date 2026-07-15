@@ -1,0 +1,11 @@
+Helena Vance took the telegram from Bernard's hand. The paper had stiffened from the cold, its edges sharp as a ledger page against her glove. She read the transmission twice. The distant cousin, next in succession, had built his fortune in slum tenements and had filed notice to demolish the estate for its quarried stone. The words sat on the page with bureaucratic clarity, a financial imperative that rendered the house and its grounds into inventory items awaiting liquidation.
+
+She folded the paper along its original crease. The gesture required three seconds. "The will must be read tonight," she said. Her voice maintained the register of cracked crystal, though the pitch had lowered to the range of administrative decision. "Before the creditors file their claims with the morning post."
+
+Bernard stood with the inventory ledger still clasped against his chest. His pale eyes did not blink. "The ice block remained partially frozen, Mrs. Vance. The document within threatened illegibility from water damage."
+
+"Then we shall read it incomplete," Helena said. She adjusted the cuff of her glove, pressing the emerald fabric until the worn threads disappeared against the seam. "The alternative is to sign the deed to a man who values the foundation stones above the structure."
+
+Dr. Mott moved her empty glass from the coaster to the table. The motion arrested midway, her fingers calculating the distance between surfaces. Teddy Bryant remained near the mantelpiece, his hands now occupied with the inspection of his fingernails, the grease still visible beneath the cuticles. Marion Ashworth held the certificates against her skirt, the pages shivering in the dim air.
+
+Helena rose. The emerald gown settled around her ankles with the sound of archival pages turning. She had taken three steps toward the door when the scream reached them from the pantry corridor. The sound cut through the frozen air with the abruptness of breaking glass, a single sustained note that terminated in the crash of falling silver.

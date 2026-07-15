@@ -1,0 +1,16 @@
+id: beat:the-hidden-flask
+summary: Teddy discovers a whiskey flask concealed in Dr. Mott's medical bag, noting her hands
+  tremble without the contents.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: reveals
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:destroy-the-supply
+- path:hide-the-booze

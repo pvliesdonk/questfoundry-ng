@@ -1,0 +1,25 @@
+id: passage:p-buried-world
+summary: Snow buries the estate and severs all contact with the outside world. The isolation
+  is absolute and escape is now impossible.
+entities:
+- location:the-great-hall
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion watches snow block the casement to the first floor sills. Telegraph
+  wires are dead. No courier has arrived since the constable departed. She turns to face seventeen
+  motionless heirs in the chamber. A fallen chandelier lies unmoved on the parquet. She calculates
+  provisions against the household ledger and finds the figures irreconcilable. The outside
+  world is inaccessible.
+beats:
+- beat:snow-fall-burying
+choices:
+- label: Lift the fire irons from their velvet rest
+  to: passage:p-helena-retrieves-irons

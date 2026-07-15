@@ -1,0 +1,15 @@
+id: passage:p-shadow-shift
+summary: Someone moves in the room above. The household freezes, and the pretense of order
+  exacts its first visible strain.
+entities:
+- location:the-cellars
+prose_summary: Teddy hears footsteps overhead. Seventeen heirs freeze mid-discussion of embezzlement
+  charges. Marion Ashworth drops her kid glove. Dr. Mott rests fingers on her medical bag.
+  Helena Vance stands rigid in frayed emerald velvet. The ice-laden chandelier sways. Assembly
+  freezes in strained postures near pocket watches and escritoires. The overhead shadow pauses,
+  then moves east. The room stays sealed and silent.
+beats:
+- beat:shadow-shift
+choices:
+- label: Examine the frost gathering on the lower wine racks
+  to: passage:p-thaw-and-descent

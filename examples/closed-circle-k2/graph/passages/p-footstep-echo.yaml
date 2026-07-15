@@ -1,0 +1,26 @@
+id: passage:p-footstep-echo
+summary: The Tyrant paces, and each footfall declares that law and entropy have become indistinguishable.
+  The gathering recognizes that drawing-room civility has served only to choreograph the violence,
+  and the performance now costs them their exemption from consequence.
+entities:
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: The cousin enters wearing meltwater-darkened gloves and crosses to the escritoire
+  in seven paces. Seventeen heirs watch. Marion Ashworth polishes her pince-nez. Teddy Bryant
+  stands by the escritoire with severed curtain-cord marks on his wrists. The ruined chandelier
+  lies on the Persian rug. Helena does not retrieve her portfolio. She realizes her exemption
+  has ended.
+beats:
+- beat:footstep-echo-weight
+choices:
+- label: Turn up my collar against the draft from the open walls
+  to: passage:estate-seizure

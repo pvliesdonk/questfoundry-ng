@@ -1,0 +1,16 @@
+id: passage:p-clock-ticking
+summary: The mantle clock ticks with irritating precision toward an unspecified deadline.
+  The frostbitten gathering loses composure as mechanical order confronts human entropy, escalating
+  the cost of the performance required to conceal violence.
+entities:
+- location:the-great-hall
+prose_summary: Helena counts forty-seven ticks since entering. Bernard's body lies on the
+  settle. Marion stands by him holding an open smudged ledger. Dr. Mott has moved her glass
+  three times on the mantelpiece. Teddy stands at the mantelpiece near ash. The chandelier
+  shifts. Ice cracks and frozen key drops three millimeters. The assembly freezes. Helena
+  holds a portfolio with rigid documentation.
+beats:
+- beat:clock-ticking
+choices:
+- label: Circle the chandelier with Bernard, counting the groans
+  to: passage:p-thermal-calculus

@@ -1,0 +1,7 @@
+id: beat:gaze-averted
+created_by: polish
+summary: Every gaze is averted, politeness become cowardice.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

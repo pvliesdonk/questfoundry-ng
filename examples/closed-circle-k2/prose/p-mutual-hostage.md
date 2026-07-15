@@ -1,0 +1,11 @@
+Marion Ashworth extended the saucer. The porcelain edge met Helena's emerald velvet glove, and for a moment the kid leather brushed the frayed cuff. The contact lasted precisely as long as required to transfer the weight of the cup. Marion did not withdraw her hand immediately. Her fingers remained against the velvet until Helena's breathing shifted, a sharp inhalation that preceded acceptance.
+
+Helena took the cup. Her hand trembled, and tea lapped against the china rim. Marion observed the tremor without comment. She adjusted her pince-nez with her free hand. The wire left no mark on her skin. The gesture revealed nothing; the gesture concealed everything.
+
+"The arrangement holds," Marion said.
+
+Helena said nothing. She set the cup upon the table with a click that echoed in the sealed room. The oxidized silver service had dulled to the color of obsolete account books, and the tea steamed thinly in the cold air. Marion calculated the distance to the door and the distance to the grate where the chandelier lay ruined. Both measurements exceeded the span of her reach without passing through Helena's sphere of influence.
+
+Marion's hand returned to her lap. The kid leather had warmed against the porcelain, but the warmth faded immediately. She touched her wedding band through the glove and rotated it once. The metal turned beneath the stain. Helena's gaze tracked the motion. Marion noted the observation and filed it beside the other data: the tan line on Helena's palm, the silence about the Pimlico solicitor, the carbonized remains of a review that would have ended a theatrical legacy.
+
+They sat without speaking. The cold transmitted itself through the table legs into their knees, preserving them in formaldehyde posture. Marion understood that they had become mutual hostages, bound by the weight of documents turned to ash and assignations turned to silence. Neither could move without destroying the other. The knowledge sat between them like ice on marble, heavy and transparent and impossible to fracture without lacerating the hand.

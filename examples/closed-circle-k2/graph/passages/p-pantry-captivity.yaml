@@ -1,0 +1,30 @@
+id: passage:p-pantry-captivity
+summary: The heirs bind Teddy with curtain cords in the pantry, their hands trembling with
+  the knowledge that Bernard's portfolio survives upstairs to testify against them all. Teddy
+  slumps against the flour bins while someone checks the safe lock again, and their pretense
+  of gentility collapses into physical restraint.
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- location:the-cellars
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: The seventeen heirs seize Teddy, accuse him of fraud, and Helena Vance binds
+  his wrists with curtain cords in the pantry. Marion Ashworth descends and tests the wall
+  safe lock beside the frozen herring barrels; it holds. Teddy understands the evidence upstairs
+  incriminates all seventeen. He cannot see the mantel clock. He calculates the water weight
+  accumulating on the ceiling.
+beats:
+- beat:teddy-detained--preserve-the-evidence
+choices:
+- label: Step into the hall to arrange Helena's theatrical masks as the dogsleds skid into
+    the yard
+  to: passage:p-cousin-inventory

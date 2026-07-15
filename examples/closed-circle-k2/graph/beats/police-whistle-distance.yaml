@@ -1,0 +1,7 @@
+id: beat:police-whistle-distance
+created_by: polish
+summary: A police whistle sounds in the distance, sharp as a scream.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

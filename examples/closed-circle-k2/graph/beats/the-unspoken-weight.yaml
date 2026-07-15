@@ -1,0 +1,14 @@
+id: beat:the-unspoken-weight
+summary: The survivors carry guilt but no legal consequence, and the silence between them
+  grows heavier than the ice on the roof.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: complicates
+entities:
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

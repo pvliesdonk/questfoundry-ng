@@ -1,0 +1,17 @@
+id: beat:ending-naked-truth
+summary: Marion secures the portfolio in the estate safe and pockets the key, ensuring Bernard's
+  blackmail survives for the scandal to come; the great hall stands exposed and drafty, its
+  civility intact but its secrets catalogued, while the frozen will upstairs waits to determine
+  who will own the ruins.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- location:the-great-hall
+- object:bernard-blackmail-archive
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:preserve-the-evidence

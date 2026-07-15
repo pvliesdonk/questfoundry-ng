@@ -1,0 +1,7 @@
+id: beat:paper-curl
+created_by: polish
+summary: The edge of a paper begins to curl from the heat before the flame even touches it.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:bernard-blackmail-archive

@@ -1,0 +1,27 @@
+id: passage:p-estate-seizure
+summary: Heirs huddle in the great hall as axes bite into the wainscoting. Their eyes drift
+  toward Bernard's locked study while the cousin's agent whistles, inventorying the heirlooms
+  that will become evidence.
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Axes breach the study door. The cousin's agent inventories crystal, silver,
+  obsolete account books, and a tarnished candelabra on trestle tables, marking them in a
+  leather-bound docket for police evidence. Helena calculates the house's depreciating value
+  against rising testimony worth. Seventeen heirs stand silent, willing to expose their indiscretions
+  to reveal Bernard's greater crime sealed in his tarnished hardware portfolio.
+beats:
+- beat:estate-seizure--preserve-the-evidence
+choices:
+- label: Remain in the great hall while the chandeliers are counted
+  to: passage:p-evidence-survives-thaw

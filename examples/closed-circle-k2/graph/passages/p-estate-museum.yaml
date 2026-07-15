@@ -1,0 +1,36 @@
+id: passage:p-estate-museum
+summary: Helena, Marion, and Dr. Mott suffer total reputational ruin when newspapers publish
+  Bernard's meticulous records of their indiscretions. Years pass, and the estate becomes
+  a museum of scandal where tourists photograph the blackmail room, converting private shame
+  into public spectacle.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- character:dr-elspeth-mott
+- object:bernard-blackmail-archive
+- location:the-great-hall
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: 'Helena reads newspapers exposing seventeen indiscretions: Helena''s debts,
+  Marion''s assignations, Mott''s prescription fraud. Bernard lies dead on settle. Dr. Mott
+  has been removed in irons. Years pass. National Trust receives estate. Heirs disperse to
+  Pimlico, Bath. House becomes museum. Tourists queue. Guide recites secrets. Blackmail room
+  is roped with frayed velvet. Display case holds reproduction ledger open to entries.'
+beats:
+- beat:bridge-14
+- beat:reputations-destroyed
+- beat:the-estate-exposed
+choices:
+- label: Touch the glass where the frost grows thin and weeping
+  to: passage:p-frost-melts
+- label: Pocket the heavy key and descend to the draft below
+  to: passage:p-naked-truth

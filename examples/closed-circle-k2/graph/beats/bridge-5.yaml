@@ -1,0 +1,9 @@
+id: beat:bridge-5
+created_by: grow
+summary: The ashes of Bernard's materials settle in the grate as Helena retrieves the fire
+  irons from their stand.
+beat_class: structural
+purpose: bridge
+entities:
+- character:helena-vance
+- location:the-great-hall

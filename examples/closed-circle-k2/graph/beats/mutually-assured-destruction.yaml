@@ -1,0 +1,16 @@
+id: beat:mutually-assured-destruction
+summary: Helena realizes that if she exposes Marion's adultery, Marion will publish the review,
+  destroying Helena's legacy as completely as Marion's marriage.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: complicates
+entities:
+- character:helena-vance
+- character:marion-ashworth
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

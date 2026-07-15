@@ -1,0 +1,15 @@
+id: beat:real-killer-taken
+summary: Dr. Mott is apprehended by the authorities when the roads clear, charged with the
+  patriarch's murder.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: advances
+entities:
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:expose-the-truth

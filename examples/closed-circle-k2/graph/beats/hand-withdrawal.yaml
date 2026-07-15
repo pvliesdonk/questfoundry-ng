@@ -1,0 +1,8 @@
+id: beat:hand-withdrawal
+created_by: polish
+summary: Teddy withdraws his hand from Helena's with a slow, inevitable precision.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:teddy-bryant
+- character:helena-vance

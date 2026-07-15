@@ -1,0 +1,20 @@
+id: passage:p-vision-sharp
+summary: 'Her vision sharpens to reveal the inconsistencies: the blood speck on the white
+  cuff, the tremor in the poured tea, the corpse’s shoe visible beneath the curtain. She recognizes
+  the civility is a performance and the violence is already complete; the clarity costs her
+  the protection of ignorance and fixes her to the crime.'
+entities:
+- character:dr-elspeth-mott
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott incises Bernard's chest. She finds blood on her cuff predating the
+  binding. She sees Teddy pour chloroform. She notes Bernard's shoe indicates rigor set in
+  hours ago. She realizes the violence occurred in the east wing and this is a performance.
+  She sets down the scalpel and waits for Teddy to notice. She acknowledges her guilt.
+beats:
+- beat:vision-sharp
+choices:
+- label: Examine the wound with surgical precision
+  to: passage:p-clinical-reckoning

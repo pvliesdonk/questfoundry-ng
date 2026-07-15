@@ -1,0 +1,9 @@
+id: beat:bridge-2
+created_by: grow
+summary: The last of the ice water drains through the floorboards as the investigator summons
+  the assembly for a final accounting.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs

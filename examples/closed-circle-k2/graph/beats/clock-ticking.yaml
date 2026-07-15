@@ -1,0 +1,8 @@
+id: beat:clock-ticking
+created_by: polish
+summary: The mantle clock ticks with an irritating precision, counting down to an unspecified
+  deadline.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

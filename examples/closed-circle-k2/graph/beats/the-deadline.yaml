@@ -1,0 +1,16 @@
+id: beat:the-deadline
+summary: Marion must decide before the will is read and the guests disperse, whether to accept
+  the bargain or release the truth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:marion-ashworth
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:marion-ashworth
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

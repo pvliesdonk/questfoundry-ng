@@ -1,0 +1,8 @@
+id: path:clear-the-butler
+name: Clear the Butler
+explores: answer:clear-the-butler
+consequences:
+- id: consequence:bernard-exonerated
+  text: Bernard is exonerated of homicide but dismissed for embezzlement
+- id: consequence:thefts-public
+  text: The wine cellar thefts are public knowledge

@@ -1,0 +1,15 @@
+id: passage:p-stain-spread
+summary: The water stain spreads across the document and renders a crucial word illegible;
+  the evidence dissolves into entropy and the company faces meticulous futility.
+entities:
+- object:the-frozen-will
+prose_summary: Helena withdraws the document from the portfolio. She presses a handkerchief
+  to the patriarch's final clause, but the stain spreads and the ink dissolves. The heir's
+  patronymic becomes an illegible smudge existing only in Helena's memory. The succession
+  remains determined but requires external confirmation to execute. Teddy and seventeen heirs
+  are present. She replaces the document and closes the clasp.
+beats:
+- beat:stain-spread
+choices:
+- label: Press your handkerchief to the spreading stain
+  to: passage:p-inheritance-settled

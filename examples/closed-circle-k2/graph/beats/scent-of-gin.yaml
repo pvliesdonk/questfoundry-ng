@@ -1,0 +1,8 @@
+id: beat:scent-of-gin
+created_by: polish
+summary: The residual smell of gin rises from the body, sweet and medicinal, reminding Marion
+  of her father's study.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

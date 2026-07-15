@@ -1,0 +1,17 @@
+id: beat:the-moment-of-truth
+summary: The assembled guests demand Teddy present proof of identity immediately or face accusations
+  of fraud before the will becomes readable.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- character:marion-ashworth
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

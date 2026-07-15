@@ -1,0 +1,16 @@
+id: beat:key-visible
+summary: The estate key, necessary to unlock the safe deposit box containing the will's codicil,
+  is seen frozen within the massive ice chandelier hanging from the Great Hall ceiling.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: reveals
+entities:
+- location:the-great-hall
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

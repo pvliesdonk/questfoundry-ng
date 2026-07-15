@@ -1,0 +1,27 @@
+id: passage:p-thaw-and-descent
+summary: The frozen key thaws and strikes the oak floorboards, but the delay exhausts the
+  investigative window. It lies forgotten as attention shifts downward to the liquid necessities
+  among the wine racks.
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+- location:the-cellars
+prose_summary: Key thaws and falls from oxidized silver armature. Helena watches. Seventeen
+  heirs calculate lost opportunity; killer's traces settle. No one retrieves key. Marion Ashworth's
+  gloves hang; Dr. Mott rests fingers on unopened medical bag; Teddy Bryant stands by Bernard's
+  covered form on settle. Attention shifts to vault below with ice-crusted barrels and wine
+  racks holding remaining evidence.
+beats:
+- beat:bridge-8
+- beat:key-drops
+choices:
+- label: Shatter the gin bottles against the cellar wall
+  grants:
+  - flag:autopsy-sound
+  - flag:mott-withdrawal
+  to: passage:p-gin-smash
+- label: Conceal the bottles behind the vintage port
+  grants:
+  - flag:autopsy-compromised
+  - flag:mott-intoxicated
+  to: passage:p-stash-behind-port

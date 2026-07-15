@@ -1,0 +1,24 @@
+id: passage:p-inheritance-settled
+summary: The executor reads the water-stained will in the Great Hall, settling the estate
+  against creditor claims before the storm breaks; the physician withdraws to confront her
+  private deprivation, and the resolution is precarious.
+entities:
+- object:the-frozen-will
+- faction:the-snowbound-heirs
+- location:the-great-hall
+- character:helena-vance
+- character:dr-elspeth-mott
+prose_summary: Helena Vance reads the patriarch's damp will from the escritoire portfolio
+  to seventeen assembled heirs. The estate transfers to Teddy Bryant and others before the
+  storm seals the roads, blocking creditors. Dr. Elspeth Mott stands arrested in irons at
+  the mahogany lectern beside Bernard's form; constables escort her out without her medical
+  bag. The inheritance stands resolved.
+beats:
+- beat:bridge-7
+- beat:inheritance-settled
+- beat:reading-proceeds
+choices:
+- label: Study the physician's grip on the mahogany lectern before the assembly
+  to: passage:p-mott-tremor
+- label: Follow her into the frost-locked corridor beyond the great doors
+  to: passage:p-frozen-bead

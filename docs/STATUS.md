@@ -15,7 +15,7 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-14._
+_Last updated: 2026-07-15._
 
 ## Current epics (two threads, roadmap "Now")
 
@@ -79,7 +79,9 @@ Previous epic **Rotating limited POV shipped in PR #74** (A22).
    **The kimi-k2.5 A/B completed 2026-07-15** — gate-clean FILL, 54 branch
    points / 159 passages, words-per-choice IN band with the same advisory
    prompts (kimi filled the cadence budget voluntarily; full table in the
-   decision log). Interludes: **zero on both tiers** — the annotate gap is
+   decision log). Checked in as
+   [`examples/closed-circle-k2/`](../examples/closed-circle-k2/) (at FILL,
+   same conventions as the baseline exemplar; the author has the HTML/PDF). Interludes: **zero on both tiers** — the annotate gap is
    tier-independent. New loose end: kimi headed 4 passages with the victim,
    outside the declared rotation (scheme conformance is ungated; BACKLOG).
 1. **The prose epic's next run — DRESS at scale, proving the enforced

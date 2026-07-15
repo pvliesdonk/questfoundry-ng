@@ -1,0 +1,15 @@
+id: beat:departure
+summary: Bernard departs the estate on foot when the storm breaks, alive but ruined, carrying
+  only his blackmail archive and his shame.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: advances
+entities:
+- character:bernard-croft
+- object:bernard-blackmail-archive
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:bernard-croft
+belongs_to:
+- path:clear-the-butler

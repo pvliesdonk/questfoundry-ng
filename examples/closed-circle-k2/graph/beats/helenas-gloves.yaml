@@ -1,0 +1,8 @@
+id: beat:helenas-gloves
+created_by: polish
+summary: Helena adjusts her gloves, the leather creaking like dry bones, before acknowledging
+  the newcomer.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:helena-vance

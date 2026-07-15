@@ -1,0 +1,20 @@
+id: passage:p-morning-reprieve
+summary: Teddy petitions Helena for silence until morning to crack the ice-locked will and
+  verify his identity; Helena hesitates, granting a provisional delay, while Marion withdraws
+  to search the bedrooms for leverage. The group’s facade of order persists while the estate
+  fragments into private threats.
+entities:
+- character:teddy-bryant
+- character:helena-vance
+- object:the-frozen-will
+- character:marion-ashworth
+prose_summary: Teddy steps away from Bernard's body and asks Helena for until morning to break
+  the ice block containing a verification document. Helena provisionally agrees but keeps
+  the portfolio documenting Marion's assignations. Marion leaves to search upstairs for leverage.
+  The frozen key in the chandelier descends as the ice thaws.
+beats:
+- beat:bridge-19
+- beat:teddy-plea
+choices:
+- label: Withdraw to the bedroom corridor
+  to: passage:p-the-archive-discovered

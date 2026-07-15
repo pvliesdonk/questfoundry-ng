@@ -1,0 +1,30 @@
+id: passage:p-the-preserved-estate
+summary: Teddy secures Bernard's files in the estate safe while the east wall sheds its molding;
+  the preservation of this evidence ensures his exposed origins will trigger the creditors'
+  flight and collapse the estate he sought to rescue.
+entities:
+- character:teddy-bryant
+- location:the-great-hall
+- location:the-cellars
+ending:
+  id: e-the-preserved-estate
+  title: The Preserved Estate
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-frozen
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Teddy forges ledgers but grease blurs signature. Plaster falls from east wall.
+  Constable examines Marion's key upstairs while seventeen heirs wait. Teddy drinks port in
+  cellar and learns Bernard's files in estate safe prove his borrowed identity and document
+  embezzlement and fraud; their preservation exposes seventeen indiscretions. He calculates
+  creditor flight. The chandelier lies ruined. National Trust will inherit estate.
+beats:
+- beat:crumbling-maintenance--preserve-the-evidence
+- beat:ending-false-salvation--preserve-the-evidence
+- beat:the-lie-consumes--preserve-the-evidence

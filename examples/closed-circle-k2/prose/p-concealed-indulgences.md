@@ -1,0 +1,9 @@
+Teddy remained by the settle where Bernard's corpse had stiffened. The medical bag sat on the stone floor, leather darkening where meltwater seeped from the ice-crusted livery. Dr. Mott had withdrawn to the corridor, leaving the bag unguarded. He lifted the brass clasp. The bag opened with the snap of dry hinges.
+
+Inside, the instruments lay nested in frayed damask: scalpels, forceps, a length of rubber tubing coiled like obsolete account book binding. He moved these aside. Beneath the peppermint reek, he found the flask concealed in a pocket sewn into the lining, silver tarnished to the color of oxidized ice. The metal was warm from the heat of her body. He replaced the instruments and closed the bag.
+
+Dr. Mott returned. She reached for the bag with fingers that trembled against the clasp, the tremor visible in the lamplight, a motion that betrayed the absence of the liquor he had touched seconds before. She withdrew her hand and clasped it with the other, hiding the shake.
+
+Teddy turned from the settle. He moved past the pantry into the wine cellars, where barrels lined the walls with ice-crusted hoops. The cold penetrated his borrowed tweed. He walked the rows, counting the bottles in their racks, until he found the disturbance: a space between the 1874 and the 1876 vintages where dust had been disturbed, recently wiped away. On the stone ledge beside it sat a corkscrew, and a glass containing two fingers of port wine, the surface filmed with ice. The glass bore Bernard's prints in grease.
+
+He understood then. Bernard had descended not to kill but to steal, hiding among the racks at the hour of the patriarch's death, his crime interrupted by the murder above. The petty larceny of a servant now served as alibi, and the household's drawing-room civility dissolved into this commonplace entropy: a physician who drank, a butler who stole, all of them performing respectability while the ice preserved only their failures.

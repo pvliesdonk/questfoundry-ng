@@ -1,0 +1,16 @@
+id: beat:structural-instability
+summary: The ice-encrusted chandelier groans under its weight, and Bernard warns that the
+  ceiling hooks are corroded and may not support additional weight.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: complicates
+entities:
+- location:the-great-hall
+- character:bernard-croft
+scene_type: scene
+narration_scope: limited
+viewpoint: character:bernard-croft
+belongs_to:
+- path:climb-for-freedom
+- path:wait-with-decorum

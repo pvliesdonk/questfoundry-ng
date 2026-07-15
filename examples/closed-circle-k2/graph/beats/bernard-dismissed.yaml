@@ -1,0 +1,15 @@
+id: beat:bernard-dismissed
+summary: Bernard is cleared of homicide but immediately dismissed from his post, stripped
+  of his livery and cast out into the snowbound grounds.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: advances
+entities:
+- character:bernard-croft
+- character:helena-vance
+scene_type: scene
+narration_scope: limited
+viewpoint: character:bernard-croft
+belongs_to:
+- path:clear-the-butler

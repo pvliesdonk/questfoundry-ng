@@ -1,0 +1,21 @@
+id: passage:p-thaw-accelerates
+summary: The ice block containing the will melts rapidly as the hall's fire dies, threatening
+  to destroy the document before nightfall. The heirs turn their attention from the water
+  pooling beneath the chandelier to confront the claimant.
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+- faction:the-snowbound-heirs
+prose_summary: Helena places a portfolio on the escritoire. The ice block on the andiron shows
+  new fissures and water covers the Persian rug along Bernard's ash path. The document blurs.
+  Helena calculates against daylight. The chandelier key descends 3mm. The 17 heirs stop monitoring
+  and confront Teddy Bryant. Marion leaves the escritoire. Dr. Mott hovers over her bag beside
+  Bernard's body.
+beats:
+- beat:bridge-25
+- beat:the-thaw-accelerates
+choices:
+- label: Smooth my glove over my wrist where it has wrinkled
+  to: passage:p-glove-tan
+- label: Demand Teddy produce his identification
+  to: passage:p-the-moment-of-truth

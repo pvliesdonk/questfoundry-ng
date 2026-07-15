@@ -1,0 +1,9 @@
+id: beat:bridge-19
+created_by: grow
+summary: Helena considers Teddy's plea while Marion, excluded from the ice debate, retreats
+  to the bedrooms to search for leverage.
+beat_class: structural
+purpose: bridge
+entities:
+- character:helena-vance
+- character:marion-ashworth

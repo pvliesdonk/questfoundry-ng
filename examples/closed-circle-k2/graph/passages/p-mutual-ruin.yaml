@@ -1,0 +1,19 @@
+id: passage:p-mutual-ruin
+summary: Two women confront each other in the drawing room, each brandishing documentary proof
+  of the other’s ruin. The stalemate shatters their performance of civility, and social annihilation
+  is now the price of any action.
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- location:the-great-hall
+prose_summary: Marion holds certificates showing birth three years late and two districts
+  east. Helena holds portfolio of assignation dates with Bernard. Each holds evidence to ruin
+  the other. Helena steps forward, gestures toward certificates, places portfolio on escritoire.
+  Neither retreats. Marion calculates time to burn certificates versus Helena reaching bell
+  cord. Destroying certificates preserves portfolio; preserving both invites authorities.
+  Price absolute.
+beats:
+- beat:the-confrontation
+choices:
+- label: Draw the assembly’s attention to the water pooling beneath the chandelier
+  to: passage:p-thaw-accelerates

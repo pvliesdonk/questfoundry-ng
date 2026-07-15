@@ -1,0 +1,33 @@
+id: passage:p-cremation-and-interment
+summary: Helena hurls the portfolio into the great fire, and the guests watch their sins turn
+  to smoke with a relief that sickens. Bernard is interred in the frozen earth without epitaph
+  or explanation, his knowledge sealed beneath the frost.
+entities:
+- character:helena-vance
+- object:bernard-blackmail-archive
+- location:the-great-hall
+- faction:the-snowbound-heirs
+- character:bernard-croft
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Helena Vance burns the portfolio that holds the seventeen heirs' failures,
+  debts, assignations, and Marion's Pimlico records. The heirs observe and feel relief followed
+  by nausea. Bernard is buried in the frozen garden without epitaph or explanation, his knowledge
+  and ivory holder sealed with him beneath the frost.
+beats:
+- beat:ash-and-relief
+- beat:bernard-buried
+- beat:feed-the-flames
+choices:
+- label: Finger the ash dusting the velvet drapes
+  to: passage:p-ash-lingers
+- label: Watch your breath mist in the sudden cold
+  to: passage:p-fire-dies

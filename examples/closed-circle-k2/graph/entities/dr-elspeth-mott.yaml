@@ -1,0 +1,26 @@
+id: character:dr-elspeth-mott
+name: Dr. Elspeth Mott
+concept: A disgraced physician hiding her drinking problem who is the only person qualified
+  to examine the corpse but increasingly unreliable
+pronouns: she/her
+base:
+  appearance: trembling hands, medical bag reeking of peppermint
+  manner: defensive bluster masking desperate panic
+arc:
+  begins: disgraced physician hiding addiction behind peppermint and bluster, the only qualified
+    examiner
+  pivots:
+  - beat: beat:the-hidden-flask
+    becomes: exposed alcoholic, her medical reliability openly compromised
+  - beat: beat:truth-exposed
+    becomes: exposed murderer, her professional competence revealed as mask for violence
+  - beat: beat:real-killer-taken
+    becomes: apprehended prisoner, medical authority revoked by irons
+  ends:
+  - path: path:destroy-the-supply
+    state: forced into painful sobriety, suffering withdrawal but yielding clear medical findings
+  - path: path:hide-the-booze
+    state: maintaining addiction through hidden supply, performing compromised and contradictory
+      autopsy
+  - path: path:expose-the-truth
+    state: denied Teddy's sacrifice, exposed as killer and separated from her protector

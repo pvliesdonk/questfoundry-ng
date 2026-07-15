@@ -1,0 +1,15 @@
+id: passage:p-wall-stain
+summary: The thaw releases a stain that spreads across the drawing-room wall in the outline
+  of a hand. The house yields its concealed damage, escalating the cost of maintaining civility.
+entities:
+- location:the-cellars
+prose_summary: Teddy watches a water stain spread through calcimine exposing seventeen gilt
+  and plaster layers and structural fractures. Thaw damages the lath. Seventeen heirs turn
+  toward the wall. A gentleman abandons a swollen pasteboard deck. Dr. Mott places her bag
+  down. Restoration costs exceed liquid assets. Bernard remains concealed beneath damask on
+  the settle.
+beats:
+- beat:wall-stain
+choices:
+- label: Smooth your waistcoat while meltwater pools at your feet
+  to: passage:p-parquet-gunshot

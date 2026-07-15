@@ -1,0 +1,17 @@
+id: beat:pressure-to-destroy
+summary: Helena argues before the fire that the living must be protected and the documents
+  fed to the flames to preserve what remains of their dignity.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- character:helena-vance
+- location:the-great-hall
+- object:bernard-blackmail-archive
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets
+- path:preserve-the-evidence

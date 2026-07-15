@@ -1,0 +1,33 @@
+id: character:teddy-bryant
+name: Teddy Bryant
+concept: The chauffeur who is not who he claims to be, improvising his way through an identity
+  theft that spirals into murder accusations
+pronouns: he/him
+base:
+  appearance: grease under fingernails, borrowed tweed
+  manner: posh accent slipping when stressed, compulsive clock-watching
+  troupe_role: second murderer in Duchess of Malfi, forgot cue, student 20 years past
+  stance: rigid, shoulders squared toward the assembly
+arc:
+  begins: impostor improvising identity theft, posh accent slipping, compulsive clock-watcher
+  pivots:
+  - beat: beat:teddy-papers-found
+    becomes: exposed fraud, his forged identity contradicted by official records
+  - beat: beat:helena-recognition
+    becomes: recognized as former theatrical student, his deception complicated by genuine
+      past
+  - beat: beat:teddy-confesses
+    becomes: false confessor, willing to hang to protect Dr. Mott's life
+  - beat: beat:teddy-exonerated
+    becomes: cleared of murder but tarnished by association, his sacrifice rejected and romance
+      destroyed
+  ends:
+  - path: path:expose-the-fraud
+    state: exposed as impostor before the will thaws, his claim voided and identity revealed
+  - path: path:preserve-the-fiction
+    state: maintaining false identity to prevent estate falling to tyrannical cousin, performer
+      become heir
+  - path: path:clear-the-butler
+    state: testifier to Bernard's alibi, his embezzlement revealed but murder charge avoided
+  - path: path:expose-the-truth
+    state: denied his noble sacrifice, his false confession rejected and true killer exposed

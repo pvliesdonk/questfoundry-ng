@@ -1,0 +1,8 @@
+id: beat:frost-patterns
+created_by: polish
+summary: Frost patterns on the stone walls resemble handwriting, a message in a language just
+  beyond recognition.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-cellars

@@ -1,0 +1,16 @@
+id: passage:p-frost-patterns
+summary: Frost patterns on the stone walls arrange themselves into glyphs resembling handwriting
+  in an unrecognized language. The characters must now contend with evidence of either supernatural
+  presence or an encrypted threat etched in ice.
+entities:
+- location:the-cellars
+prose_summary: Marion traces frost patterns on the cellar wall. She recognizes they mimic
+  Bernard's inventory entries but remain illegible code. She touches the frost and her finger
+  pad freezes tacky. She steps back, observes critical water droplets on the ceiling, and
+  turns from the wall. The encoded message awaits thaw or decryption. The cellar contains
+  vintage port barrels with ice-crusted hoops.
+beats:
+- beat:frost-patterns
+choices:
+- label: Trace the frost patterns down the wall toward the cellar
+  to: passage:p-helena-ultimatum

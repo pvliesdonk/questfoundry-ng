@@ -1,0 +1,14 @@
+id: passage:p-mott-tremor
+summary: Dr. Mott's hand trembles visibly before the assembly, betraying her professional
+  composure, and her performance of authority suffers its first irreparable fracture.
+entities:
+- character:dr-elspeth-mott
+prose_summary: Dr. Mott stands in irons before seventeen heirs. Her left hand trembles. She
+  presses it to her leather bag but fails to still it. The heirs observe her loss of composure.
+  She does not look back at Teddy Bryant. She drops her medical bag onto the settle by Bernard.
+  The constable escorts her into the corridor. Her medical authority ends.
+beats:
+- beat:tremor-visible
+choices:
+- label: Suggest she entrust the blade to steadier hands
+  to: passage:p-mott-tremors

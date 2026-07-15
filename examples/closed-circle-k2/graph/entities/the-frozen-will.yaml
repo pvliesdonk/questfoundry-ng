@@ -1,0 +1,25 @@
+id: object:the-frozen-will
+name: The Frozen Will
+concept: The deceased's final testament sealed inside a block of lake ice, thawing unevenly
+  and threatening to become illegible before it can be read
+base:
+  appearance: document visible through cracking ice
+  condition: water damage spreading from cracks
+  location: upstairs chamber, thawing
+arc:
+  begins: final testament sealed in lake ice, legibility threatened by entropy and temperature
+  pivots:
+  - beat: beat:key-visible
+    becomes: double mystery, the estate key visible in the ice chandelier above
+  - beat: beat:apply-flames
+    becomes: rapidly thawing document, water damage spreading through cracks
+  - beat: beat:water-damage
+    becomes: compromised text, soaked and smudged but partially legible
+  - beat: beat:reading-proceeds
+    becomes: settled instrument, inheritance determined despite damage
+  ends:
+  - path: path:hasten-with-flames
+    state: thawed by fire, water-damaged but legible enough to determine heir
+  - path: path:wait-with-decorum
+    state: awaiting natural thaw, key eventually dropping but precious investigative time
+      lost

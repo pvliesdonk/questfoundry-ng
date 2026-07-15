@@ -1,0 +1,9 @@
+id: beat:bridge-6
+created_by: grow
+summary: Marion ascends to secure the portfolio while Helena remains below, assessing the
+  tools arranged before the ice.
+beat_class: structural
+purpose: bridge
+entities:
+- character:marion-ashworth
+- character:helena-vance

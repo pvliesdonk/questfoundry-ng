@@ -1,0 +1,16 @@
+id: dilemma:enable-or-confront-addiction
+question: Do you help Dr. Mott hide her whiskey in the cellars to keep her sober enough to
+  perform the autopsy, or pour it out to force her confrontation with her addiction?
+why_it_matters: Determines whether the medical examination is reliable or compromised, and
+  whether Elspeth begins recovery or sinks deeper into ruin
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:hide-the-booze
+  text: Stash the gin behind the vintage port where she can find it later
+- id: answer:destroy-the-supply
+  text: Smash the bottles and force her to face the withdrawal and the truth sober
+anchored_to:
+- character:dr-elspeth-mott
+- location:the-cellars

@@ -1,0 +1,19 @@
+id: passage:p-yielded-center
+summary: Bernard withdraws from the room's center and yields the floor to Teddy, who argues
+  that waiting for natural thaw risks another murder and the destruction of evidence in melting
+  ice. The cost is the collapse of their pretense to calm.
+entities:
+- character:bernard-croft
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+prose_summary: Bernard retreats to the drape, cigarette holder on the ledger by the medical
+  bag. Teddy declares that waiting risks losing evidence; thaw arrives in forty-eight hours
+  with authorities, and the killer remains among them. He proposes moving the will-containing
+  ice block from the chandelier to kitchen storage and heating the cracked southeast face.
+  The assembly abandons pretense of calm.
+beats:
+- beat:bridge-18
+- beat:risk-of-flight
+choices:
+- label: Descend to the great hall to witness the assembly’s cold fracture
+  to: passage:p-assembly-watches

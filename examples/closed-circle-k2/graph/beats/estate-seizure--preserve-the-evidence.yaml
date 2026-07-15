@@ -1,0 +1,17 @@
+id: beat:estate-seizure--preserve-the-evidence
+created_by: grow
+summary: The snowbound heirs huddle in the great hall as axes bite into the wainscoting, their
+  eyes drifting toward the study where Bernard's portfolio remains locked against the chaos;
+  the cousin's agent whistles while inventorying heirlooms that will become evidence.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud

@@ -1,0 +1,18 @@
+id: beat:recognized-heir--preserve-the-evidence
+created_by: grow
+summary: The snowbound heirs acknowledge Teddy's claim as the will's text emerges from the
+  ice, their signatures grudging and watchful knowing that Marion holds the key to Bernard's
+  files upstairs; the thawing document sheds water while the safe upstairs waits.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:preserve-the-fiction

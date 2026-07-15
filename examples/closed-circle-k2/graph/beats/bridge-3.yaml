@@ -1,0 +1,9 @@
+id: beat:bridge-3
+created_by: grow
+summary: Bernard is escorted from the cellars to the Great Hall, where the frozen obstruction
+  now dominates all discussion of justice.
+beat_class: structural
+purpose: bridge
+entities:
+- character:bernard-croft
+- location:the-great-hall

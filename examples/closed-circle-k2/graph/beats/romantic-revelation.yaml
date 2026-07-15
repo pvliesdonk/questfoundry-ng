@@ -1,0 +1,15 @@
+id: beat:romantic-revelation
+summary: Evidence surfaces revealing Teddy's romantic love for Dr. Mott, indicating he is
+  sacrificing himself to save her from the gallows.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: reveals
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:expose-the-truth

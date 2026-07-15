@@ -1,0 +1,15 @@
+id: beat:teddy-confesses
+summary: Teddy stands before the assembly and claims he killed the patriarch, offering a detailed
+  confession that protects another.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: reveals
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

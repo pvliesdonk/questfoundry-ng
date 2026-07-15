@@ -1,0 +1,16 @@
+id: beat:the-thaw-accelerates
+summary: The ice block containing the will shows unexpected melting from the hall's dying
+  fireplace, threatening to render the document illegible before nightfall.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: complicates
+entities:
+- object:the-frozen-will
+- location:the-great-hall
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:expose-the-fraud
+- path:preserve-the-fiction

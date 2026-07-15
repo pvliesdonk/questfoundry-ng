@@ -1,0 +1,7 @@
+id: beat:match-strike
+created_by: polish
+summary: The match flares with a sulfurous smell, illuminating frightened faces.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

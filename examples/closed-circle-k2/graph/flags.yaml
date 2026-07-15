@@ -1,0 +1,121 @@
+flags:
+- id: flag:archive-ash
+  description: Bernard's blackmail archive is reduced to ash
+  source: dilemma
+  path: path:burn-the-secrets
+  derived_from:
+  - consequence:archive-ash
+- id: flag:archive-survives
+  description: Bernard's blackmail materials survive as court evidence
+  source: dilemma
+  path: path:preserve-the-evidence
+  derived_from:
+  - consequence:archive-survives
+- id: flag:autopsy-compromised
+  description: The autopsy yields medically compromised findings
+  source: dilemma
+  path: path:hide-the-booze
+  derived_from:
+  - consequence:autopsy-compromised
+- id: flag:autopsy-sound
+  description: The autopsy findings are medically reliable
+  source: dilemma
+  path: path:destroy-the-supply
+  derived_from:
+  - consequence:autopsy-sound
+- id: flag:chandelier-destabilized
+  description: The great hall's icy centerpiece is destabilized
+  source: dilemma
+  path: path:climb-for-freedom
+  derived_from:
+  - consequence:chandelier-destabilized
+- id: flag:cousin-inherits
+  description: The tyrannical cousin inherits the crumbling estate
+  source: dilemma
+  path: path:expose-the-fraud
+  derived_from:
+  - consequence:cousin-inherits
+- id: flag:helena-protected
+  description: Helena's reputation remains intact through suppressed criticism
+  source: dilemma
+  path: path:seal-the-pact
+  derived_from:
+  - consequence:helena-protected
+- id: flag:helena-savaged
+  description: Helena's final performance is publicly savaged by the critic
+  source: dilemma
+  path: path:let-truth-ring
+  derived_from:
+  - consequence:helena-savaged
+- id: flag:impostor-wins
+  description: The estate passes to the impostor rather than the distant cousin
+  source: dilemma
+  path: path:preserve-the-fiction
+  derived_from:
+  - consequence:impostor-wins
+- id: flag:key-frozen
+  description: The key remains frozen above the assembly
+  source: dilemma
+  path: path:wait-with-decorum
+  derived_from:
+  - consequence:key-frozen
+- id: flag:key-recovered
+  description: The frozen key is recovered from the chandelier
+  source: dilemma
+  path: path:climb-for-freedom
+  derived_from:
+  - consequence:key-recovered
+- id: flag:marion-concealed
+  description: Marion's affair remains concealed from public knowledge
+  source: dilemma
+  path: path:seal-the-pact
+  derived_from:
+  - consequence:marion-concealed
+- id: flag:marion-exposed
+  description: Marion's adultery becomes common knowledge among the guests
+  source: dilemma
+  path: path:let-truth-ring
+  derived_from:
+  - consequence:marion-exposed
+- id: flag:motives-buried
+  description: The secrets that poisoned the house are buried with the dead
+  source: dilemma
+  path: path:burn-the-secrets
+  derived_from:
+  - consequence:motives-buried
+- id: flag:mott-intoxicated
+  description: Dr. Mott remains functional but intoxicated
+  source: dilemma
+  path: path:hide-the-booze
+  derived_from:
+  - consequence:mott-intoxicated
+- id: flag:mott-withdrawal
+  description: Dr. Mott suffers acute withdrawal but retains sobriety
+  source: dilemma
+  path: path:destroy-the-supply
+  derived_from:
+  - consequence:mott-withdrawal
+- id: flag:propriety-maintained
+  description: The snowbound heirs maintain rigid propriety despite mortal threat
+  source: dilemma
+  path: path:wait-with-decorum
+  derived_from:
+  - consequence:propriety-maintained
+- id: flag:scandal-erupts
+  description: Guest secrets are exposed to scandal and investigation
+  source: dilemma
+  path: path:preserve-the-evidence
+  derived_from:
+  - consequence:scandal-erupts
+- id: flag:teddy-imprisoned
+  description: Teddy faces imprisonment for fraudulent identity
+  source: dilemma
+  path: path:expose-the-fraud
+  derived_from:
+  - consequence:teddy-imprisoned
+- id: flag:teddy-legitimized
+  description: Teddy secures recognition as the legitimate heir
+  source: dilemma
+  path: path:preserve-the-fiction
+  derived_from:
+  - consequence:teddy-legitimized

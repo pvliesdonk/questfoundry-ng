@@ -1,0 +1,14 @@
+id: beat:teddy-exonerated
+summary: Teddy's false confession is exposed, and he is freed from suspicion, though his reputation
+  remains tarnished by the association.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: reveals
+entities:
+- character:teddy-bryant
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

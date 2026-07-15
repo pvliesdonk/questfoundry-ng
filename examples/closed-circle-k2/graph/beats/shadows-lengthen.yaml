@@ -1,0 +1,7 @@
+id: beat:shadows-lengthen
+created_by: polish
+summary: Shadows lengthen across the carpet, making the furniture appear to shift.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

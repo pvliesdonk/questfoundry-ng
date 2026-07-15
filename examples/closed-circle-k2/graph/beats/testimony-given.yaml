@@ -1,0 +1,16 @@
+id: beat:testimony-given
+summary: Teddy testifies that Bernard was in the cellars during the murder, confirming his
+  alibi while revealing the wine thefts to all.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: commits
+entities:
+- character:teddy-bryant
+- character:bernard-croft
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:clear-the-butler

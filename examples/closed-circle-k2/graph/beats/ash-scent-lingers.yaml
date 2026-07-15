@@ -1,0 +1,7 @@
+id: beat:ash-scent-lingers
+created_by: polish
+summary: The scent of ash lingers in the curtains.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

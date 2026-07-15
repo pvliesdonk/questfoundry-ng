@@ -1,0 +1,15 @@
+id: passage:p-ice-glint-malevolent
+summary: She ascends as the ice glints with a malevolent sheen, confirming the environment
+  is now an active threat.
+entities:
+- location:the-cellars
+prose_summary: Helena stands atop crystalline stairs holding the frozen key. The oxidized
+  silver armature groans and tilts seventeen feet above the Persian rug where seventeen heirs
+  stand around Bernard's settle. Ice glints malevolently; the structure becomes an active
+  threat calculating her weight against her emerald velvet glove. She calculates descent cost
+  against the key's value. The chandelier sways.
+beats:
+- beat:ice-glint-malevolent
+choices:
+- label: Mount the last of the crystalline stairs
+  to: passage:p-chandelier-crash

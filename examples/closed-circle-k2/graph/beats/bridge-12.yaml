@@ -1,0 +1,10 @@
+id: beat:bridge-12
+created_by: grow
+summary: The medical examination stalls in ambiguity; in the drawing room, the women meet
+  privately to negotiate their mutual survival.
+beat_class: structural
+purpose: bridge
+entities:
+- character:dr-elspeth-mott
+- character:helena-vance
+- character:marion-ashworth

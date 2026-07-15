@@ -1,0 +1,8 @@
+id: beat:breath-clouds
+created_by: polish
+summary: The assembled guests' breath forms clouds that mingle and dissipate, a collective
+  sigh of anxiety.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:the-snowbound-heirs

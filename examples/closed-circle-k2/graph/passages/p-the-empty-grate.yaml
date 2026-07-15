@@ -1,0 +1,31 @@
+id: passage:p-the-empty-grate
+summary: Teddy signs drainage orders in the great hall and drinks alone in the cellars while
+  the estate's structure crumbles and the thaw undermines the foundations. He achieves the
+  title of master but the burned secrets leave no evidence of his true identity, condemning
+  him to an unverifiable performance in a decaying house that echoes with his false authority.
+entities:
+- character:teddy-bryant
+- location:the-great-hall
+- location:the-cellars
+ending:
+  id: e-the-empty-grate
+  title: The Empty Grate
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Teddy signs drainage orders finalizing estate transfer. The grate holds ash
+  from Bernard's archive, eliminating identity proof. He descends to cellar, pours 1874 wine,
+  and drops posh accent. He paces great hall past ruined chandelier on Persian rug. House
+  accepts him as master but ignores his true name. Distance between performance and empty
+  grate remains.
+beats:
+- beat:crumbling-maintenance--burn-the-secrets
+- beat:ending-false-salvation--burn-the-secrets
+- beat:the-lie-consumes--burn-the-secrets

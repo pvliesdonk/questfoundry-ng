@@ -1,0 +1,9 @@
+Marion descended the stairs with her notebook pressed against her hip. The steps wore the same skin of ice that crackled under her heels, each tread surrendering its archive of frozen condensation. She reached the bottom corridor where Bernard stood beside the racks, his inventory ledger clamped beneath his arm. She adjusted her pince-nez. The spectacles slipped slightly on the bridge of her nose, secured by habit and the pressure of the metal.
+
+The body lay between the third and fourth rack as she had expected, though Bernard had said nothing. The patriarch had already assumed the rigid posture of frozen meat. Marion approached with the deliberate stride she reserved for opening nights and funeral viewings alike. She stopped at the measured distance that allowed her to observe without committing to touch.
+
+Then she inhaled.
+
+The scent rose from the collar of the dead man's shirt, sweet and medicinal, cutting through the cellar damp with the precision of a critic's pen. It was not the crude volatility of cheap distillery gin, but the complex ghost of something aged and preserved, a tincture kept in cut glass and accessed with tarnished silver tongs. The recognition struck her between the ribs: her father's study, the locked cabinet behind the frayed damask chair, the obsolete account books stacked beside the decanter, the afternoons when she had sat with her legs tucked beneath her, watching him measure doses with a steady hand.
+
+Her fingers tightened on the closed notebook. The professional distance she had cultivated—her armor of sharp observations and devastating judgments—cracked along its binding. She stood in the vault with the dead patriarch and the living stain of her own history, unable to maintain the pretense of detached observation. The gin had followed her from that study to this cellar, bridging the years with its saccharine persistence, insisting that she acknowledge the violence beneath both surfaces.

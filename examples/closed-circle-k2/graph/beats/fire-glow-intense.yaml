@@ -1,0 +1,7 @@
+id: beat:fire-glow-intense
+created_by: polish
+summary: The fireplace glows with an unnatural intensity, as hungry as the silence.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

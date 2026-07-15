@@ -1,0 +1,16 @@
+id: passage:p-watch-check
+summary: A guest opens a pocket watch, and the mechanism’s click cracks through the parlor
+  like gunfire. The violation exposes the fragility of the group’s composure and marks the
+  passage of time as an active liability.
+entities:
+- faction:the-snowbound-heirs
+prose_summary: Teddy stands among seventeen heirs in the vault. Gentleman clicks a chronometer;
+  all flinch. He returns the watch unread. Dr. Mott hovers over her medical bag. Marion holds
+  a ledger; Helena holds a portfolio. Lady touches her oxidized silver necklace. Ice cracks
+  in the chandelier. Body rests on settle. Teddy notes his greasy cuffs and distance to door.
+  Silence holds.
+beats:
+- beat:watch-check
+choices:
+- label: Turn toward the hall with gloved precision
+  to: passage:p-melting-protocol

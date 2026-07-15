@@ -1,0 +1,7 @@
+Helena Vance remained beside the settle. The emerald velvet of her gown had settled into stillness, the frayed hem lying in administrative precision against the rug where ash had merged with carbon. She held her hands at her sides, fingers arranged in the posture of a hostess concluding an unpleasant negotiation. The seventeen heirs had not moved from their stations around the room, their silence retaining the density of the documents recently consumed.
+
+She turned toward the assembly. Her mouth formed the requisite expression of hospitality, the lips curving upward in the prescribed arc. The muscles at the corners of her jaw contracted against the effort, trembling beneath the skin. A fault line appeared at the left edge of the smile, a fissure in the fixed arrangement of features that no amount of theatrical discipline could seal. The smile held, but its integrity had compromised.
+
+The heir nearest the escritoire stepped backward. His heel struck the marble with a report that echoed against the plaster. Another gentleman dropped the silver card case he had been manipulating; it struck the rug and lay unretrieved, the tarnished surface reflecting the chandelier's frozen light. The seventeen heirs exchanged glances that calculated distance and exit routes. Helena felt the fracture widen, the porcelain of her composure developing visible cracks that transmitted her panic to the assembly.
+
+The social arrangement dissolved. Order had depended upon her maintained facade, and the facade had shattered.

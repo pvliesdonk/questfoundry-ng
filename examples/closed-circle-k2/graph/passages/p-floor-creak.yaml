@@ -1,0 +1,14 @@
+id: passage:p-floor-creak
+summary: Someone shifts their weight and the floorboards creak to warn of their presence.
+  Concealment collapses into exposed vulnerability.
+entities:
+- location:the-great-hall
+prose_summary: Helena Vance grips the portfolio containing Marion Ashworth's fourteen-month
+  assignation record. The floorboard cracks; Marion Ashworth, Dr. Mott, Teddy Bryant, and
+  the distant cousin freeze. Concealment collapses. The fracture and thaw factions mark her
+  exposed position. The frozen key shifts three millimeters.
+beats:
+- beat:creaking-floorboards
+choices:
+- label: Scale the frozen façade in my evening gloves
+  to: passage:p-climb-or-decorum

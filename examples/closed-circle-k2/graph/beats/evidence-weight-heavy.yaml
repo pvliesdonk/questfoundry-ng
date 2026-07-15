@@ -1,0 +1,8 @@
+id: beat:evidence-weight-heavy
+created_by: polish
+summary: The portfolio grows heavier with each step.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive

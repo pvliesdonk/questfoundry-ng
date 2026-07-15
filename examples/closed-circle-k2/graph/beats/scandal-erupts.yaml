@@ -1,0 +1,15 @@
+id: beat:scandal-erupts
+summary: The secrets are read aloud in the investigation room, and arrests begin for crimes
+  ranging from embezzlement to prescription fraud.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: reveals
+entities:
+- object:bernard-blackmail-archive
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:preserve-the-evidence

@@ -1,0 +1,22 @@
+id: dilemma:expose-or-preserve-heir
+question: Do you expose Teddy Bryant's forged identity before the frozen will thaws, or help
+  him maintain his deception to prevent the estate falling to a distant tyrannical cousin?
+why_it_matters: Determines whether Teddy faces prison for fraud or gains legitimate belonging,
+  and whether the estate passes to a deserving impostor or a cruel legitimate heir
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:expose-the-fraud
+  text: Reveal the chauffeur's forged papers to the assembled guests and let justice take
+    its course
+- id: answer:preserve-the-fiction
+  text: Help Teddy crack the ice and validate his claim before the others realize he is not
+    the true heir
+anchored_to:
+- character:teddy-bryant
+- object:the-frozen-will
+wraps:
+- dilemma:burn-or-keep-secrets
+- dilemma:martyr-or-justice
+- dilemma:fire-thaw-or-natural-thaw

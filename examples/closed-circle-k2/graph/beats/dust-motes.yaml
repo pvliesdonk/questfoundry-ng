@@ -1,0 +1,7 @@
+id: beat:dust-motes
+created_by: polish
+summary: Dust motes dance in the gaslight, each speck a potential witness to what transpired.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

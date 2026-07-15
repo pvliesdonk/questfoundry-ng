@@ -1,0 +1,13 @@
+The dogsled had carried him through the service entrance with the momentum of a ledger falling from a clerk's exhausted hand. Helena stood beside the settle where Bernard's form remained beneath frayed damask, her emerald velvet gown pooling at the hem where the weave had begun to separate. She did not adjust the fabric. The cousin had already crossed the threshold, his boots distributing meltwater across the marble in patterns that recalled the cellar's spreading stains.
+
+He surveyed the assembly without removing his gloves. The seventeen heirs maintained their perimeter around the settle, but their posture shifted toward him with the automatic alignment of iron filings responding to a magnet's passage. He carried no luggage, only a folio of legal dimensions bound in calfskin that had begun to stiffen from the cold.
+
+"Inventory," he said. His voice carried the flatness of a notary confirming a deficit. "The theatrical effects first. Costumes, programs, correspondence. Valuation for immediate liquidation."
+
+Helena felt the words settle against her ribs with the weight of oxidized silver. She had preserved her correspondence from the Imperial Theatre in a trunk bound with tarnished braid, each letter annotated with the date of performance and the revenue recorded in her own ink. The cousin gestured toward the east wing with a hand that had not trembled since the sled had stopped moving.
+
+A servant produced a clipboard. The cousin listed items with the precision of a coroner cataloguing personal effects. Helena watched him assign figures to the cracked crystal of her voice, to the gestures she had held too long before audiences now dead or dispersed. He priced the emerald gown at less than the cost of its frayed hem's repair.
+
+The ash of Bernard's archive still coated the andiron. The cousin did not glance toward it. He had inherited the estate with the clean authority of a debt come due, the secrets that might have complicated his claim now buried with the dead man beneath the frozen garden. Helena calculated the distance to the escritoire where her portfolio remained, and found it measured in currencies she no longer possessed.
+
+He closed the folio with a sound like ice shifting on a winter river. "The items will be removed before the thaw," he said. The heirs maintained their silence. Helena let her hand fall to her side. The glove brushed the settle's damask with the finality of an account closed against further entry.

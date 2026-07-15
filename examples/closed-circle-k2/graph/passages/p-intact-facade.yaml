@@ -1,0 +1,23 @@
+id: passage:p-intact-facade
+summary: The evidence of Marion's indiscretion is destroyed. Her marriage remains intact,
+  concealing its foundational rot beneath a preserved facade of civility.
+entities:
+- character:marion-ashworth
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth adjusts her pince-nez and rotates her wedding band, which survived
+  incineration of evidence documenting her fourteen-month assignation. Helena Vance stands
+  nearby; her palm has a tan line now lacking documentation. Marion dons kid gloves to hide
+  ink stains, concealing professional capacity and personal collapse. She steps onto marble,
+  preserving an administrative facade while the screen conceals charred foundation.
+beats:
+- beat:affair-concealed
+choices:
+- label: Ask Helena if the room feels colder to her
+  to: passage:p-smile-strain
+- label: Arrange the spoons in geometric precision
+  to: passage:p-false-civility

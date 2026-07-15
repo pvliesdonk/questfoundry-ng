@@ -1,0 +1,20 @@
+id: passage:p-marion-demands-justice
+summary: Marion insists the archive is evidence of Bernard's murder and must be preserved
+  for the police, accepting the scandal that will follow. The group's protective discretion
+  collapses as she chooses legal accountability over their collective reputation.
+entities:
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+- character:bernard-croft
+prose_summary: Marion Ashworth blocks Helena from burning Bernard's portfolio at the hearth.
+  Marion reveals the documents record the murderer's presence at eleven o'clock and motive,
+  plus secrets of seventeen heirs including assignations, embezzlement, and forged prescriptions.
+  She accepts scandal and places the portfolio on the settle beside Bernard's corpse, halting
+  the heirs' movement.
+beats:
+- beat:demand-for-justice
+choices:
+- label: Point to the clock and say that Bernard's murder has run out of patience
+  to: passage:p-clock-strikes
+- label: Hold the archive steady while your breath clouds the air
+  to: passage:p-frost-tableau

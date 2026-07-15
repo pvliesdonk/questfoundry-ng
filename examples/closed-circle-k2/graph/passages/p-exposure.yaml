@@ -1,0 +1,31 @@
+id: passage:p-exposure
+summary: Police arrive on snowshoes when the storm breaks and confiscate the archive for cataloguing.
+  Officers read the files aloud in the investigation room, triggering arrests for embezzlement
+  and prescription fraud; the cost is the shattering of the household’s civil pretense and
+  the onset of panic.
+entities:
+- faction:the-snowbound-heirs
+- object:bernard-blackmail-archive
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-protected
+- flag:key-frozen
+- flag:key-recovered
+- flag:marion-concealed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion surrenders the safe key to the constable. Officers remove the portfolio
+  from the open safe and spread the pages in the investigation room. A sergeant reads evidence
+  of embezzlement and prescription fraud to seventeen heirs. Officers arrest two heirs while
+  the remaining heirs withdraw their alliance. The pocket watch lies shattered. Helena observes
+  and calculates ledger favors chaos.
+beats:
+- beat:police-arrival
+- beat:scandal-erupts
+choices:
+- label: Clutch the teacup with frost-brittle fingers
+  to: passage:p-porcelain-crack
+- label: Let the ribbon-bound letter flutter to the floor
+  to: passage:p-letter-flutter

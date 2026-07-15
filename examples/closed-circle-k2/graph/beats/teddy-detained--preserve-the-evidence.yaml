@@ -1,0 +1,18 @@
+id: beat:teddy-detained--preserve-the-evidence
+created_by: grow
+summary: The snowbound heirs lash Teddy with curtain cords in the pantry, their hands trembling
+  with the knowledge that Bernard's portfolio survives upstairs to testify against them all;
+  he slumps against the flour bins while someone checks the safe lock again.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: advances
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-fraud

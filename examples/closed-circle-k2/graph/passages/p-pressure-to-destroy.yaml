@@ -1,0 +1,20 @@
+id: passage:p-pressure-to-destroy
+summary: Helena demands the documents burn before the fire to preserve the survivors' dignity,
+  forcing a choice between evidence and the performance of mercy. The cost is truth, traded
+  for the illusion of order.
+entities:
+- character:helena-vance
+- location:the-great-hall
+- object:bernard-blackmail-archive
+prose_summary: Helena Vance places her portfolio beside Bernard's corpse on the settle. She
+  argues the dead have no rights and proposes burning the archive to protect the living. She
+  reveals documentation of Marion's fourteen-month assignation with the Pimlico solicitor.
+  Marion touches the poker without lifting it and argues truth demands preservation. The frozen
+  key descends three millimeters. The assembly waits.
+beats:
+- beat:pressure-to-destroy
+choices:
+- label: Stand rigid at the hearthside
+  to: passage:p-hungry-hearth
+- label: Trace the ash line across the rug
+  to: passage:p-ash-scatter

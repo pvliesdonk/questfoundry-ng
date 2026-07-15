@@ -1,0 +1,16 @@
+id: dilemma:climb-or-wait
+question: Do you risk climbing the frozen chandelier to retrieve the key frozen above, or
+  wait for the thaw and risk the killer escaping first?
+why_it_matters: Determines whether the group takes a dangerous gamble for freedom or maintains
+  their civilized patience while trapped with a murderer
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+answers:
+- id: answer:climb-for-freedom
+  text: Ascend the icy fixture and risk bringing it crashing down upon the assembly
+- id: answer:wait-with-decorum
+  text: Maintain propriety and hope the killer does not strike again before the thaw
+anchored_to:
+- location:the-great-hall
+- faction:the-snowbound-heirs

@@ -1,0 +1,7 @@
+Dr. Mott held the scalpel steady against the tethered silk. The blade had entered the flesh at the third intercostal space, parting the skin with the precision of an archivist cutting a damaged signature from a ledger. She withdrew the instrument and the blood followed in a slow, bureaucratic exudate that pooled in the table's oxidized groove.
+
+Her hands ceased their vibration. The withdrawal tightened her focus to a single aberrant detail, and the room's periphery sharpened with unwelcome clarity. She observed the white cuff of her own sleeve where a speck of dried blood had settled, which predated the incision she had just made. The mark sat there, oxidized to rust, and accused her with the exactitude of a ledger entry. She had missed it during the binding.
+
+Teddy stood at the table's foot. He poured chloroform from a glass bottle, and she saw the tremor in the liquid's meniscus, matching the tremor she had suppressed in her own hands moments before. The correspondence fixed her to the act. Beneath the frayed damask that covered Bernard's lower limbs, the toe of his left shoe protruded at an angle that indicated rigor had set in hours prior to her official examination. The timeline collapsed.
+
+She understood then that the civility of the bound wrists and the careful incision was a performance concluded. The violence had been completed in the east wing, not here. The clarity removed her last protection. She set the scalpel on the table's edge and waited for Teddy to observe the blood speck, the shifted shoe, the arithmetic of her guilt.

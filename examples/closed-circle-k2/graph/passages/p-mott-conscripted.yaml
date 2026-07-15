@@ -1,0 +1,21 @@
+id: passage:p-mott-conscripted
+summary: The snowbound heirs compel Dr. Mott to perform the autopsy on the body in temporary
+  state, and Teddy wanders the upper corridors to escape the cellar.
+entities:
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+- location:the-cellars
+- character:teddy-bryant
+prose_summary: Dr. Elspeth Mott is conscripted to examine Bernard Croft's frozen corpse; storm
+  prevents coroner. Helena Vance, Marion Ashworth verify license, compel examination. Teddy
+  Bryant paces above. Mott clears room, requests lamp, withdraws scalpel and flask from bag,
+  places them on settle beside open account book of debts. She prepares to examine body, refrains
+  from drinking.
+beats:
+- beat:bridge-10
+- beat:mott-is-needed
+choices:
+- label: Record the precise hour of death in the household ledger
+  to: passage:p-ink-frozen
+- label: Examine the ridged fibers of the water-damaged page
+  to: passage:p-frozen-document

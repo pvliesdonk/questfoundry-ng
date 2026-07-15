@@ -1,0 +1,26 @@
+id: character:bernard-croft
+name: Bernard Croft
+concept: The butler who has spent decades gathering blackmail material on his employers and
+  now finds himself the most feared man in the house
+pronouns: he/him
+base:
+  appearance: ivory cigarette holder, liver-spotted hands
+  manner: unblinking pale eyes, voice that barely rises above a whisper
+arc:
+  begins: the most feared man in the house, power through accumulated blackmail material
+  pivots:
+  - beat: beat:bernard-found-dead
+    becomes: murder victim, his knowledge become volatile inheritance
+  - beat: beat:bernard-suspected
+    becomes: posthumous suspect for the patriarch's murder, his secrets now dangerous to possess
+  - beat: beat:testimony-given
+    becomes: cleared of homicide but exposed as embezzler, alibi purchased with disgrace
+  - beat: beat:bernard-dismissed
+    becomes: stripped of livery and position, servant become outcast
+  ends:
+  - path: path:clear-the-butler
+    state: ruined but alive, dismissed into the snow with his archive and his shame
+  - path: path:burn-the-secrets
+    state: buried in frozen earth, his murder technically unsolved as evidence turns to ash
+  - path: path:preserve-the-evidence
+    state: victim whose killer may yet be found, his own crimes catalogued for the police

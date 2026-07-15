@@ -1,0 +1,29 @@
+id: passage:p-the-iron-bites
+summary: Helena steadies the frozen will while Teddy strikes, the iron biting deep until legible
+  text emerges; they work knowing Marion has locked Bernard's portfolio upstairs and that
+  any scorch or scratch will compound their guilt in the investigation to come. The mood is
+  frostbitten dread beneath the performance of civility.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- object:the-frozen-will
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Helena holds the ice block containing the patriarch's will while Teddy strikes
+  it with the fire iron. Ice fractures reveal legible text determining succession. Seventeen
+  heirs watch. Water damage spreads. Marion Ashworth holds Bernard's portfolio and the archive
+  key upstairs in the locked study safe. The investigator arrives with the storm; damage annotates
+  guilt. Helena nods; Teddy strikes again.
+beats:
+- beat:aid-the-impostor--preserve-the-evidence
+choices:
+- label: Slide the leather-bound ledger across the desk
+  to: passage:p-forged-recognition

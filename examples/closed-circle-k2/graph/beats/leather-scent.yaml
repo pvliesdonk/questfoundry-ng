@@ -1,0 +1,7 @@
+id: beat:leather-scent
+created_by: polish
+summary: The smell of old leather and corruption wafts from the portfolio.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:bernard-blackmail-archive

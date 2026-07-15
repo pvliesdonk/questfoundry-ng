@@ -1,0 +1,16 @@
+id: passage:p-frost-jewelry
+summary: Marion observes that ice crystals have formed on Bernard's eyelashes like grotesque
+  bridal jewelry and thinks of winter weddings. The image confirms that the frost has penetrated
+  the civilized interior, collapsing the distinction between ornament and injury.
+entities:
+- character:marion-ashworth
+- character:bernard-croft
+prose_summary: Marion observes Bernard in the Great Hall doorway. Bernard carries an inventory
+  ledger and has ice crystals on his eyelashes from the cellars. The frost penetrates the
+  interior, dissolving the barrier between the public areas and the frozen lower levels. The
+  house decays.
+beats:
+- beat:frost-on-eyelashes
+choices:
+- label: Sort through the stranger's luggage for the patriarch's papers
+  to: passage:p-teddy-exposed

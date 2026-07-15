@@ -1,0 +1,15 @@
+id: beat:both-women-fall
+summary: Helena's theatrical legacy is publicly savaged while Marion's marriage ends in disgrace,
+  both women ruined by the exchange.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: advances
+entities:
+- character:helena-vance
+- character:marion-ashworth
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring

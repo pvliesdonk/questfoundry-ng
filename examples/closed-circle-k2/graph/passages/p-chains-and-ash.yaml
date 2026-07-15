@@ -1,0 +1,29 @@
+id: passage:p-chains-and-ash
+summary: Teddy stands chained in the great hall while Helena gathers her coat. The fireplace
+  contains only grey ash where evidence of Bernard's killers once sat, and industrial demolition
+  markers punctuate the snow; the estate falls to erasure and justice arrives hollow.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+- location:the-great-hall
+ending:
+  id: e-chains-and-ash
+  title: The Removal
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+- flag:propriety-maintained
+prose_summary: Teddy stands in irons as a constable secures chains. Helena gathers emerald
+  velvet, brushes Bernard's damask-covered form, and exits via the service entrance without
+  looking at Teddy. The fireplace contains carbonized proof of seventeen failures and Bernard's
+  killers. Men measure walls with metal tapes for demolition and assess removal costs. Justice
+  completes hollow.
+beats:
+- beat:ending-tyranny--burn-the-secrets
+- beat:final-desolation--burn-the-secrets

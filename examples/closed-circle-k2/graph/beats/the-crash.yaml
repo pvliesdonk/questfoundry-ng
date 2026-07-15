@@ -1,0 +1,15 @@
+id: beat:the-crash
+summary: The chandelier breaks loose and smashes into the hall, sending ice shards and crystal
+  fragments cascading across the floor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:climb-or-wait
+  effect: advances
+entities:
+- location:the-great-hall
+- character:helena-vance
+scene_type: scene
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:climb-for-freedom

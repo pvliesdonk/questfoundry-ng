@@ -1,0 +1,27 @@
+id: passage:p-teddy-detained
+summary: The heirs bind Teddy with curtain cords in the pantry, the missing blackmail files
+  prevent proof of Bernard's murderer, and the storm seals the estate in isolation.
+entities:
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+- location:the-cellars
+irrelevant_flags:
+- flag:autopsy-compromised
+- flag:autopsy-sound
+- flag:chandelier-destabilized
+- flag:helena-savaged
+- flag:key-recovered
+- flag:marion-concealed
+- flag:marion-exposed
+- flag:mott-intoxicated
+- flag:mott-withdrawal
+prose_summary: Marion Ashworth binds Teddy's wrists with curtain cords in the pantry. Helena
+  Vance reveals the documentation proving Teddy is chauffeur, not heir. Storm buries roads,
+  isolating seventeen heirs. Water accumulates on the cellar ceiling. Bernard's blackmail
+  archive burns to ash, though barrels of embezzlement evidence remain. Without alphabetical
+  foolscap, no heir can prove motive; only Teddy's fraudulent identity is accusation.
+beats:
+- beat:teddy-detained--burn-the-secrets
+choices:
+- label: Step into the great hall to observe the new arrival
+  to: passage:p-tyrant-arrives

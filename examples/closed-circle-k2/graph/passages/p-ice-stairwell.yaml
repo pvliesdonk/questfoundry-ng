@@ -1,0 +1,14 @@
+id: passage:p-ice-stairwell
+summary: Ice encases the stairwell railing in a treacherous sculpture that reflects the gaslight,
+  and the price of orderly movement is now a gamble against mortal descent.
+entities:
+- location:the-great-hall
+prose_summary: Dr Elspeth Mott descends the stairwell toward the cellar. The iron banister
+  is encased in ice; gripping it risks adhesion. Steps three and four hold snow drifts; the
+  landing holds re-frozen slush. The wood groans. She steps downward, distributing weight
+  to avoid falling on the iced treads.
+beats:
+- beat:ice-in-stairwell
+choices:
+- label: Grip the frozen railing and descend toward the pantry
+  to: passage:p-bernard-found-dead

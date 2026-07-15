@@ -1,0 +1,7 @@
+id: beat:metal-cold-burn
+created_by: polish
+summary: The key is so cold it burns Marion's palm.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

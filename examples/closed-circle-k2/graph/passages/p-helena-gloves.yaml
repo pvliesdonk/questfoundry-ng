@@ -1,0 +1,15 @@
+id: passage:p-helena-gloves
+summary: Helena adjusts her gloves, the leather creaking like dry bones, before acknowledging
+  the newcomer. The ritual enforces composure while betraying the violence concealed beneath
+  polished etiquette.
+entities:
+- character:helena-vance
+prose_summary: Helena Vance dons left leather and right emerald velvet gloves for twelve seconds.
+  Marion Ashworth holds certificates. Dr. Mott places an empty glass on a coaster. Teddy Bryant
+  stands rigid. Bernard Croft enters carrying a frost-stiffened cellar ledger, ice on his
+  eyelashes. Helena addresses him as "Mr. Croft" without acknowledging his discovery below.
+beats:
+- beat:helenas-gloves
+choices:
+- label: Suggest the library for the immediate reading
+  to: passage:p-tyrant-revealed

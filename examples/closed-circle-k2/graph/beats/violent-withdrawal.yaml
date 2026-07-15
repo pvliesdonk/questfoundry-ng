@@ -1,0 +1,15 @@
+id: beat:violent-withdrawal
+summary: Dr. Mott suffers acute physical withdrawal, vomiting into the ice sink and shaking
+  so violently she must be tied to the examination table to steady her hands.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: reveals
+entities:
+- character:dr-elspeth-mott
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:dr-elspeth-mott
+belongs_to:
+- path:destroy-the-supply

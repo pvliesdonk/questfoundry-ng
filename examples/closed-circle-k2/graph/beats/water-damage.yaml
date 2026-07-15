@@ -1,0 +1,14 @@
+id: beat:water-damage
+summary: The document is soaked and partially smudged, but the text remains legible enough
+  to determine the rightful heir.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:fire-thaw-or-natural-thaw
+  effect: reveals
+entities:
+- object:the-frozen-will
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:hasten-with-flames

@@ -1,0 +1,18 @@
+id: passage:p-structural-instability
+summary: Bernard warns that the ice-heavy chandelier strains against corroded ceiling hooks.
+  The room’s physical security deteriorates, threatening collapse with any additional weight.
+entities:
+- location:the-great-hall
+- character:bernard-croft
+prose_summary: Bernard examines ceiling hooks noted in 1923 ledger and calculates ice mass
+  plus frozen key. He warns structure will shear from joists under added weight. Chandelier
+  sways on compromised anchor and plaster cracks. Helena grips portfolio; Marion stands by
+  trestle; Dr. Mott hovers over bag; Teddy Bryant stops pacing. Bernard taps cigarette holder
+  against ledger.
+beats:
+- beat:structural-instability
+choices:
+- label: Trace your fingers along the frozen plaster to map the cracks
+  to: passage:p-plaster-cracks
+- label: Withdraw from the room's center and yield the floor to Teddy
+  to: passage:p-yielded-center

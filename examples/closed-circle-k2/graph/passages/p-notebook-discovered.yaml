@@ -1,0 +1,19 @@
+id: passage:p-notebook-discovered
+summary: Teddy discovers Marion's notebook concealed among the personal effects and reads
+  her handwritten review of Helena's final theatrical performance, which describes Helena
+  as a corpse-like parody of her former genius. The discovery exposes the surgical malice
+  beneath the household's frostbitten civility, and the cost is Teddy's certainty that these
+  ordered manners ever concealed authentic mercy.
+entities:
+- character:teddy-bryant
+- character:marion-ashworth
+- character:helena-vance
+prose_summary: Teddy discovers Marion's notebook among Bernard's personal effects. He reads
+  her review of Helena Vance's final performance. He realizes the household's civility conceals
+  systematized contempt. He replaces the notebook in its original position. He understands
+  the cruelty is documented and preserved.
+beats:
+- beat:notebook-discovered
+choices:
+- label: Tuck the notebook into my waistcoat and descend to the frozen hall
+  to: passage:secret-descent

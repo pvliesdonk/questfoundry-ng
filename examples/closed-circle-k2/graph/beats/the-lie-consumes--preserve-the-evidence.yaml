@@ -1,0 +1,17 @@
+id: beat:the-lie-consumes--preserve-the-evidence
+created_by: grow
+summary: Teddy drinks in the cellars knowing the portfolio upstairs contains the leverage
+  to destroy his masquerade, his voice rising as he realizes Bernard's files hold proof of
+  his origins; the racks tremble with his grip on the bottles.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:expose-or-preserve-heir
+  effect: complicates
+entities:
+- character:teddy-bryant
+- location:the-cellars
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:preserve-the-fiction

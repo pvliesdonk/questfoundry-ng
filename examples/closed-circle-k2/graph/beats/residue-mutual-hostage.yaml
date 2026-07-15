@@ -1,0 +1,12 @@
+id: beat:residue-mutual-hostage
+created_by: polish
+summary: Marion offers Helena a teacup and their fingers brush with the intimacy of co-conspirators;
+  the unspoken bargain sits heavy between them, a shared weight that anchors them together
+  in the freezing dark.
+beat_class: structural
+purpose: residue
+entities:
+- character:marion-ashworth
+- character:helena-vance
+requires_flags:
+- flag:helena-protected

@@ -1,0 +1,16 @@
+id: passage:p-breath-clouds
+summary: The assembled guests' breath forms clouds that mingle and dissipate as a collective
+  sigh of anxiety. The performance of drawing-room manners is compromised, and the cost of
+  maintaining appearances is the visible manifestation of their panic.
+entities:
+- faction:the-snowbound-heirs
+prose_summary: Helena Vance holds a portfolio on the settle. Seventeen heirs stand in the
+  freezing Great Hall vault. A proposal to scale the façade has suspended dialogue. Marion
+  Ashworth grips a ledger, Dr. Mott holds an empty glass, Teddy Bryant stands with unclasped
+  hands, a gentleman lowers his pocket watch, and a lady touches her oxidized silver necklace.
+  Panic replaces manners.
+beats:
+- beat:breath-clouds
+choices:
+- label: I volunteer to scale the ice-sheathed façade
+  to: passage:p-climb-or-decorum

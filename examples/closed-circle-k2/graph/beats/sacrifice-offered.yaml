@@ -1,0 +1,14 @@
+id: beat:sacrifice-offered
+summary: Teddy begs the investigator to accept his death and let the matter rest, arguing
+  that revealing the truth will destroy two lives instead of one.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:martyr-or-justice
+  effect: advances
+entities:
+- character:teddy-bryant
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:expose-the-truth

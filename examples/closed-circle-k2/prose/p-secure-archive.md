@@ -1,0 +1,9 @@
+Marion Ashworth carried the portfolio to the wall where the safe stood. The oiled leather had darkened where her ink-stained fingers gripped the brass corners. She did not look at the ruined chandelier that lay across the parquet floor, its oxidized silver armature twisted like obsolete account books shelved by a careless hand. The cold lived in the metal and the marble, not in the air she breathed.
+
+She knelt before the safe. Her fingers moved the dial with the precision of ledger-keeping, pausing at the numbers that composed the estate's fiscal year. The mechanism clicked. She opened the door and placed the portfolio inside, arranging it alphabetically by victim as Bernard had done, though now the classification served the authorities rather than the butler's extortion.
+
+The safe closed. The snap of the bolt echoed against the frost-rimed windows. She stood and withdrew the key. The metal had chilled to the temperature of cellar ice. She held it in her palm and felt the bow press against the welt shaped by previous hours of gripping. The mark matched the key's contour exactly, a bureaucratic stigmata.
+
+She opened her bodice. The fabric parted with a whisper of frayed damask. She placed the key against her skin, between the corset and the flesh. The cold burned briefly, then faded as her body warmed the metal. She adjusted her clothing. The key rested against her sternum, hidden but present, a new organ that pulsed with the weight of seventeen secrets.
+
+She touched her pince-nez. The wire sat precisely upon the bridge of her nose. She had become the archive's sole guardian. Her body was the vulnerable new lock, her composure the only shield against the violence the papers concealed. She stood in the ruined hall with the frost sealing the windows from within, and calculated the cost of preservation against the cost of silence.

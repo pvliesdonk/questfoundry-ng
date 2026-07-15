@@ -1,0 +1,7 @@
+id: intersection:cellar-simultaneity
+location: location:the-cellars
+rationale: Helena confronts Dr. Mott in the freezing cellars while Teddy simultaneously discovers
+  evidence of Bernard's secret presence among the wine barrels.
+members:
+- beat:cellar-presence
+- beat:helenas-demand

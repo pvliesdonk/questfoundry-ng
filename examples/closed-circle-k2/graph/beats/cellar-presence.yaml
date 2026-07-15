@@ -1,0 +1,16 @@
+id: beat:cellar-presence
+summary: Teddy discovers evidence that Bernard was hiding in the wine cellars during the murder,
+  stealing vintage port rather than committing homicide.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: reveals
+entities:
+- character:teddy-bryant
+- character:bernard-croft
+- location:the-cellars
+scene_type: scene
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:clear-the-butler

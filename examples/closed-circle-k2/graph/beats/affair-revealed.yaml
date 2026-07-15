@@ -1,0 +1,17 @@
+id: beat:affair-revealed
+summary: Helena learns from Bernard's archive that Marion is conducting an affair with the
+  estate's married solicitor, a fact that would ruin Marion's reputation if exposed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:silence-or-truth-between-women
+  effect: reveals
+entities:
+- character:helena-vance
+- character:marion-ashworth
+- object:bernard-blackmail-archive
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:let-truth-ring
+- path:seal-the-pact

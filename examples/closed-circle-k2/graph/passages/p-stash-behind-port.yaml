@@ -1,0 +1,20 @@
+id: passage:p-stash-behind-port
+summary: Teddy conceals the gin bottles behind the vintage port so Dr. Mott may recover them
+  later, preserving the doctor's supply and binding them to a secret that risks exposure.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+- location:the-cellars
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: 'Teddy hides gin behind the 1876 port in the wine cellar, preserving dust on
+  the 1874 vintage to conceal the disturbance. He establishes mutual dependency with Dr. Mott:
+  she needs the gin for her tremor and empty medical bag, while his fraudulent identity depends
+  on her compromised testimony. He departs.'
+beats:
+- beat:stash-behind-port
+choices:
+- label: Arrange the bottles behind the vintage port with meticulous care
+  to: passage:p-steady-hands

@@ -1,0 +1,30 @@
+id: passage:p-survival-negotiation
+summary: The medical examination produces ambiguous results that halt the official inquiry.
+  The women withdraw to the drawing room to negotiate the terms of their mutual survival,
+  establishing a private jurisdiction apart from the stalled investigation.
+entities:
+- character:dr-elspeth-mott
+- character:helena-vance
+- character:marion-ashworth
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Helena removes her emerald glove and shows Marion her chain-burned palm. Marion’s
+  fingers bear escritoire stains; she produces her unpublished review and Helena her portfolio.
+  They place both documents on the drawing room’s tea table. Seventeen heirs remain. They
+  do not pull the bell cord. Survival requires they destroy papers. The constable’s inconclusive
+  notebook on Dr. Mott’s death stalls.
+beats:
+- beat:bridge-12
+choices:
+- label: Recite the critic's brutal assessment for the assembled company
+  grants:
+  - flag:helena-savaged
+  - flag:marion-exposed
+  to: passage:p-rejection-published
+- label: Cast the letters and review into the flames together
+  grants:
+  - flag:helena-protected
+  - flag:marion-concealed
+  to: passage:p-pact-of-ashes

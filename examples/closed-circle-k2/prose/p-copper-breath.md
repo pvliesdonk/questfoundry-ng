@@ -1,0 +1,5 @@
+Marion released the breath she had held since Teddy descended the stair. The air tasted of copper. She lowered her handkerchief from her lips and stood at the edge of the great hall.
+
+Seventeen heirs maintained their rigid postures around the settle where Bernard's form lay beneath the frayed damask. Dr. Mott had placed her medical bag on the marble beside the body. Marion observed the tremor in the doctor's fingers as they hovered above the brass-bound instruments. The incision might have wandered; the evidence might have blurred. The diagnosis would serve whoever held the pen, but the hand that guided the blade shook with a palsy that suggested compromised findings.
+
+Marion gripped the unpublished review concealed against her ribs. Her ink-stained fingers trembled against the paper. The copper taste confirmed the violence beneath the performance had surfaced. She understood that her composure had cracked, and that the cost would be recorded not in shillings but in her fractured breath. She inhaled sharply and turned toward the spectacle.

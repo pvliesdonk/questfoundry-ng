@@ -1,0 +1,7 @@
+id: beat:cold-draft
+created_by: polish
+summary: A draft from the fireplace sends ash dancing across the hearth.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

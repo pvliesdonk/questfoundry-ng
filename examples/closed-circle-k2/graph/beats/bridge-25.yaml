@@ -1,0 +1,9 @@
+id: beat:bridge-25
+created_by: grow
+summary: The dripping accelerates, pooling beneath the chandelier as the heirs turn their
+  attention from the ice to the claimant.
+beat_class: structural
+purpose: bridge
+entities:
+- object:the-frozen-will
+- faction:the-snowbound-heirs

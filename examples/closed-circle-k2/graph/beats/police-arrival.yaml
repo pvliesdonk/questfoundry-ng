@@ -1,0 +1,15 @@
+id: beat:police-arrival
+summary: Law enforcement enters on snowshoes when the storm breaks, demanding the archive
+  be opened and catalogued.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: advances
+entities:
+- faction:the-snowbound-heirs
+- object:bernard-blackmail-archive
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:preserve-the-evidence

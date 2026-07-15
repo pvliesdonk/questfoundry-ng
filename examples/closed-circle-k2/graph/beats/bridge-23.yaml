@@ -1,0 +1,10 @@
+id: beat:bridge-23
+created_by: grow
+summary: Teddy seals the cellar door behind him as Helena enters the Great Hall to confront
+  the suspended ice.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-cellars
+- character:helena-vance
+- location:the-great-hall

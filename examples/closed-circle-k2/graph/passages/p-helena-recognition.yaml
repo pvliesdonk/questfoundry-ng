@@ -1,0 +1,20 @@
+id: passage:p-helena-recognition
+summary: Helena Vance recognizes Teddy as a former student from her theatrical troupe twenty
+  years ago, exposing his professional training in deception and complicating his claim as
+  the long-lost heir. The drawing room's enforced civility now masks a panic as the family
+  realizes their heir may be merely a skilled performer.
+entities:
+- character:helena-vance
+- character:teddy-bryant
+prose_summary: Helena Vance recognizes Teddy Bryant as her former acting student from a warehouse
+  theatre. She exposes his false claim as heir by identifying his theatrical training and
+  Whitechapel origins. Marion Ashworth holds discrepant certificates. The assembly learns
+  the heir is a fabrication built upon Helena's curriculum. Teddy's deception fails through
+  performative tells despite competent forgery.
+beats:
+- beat:helena-recognition
+choices:
+- label: Match her ritual, bone for bone
+  to: passage:p-helena-gloves
+- label: Intercept the sealed wire at the door
+  to: passage:p-tyrant-revealed

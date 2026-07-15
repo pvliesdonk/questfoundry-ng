@@ -1,0 +1,17 @@
+id: passage:p-hand-withdrawal
+summary: Teddy withdraws his hand from Helena's with slow, inevitable precision, breaking
+  their physical connection. The gesture imposes a frostbitten estrangement upon the room
+  and forfeits the pretense of alliance that had concealed their mutual suspicion.
+entities:
+- character:teddy-bryant
+- character:helena-vance
+prose_summary: Teddy withdraws his hand from Helena's emerald velvet glove, leaving cellar
+  grease on the frayed cuff. Helena suspends her hand and withholds documentation. The seventeen
+  heirs square toward the space between them, abandoning alliance pretense. Mutual suspicion
+  exposes itself. Teddy's palms hold congealing 1874 vintage rack grease. The record of complicity
+  stands.
+beats:
+- beat:hand-withdrawal
+choices:
+- label: Step back into the chill of the hall
+  to: passage:p-dissolution

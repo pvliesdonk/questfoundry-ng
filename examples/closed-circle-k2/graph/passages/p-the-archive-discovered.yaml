@@ -1,0 +1,22 @@
+id: passage:p-the-archive-discovered
+summary: Marion discovers beneath Bernard's mattress a leather portfolio containing photographs,
+  ledgers, and letters that document every guest's hidden sins. The archive exposes the violence
+  beneath the group's performed civility; the cost is the collapse of privacy and the certainty
+  of mutual blackmail, and the mood is suffocating archival dread.
+entities:
+- character:marion-ashworth
+- character:bernard-croft
+- object:bernard-blackmail-archive
+prose_summary: Marion lifts Bernard's mattress and retrieves his oiled leather portfolio.
+  Inside she finds gelatin prints of compromised household members, account books of debts,
+  resealed letters. She discovers her fourteen months of documented assignations with the
+  solicitor. She realizes Bernard maintained a blackmail archive on everyone and that mutual
+  blackmail now replaces privacy. She closes the portfolio, understands possession endangers
+  her.
+beats:
+- beat:the-archive-discovered
+choices:
+- label: Lift the portfolio to your nose and inhale
+  to: passage:p-leather-scent
+- label: Spread the contents across the counterpane
+  to: passage:p-guest-panic

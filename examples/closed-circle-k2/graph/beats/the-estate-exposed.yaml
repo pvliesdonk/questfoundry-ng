@@ -1,0 +1,14 @@
+id: beat:the-estate-exposed
+summary: The house becomes a museum of scandal, visited by tourists who photograph the room
+  where the blackmail was stored.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: complicates
+entities:
+- location:the-great-hall
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: wide
+belongs_to:
+- path:preserve-the-evidence

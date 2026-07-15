@@ -1,0 +1,9 @@
+id: beat:bridge-10
+created_by: grow
+summary: The body is laid in temporary state; above, Teddy wanders the corridors seeking distraction
+  from the cellar's chill.
+beat_class: structural
+purpose: bridge
+entities:
+- location:the-cellars
+- character:teddy-bryant

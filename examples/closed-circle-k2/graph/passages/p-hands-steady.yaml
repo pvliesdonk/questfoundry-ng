@@ -1,0 +1,18 @@
+id: passage:p-hands-steady
+summary: Dr. Mott's hands steady as the alcohol leaves her system. She regains surgical precision
+  and loses the chemical buffer that distanced her from the gathering's brutality.
+entities:
+- character:dr-elspeth-mott
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott cuts Bernard from throat to sternum with a scalpel while bound by
+  silk straps and irons to an oxidized silver table. Teddy holds a lamp. She experiences withdrawal
+  without alcohol, perceiving with unmediated clarity. Her hands remain steady. She pauses
+  at the sternum, recognizing the brutality of violating exposed flesh without chemical buffer.
+beats:
+- beat:hands-steady
+choices:
+- label: Surrender your hidden flasks to Helena
+  to: passage:p-clinical-reckoning

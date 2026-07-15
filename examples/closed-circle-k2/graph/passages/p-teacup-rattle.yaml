@@ -1,0 +1,15 @@
+id: passage:p-teacup-rattle
+summary: The teacup rattles in its saucer though nobody has touched it. The gathering stops
+  talking and acknowledges that the room permits physical impossibilities, and their performance
+  of calm now costs them the certainty of their surroundings.
+entities:
+- location:the-great-hall
+prose_summary: The teacup rotates and freezes, leaving a tarnish on the silver tray. The cold
+  moves objects without touch. Marion holds the ledger with page eleven unseen. Helena grips
+  her portfolio. Teddy opens and closes his hands. The seventeen heirs maintain composure
+  around Bernard's body, but the effort costs more than panic.
+beats:
+- beat:teacup-rattle
+choices:
+- label: Reach out to steady the rattling saucer
+  to: passage:p-morning-reprieve

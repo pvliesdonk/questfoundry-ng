@@ -1,0 +1,15 @@
+id: beat:the-moment-of-truth-locked
+summary: The assembly gathers to hear Teddy's testimony, and Bernard braces for exposure.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: advances
+entities:
+- character:bernard-croft
+- character:teddy-bryant
+- faction:the-snowbound-heirs
+scene_type: scene
+narration_scope: limited
+viewpoint: character:bernard-croft
+belongs_to:
+- path:clear-the-butler

@@ -1,0 +1,23 @@
+id: passage:p-ice-ascent
+summary: Helena climbs the frozen chandelier toward the key while ice cracks beneath her boots
+  and the assembly gasps; she seizes the key as fractures race through the crystal structure.
+  The retrieval breaches the room's fragile integrity and exposes the precariousness of the
+  civil order.
+entities:
+- character:helena-vance
+- location:the-great-hall
+- faction:the-snowbound-heirs
+- object:the-frozen-will
+prose_summary: Helena Vance climbs the frozen chandelier in emerald velvet gloves. Her boot
+  slips. She grasps the ice-encased key on its tarnished chain and yanks. The ice fractures
+  catastrophically. The chandelier tilts and loses structural integrity. Seventeen heirs around
+  the settle gasp, breaking silence; their civil arrangement cracks.
+beats:
+- beat:ascend-the-ice
+- beat:key-retrieved
+- beat:the-ascent
+choices:
+- label: Press the frozen key into Marion's gloved hand
+  to: passage:p-metal-cold-burn
+- label: Ascend the splintering crystal overhead
+  to: passage:p-ice-glint-malevolent

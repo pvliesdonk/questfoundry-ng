@@ -1,0 +1,15 @@
+id: beat:testimony-prepared
+summary: Teddy prepares to testify to Bernard's presence in the cellars, knowing it will exonerate
+  him of murder but expose his theft.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:clear-or-suspect-butler
+  effect: advances
+entities:
+- character:teddy-bryant
+- character:bernard-croft
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:clear-the-butler

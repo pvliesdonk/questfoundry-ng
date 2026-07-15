@@ -1,0 +1,19 @@
+id: passage:p-apprehension
+summary: Dr. Mott is apprehended by the authorities when the roads clear and charged with
+  the patriarch's murder; the constables depart with their prisoner, and Teddy's shackles
+  are struck as the record is corrected. The mood is one of brittle, frostbitten quiet exposing
+  the cost of performed civility.
+entities:
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+- character:teddy-bryant
+prose_summary: Constables arrest Dr. Mott with irons for the patriarch's death and escort
+  her past the watching heirs. Teddy Bryant is freed; the ledger is corrected to close the
+  account of her violence. She loses medical authority and exits. Bernard's body remains covered
+  on the settle.
+beats:
+- beat:bridge-13
+- beat:real-killer-taken
+choices:
+- label: Smooth your gloves and incline your head by exactly the degree that courtesy demands
+  to: passage:p-teddy-exonerated

@@ -100,7 +100,6 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   is offered but nothing states when taking it is expected). Fold into the
   prompt-template audit or fix directly; the register machinery itself is
   offline-tested and has never run live.
-
 - [ ] **`exit_mood` beat annotation** — deferred with the annotation family (01
   §10.3); add only on a demonstrated FILL quality gap (the `scene_type` /
   `narration_scope` precedent).

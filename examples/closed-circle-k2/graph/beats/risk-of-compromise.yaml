@@ -1,0 +1,16 @@
+id: beat:risk-of-compromise
+summary: Teddy realizes that if Dr. Mott is intoxicated, she might destroy forensic evidence
+  or misdiagnose the cause of death entirely.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:enable-or-confront-addiction
+  effect: complicates
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:teddy-bryant
+belongs_to:
+- path:destroy-the-supply
+- path:hide-the-booze

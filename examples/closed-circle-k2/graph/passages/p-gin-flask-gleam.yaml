@@ -1,0 +1,19 @@
+id: passage:p-gin-flask-gleam
+summary: A half-empty gin flask gleams from her pocket, exposing her intoxication to the assembled
+  company, and the pretense of sobriety collapses.
+entities:
+- character:dr-elspeth-mott
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: Dr. Mott enters the Great Hall from the cellar with calipers, scalpel, and
+  half-empty silver flask in her coat pocket; medical bag stays below. Seventeen heirs stand
+  in semicircle; Helena Vance steps forward, Marion Ashworth turns from the escritoire, and
+  Teddy Bryant stands by the andiron. Mott tries to hide the flask, stops, and drops medical
+  authority and stands exposed.
+beats:
+- beat:gin-flask-gleam
+choices:
+- label: Ask the examiner to reconcile the gin with the fractures
+  to: passage:p-contradictory-autopsy

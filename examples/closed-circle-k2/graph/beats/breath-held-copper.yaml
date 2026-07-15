@@ -1,0 +1,7 @@
+id: beat:breath-held-copper
+created_by: polish
+summary: Marion realizes she has been holding her breath, and the air tastes of copper.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marion-ashworth

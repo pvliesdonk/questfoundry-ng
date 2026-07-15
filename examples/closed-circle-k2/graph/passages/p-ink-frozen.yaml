@@ -1,0 +1,16 @@
+id: passage:p-ink-frozen
+summary: The ink in the pen freezes solid, truncating the final sentence into an illegible
+  crystalline scrawl. The attempt at orderly documentation fails against the entropy of the
+  cold, and the missing word now stands as the only barrier between suspicion and certainty.
+entities:
+- object:bernard-blackmail-archive
+prose_summary: Marion Ashworth sits with her back to a corpse. She withdraws a notebook and
+  attempts to record a crack in an ice block's southeast face and center of mass alignment
+  suggesting deliberate placement. Certificates remain in her left pocket. Her pen's ink reservoir
+  freezes solid after three words. She closes the book with an incomplete entry. Documentation
+  gap widens.
+beats:
+- beat:ink-frozen
+choices:
+- label: Open Marion's notebook where it lies concealed among the personal effects
+  to: passage:p-notebook-discovered

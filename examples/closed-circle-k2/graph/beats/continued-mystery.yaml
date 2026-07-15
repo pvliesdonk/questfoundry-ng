@@ -1,0 +1,15 @@
+id: beat:continued-mystery
+summary: Bernard's killer is never found, and justice remains impossible in a house where
+  the motive has turned to ash.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:burn-or-keep-secrets
+  effect: reveals
+entities:
+- character:bernard-croft
+- faction:the-snowbound-heirs
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:helena-vance
+belongs_to:
+- path:burn-the-secrets

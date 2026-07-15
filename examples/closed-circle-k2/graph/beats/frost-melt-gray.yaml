@@ -1,0 +1,7 @@
+id: beat:frost-melt-gray
+created_by: polish
+summary: Frost melts on the windowpane, revealing the gray truth outside.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

@@ -1,0 +1,9 @@
+id: beat:bridge-22
+created_by: grow
+summary: The initial shock of the discovery subsides; the search for the patriarch's papers
+  leads Marion to examine the stranger's luggage.
+beat_class: structural
+purpose: bridge
+entities:
+- character:bernard-croft
+- character:marion-ashworth

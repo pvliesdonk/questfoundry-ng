@@ -1,0 +1,9 @@
+id: beat:bridge-24
+created_by: grow
+summary: Marion signals her decision with a curt nod; servants arrive bearing the implements
+  of heat and force.
+beat_class: structural
+purpose: bridge
+entities:
+- character:marion-ashworth
+- location:the-great-hall

@@ -1,0 +1,7 @@
+id: beat:fire-glow-dim
+created_by: polish
+summary: The fire glows dim, embers dying.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:the-great-hall

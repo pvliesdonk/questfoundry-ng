@@ -1,0 +1,12 @@
+id: beat:residue-gilded-cage
+created_by: polish
+summary: Marion smiles at Helena and tastes the metallic tang of fear; the silence they have
+  forged feels less like protection and more like a cell whose bars are made of courtesy and
+  mutual destruction.
+beat_class: structural
+purpose: residue
+entities:
+- character:marion-ashworth
+- character:helena-vance
+requires_flags:
+- flag:helena-protected

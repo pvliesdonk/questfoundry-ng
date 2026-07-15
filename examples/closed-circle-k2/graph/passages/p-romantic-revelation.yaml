@@ -1,0 +1,16 @@
+id: passage:p-romantic-revelation
+summary: Evidence confirms Teddy's romantic devotion to Dr. Mott and his plan to die for her
+  crime. The revelation recasts his testimony as a suicide pact, forcing the inquiry to acknowledge
+  that personal passion has contaminated the proceedings.
+entities:
+- character:teddy-bryant
+- character:dr-elspeth-mott
+prose_summary: Elspeth Mott presses a photograph into Teddy's hands. The image shows her unaware,
+  taken days prior, with dated initials on the reverse. He conceals it. She realizes his confession
+  to the patriarch's death was calculated to hang for her crime. She steps back. The inquiry
+  becomes a record of his compulsive documentation and their shared guilt awaiting exposure.
+beats:
+- beat:romantic-revelation
+choices:
+- label: Press the photograph into his trembling hands
+  to: passage:p-teddy-sacrifice

@@ -1,0 +1,26 @@
+id: passage:p-sealed-cellar
+summary: Teddy seals the cellar door as Helena enters the Great Hall to confront the suspended
+  ice. The house bifurcates into locked darkness below and frozen spectacle above, and the
+  absurdity of the display erodes the remaining pretense of civility.
+entities:
+- location:the-cellars
+- character:helena-vance
+- location:the-great-hall
+prose_summary: Teddy seals cellar door; draft ceases. Helena enters Great Hall, frees her
+  caught emerald velvet gown, and advances toward chandelier where ice sheaths frozen key;
+  she extends her gloved hand toward ice. Seventeen heirs stand rigid and watch without speaking.
+  Bernard lies beneath a damask covering beside Dr. Mott's bag. Water gathers to critical
+  mass on cellar ceiling. Civility erodes.
+beats:
+- beat:bridge-23
+choices:
+- label: Scale the ice-sheathed chandelier toward the suspended key
+  grants:
+  - flag:chandelier-destabilized
+  - flag:key-recovered
+  to: passage:p-ice-ascent
+- label: Refuse to climb and command the assembly to maintain proper conduct
+  grants:
+  - flag:key-frozen
+  - flag:propriety-maintained
+  to: passage:p-propriety-vigil

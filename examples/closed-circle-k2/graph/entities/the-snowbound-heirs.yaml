@@ -1,0 +1,28 @@
+id: faction:the-snowbound-heirs
+name: The Snowbound Heirs
+concept: The trapped guests who must decide whether to maintain civilized decorum or form
+  survivalist factions as the storm isolates them
+base:
+  dynamic: shared desperation creating shifting alliances
+  risk: collective hysteria or mutual paranoia
+arc:
+  begins: trapped guests maintaining civilized decorum despite shared desperation
+  pivots:
+  - beat: beat:killer-loose
+    becomes: paranoid assembly aware the murderer walks among them, civility cracking
+  - beat: beat:pressure-to-destroy
+    becomes: divided between protectors demanding destruction of evidence and justice-seekers
+      demanding preservation
+  - beat: beat:demand-for-justice
+    becomes: united in demand for legal accountability, willing to risk scandal for truth
+  ends:
+  - path: path:burn-the-secrets
+    state: complicit in silence, their sins turned to smoke, surviving with guilt but no legal
+      consequence
+  - path: path:preserve-the-evidence
+    state: subject to investigation and public scandal, their indiscretions catalogued for
+      police
+  - path: path:seal-the-pact
+    state: maintainers of false civility, polite masks hiding mutual knowledge of vulnerability
+  - path: path:let-truth-ring
+    state: fragmented by exposed secrets, their social bonds shattered by honesty

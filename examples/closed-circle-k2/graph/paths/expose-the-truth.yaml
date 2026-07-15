@@ -1,0 +1,8 @@
+id: path:expose-the-truth
+name: Expose the Truth
+explores: answer:expose-the-truth
+consequences:
+- id: consequence:killer-caught
+  text: The actual murderer is identified and apprehended
+- id: consequence:martyr-refused
+  text: Teddy's false confession is exposed as noble sacrifice refused

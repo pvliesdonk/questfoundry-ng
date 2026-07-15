@@ -1,0 +1,24 @@
+id: passage:p-contradictory-autopsy
+summary: The examiner produces contradictory findings that declare poisoning despite clear
+  blunt trauma wounds, and the investigation stalls because the medical evidence is unreliable
+  and the true cause of death remains obscured.
+entities:
+- character:dr-elspeth-mott
+- faction:the-snowbound-heirs
+irrelevant_flags:
+- flag:chandelier-destabilized
+- flag:key-frozen
+- flag:key-recovered
+prose_summary: 'Dr. Elspeth Mott examines her ledger and finds contradictory causes of death
+  recorded: gastric discoloration indicating arsenic and a cranial fracture indicating blunt
+  trauma. She fails to reconcile the evidence. Marion Ashworth declares no clear verdict.
+  The investigation stalls. Seventeen heirs wait. The true cause remains obscured. Dr. Mott
+  wears iron restraints. Calipers tremble. The inkwell rattles.'
+beats:
+- beat:compromised-results
+- beat:mystery-continues
+choices:
+- label: Turn the wick to catch the light on the crystal decanter
+  requires:
+  - flag:autopsy-compromised
+  to: passage:p-medicated-haze

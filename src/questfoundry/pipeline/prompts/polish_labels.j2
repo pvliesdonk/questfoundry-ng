@@ -11,7 +11,8 @@ THIS PASSAGE (group {{ index }}) — the moment the player is choosing from:
 
 CHOICES LEAVING IT (write one label per destination):
 {% for d in dests %}
-- to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}
+- to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}{% if d.siblings %}
+  ALREADY OFFERED into this same destination by parallel passages: {% for s in d.siblings %}"{{ s }}"{% if not loop.last %}, {% endif %}{% endfor %} — do NOT re-offer that action.{% endif %}
 {% endfor %}
 
 REQUIREMENTS:
@@ -21,5 +22,13 @@ REQUIREMENTS:
   even a single onward choice deserves a diegetic line.
 - Labels leaving this passage must differ from one another.
 - Match the tone. Never mention flags, dilemmas, or structure in a label.
+{% if is_rendering %}
+- THIS PASSAGE is one rendering of a cosmetic fork, rejoining a road the reader
+  could have walked plainly. Its rejoin label must voice THIS rendering's
+  residue — the mood, image, or small knowing the reader now carries — so it
+  reads differently from simply walking on. Never re-offer an action a parallel
+  passage already labels onto the same destination (marked ALREADY OFFERED
+  above): same road reached, a different memory of reaching it.
+{% endif %}
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

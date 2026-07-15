@@ -666,10 +666,29 @@ def _summary_apply(i: int) -> Callable[[BaseModel, Project], list[str]]:
     return apply
 
 
+def _sibling_labels(g, passages: list[tuple[str, list[str]]]) -> list[str]:
+    """Labels already worded onto choices entering a destination's passage(s)
+    — the parallel edges a cosmetic rejoin must differ from (cosmetic-forks
+    §5). Ordering defers rejoin renderings after their siblings, so by the
+    time this runs those siblings' choices exist; the rendering's own choices
+    do not yet. Deduped, first-seen order (edge order is deterministic)."""
+    labels: list[str] = []
+    for pid, _ in passages:
+        for e in g.in_edges(pid, EdgeKind.CHOICE):
+            lbl = e.payload.get("label")
+            if lbl and lbl not in labels:
+                labels.append(lbl)
+    return labels
+
+
 def _labels_context(a: int) -> Callable[[Project], dict]:
     def build(project: Project) -> dict:
         g = project.graph
         groups = _groups(project)
+        # A rejoin rendering carries residue relative to the sibling edges into
+        # its destination; only then do we surface those siblings (cosmetic-
+        # forks §5). A trunk/ordinary pass keeps its context byte-identical.
+        is_rendering = a in pc.cosmetic_rejoin_sources(groups, g)
         out = [b for x, b in pc.group_edges(groups, g) if x == a]
         dests = []
         for b in out:
@@ -687,6 +706,7 @@ def _labels_context(a: int) -> Callable[[Project], dict]:
                     "requires": pc.choice_requires(g, groups[b]),
                     "grants": pc.choice_grants(g, groups[b]),
                     "is_ending": pc.ending_beat(g, groups[b]) is not None,
+                    "siblings": _sibling_labels(g, passages) if is_rendering else [],
                 }
             )
         return {
@@ -694,6 +714,7 @@ def _labels_context(a: int) -> Callable[[Project], dict]:
             "index": a,
             "beats": [g.node(x) for x in groups[a]],
             "dests": dests,
+            "is_rendering": is_rendering,
         }
 
     return build
@@ -763,10 +784,17 @@ def _polish_expand(project: Project) -> list[PassSpec]:
     (runner `PassSpec.expand`). Deterministic — the same post-finalize graph
     yields the same pass names on ledger resume (docs/plans/passages-chunking.md).
     All `summary:<group>` passes precede every `labels:<group>` pass: labels
-    reference destinations that must already exist."""
+    reference destinations that must already exist. Cosmetic-fork renderings
+    word their rejoin label AFTER the parallel trunk/sibling edges into the
+    same destination (a stable two-key sort), so each carries its rendering's
+    residue rather than re-offering a sibling's action (cosmetic-forks §5)."""
     g = project.graph
     groups = _groups(project)
-    source_groups = sorted({a for a, _ in pc.group_edges(groups, g)})
+    rejoin_sources = pc.cosmetic_rejoin_sources(groups, g)
+    source_groups = sorted(
+        {a for a, _ in pc.group_edges(groups, g)},
+        key=lambda a: (a in rejoin_sources, a),
+    )
     passes: list[PassSpec] = []
     for i in range(len(groups)):
         passes.append(

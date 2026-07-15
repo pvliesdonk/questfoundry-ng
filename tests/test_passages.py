@@ -33,7 +33,9 @@ from questfoundry.pipeline.stages.polish import (
     _finalize_apply,
     _groups,
     _labels_apply,
+    _labels_context,
     _light_needs,
+    _polish_expand,
     _summary_apply,
     _variant_needs,
 )
@@ -1085,3 +1087,122 @@ def test_collapse_headless_run_is_one_group():
     g = StoryGraph()
     ids = _viewpoint_chain(g, [None, None, None])
     assert ids in pc.collapse_groups(g, split_viewpoints=True)
+
+
+# -- exit-label residue: cosmetic rejoins (cosmetic-forks §5) -------------------
+
+
+def _sidetrack_project(g: StoryGraph, vision, tmp_path) -> tuple[Project, str, str]:
+    """A woven spine with one FALSE_BRANCH sidetrack spliced onto its first
+    long run; returns the project and the (before, after) trunk edge."""
+    _woven_story(g, ResidueWeight.LIGHT)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    before, after = run[0], run[1]
+    arm = Beat(
+        id="beat:detour",
+        created_by=Stage.POLISH,
+        summary="a quiet detour",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+    )
+    pc.insert_sidetrack(g, [arm], before, after)
+    project = Project(root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g)
+    return project, before, after
+
+
+def _apply_summaries(project: Project) -> None:
+    g = project.graph
+    for i, group in enumerate(_groups(project)):
+        _summary_apply(i)(
+            SummaryProposal(
+                id=f"passage:p{i}",
+                summary=f"group {i}",
+                ending_title="An End" if pc.ending_beat(g, group) else "",
+            ),
+            project,
+        )
+
+
+def test_cosmetic_rejoin_sources_flags_the_arm_not_the_trunk(vision, tmp_path):
+    g = StoryGraph()
+    project, before, _ = _sidetrack_project(g, vision, tmp_path)
+    groups = _groups(project)
+    sources = pc.cosmetic_rejoin_sources(groups, g)
+    arm_idx = next(i for i, grp in enumerate(groups) if "beat:detour" in grp)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    assert arm_idx in sources  # the rendering rejoins a shared destination
+    assert before_idx not in sources  # the trunk is worded first, freely
+
+
+def test_cosmetic_rejoin_sources_flags_both_diamond_arms(vision, tmp_path):
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    mutations.freeze_topology(g)
+    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    before, after = run[0], run[1]
+    arms = [
+        Beat(
+            id=f"beat:arm-{side}",
+            created_by=Stage.POLISH,
+            summary=side,
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+        )
+        for side in ("left", "right")
+    ]
+    pc.insert_false_branch(g, [arms[0]], [arms[1]], before, after)
+    project = Project(root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g)
+    groups = _groups(project)
+    sources = pc.cosmetic_rejoin_sources(groups, g)
+    left = next(i for i, grp in enumerate(groups) if "beat:arm-left" in grp)
+    right = next(i for i, grp in enumerate(groups) if "beat:arm-right" in grp)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    assert {left, right} <= sources  # both arms converge on the rejoin
+    assert before_idx not in sources
+
+
+def test_polish_expand_orders_rejoin_renderings_after_their_siblings(vision, tmp_path):
+    g = StoryGraph()
+    project, before, _ = _sidetrack_project(g, vision, tmp_path)
+    groups = _groups(project)
+    arm_idx = next(i for i, grp in enumerate(groups) if "beat:detour" in grp)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    labels = [p.name for p in _polish_expand(project) if p.name.startswith("labels:")]
+    # every summary precedes every labels pass (existing contract) ...
+    names = [p.name for p in _polish_expand(project)]
+    assert max(i for i, n in enumerate(names) if n.startswith("summary:")) < min(
+        i for i, n in enumerate(names) if n.startswith("labels:")
+    )
+    # ... and the arm's rejoin label is worded after the trunk's
+    assert labels.index(f"labels:{before_idx}") < labels.index(f"labels:{arm_idx}")
+
+
+def test_rejoin_context_surfaces_the_trunk_label_as_a_sibling(vision, tmp_path):
+    g = StoryGraph()
+    project, before, after = _sidetrack_project(g, vision, tmp_path)
+    groups = _groups(project)
+    arm_idx = next(i for i, grp in enumerate(groups) if "beat:detour" in grp)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    after_idx = next(i for i, grp in enumerate(groups) if after in grp)
+    _apply_summaries(project)
+    # word the trunk pass first (what the ordering guarantees), then inspect
+    # the arm pass's context — it must see the trunk's onward label
+    trunk_dests = [b for x, b in pc.group_edges(groups, g) if x == before_idx]
+    _labels_apply(before_idx)(
+        LabelsProposal(
+            labels=[
+                EdgeLabelSpec.model_validate({"to": b, "label": f"walk on to {b}"})
+                for b in trunk_dests
+            ]
+        ),
+        project,
+    )
+    ctx = _labels_context(arm_idx)(project)
+    assert ctx["is_rendering"] is True
+    dest = next(d for d in ctx["dests"] if d["index"] == after_idx)
+    assert f"walk on to {after_idx}" in dest["siblings"]
+    # an ordinary (trunk) pass keeps its context unchanged: no siblings surfaced
+    trunk_ctx = _labels_context(before_idx)(project)
+    assert trunk_ctx["is_rendering"] is False
+    assert all(not d["siblings"] for d in trunk_ctx["dests"])

@@ -16,6 +16,34 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (cosmetic forks PR-0 — exit-label residue built):**
+  Implemented §5 of [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md),
+  the standalone exit-label fix that ships ahead of the engine rework. The
+  confirmed defect: a cosmetic rendering's rejoin label re-offers the
+  onward step the reader already declined, because the label pass words it
+  from the arm's beats alone while the only shared anchor (the destination
+  summary) is identical across the parallel calls — independent samples
+  converge. Three layers, no validator (the fix is context, not a fence —
+  a label-similarity check would be the pedantic reviewer AGENTS.md warns
+  against): (1) **finalize prompt** (`polish_finalize.j2`, FALSE BRANCHES)
+  now requires each arm's beat summaries to state the *mark* the detour
+  leaves — the mood/image/knowing the reader carries on with, textural
+  memory never consequence — so the exit has residue to voice; (2) the
+  **labels pass** orders cosmetic-fork renderings after their parallel
+  trunk/sibling edges (`_polish_expand` two-key sort keyed on
+  `pc.cosmetic_rejoin_sources`) and surfaces the sibling labels already
+  worded onto the shared rejoin (`_labels_context` → `_sibling_labels`,
+  reading applied CHOICE-edge labels), with a "carry this rendering's
+  residue; never re-offer that action" instruction gated on `is_rendering`
+  so ordinary passes stay byte-identical; (3) **generalized** past
+  sidetracks — the rejoin detector is *source group carries a
+  false-branch/texture-world beat AND its destination has ≥2 incoming
+  group edges*, which covers diamond sibling arms and texture-world tails
+  and excludes a capped arm's internal chunk seams (single-incoming, so
+  nothing to differ from). Tests: helper flags the arm not the trunk (and
+  both diamond arms), the expansion orders renderings last, the arm's
+  context sees the trunk's onward label while a trunk pass sees none. Full
+  suite + golden green.
 - **2026-07-15 (cosmetic forks unified — the branching ideas thought
   through, shape ratified):** A design session took the day's three
   branching threads (residue keywords, the cadence-vocabulary follow-ons,

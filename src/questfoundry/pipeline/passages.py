@@ -130,6 +130,32 @@ def group_edges(groups: list[list[str]], g: StoryGraph) -> list[tuple[int, int]]
     return sorted(result)
 
 
+_FORK_RENDERING = (StructuralPurpose.FALSE_BRANCH, StructuralPurpose.TEXTURE_WORLD)
+
+
+def cosmetic_rejoin_sources(groups: list[list[str]], g: StoryGraph) -> set[int]:
+    """Source groups whose outgoing choice is a cosmetic-fork rendering
+    rejoining the road the reader could have walked plainly: the group is one
+    rendering of a cosmetic fork (its beats carry a false-branch or
+    texture-world purpose) and it edges into a *shared rejoin* — a destination
+    several parallel edges enter. Their label passes are ordered AFTER the
+    parallel siblings' (`_polish_expand`) so each carries its rendering's
+    residue instead of re-offering the action a sibling already labels onto
+    the same destination — the confirmed exit-label convergence (01 §6;
+    cosmetic-forks §5). A rendering's internal chunk seams are excluded: a
+    capped arm splits into groups joined by single edges, whose destination
+    has one entering edge and so nothing to differ from."""
+    edges = group_edges(groups, g)
+    incoming: dict[int, int] = {}
+    for _, b in edges:
+        incoming[b] = incoming.get(b, 0) + 1
+    return {
+        a
+        for a, b in edges
+        if incoming[b] >= 2 and any(_beat(g, x).purpose in _FORK_RENDERING for x in groups[a])
+    }
+
+
 def choice_requires(g: StoryGraph, target_group: list[str]) -> list[str]:
     """A choice into a gated (residue) passage carries its head's gate."""
     return sorted(_beat(g, target_group[0]).requires_flags)

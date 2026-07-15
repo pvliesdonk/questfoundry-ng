@@ -85,6 +85,22 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Prose & annotations
 
+- [ ] **Head-scheme conformance is ungated (live kimi A/B, 2026-07-15).**
+  GROW annotate assigned the *victim* (Bernard Croft) as viewpoint head for
+  4 passages while `Voice.pov` declares a four-head rotation without him —
+  I14 (one head per passage) and G3 (head is a retained character) both
+  pass; nothing checks head ∈ the declared scheme. Decide: gate it (the
+  scheme is authoritative), or bless off-scheme heads as legitimate
+  (prologue/epilogue/victim's-eyes passages are a real device) and make
+  the voice pass *declare* what annotate assigned. Frontier judgment.
+- [ ] **Interludes never fire at annotate (both tiers, 2026-07-14/15).**
+  Two live mediums declared a journal interlude register in `Voice` and
+  marked zero `interlude` beats at GROW annotate — tier-independent, so a
+  prompt under-determination in `grow_annotate.j2` (the interlude option
+  is offered but nothing states when taking it is expected). Fold into the
+  prompt-template audit or fix directly; the register machinery itself is
+  offline-tested and has never run live.
+
 - [ ] **`exit_mood` beat annotation** — deferred with the annotation family (01
   §10.3); add only on a demonstrated FILL quality gap (the `scene_type` /
   `narration_scope` precedent).

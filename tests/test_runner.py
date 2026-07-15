@@ -443,6 +443,41 @@ def test_progress_reports_failed_pass(tmp_path, monkeypatch):
     assert [e.status for e in events] == ["start", "failed"]
 
 
+def test_pass_level_max_repairs_overrides_the_runner_default(tmp_path, monkeypatch):
+    """A pass facing several independent checks may need more rounds than
+    the runner default (texture-trial live run, 2026-07-15: a write pass
+    exhausted with every shown finding fixed and one never-shown echo
+    left). The override widens ONLY that pass's budget."""
+    _use_test_templates(monkeypatch)
+    project = _scaffold(tmp_path)
+    calls = {"n": 0}
+
+    def flaky_apply(proposal, project):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise ApplyError(f"round {calls['n']} rejection")
+        project.vision.audience = proposal.audience
+        return ["ok"]
+
+    spec = PassSpec(
+        name="flaky",
+        role="utility",
+        template=TEMPLATE_NAME,
+        schema=VisionProposal,
+        build_context=lambda project: {"audience_hint": ""},
+        apply=flaky_apply,
+        max_repairs=4,
+    )
+    impl = StageImpl(stage=Stage.DREAM, passes=(spec,), gate=lambda project: [])
+    adapter = FakeAdapter([VisionProposal(audience="x")] * 3)
+
+    # the runner default (0) would halt on the first rejection; the pass
+    # override gives the loop room to converge on round 3
+    report = runner.run_stage(project, impl, adapter, max_repairs=0)
+    assert report.success
+    assert report.passes[0].attempts == 3
+
+
 def test_progress_reports_kept_pass(tmp_path, monkeypatch):
     _use_test_templates(monkeypatch)
     project = _scaffold(tmp_path)

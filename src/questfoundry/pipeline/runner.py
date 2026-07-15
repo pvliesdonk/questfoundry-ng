@@ -147,6 +147,8 @@ def _run_pass(
     human-readable error string once repairs are exhausted."""
     template = env.get_template(spec.template)
     context = spec.build_context(project)
+    if spec.max_repairs is not None:
+        max_repairs = spec.max_repairs
     repair_errors: list[str] = []
     repairs_used = 0
     while True:

@@ -1034,6 +1034,12 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
                 build_context=_write_context_for(passage_id, last_draft),
                 apply=_write_apply_for(passage_id, prior_facts, last_draft),
                 review=_review_for(passage_id, prior_facts),
+                # A write faces several independent checks (echoes, review
+                # findings, grounding) that surface serially; the default
+                # budget of 2 halted a live run with every shown finding
+                # fixed and one never-shown echo left. Room to converge,
+                # not license to thrash: arbitration still gates round 2+.
+                max_repairs=4,
             )
         )
         # the rolling story-so-far entry rides right behind the accepted

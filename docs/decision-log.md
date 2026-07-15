@@ -86,6 +86,19 @@ history; the decisions it recorded are captured below and in the design docs.
   refusal gives the honest frozen-ending-set reason (I12 exception
   documented).
 
+- **2026-07-15 (write passes get a repair budget of 4 — agent decision):**
+  The texture-trial's sixth halt (`write:p-ambiguous-tweak`, "exhausted
+  repairs") had a different shape from the fifth: the cache trace shows
+  every round fixed exactly what it was shown (an echo, then two grounding
+  findings), each fix added fresh text that tripped the next independent
+  check, and the pipeline-default budget of 2 exhausted the moment a
+  second echo surfaced — the writer never got a round to fix it. Nothing
+  structural, no non-compliance: ordinary convergence across serial
+  independent checks, one round short. `PassSpec.max_repairs` (per-pass
+  override, None inherits the default) and FILL's write passes set 4.
+  The default stays 2 everywhere else; arbitration still gates repeat
+  review rejections.
+
 - **2026-07-15 (over-strict review, not writer compliance — twice
   author-corrected):** The texture-trial's fifth halt (`write:p-vara-laugh`,
   "failed review 2 times" on choice_grounding) drew two wrong fixes in a

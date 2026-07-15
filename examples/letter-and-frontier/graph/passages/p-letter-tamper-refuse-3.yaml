@@ -1,0 +1,17 @@
+id: passage:p-letter-tamper-refuse-3
+summary: A sympathetic guard allows her through after a tense exchange, yet his lingering
+  suspicion shadows the moment.
+entities:
+- character:malrik
+- character:elara
+prose_summary: Malrik stands at the gate with iron stamp, asks Elara her purpose; she explains,
+  presents sealed parchment with scarlet wax bearing queen's emblem; Malrik lowers stamp,
+  feels heat, lets his patrol spears form a wall then recede as she passes; Elara places hand
+  on wax and enters; Malrik watches the untouched seal, gaining suspicion.
+beats:
+- beat:letter-tamper-refuse-3
+choices:
+- label: press my palm to the seal and move onward
+  requires:
+  - flag:risk-intercept
+  to: passage:p-intercept-suspicion

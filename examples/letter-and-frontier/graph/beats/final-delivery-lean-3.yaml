@@ -1,0 +1,13 @@
+id: beat:final-delivery-lean-3
+summary: The messenger’s oath rings louder amidst the hum of traders.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-delivery
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-position

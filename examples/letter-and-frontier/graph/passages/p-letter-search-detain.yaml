@@ -1,0 +1,18 @@
+id: passage:p-letter-search-detain
+summary: Malrik orders a thorough search of Elara’s pack; the patrol stops her at the gate,
+  interrogates her motives, and the sealed letter draws wary glances.
+entities:
+- character:malrik
+- character:elara
+prose_summary: Malrik orders patrol to search the woman's pack. They open the satchel, find
+  cloth, rope, and a sealed letter with the queen's emblem under a map. The guard detains
+  her at the gate, questions her purpose, and she replies with a queen's oath. She passes
+  through the gate while suspicion remains.
+beats:
+- beat:letter-tamper-refuse-1
+- beat:letter-tamper-refuse-2
+choices:
+- label: Feel the cold draft slip over the sealed parchment
+  to: passage:p-draft-uncertainty
+- label: Step through the gate as the guard's wary gaze lingers
+  to: passage:p-letter-tamper-refuse-3

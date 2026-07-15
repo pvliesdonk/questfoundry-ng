@@ -1,0 +1,7 @@
+id: beat:fb-edge-16
+created_by: polish
+summary: Elara’s shoulders tighten, feeling the empty space where an ally would be.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

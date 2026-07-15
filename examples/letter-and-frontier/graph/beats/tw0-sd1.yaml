@@ -1,0 +1,14 @@
+id: beat:tw0-sd1
+created_by: polish
+summary: In a shadowed alcove of the hilltop, Spymaster Vara appears, eyes glittering with
+  intrigue.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:vara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:vara
+mirrors: beat:spymaster-demand-pre-1
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

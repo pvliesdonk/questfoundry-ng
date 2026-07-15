@@ -1,0 +1,21 @@
+id: passage:p-bridge-letter
+summary: At dusk the courier hands Elara’s sealed letter to Malrik, who examines the queen’s
+  seal and offers to add an official stamp, promising safe passage while hinting the wording
+  may be changed.
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter
+prose_summary: Courier places satchel, slides sealed parchment with queen’s sigil to Malrik.
+  Malrik lifts letter, notes scar and flaw in seal, warns challenge may stall peace. He offers
+  to add Fort’s iron seal, granting safe passage on southern road but altering wording. He
+  stamps iron emblem on wax. Courier tightens grip, decision weighs.
+beats:
+- beat:letter-tamper-pre-1
+- beat:letter-tamper-pre-2
+- bridge:2
+choices:
+- label: Listen to the pine’s whisper
+  to: passage:p-whisper-pine
+- label: Enter the great hall, clutching the sealed letter
+  to: passage:p-hall-road

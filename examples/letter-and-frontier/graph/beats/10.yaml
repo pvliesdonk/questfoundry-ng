@@ -1,0 +1,9 @@
+id: bridge:10
+created_by: grow
+summary: After Vara’s proposal, the chamber falls quiet and Elara studies her counterpart’s
+  face for hidden motives.
+beat_class: structural
+purpose: bridge
+entities:
+- character:vara
+- character:elara

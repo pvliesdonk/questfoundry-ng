@@ -1,0 +1,14 @@
+id: beat:brother-legacy-lean-1
+summary: Elara studies the wax seal, recalling stories of the queen's brother who hid maps
+  in sealed letters.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

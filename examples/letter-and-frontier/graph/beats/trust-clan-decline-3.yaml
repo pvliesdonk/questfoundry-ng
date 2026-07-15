@@ -1,0 +1,12 @@
+id: beat:trust-clan-decline-3
+summary: The delay forces the council to consider alternative envoys, risking the peace proposal’s
+  relevance.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: complicates
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-side

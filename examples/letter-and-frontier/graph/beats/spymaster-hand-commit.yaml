@@ -1,0 +1,11 @@
+id: beat:spymaster-hand-commit
+summary: Elara hands the sealed letter to Vara, trusting her promise of stability.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:hand-letter

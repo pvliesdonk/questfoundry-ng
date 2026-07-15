@@ -1,0 +1,15 @@
+id: beat:spymaster-hand-3
+summary: Elara watches as Vara’s smile widens, aware that the letter may now be used as a
+  pawn.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: complicates
+entities:
+- character:vara
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:hand-letter

@@ -1,0 +1,16 @@
+id: dilemma:peace-interpretation
+question: Should Elara present the ambiguous wording of the sealed letter unchanged, or subtly
+  adjust the phrasing to guide the rival court’s response?
+why_it_matters: An unchanged letter may be misread, sparking conflict; a subtle tweak may
+  steer toward peace but borders on deception.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:present-unchanged
+  text: Present the letter exactly as sealed.
+- id: answer:adjust-subtle
+  text: Adjust the wording just enough to influence.
+anchored_to:
+- character:elara
+- object:sealed-letter

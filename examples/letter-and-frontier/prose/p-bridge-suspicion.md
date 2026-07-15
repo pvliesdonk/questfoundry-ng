@@ -1,0 +1,5 @@
+The clearing fell silent as the echo of Vara’s offer faded. Elara studied the spymaster’s mask‑framed face, eyes tracing the faint line where silver hair met stone. She noted how the half‑mask caught the dim ember glow that slipped through the canopy. She remembered the whispered rumors that followed Vara’s name, talk of bargains turned betrayals that lingered on the wind. The forest’s rustle seemed to echo that doubt, leaves shaking like muted breaths. Her suspicion sharpened as the scarlet wax of the sealed letter caught a stray beam of light, the seal glinting against the shadowed stone. A small candle stood near the altar, its flame flickering over the wax and sending a wavering shade across the parchment. A River Clan rider emerged from the trees, his horse’s breath forming a brief cloud in the cold air. He paused, hand resting on the hilt of his spear, eyes flicking to the seal as if weighing its promise. Elara felt the weight of the queen’s emblem against her palm, a reminder of duty.
+
+Stoke the candle, watching the wax tremble.
+
+Move toward the rider, tracing the queen’s seal with my gaze.

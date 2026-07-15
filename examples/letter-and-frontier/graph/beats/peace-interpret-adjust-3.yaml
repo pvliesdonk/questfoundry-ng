@@ -1,0 +1,11 @@
+id: beat:peace-interpret-adjust-3
+summary: The court’s advisor whispers gratitude, hinting future favors for Elara’s “insight”.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: reveals
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle

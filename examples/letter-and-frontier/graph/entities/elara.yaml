@@ -1,0 +1,49 @@
+id: character:elara
+name: Elara Windrider
+concept: A young courier bound to deliver the sealed peace letter despite knowing nothing
+  of its contents.
+pronouns: she/her
+base:
+  appearance: Tucked hair, travel‑worn cloak, quick eyes.
+  manner: Stoic, dutiful, yet quietly questioning.
+  moral_conflict: present
+arc:
+  begins: Elara is a dutiful courier, stoic yet quietly questioning, carrying the sealed letter.
+  pivots:
+  - beat: beat:brother-legacy-lean-1
+    becomes: she becomes curious about a hidden map within the seal, weighing curiosity against
+      duty.
+  - beat: beat:letter-tamper-pre-3
+    becomes: she becomes torn between preserving the queen's seal and accepting pragmatic
+      security.
+  - beat: beat:spymaster-conceal-commit
+    becomes: she becomes resolute to hide the letter from Vara, asserting secrecy over potential
+      alliance.
+  - beat: beat:final-delivery-resolution
+    becomes: she becomes firm in rejecting the rival queen's court position, reaffirming her
+      identity as an independent courier.
+  ends:
+  - path: path:keep-intact
+    state: she remains steadfast, keeping the seal intact and the hidden map undiscovered.
+  - path: path:decline-position
+    state: she declines the court offer, preserving her autonomy.
+  - path: path:accept-seal
+    state: she carries an altered letter, feeling guilt over compromising the queen's words.
+  - path: path:refuse-seal
+    state: she bears the pristine seal, burdened by suspicion.
+  - path: path:adjust-subtle
+    state: she has subtly altered the wording, carrying secret influence.
+  - path: path:present-unchanged
+    state: she presents the ambiguous letter unchanged, bearing the weight of uncertainty.
+  - path: path:fort-route
+    state: she endures interrogation at the fort, compromising some trust.
+  - path: path:plain-route
+    state: she travels with River Clan protection, maintaining secrecy.
+  - path: path:conceal-letter
+    state: she hides the letter from Vara, keeping its contents secret.
+  - path: path:hand-letter
+    state: she hands the letter to Vara, risking its manipulation.
+  - path: path:agree-side
+    state: she owes the River Clan a future favor, accepting their aid.
+  - path: path:decline-side
+    state: she refuses the clan favor, remaining independent but lacking protection.

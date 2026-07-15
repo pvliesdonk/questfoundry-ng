@@ -1,0 +1,12 @@
+id: beat:residue-spymaster-demand-agree
+created_by: polish
+summary: Elara’s smile flickers as she hands the letter, feeling the subtle rise of a new
+  alliance.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+requires_flags:
+- flag:risk-exposure

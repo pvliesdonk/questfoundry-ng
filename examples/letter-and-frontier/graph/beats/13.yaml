@@ -1,0 +1,9 @@
+id: bridge:13
+created_by: grow
+summary: The clan chief’s promise echoes as Elara tallies her dwindling supplies, measuring
+  the cost of future indebtedness.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:river-clan
+- character:elara

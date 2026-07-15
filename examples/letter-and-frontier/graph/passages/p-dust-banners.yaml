@@ -1,0 +1,15 @@
+id: passage:p-dust-banners
+summary: The clan’s banner ripples in the wind, its colors stitching a faint promise through
+  the settling dust, reminding the messenger of the fragile hope that still binds duty to
+  conscience.
+entities:
+- faction:river-clan
+prose_summary: Elara lifts the rust‑stained banner, feeling its rope; the chief, spear in
+  ground, declares her oath. She receives the sealed wax, bows, and now carries the promise.
+  Nearby lie a leather satchel, cracked biscuits, and a half‑full water skin, showing limited
+  supplies and the debt she must repay.
+beats:
+- beat:fb-edge-7--tw0
+choices:
+- label: Count the dwindling supplies as the chief's oath echoes
+  to: passage:p-promise-entanglement

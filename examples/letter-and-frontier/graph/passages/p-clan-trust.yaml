@@ -1,0 +1,29 @@
+id: passage:p-clan-trust
+summary: Elara pledges a future favor to the Clan; their riders hide her journey through secret
+  paths, and the Clan’s emblem opens the door to an audience with the rival court’s council.
+entities:
+- faction:river-clan
+- character:elara
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara meets River Clan chief, nods to seal a favor promise with the queen’s
+  scarlet seal. She requests price; chief signals riders who clear a hidden archway under
+  market arches, shielding her from bandits. A guard at rival court recognizes the clan emblem,
+  opens doors. Elara enters council with sealed letter, gaining audience by the pact.
+beats:
+- beat:trust-clan-agree-1
+- beat:trust-clan-agree-2
+- beat:trust-clan-agree-commit
+choices:
+- label: Bow to the chief and seal the pact
+  to: passage:p-chief-nod-pact
+- label: Step back, challenging the clan’s demand
+  to: passage:p-debt-clan-call

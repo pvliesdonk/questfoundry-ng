@@ -1,0 +1,18 @@
+id: location:silver-plain
+name: Silver Plain
+concept: A windswept steppe where merchants and nomads cross, littered with the bones of forgotten
+  caravans.
+arc:
+  begins: Silver Plain is a windswept steppe littered with the bones of forgotten caravans.
+  pivots:
+  - beat: beat:route-choice-pre-3
+    becomes: the atmosphere becomes harsh, with low supplies and a looming sandstorm.
+  - beat: beat:route-choice-plain-1
+    becomes: the plain feels guarded as River Clan riders provide hidden protection.
+  - beat: beat:route-choice-plain-2
+    becomes: the plain endures a storm, yet clan expertise keeps travelers safe.
+  - beat: beat:route-choice-plain-3
+    becomes: the plain's journey culminates in a swift peace debate, unspoiled by bureaucracy.
+  ends:
+  - path: path:plain-route
+    state: the plain trek is completed with clan aid, leading to rapid peace negotiations.

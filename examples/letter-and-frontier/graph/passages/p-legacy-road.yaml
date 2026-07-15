@@ -1,0 +1,35 @@
+id: passage:p-legacy-road
+summary: The queen's peace proposal remains untouched as the sun slides low, and Elara turns
+  her gaze to the southern road toward Stonegate Fort, noting its stone walls and the soldiers
+  watching the thoroughfare.
+entities:
+- object:sealed-letter
+- location:stonegate-fort
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara carries the queen's wax‑sealed peace proposal, scarlet seal hidden under
+  her cloak. She surveys the stone‑lined southern road, sees weathered markers, a low stone
+  wall leading to Stonegate Fort, soldiers marching with spears, and a border camp envoy in
+  a dull green tabard. She steps toward the envoy, feeling the sealed oath pulse.
+beats:
+- beat:brother-legacy-aftermath-2
+- beat:route-choice-pre-1
+- bridge:1
+choices:
+- label: Walk the frontier road toward the fading markers
+  to: passage:p-blur-path
+- label: Approach the envoy at the border camp
+  to: passage:p-border-offer

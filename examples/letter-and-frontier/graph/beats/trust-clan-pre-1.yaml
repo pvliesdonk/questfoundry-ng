@@ -1,0 +1,16 @@
+id: beat:trust-clan-pre-1
+summary: The River Clan chief offers Elara hidden protection across the plain in exchange
+  for a future favor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: reveals
+entities:
+- faction:river-clan
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side
+- path:decline-side

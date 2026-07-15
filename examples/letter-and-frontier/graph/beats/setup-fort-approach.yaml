@@ -1,0 +1,12 @@
+id: beat:setup-fort-approach
+summary: She rides toward Stonegate Fort, aware of the watchful gatekeeper Malrik waiting
+  at the southern road.
+beat_class: structural
+purpose: setup
+entities:
+- character:elara
+- character:malrik
+- location:stonegate-fort
+scene_type: micro_beat
+narration_scope: limited
+viewpoint: character:elara

@@ -1,0 +1,13 @@
+id: passage:p-vara-laugh
+summary: Vara laughs, her mirth a thin veil that masks hidden motives.
+entities:
+- character:vara
+prose_summary: Vara offers Elara a sealed letter to trade for a seasonal caravan pact. Elara
+  holds the wax‑sealed letter, weighs the queen's oath and River Clan's protection, and must
+  decide to give the letter to Vara or keep it, costing either secured caravans or possible
+  betrayal.
+beats:
+- beat:fb-edge-5
+choices:
+- label: study Vara's grin and the wax‑sealed letter
+  to: passage:p-suspicion-letter

@@ -1,0 +1,12 @@
+id: beat:fb-edge-17--tw0
+created_by: polish
+summary: The road’s stone markers blur, hinting at divergent futures ahead.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-17
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

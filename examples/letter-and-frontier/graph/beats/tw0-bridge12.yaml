@@ -1,0 +1,12 @@
+id: beat:tw0-bridge12
+created_by: polish
+summary: A River Clan rider emerges from the trees, offering hidden protection.
+beat_class: structural
+purpose: texture_world
+entities:
+- faction:river-clan
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:12
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

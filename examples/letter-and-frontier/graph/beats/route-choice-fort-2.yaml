@@ -1,0 +1,14 @@
+id: beat:route-choice-fort-2
+summary: Inside the fort, Elara is interrogated by a council, her loyalty scrutinized, and
+  she is forced to surrender part of the letter’s trust for political leverage.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: complicates
+entities:
+- character:elara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route

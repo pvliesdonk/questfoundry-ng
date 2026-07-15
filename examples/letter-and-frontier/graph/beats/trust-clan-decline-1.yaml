@@ -1,0 +1,13 @@
+id: beat:trust-clan-decline-1
+summary: Without the Clan’s shield, she faces a sudden ambush by desert raiders on the plain.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: complicates
+entities:
+- character:elara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-side

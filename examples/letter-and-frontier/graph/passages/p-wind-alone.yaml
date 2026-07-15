@@ -1,0 +1,25 @@
+id: passage:p-wind-alone
+summary: Elara walks the wind‑swept plain alone, feeling the clan’s promised aid fade away,
+  a cold reminder that trust is waning and the weight of her mission grows heavier.
+entities:
+- character:elara
+- faction:river-clan
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara walks alone across the Silver Plain after the River Clan riders turn
+  back. She carries a wax‑sealed letter pressed to her chest and a crisp secret map in her
+  satchel. She feels the map, notes invisible ink trails, tightens her strap, and heads eastward
+  as dusk falls and pine scent rises.
+beats:
+- beat:residue-trust-clan-decline
+choices:
+- label: Fold the secret map and stride across the scarred Silver Plain
+  to: passage:p-legacy-plain

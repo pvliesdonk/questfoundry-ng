@@ -1,0 +1,12 @@
+id: passage:p-letter-refuse
+summary: Elara pulls back, refusing Malrik’s stamp and leaving the queen’s seal untouched,
+  a quiet act of defiance that sharpens the tension between duty and conscience.
+prose_summary: Elara touches the scarlet wax queen’s seal and refuses to seal the letter;
+  Malrik lifts the iron garrison stamp but does not press it. Patrol blocks the gate with
+  spears, commander orders soldiers to hold. Drums signal war outside. The unmarked letter
+  remains whole, gate stays barred, Elara’s defiance creates suspicion and delays passage.
+beats:
+- beat:letter-tamper-refuse-commit
+choices:
+- label: Stand firm as the patrol blocks the gate
+  to: passage:p-letter-search-detain

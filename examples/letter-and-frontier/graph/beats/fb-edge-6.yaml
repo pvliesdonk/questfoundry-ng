@@ -1,0 +1,7 @@
+id: beat:fb-edge-6
+created_by: polish
+summary: The candlelight flickers, casting doubts on the sealed wax.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:sealed-letter

@@ -1,0 +1,11 @@
+id: beat:peace-interpret-present-3
+summary: One elder argues for a cautious acceptance, buying more time for negotiations.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: advances
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:present-unchanged

@@ -1,0 +1,43 @@
+id: passage:p-silver-plain-choice
+summary: The messenger rides west onto the exposed Silver Plain, aware of the River Clan’s
+  swift riders and the looming sandstorm, while low supplies make the distant fort’s shelter
+  tempting yet fraught with scrutiny.
+entities:
+- character:elara
+- location:silver-plain
+- faction:river-clan
+- location:stonegate-fort
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: She turns west onto the Silver Plain, feeling satchel weight. The sky darkens,
+  a sandstorm approaches, and Stonegate Fort’s ajar gate and recording garrison appear. A
+  River Clan rider in rust‑tipped spear joins, says they will keep the plain clear. She acknowledges,
+  tightens cloak, urges horse forward; riders match her pace as storm looms, fort gate remains
+  an uneasy option.
+beats:
+- beat:route-choice-pre-2
+- beat:route-choice-pre-3
+- bridge:3
+choices:
+- label: Step through Stonegate Fort’s southern gate
+  grants:
+  - flag:safe-passage
+  - flag:under-surveillance
+  to: passage:p-southern-route-fort
+- label: Ride westward with the River Clan across the Silver Plain
+  grants:
+  - flag:exposed-plains
+  - flag:river-clan-guard
+  to: passage:p-plain-journey

@@ -1,0 +1,9 @@
+id: bridge:4
+created_by: grow
+summary: A guard’s low murmur fades as the letter slides into the next hand, the ink settling
+  into its subtly altered phrasing.
+beat_class: structural
+purpose: bridge
+entities:
+- character:malrik
+- object:sealed-letter

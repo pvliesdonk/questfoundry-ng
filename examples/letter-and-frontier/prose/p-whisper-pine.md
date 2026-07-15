@@ -1,0 +1,5 @@
+Elara heard a soft rustle of pine needles beyond the stone doorway, the wind pulling the sound across the cold flagstones. The whisper brushed against the edge of her awareness, a reminder of the trail she had vowed to follow through the borderlands. She tightened the grip on the sealed letter, its scarlet wax cool beneath her palm, and felt a faint tremor as the wind nudged it.
+
+The great hall loomed ahead, its wooden doors half open to the muted dusk light. An ember glow flickered from the hearth inside, casting a thin halo on the dust that clung to the floor. The scent of pine mingled with the faint smell of smoked iron, grounding her in the moment.
+
+Elara stood at the threshold, the letter trembling in her grasp, and the rust‑colored dust swirled around her boots. She recalled the promise she had made to the River Clan, the duty that steadied her steps, and the quiet question that lingered about the hidden map that might lie beneath the seal. The wind sighed once more, as if urging her onward toward the path she had chosen.

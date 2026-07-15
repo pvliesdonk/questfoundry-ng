@@ -1,0 +1,23 @@
+id: dilemma:brother-legacy
+question: Should Elara break the wax seal to uncover a secret map hidden by the queen’s dead
+  brother, risking the letter’s integrity?
+why_it_matters: The map could offer a shortcut to the court, yet destroying the seal may invalidate
+  the peace pledge.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:break-seal
+  text: Break the seal to retrieve the map.
+- id: answer:keep-intact
+  text: Keep the letter sealed and intact.
+anchored_to:
+- character:elara
+- object:sealed-letter
+wraps:
+- dilemma:letter-tamper
+- dilemma:peace-interpretation
+- dilemma:spymaster-demand
+- dilemma:trust-clan
+serial:
+- dilemma:route-choice

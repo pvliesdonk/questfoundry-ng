@@ -1,0 +1,14 @@
+id: beat:tw0-bridge10
+created_by: polish
+summary: After Vara’s offer, the clearing falls quiet as Elara studies Vara’s face for hidden
+  motives.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+- character:vara
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:10
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

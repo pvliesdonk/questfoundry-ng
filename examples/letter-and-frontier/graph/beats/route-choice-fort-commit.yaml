@@ -1,0 +1,11 @@
+id: beat:route-choice-fort-commit
+summary: Elara decides to travel the southern route, entering Stonegate Fort’s gate.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route

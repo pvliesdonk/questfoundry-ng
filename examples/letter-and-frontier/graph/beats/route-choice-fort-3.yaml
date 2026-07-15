@@ -1,0 +1,15 @@
+id: beat:route-choice-fort-3
+summary: The fort’s walls become her prison; the peace proposal stalls as bureaucratic delays
+  mount, and war looms on the horizon.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: reveals
+entities:
+- location:stonegate-fort
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route

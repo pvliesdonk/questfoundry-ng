@@ -1,0 +1,15 @@
+id: beat:spymaster-demand-pre-2
+summary: She offers to trade the sealed letter for a pact that could stabilize the frontier’s
+  volatile trade routes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: complicates
+entities:
+- character:vara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:vara
+belongs_to:
+- path:conceal-letter
+- path:hand-letter

@@ -1,0 +1,7 @@
+id: beat:fb-edge-11
+created_by: polish
+summary: A faint rustle of robes signals the court’s watchful eyes.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

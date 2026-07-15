@@ -1,0 +1,30 @@
+id: passage:p-blur-path
+summary: The messenger walks the frontier road as the stone markers melt into vague outlines,
+  signaling that multiple future routes lie ahead. An uneasy sense of possibility hangs over
+  the traveler, foreshadowing choices that will test duty and conscience.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: 'Elara watches stone markers fade, revealing two routes: Stonegate or open
+  plain. She feels sealed wax on her cheek, confirming she hides the letter. The border camp’s
+  green‑tabarded envoy stands by a wooden gate, scanning horizon. Soldiers shift spears on
+  the wall. She decides to keep the letter hidden whichever path she chooses. Frontier weight
+  presses her.'
+beats:
+- beat:fb-edge-17
+choices:
+- label: Enter the border camp
+  to: passage:p-border-offer

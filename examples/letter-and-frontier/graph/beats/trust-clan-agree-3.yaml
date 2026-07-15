@@ -1,0 +1,15 @@
+id: beat:trust-clan-agree-3
+summary: The debt lingers, and later the Clan calls on her aid, pulling her back into frontier
+  politics.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: complicates
+entities:
+- faction:river-clan
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side

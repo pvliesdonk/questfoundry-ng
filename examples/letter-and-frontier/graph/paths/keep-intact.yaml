@@ -1,0 +1,8 @@
+id: path:keep-intact
+name: Keep Seal Intact
+explores: answer:keep-intact
+consequences:
+- id: consequence:map-lost
+  text: The hidden map remains undiscovered, forcing a longer journey.
+- id: consequence:letter-pure
+  text: The queen's peace proposal stays untouched.

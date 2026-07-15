@@ -1,0 +1,15 @@
+id: passage:p-seal-affirmation
+summary: Elara feels the seal’s weight settle upon her, a quiet affirmation that her duty
+  is now bound to her very flesh.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara stands at a stone arch, warm scarlet wax from Malrik’s fort stamped on
+  the queen’s seal cracks but adheres. She presses the seal to her cheek, receiving a silent
+  affirmation. Guard in muted mail opens hand; river‑clan rider watches. Elara lifts the sealed
+  letter, hands it to guard; he secures it, and the missive proceeds onward.
+beats:
+- beat:fb-edge-9
+choices:
+- label: hand the sealed missive onward
+  to: passage:p-concession-bridge

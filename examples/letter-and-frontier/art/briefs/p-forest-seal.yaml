@@ -1,0 +1,11 @@
+passage: passage:p-forest-seal
+priority: 5
+caption: At dusk, Elara hands the sealed letter to Malrik beside a moss‑covered stone, his
+  eyes studying the wax.
+prompt: Scene of Elara in travel cloak offering a crimson‑sealed parchment to Malrik, both
+  under dusk light beside a moss‑covered stone, forest silhouette, soft pastel washes, Malrik
+  in iron‑edged armor, scar visible.
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter

@@ -1,0 +1,11 @@
+id: beat:letter-tamper-refuse-commit
+summary: Elara pulls back, refusing Malrik's stamp, keeping the queen’s seal pristine.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:refuse-seal

@@ -1,0 +1,12 @@
+id: beat:fb-edge-4--tw0
+created_by: polish
+summary: A sigh of wind through leaves mirrors the tension in the hall.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-4
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

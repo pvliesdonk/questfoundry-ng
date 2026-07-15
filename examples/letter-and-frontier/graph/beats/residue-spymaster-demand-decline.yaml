@@ -1,0 +1,12 @@
+id: beat:residue-spymaster-demand-decline
+created_by: polish
+summary: The hidden letter shifts heavy in Elara’s satchel, a secret that tightens the knot
+  of lost trust.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+requires_flags:
+- flag:letter-hidden

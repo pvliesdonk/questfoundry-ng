@@ -1,0 +1,8 @@
+id: path:agree-side
+name: Agree to Clan Favor
+explores: answer:agree-side
+consequences:
+- id: consequence:clan-favor
+  text: Elara promises a future favor, binding her to the River Clan.
+- id: consequence:clan-protection
+  text: Clan riders shield her from plain bandits.

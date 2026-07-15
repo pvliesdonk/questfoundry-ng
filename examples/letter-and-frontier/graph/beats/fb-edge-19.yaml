@@ -1,0 +1,8 @@
+id: beat:fb-edge-19
+created_by: polish
+summary: A sudden gust lifts sand, whispering of the plain’s unforgiving breath.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:silver-plain
+- character:elara

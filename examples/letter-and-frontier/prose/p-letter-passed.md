@@ -1,0 +1,5 @@
+The seal's scarlet edge caught the wan light on the stone arch, a thin ember against the cold. Malrik watched the wax flash as the messenger slipped the parchment into his outstretched palm. He raised the iron‑edged stamp, felt its weight, and pressed the fort's emblem into the wax. The impression gleamed; the garrison guards stepped aside, spears lowered, nodding at the official mark.
+
+One guard near the gate leaned close, his breath cold on Malrik's ear. He said, “The phrasing seems off; some words have shifted since the queen’s draft.” Malrik held the letter a heartbeat, aware that the altered wording now rode on his seal, then gave a curt nod. Without further inspection the messenger released his grip, and the altered letter slid into the guard’s palm.
+
+Malrik felt the stone beneath his boots, heard the distant river’s murmur, and smelled the rust‑colored dust that settled on his boots. The imprint lingered on his skin, a cold reminder that his action might have altered the queen’s oath.

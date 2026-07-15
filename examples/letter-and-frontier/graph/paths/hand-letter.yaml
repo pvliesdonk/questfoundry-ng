@@ -1,0 +1,8 @@
+id: path:hand-letter
+name: Hand Letter to Vara
+explores: answer:hand-letter
+consequences:
+- id: consequence:vara-ally
+  text: Vara gains the sealed letter, offering political leverage.
+- id: consequence:risk-exposure
+  text: The letter's contents may be compromised.

@@ -1,0 +1,16 @@
+id: dilemma:personal-identity
+question: When confronted with a mirrored version of herself in the rival court, should Elara
+  embrace the courier identity imposed on her or reject it to forge a new path?
+why_it_matters: Embracing may grant her purpose and trust; rejecting could free her but risk
+  losing the influence she has earned.
+role: soft
+residue_weight: cosmetic
+ending_salience: none
+reserved: true
+answers:
+- id: answer:embrace-courier
+  text: Embrace the identity of the courier.
+- id: answer:reject-courier
+  text: Reject it and seek a new role.
+anchored_to:
+- character:elara

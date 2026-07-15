@@ -1,0 +1,12 @@
+id: passage:p-letter-stamp
+summary: Elara gives her assent, and Malrik presses his seal onto the sealed letter, binding
+  himself to the message and its dangerous purpose.
+prose_summary: Elara feels warm scarlet wax on palm as Malrik lifts iron stamp, nods, presses
+  stamp onto queen’s seal, causing cold shiver on her thumb and a muted crack. Guard with
+  spear receives letter, nods, steps aside. Drums roll, dust settles on boots. Elara tightens
+  satchel, aware stamp may alter guarded phrasing, and waits for next command.
+beats:
+- beat:letter-tamper-accept-commit
+choices:
+- label: Hand the sealed letter to the guard
+  to: passage:p-letter-passed

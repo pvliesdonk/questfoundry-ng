@@ -1,0 +1,30 @@
+id: passage:p-alliancespark
+summary: Elara hands the demanded letter, her smile flickering as she senses the tentative
+  birth of a new alliance that could reshape loyalties.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara enters the alcove, feels the crimson seal, gives the sealed parchment
+  to Vara, who mentions shifting frontiers. A River Clan rider indicates a hidden throat in
+  the wall. Elara senses the seal’s weight and must choose between the clan‑guarded concealed
+  passage or the open dunes beyond the fort.
+beats:
+- beat:residue-spymaster-demand-agree
+choices:
+- label: Take the letter and accept the Clan’s hidden aid
+  grants:
+  - flag:clan-favor
+  - flag:clan-protection
+  to: passage:p-clan-trust
+- label: Decline the Clan’s aid and march into the dunes alone
+  grants:
+  - flag:exposed-risk
+  - flag:solo-journey
+  to: passage:p-trust-clan-decline

@@ -1,0 +1,14 @@
+id: passage:p-owl-hoots
+summary: An owl's distant hoot marks the decisive moment when the clan's trust is finally
+  weighed, casting a tense, fragile hope over the gathering.
+entities:
+- faction:river-clan
+prose_summary: An owl hoots. River Clan chief lowers his hand, catching light on his reins.
+  Elara feels resolve; riders form a silent line measuring her promised trust. The chief looks
+  at Elara’s scarlet seal and the ridge horizon. War drums sound from the ridge, reminding
+  Elara of the clan’s pledge she must honor. She tightens her cloak strap, holding a letter.
+beats:
+- beat:fb-edge-8
+choices:
+- label: Listen to the war drums rising in the wind
+  to: passage:p-war-drums

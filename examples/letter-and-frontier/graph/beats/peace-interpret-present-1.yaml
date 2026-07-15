@@ -1,0 +1,12 @@
+id: beat:peace-interpret-present-1
+summary: The rival court reads the ambiguous wording, murmuring, “Did she mean surrender?”
+  Tension rises among the lords.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: complicates
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:present-unchanged

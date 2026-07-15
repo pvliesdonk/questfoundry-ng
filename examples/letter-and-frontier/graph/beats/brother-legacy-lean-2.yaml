@@ -1,0 +1,13 @@
+id: beat:brother-legacy-lean-2
+summary: The road ahead grows rough, and the hidden map could shortcut dangerous passes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: complicates
+entities:
+- location:silver-plain
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

@@ -1,0 +1,12 @@
+id: beat:peace-interpret-adjust-commit
+summary: Elara carefully slides a quill beneath the seal, adjusting a phrase to emphasize
+  “mutual stewardship”.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle

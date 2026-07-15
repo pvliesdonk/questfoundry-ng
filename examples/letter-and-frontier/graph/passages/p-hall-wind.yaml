@@ -1,0 +1,14 @@
+id: passage:p-hall-wind
+summary: A sigh of wind rustles the leaves outside, its sound echoing the tight tension that
+  fills the hall and underscoring the fragile hope that steadies those within.
+entities:
+- character:elara
+prose_summary: Elara stands in stone corridor holding a scarlet-waxed, queen‑emblem sealed
+  parchment that may hide a map; a clerk notices the seal and falls silent. Courtiers await
+  as heavy doors open. She decides to step into the great hall while the courtiers watch,
+  risking her oath’s secrecy for potential revelation.
+beats:
+- beat:fb-edge-4--tw0
+choices:
+- label: step into the great hall as the courtiers watch
+  to: passage:p-courtiers-await

@@ -1,0 +1,37 @@
+id: object:sealed-letter
+name: Sealed Letter of the Dying Queen
+concept: A wax‑sealed parchment bearing a fragile peace proposal; its contents are unreadable
+  without breaking the seal.
+base:
+  wax_color: crimson
+  conceals hidden map: etched beneath wax
+  sealMaterial: beeswax
+  seal_intact: 'true'
+  status: intact
+arc:
+  begins: Sealed Letter is a wax‑sealed parchment bearing a fragile peace proposal, unreadable
+    without breaking the seal.
+  pivots:
+  - beat: beat:letter-tamper-pre-1
+    becomes: the seal is questioned, opening possibility of alteration.
+  - beat: beat:letter-tamper-accept-commit
+    becomes: the letter acquires an official stamp, potentially altering its wording.
+  - beat: beat:letter-tamper-refuse-commit
+    becomes: the letter retains the queen's original seal, remaining pristine.
+  - beat: beat:peace-interpret-adjust-commit
+    becomes: the letter's phrasing is subtly modified, steering interpretation.
+  ends:
+  - path: path:accept-seal
+    state: letter bears official stamp, wording may be altered.
+  - path: path:refuse-seal
+    state: letter retains original queen's seal, unchanged.
+  - path: path:adjust-subtle
+    state: letter contains subtle phrase adjustments influencing the peace proposal.
+  - path: path:present-unchanged
+    state: letter remains ambiguous, unchanged.
+  - path: path:hand-letter
+    state: letter is in Vara's possession, open to manipulation.
+  - path: path:conceal-letter
+    state: letter stays hidden with Elara, its contents secret.
+  - path: path:keep-intact
+    state: letter's hidden map remains concealed, seal untouched.

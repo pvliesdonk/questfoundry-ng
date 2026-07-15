@@ -1,0 +1,27 @@
+id: passage:p-accord-at-dawn
+summary: The rival court receives the messenger swiftly, debates the peace proposal in a fresh,
+  hopeful light, and forges a tentative accord that staves off war.
+ending:
+  id: e-accord-at-dawn
+  title: Dawn of a Truce
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara enters chamber; guards lower portcullis. She places letter on marble
+  altar, feeling seal chill. Envoy reads letter aloud. Courtiers hear proposals to share river
+  borders and fields. Elara notes peace direction. Council debates briefly, envoys exchange
+  glances. Chief councilor declares accord sealed before sunrise, binding courts. Wax warms,
+  reminding her oath; resolve steadied. Hall opens; parties move to terrace.
+beats:
+- beat:route-choice-plain-3

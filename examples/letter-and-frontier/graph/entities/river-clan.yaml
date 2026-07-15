@@ -1,0 +1,22 @@
+id: faction:river-clan
+name: River Clan
+concept: Nomadic riders who patrol the western river, trading in information and protection.
+base:
+  knowledge: guides hidden gullied tracks across silver plain
+arc:
+  begins: River Clan are nomadic riders who trade protection for future favors.
+  pivots:
+  - beat: beat:trust-clan-pre-1
+    becomes: they become willing to offer hidden protection across the plain in exchange for
+      a future favor.
+  - beat: beat:trust-clan-pre-2
+    becomes: they become entangled with Elara, creating a debt relationship.
+  - beat: beat:trust-clan-agree-commit
+    becomes: they become bound by a pact, expecting a future favor from Elara.
+  - beat: beat:trust-clan-decline-commit
+    becomes: they become dismissed, their aid withdrawn.
+  ends:
+  - path: path:agree-side
+    state: the clan expects a future favor, their riders escort her and grant audience.
+  - path: path:decline-side
+    state: the clan offers no aid, leaving her vulnerable to ambush.

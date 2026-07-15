@@ -1,0 +1,24 @@
+id: passage:p-emptied-alliance
+summary: Elara tightens her shoulders, the empty space where an ally should be bearing down
+  on her, sparking a sharp surge of doubt and resolve.
+entities:
+- character:elara
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara rides across the plain, feeling the missing River Clan shield, carries
+  a sealed parchment bearing the queen’s wax seal, decides to give it to spymaster Vara, tightens
+  her satchel, approaches the council hall’s stone doorway where a guard stands, and prepares
+  to demand an answer, risking exposure and political cost.
+beats:
+- beat:fb-edge-16
+choices:
+- label: Step forward and demand a decision
+  to: passage:p-trust-clan-decline-3

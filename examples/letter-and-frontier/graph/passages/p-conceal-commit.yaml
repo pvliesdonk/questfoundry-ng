@@ -1,0 +1,17 @@
+id: passage:p-conceal-commit
+summary: Elara tucks the sealed letter into her cloak and refuses to hand it over, deepening
+  the secret she must protect.
+irrelevant_flags:
+- flag:official-seal
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+prose_summary: Elara hides the scarlet‑wax sealed letter inside her cloak, refuses to give
+  it to spymaster Vara, and tightens her collar knot. Courtiers whisper, and she feels the
+  River Clan oath urging her. The letter stays concealed and untouched.
+beats:
+- beat:spymaster-conceal-commit
+choices:
+- label: I tuck the sealed letter deeper into my cloak
+  to: passage:p-spymaster-conceal

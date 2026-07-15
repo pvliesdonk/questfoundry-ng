@@ -1,0 +1,14 @@
+id: beat:spymaster-demand-pre-3
+summary: Elara senses Vara’s reputation for manipulation, recalling whispers of double‑crosses.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:conceal-letter
+- path:hand-letter

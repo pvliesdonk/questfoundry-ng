@@ -1,0 +1,15 @@
+id: beat:tw0-lt2
+created_by: polish
+summary: A forest ranger offers to press an official sigil onto the seal, promising safe passage
+  yet hinting at altered words.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:malrik
+- object:sealed-letter
+scene_type: scene
+narration_scope: limited
+viewpoint: character:malrik
+mirrors: beat:letter-tamper-pre-2
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

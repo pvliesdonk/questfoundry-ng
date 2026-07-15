@@ -1,0 +1,13 @@
+id: beat:route-choice-plain-3
+summary: The rival court receives her swiftly; the peace proposal is debated in a fresh, unspoiled
+  light, and a tentative accord is forged before war can erupt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: reveals
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:plain-route

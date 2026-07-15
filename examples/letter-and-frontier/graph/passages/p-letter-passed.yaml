@@ -1,0 +1,20 @@
+id: passage:p-letter-passed
+summary: The messenger presents the sealed letter; the garrison guards recognize the official
+  seal, step aside, and let it pass, while a whispering guard notes a subtle wording shift
+  but allows the letter through without inspection.
+entities:
+- character:malrik
+- character:elara
+- location:stonegate-fort
+prose_summary: Malrik seals the messenger’s parchment with the iron‑ed stamp, imprinting the
+  fort’s emblem. A guard notes the wording has shifted from the queen’s draft; the altered
+  text now rides Malrik’s seal. Malrik hands the letter to the guard, aware his seal may affect
+  the queen’s oath.
+beats:
+- beat:letter-tamper-accept-1
+- beat:letter-tamper-accept-2
+choices:
+- label: Press the seal onto the wax
+  to: passage:p-seal-affirmation
+- label: Slip the altered letter into the guard’s hand
+  to: passage:p-concession-bridge

@@ -1,0 +1,27 @@
+id: passage:p-debt-clan-call
+summary: The Clan invokes her lingering debt, demanding her aid and pulling her back into
+  the tangled frontier politics.
+entities:
+- faction:river-clan
+- character:elara
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara moves deeper in the stone corridor; River Clan chief acknowledges her
+  debt and summons the clan’s riders. An ember on a slab burns as the clan circles, repeats
+  their pledge, and the chief signals the riders to escort her. She sits by the ember, tightens
+  her satchel strap, hides the sealed missive, and incurs a future favor debt.
+beats:
+- beat:trust-clan-agree-3
+choices:
+- label: Sit beside the ember as the clan renews its oath
+  requires:
+  - flag:clan-favor
+  to: passage:p-clan-ember

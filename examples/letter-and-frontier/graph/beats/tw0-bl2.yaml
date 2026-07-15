@@ -1,0 +1,14 @@
+id: beat:tw0-bl2
+created_by: polish
+summary: The road ahead becomes rough, and a hidden map glints faintly beneath the bark, promising
+  shortcuts.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:brother-legacy-lean-2
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

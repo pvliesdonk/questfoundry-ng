@@ -1,0 +1,7 @@
+id: beat:fb-edge-8
+created_by: polish
+summary: An owl hoots distant, marking the final weigh of the clan’s trust.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:river-clan

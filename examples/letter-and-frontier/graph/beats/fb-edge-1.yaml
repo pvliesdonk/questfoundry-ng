@@ -1,0 +1,7 @@
+id: beat:fb-edge-1
+created_by: polish
+summary: A whisper of pine rustles, reminding Elara of the path she chose.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara

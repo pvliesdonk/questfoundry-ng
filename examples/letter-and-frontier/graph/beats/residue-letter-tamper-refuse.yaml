@@ -1,0 +1,11 @@
+id: beat:residue-letter-tamper-refuse
+created_by: polish
+summary: A thin veil of suspicion lingers in the air, the untouched seal weighing on Elara’s
+  shoulders.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- object:sealed-letter
+requires_flags:
+- flag:risk-intercept

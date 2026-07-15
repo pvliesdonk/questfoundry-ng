@@ -1,0 +1,12 @@
+id: beat:fb-edge-5--tw0
+created_by: polish
+summary: Vara’s laughter drifts, a thin veil over hidden motives.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:vara
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-5
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

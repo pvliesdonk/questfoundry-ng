@@ -1,0 +1,14 @@
+id: beat:letter-tamper-refuse-3
+summary: A sympathetic guard lets her through after a tense exchange, but suspicion lingers.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: complicates
+entities:
+- character:malrik
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:refuse-seal

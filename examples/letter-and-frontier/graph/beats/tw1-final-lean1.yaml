@@ -1,0 +1,13 @@
+id: beat:tw1-final-lean1
+created_by: polish
+summary: At the border camp, the rival queen’s envoy offers Elara a seat, praising her skill.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:vara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:final-delivery-lean-1
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

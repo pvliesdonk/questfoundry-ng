@@ -1,0 +1,10 @@
+passage: passage:p-final-choice
+priority: 18
+caption: Elara clutches the sealed letter and walks away from the great hall’s stone doorway,
+  her path uncertain.
+prompt: Elara in travel cloak, holding the crimson‑sealed parchment close, turning away from
+  the great hall’s stone doorway, the road ahead open, muted stone courtyard, pastel earth
+  tones, wax glinting.
+entities:
+- character:elara
+- object:sealed-letter

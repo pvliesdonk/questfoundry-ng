@@ -1,0 +1,29 @@
+id: passage:p-fort-entry
+summary: The messenger reaches the frontier garrison, where the soldiers greet her and Malrik
+  recognises the official seal on her letter, granting her smooth passage through the fort.
+entities:
+- character:malrik
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Malrik stands by the stone as the gate opens; a soldier greets courier Elara.
+  He verifies the queen‑sealed parchment against his ledger, presses his iron stamp to confirm
+  clearance, and hands the letter to the guard, who stores it and steps aside. Elara passes
+  through the doorway toward the council chamber; the garrison watches.
+beats:
+- beat:route-choice-fort-1
+choices:
+- label: Enter the council chamber
+  to: passage:p-fort-interrogation

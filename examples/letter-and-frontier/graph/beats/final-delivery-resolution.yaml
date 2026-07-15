@@ -1,0 +1,15 @@
+id: beat:final-delivery-resolution
+summary: Elara declines, stepping away from the throne's promise while clutching the sealed
+  letter.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-delivery
+  effect: commits
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-position

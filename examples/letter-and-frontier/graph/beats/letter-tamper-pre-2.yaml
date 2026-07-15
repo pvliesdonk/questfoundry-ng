@@ -1,0 +1,16 @@
+id: beat:letter-tamper-pre-2
+summary: He offers to stamp an official seal, promising safe passage but hinting it could
+  alter the wording.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: complicates
+entities:
+- character:malrik
+- character:elara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:accept-seal
+- path:refuse-seal

@@ -1,0 +1,16 @@
+id: beat:spymaster-demand-pre-1
+summary: In the rival court’s shadowed alcove, Spymaster Vara approaches, eyes glittering
+  with intrigue.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: reveals
+entities:
+- character:vara
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:vara
+belongs_to:
+- path:conceal-letter
+- path:hand-letter

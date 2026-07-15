@@ -1,0 +1,14 @@
+id: beat:tw0-pi2
+created_by: polish
+summary: The wording mentions ‘the dawn of shared fields’ in vague tones, leaving room for
+  many readings.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:peace-interpret-pre-2
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

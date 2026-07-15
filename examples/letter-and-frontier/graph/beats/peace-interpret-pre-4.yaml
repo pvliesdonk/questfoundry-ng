@@ -1,0 +1,12 @@
+id: beat:peace-interpret-pre-4
+summary: The courtiers watch her intently, awaiting her presentation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: complicates
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle
+- path:present-unchanged

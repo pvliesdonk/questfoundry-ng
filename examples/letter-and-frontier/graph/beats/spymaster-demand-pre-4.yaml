@@ -1,0 +1,14 @@
+id: beat:spymaster-demand-pre-4
+summary: The sealed letter’s wax still bears the queen’s mark, a tangible reminder of trust.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: reveals
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:conceal-letter
+- path:hand-letter

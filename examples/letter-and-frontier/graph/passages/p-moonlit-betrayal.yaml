@@ -1,0 +1,20 @@
+id: passage:p-moonlit-betrayal
+summary: A cold wind lifts dust among the trees, murmuring betrayal, while Elara wrestles
+  with her oath to the queen’s seal against the urgent need for security, and steadies herself
+  to study the parchment illuminated by a single beam of moonlight.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara feels cold wind and pine resin, holds the queen’s wax seal, examines
+  a parchment map under moonlight, notices a shortcut route, and weighs keeping the queen’s
+  oath against protecting the people following her. Choosing the shortcut risks breaking the
+  oath; staying the guarded road costs safety for her followers.
+beats:
+- beat:tw0-bl3
+- beat:tw0-bridge5
+- beat:tw0-lt3
+choices:
+- label: let the fireflies alight on the parchment
+  to: passage:p-firefly-glow
+- label: trace the faint promise of a shared dawn
+  to: passage:p-dawn-veil

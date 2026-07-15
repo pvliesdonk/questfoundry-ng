@@ -1,0 +1,11 @@
+id: beat:residue-trust-clan-agree
+created_by: polish
+summary: A warm ember glows within the clan’s campfire, the promise of protection humming
+  softly.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- faction:river-clan
+requires_flags:
+- flag:clan-favor

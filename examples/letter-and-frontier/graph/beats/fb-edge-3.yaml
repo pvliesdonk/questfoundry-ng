@@ -1,0 +1,8 @@
+id: beat:fb-edge-3
+created_by: polish
+summary: A soft glow of fireflies catches Elara’s eye, lingering on the parchment.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara
+- object:sealed-letter

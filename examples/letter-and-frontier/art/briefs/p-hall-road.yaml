@@ -1,0 +1,11 @@
+passage: passage:p-hall-road
+priority: 10
+caption: The great hall doors shut behind Elara as she steps onto the rough road across the
+  plain, the sealed letter trembling in her grasp.
+prompt: Scene showing stone doors closing behind a cloaked Elara, a cracked stone road leading
+  out onto the Silver Plain, the crimson‑sealed parchment in her hand, muted steely sky, pastel
+  ochre ground.
+entities:
+- character:elara
+- object:sealed-letter
+- location:silver-plain

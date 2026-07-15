@@ -1,0 +1,9 @@
+id: bridge:12
+created_by: grow
+summary: The queen’s seal catches the fading light, and a rider of the River Clan steps forward
+  with an offer of hidden protection.
+beat_class: structural
+purpose: bridge
+entities:
+- object:sealed-letter
+- faction:river-clan

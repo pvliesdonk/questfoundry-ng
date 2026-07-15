@@ -1,0 +1,11 @@
+id: beat:trust-clan-decline-commit
+summary: Elara declines the Clan’s offer, choosing to travel alone.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-side

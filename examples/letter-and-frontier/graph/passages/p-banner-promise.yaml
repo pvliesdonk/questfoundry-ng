@@ -1,0 +1,14 @@
+id: passage:p-banner-promise
+summary: The clan’s banner flutters above the dust‑laden ground, its colors a fragile promise
+  that steadies the gathered messengers.
+entities:
+- faction:river-clan
+prose_summary: Elara steps beneath the clan banner; a River Clan rider informs her of a hidden
+  passage and says the price will be settled later. The chief repeats the bargain. Elara places
+  dried meat, water skin, and a sealed letter on the table, counts the rations, and notes
+  the limited supplies for the journey.
+beats:
+- beat:fb-edge-7
+choices:
+- label: Count the dwindling supplies
+  to: passage:p-clan-promise

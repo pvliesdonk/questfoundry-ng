@@ -1,0 +1,23 @@
+id: passage:p-chief-nod-pact
+summary: The clan chief nods, sealing the pact and binding the parties to a fragile peace.
+entities:
+- faction:river-clan
+irrelevant_flags:
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara stands in stone corridor; chief nods, binding her to River Clan. She
+  bows and offers debt, chief accepts. She carries queen’s red wax seal as oath reminder.
+  Riders prepare to escort her across the plain. The promised favor may affect frontier peace.
+  She tightens satchel, feels pact’s weight; spearmen assume positions.
+beats:
+- beat:fb-edge-15
+choices:
+- label: Offer the debt I owe
+  to: passage:p-debt-clan-call

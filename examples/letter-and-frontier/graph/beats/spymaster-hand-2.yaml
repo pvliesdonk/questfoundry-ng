@@ -1,0 +1,12 @@
+id: beat:spymaster-hand-2
+summary: The council, impressed by the queen’s direct appeal, moves quickly toward a trade
+  agreement that could ease frontier tensions.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: reveals
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:hand-letter

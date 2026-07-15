@@ -1,0 +1,14 @@
+id: beat:tw2-bridge3
+created_by: polish
+summary: Turning west, the trail opens onto the exposed Silver Plain, where River Clan riders
+  are whispered about.
+beat_class: structural
+purpose: texture_world
+entities:
+- location:silver-plain
+- faction:river-clan
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:3
+texture_premise: Across the open steppe, the wind sweeps the grasses as Elara faces the exposed
+  plain.

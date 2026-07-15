@@ -1,0 +1,12 @@
+id: beat:spymaster-conceal-2
+summary: The court proceeds without the letter, debating peace based on rumors alone, their
+  resolve wavering.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: reveals
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:conceal-letter

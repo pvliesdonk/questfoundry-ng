@@ -1,0 +1,15 @@
+id: beat:route-choice-pre-1
+summary: Elara surveys the southern road, its stone walls rising to Stonegate Fort, a thoroughfare
+  watched by soldiers.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: reveals
+entities:
+- location:stonegate-fort
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route
+- path:plain-route

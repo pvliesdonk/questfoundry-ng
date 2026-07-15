@@ -1,0 +1,57 @@
+style: A restrained line‑drawing style softened by pastel watercolor washes, emphasizing texture
+  of stone, cloth, and wind‑scoured steppe. The art conveys a quiet tension and fragile hope.
+palette: Warm earth tones of ochre and sandstone, muted steely grays, with splashes of deep
+  crimson and silvery highlights.
+influences:
+- Classic frontier map art
+- Hayao Miyazaki's pastoral settings
+- John Howe's fantasy illustrations
+profiles:
+- entity: character:elara
+  appearance: Tucked hair peeks from beneath a travel‑worn cloak; quick, sharp eyes convey
+    a stoic yet questioning resolve.
+  iconography:
+  - tucked hair
+  - travel‑worn cloak
+  - quick eyes
+- entity: character:malrik
+  appearance: Broad shoulders are sheathed in iron‑edged armor, a scar crossing his left cheek
+    marking his hardened duty.
+  iconography:
+  - broad shoulders
+  - iron‑edged armor
+  - left cheek scar
+- entity: character:vara
+  appearance: Silvery hair frames a half‑mask, while a faint wisp of incense perpetually curls
+    around her.
+  iconography:
+  - silvery hair
+  - half‑mask
+  - incense wisp
+- entity: faction:river-clan
+  appearance: Nomadic riders traverse the western river, guiding hidden gullied tracks across
+    the silver plain.
+  iconography:
+  - riders on hidden gullied tracks
+  - western river
+- entity: location:silver-plain
+  appearance: A windswept steppe stretches under an open sky, littered with the bleached bones
+    of forgotten caravans.
+  iconography:
+  - wind‑swept steppe
+  - scattered caravan bones
+  - merchant caravans
+- entity: location:stonegate-fort
+  appearance: Stone‑clad walls rise around a fortified gate, standing as a stark symbol of
+    law and constant surveillance.
+  iconography:
+  - stone walls
+  - fortified gate
+  - surveillance posts
+- entity: object:sealed-letter
+  appearance: A parchment bears an intact crimson beeswax seal; beneath the wax, an etched
+    map lies hidden.
+  iconography:
+  - crimson beeswax seal
+  - parchment
+  - etched map

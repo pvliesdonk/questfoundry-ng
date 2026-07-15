@@ -1,0 +1,14 @@
+id: beat:trust-clan-agree-2
+summary: Upon reaching the rival court, the Clan’s emblem is recognized, granting her audience
+  with the council.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:trust-clan
+  effect: reveals
+entities:
+- faction:river-clan
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:agree-side

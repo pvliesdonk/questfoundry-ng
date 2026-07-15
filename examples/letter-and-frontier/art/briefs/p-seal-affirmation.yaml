@@ -1,0 +1,9 @@
+passage: passage:p-seal-affirmation
+priority: 16
+caption: Elara feels the weight of the altered seal settle on her palm, a quiet affirmation
+  of her duty.
+prompt: Close view of Elara’s hand pressing against a crimson wax seal now marked with an
+  iron stamp, her travel‑worn fingers, pastel background of stone table, soft crimson glow.
+entities:
+- character:elara
+- object:sealed-letter

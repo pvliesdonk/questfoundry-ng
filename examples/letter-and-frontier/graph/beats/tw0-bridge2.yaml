@@ -1,0 +1,15 @@
+id: beat:tw0-bridge2
+created_by: polish
+summary: Dusk settles among towering pines as Elara passes the sealed letter to a forest clerk
+  waiting by a moss‑covered stone.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+- character:malrik
+- object:sealed-letter
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:2
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

@@ -1,0 +1,14 @@
+id: beat:peace-interpret-present-2
+summary: A heated debate ensues, threatening to derail the fragile peace. Elara watches, heart
+  racing.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:present-unchanged

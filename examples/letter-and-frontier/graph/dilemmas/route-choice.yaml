@@ -1,0 +1,19 @@
+id: dilemma:route-choice
+question: Should Elara take the inspected southern road through Stonegate Fort or the exposed
+  western path across Silver Plain with the River Clan?
+why_it_matters: The chosen route determines who watches her, what allies she meets, and how
+  much of the letter’s secrecy is compromised.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:fort-route
+  text: Take the southern route through Stonegate Fort.
+- id: answer:plain-route
+  text: Cross the western plain with the River Clan.
+anchored_to:
+- character:elara
+- location:silver-plain
+- location:stonegate-fort
+wraps:
+- dilemma:final-delivery

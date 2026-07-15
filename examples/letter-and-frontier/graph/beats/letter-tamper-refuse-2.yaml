@@ -1,0 +1,15 @@
+id: beat:letter-tamper-refuse-2
+summary: The patrol detains her at the gate, questioning her motives while the sealed letter
+  draws wary gazes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:letter-tamper
+  effect: reveals
+entities:
+- character:malrik
+- character:elara
+scene_type: scene
+narration_scope: limited
+viewpoint: character:malrik
+belongs_to:
+- path:refuse-seal

@@ -1,0 +1,15 @@
+id: passage:p-draft-uncertainty
+summary: A cold draft slips over Elara’s sealed parchment, mirroring her hesitation as she
+  ponders the message.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara stands at stone gate while a guard points his spear at her chest. She
+  holds a sealed parchment with scarlet wax bearing the queen’s emblem, lifts it so metal
+  clasp catches lantern light, and notices rust‑colored dust settling. She debates obeying
+  her oath versus searching for a rumored map under wax as guard waits, hand on hilt.
+beats:
+- beat:fb-edge-10
+choices:
+- label: Hand the guard the sealed parchment
+  to: passage:p-letter-tamper-refuse-3

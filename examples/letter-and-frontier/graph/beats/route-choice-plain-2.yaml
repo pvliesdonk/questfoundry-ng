@@ -1,0 +1,15 @@
+id: beat:route-choice-plain-2
+summary: A sudden storm engulfs the plain, but the Clan’s knowledge keeps her safe, and she
+  reaches the rival court ahead of the fortified convoy.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: advances
+entities:
+- faction:river-clan
+- location:silver-plain
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:plain-route

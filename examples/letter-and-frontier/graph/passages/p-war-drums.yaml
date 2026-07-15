@@ -1,0 +1,20 @@
+id: passage:p-war-drums
+summary: She feels the distant war drums on the wind, reminding her that the clan’s trust
+  carries far‑reaching stakes beyond any personal favor.
+prose_summary: Elara stands on the Silver Plain ridge holding the queen’s seal wax; Malrik
+  offers the iron stamp of Stonegate, saying it will mark her sanctioned. She tightens her
+  satchel grip and refuses the stamp, recalling a River Clan chief’s loyalty promise that
+  could spark battle. The war drums echo, the seal awaits her decision.
+beats:
+- beat:trust-clan-pre-4
+choices:
+- label: Stamp the seal
+  grants:
+  - flag:official-seal
+  - flag:trust-boost
+  to: passage:p-letter-stamp
+- label: Refuse the seal
+  grants:
+  - flag:risk-intercept
+  - flag:unmarked-letter
+  to: passage:p-letter-refuse

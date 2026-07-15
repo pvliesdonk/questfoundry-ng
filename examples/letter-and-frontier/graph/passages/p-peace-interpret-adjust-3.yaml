@@ -1,0 +1,15 @@
+id: passage:p-peace-interpret-adjust-3
+summary: The court advisor whispers gratitude to Elara and hints that her insight will earn
+  her future favors.
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara stands in the hall; Meros whispers that her insight eases lord tension,
+  touches warm scarlet wax on her thumb, promises her a council seat with the river clan when
+  they request aid; this creates a quiet debt that binds her future actions.
+beats:
+- beat:peace-interpret-adjust-3
+choices:
+- label: let the cloak settle against me
+  requires:
+  - flag:ethical-doubt
+  to: passage:p-cloak-conceal

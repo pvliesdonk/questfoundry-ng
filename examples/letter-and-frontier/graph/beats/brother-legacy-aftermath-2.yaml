@@ -1,0 +1,13 @@
+id: beat:brother-legacy-aftermath-2
+summary: The queen's peace proposal stays untouched, its delicate parchment unmarred.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: reveals
+entities:
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

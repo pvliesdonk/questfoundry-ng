@@ -1,0 +1,8 @@
+id: path:adjust-subtle
+name: Adjust Letter Subtly
+explores: answer:adjust-subtle
+consequences:
+- id: consequence:subtle-influence
+  text: Elara tweaks phrasing, nudging the rival court toward peace.
+- id: consequence:ethical-doubt
+  text: Her deception raises personal moral conflict.

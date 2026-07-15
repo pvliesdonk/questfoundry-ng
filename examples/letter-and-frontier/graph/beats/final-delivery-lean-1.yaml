@@ -1,0 +1,14 @@
+id: beat:final-delivery-lean-1
+summary: At the border camp, the rival queen's envoy offers Elara a seat at her court, praising
+  her skill.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-delivery
+  effect: reveals
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-position

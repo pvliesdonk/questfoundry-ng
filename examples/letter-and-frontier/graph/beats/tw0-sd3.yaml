@@ -1,0 +1,14 @@
+id: beat:tw0-sd3
+created_by: polish
+summary: Elara recalls whispers of Vara’s double‑crosses, the forest’s rustle echoing her
+  doubt.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:vara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:spymaster-demand-pre-3
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

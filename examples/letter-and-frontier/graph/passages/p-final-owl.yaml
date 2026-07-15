@@ -1,0 +1,14 @@
+id: passage:p-final-owl
+summary: The distant owl hoots, heralding the clan’s decisive weighing of its trust, a tense
+  moment that sharpens fragile hope.
+entities:
+- faction:river-clan
+prose_summary: Elara tightens a biting cord on her shoulder while a River Clan rider with
+  an upright spear watches. A hill drumbeat starts, an owl hoots, marking the clan’s judgment
+  of her promise. She feels scarcity, lifts a water skin, notices her biscuit crumbling, and
+  hears the drum grow louder as night deepens, realizing each choice will shape her path.
+beats:
+- beat:fb-edge-8--tw0
+choices:
+- label: Listen to the war drums
+  to: passage:p-distant-drums

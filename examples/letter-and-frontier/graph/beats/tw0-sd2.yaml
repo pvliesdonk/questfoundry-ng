@@ -1,0 +1,15 @@
+id: beat:tw0-sd2
+created_by: polish
+summary: Vara proposes trading the sealed letter for a pact that could steady volatile trade
+  routes.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:vara
+- object:sealed-letter
+scene_type: scene
+narration_scope: limited
+viewpoint: character:vara
+mirrors: beat:spymaster-demand-pre-2
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

@@ -1,0 +1,14 @@
+id: beat:tw1-route-choice
+created_by: polish
+summary: She scans the southern road, stone walls rising toward the fortified gate, soldiers
+  patrolling the path.
+beat_class: structural
+purpose: texture_world
+entities:
+- location:stonegate-fort
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:route-choice-pre-1
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

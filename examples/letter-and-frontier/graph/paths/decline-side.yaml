@@ -1,0 +1,8 @@
+id: path:decline-side
+name: Decline Clan Favor
+explores: answer:decline-side
+consequences:
+- id: consequence:solo-journey
+  text: Elara travels alone, forgoing clan aid.
+- id: consequence:exposed-risk
+  text: Without Clan assistance she faces greater danger on the plain.

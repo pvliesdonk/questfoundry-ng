@@ -1,0 +1,13 @@
+id: beat:fb-edge-3--tw0
+created_by: polish
+summary: A soft glow of fireflies catches Elara’s eye, lingering on the parchment.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: micro_beat
+narration_scope: limited
+mirrors: beat:fb-edge-3
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

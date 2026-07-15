@@ -1,0 +1,15 @@
+id: passage:p-legacy-drum
+summary: A distant drum echoes across the frontier, its rhythm a pulse of the messenger's
+  family legacy. The sound presses the weight of inherited duty onto the present, tightening
+  the knot between role and self.
+entities:
+- character:elara
+prose_summary: Elara hears a low drumbeat across the plain, tightens her cloak, feels the
+  sealed parchment at her side, recalls a rumor that the queen’s brother hid a map beneath
+  wax, and remembers her oath to keep the seal unbroken; she pauses and turns the parchment
+  over, feeling heightened duty.
+beats:
+- beat:fb-edge-2
+choices:
+- label: Turn the sealed parchment over
+  to: passage:p-wind-betrayal

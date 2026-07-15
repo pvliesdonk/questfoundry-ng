@@ -1,0 +1,14 @@
+id: beat:tw1-final-lean2
+created_by: polish
+summary: Elara feels the weight of leaving the courier life, the identity she’s known since
+  youth pressing on her shoulders.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:final-delivery-lean-2
+texture_premise: On a windswept mountain ridge, Elara watches the horizon as she chooses her
+  next path.

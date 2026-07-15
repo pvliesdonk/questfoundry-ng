@@ -1,0 +1,16 @@
+id: beat:route-choice-pre-2
+summary: To the west, the Silver Plain stretches, exposed but rumored to be defended by the
+  River Clan's swift riders.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:route-choice
+  effect: reveals
+entities:
+- location:silver-plain
+- faction:river-clan
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:fort-route
+- path:plain-route

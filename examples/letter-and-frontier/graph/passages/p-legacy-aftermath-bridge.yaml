@@ -1,0 +1,34 @@
+id: passage:p-legacy-aftermath-bridge
+summary: Elara gazes at the pristine peace proposal abandoned on cold stone as the sun slips
+  behind the ridge, and she turns her thoughts to the southern road toward Stonegate Fort,
+  where stone walls loom and soldiers patrol the path.
+entities:
+- object:sealed-letter
+- location:stonegate-fort
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara examines the queen’s sealed peace proposal on the stone slab, feels its
+  chill and oath weight, surveys the southern road to Stonegate Fort with marching soldiers,
+  a border camp, and ancient guide stones, notes the frontier’s weight, secures her satchel
+  with the sealed letter, and steps forward toward the pending choices.
+beats:
+- beat:tw1-bridge1
+- beat:tw1-legacy-aftermath
+- beat:tw1-route-choice
+choices:
+- label: Walk the stone‑marked road
+  to: passage:p-forked-road
+- label: Enter the border camp
+  to: passage:p-border-approach

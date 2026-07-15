@@ -1,0 +1,11 @@
+id: beat:spymaster-conceal-commit
+summary: Elara tucks the sealed letter into her cloak, refusing to hand it over.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:spymaster-demand
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:conceal-letter

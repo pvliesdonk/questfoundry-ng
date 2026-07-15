@@ -1,0 +1,26 @@
+id: passage:p-southern-route-fort
+summary: Elara chooses the southern road and steps through Stonegate Fort’s gate, committing
+  to a path that will confront her sense of duty and place her amid the fort’s guarded inhabitants.
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara turns her horse toward Stonegate Fort’s southern gate, decides on the
+  southern road, hands the sealed letter to the forward guard, who verifies the seal and queen’s
+  oath, opens the gate, and lets her enter the courtyard. A River Clan rider promises to watch
+  the road, then the gate closes behind her as she readies her horse.
+beats:
+- beat:route-choice-fort-commit
+choices:
+- label: Enter Stonegate Fort
+  to: passage:p-fort-entry

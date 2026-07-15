@@ -1,0 +1,14 @@
+id: beat:tw0-pi3
+created_by: polish
+summary: She knows a subtle tweak could nudge the court toward acceptance, yet fears betraying
+  her queen.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+mirrors: beat:peace-interpret-pre-3
+texture_premise: In the mist‑cloaked pine forest, Elara’s courier path winds beneath ancient
+  boughs.

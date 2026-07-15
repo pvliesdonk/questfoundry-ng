@@ -50,7 +50,9 @@ repair budget (write passes get 4), and legible voice bans. **The live
 validation completed 2026-07-15: the short-scope texture-trial ("The
 Letter and the Frontier") is the first project ever through DRESS
 gate-clean** — 0 errors, W1–W4 all exercised (scorecard in the decision
-log). Previous epic **Rotating limited POV shipped in PR #74** (A22).
+log); checked in as [`examples/letter-and-frontier/`](../examples/letter-and-frontier/)
+(through DRESS — codex + art briefs included; exports stay out per
+AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV shipped in PR #74** (A22).
 
 ## Immediate next steps
 

@@ -1,0 +1,9 @@
+id: bridge:6
+created_by: grow
+summary: The great hall doors close behind her, and the courtyard beyond yields to the rough
+  road that threads across the plain.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- location:silver-plain

@@ -1,0 +1,12 @@
+id: beat:peace-interpret-adjust-1
+summary: The rival lord reads the altered line, nods, and declares the proposal a step toward
+  lasting peace.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:peace-interpretation
+  effect: advances
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:adjust-subtle

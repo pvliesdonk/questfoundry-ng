@@ -1,0 +1,17 @@
+id: dilemma:spymaster-demand
+question: Should Elara hand the sealed letter to Spymaster Vara who claims it can broker a
+  trade for the frontier’s stability?
+why_it_matters: Handing it over could secure a powerful ally but betrays the dying queen’s
+  trust; keeping it may keep the peace proposal intact but lose a strategic advantage.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:hand-letter
+  text: Give the letter to Vara.
+- id: answer:conceal-letter
+  text: Hide the letter and refuse.
+anchored_to:
+- character:elara
+- character:vara
+- object:sealed-letter

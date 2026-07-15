@@ -1,0 +1,26 @@
+id: passage:p-cloak-conceal
+summary: Elara feels the cloak's fabric press close, a silent guard that muffles the court's
+  scrutinising eyes.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara wears a cloak that hides scarlet wax with a possible Malrik stamp. Vara
+  Shadowmantle appears and asks for the sealed letter. Elara feels doubt about a promise to
+  the River Clan and the queen’s oath. She adjusts her cloak, then slips the hidden sealed
+  letter to Vara, binding her fate and risking clan loyalty.
+beats:
+- beat:residue-peace-interpret-conceal
+choices:
+- label: Hide the letter beneath my cloak
+  grants:
+  - flag:letter-hidden
+  - flag:lost-trust
+  to: passage:p-conceal-commit
+- label: Offer the letter to Vara
+  grants:
+  - flag:risk-exposure
+  - flag:vara-ally
+  to: passage:p-spymaster-hand-commit

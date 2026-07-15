@@ -1,0 +1,7 @@
+The last questions fell silent, leaving only the distant clank of shackles. The stone hall seemed to lengthen, each turn adding another block of cold masonry, until the corridor felt endless. Elara felt the stone press against the small of her back, a thin veil of dust drifting where the torchlight waned.
+
+She moved onward, the heavy oak doors behind her thudding shut. Beyond them, the courtyard opened to a wall of granite that blocked the wan sky, its surface scarred by years of siege. The iron gate that had seemed an entrance now stood as a barrier, its bars casting long shadows across the flagstones. The garrison's eyes followed her, the ledger‑clerk noting every step.
+
+Elara's hand rested on the sealed parchment, the scarlet wax cold against her palm. The fragment the council had used—"the dawn of shared fields"— lay recorded in their ledgers, a bargaining token rather than a promise of peace. No envoy had returned with a reply; the southern lords delayed their councils, their decisions caught in endless paperwork.
+
+Outside, the river's murmur mixed with a low drumbeat from the borderlands, a sound that grew louder with each passing hour. The rhythm reminded her that the war the fort feared was already gathering beyond the stone. She tightened the strap of her satchel, the weight of the seal a silent oath she could not set aside.

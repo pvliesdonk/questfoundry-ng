@@ -1,0 +1,13 @@
+id: passage:p-courtiers-await
+summary: The courtiers assemble in the great hall, their eyes like owls fixed on the messenger
+  as she prepares to present her report. The atmosphere tightens, for her words will decide
+  the fragile hope of peace.
+prose_summary: Elara enters the great hall; courtiers rise and stare. She removes a sealed
+  letter with scarlet wax (queen’s oath) from her cloak, places it on the podium. Captain
+  Malrik states the seal is intact. Courtiers wait for the reading. In a shadowed alcove,
+  Vara watches from beyond the banner.
+beats:
+- beat:tw0-pi4
+choices:
+- label: Enter the shadowed alcove to meet Vara
+  to: passage:p-vara-offer

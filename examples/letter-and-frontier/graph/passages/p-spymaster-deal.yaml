@@ -1,0 +1,17 @@
+id: passage:p-spymaster-deal
+summary: The council, swayed by the queen’s direct appeal, hastens a trade agreement that
+  promises to ease frontier tensions, raising hopes for peace while binding the kingdom to
+  new obligations.
+irrelevant_flags:
+- flag:unmarked-letter
+prose_summary: Elara stands on dais, holds warm queen seal wax. Council hears queen appeal,
+  chancellor declares trade pact with River Clan, council sets terms. Scribe returns sealed
+  letter, wax unbroken. Iron stamp glows on table. Treaty now exists between queen's oath
+  and council pledge, costing political capital and future compliance.
+beats:
+- beat:spymaster-hand-2
+choices:
+- label: Nod at the council, urging them to press the trade accord
+  to: passage:p-vara-anticipation
+- label: Hand the sealed letter to Elara, feeling its purpose shift
+  to: passage:p-spymaster-hand-3

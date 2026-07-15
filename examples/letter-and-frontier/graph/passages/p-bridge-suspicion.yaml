@@ -1,0 +1,21 @@
+id: passage:p-bridge-suspicion
+summary: Elara studies Vara's face, recalling whispered rumors of his double‑crosses, while
+  the forest's rustle deepens her doubt and the wax seal on the letter catches the dim light,
+  sharpening her suspicion.
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+prose_summary: 'Elara watches Vara after his offer, recalls spymaster rumors, examines the
+  parchment’s wax seal illuminated by a candle, notes pine resin scent and the rider’s armor
+  metal. A River Clan rider steps from shadows, hand on short spear, nods. She feels the queen’s
+  oath. Choices: stoke candle, or move toward rider.'
+beats:
+- beat:tw0-bridge10
+- beat:tw0-bridge11
+- beat:tw0-sd3
+choices:
+- label: Stoke the candle, watching the wax tremble
+  to: passage:p-flicker-wax
+- label: Move toward the rider, tracing the queen’s seal with my gaze
+  to: passage:p-seal-and-alliance

@@ -1,0 +1,11 @@
+id: beat:setup-intro
+summary: Elara receives the sealed letter from the dying queen's messenger, feeling the weight
+  of the wax seal on her palm.
+beat_class: structural
+purpose: setup
+entities:
+- character:elara
+- object:sealed-letter
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara

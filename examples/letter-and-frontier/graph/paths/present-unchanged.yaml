@@ -1,0 +1,8 @@
+id: path:present-unchanged
+name: Present Letter Unchanged
+explores: answer:present-unchanged
+consequences:
+- id: consequence:ambiguous-interpretation
+  text: The rival court reads the ambiguous wording, risking misinterpretation.
+- id: consequence:faithful-delivery
+  text: Elara remains true to the queen's intent.

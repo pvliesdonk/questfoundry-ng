@@ -1,0 +1,31 @@
+id: passage:p-stonegate-imprisonment
+summary: The messenger is sealed inside Stonegate Fort as the corridors lengthen, while the
+  peace proposal stalls under endless bureaucracy and the specter of war draws nearer.
+entities:
+- location:stonegate-fort
+- character:elara
+ending:
+  id: e-stonegate-imprisonment
+  title: Echoes Behind Stone
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara walks down the endless stone corridor, heavy oak doors thudding shut
+  behind her. She emerges to a courtyard blocked by a granite wall and iron gate, garrison
+  eyes and ledger‑clerk recording her steps. She grasps a sealed parchment token, notes southern
+  lords’ delayed reply, hears river and border drumbeat, tightens satchel strap, bearing the
+  seal’s oath.
+beats:
+- beat:route-choice-fort-3
+- bridge:8

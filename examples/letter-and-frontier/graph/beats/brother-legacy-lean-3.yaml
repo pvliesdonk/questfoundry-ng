@@ -1,0 +1,11 @@
+id: beat:brother-legacy-lean-3
+summary: A chill wind lifts dust, whispering of betrayal among couriers.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:brother-legacy
+  effect: complicates
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:keep-intact

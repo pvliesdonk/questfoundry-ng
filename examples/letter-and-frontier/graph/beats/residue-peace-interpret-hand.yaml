@@ -1,0 +1,12 @@
+id: beat:residue-peace-interpret-hand
+created_by: polish
+summary: A steadiness settles in her grip as she extends the letter, trusting the promise
+  of stability.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+requires_flags:
+- flag:ambiguous-interpretation

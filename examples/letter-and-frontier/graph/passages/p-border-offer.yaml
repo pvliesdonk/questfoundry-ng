@@ -1,0 +1,31 @@
+id: passage:p-border-offer
+summary: The envoy greets Elara at the border camp, offering her a place at the rival queen’s
+  court and lauding her abilities; Elara confronts the sudden shift from lifelong courier
+  to potential courtier, feeling the weight of abandoning the identity she’s known.
+entities:
+- location:stonegate-fort
+- character:elara
+irrelevant_flags:
+- flag:ethical-doubt
+- flag:exposed-risk
+- flag:faithful-delivery
+- flag:letter-hidden
+- flag:lost-trust
+- flag:official-seal
+- flag:risk-exposure
+- flag:risk-intercept
+- flag:solo-journey
+- flag:subtle-influence
+- flag:trust-boost
+- flag:unmarked-letter
+- flag:vara-ally
+prose_summary: Elara arrives at the border camp’s gate, meets the queen’s envoy, who offers
+  her a seat as royal counselor. She holds a sealed letter with the queen’s wax. The choice
+  is to clench the letter and continue onward, rejecting the throne’s promise.
+beats:
+- beat:final-delivery-lean-1
+- beat:final-delivery-lean-2
+- bridge:9
+choices:
+- label: Clench the sealed letter and stride onward, refusing the throne’s promise
+  to: passage:p-final-choice

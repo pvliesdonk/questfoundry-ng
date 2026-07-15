@@ -1,0 +1,11 @@
+id: beat:residue-peace-interpret-conceal
+created_by: polish
+summary: Elara feels the cloak’s fabric press close, a silent guard against the court’s eyes.
+beat_class: structural
+purpose: residue
+entities:
+- character:elara
+- character:vara
+- object:sealed-letter
+requires_flags:
+- flag:ethical-doubt

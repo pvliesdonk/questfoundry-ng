@@ -1,0 +1,9 @@
+passage: passage:p-banner-promise
+priority: 3
+caption: The River Clan’s weather‑worn banner flutters above the dust‑laden ground as Elara
+  steps beneath it.
+prompt: Line drawing with pastel washes of a tattered River Clan banner of muted colors fluttering
+  above a dust‑streaked steppe, Elara underneath, cloak brushing the cloth, background hint
+  of the Silver Plain.
+entities:
+- faction:river-clan

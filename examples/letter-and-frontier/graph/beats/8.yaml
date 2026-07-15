@@ -1,0 +1,9 @@
+id: bridge:8
+created_by: grow
+summary: The echo of interrogations fades, and the stone corridors of Stonegate Fort stretch
+  longer, sealing her within its walls.
+beat_class: structural
+purpose: bridge
+entities:
+- location:stonegate-fort
+- character:elara

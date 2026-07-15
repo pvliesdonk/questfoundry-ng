@@ -1,0 +1,8 @@
+id: beat:fb-edge-9
+created_by: polish
+summary: Elara feels the weight of the seal settle, a silent affirmation of duty.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:elara
+- object:sealed-letter

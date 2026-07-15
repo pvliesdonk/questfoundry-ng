@@ -1,0 +1,14 @@
+id: beat:final-delivery-lean-2
+summary: Elara feels the weight of leaving her courier life, the identity she's known since
+  youth.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:final-delivery
+  effect: complicates
+entities:
+- character:elara
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:elara
+belongs_to:
+- path:decline-position

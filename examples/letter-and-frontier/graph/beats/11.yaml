@@ -1,0 +1,9 @@
+id: bridge:11
+created_by: grow
+summary: Her suspicion sharpens as her gaze lands on the still‑sealed letter, its wax glinting
+  in the dim light.
+beat_class: structural
+purpose: bridge
+entities:
+- character:elara
+- object:sealed-letter

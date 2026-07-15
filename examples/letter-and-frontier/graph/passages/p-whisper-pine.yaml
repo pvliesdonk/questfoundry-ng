@@ -1,0 +1,14 @@
+id: passage:p-whisper-pine
+summary: Elara hears a soft rustle of pine needles, the wind's whisper pulling her thoughts
+  back to the path she has pledged to follow.
+entities:
+- character:elara
+prose_summary: 'Elara stands in the hall entrance, inspects a sealed letter with scarlet wax
+  and an iron stamp; she recalls the queen’s seal and a rumored map hidden beneath. She hears
+  pine rustling, river murmur, and distant soldiers. She tightens her satchel strap and faces
+  a decision: obey duty or pursue the secret route, risking loyalty.'
+beats:
+- beat:fb-edge-1
+choices:
+- label: Enter the great hall, the sealed letter trembling in my grasp
+  to: passage:p-hall-road

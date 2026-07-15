@@ -1,0 +1,7 @@
+id: beat:fb-edge-7
+created_by: polish
+summary: The clan’s banner flutters, a promise threading through the dust.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:river-clan

@@ -1,0 +1,109 @@
+beats:
+- beat:brother-legacy-aftermath-1
+- beat:brother-legacy-aftermath-2
+- beat:brother-legacy-lean-1
+- beat:brother-legacy-lean-2
+- beat:brother-legacy-lean-3
+- beat:brother-legacy-resolution
+- beat:final-delivery-aftermath-1
+- beat:final-delivery-lean-1
+- beat:final-delivery-lean-2
+- beat:final-delivery-lean-3
+- beat:final-delivery-resolution
+- beat:letter-tamper-accept-1
+- beat:letter-tamper-accept-2
+- beat:letter-tamper-accept-3
+- beat:letter-tamper-accept-commit
+- beat:letter-tamper-pre-1
+- beat:letter-tamper-pre-2
+- beat:letter-tamper-pre-3
+- beat:letter-tamper-refuse-1
+- beat:letter-tamper-refuse-2
+- beat:letter-tamper-refuse-3
+- beat:letter-tamper-refuse-commit
+- beat:peace-interpret-adjust-1
+- beat:peace-interpret-adjust-2
+- beat:peace-interpret-adjust-3
+- beat:peace-interpret-adjust-commit
+- beat:peace-interpret-pre-1
+- beat:peace-interpret-pre-2
+- beat:peace-interpret-pre-3
+- beat:peace-interpret-pre-4
+- beat:peace-interpret-present-1
+- beat:peace-interpret-present-2
+- beat:peace-interpret-present-3
+- beat:peace-interpret-present-commit
+- beat:route-choice-fort-1
+- beat:route-choice-fort-2
+- beat:route-choice-fort-3
+- beat:route-choice-fort-commit
+- beat:route-choice-plain-1
+- beat:route-choice-plain-2
+- beat:route-choice-plain-3
+- beat:route-choice-plain-commit
+- beat:route-choice-pre-1
+- beat:route-choice-pre-2
+- beat:route-choice-pre-3
+- beat:setup-fort-approach
+- beat:setup-intro
+- beat:spymaster-conceal-1
+- beat:spymaster-conceal-2
+- beat:spymaster-conceal-3
+- beat:spymaster-conceal-commit
+- beat:spymaster-demand-pre-1
+- beat:spymaster-demand-pre-2
+- beat:spymaster-demand-pre-3
+- beat:spymaster-demand-pre-4
+- beat:spymaster-hand-1
+- beat:spymaster-hand-2
+- beat:spymaster-hand-3
+- beat:spymaster-hand-commit
+- beat:trust-clan-agree-1
+- beat:trust-clan-agree-2
+- beat:trust-clan-agree-3
+- beat:trust-clan-agree-commit
+- beat:trust-clan-decline-1
+- beat:trust-clan-decline-2
+- beat:trust-clan-decline-3
+- beat:trust-clan-decline-commit
+- beat:trust-clan-pre-1
+- beat:trust-clan-pre-2
+- beat:trust-clan-pre-3
+- beat:trust-clan-pre-4
+- bridge:0
+- bridge:1
+- bridge:10
+- bridge:11
+- bridge:12
+- bridge:13
+- bridge:2
+- bridge:3
+- bridge:4
+- bridge:5
+- bridge:6
+- bridge:7
+- bridge:8
+- bridge:9
+forks:
+  dilemma:brother-legacy:
+  - beat:brother-legacy-resolution
+  dilemma:final-delivery:
+  - beat:final-delivery-resolution
+  dilemma:letter-tamper:
+  - beat:letter-tamper-accept-commit
+  - beat:letter-tamper-refuse-commit
+  dilemma:peace-interpretation:
+  - beat:peace-interpret-adjust-commit
+  - beat:peace-interpret-present-commit
+  dilemma:route-choice:
+  - beat:route-choice-fort-commit
+  - beat:route-choice-plain-commit
+  dilemma:spymaster-demand:
+  - beat:spymaster-conceal-commit
+  - beat:spymaster-hand-commit
+  dilemma:trust-clan:
+  - beat:trust-clan-agree-commit
+  - beat:trust-clan-decline-commit
+convergences:
+  dilemma:trust-clan:
+  - beat:brother-legacy-resolution

@@ -1,0 +1,14 @@
+id: passage:p-firefly-glow
+summary: Elara watches a soft swarm of fireflies drift onto the parchment, the gentle illumination
+  drawing her focus to the hidden words she bears.
+entities:
+- character:elara
+- object:sealed-letter
+prose_summary: Elara hides sealed parchment under cloak, touches queen’s emblem seal, reads
+  firefly‑lit hidden map showing shortcut trail, decides to keep map despite duty conflict,
+  fireflies fade, map becomes weight she cannot ignore.
+beats:
+- beat:fb-edge-3--tw0
+choices:
+- label: Trace the promise with trembling fingers
+  to: passage:p-dawn-veil

@@ -501,15 +501,23 @@ against the prose (a claimed fix the prose doesn't deliver is itself a
 defect). `revision_notes` are reviewer-facing only — never applied, so
 replay stays deterministic. (Validated on `gpt-oss:120b`: the per-finding
 account lifts a stuck beat-fidelity fix from 2/4 to 4/4 under the load that
-halted a live run.) A third, prompt-level lever guards against rework
-*regression* (texture-trial live run, 2026-07-15: a revision fixed the
-quoted findings, rewrote the rest, and dropped a grounded possessive no
-finding touched): the rework prompt ends with an explicit self-check —
-diff the revision against the shown draft sentence by sentence, restore
-any sentence no finding required changing. Rework convergence is a
-prompting concern; an engine-side edit-merge mechanism was built and
-reverted the same day (author-directed: don't micromanage the writer from
-the engine).
+halted a live run.)
+
+**When the rework loop still fails, suspect review strictness before
+writer compliance** (author-directed, 2026-07-15). A texture-trial halt
+("failed review 2 times" on a grounding nit) drew two wrong fixes in a
+row — an engine-side edit-merge mechanism, then a writer-prompt self-check
+step, both reverted — before the author named the real defect: the
+*reviewer* was too strict, re-rejecting hedged inference as interiority
+and demanding an explicit possessive for a referent context already
+attributed (one masked character on stage; "the mask" is theirs). Each
+pedantic rejection forces another rewrite, and rewrites churn new nits:
+the loop's non-convergence was manufactured by the review, not the
+writer. The review rules therefore lean permissive at the margins —
+context-supplied attribution grounds a label's referent, and an explicit
+observed inference ("as if weighing") is the narrator's own mind — and
+new fences on the *writer* prompt are the wrong reflex for a rework that
+won't settle.
 
 ### DRESS — art and codex
 

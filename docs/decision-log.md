@@ -86,6 +86,31 @@ history; the decisions it recorded are captured below and in the design docs.
   refusal gives the honest frozen-ending-set reason (I12 exception
   documented).
 
+- **2026-07-15 (over-strict review, not writer compliance — twice
+  author-corrected):** The texture-trial's fifth halt (`write:p-vara-laugh`,
+  "failed review 2 times" on choice_grounding) drew two wrong fixes in a
+  row, both reverted the same day. The agent first read the cache trace as
+  a writer defect (a rework regressed "Vara's mask" → "the mask" while
+  fixing other findings) and shipped an engine-side edit-merge (rework
+  rounds schema-forced to `edits`, 573c318); the author: *"this is a
+  prompting issue … not something you must micromanage from the engine"*
+  (reverted, ac9284e). The agent then added a writer-prompt self-check
+  step (ab76fa9); the author again: *"you still sound like you are feeling
+  you should micromanage a weak model in the prompts … the problems come
+  from being too strict in your prompts"* (removed). The standing fix
+  loosens the REVIEW where the halt was actually manufactured: the
+  reviewer had re-rejected a hedged inference ("as if weighing") that the
+  voice_pov rule's own carve-out permits, and demanded an explicit
+  possessive for a gesture context already attributed — each pedantic
+  rejection forced another rewrite, and rewrites churn new nits.
+  choice_grounding now counts a context-identifiable referent as grounded;
+  voice_pov names explicit observed inference as the narrator's own mind.
+  Durable rule in design doc 02 (FILL): when the rework loop fails,
+  suspect review strictness before writer compliance. Same halt cluster,
+  earlier fixes that DID stand: the echo check batches every lift into one
+  error, and the ending+split_on refusal gives the honest
+  frozen-ending-set reason (I12 exception documented).
+
 - **2026-07-14 (I12's unit is the dilemma, and the audit gains split_on —
   author-directed on the live run):** The texture-trial's second halt
   (five spymaster passages "over the I12 cap") unwound into two author

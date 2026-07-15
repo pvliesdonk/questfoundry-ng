@@ -410,13 +410,6 @@ def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden)
     assert "performed by the character the summary names" in source
     assert "REVISE, DON'T REWRITE" in source
     assert "keep every sentence the findings do not touch" in source
-    # the self-check step (texture-trial live run, 2026-07-15: a rework fixed
-    # the quoted findings, rewrote the rest, and regressed a grounded
-    # possessive no finding touched — the check makes the writer diff its own
-    # revision before returning; author-directed: a prompting concern, not an
-    # engine mechanism)
-    assert "BEFORE RETURNING, CHECK YOUR REVISION sentence by sentence" in source
-    assert "put the original sentence back word-for-word" in source
     # the head's pronouns render in the viewpoint line itself
     from questfoundry.pipeline.stages.fill import _write_context_for
     from tests.test_fill import _set_passage_head

@@ -480,59 +480,104 @@ choice-wiring can recover which variant carries which gate when POLISH creates
 passages and wires choices in separate passes
 (`docs/plans/passages-chunking.md`).
 
-**False branch** — POLISH-added cosmetic forks for the feel of agency:
-*diamond* (two choices, same destination) or *sidetrack* (a short detour
-that rejoins). May grant cosmetic flags for later flavor callbacks.
-**Even fake branching needs residue** (author-directed, 2026-07-15,
-reading letter-and-frontier — the author's words: "even fake branching
-needs consequence", meant in the reader-felt sense; the Drama-layer
-Consequence stays off false branches by the contract above): a cosmetic
-arm is still *chosen* — the reader picks the pine path, they don't
-decline the hall — and the choice must leave a mark, at minimum in the
-arm's own beat and in how the rejoin is worded (the exit label carries
-the arm's residue: "reassured by the pine's whisper, step into the
-hall", never a re-offer of the trunk's label — an identical rejoin label
-exposes the passage as a mechanical sidestep). Cosmetic flags are the
-stronger form of the same rule.
+**Cosmetic forks — one mechanism, three shapes today.** A false branch and
+a texture world are the same construct at different scales: **k ≥ 2
+*renderings* of a trunk *segment*.** A segment is a stretch of the frozen
+trunk between a `before` beat and an `after` beat — length zero (a single
+edge) up to a whole cap-aligned run; a rendering is a parallel beat chain
+the reader may choose, and every rendering rejoins at `after`. The shapes
+differ only in parameters — the segment's length, how many renderings, and
+whether a rendering is *empty* (walk the trunk straight through), *the
+segment's own beats*, or a *fresh* invented chain:
 
-**Texture world** — the false branch generalized to scene scale
-(structural-depth W3, author-directed 2026-07-14): a diamond laid over a
-whole choice-free *stretch* of the DAG, temporarily creating a parallel
-rendering — **the same events against another backdrop** — that converges
-exactly where the stretch does. "Backdrop" is deliberately wide (author
-clarification, 2026-07-14): any consequence-free axis — the place ("the
-next events happen in the forest / in the mountains"), the means ("go by
-bus or train"), the company, or the small facts of things and people
-("the car is blue / yellow", "the innkeeper has a son / a daughter") —
-not location only. Same contract as false branches (different textures, never
-different consequences), different economics: a beat-scale diamond buys
-one choice for one texture arm's traversed words, while a texture fork
-buys one at near-zero traversed words — the reader walks one world of
-roughly the trunk's length — paid for in FILL tokens and print pages (the
-stretch is written twice). The arm **mirrors the trunk beat-for-beat**:
-structural beats (`purpose: texture_world`, zero `belongs_to`, zero
-impacts, ungated) each carrying their trunk twin in `mirrors` and the
-twin's *effective* `scene_type`/`narration_scope`/`viewpoint`/`interlude`,
-engine-copied at the splice — both worlds read at the same band and head
-(the strictly-equal doctrine's mechanical form; the false-branch
-micro_beat fallback would starve the parallel world). `mirrors` is stored
-because it cannot be recomputed once forks share endpoints — insertion
-provenance like A14's world suffixes, consumed only by the engine and
-gate I15, never rendered to a prompt. Cadence diamonds inside a mirrored
-stretch are mirrored into the arm (engine-suffixed twins), so both worlds
-keep the same choice topology; sites are cap-aligned sub-stretches
-containing no commit, gate, ending, or other arm, and avoid rejoin
-frontiers (a residue splice would otherwise be bypassed). Arcs, flags,
-and the freeze are untouched by construction — the arm is conditionally
-traversed structure, like any diamond arm. Feedstock for the arm's
-material is the triage reserve (§4). Invariant I15 (§8) holds the whole
-contract. The arm's material is model-worded in the finalize proposal
-(one beat per trunk beat, in order, behind a declared one-line
-**premise** — "the crossing goes over the mountain pass"), and the
-premise is persisted on the arm beats (`texture_premise`, the
-`Passage.variant_flag` persist-for-a-later-pass precedent) so FILL's
-write prompt names the world the passage grounds — the different-context
-lever (W4) that makes parallel beats read as genuinely different scenes.
+| Shape | Segment | Renderings |
+|---|---|---|
+| Sidetrack | empty (an edge) | empty ("walk on") + one fresh chain |
+| Diamond | empty (an edge) | two fresh chains |
+| Texture world | a cap-aligned run | the segment's own beats + one fresh chain |
+
+The engine splices these through three entry points today
+(`insert_sidetrack`, `insert_false_branch`, `insert_texture_world`); the
+cosmetic-forks epic (mini-ADR A24 in [03 — Architecture](03-architecture.md)
+§9, contract `docs/plans/cosmetic-forks.md`) unifies them behind one primitive
+and admits a fourth parameterization — a *small two-worlds* over a
+1-to-(cap−1)-beat segment — that is not yet built.
+
+**The content regime follows segment length, not shape.** An empty segment
+has no events, so each fresh rendering invents a breath of texture — a
+diamond's two flavors of the same forward motion, a sidetrack's optional
+detour. A non-empty segment carries real events, so every rendering
+re-expresses *the same events* against another backdrop, beat for beat and
+in order (the texture-world mirror rule, invariant I15 in §8).
+
+**Empty-segment renderings (false branches)** are POLISH-added cosmetic
+forks for the feel of agency: a *diamond* (two fresh arms, one destination)
+or a *sidetrack* (a short detour that rejoins, which the reader may also
+decline). May grant cosmetic flags for later flavor callbacks. **Even fake
+branching needs residue** (author-directed, 2026-07-15, reading
+letter-and-frontier — the author's words: "even fake branching needs
+consequence", meant in the reader-felt sense; the Drama-layer Consequence
+stays off false branches by the contract above): a cosmetic arm is still
+*chosen* — the reader picks the pine path, they don't decline the hall —
+and the choice must leave a mark, at minimum in the arm's own beat and in
+how the rejoin is worded (the exit label carries the arm's residue:
+"reassured by the pine's whisper, step into the hall", never a re-offer of
+the trunk's label — an identical rejoin label exposes the passage as a
+mechanical sidestep). Cosmetic flags are the stronger form of the same rule.
+
+**Non-empty-segment renderings (texture worlds)** are the false branch at
+scene scale (structural-depth W3, author-directed 2026-07-14): a rendering
+laid over a whole choice-free *stretch* of the DAG — **the same events
+against another backdrop** — converging exactly where the stretch does.
+"Backdrop" is deliberately wide (author clarification, 2026-07-14): any
+consequence-free axis — the place ("the next events happen in the forest /
+in the mountains"), the means ("go by bus or train"), the company, or the
+small facts of things and people ("the car is blue / yellow", "the
+innkeeper has a son / a daughter") — not location only. Same contract as an
+empty-segment fork (different textures, never different consequences),
+different economics: a beat-scale diamond buys one choice for one arm's
+traversed words, while a texture fork buys one at near-zero traversed words
+— the reader walks one world of roughly the trunk's length — paid for in
+FILL tokens and print pages (the stretch is written twice). The fresh
+rendering **mirrors the trunk beat-for-beat**: structural beats
+(`purpose: texture_world`, zero `belongs_to`, zero impacts, ungated) each
+carrying their trunk twin in `mirrors` and the twin's *effective*
+`scene_type`/`narration_scope`/`viewpoint`/`interlude`, engine-copied at the
+splice — both worlds read at the same band and head (the strictly-equal
+doctrine's mechanical form; the false-branch micro_beat fallback would
+starve the parallel world). `mirrors` is stored because it cannot be
+recomputed once forks share endpoints — insertion provenance like A14's
+world suffixes, consumed only by the engine and gate I15, never rendered to
+a prompt. Cadence diamonds inside a mirrored stretch are mirrored into the
+arm (engine-suffixed twins), so both worlds keep the same choice topology;
+sites are cap-aligned sub-stretches containing no commit, gate, ending, or
+other arm, and avoid rejoin frontiers (a residue splice would otherwise be
+bypassed). Arcs, flags, and the freeze are untouched by construction — the
+arm is conditionally traversed structure, like any diamond arm. Feedstock
+for the arm's material is the triage reserve (§4). Invariant I15 (§8) holds
+the whole contract. The arm's material is model-worded in the finalize
+proposal (one beat per trunk beat, in order, behind a declared one-line
+**premise** — "the crossing goes over the mountain pass"), persisted on the
+arm beats (`texture_premise`, the `Passage.variant_flag`
+persist-for-a-later-pass precedent) so FILL's write prompt names the world
+the passage grounds — the different-context lever (W4) that makes parallel
+beats read as genuinely different scenes. **Today the premise lives on the
+fresh rendering's beats only**; the trunk stretch — rendering 0 — carries
+none, so FILL grounds only the arm's prose and its entry label cannot name
+the trunk-side backdrop. Likewise the mirrored cadence keeps the two worlds'
+*choice topology* structurally identical. Both are current asymmetries the
+epic removes: A24 makes the premise a per-rendering value (rendering 0
+included) and retires the mirrored-cadence twinning in favor of per-walk
+budget parity. Until those PRs land, this paragraph is current behavior.
+
+**Two shapes that look like renderings but are not** (the fence). A
+**residue arm** (§5) is the same *shape* — a parallel chain rejoining the
+trunk — but the reader does not *choose* it: a flag *routes* it, and it is
+an obligation the story owes (the world remembering a soft choice; I12, arc
+completion), never a consequence-free option. A **dilemma fork** carries
+real consequence and is a Drama-layer branch. The cosmetic construct is
+*chosen and consequence-free*; routed-or-obligated and consequential both
+stay outside it.
 
 The **passage graph** — passages + choices — is what SHIP exports and the
 player traverses. The beat DAG never ships; it is the authoring truth from

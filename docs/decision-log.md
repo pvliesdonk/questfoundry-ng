@@ -16,6 +16,24 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (cosmetic forks PR-1 built — one-mechanism framing,
+  current-state truth only):** Rewrote 01 §6's false-branch and
+  texture-world entries into a single unified presentation — cosmetic forks
+  are **k ≥ 2 renderings of a trunk segment**, the shapes (sidetrack,
+  diamond, texture world) differing only in parameters (segment length,
+  rendering count, empty/segment/fresh content) — and introduced the
+  *segment* / *rendering* vocabulary later PRs' code will use. Held strictly
+  to the doc-truth rule the reshape settled (below): every added sentence is
+  true of today's code. The three splice entry points are named as current;
+  the unified primitive, the fourth *small two-worlds* parameterization, the
+  per-rendering premise (rendering 0 included), and the retirement of
+  mirrored-cadence twinning are marked as the epic's target with A24/plan
+  pointers — today's premise asymmetry (fresh arms only) and structural
+  choice-parity read as current behavior. Deliberately excluded (each rides
+  the PR whose code makes it true): **no** I15 restatement, **no** I16,
+  **no** freeze clarification, and no §8 invariant text touched. A "fence"
+  paragraph names the two look-alikes that are not renderings (residue arms
+  are routed/obligated, dilemma forks carry consequence). Docs-only.
 - **2026-07-15 (cosmetic-forks PR-1 reshaped — no target-state in the
   authoritative docs):** The session building the epic's PR-1 flagged
   that the slice as specced wrote an engine that doesn't exist into 01

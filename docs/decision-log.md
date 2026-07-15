@@ -16,6 +16,19 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-15 (the write prompt gets legible bans; the exhaustion message
+  gets honest channel counts — agent decision on the live run):** The
+  texture-trial's seventh halt (`write:p-border-approach`) reported
+  "failed review 4 times" but the cache showed 2 legitimate
+  banned-dialogue-tag review rejections plus 2 echo apply repairs — the
+  shared budget's channels were conflated in the message. The standing
+  no-more-rules check found a clarity asymmetry, not a rule gap: the
+  review prompt explains the tag ban in a paragraph while the write
+  prompt handed the writer the bans as one semicolon-joined line.
+  `fill_write.j2` now renders each existing ban as its own bullet (no new
+  rules), and the runner's exhaustion message reports review and apply
+  rejections separately so the operator reads true counts.
+
 - **2026-07-15 (tier is the fluency knob, not the structure knob — author
   hypotheses on the kimi A/B):** Reading `examples/closed-circle-k2` against
   the gpt-oss baseline, the author's read (verbatim intent): a weaker model

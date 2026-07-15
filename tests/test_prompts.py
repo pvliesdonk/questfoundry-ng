@@ -396,6 +396,27 @@ def test_fill_review_said_plus_speaker_is_never_a_banned_tag():
     assert "NEVER phrase a ban as a complement" in voice
 
 
+def test_fill_write_renders_each_ban_as_its_own_bullet(golden):
+    """Texture-trial stall 7 (2026-07-15): the review prompt explains the
+    dialogue-tag ban in a paragraph while the write prompt showed the bans
+    as one semicolon-joined line — the judge understood the rule better
+    than the writer. Each existing ban renders as its own bullet."""
+    from questfoundry.models.concept import Voice
+
+    env = runner._environment()
+    context = _write_context_for("passage:p-arrival")(golden)
+    context["voice"] = Voice(
+        pov="third person limited",
+        tense="past",
+        diction="spare",
+        banned=["exclamation marks", "dialogue tags other than 'said'"],
+    )
+    rendered = _render(env, "fill_write.j2", "", **context)
+    assert "- Banned — never in your prose, in any sentence" in rendered
+    assert "\n  - exclamation marks\n" in rendered
+    assert "\n  - dialogue tags other than 'said'\n" in rendered
+
+
 def test_fill_write_head_pronouns_coverage_check_and_minimal_edit_rework(golden):
     """Tracing the Closed Circle stall journal against the prompts (the
     author's don't-blame-the-weak-model correction, 2026-07-14) found three

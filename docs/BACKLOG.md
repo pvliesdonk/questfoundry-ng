@@ -34,6 +34,37 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   authored inclination as vision input; reinterpreting it is DREAM's job
   (author decision, 2026-07-14, decision log).
 
+- [ ] **Finalize/audit prompt defects surfaced by the structural-depth medium
+  run (2026-07-15).** Concrete instances of the template-audit item above,
+  found running DREAM→POLISH at medium on `gpt-oss:120b-cloud` (unbilled;
+  scorecard in the decision log):
+  - **Finalize entity roster — FIXED** (PR #92, awaiting merge):
+    `_finalize_context` pinned `entities` to the retained cast's ids but never
+    showed the roster, so the writer coined a name-derived id
+    (`character:finch` for the sheriff whose id is `character:marshal`) and
+    finalize halted. Fix: pass the cast, list `name (id): concept`.
+    Live-validated.
+  - **Cadence shape bias toward sidetracks** (`polish_finalize.j2` FALSE
+    BRANCHES): the diamond is undersold (no reader hook, no "use it when"
+    trigger, denigrated as "look left / look right") while the sidetrack is
+    oversold with a near-universal trigger ("use it where lingering is
+    plausible"). The run placed **44/44 sidetracks, 0 diamonds** — the prompt
+    steering, not model discretion (44 samples, zero variance). Plan **PR-3**
+    (engine-assigned mandatory shape) is the real fix; the descriptive
+    imbalance is the prompt-quality remainder.
+  - **PR-0 residue paragraph is sidetrack-only vocabulary** (regression): the
+    exit-label residue paragraph PR-0 added ("the detour", "declined", "the
+    arm rejoins the same road") is wrong for a diamond arm — a shape-neutral
+    rewrite is owed regardless of PR-3.
+  - **Audit pass halt — undiagnosed**: the `polish_audit` single call (one
+    entry per ambiguous-state passage, ~70 at medium, several near-identical
+    texture renderings) produced duplicate entries and did not converge.
+    First suspects per AGENTS.md: the audit *prompt* clarity and the "audited
+    twice" *message* actionability; only if both are clean is it the A21
+    giant-call format → decompose per-passage (the I12 cap is already
+    per-passage). **Blocks the medium run from completing** (399 passes
+    journaled, resumable free). Its own PR.
+
 - [ ] **Echo guard vs canonical utterances (two live instances, 2026-07-14).**
   The window-echo floor (8 shared tokens) collides with fixed statements the
   drama must repeat across adjacent passages: Jordan's theory declaration and
@@ -74,6 +105,18 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   at **59 passages against the 90–160 band** (its B3 advisory). Provenance:
   observed live in that scratch run (not committed) — treat as an
   unverified agent observation until reproduced.
+- [ ] **Texture worlds overshoot the words budget (medium run, 2026-07-15).**
+  A DREAM→POLISH *Closed Circle* medium run with `--words-target 55000` (band
+  top) projected **76,160 words (B7, +38% over target)** and **B6 971
+  words/choice** (above the 800 band top): 3 max-size texture worlds (~12–29
+  beats each, written twice) inflate the book past its own target while
+  crowding out cadence choices. Open: does texture/cadence admission honor
+  `words_target` (`texture_plan`'s `limit` vs the post-cadence projection),
+  or is the W1 coupling not biting on texture inflation? Data for the plan's
+  open-question 1 (mix ratio, small-segment appetite) and a possible
+  admission bug — investigate when PR-2/PR-3 touch the budget. Provenance:
+  the resumable scratch run measured by replaying its cached POLISH proposals
+  (decision log, 2026-07-15) — reproduce before treating as confirmed.
 - [ ] **Intersections over post-commit (exclusive) beats** — M2 only groups
   shared pre-commit beats; exclusive-beat intersections are meaningful but
   interact with arc membership in ways the spine model doesn't cover. Same for

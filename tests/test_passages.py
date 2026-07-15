@@ -31,6 +31,7 @@ from questfoundry.pipeline.stages.polish import (
     VariantSpec,
     _audit_apply,
     _finalize_apply,
+    _finalize_context,
     _groups,
     _labels_apply,
     _labels_context,
@@ -1206,3 +1207,22 @@ def test_rejoin_context_surfaces_the_trunk_label_as_a_sibling(vision, tmp_path):
     trunk_ctx = _labels_context(before_idx)(project)
     assert trunk_ctx["is_rendering"] is False
     assert all(not d["siblings"] for d in trunk_ctx["dests"])
+
+
+def test_finalize_context_exposes_the_entity_roster(vision, tmp_path):
+    """The finalize schema pins every `entities` value to the retained cast's
+    ids, but the prompt showed the model only beat summaries — so a summary
+    naming an entity whose id differs from its name led the weak tier to coin
+    a name-derived id (`character:finch` for `character:marshal`, live medium
+    halt 2026-07-15). The context must carry the id roster the schema enforces
+    so the prompt can list it."""
+    from questfoundry.models.world import Entity
+
+    g = StoryGraph()
+    _woven_story(g, ResidueWeight.LIGHT)
+    mutations.freeze_topology(g)
+    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
+    ctx = _finalize_context(project)
+    retained = {e.id for e in g.nodes_of(Entity) if e.retained}
+    assert retained, "the woven story should retain at least one entity"
+    assert {e.id for e in ctx["cast"]} == retained

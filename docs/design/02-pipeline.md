@@ -42,7 +42,13 @@ Key properties:
   `GraphError` (a duplicate/missing reference), the runner catches it as
   repairable alongside `ApplyError`/`MutationError`, and no model-reachable
   graph write can escape as an uncaught crash. See `AGENTS.md` §"Prompt and
-  error-message quality".
+  error-message quality". **Feedback is batched**: an apply reports every
+  violation it can see in ONE error, never the first found — with ≤2
+  repair rounds, one-at-a-time feedback is a budget the model spends
+  fixing exactly what was quoted while the next violation waits (learned
+  twice on the texture-trial live run: the audit's scaffold-precedent
+  batching, then FILL's echo check exhausting repairs one lift per
+  round).
 - **Deterministic where possible.** Anything computable — DAG assembly
   bookkeeping, flag derivation, passage collapse boundaries, arc
   enumeration, all validation — is code, not model. The LLM is reserved

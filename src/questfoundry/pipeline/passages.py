@@ -742,11 +742,3 @@ def texture_plan(g: StoryGraph, preset, words_target: int | None = None) -> list
     return chosen
 
 
-# -- feasibility ---------------------------------------------------------------
-
-
-def active_flags(g: StoryGraph, group: list[str]) -> list[str]:
-    """Flags the passage's prose must honor both values of (the I12
-    computation — see queries.ambiguous_flags). Certain flags are world
-    facts, not states; the audit only weighs the ambiguous ones."""
-    return queries.ambiguous_flags(g, group)

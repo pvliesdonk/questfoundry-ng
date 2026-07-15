@@ -930,8 +930,10 @@ def _audit_apply(proposal: AuditProposal, project: Project) -> list[str]:
             continue
         if entry.split_on and entry.passage in endings:
             problems.append(
-                f"{entry.passage} is an ending and cannot split; mark states "
-                "irrelevant instead (an ending's world is already determined)"
+                f"{entry.passage} is an ending and cannot split (variants would "
+                "multiply the story's ending set, fixed at the freeze); drop its "
+                "split_on and mark only the states this final scene genuinely "
+                "does not address as irrelevant"
             )
             continue
         left = len(relevant) - len(entry.split_on)

@@ -286,7 +286,9 @@ def test_tensored_residue_arm_is_a_gated_choice_on_one_side(vision, tmp_path):
         audit=[
             AuditEntry(passage=p.id, irrelevant=[])
             for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
-            if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+            if queries.ambiguous_flags(
+                g, queries.beats_of_passage(g, p.id), queries.passage_gate_flags(g, p.id)
+            )
         ]
     )
     _audit_apply(proposal, project)
@@ -704,7 +706,7 @@ def test_b6_choice_cadence_measures_feel(golden):
     assert len(warns) == 1 and "words per genuine choice" in warns[0].message
 
 
-def test_active_flags_mirrors_i12(golden):
+def test_ambiguous_flags_mirrors_i12(golden):
     g = golden.graph
     group = next(
         grp for grp in pc.collapse_groups(g) if "beat:keep-ending" in grp
@@ -712,7 +714,7 @@ def test_active_flags_mirrors_i12(golden):
     # flag:bound-to-light is granted on every route here (its commit is
     # the only side upstream) — a fact, not a state to honor (I12);
     # the reconverged soft dilemma's pair stays ambiguous
-    assert pc.active_flags(g, group) == [
+    assert queries.ambiguous_flags(g, group) == [
         "flag:elias-knows",
         "flag:lie-between",
     ]
@@ -796,7 +798,9 @@ def test_audit_accepts_slug_form_passage_ids(vision, tmp_path):
     flagged = [
         p.id
         for p in sorted(g.nodes_of(Passage), key=lambda p: p.id)
-        if pc.active_flags(g, queries.beats_of_passage(g, p.id))
+        if queries.ambiguous_flags(
+                g, queries.beats_of_passage(g, p.id), queries.passage_gate_flags(g, p.id)
+            )
     ]
     assert flagged
     proposal = AuditProposal(

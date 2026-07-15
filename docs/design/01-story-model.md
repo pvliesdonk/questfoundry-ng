@@ -602,7 +602,15 @@ design.
   re-presents the moment as flag-gated variants — each variant's
   arrivals hold a known side, removing that state — never marking a
   load-bearing state irrelevant to satisfy a budget (author-directed
-  2026-07-14).
+  2026-07-14). **Exception: endings never split** — variants would
+  multiply the story's ending set, fixed at the freeze. An ending's hard
+  flags are facts (only its own side is upstream), but reconverged soft
+  states stay ambiguous there, so an ending that genuinely turns on more
+  than the cap has no in-audit escape: that is an upstream structure
+  defect (too many soft threads collecting unresolved at one final
+  scene — route their payoffs into gated residue before the finale), and
+  the audit fails loudly rather than absorbing it with dishonest
+  irrelevance.
 - **I13** The passage graph has no dead ends: every non-ending passage
   has ≥1 always-satisfiable choice; every ending is reachable.
 - **I14** One head per passage: among a passage's member beats that carry

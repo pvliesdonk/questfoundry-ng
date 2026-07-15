@@ -403,8 +403,8 @@ def split_passage(g: StoryGraph, passage_id: str, gate_sets: list[list[str]]) ->
             raise MutationError(f"split gate references unknown flag {flag_id!r}")
     if passage.ending is not None:
         raise MutationError(
-            f"{passage_id} is an ending; endings are not split — an ending's "
-            "world is already determined by its hard branch"
+            f"{passage_id} is an ending; endings are not split — variants "
+            "would multiply the story's ending set, fixed at the freeze"
         )
     beats = [e.src for e in g.in_edges(passage_id, EdgeKind.GROUPED_IN)]
     in_choices = list(g.in_edges(passage_id, EdgeKind.CHOICE))

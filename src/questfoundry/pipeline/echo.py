@@ -53,19 +53,28 @@ def contains_phrase(text: str, phrase: str, min_tokens: int) -> bool:
     return any(tuple(hay[i : i + n]) == target for i in range(len(hay) - n + 1))
 
 
-def longest_shared_run(a: str, b: str, min_tokens: int) -> str | None:
-    """The longest contiguous token run shared by `a` and `b`, as a
-    space-joined phrase, when it reaches `min_tokens`; else None."""
+def _contains(hay: tuple[str, ...], needle: tuple[str, ...]) -> bool:
+    n = len(needle)
+    return any(hay[i : i + n] == needle for i in range(len(hay) - n + 1))
+
+
+def shared_runs(a: str, b: str, min_tokens: int) -> list[str]:
+    """Every maximal contiguous token run shared by `a` and `b` that
+    reaches `min_tokens`, as space-joined phrases in order of appearance
+    in `a`. A draft can carry several independent lifts; reporting one
+    per repair round taught whack-a-mole (texture-trial live run: each
+    round surfaced the next lift until repairs exhausted), so the caller
+    gets them all at once."""
     ta, tb = tokens(a), tokens(b)
     if len(ta) < min_tokens or len(tb) < min_tokens:
-        return None
+        return []
     seed = _ngrams(ta, min_tokens) & _ngrams(tb, min_tokens)
     if not seed:
-        return None
-    # Grow the best seed: for each shared min-length n-gram occurrence
-    # in `a`, extend while `b` still contains the longer run.
+        return []
+    # Grow each seed: for each shared min-length n-gram occurrence in
+    # `a`, extend while `b` still contains the longer run.
     b_grams: dict[int, set[tuple[str, ...]]] = {min_tokens: _ngrams(tb, min_tokens)}
-    best: tuple[str, ...] = ()
+    found: list[tuple[str, ...]] = []
     for i in range(len(ta) - min_tokens + 1):
         gram = tuple(ta[i : i + min_tokens])
         if gram not in seed:
@@ -78,6 +87,18 @@ def longest_shared_run(a: str, b: str, min_tokens: int) -> str | None:
             if grown not in b_grams[n + 1]:
                 break
             gram, n = grown, n + 1
-        if len(gram) > len(best):
-            best = gram
-    return " ".join(best) if best else None
+        found.append(gram)
+    maximal: list[tuple[str, ...]] = []
+    for gram in found:
+        if any(len(other) > len(gram) and _contains(other, gram) for other in found):
+            continue
+        if gram not in maximal:
+            maximal.append(gram)
+    return [" ".join(g) for g in maximal]
+
+
+def longest_shared_run(a: str, b: str, min_tokens: int) -> str | None:
+    """The longest contiguous token run shared by `a` and `b`, as a
+    space-joined phrase, when it reaches `min_tokens`; else None."""
+    runs = shared_runs(a, b, min_tokens)
+    return max(runs, key=lambda p: len(tokens(p))) if runs else None

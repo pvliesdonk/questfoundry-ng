@@ -753,21 +753,29 @@ def check_i13_passage_graph(ctx: Context) -> None:
 
 
 def check_i15_texture_worlds(ctx: Context) -> None:
-    """I15: a texture-world arm mirrors a consequence-free trunk stretch
-    beat-for-beat (design doc 01 §6, §8; docs/plans/structural-depth.md W3).
+    """I15, restated for the finalize loop (design doc 01 §6, §8;
+    cosmetic-forks §3 — segment-relative, composition-closed, budget parity).
 
-    Field half: every texture_world beat names an existing, non-arm,
-    ungated, non-commit, non-ending twin (``mirrors``), carries the twin's
-    *effective* annotations — band and head parity, the strictly-equal
-    doctrine's mechanical form — and no gate of its own.
+    Field half: every texture_world beat names an existing twin
+    (``mirrors``); the twin may itself be a mirror beat (worlds nest), so
+    mirror chains must be acyclic and ground out in a non-mirror beat; the
+    direct twin is ungated, commits nothing, ends nothing (nested twins are
+    themselves mirror beats, so the rule composes link-by-link); the beat
+    carries the twin's *effective* annotations — band and head parity, the
+    strictly-equal doctrine's mechanical form — and no gate of its own.
 
-    Shape half, the projection rule: every ordering edge incident to a
-    texture beat must project, via ``mirrors``, onto an existing trunk
-    edge. This pins arm contiguity, fork/convergence parity (the arm
-    rejoins exactly where its stretch does), twin injectivity along the
-    chain, and catches a later splice that reroutes the trunk around a
-    residue arm while the texture arm still bypasses it — all as local
-    edge checks, no chain reconstruction."""
+    Shape half, the projection rule: on the PREDECESSOR graph with every
+    *un-mirrored* FALSE_BRANCH beat contracted away (edge-scale decoration a
+    later round spliced inside either world — legacy mirrored-cadence twins
+    keep their FALSE_BRANCH twins in place), every edge incident to a mirror
+    beat must project onto an edge of that same contracted graph, mirroring
+    one step at either or both endpoints (nested constructs project
+    level-by-level, which is what makes the rule compose). This pins
+    rendering contiguity and fork/convergence parity (the rendering rejoins
+    exactly where its segment does) as local edge checks. Structural
+    choice-topology parity between renderings is deliberately NOT required
+    (ratified decision 1): each rendering grows its own forks and per-walk
+    B6 owns choice fairness."""
     beats = {b.id: b for b in ctx.g.nodes_of(Beat)}
     arms = {bid for bid, b in beats.items() if b.purpose == StructuralPurpose.TEXTURE_WORLD}
     if not arms:
@@ -795,13 +803,6 @@ def check_i15_texture_worlds(ctx: Context) -> None:
                 "beat; point mirrors at its trunk twin",
             )
             continue
-        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
-            ctx.error(
-                "I15",
-                f"texture-world beat {bid} mirrors another texture arm "
-                f"({twin.id}); worlds do not nest — mirror the trunk",
-            )
-            continue
         if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
             ctx.error(
                 "I15",
@@ -824,24 +825,78 @@ def check_i15_texture_worlds(ctx: Context) -> None:
                 "read at the same band and head — copy the twin's annotations",
             )
 
-    def proj(beat_id: str) -> str:
-        b = beats.get(beat_id)
-        if b is not None and beat_id in arms and b.mirrors:
-            return b.mirrors
-        return beat_id
+    # Mirror chains ground out: link-by-link checks cannot see a cycle of
+    # mutual mirrors now that nesting is legal, so walk each chain once.
+    reported_cycles: set[frozenset[str]] = set()
+    for bid in sorted(arms):
+        seen: list[str] = []
+        cur: str | None = bid
+        while cur is not None and cur in beats and beats[cur].mirrors is not None:
+            if cur in seen:
+                cycle = frozenset(seen[seen.index(cur) :])
+                if cycle not in reported_cycles:
+                    reported_cycles.add(cycle)
+                    ctx.error(
+                        "I15",
+                        f"the mirror chain at {bid} cycles ({' -> '.join(seen)}); "
+                        "mirror chains must be acyclic and ground out in a "
+                        "non-mirror trunk beat",
+                    )
+                break
+            seen.append(cur)
+            cur = beats[cur].mirrors
 
+    # The decoration-contracted edge set: bypass every FALSE_BRANCH beat that
+    # no beat mirrors (a mirrored one is a legacy cadence twin's trunk-side
+    # counterpart and stays projectable).
+    twins_of = {b.mirrors for b in beats.values() if b.mirrors}
+    transparent = {
+        bid
+        for bid, b in beats.items()
+        if b.purpose == StructuralPurpose.FALSE_BRANCH
+        and b.mirrors is None
+        and bid not in twins_of
+    }
+    raw_succ: dict[str, set[str]] = {}
     for e in ctx.g.edges:
-        if e.kind != EdgeKind.PREDECESSOR:
+        if e.kind == EdgeKind.PREDECESSOR:
+            raw_succ.setdefault(e.src, set()).add(e.dst)
+    edges: set[tuple[str, str]] = set()
+    for u in beats:
+        if u in transparent:
             continue
-        if e.src not in arms and e.dst not in arms:
+        stack, seen_nodes = list(raw_succ.get(u, ())), set()
+        while stack:
+            v = stack.pop()
+            if v in seen_nodes:
+                continue
+            seen_nodes.add(v)
+            if v in transparent:
+                stack.extend(raw_succ.get(v, ()))
+            else:
+                edges.add((u, v))
+
+    def mirror_of(beat_id: str) -> str | None:
+        b = beats.get(beat_id)
+        return b.mirrors if b is not None and beat_id in arms else None
+
+    for u, v in sorted(edges):
+        if u not in arms and v not in arms:
             continue
-        ps, pd = proj(e.src), proj(e.dst)
-        if ps == pd or not ctx.g.has_edge(EdgeKind.PREDECESSOR, ps, pd):
+        mu, mv = mirror_of(u), mirror_of(v)
+        candidates = [
+            pair
+            for pair in ((mu, v), (u, mv), (mu, mv))
+            if pair[0] is not None and pair[1] is not None
+        ]
+        if not any(a != b and (a, b) in edges for a, b in candidates):
+            shown = candidates[0] if candidates else (u, v)
             ctx.error(
                 "I15",
-                f"edge {e.src} -> {e.dst} projects onto {ps} -> {pd}, which is "
-                "not a trunk edge; the arm must run parallel to its mirrored "
-                "stretch and rejoin exactly where it does",
+                f"edge {u} -> {v} projects onto {shown[0]} -> {shown[1]}, which "
+                "is not an edge of the decoration-contracted trunk; the "
+                "rendering must run parallel to its segment and rejoin exactly "
+                "where it does",
             )
 
 

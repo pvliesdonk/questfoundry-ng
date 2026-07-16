@@ -690,16 +690,28 @@ design.
   never switches inside a passage — a rotation is always a page-turn
   (author-confirmed 2026-07-14, `docs/plans/rotating-pov-build.md`);
   unannotated beats and `wide` codas are wildcards.
-- **I15** Texture worlds mirror their trunk (§6, structural-depth W3).
+- **I15** Non-empty-segment renderings mirror their segment (§6;
+  restated segment-relative and composition-closed for the finalize loop,
+  cosmetic-forks A24 — the original statement was structural-depth W3's).
   Field half: every `texture_world` beat names an existing twin in
-  `mirrors` that is not itself an arm beat, not gated, commits nothing,
-  and ends nothing; the arm beat is ungated and carries the twin's
-  *effective* annotations. Shape half (the projection rule): every
-  ordering edge incident to a texture beat projects, via `mirrors`, onto
-  an existing trunk edge — which pins arm contiguity, fork/convergence
-  parity (the arm rejoins exactly where its stretch does), twin
-  injectivity, and catches any splice that would let the arm bypass a
-  later graft, all as local edge checks.
+  `mirrors`; the twin may itself be a mirror beat (worlds nest), so
+  mirror chains must be acyclic and **ground out** in a non-mirror beat;
+  the direct twin is not gated, commits nothing, and ends nothing (nested
+  twins are mirror beats, so the rule composes link-by-link); the
+  rendering beat is ungated and carries the twin's *effective*
+  annotations. Shape half (the projection rule): on the beat graph with
+  every *un-mirrored* `false_branch` beat contracted away (edge-scale
+  decoration a later round spliced inside either world; a mirrored
+  `false_branch` beat is a legacy cadence twin's counterpart and stays),
+  every edge incident to a mirror beat projects — one `mirrors` step at
+  either or both endpoints — onto an edge of that same contracted graph.
+  This pins rendering contiguity and fork/convergence parity (the
+  rendering rejoins exactly where its segment does) as local edge checks,
+  and nested constructs project level-by-level. Structural choice-topology
+  parity between renderings is deliberately **not** required (budget
+  parity, ratified cosmetic-forks decision 1): each rendering grows its
+  own forks under the loop's budgets, and per-walk B6 owns choice
+  fairness.
 
 ## 9. Where the mapping breaks (danger zones)
 

@@ -772,3 +772,46 @@ def test_offered_keywords_upstream_unconsumed_capped():
     assert len(offered) == 8
     assert consumed not in offered and downstream not in offered
     assert set(offered) <= set(flags)
+
+
+# -- PR-5: I15 restated (composition-closed, budget parity) -------------------------
+
+
+def test_i15_accepts_nesting_and_unmirrored_decoration(vision):
+    """The restated shape half (cosmetic-forks §3, ratified decision 1):
+    un-mirrored FALSE_BRANCH decoration is contracted before projection, so
+    a diamond spliced inside either side of a two-worlds fork no longer
+    breaks parity — per-walk B6 owns choice fairness now — and a rendering
+    over an arm stretch (nesting) projects level-by-level."""
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    # nested world over an arm stretch
+    pc.insert_texture_world(
+        g, [arm_beat(f"n{i}") for i in range(3)], ["beat:a3", "beat:a4", "beat:a5"]
+    )
+    # un-mirrored diamond inside the mirrored trunk stretch (removes t6->t7)
+    def fb(slug):
+        return Beat(
+            id=f"beat:{slug}",
+            created_by=Stage.POLISH,
+            summary=slug,
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+        )
+
+    pc.insert_false_branch(g, [fb("d-a")], [fb("d-b")], "beat:t6", "beat:t7")
+    # and an un-mirrored sidetrack inside the arm
+    pc.insert_sidetrack(g, [fb("d-c")], "beat:a6", "beat:a7")
+    assert i15_errors(g, vision) == []
+
+
+def test_i15_mirror_cycle_does_not_ground_out(vision):
+    g = StoryGraph()
+    chain(g, ["p", "s"])
+    for slug, twin in (("x", "beat:y"), ("y", "beat:x")):
+        mutations.add_beat(g, arm_beat(slug, mirrors=twin), [])
+    for slug in ("x", "y"):
+        mutations.add_ordering(g, "beat:p", f"beat:{slug}")
+        mutations.add_ordering(g, f"beat:{slug}", "beat:s")
+    assert any("ground out" in i.message for i in i15_errors(g, vision))

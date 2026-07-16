@@ -85,6 +85,16 @@ class ScopePreset(BaseModel):
     # shape pins pre-M8 literals for the golden story).
     anchor_words: int | None = None
     words_per_soft: int | None = None
+    # Cadence shape mix (cosmetic-forks PR-3): the arm counts the engine
+    # assigns across cadence sites, cycled in order — 1 = sidetrack, 2 =
+    # diamond, 3 = diamond with a third arm. Shape is engine-assigned, not
+    # model-chosen: given the choice a weak tier placed 44/44 sidetracks (the
+    # prompt undersold the diamond; medium validation 2026-07-15), exactly as
+    # discretion over counts produced the flat book. Front-loaded so even a
+    # few-site book gets variety. Placeholder ratio (~1 diamond per 2
+    # sidetracks); the mix is author taste, revisit on a medium read
+    # (open question 1).
+    cadence_arm_cycle: tuple[int, ...] = (2, 1, 1, 3, 1, 1)
 
     def budget_for(self, words_target: int | None) -> DilemmaBudget:
         """B1's dilemma budget. With a ``words_target`` the soft count

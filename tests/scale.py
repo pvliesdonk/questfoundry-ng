@@ -199,21 +199,24 @@ def fill_cadence_budget(g: StoryGraph, preset: ScopePreset) -> int:
     model to. Returns the number of diamonds inserted."""
     plan = pc.cadence_plan(g, preset)
     inserted = 0
-    for _run_idx, edges in sorted(plan.items()):
-        for before, after in edges:
+    for _run_idx, sites in sorted(plan.items()):
+        for before, after, n_arms in sites:
             arms = [
                 [
                     Beat(
-                        id=f"beat:fb-{inserted}-{side}",
+                        id=f"beat:fb-{inserted}-{j}",
                         created_by=Stage.POLISH,
                         summary="flavor",
                         beat_class=BeatClass.STRUCTURAL,
                         purpose=StructuralPurpose.FALSE_BRANCH,
                     )
                 ]
-                for side in ("a", "b")
+                for j in range(n_arms)
             ]
-            pc.insert_cadence_diamond(g, arms[0], arms[1], before, after)
+            if n_arms == 1:
+                pc.insert_cadence_sidetrack(g, arms[0], before, after)
+            else:
+                pc.insert_cadence_diamond(g, arms, before, after)
             inserted += 1
     return inserted
 

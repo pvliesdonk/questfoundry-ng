@@ -511,9 +511,15 @@ re-expresses *the same events* against another backdrop, beat for beat and
 in order (the texture-world mirror rule, invariant I15 in §8).
 
 **Empty-segment renderings (false branches)** are POLISH-added cosmetic
-forks for the feel of agency: a *diamond* (two fresh arms, one destination)
-or a *sidetrack* (a short detour that rejoins, which the reader may also
-decline). May grant cosmetic flags for later flavor callbacks. **Even fake
+forks for the feel of agency: a *diamond* (two — or three — fresh arms, one
+destination) or a *sidetrack* (a short detour that rejoins, which the reader
+may also decline). **The shape and count are engine-assigned, not
+model-chosen** (cosmetic-forks PR-3): the cadence budget cycles a mix (the
+scope preset's `cadence_arm_cycle`) across its sites and the finalize apply
+enforces it like it enforces counts — given the choice, a weak tier placed
+44/44 sidetracks (the prompt undersold the diamond; medium validation
+2026-07-15), exactly as discretion over counts once produced the flat book.
+May grant cosmetic flags for later flavor callbacks. **Even fake
 branching needs residue** (author-directed, 2026-07-15, reading
 letter-and-frontier — the author's words: "even fake branching needs
 consequence", meant in the reader-felt sense; the Drama-layer Consequence

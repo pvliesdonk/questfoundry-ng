@@ -35,7 +35,6 @@ scene_type — graph/validate.py check_b8_pacing).
 from __future__ import annotations
 
 import copy
-from collections import Counter
 from collections.abc import Callable
 from itertools import product
 
@@ -110,9 +109,10 @@ class FalseBranchSpec(BaseModel):
 
     before: str  # linear beat edge to fork
     after: str
-    # 2 arms = a diamond (fork, rejoin immediately); 1 arm = a sidetrack
-    # (the direct edge stays — an optional detour the reader may decline)
-    arms: list[ArmSpec] = Field(min_length=1, max_length=2)
+    # arm count = the engine-assigned shape (PR-3): 1 = sidetrack (the direct
+    # edge stays, an optional detour the reader may decline), 2 = diamond, 3 =
+    # diamond with a third arm. The count is mandatory per the CADENCE table.
+    arms: list[ArmSpec] = Field(min_length=1, max_length=3)
 
 
 class TextureBeatSpec(BaseModel):
@@ -182,7 +182,14 @@ def _texture_and_cadence(project: Project) -> tuple[list[list[str]], list[dict],
         pc.insert_texture_world(scratch, arm, run)
     runs = pc.collapse_groups(scratch)
     plan = pc.cadence_plan(scratch, preset)
-    cadence = [{"beats": runs[i], "edges": edges} for i, edges in sorted(plan.items())]
+    cadence = [
+        {
+            "beats": runs[i],
+            "edges": [(before, after) for before, after, _ in sites],
+            "arm_counts": [arms for _, _, arms in sites],
+        }
+        for i, sites in sorted(plan.items())
+    ]
     arm_ids = {
         b.id for b in scratch.nodes_of(Beat) if b.purpose == StructuralPurpose.TEXTURE_WORLD
     }
@@ -315,23 +322,30 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 "beat, in order"
             )
     run_of = {b: i for i, run in enumerate(cadence) for b in run["beats"]}
-    placed: Counter[int] = Counter(
-        run_of[spec.before] for spec in proposal.false_branches if spec.before in run_of
-    )
-    short = [
-        (run, placed[i]) for i, run in enumerate(cadence) if placed[i] < len(run["edges"])
+    # Per run, the multiset of arm counts placed must match the engine-assigned
+    # shape mix (PR-3): shape is mandatory, not model-chosen — given the choice
+    # a weak tier placed 44/44 sidetracks. This enforces count AND shape at once.
+    placed_arms: dict[int, list[int]] = {}
+    for spec in proposal.false_branches:
+        if spec.before in run_of:
+            placed_arms.setdefault(run_of[spec.before], []).append(len(spec.arms))
+    mismatched = [
+        (run, sorted(run["arm_counts"]), sorted(placed_arms.get(i, [])))
+        for i, run in enumerate(cadence)
+        if sorted(run["arm_counts"]) != sorted(placed_arms.get(i, []))
     ]
-    if short:
+    if mismatched:
         detail = "; ".join(
-            f"the run {run['beats'][0]} -> {run['beats'][-1]} needs "
-            f"{len(run['edges'])} site(s), this proposal places {got}"
-            for run, got in short
+            f"the run {run['beats'][0]} -> {run['beats'][-1]} needs sites with arm "
+            f"counts {want} (1=sidetrack, 2=diamond, 3=diamond+3rd-arm), this proposal "
+            f"placed {got}"
+            for run, want, got in mismatched
         )
         raise ApplyError(
-            f"the cadence budget is mandatory, not advisory: {detail} — add the "
-            "missing site(s) on each named run (any suggested seam edge listed "
-            "under CADENCE for that run is valid; a diamond takes 2 arms, a "
-            "sidetrack 1), keeping every site you already placed"
+            f"the cadence budget is mandatory, not advisory: {detail} — the engine "
+            "assigns the shape mix; place exactly the arm counts listed for each run "
+            "under CADENCE (each on any of that run's suggested seam edges), keeping "
+            "the sites you already placed correctly"
         )
     lines = []
     # Texture worlds splice first: the cadence table was sized on a graph
@@ -403,7 +417,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             if len(chains) == 1:
                 pc.insert_cadence_sidetrack(g, chains[0], spec.before, spec.after)
             else:
-                pc.insert_cadence_diamond(g, chains[0], chains[1], spec.before, spec.after)
+                pc.insert_cadence_diamond(g, chains, spec.before, spec.after)
         except (mutations.MutationError, KeyError) as e:
             # add_beat already converts a duplicate-id KeyError into an
             # actionable MutationError; the KeyError arm here catches the

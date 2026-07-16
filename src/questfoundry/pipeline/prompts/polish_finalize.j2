@@ -103,18 +103,19 @@ different beat count than the stretch is rejected whole.
 {% if cadence %}
 FALSE BRANCHES (cadence). The story's real choices — its dilemmas — are
 guaranteed elsewhere; these stretches run several scenes without ANY choice,
-which reads as a book, not a game. The site counts below are computed from
-the story's projected reading pace (a genuine-feeling decision every few
-hundred words); fill each run's count, spreading the sites across its edges.
-Two shapes, pick per site:
-- a DIAMOND (2 arms): two flavors of the same forward motion, rejoining
-  immediately — different textures (where you look, who you pass, what you
-  overhear), never different consequences;
-- a SIDETRACK (1 arm): an optional detour off the road that rejoins it —
-  something the reader may stop to examine, or walk past. Declining is
-  also a choice; use it where lingering is plausible.
-An arm is one 1-sentence beat, plus an optional "followup" beat when its
-flavor genuinely needs a breath more room.
+which reads as a book, not a game. The engine has computed, per run, how many
+sites to place and ASSIGNED each a shape by arm count — you fill the shapes it
+lists, you do not choose them. The shapes:
+- 1 arm — a SIDETRACK: an optional detour off the road that rejoins it, which
+  the reader may examine or walk past; the direct road stays.
+- 2 arms — a DIAMOND: two flavors of the same forward motion, forking and
+  rejoining at once; the direct road is replaced by the two arms.
+- 3 arms — a DIAMOND with a third arm: three flavors of that same motion,
+  same fork-and-rejoin.
+Every arm is a texture of the same forward motion — different where you look,
+who you pass, what you overhear — never a different consequence. An arm is one
+1-sentence beat, plus an optional "followup" beat when its flavor genuinely
+needs a breath more room.
 Each arm's beat summaries must state the MARK it leaves — the mood, image, or
 small knowing the reader carries on with — not only the events along it. Every
 arm rejoins a shared destination alongside its siblings (the trunk it forks
@@ -127,22 +128,24 @@ establishes may be true after the rejoin (that would make it a real choice,
 which these are not).
 {% for run in cadence %}
 - run: {{ run.beats | join(" -> ") }}
-  insert {{ run.edges | length }} site(s); suggested edges (scene seams — prefer these):
+  place {{ run.arm_counts | length }} site(s) with arm counts {{ run.arm_counts }} (one
+  site per listed count); suggested edges (scene seams — prefer these):
 {% for before, after in run.edges %}
     {{ before }} -> {{ after }}
 {% endfor %}
 {% endfor %}
 Each entry: {"before": beat id, "after": its successor in the same run,
 "arms": [{"id": "beat:slug", "summary", "entities", "followup": {"id":
-"beat:slug", "summary", "entities"} or omit}] — 2 arms for a diamond, 1 for a
-sidetrack}. Every arm and followup "id" names a NEW beat: coin a fresh, unique
+"beat:slug", "summary", "entities"} or omit}]}. Give each entry exactly as many
+arms as one of its run's listed counts, and place one site per listed count (a
+run listing [2, 1, 1] gets one 2-arm site and two 1-arm sites, in any order on
+its edges). Every arm and followup "id" names a NEW beat: coin a fresh, unique
 "beat:slug" no existing beat uses (a colliding id is rejected). Move a site
 along its run only to avoid an ending's approach or a point of no return's
 immediate aftermath.
-The counts are MANDATORY, not advisory: a proposal that places fewer sites
-on any run than that run's count above is rejected whole. Never return an
-empty "false_branches" list while CADENCE lists runs — fill every run's
-count, however flavorless a stretch seems; a plain diamond (look left /
-look right) beats no choice at all.
+The shape mix is MANDATORY, not advisory: the multiset of arm counts you place
+on a run must match the counts listed for it — the wrong shapes, or too few
+sites, is rejected whole. Never return an empty "false_branches" list while
+CADENCE lists runs.
 {% endif %}
 {% include "_shared.j2" %}

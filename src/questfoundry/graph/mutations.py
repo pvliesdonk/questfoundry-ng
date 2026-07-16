@@ -515,6 +515,31 @@ def set_beat_texture_premise(g: StoryGraph, beat_id: str, premise: str) -> None:
     beat.texture_premise = premise
 
 
+def add_beat_flag_grant(g: StoryGraph, beat_id: str, flag_id: str) -> None:
+    """POLISH's fork-splice write path (cosmetic-forks PR-5): record on a
+    rendering's head beat that walking it grants ``flag_id`` — the beat-layer
+    cosmetic grant `grant_beats` reads. Like ``set_beat_texture_premise``, a
+    presentation *addition*: rendering 0's head is a frozen beat and the
+    freeze (I9) is topological, so no freeze check. Engine-set only; kept
+    sorted and idempotent (re-applying a recorded proposal is a no-op)."""
+    from questfoundry.models.structure import FlagSource
+
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    flag = g.get(flag_id)
+    if not isinstance(flag, StateFlag):
+        raise MutationError(f"{flag_id!r} is not a flag")
+    if flag.source != FlagSource.COSMETIC:
+        raise MutationError(
+            f"flag {flag_id} is not cosmetic; only cosmetic flags are granted "
+            "via grants_flags — a dilemma flag is granted at its path's commit "
+            "beat, never annotated onto one"
+        )
+    if flag_id not in beat.grants_flags:
+        beat.grants_flags = sorted([*beat.grants_flags, flag_id])
+
+
 def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:
     """GROW's realization: a nested hard fork de-ends the first-forking
     dilemma's tails (the story continues into the climax fork)."""

@@ -157,31 +157,48 @@ def test_polish_finalize_rejects_the_live_invented_world(golden):
     )
 
 
-def test_polish_finalize_forbids_false_branches_without_long_runs(golden, monkeypatch):
-    # a false branch splices only into a long linear run; with none, the
-    # list must be empty (the enum can't say "no items") — the live
-    # gpt-oss:120b cloud failure was a proposed diamond where none fit.
-    # texture_worlds gets the same list discipline when no sites are offered.
-    with_runs = polish.finalize_proposal_schema(golden)
-    assert "maxItems" not in with_runs.model_json_schema()["properties"]["false_branches"]
+def test_fork_schema_pins_keyword_enum_and_omits_gated_without_offers():
+    """The per-site fork schema (PR-5): a gated rendering's `keyword` is
+    pinned to the site's offered set, and a site with no offers has no
+    `gated` field at all — a disallowed consumption is unrepresentable
+    (the list-discipline successor of the old empty-enum rule)."""
+    from questfoundry.graph import mutations
+    from questfoundry.graph.store import StoryGraph
+    from questfoundry.models.base import Stage as St
+    from questfoundry.models.concept import Vision
+    from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
+    from questfoundry.pipeline import passages as pc
+    from questfoundry.project.io import Project
 
-    monkeypatch.setattr(polish, "_texture_and_cadence", lambda project: ([], [], set()))
-    without = polish.finalize_proposal_schema(golden)
-    props = without.model_json_schema()["properties"]
-    assert props["false_branches"]["maxItems"] == 0
-    assert props["texture_worlds"]["maxItems"] == 0
-    with pytest.raises(ValidationError):
-        without.model_validate(
-            {"residue": [], "false_branches": [
-                {"before": "a", "after": "b", "arms": [{"id": "x", "summary": "s"}]}
-            ]}
+    g = StoryGraph()
+    prev = None
+    for i in range(6):
+        beat = Beat(
+            id=f"beat:c{i}",
+            created_by=St.SEED,
+            summary=f"c{i}",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.SETUP,
         )
-    with pytest.raises(ValidationError):
-        without.model_validate(
-            {"texture_worlds": [
-                {"site": 0, "premise": "p", "beats": [{"id": "x", "summary": "s"}]}
-            ]}
-        )
+        mutations.add_beat(g, beat, [])
+        if prev:
+            mutations.add_ordering(g, prev, beat.id)
+        prev = beat.id
+    vision = Vision(premise="t", genre="t", tone="t", themes=["x"], scope="micro")
+    project = Project(root=None, name="t", stage=St.POLISH, vision=vision, graph=g)
+
+    site = pc.ForkSite(
+        before="beat:c2", after="beat:c3", segment=(), arms=2,
+        keywords=("flag:cw-a", "flag:cw-b"),
+    )
+    props = polish._fork_schema(site)(project).model_json_schema()
+    keyword = props["$defs"]["GatedRenderingSpec"]["properties"]["keyword"]
+    assert keyword["enum"] == ["flag:cw-a", "flag:cw-b"]
+
+    bare = pc.ForkSite(
+        before="beat:c2", after="beat:c3", segment=(), arms=2, keywords=()
+    )
+    assert "gated" not in polish._fork_schema(bare)(project).model_json_schema()["properties"]
 
 
 def test_polish_audit_pins_passages_and_flags_with_slug_affordance(golden):

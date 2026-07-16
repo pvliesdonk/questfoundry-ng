@@ -16,6 +16,46 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-16, later (cosmetic forks PR-5 built whole — the finalize
+  loop; the order question mooted):** The 5a/5b/5c order decision the
+  same-day hand-off left open resolved itself: one session built all three
+  sub-slices together as draft PR #101 (the recorded coupling held —
+  retiring mirrored cadence was inseparable from recursion + budget
+  parity). Built plan §6 end to end on one branch: `finalize:0`
+  keeps residue (obligations before decoration); engine-only planner rounds
+  `finalize:<n>` recompute `fork_plan` on the current graph and expand into
+  per-site `fork:<n>:<k>` writer passes; per-site schemas pin rendering
+  count, beat counts, entities, and the offered-keyword enum; the apply
+  splices through `insert_cosmetic_fork`, persists premises (rendering 0's
+  onto frozen trunk heads), and mints `flag:cw-*` per non-empty rendering;
+  a keyword-gated extra rendering is v1 consumption (edge-scale only —
+  build decision, plan doc). I15 restated composition-closed (un-mirrored
+  FALSE_BRANCH decoration contracted before projection; mirror chains
+  ground out; structural choice-topology parity retired for per-walk
+  budget parity) with legacy exemplar structures pinned valid; I16
+  (cosmetic-gate locality) landed with check + violating constructions.
+  Retired and deleted: `texture_sites`/`texture_plan`/`cadence_plan`/
+  `insert_cadence_*`/`_texture_and_cadence`/`_twin_chain`/`_arm_pairs`;
+  the scale sim now drives `fill_fork_budget` (the loop to its fixed
+  point). Planner calls the sim forced: target the WORST projected walk
+  (budget parity), degrade a cycled shape to a sidetrack at the words
+  boundary, order tiers by marginal story-words per decision (scenes
+  capped, edges, smalls last). Recalibration flagged, not retuned: honest
+  words pricing means the band-top sim lands ~3% over B6's 800 (fixed
+  point asserted instead), and arc-VIEW beat counts inflate with
+  renderings (B3/B4 post-modulation, BACKLOG). Open questions 4 and 5
+  answered (resume determinism pinned by test; B6 over-holding fixed —
+  cosmetic holds are walk-accumulated in both walkers). **Drive-by fix:**
+  the offline loop fixture exposed `_audit_one_context` comparing the
+  Passage NODE to the passage id (always False), so every per-passage
+  `audit:<pid>` prompt rendered with an EMPTY passage list — a severe
+  prompt defect; the live run survived it only because the schema pins
+  the passage enum (the medium run's halt itself was the giant-call,
+  already fixed by #95's decomposition — this is that fix's remaining
+  prompt half). Fixed and pinned by the fixture's audit passes. (The PR's
+  earlier commit message calls this "the audit halt's root cause" — an
+  overclaim written before #100's hand-off was visible; this entry is the
+  corrected record.)
 - **2026-07-16 (cosmetic forks PR-2 → PR-4 shipped; PR-5 sub-sliced, order
   left open):** Landed the epic's engine core across three merged PRs: **PR-2**
   (#97) the one splice primitive `insert_cosmetic_fork` behind the three shapes
@@ -39,6 +79,7 @@ history; the decisions it recorded are captured below and in the design docs.
   PR-4. The agent recommended flipping to **minting + I16 first**; the author
   paused to decide the order in a fresh session. Provenance for the validation
   exemplar and the audit/entity-roster fixes: entries below and the BACKLOG.
+
 
 - **2026-07-15 (structural-depth medium validation run — machinery
   measured, four findings, two prompt defects):** Ran DREAM→POLISH at

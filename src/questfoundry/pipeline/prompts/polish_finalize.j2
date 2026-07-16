@@ -1,5 +1,5 @@
-Finalize the story's structure before it becomes passages. Two jobs, both additions
-(the topology is frozen — nothing moves, nothing is deleted):
+Finalize the story's structure before it becomes passages: residue arms,
+additions only (the topology is frozen — nothing moves, nothing is deleted).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 
@@ -52,100 +52,4 @@ slug from the path or dilemma so it stays distinct, e.g. "beat:hand-locket-after
 {% endif %}
 {% include "_craft.j2" %}
 {% include "_summary_brief.j2" %}
-{% if reserve and (texture_sites or cadence) %}
-RESERVED MATERIAL (advisory). Triage set these dilemmas aside as unwoven
-feedstock — real material from this story's brainstorm. Where a texture
-world or a false-branch arm wants substance, prefer grafting from them (a
-place, a tension, a rumor they name) over inventing texture from nothing.
-They stay unwoven: an arm may echo their material as texture, never
-advance, reveal, or decide them.
-{% for r in reserve %}
-- {{ r.dilemma.question }} (stakes: {{ r.dilemma.why_it_matters }}{% if r.entities %}; touches {{ r.entities | join(", ") }}{% endif %})
-{% endfor %}
-{% endif %}
-{% if texture_sites %}
-TEXTURE WORLDS (required). Each stretch below runs several scenes with no
-choice; lay a PARALLEL RENDERING over it — the SAME story events against
-another backdrop. The difference may sit on any consequence-free axis:
-where the events happen, by what road or means, in whose company, or in
-the small facts of things and people along the way. The reader chooses a
-rendering where the stretch begins and both converge exactly where it
-ends: a different backdrop, never different consequences — nothing may
-happen in one rendering that changes what is true after the convergence.
-For EACH site, BOTH renderings name their backdrop — they are peers, not an
-original and a variant. The FRESH rendering: a one-line "premise" stating its
-backdrop, anchored in a story element the beats, cast, or RESERVED MATERIAL
-above already carry or clearly imply. The TRUNK rendering (rendering 0, the
-existing beats): a one-line "trunk_premise" naming the backdrop those beats
-ALREADY carry — extract it from them; only where the weave left the backdrop
-vague may you sharpen it, never contradicting what a beat states. The two must
-vary the SAME consequence-free axis (both a road, both a companion, both a
-detail of the place), so the reader chooses between two named worlds. Then
-write exactly ONE beat per trunk beat, IN ORDER: the same event the trunk beat
-carries, re-expressed with the fresh rendering's difference present. Summaries
-in plain declarative present tense (a brief for the writer, never the prose).
-{% for site in texture_sites %}
-- site {{ site.index }} ({{ site.beats | length }} beats to mirror):
-{% for b in site.beats %}
-    {{ b.id }} — "{{ b.summary }}"
-{% endfor %}
-{% endfor %}
-Each entry: {"site": the site index above, "premise": the fresh rendering's
-backdrop (one line), "trunk_premise": rendering 0's backdrop (one line), "beats":
-[{"id": "beat:slug", "summary", "entities": [...]}] — exactly one per trunk
-beat, in order}. Every "id" names a NEW beat: coin fresh, unique
-"beat:slug"s no existing beat uses (a colliding id is rejected); a
-mechanical scheme is fine — site 0's beats as "beat:tw0-1", "beat:tw0-2",
-and so on. The site counts
-are MANDATORY: a proposal that skips a site, doubles one, or writes a
-different beat count than the stretch is rejected whole.
-{% endif %}
-{% if cadence %}
-FALSE BRANCHES (cadence). The story's real choices — its dilemmas — are
-guaranteed elsewhere; these stretches run several scenes without ANY choice,
-which reads as a book, not a game. The engine has computed, per run, how many
-sites to place and ASSIGNED each a shape by arm count — you fill the shapes it
-lists, you do not choose them. The shapes:
-- 1 arm — a SIDETRACK: an optional detour off the road that rejoins it, which
-  the reader may examine or walk past; the direct road stays.
-- 2 arms — a DIAMOND: two flavors of the same forward motion, forking and
-  rejoining at once; the direct road is replaced by the two arms.
-- 3 arms — a DIAMOND with a third arm: three flavors of that same motion,
-  same fork-and-rejoin.
-Every arm is a texture of the same forward motion — different where you look,
-who you pass, what you overhear — never a different consequence. An arm is one
-1-sentence beat, plus an optional "followup" beat when its flavor genuinely
-needs a breath more room.
-Each arm's beat summaries must state the MARK it leaves — the mood, image, or
-small knowing the reader carries on with — not only the events along it. Every
-arm rejoins a shared destination alongside its siblings (the trunk it forks
-from, or the other diamond arm), and the rejoin labels are worded from these
-summaries; so if a summary carries only its own events, the sibling labels
-collapse onto the same onward step and the choice reads as a mechanical
-sidestep. Give every arm a residue its exit label can voice, distinct from its
-siblings'. That mark is textural memory, never consequence: nothing an arm
-establishes may be true after the rejoin (that would make it a real choice,
-which these are not).
-{% for run in cadence %}
-- run: {{ run.beats | join(" -> ") }}
-  place {{ run.arm_counts | length }} site(s) with arm counts {{ run.arm_counts }} (one
-  site per listed count); suggested edges (scene seams — prefer these):
-{% for before, after in run.edges %}
-    {{ before }} -> {{ after }}
-{% endfor %}
-{% endfor %}
-Each entry: {"before": beat id, "after": its successor in the same run,
-"arms": [{"id": "beat:slug", "summary", "entities", "followup": {"id":
-"beat:slug", "summary", "entities"} or omit}]}. Give each entry exactly as many
-arms as one of its run's listed counts, and place one site per listed count (a
-run listing [2, 1, 1] gets one 2-arm site and two 1-arm sites, in any order on
-its edges). Every arm and followup "id" names a NEW beat: coin a fresh, unique
-"beat:slug" no existing beat uses (a colliding id is rejected). Move a site
-along its run only to avoid an ending's approach or a point of no return's
-immediate aftermath.
-The shape mix is MANDATORY, not advisory: the multiset of arm counts you place
-on a run must match the counts listed for it — the wrong shapes, or too few
-sites, is rejected whole. Never return an empty "false_branches" list while
-CADENCE lists runs.
-{% endif %}
 {% include "_shared.j2" %}

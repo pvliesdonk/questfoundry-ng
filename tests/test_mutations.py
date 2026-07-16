@@ -213,3 +213,56 @@ def test_split_passage_rejects_an_ending():
     )
     with pytest.raises(MutationError, match="ending set, fixed at the freeze"):
         mutations.split_passage(g, "passage:p-final", [["flag:one-a"], ["flag:one-b"]])
+
+
+def test_add_beat_flag_grant_lands_sorted_and_idempotent_on_frozen_beats():
+    """The rendering-0 head annotation (cosmetic-forks PR-5): a cosmetic
+    grant is a legal presentation addition on a frozen beat — the freeze
+    (I9) is topological. Grants stay sorted and re-granting is a no-op."""
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    mutations.freeze_topology(g)
+    for slug in ("cw-b", "cw-a"):
+        mutations.add_flag(
+            g,
+            StateFlag(
+                id=f"flag:{slug}",
+                created_by=Stage.POLISH,
+                description="took the rendering",
+                source=FlagSource.COSMETIC,
+            ),
+        )
+    mutations.add_beat_flag_grant(g, "beat:one-pre", "flag:cw-b")
+    mutations.add_beat_flag_grant(g, "beat:one-pre", "flag:cw-a")
+    mutations.add_beat_flag_grant(g, "beat:one-pre", "flag:cw-b")
+    assert g.node("beat:one-pre").grants_flags == ["flag:cw-a", "flag:cw-b"]
+
+
+def test_add_beat_flag_grant_rejects_bad_references_and_dilemma_flags():
+    """Only cosmetic flags are granted via grants_flags; a dilemma flag is
+    granted at its path's commit. Errors carry the corrective."""
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:one-a",
+            created_by=Stage.GROW,
+            description="d",
+            source=FlagSource.DILEMMA,
+            path=pa,
+        ),
+    )
+    with pytest.raises(MutationError, match="not a beat"):
+        mutations.add_beat_flag_grant(g, "beat:missing", "flag:one-a")
+    with pytest.raises(MutationError, match="not a flag"):
+        mutations.add_beat_flag_grant(g, "beat:one-pre", "flag:missing")
+    with pytest.raises(MutationError, match="commit") as exc:
+        mutations.add_beat_flag_grant(g, "beat:one-pre", "flag:one-a")
+    assert "cosmetic" in str(exc.value)

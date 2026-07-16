@@ -1,0 +1,115 @@
+Word ONE cosmetic fork. The engine has already chosen the site and the shape;
+you write only the renderings — their premises and beats. Everything here is
+an addition to a frozen story (nothing moves, nothing is deleted), and it is
+texture, never consequence: nothing a rendering establishes may still be true
+after the fork rejoins.
+
+VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+
+CAST — the only entities you may reference. Every "entities" value below MUST
+be an id copied verbatim from this list (the id in parentheses). An entity's
+id often differs from its name — copy the id, never derive one from a name,
+and never coin an id for a person or place not listed here.
+{% for e in cast %}
+- {{ e.name }} ({{ e.id }}): {{ e.concept }}
+{% endfor %}
+
+{% if host_premise %}
+THIS SITE SITS INSIDE AN EXISTING RENDERING whose backdrop is:
+"{{ host_premise }}". Every beat you write here happens inside that world —
+your summaries must stay consistent with it (your own premise varies a
+FURTHER detail within it, never contradicts it).
+{% endif %}
+{% if segment %}
+THE SITE — a trunk segment to render a second way ({{ segment | length }} beats):
+{% for b in segment %}
+    {{ b.id }} — "{{ b.summary }}"
+{% endfor %}
+Lay a PARALLEL RENDERING over these events — the SAME story events against
+another backdrop. The difference may sit on any consequence-free axis: where
+the events happen, by what road or means, in whose company, or in the small
+facts of things and people along the way. The reader chooses a rendering
+where the segment begins and both converge exactly where it ends: a different
+backdrop, never different consequences.
+BOTH renderings name their backdrop — they are peers, not an original and a
+variant. Each fresh rendering: a one-line "premise" stating its backdrop,
+anchored in a story element the beats, cast, or RESERVED MATERIAL below
+already carry or clearly imply. The TRUNK rendering (rendering 0, the
+existing beats): a one-line "trunk_premise" naming the backdrop those beats
+ALREADY carry — extract it from them; only where the weave left the backdrop
+vague may you sharpen it, never contradicting what a beat states. All
+premises must vary the SAME consequence-free axis (both a road, both a
+companion, both a detail of the place), so the reader chooses between named
+worlds. Then, per fresh rendering, write exactly ONE beat per trunk beat, IN
+ORDER: the same event the trunk beat carries, re-expressed with that
+rendering's difference present. Summaries in plain declarative present tense
+(a brief for the writer, never the prose).
+Return: {"trunk_premise": one line, "renderings": [{"premise": one line,
+"beats": [{"id": "beat:slug", "summary", "entities": [...]}] — exactly one
+per trunk beat, in order}] — exactly {{ arms }} rendering(s)}.
+{% else %}
+THE SITE — the edge between two existing story moments:
+    {{ before.id }} — "{{ before.summary }}"
+    -> {{ after.id }} — "{{ after.summary }}"
+{% if arms == 1 %}
+Shape: a SIDETRACK — one optional detour off this edge that rejoins it; the
+direct road stays, and the reader may examine the detour or walk past it.
+{% elif arms == 2 %}
+Shape: a DIAMOND — two flavors of the same forward motion, forking at
+{{ before.id }} and rejoining at {{ after.id }}; the direct edge is replaced
+by your two arms.
+{% else %}
+Shape: a DIAMOND WITH A THIRD ARM — three flavors of that same motion, same
+fork-and-rejoin; the direct edge is replaced by your three arms.
+{% endif %}
+Every arm is a texture of the same forward motion — different where you look,
+who you pass, what you overhear — never a different consequence. Each
+rendering: a one-line "premise" naming its flavor (its value on one
+consequence-free axis, the same axis across all arms), and one 1-sentence
+beat — plus an optional second beat only when its flavor genuinely needs a
+breath more room.
+Each arm's beat summaries must state the MARK it leaves — the mood, image, or
+small knowing the reader carries on with — not only the events along it.
+Every arm rejoins a shared destination alongside its siblings (the trunk it
+forks from, or another arm), and the rejoin labels are worded from these
+summaries; so if a summary carries only its own events, the sibling labels
+collapse onto the same onward step and the choice reads as a mechanical
+sidestep. Give every arm a residue its exit label can voice, distinct from
+its siblings'. That mark is textural memory, never consequence.
+Return: {"renderings": [{"premise": one line, "beats": [{"id": "beat:slug",
+"summary", "entities": [...]}] — 1 beat, or 2 when the flavor needs room}] —
+exactly {{ arms }} rendering(s); leave "trunk_premise" out (or "")}.
+{% endif %}
+{% if reserve %}
+
+RESERVED MATERIAL (advisory). Triage set these dilemmas aside as unwoven
+feedstock — real material from this story's brainstorm. Where a rendering
+wants substance, prefer grafting from them (a place, a tension, a rumor they
+name) over inventing texture from nothing. They stay unwoven: a rendering may
+echo their material as texture, never advance, reveal, or decide them.
+{% for r in reserve %}
+- {{ r.dilemma.question }} (stakes: {{ r.dilemma.why_it_matters }}{% if r.entities %}; touches {{ r.entities | join(", ") }}{% endif %})
+{% endfor %}
+{% endif %}
+{% if keywords %}
+
+KEYWORDS (optional). Some readers arrive here carrying a mark from an earlier
+rendering they chose. You MAY add ONE extra arm visible only to those
+readers, by returning a "gated" entry: {"keyword": one id from the list
+below, copied verbatim, "premise", "beats": [...]} — the same size and the
+same rules as any arm. It ACKNOWLEDGES the mark (the arm may echo what the
+keyword remembers), it never rewards it: an arm richer than its siblings
+turns a declinable detour into a loss, which makes the earlier choice a
+consequence. Adding it is always optional — when no keyword genuinely echoes
+here, leave "gated" out.
+{% for f, description in keywords %}
+- {{ f }}: {{ description }}
+{% endfor %}
+{% endif %}
+
+Every "id" names a NEW beat the engine will create: coin a fresh, unique
+"beat:slug" no existing beat uses (a colliding id is rejected), and keep
+every id in this proposal distinct from the others. A mechanical scheme is
+fine — e.g. "beat:arm1-1", "beat:arm1-2" for the first rendering's beats.
+{% include "_craft.j2" %}
+{% include "_shared.j2" %}

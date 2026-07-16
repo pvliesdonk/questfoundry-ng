@@ -433,3 +433,163 @@ def test_g4_arc_references_fail_loud():
     ]
     assert any("beat:the-offer" in i.message for i in issues)
     assert any("path:no-such" in i.message for i in issues)
+
+
+def test_b6_walker_holds_cosmetic_flags_only_via_traversed_grants(vision):
+    """B6's walk must not count a keyword-gated entry as a live decision
+    when the walk never took the granting rendering (cosmetic-forks §4,
+    open question 5 — cosmetic holds accrue from traversed choice grants,
+    not grant-beats-in-view)."""
+    from questfoundry.models.presentation import Choice, Passage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+
+    def structural(slug, purpose, **kwargs):
+        mutations.add_beat(
+            g,
+            Beat(
+                id=f"beat:{slug}",
+                created_by=Stage.POLISH,
+                summary=slug,
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=purpose,
+                **kwargs,
+            ),
+            [],
+        )
+
+    for slug in ("a", "d", "f"):
+        structural(slug, StructuralPurpose.BRIDGE)
+    for slug in ("x", "y"):
+        mutations.add_flag(
+            g,
+            StateFlag(
+                id=f"flag:cw-{slug}",
+                created_by=Stage.POLISH,
+                description=slug,
+                source=FlagSource.COSMETIC,
+            ),
+        )
+        structural(slug, StructuralPurpose.FALSE_BRANCH, grants_flags=[f"flag:cw-{slug}"])
+    structural("gy", StructuralPurpose.FALSE_BRANCH, requires_flags=["flag:cw-y"])
+    for src, dst in [
+        ("a", "x"), ("a", "y"), ("x", "d"), ("y", "d"),
+        ("d", "gy"), ("gy", "f"), ("d", "f"),
+    ]:
+        mutations.add_ordering(g, f"beat:{src}", f"beat:{dst}")
+
+    prose = {"pa": 300, "px": 300, "py": 300, "pd": 200, "pgy": 50, "pf": 100}
+    for pid, beat in [
+        ("pa", "a"), ("px", "x"), ("py", "y"), ("pd", "d"), ("pgy", "gy"), ("pf", "f"),
+    ]:
+        mutations.add_passage(
+            g,
+            Passage(
+                id=f"passage:{pid}",
+                created_by=Stage.POLISH,
+                summary=pid,
+                prose="w " * prose[pid],
+            ),
+            [f"beat:{beat}"],
+        )
+    for src, dst, req, grants in [
+        ("pa", "px", [], ["flag:cw-x"]),
+        ("pa", "py", [], ["flag:cw-y"]),
+        ("px", "pd", [], []),
+        ("py", "pd", [], []),
+        ("pd", "pgy", ["flag:cw-y"], []),
+        ("pgy", "pf", [], []),
+        ("pd", "pf", [], []),
+    ]:
+        mutations.add_choice(
+            g,
+            f"passage:{src}",
+            f"passage:{dst}",
+            Choice(label=f"{src}->{dst}", requires=req, grants=grants),
+        )
+    # the walk: pa (decision: px/py live) -> px -> pd -> pf. cw-y was never
+    # granted along it, so pd offers no second live choice: 900 words / 1
+    # decision = 900, above the band -> B6 warns. View-derived holding would
+    # have counted 2 decisions (450, in band) and stayed silent.
+    b6 = [i for i in run_checks(g, vision, Stage.FILL) if i.check == "B6"]
+    assert b6 and "900" in b6[0].message
+
+
+def _i16(g, vision):
+    return [
+        i
+        for i in run_checks(g, vision, Stage.POLISH)
+        if i.check == "I16" and i.severity == Severity.ERROR
+    ]
+
+
+def _cosmetic_flag(g, slug):
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=f"flag:cw-{slug}",
+            created_by=Stage.POLISH,
+            description=slug,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    return f"flag:cw-{slug}"
+
+
+def test_i16_cosmetic_gate_on_non_rendering_beat_is_an_error(vision):
+    """I16 (cosmetic-gate locality): a keyword may gate only a cosmetic-fork
+    rendering — a narrative beat depending on one is a dilemma in costume."""
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    cw = _cosmetic_flag(g, "pine")
+    beat = g.node("beat:one-pre")
+    beat.requires_flags = [cw]
+    issues = _i16(g, vision)
+    assert issues and "beat:one-pre" in issues[0].message
+    assert "rendering" in issues[0].message
+
+
+def test_i16_cosmetic_gate_on_ordinary_choice_is_an_error(vision):
+    from questfoundry.models.presentation import Choice, Passage
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    cw = _cosmetic_flag(g, "pine")
+    mutations.add_passage(
+        g,
+        Passage(id="passage:src", created_by=Stage.POLISH, summary="s"),
+        ["beat:one-pre"],
+    )
+    mutations.add_passage(
+        g,
+        Passage(id="passage:dst", created_by=Stage.POLISH, summary="d"),
+        ["beat:one-commit-a"],
+    )
+    mutations.add_choice(
+        g, "passage:src", "passage:dst", Choice(label="go", requires=[cw])
+    )
+    issues = _i16(g, vision)
+    assert issues and "passage:dst" in issues[0].message
+
+
+def test_i16_accepts_a_gated_rendering(vision):
+    g = StoryGraph()
+    cw = _cosmetic_flag(g, "pine")
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:gated-arm",
+            created_by=Stage.POLISH,
+            summary="only holders see this",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+            requires_flags=[cw],
+        ),
+        [],
+    )
+    assert _i16(g, vision) == []

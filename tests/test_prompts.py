@@ -309,22 +309,24 @@ def test_fill_voice_asks_for_restraint_and_a_plain_baseline():
 
 def test_finalize_states_coined_ids_must_be_fresh():
     """POLISH F1 (the live finalize collision root cause): the model must be
-    told its coined beat ids are NEW and must be unique."""
-    source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
-    assert "names a NEW beat" in source
-    assert "colliding id is rejected" in source
+    told its coined beat ids are NEW and must be unique — in the residue
+    prompt and in the per-site fork prompt alike."""
+    for template in ("polish_finalize.j2", "polish_fork.j2"):
+        source = (PROMPTS_DIR / template).read_text(encoding="utf-8")
+        assert "names a NEW beat" in source
+        assert "colliding id is rejected" in source
 
 
-def test_finalize_texture_premise_is_anchored_and_uncontaminated():
+def test_fork_texture_premise_is_anchored_and_uncontaminated():
     """Texture-premise contamination (author-caught, texture-trial live run
     2026-07-14): the template quoted the doctrine's forest/mountains example
-    and the model echoed it as 2 of 3 premises. The template must carry no
-    copyable scenery (the id example stays mechanical), and the premise
-    constraint is positive and structural — anchor in a story element and
-    name it — not a negative fence (author correction, same day: texture is
-    any consequence-free axis, 'same events against another backdrop', not
-    location only)."""
-    source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
+    and the model echoed it as 2 of 3 premises. The fork template (where the
+    rendering contract now lives) must carry no copyable scenery (the id
+    example stays mechanical), and the premise constraint is positive and
+    structural — anchor in a story element and name it — not a negative
+    fence (author correction, same day: texture is any consequence-free
+    axis, 'same events against another backdrop', not location only)."""
+    source = (PROMPTS_DIR / "polish_fork.j2").read_text(encoding="utf-8")
     flat = " ".join(source.split())
     assert "anchored in a story element" in flat  # positive, structural constraint
     assert "never different consequences" in flat
@@ -332,7 +334,7 @@ def test_finalize_texture_premise_is_anchored_and_uncontaminated():
     # extracted from the trunk beats and only sharpened where the weave is vague
     assert "trunk_premise" in flat
     assert "extract it from them" in flat and "sharpen" in flat
-    assert "beat:tw0-1" in flat  # mechanical, not a place name
+    assert "beat:arm1-1" in flat  # mechanical, not a place name
     assert "forest" not in flat and "mountain" not in flat
 
 

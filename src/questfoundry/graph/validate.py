@@ -1,4 +1,4 @@
-"""The invariant registry (I1-I14) and gate runner.
+"""The invariant registry (I1-I16) and gate runner.
 
 Each check cites the invariant it enforces (design doc 01 §8) and the
 gate it belongs to (design doc 02). `run_checks` runs every gate at or
@@ -24,6 +24,7 @@ from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
+    FlagSource,
     IntersectionGroup,
     StateFlag,
     StructuralPurpose,
@@ -753,21 +754,29 @@ def check_i13_passage_graph(ctx: Context) -> None:
 
 
 def check_i15_texture_worlds(ctx: Context) -> None:
-    """I15: a texture-world arm mirrors a consequence-free trunk stretch
-    beat-for-beat (design doc 01 §6, §8; docs/plans/structural-depth.md W3).
+    """I15, restated for the finalize loop (design doc 01 §6, §8;
+    cosmetic-forks §3 — segment-relative, composition-closed, budget parity).
 
-    Field half: every texture_world beat names an existing, non-arm,
-    ungated, non-commit, non-ending twin (``mirrors``), carries the twin's
-    *effective* annotations — band and head parity, the strictly-equal
-    doctrine's mechanical form — and no gate of its own.
+    Field half: every texture_world beat names an existing twin
+    (``mirrors``); the twin may itself be a mirror beat (worlds nest), so
+    mirror chains must be acyclic and ground out in a non-mirror beat; the
+    direct twin is ungated, commits nothing, ends nothing (nested twins are
+    themselves mirror beats, so the rule composes link-by-link); the beat
+    carries the twin's *effective* annotations — band and head parity, the
+    strictly-equal doctrine's mechanical form — and no gate of its own.
 
-    Shape half, the projection rule: every ordering edge incident to a
-    texture beat must project, via ``mirrors``, onto an existing trunk
-    edge. This pins arm contiguity, fork/convergence parity (the arm
-    rejoins exactly where its stretch does), twin injectivity along the
-    chain, and catches a later splice that reroutes the trunk around a
-    residue arm while the texture arm still bypasses it — all as local
-    edge checks, no chain reconstruction."""
+    Shape half, the projection rule: on the PREDECESSOR graph with every
+    *un-mirrored* FALSE_BRANCH beat contracted away (edge-scale decoration a
+    later round spliced inside either world — legacy mirrored-cadence twins
+    keep their FALSE_BRANCH twins in place), every edge incident to a mirror
+    beat must project onto an edge of that same contracted graph, mirroring
+    one step at either or both endpoints (nested constructs project
+    level-by-level, which is what makes the rule compose). This pins
+    rendering contiguity and fork/convergence parity (the rendering rejoins
+    exactly where its segment does) as local edge checks. Structural
+    choice-topology parity between renderings is deliberately NOT required
+    (ratified decision 1): each rendering grows its own forks and per-walk
+    B6 owns choice fairness."""
     beats = {b.id: b for b in ctx.g.nodes_of(Beat)}
     arms = {bid for bid, b in beats.items() if b.purpose == StructuralPurpose.TEXTURE_WORLD}
     if not arms:
@@ -795,13 +804,6 @@ def check_i15_texture_worlds(ctx: Context) -> None:
                 "beat; point mirrors at its trunk twin",
             )
             continue
-        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
-            ctx.error(
-                "I15",
-                f"texture-world beat {bid} mirrors another texture arm "
-                f"({twin.id}); worlds do not nest — mirror the trunk",
-            )
-            continue
         if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
             ctx.error(
                 "I15",
@@ -824,24 +826,121 @@ def check_i15_texture_worlds(ctx: Context) -> None:
                 "read at the same band and head — copy the twin's annotations",
             )
 
-    def proj(beat_id: str) -> str:
-        b = beats.get(beat_id)
-        if b is not None and beat_id in arms and b.mirrors:
-            return b.mirrors
-        return beat_id
+    # Mirror chains ground out: link-by-link checks cannot see a cycle of
+    # mutual mirrors now that nesting is legal, so walk each chain once.
+    reported_cycles: set[frozenset[str]] = set()
+    for bid in sorted(arms):
+        seen: list[str] = []
+        cur: str | None = bid
+        while cur is not None and cur in beats and beats[cur].mirrors is not None:
+            if cur in seen:
+                cycle = frozenset(seen[seen.index(cur) :])
+                if cycle not in reported_cycles:
+                    reported_cycles.add(cycle)
+                    ctx.error(
+                        "I15",
+                        f"the mirror chain at {bid} cycles ({' -> '.join(seen)}); "
+                        "mirror chains must be acyclic and ground out in a "
+                        "non-mirror trunk beat",
+                    )
+                break
+            seen.append(cur)
+            cur = beats[cur].mirrors
 
+    # The decoration-contracted edge set: bypass every FALSE_BRANCH beat that
+    # no beat mirrors (a mirrored one is a legacy cadence twin's trunk-side
+    # counterpart and stays projectable).
+    twins_of = {b.mirrors for b in beats.values() if b.mirrors}
+    transparent = {
+        bid
+        for bid, b in beats.items()
+        if b.purpose == StructuralPurpose.FALSE_BRANCH
+        and b.mirrors is None
+        and bid not in twins_of
+    }
+    raw_succ: dict[str, set[str]] = {}
     for e in ctx.g.edges:
-        if e.kind != EdgeKind.PREDECESSOR:
+        if e.kind == EdgeKind.PREDECESSOR:
+            raw_succ.setdefault(e.src, set()).add(e.dst)
+    edges: set[tuple[str, str]] = set()
+    for u in beats:
+        if u in transparent:
             continue
-        if e.src not in arms and e.dst not in arms:
+        stack, seen_nodes = list(raw_succ.get(u, ())), set()
+        while stack:
+            v = stack.pop()
+            if v in seen_nodes:
+                continue
+            seen_nodes.add(v)
+            if v in transparent:
+                stack.extend(raw_succ.get(v, ()))
+            else:
+                edges.add((u, v))
+
+    def mirror_of(beat_id: str) -> str | None:
+        b = beats.get(beat_id)
+        return b.mirrors if b is not None and beat_id in arms else None
+
+    for u, v in sorted(edges):
+        if u not in arms and v not in arms:
             continue
-        ps, pd = proj(e.src), proj(e.dst)
-        if ps == pd or not ctx.g.has_edge(EdgeKind.PREDECESSOR, ps, pd):
+        mu, mv = mirror_of(u), mirror_of(v)
+        candidates = [
+            pair
+            for pair in ((mu, v), (u, mv), (mu, mv))
+            if pair[0] is not None and pair[1] is not None
+        ]
+        if not any(a != b and (a, b) in edges for a, b in candidates):
+            shown = candidates[0] if candidates else (u, v)
             ctx.error(
                 "I15",
-                f"edge {e.src} -> {e.dst} projects onto {ps} -> {pd}, which is "
-                "not a trunk edge; the arm must run parallel to its mirrored "
-                "stretch and rejoin exactly where it does",
+                f"edge {u} -> {v} projects onto {shown[0]} -> {shown[1]}, which "
+                "is not an edge of the decoration-contracted trunk; the "
+                "rendering must run parallel to its segment and rejoin exactly "
+                "where it does",
+            )
+
+
+def check_i16_cosmetic_gate_locality(ctx: Context) -> None:
+    """I16 (cosmetic-gate locality, 01 §8; cosmetic-forks §4): a cosmetic
+    flag may be required only inside constructs that converge by
+    construction — a beat gated on one is itself a cosmetic-fork rendering
+    beat, and a choice requiring one enters a rendering's passage. With
+    this, "downstream depends on a keyword" is impossible to express in
+    the graph: a keyword is permission (prose may color), never a promise
+    (a required callback is a dilemma in costume and belongs in GROW)."""
+    cosmetic = {f.id for f in ctx.g.nodes_of(StateFlag) if f.source == FlagSource.COSMETIC}
+    if not cosmetic:
+        return
+    rendering = (StructuralPurpose.FALSE_BRANCH, StructuralPurpose.TEXTURE_WORLD)
+    for beat in ctx.g.nodes_of(Beat):
+        gated_on = sorted(set(beat.requires_flags) & cosmetic)
+        if gated_on and beat.purpose not in rendering:
+            ctx.error(
+                "I16",
+                f"beat {beat.id} requires cosmetic keyword(s) {gated_on} but is "
+                "not a cosmetic-fork rendering beat; a keyword may gate only a "
+                "rendering that converges by construction — if downstream "
+                "genuinely depends on this mark, it is a dilemma in costume and "
+                "belongs in GROW",
+            )
+    for e in ctx.g.edges:
+        if e.kind != EdgeKind.CHOICE:
+            continue
+        gated_on = sorted(set(e.payload.get("requires", [])) & cosmetic)
+        if not gated_on:
+            continue
+        dst_beats = queries.beats_of_passage(ctx.g, e.dst)
+        if not all(
+            isinstance(b := ctx.g.node(bid), Beat) and b.purpose in rendering
+            for bid in dst_beats
+        ):
+            ctx.error(
+                "I16",
+                f"choice {e.src} -> {e.dst} requires cosmetic keyword(s) "
+                f"{gated_on} but {e.dst} is not a cosmetic-fork rendering's "
+                "passage; a keyword may gate only a rendering that converges "
+                "by construction",
             )
 
 
@@ -1016,10 +1115,16 @@ def check_b6_choice_cadence(ctx: Context) -> None:
     averages = []
     for selection in queries.arc_selections(ctx.g):
         view = queries.arc_view(ctx.g, selection)
+        # Dilemma flags are view-derived (a commit is on exactly the arcs the
+        # view selects); cosmetic flags accrue from the grants of choices the
+        # walk actually takes — a rendering head sits in every arc view, so
+        # view-derived holding would count keywords from detours this walk
+        # never took (cosmetic-forks §4, open question 5 — resolved).
         held = {
             f.id
             for f in ctx.g.nodes_of(StateFlag)
-            if any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
+            if f.path is not None
+            and any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
         }
 
         def on_arc(passage_id: str, view=view) -> bool:
@@ -1046,7 +1151,11 @@ def check_b6_choice_cadence(ctx: Context) -> None:
             )
             if len(live) >= 2:
                 decisions += 1
-            cur = next((e.dst for e in live if on_arc(e.dst)), None)
+            taken = next((e for e in live if on_arc(e.dst)), None)
+            if taken is None:
+                break
+            held.update(taken.payload.get("grants", []))
+            cur = taken.dst
         if words:
             averages.append(words / max(decisions, 1))
     if not averages:
@@ -1290,6 +1399,7 @@ GATES: dict[Stage, list] = {
         check_i13_passage_graph,
         check_i14_passage_viewpoint,
         check_i15_texture_worlds,
+        check_i16_cosmetic_gate_locality,
         check_g4_choice_labels,
         check_g4_residue_coverage,
         check_g4_arc_references,

@@ -289,59 +289,58 @@ central commitment point.
 | | |
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
-| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, texture worlds (run-scale parallel arms, I15), false branches, pacing bridges; character-arc metadata per entity |
-| Gate G4 | I10–I15 (I15: texture-world arms mirror their trunk stretch beat-for-beat — annotations, boundaries, and choice topology; 01 §6, §8); every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
+| Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, cosmetic forks (sidetracks, diamonds, small two-worlds, texture worlds — one mechanism, I15) with one minted cosmetic keyword per non-empty rendering; character-arc metadata per entity |
+| Gate G4 | I10–I16 (I15: non-empty-segment renderings mirror their segment — content and boundary parity, composition-closed under nesting and decoration, structural choice-topology parity deliberately retired for per-walk budget parity; I16: a cosmetic keyword gates only cosmetic-fork renderings; 01 §6, §8); every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
 
-1. **Finalize the DAG** (additions only): reorder within linear runs for
-   flow; insert bridge beats for pacing; insert residue arms per the
-   convergence sketch — one flag-gated arm per path per world (the
-   residue diamond: the story visibly remembers whichever side was
-   chosen), an arm being one beat, a 2-beat chain where the memory
-   deserves a scene (an identically gated chain collapses into a single
-   passage), or a tensored arm — two same-gate branches, each its own
-   gated passage, giving the reader who holds the flag a texture-only
-   choice in how to carry the memory (M8; either branch satisfies G4's
-   coverage); lay **texture worlds** over the engine-computed sites
-   (structural-depth W3, invariant I15, 01 §6): cap-aligned
-   consequence-free stretches, sized against the same B6 projection
-   *before* cadence and capped by the words budget (`words_target` when
-   set — a parallel stretch is written and printed twice); the model
-   declares each world's one-line premise and words one arm beat per
-   trunk beat, in order, grafting from the triage reserve — the engine
-   mirrors annotations, wires the fork, and persists the premise on the
-   arm beats for FILL's context (the site counts are mandatory at
-   apply, like cadence's); then add false branches at the
-   engine-computed cadence budget
-   (M8): the engine projects a playthrough walk from the capped groups
-   — sized on a graph already carrying the texture forks, so the two
-   budgets agree, and a diamond landing inside a mirrored stretch is
-   mirrored into every arm so both worlds keep the same choice topology —
-   and sizes the diamonds that bring words-per-choice into the B6 band,
-   offering only cap-aligned seam edges (a mid-chunk split would mint a
-   whole extra passage per choice) — the model chooses diamond (two
-   arms, different textures of the same forward motion) or sidetrack
-   (one arm, an optional detour the reader may decline) per site and
-   writes the arms — grafting, where it fits, from the triage-reserved
-   dilemmas its context surfaces as advisory feedstock (real brainstormed
-   material over invented flavor; 01 §4, structural-depth W2: an arm may
-   echo reserved material as texture, never advance or decide it). The
-   real choices are the dilemmas; cadence sites
-   are safe dressing precisely because the structure guarantees the
-   real ones. Each run's site count is **mandatory** — the apply rejects
-   a proposal that leaves any run short, with the shortfall named
-   (before enforcement a weak tier proposed zero sites against a full
-   budget across four repair rounds and shipped an essentially flat
-   book: 10 branch points over 112 passages, words-per-choice ~4x over
-   the B6 band — live *Closed Circle* medium, 2026-07-14; the count is
-   engine-computed precisely so the model cannot under-sample it).
+1. **Finalize the DAG** (additions only) — **the loop**
+   (cosmetic-forks A24, `docs/plans/cosmetic-forks.md` §3/§6). **Round 0
+   (`finalize:0`) is residue**: insert residue arms per the convergence
+   sketch — one flag-gated arm per path per world (the residue diamond:
+   the story visibly remembers whichever side was chosen), an arm being
+   one beat, a 2-beat chain where the memory deserves a scene (an
+   identically gated chain collapses into a single passage), or a
+   tensored arm — two same-gate branches, each its own gated passage
+   (M8; either branch satisfies G4's coverage). Obligations land before
+   decoration, so the fork rounds always plan on the rerouted graph.
+   **Budget rounds (`finalize:<n>`, n ≥ 1) are engine-only planners**:
+   each recomputes the qualifying sites (segment tiers and seam edges,
+   `fork_segments`) and both budgets — the per-walk B6 projection and the
+   story-words headroom (`words_target` when set, the band top otherwise;
+   every site's marginal story words must fit) — on the *current* graph,
+   assigns shape and arm count per admitted site (sidetrack / diamond-2 /
+   diamond-3 / two-worlds; the scope's `cadence_arm_cycle`, offset by the
+   keywords already minted so resume reproduces the assignment; a shape
+   that no longer fits the headroom degrades to a sidetrack), and expands
+   into one small `fork:<n>:<k>` wording pass per site. The model words
+   only the renderings — one premise per non-empty rendering, rendering
+   0's trunk premise included (renderings are peers), fresh beats grafted
+   from the triage reserve where it fits — while every count and shape is
+   engine-mandated at the schema. **At apply the engine splices** through
+   the one cosmetic-fork primitive, persists the premises (rendering 0's
+   onto the frozen trunk beats — a legal presentation addition, the
+   freeze is topological), and **mints one cosmetic keyword per
+   non-empty rendering** (`flag:cw-*`, granted on the rendering's head
+   beat, description = the premise). A round's edge-scale sites are
+   offered up to 8 holdable, unconsumed keywords minted in earlier
+   rounds (grants strictly upstream), and a pass MAY attach one
+   keyword-gated extra rendering consuming one — acknowledges, never
+   rewards; one consumer per keyword; I16 holds the locality. The loop
+   terminates when a round admits nothing: every projected walk at the
+   B6 target, or no site fits the remaining words or seam capacity.
+   Because a segment inside a rendering is just a segment a later round
+   may fork, recursion falls out — worlds nest, diamonds land inside
+   arms — and renderings keep budget parity, not structural parity:
+   per-walk B6 owns choice fairness (ratified decision 1). The real
+   choices are the dilemmas; cosmetic sites are safe dressing precisely
+   because the structure guarantees the real ones.
 2. **Build the passage layer:** collapse maximal linear runs into
    passages (boundaries at forks/joins; runs split at the scope's
    `passage_beats_max` — the choice-free cutter, 01 §6 — **and at every
    viewpoint switch**: one head per passage, I14, with unannotated and
-   `wide` beats riding as wildcards; the raw choice-topology runs cadence
-   planning reads stay uncut — a head-switch chunks prose, not choices);
+   `wide` beats riding as wildcards; the raw choice-topology runs the fork
+   planner reads stay uncut — a head-switch chunks prose, not choices);
    merge intersection-adjacent
    beats into single scenes where narratable; run the **prose-feasibility
    audit** on every passage — ambiguity is presented and capped in
@@ -360,10 +359,10 @@ Two phases:
 The engine computes collapse boundaries and gate satisfiability; the LLM
 writes labels, decides feasibility judgments, and drafts arc metadata.
 
-The passage layer is **not** emitted in one call. The `finalize` pass
-*expands* (runner `PassSpec.expand`) into independent, minimal-context
-passes — the collapse groups are known only after finalize adds its
-residue/false-branch/bridge beats — one **`summary:<group>`** per
+The passage layer is **not** emitted in one call. The finalize loop's
+*terminal round* expands (runner `PassSpec.expand`) into independent,
+minimal-context passes — the collapse groups are known only after every
+residue arm and cosmetic fork has landed — one **`summary:<group>`** per
 collapse group (context: that group's own beats, its ending flag, and
 for a heavy-residue frontier group the world-states its variants must
 cover) and one **`labels:<group>`** per source group with outgoing

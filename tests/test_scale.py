@@ -38,8 +38,18 @@ def test_simulated_medium_lands_inside_its_recalibrated_bands():
         assert preset.words_total[0] <= y.words_total <= preset.words_total[1]
         assert preset.passages_min <= y.passages <= preset.passages_max
         assert preset.arc_beats_min <= y.arc_beats[0]
-        assert y.arc_beats[1] <= preset.arc_beats_max
-        assert y.b6[1] <= 800
+        # arc_beats_max is deliberately not asserted: an arc VIEW counts every
+        # rendering of every cosmetic fork while a walk traverses one — the
+        # known post-modulation B3/B4 recalibration (BACKLOG); B4 is advisory
+        # PR-5 recalibration: the finalize loop prices every fork's story
+        # words honestly (the retired cadence machinery charged arms nothing),
+        # so at the words band top the budget and seam capacity bind before
+        # B6's 800 top. The exit criterion is the fixed point itself — no
+        # further site is admissible — with the walk within a few percent of
+        # the band instead of the flat-book 4x over it (flagged in the PR-5
+        # body; the mix/appetite knobs are open question 1).
+        assert pc.fork_plan(g, preset) == []
+        assert y.b6[1] <= 830
 
 
 def test_simulated_stories_are_structurally_valid():
@@ -135,22 +145,21 @@ def test_sidetrack_keeps_the_direct_edge():
 # -- cadence budget ---------------------------------------------------------------
 
 
-def test_cadence_plan_offers_only_cap_aligned_seams():
+def test_fork_plan_offers_only_cap_aligned_seams():
     """A mid-chunk split mints a whole extra passage per choice; the
-    budget only offers the seams between complete chunks."""
+    edge tier only offers the seams between complete chunks."""
     g = StoryGraph()
     ids = _chain(g, 13)
     preset = SCOPE_PRESETS["medium"]  # cap 3
-    plan = pc.cadence_plan(g, preset)
-    for sites in plan.values():
-        for before, _after, _arms in sites:
-            assert (ids.index(before) + 1) % preset.passage_beats_max == 0
+    for site in pc.fork_plan(g, preset):
+        if not site.segment:
+            assert (ids.index(site.before) + 1) % preset.passage_beats_max == 0
 
 
-def test_cadence_plan_is_empty_when_the_walk_is_already_paced():
+def test_fork_plan_is_empty_when_the_walk_is_already_paced():
     g = StoryGraph()
-    _chain(g, 2)  # two beats: nothing long enough to need a diamond
-    assert pc.cadence_plan(g, SCOPE_PRESETS["micro"]) == {}
+    _chain(g, 2)  # two beats: nothing long enough to need a fork
+    assert pc.fork_plan(g, SCOPE_PRESETS["micro"]) == []
 
 
 # -- word bands -------------------------------------------------------------------

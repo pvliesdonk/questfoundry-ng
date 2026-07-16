@@ -11,6 +11,7 @@ from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
+from questfoundry.models.concept import SCOPE_PRESETS
 from questfoundry.models.drama import DilemmaRole, ResidueWeight
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
@@ -18,11 +19,9 @@ from questfoundry.pipeline import passages as pc
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.stages.grow import _derive_flags
 from questfoundry.pipeline.stages.polish import (
-    ArmSpec,
     AuditEntry,
     AuditProposal,
     EdgeLabelSpec,
-    FalseBranchSpec,
     FinalizeProposal,
     ForkSpec,
     LabelsProposal,
@@ -536,145 +535,30 @@ def test_false_branch_splice_and_long_run_detection():
     assert set(queries.predecessors(g, after)) == {"beat:via-the-cliffs", "beat:shore-tidepools"}
 
 
-def test_finalize_splices_false_branches_against_pristine_topology(vision, tmp_path, monkeypatch):
-    """Both residue arms and cadence false branches add to the *frozen*
-    topology, so a false branch validates and splices against the long
-    runs the model was shown — BEFORE residue splicing shortens them.
-    Otherwise a beat inside a long run at proposal time can be evicted by
-    residue and its diamond wrongly rejected (the live gpt-oss:120b cloud
-    finalize failure, 2026-07-11). Assert the order directly: the false
-    branch is spliced before any residue arm."""
-    g = StoryGraph()
-    _woven_story(g, ResidueWeight.LIGHT)
-    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    mutations.freeze_topology(g)
-    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
-
-    order: list[str] = []
-    for name in ("insert_sidetrack", "insert_residue_chain", "insert_residue_diamond"):
-        real = getattr(pc, name)
-        tag = "false" if name == "insert_sidetrack" else "residue"
-        monkeypatch.setattr(
-            pc, name, lambda *a, _r=real, _t=tag, **k: (order.append(_t), _r(*a, **k))[1]
-        )
-
-    proposal = FinalizeProposal(
-        residue=[
-            ResidueSpec(dilemma="dilemma:sub", path="path:sub-a", id="beat:mem-a", summary="s"),
-            ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
-        ],
-        false_branches=[
-            FalseBranchSpec(
-                before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
-            )
-        ],
+def test_fork_beat_id_collision_is_repairable(vision, tmp_path):
+    """A rendering beat reusing an existing id is a repairable ApplyError
+    carrying the fork's location, not a crash (the false-branch splice once
+    let the store's KeyError escape uncaught)."""
+    from questfoundry.pipeline.stages.polish import (
+        ForkBeatSpec,
+        ForkProposal,
+        RenderingSpec,
+        _fork_apply,
     )
-    _finalize_apply(proposal, project)
-    assert order and order[0] == "false"  # the diamond lands before residue shortens the run
-    assert order.count("residue") == 2  # both arms still applied
-    assert isinstance(g.node("beat:detour"), Beat)
-
-
-def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypatch):
-    """The cadence budget is mandatory: the live 2026-07-14 gpt-oss medium
-    proposed `false_branches: []` against a full budget in four straight
-    rounds and nothing objected — the shipped structure had 10 branch
-    points over 112 passages. An under-filled budget must be a repairable
-    ApplyError naming the short run and both counts, raised before any
-    splice mutates the graph."""
-    import questfoundry.pipeline.stages.polish as polish_mod
 
     g = StoryGraph()
     _woven_story(g, ResidueWeight.LIGHT)
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
     mutations.freeze_topology(g)
     run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
-    # the engine assigned this run one diamond and one sidetrack (PR-3 mix)
-    budget = [
-        {"beats": run, "edges": [(run[0], run[1]), (run[1], run[2])], "arm_counts": [2, 1]},
-    ]
-    long_beats = {b for r in pc.collapse_groups(g) for b in r}
-    monkeypatch.setattr(
-        polish_mod, "_texture_and_cadence", lambda _p: ([], budget, long_beats)
-    )
-
-    before = {b.id for b in g.nodes_of(Beat)}
-    # too few sites: placed [1] against the required [1, 2] — rejected
-    with pytest.raises(ApplyError, match=r"mandatory.*arm counts \[1, 2\].*placed \[1\]"):
-        _finalize_apply(
-            FinalizeProposal(
-                false_branches=[
-                    FalseBranchSpec(
-                        before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
-                    )
-                ]
-            ),
-            project,
-        )
-    assert {b.id for b in g.nodes_of(Beat)} == before  # shortfall spliced nothing
-    # right count, WRONG shape: two sidetracks placed [1, 1] against [1, 2] — rejected
-    with pytest.raises(ApplyError, match=r"mandatory.*arm counts \[1, 2\].*placed \[1, 1\]"):
-        _finalize_apply(
-            FinalizeProposal(
-                false_branches=[
-                    FalseBranchSpec(
-                        before=run[0], after=run[1], arms=[ArmSpec(id="beat:d1", summary="s")]
-                    ),
-                    FalseBranchSpec(
-                        before=run[1], after=run[2], arms=[ArmSpec(id="beat:d2", summary="s")]
-                    ),
-                ]
-            ),
-            project,
-        )
-    assert {b.id for b in g.nodes_of(Beat)} == before  # wrong shape spliced nothing
-
-    # the same budget, filled, applies clean — one site per required edge
-    _finalize_apply(
-        FinalizeProposal(
-            residue=[
-                ResidueSpec(dilemma="dilemma:sub", path="path:sub-a", id="beat:mem-a", summary="s"),
-                ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
-            ],
-            false_branches=[
-                FalseBranchSpec(  # the required 2-arm diamond
-                    before=run[0],
-                    after=run[1],
-                    arms=[
-                        ArmSpec(id="beat:detour", summary="s"),
-                        ArmSpec(id="beat:detour-b", summary="s"),
-                    ],
-                ),
-                FalseBranchSpec(  # and the required 1-arm sidetrack
-                    before=run[1], after=run[2], arms=[ArmSpec(id="beat:detour-2", summary="s")]
-                ),
-            ]
-        ),
-        project,
-    )
-    assert isinstance(g.node("beat:detour"), Beat)
-    assert isinstance(g.node("beat:detour-2"), Beat)
-
-
-def test_finalize_false_branch_id_collision_is_repairable(vision, tmp_path):
-    """The exact asymmetry the PR fixes: the false-branch splice once let a
-    colliding new-beat id escape as an uncaught KeyError and crash the run
-    (the residue path caught it, this one did not). Through _finalize_apply
-    it is now a repairable ApplyError carrying false-branch location
-    context, not a crash."""
-    g = StoryGraph()
-    _woven_story(g, ResidueWeight.LIGHT)
-    project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
-    mutations.freeze_topology(g)
-    run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
-    proposal = FinalizeProposal(
-        false_branches=[
-            # arm reuses an existing beat id (run[0]) — the collision
-            FalseBranchSpec(before=run[0], after=run[1], arms=[ArmSpec(id=run[0], summary="s")])
+    site = pc.ForkSite(before=run[0], after=run[1], segment=(), arms=1, keywords=())
+    proposal = ForkProposal(
+        renderings=[
+            RenderingSpec(premise="p", beats=[ForkBeatSpec(id=run[0], summary="s")])
         ]
     )
-    with pytest.raises(ApplyError, match="false branch"):
-        _finalize_apply(proposal, project)
+    with pytest.raises(ApplyError, match="cosmetic fork"):
+        _fork_apply(site)(proposal, project)
 
 
 def test_llm_beat_entities_must_be_ids(vision, tmp_path):
@@ -1321,28 +1205,41 @@ def test_audit_prompt_marks_endings_as_unsplittable(vision):
     assert "irrelevant only" in out  # its over-cap note steers away from split_on
     assert "p-mid [ENDING" not in out  # a non-ending passage is not marked
     assert "passage cannot" in out  # the rule is also stated in the split_on body
-def test_finalize_cadence_residue_instruction_is_shape_neutral(vision):
-    """PR-0's exit-label residue paragraph was written in sidetrack-only
-    vocabulary ("the detour", "declined", "rejoins the same road"), which
-    both biased shape selection and mis-instructed diamond arms (a diamond
-    has no detour and declines nothing). It now addresses both shapes."""
+def test_fork_prompt_mark_instruction_is_shape_neutral(vision):
+    """PR-0's exit-label residue paragraph was once written in sidetrack-only
+    vocabulary ("the detour", "declined"), which both biased shape selection
+    and mis-instructed diamond arms. The per-site fork prompt's mark rule
+    must speak to both shapes."""
     from questfoundry.pipeline.runner import _environment
 
-    out = _environment().get_template("polish_finalize.j2").render(
+    out = _environment().get_template("polish_fork.j2").render(
         vision=vision,
         cast=[],
-        needs=[],
         reserve=[],
-        texture_sites=[],
-        cadence=[
-            {"beats": ["beat:a", "beat:b"], "edges": [("beat:a", "beat:b")], "arm_counts": [2]}
-        ],
+        segment=[],
+        before=Beat(
+            id="beat:a",
+            created_by=Stage.GROW,
+            summary="a",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        after=Beat(
+            id="beat:b",
+            created_by=Stage.GROW,
+            summary="b",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        arms=2,
+        keywords=[],
+        host_premise="",
         notes=None,
         repair_errors=None,
         research=None,
     )
-    mark = out[out.index("Each arm's beat summaries") : out.index("which these are not")]
-    assert "diamond arm" in mark  # the mark rule speaks to both shapes
+    mark = out[out.index("Each arm's beat summaries") : out.index("That mark is textural")]
+    assert "sibling" in mark  # the mark rule speaks to arms with siblings
     assert "detour" not in mark and "declined" not in mark  # not sidetrack-only
 
 
@@ -1419,3 +1316,75 @@ def test_grants_flags_round_trips(vision, tmp_path):
     reloaded = load_project(tmp_path)
     assert reloaded.graph.node("beat:grant-head").grants_flags == ["flag:cw"]
     assert reloaded.graph.node("beat:root").grants_flags == []  # default preserved
+
+
+def _cosmetic_flag(g, slug):
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=f"flag:cw-{slug}",
+            created_by=Stage.POLISH,
+            description=slug,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    return f"flag:cw-{slug}"
+
+
+def _fb_beat(slug, **kwargs):
+    return Beat(
+        id=f"beat:{slug}",
+        created_by=Stage.POLISH,
+        summary=slug,
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+        **kwargs,
+    )
+
+
+def _bridge(slug):
+    return Beat(
+        id=f"beat:{slug}",
+        created_by=Stage.GROW,
+        summary=slug,
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.BRIDGE,
+    )
+
+
+def _diamond_keyword_graph(gated_on: str) -> StoryGraph:
+    """a -> {x, y} -> b -> d -> {gd?, f}: a cosmetic diamond whose arms grant
+    cw-x / cw-y, then a later entry gated on ``gated_on``. The projected walk
+    deterministically takes arm x (topological group order)."""
+    g = StoryGraph()
+    for slug in ("a", "b", "d", "f"):
+        mutations.add_beat(g, _bridge(slug), [])
+    cw_x, cw_y = _cosmetic_flag(g, "x"), _cosmetic_flag(g, "y")
+    mutations.add_beat(g, _fb_beat("x", grants_flags=[cw_x]), [])
+    mutations.add_beat(g, _fb_beat("y", grants_flags=[cw_y]), [])
+    mutations.add_beat(g, _fb_beat("gd", requires_flags=[gated_on]), [])
+    for src, dst in [
+        ("a", "x"), ("a", "y"), ("x", "b"), ("y", "b"), ("b", "d"),
+        ("d", "gd"), ("gd", "f"), ("d", "f"),
+    ]:
+        mutations.add_ordering(g, f"beat:{src}", f"beat:{dst}")
+    return g
+
+
+def test_projected_walks_hold_cosmetic_flags_only_when_walked():
+    """Open question 5, resolved: a cosmetic grant sits in every arc view,
+    so view-derived holding counted keywords from detours the walk never
+    took. Cosmetic flags accrue as the walk traverses the granting group;
+    dilemma flags stay view-derived."""
+    preset = SCOPE_PRESETS["micro"]
+    # the walk takes arm x, so a cw-y-gated entry is never live: only the
+    # diamond itself offers a decision
+    g = _diamond_keyword_graph("flag:cw-y")
+    ((_, decisions),) = pc.projected_walks(g, preset)
+    assert decisions == 1
+    # gated on the arm the walk DOES take, the entry is live: two decisions
+    g = _diamond_keyword_graph("flag:cw-x")
+    ((_, decisions),) = pc.projected_walks(g, preset)
+    assert decisions == 2

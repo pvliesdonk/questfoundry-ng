@@ -1,6 +1,7 @@
 # Cosmetic forks — one mechanism, renderings as peers, residue keywords (milestone plan)
 
-> Status: **DESIGNED, not started** (2026-07-15). The unifying insight is the
+> Status: **PR-0..PR-5 SHIPPED** (PR-5 built 2026-07-16; PR-6 deferred
+> until a live run mints keywords). The unifying insight is the
 > **author's, directed 2026-07-15**: "diamonds, sidetracks and texture worlds
 > are all intrinsically the exact same mechanism"; "one arm should not have a
 > different treatment than the other" (the texture trunk is currently
@@ -368,7 +369,7 @@ made; system descriptions are not).
 | PR-2 | Symmetry engine: one splice primitive behind the three current entry points, premise per rendering incl. rendering 0 (relaxing `Beat._class_consistency`'s premise-only-on-`TEXTURE_WORLD` guard, §2), FILL/entry-labels reading it. Doc half in the same PR: the freeze clarification and the premise-per-rendering rule land in 01 §6 | frontier design, mid-tier typing |
 | PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5. Lands in the *one-shot* finalize (before the loop exists): `cadence_plan` gains the per-site shape, the prompt's CADENCE table states it, `_finalize_apply` enforces it like it enforces counts | mid-tier against this contract |
 | PR-4 | Grant model: `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10/round-trip + violating-construction tests; B6 held-note | mid-tier against this contract |
-| PR-5 | The loop, **sub-sliced (agent decision + author, 2026-07-16)** because it bundled ~6 major changes across the freeze/arc/I15 seams into one diff. A coupling surfaced reading the code: **retiring mirrored cadence is inseparable from recursion + budget parity** (dropping the trunk↔arm cadence mirroring leaves a texture arm cadence-less/asymmetric unless recursion budgets the arm's own run — the budget-parity amendment to I15), so it moves out of 5a. Refined slices: **PR-5a** the finalize loop mechanism (`finalize:<n>` expansion decomposing the one giant proposal into per-round wording passes — the A21 fix STATUS predicts for ~60-site exhaustion), engine assignment + mirrored cadence unchanged, 02's POLISH contract names the loop; **PR-5b** minting + gated-rendering consumption + I16 (stated in 01 §8 with its `graph/validate.py` check + violating test); **PR-5c** recursion (drop the `qualifies()` texture exclusion) + small-segment admission + retire mirrored cadence + budget parity, with I15 restated segment-relative and composition-closed and its check updated | frontier (freeze/arc/I15 seams) |
+| PR-5 | The loop — **delivered whole** (PR #101, 2026-07-16): a same-day hand-off sub-sliced it (5a mechanism / 5b minting + I16 / 5c recursion + retirement + I15 restatement) and left the order open, but the build session delivered all three together — the recorded coupling (retiring mirrored cadence is inseparable from recursion + budget parity) held, and slicing would have re-serialized against itself. Contents as §6 specifies: `finalize:<n>` rounds + per-site `fork:<n>:<k>` passes, minting + gated-rendering consumption + I16, recursion + small-segment admission, probe-scratch and mirrored cadence retired, I15 restated with check and violating constructions, 02's POLISH contract names the loop. Build decisions below | frontier (freeze/arc/I15 seams) |
 | PR-6 | DRESS print acknowledgment paragraphs | deferred until a live run mints keywords |
 
 **Acceptance criteria per PR** (what "done" means, checkable without this
@@ -420,6 +421,39 @@ build lives only in the 2026-07-15 design session; if a seam turns out
 underspecified anyway, that is a plan bug — sharpen this doc in the same PR
 rather than deriving silently (AGENTS.md, doc-silent territory).
 
+## PR-5 build decisions (2026-07-16, the build session's frontier calls)
+
+Seams §6 left open, frozen at build time — each is an agent ruling, not
+author-ratified, recorded so the next session doesn't re-derive:
+
+1. **Gated renderings are edge-scale only in v1** (purpose `FALSE_BRANCH`):
+   §4's v1 form is the diamond's extra arm, "a keyword never gates a
+   scene-scale world" holds by construction, and I15's field half keeps
+   texture beats ungated. Sites without offers get a schema with no `gated`
+   field at all (the empty-enum list discipline's successor).
+2. **The restated I15 shape rule** contracts every *un-mirrored*
+   `FALSE_BRANCH` beat (new-loop decoration) before projecting, and projects
+   one `mirrors` step at either or both endpoints — legacy mirrored-cadence
+   twins keep their `FALSE_BRANCH` counterparts in place, so every
+   checked-in exemplar validates unchanged; nested constructs project
+   level-by-level (composition).
+3. **Cycle offset** = count of existing cosmetic flags; **keyword offers**
+   pinned at round-plan time (rounds < n by construction); **minting** =
+   `flag:cw-<head-slug>` (suffixed on collision), description = the premise.
+4. **Small-segment tier** = the seam-aligned run-tail spans of 1..cap−1
+   beats the old `>= cap` test discarded (interior spans snap to seams on
+   both sides and are always cap-multiples). Admission order is marginal
+   story-words per decision: scenes (capped), edges, smalls last; a cycled
+   shape that no longer fits the words headroom degrades to a sidetrack.
+5. **Per-walk targeting**: the planner drives the WORST projected walk to
+   the B6 upper-middle target, not the mean — budget parity means every
+   walk lands in band on its own. Recalibration flagged: forks now price
+   their story words honestly, so at the words band top the budget and
+   seam capacity bind before B6's top (the sim asserts the fixed point).
+6. **FILL premise stack** (§3's consequence) deferred to BACKLOG: the
+   words budget rarely buys depth ≥ 2, and the fork prompt shows the host
+   rendering's premise so summaries stay world-consistent.
+
 ## Open questions (for the author or a later frontier session)
 
 1. **The mix ratio** (diamond : sidetrack : two-worlds per scope) is author
@@ -430,8 +464,11 @@ rather than deriving silently (AGENTS.md, doc-silent territory).
 3. **Nesting depth in practice** — the loop admits recursion structurally,
    but words-budget admission may never buy depth ≥ 2 below long scope;
    confirm the budgets are the only limiter rather than adding a depth cap.
-4. **Runner resume determinism for the `finalize:<n>` chain** — verify
-   against `runner.py` when PR-5 is built (expected to hold: the next-round
-   decision is a pure function of the checkpointed graph).
-5. **B6 walker over-holding** cosmetic keywords (grant-beats-in-view vs
-   actually-walked) — fix or explicitly document when B6 is next touched.
+4. **Runner resume determinism for the `finalize:<n>` chain** — ANSWERED
+   (PR-5): every planning input is a pure function of the graph (cycle
+   offset from minted-flag count, offers from graph-derived consumption);
+   pinned by `tests/test_fork_loop.py::test_loop_expansion_names_are_deterministic`.
+5. **B6 walker over-holding** — FIXED (PR-5): cosmetic holds are
+   walk-accumulated in both walkers (`projected_walks` accrues at the
+   granting group, the B6 gate walker from traversed choice grants);
+   dilemma flags stay view-derived.

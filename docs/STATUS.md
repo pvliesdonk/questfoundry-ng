@@ -15,7 +15,7 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-15._
+_Last updated: 2026-07-16._
 
 ## Current epics (two threads, roadmap "Now")
 
@@ -136,19 +136,29 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    finalize exhaustion** (the whole proposal landed in one shot) — the
    plan's top loop-risk did not manifest.
 
-   **Next: PR-5 (the loop) — sub-sliced, and its ORDER is an OPEN DECISION
-   for this session.** Reading the code against the plan surfaced (a) a
-   coupling — retiring mirrored cadence is inseparable from recursion +
-   budget parity, so 5a is the loop *mechanism* only (mirrored cadence stays;
-   retirement → 5c); and (b) that the loop's headline value (decompose
-   finalize to avoid ~60-site exhaustion) is **speculative** — the medium run
-   didn't exhaust — while **minting + I16 (PR-5b) is independent of the loop,
-   builds directly on the just-landed PR-4 grant model, is smaller, and needs
-   no fixture re-record.** An agent recommended flipping to **minting + I16
-   first**; the author paused to decide in a fresh session. Both the coupling
-   and the refined 5a/5b/5c slices are recorded in the plan's PR-slicing
-   table. GitHub *issues* are NOT used for this repo — work is tracked here
-   and in the BACKLOG.
+**Next: PR-5 is BUILT — whole — as draft PR #101** (2026-07-16, branch
+   `cosmetic-forks-pr5-finalize-loop`): the order decision the last hand-off
+   left open (5b-first vs 5a-first) is mooted — one session delivered
+   5a+5b+5c together, and the recorded coupling held (retiring mirrored
+   cadence was inseparable from recursion + budget parity, so slicing would
+   have re-serialized against itself). Iterative engine-planned fork rounds,
+   keyword minting + v1 consumption (I16), I15 restated composition-closed,
+   mirrored cadence retired, offline-validated end to end
+   (`tests/test_fork_loop.py`). **Drive-by fix:** the acceptance fixture
+   exposed that `_audit_one_context` compared the Passage NODE to the
+   passage id, so every per-passage `audit:<pid>` prompt rendered with an
+   EMPTY passage list — a severe prompt defect the live run survived only
+   because the schema pins the passage enum (the halt itself was the
+   giant-call, fixed by #95; this is its remaining prompt half). Fixed and
+   pinned. Recalibration flags from PR-5 (details in the PR body): forks
+   now price story words honestly, so at the words band top B6 lands a few
+   percent over its top; arc-VIEW beat counts inflate with renderings a
+   walk never traverses (the known B3/B4 post-modulation item, BACKLOG).
+   After #101 merges: the author read of the POLISH-clean medium exemplar
+   (does it feel interactive?), its FILL/DRESS continuation, then PR-6
+   (DRESS print acknowledgments) once a live run mints keywords. GitHub
+   *issues* are NOT used for this repo (author, 2026-07-15) — work is
+   tracked here and in the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

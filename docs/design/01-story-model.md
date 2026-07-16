@@ -483,7 +483,7 @@ choice-wiring can recover which variant carries which gate when POLISH creates
 passages and wires choices in separate passes
 (`docs/plans/passages-chunking.md`).
 
-**Cosmetic forks — one mechanism, three shapes today.** A false branch and
+**Cosmetic forks — one mechanism, four shapes.** A false branch and
 a texture world are the same construct at different scales: **k ≥ 2
 *renderings* of a trunk *segment*.** A segment is a stretch of the frozen
 trunk between a `before` beat and an `after` beat — length zero (a single
@@ -497,14 +497,23 @@ segment's own beats*, or a *fresh* invented chain:
 |---|---|---|
 | Sidetrack | empty (an edge) | empty ("walk on") + one fresh chain |
 | Diamond | empty (an edge) | two or three fresh chains |
+| Small two-worlds | 1..cap−1 beats (a run tail) | the segment's own beats + one fresh chain |
 | Texture world | a cap-aligned run | the segment's own beats + one fresh chain |
 
-The engine splices these through three entry points today
-(`insert_sidetrack`, `insert_false_branch`, `insert_texture_world`); the
-cosmetic-forks epic (mini-ADR A24 in [03 — Architecture](03-architecture.md)
-§9, contract `docs/plans/cosmetic-forks.md`) unifies them behind one primitive
-and admits a fourth parameterization — a *small two-worlds* over a
-1-to-(cap−1)-beat segment — that is not yet built.
+All four splice through one primitive (`insert_cosmetic_fork`; the named
+splices are adapters), and POLISH plants them through one machinery — the
+**finalize loop** (cosmetic-forks A24 in [03 — Architecture](03-architecture.md)
+§9, contract `docs/plans/cosmetic-forks.md`): engine-only rounds
+(`finalize:<n>`) recompute the qualifying sites and both budgets — the B6
+projection per walk and the story-words headroom (`words_target` or the
+band top) — on the current graph, assign shape and arm count per admitted
+site, and expand into one small wording pass per site; the loop terminates
+when every projected walk is at the B6 target or no site fits the remaining
+words. Admission order follows marginal story-words per decision: scene
+segments (capped story-total), seam edges, small two-worlds last. Because a
+segment inside a rendering is just a segment a later round may fork,
+**recursion falls out**: worlds nest, diamonds land inside arms, and mirror
+chains ground out in trunk beats transitively (I15).
 
 **The content regime follows segment length, not shape.** An empty segment
 has no events, so each fresh rendering invents a breath of texture — a
@@ -522,7 +531,17 @@ scope preset's `cadence_arm_cycle`) across its sites and the finalize apply
 enforces it like it enforces counts — given the choice, a weak tier placed
 44/44 sidetracks (the prompt undersold the diamond; medium validation
 2026-07-15), exactly as discretion over counts once produced the flat book.
-May grant cosmetic flags for later flavor callbacks. **Even fake
+**Every non-empty rendering mints a cosmetic keyword** at splice
+time (`flag:cw-<head-slug>`, `FlagSource.COSMETIC`, granted on the
+rendering's head beat — rendering 0's frozen head included; the empty
+rendering mints nothing: walking past a sidetrack leaves no mark, a
+recorded choice, not an accident). A later round's edge-scale site may
+offer up to 8 holdable, unconsumed keywords, and the wording pass MAY
+attach one **keyword-gated extra rendering** consuming one — visible only
+to holders, same size budget as any rendering (*acknowledges, never
+rewards*: one consumer per keyword, never a scene-scale world), the v1
+consumption form. A keyword is *permission*, never a promise: I16 (§8)
+makes downstream dependence inexpressible. **Even fake
 branching needs residue** (author-directed, 2026-07-15, reading
 letter-and-frontier — the author's words: "even fake branching needs
 consequence", meant in the reader-felt sense; the Drama-layer Consequence
@@ -557,11 +576,14 @@ doctrine's mechanical form; the false-branch micro_beat fallback would
 starve the parallel world). `mirrors` is stored because it cannot be
 recomputed once forks share endpoints — insertion provenance like A14's
 world suffixes, consumed only by the engine and gate I15, never rendered to
-a prompt. Cadence diamonds inside a mirrored stretch are mirrored into the
-arm (engine-suffixed twins), so both worlds keep the same choice topology;
-sites are cap-aligned sub-stretches containing no commit, gate, ending, or
-other arm, and avoid rejoin frontiers (a residue splice would otherwise be
-bypassed). Arcs, flags, and the freeze are untouched by construction — the
+a prompt. Renderings keep **budget parity, not structural parity** (ratified
+cosmetic-forks decision 1): a detour a later round plants inside one
+rendering is NOT mirrored into the others — each rendering grows its own
+forks until its walks hit the B6 band, and per-walk B6 owns choice
+fairness. Sites are seam-aligned sub-stretches containing no commit,
+gate, or ending, and avoid rejoin frontiers (a residue splice would
+otherwise be bypassed); an existing rendering's interior qualifies
+(recursion). Arcs, flags, and the freeze are untouched by construction — the
 arm is conditionally traversed structure, like any diamond arm. Feedstock
 for the arm's material is the triage reserve (§4). Invariant I15 (§8) holds
 the whole contract. The arm's material is model-worded in the finalize
@@ -581,10 +603,10 @@ beat). **Freeze clarification:** the freeze (I9, iron rule 4) is *topological*
 annotation POLISH adds to a frozen beat (a `texture_premise` on rendering 0's
 trunk beats, set only through the mutation layer) is a legal addition, not a
 content rewrite (`set_beat_texture_premise`, deliberately unlike the
-freeze-rejecting `set_beat_summary`/`set_beat_scene_type`). One asymmetry
-remains: the mirrored cadence still keeps the two worlds' *choice topology*
-structurally identical — A24 retires that twinning for per-walk budget parity
-when the finalize loop lands (PR-5); until then this clause is current behavior.
+freeze-rejecting `set_beat_summary`/`set_beat_scene_type`). The legacy
+mirrored-cadence structures earlier runs produced (engine-suffixed twins of
+false-branch beats inside arms) remain valid under I15; the machinery that
+made them is retired.
 
 **Two shapes that look like renderings but are not** (the fence). A
 **residue arm** (§5) is the same *shape* — a parallel chain rejoining the
@@ -690,16 +712,38 @@ design.
   never switches inside a passage — a rotation is always a page-turn
   (author-confirmed 2026-07-14, `docs/plans/rotating-pov-build.md`);
   unannotated beats and `wide` codas are wildcards.
-- **I15** Texture worlds mirror their trunk (§6, structural-depth W3).
+- **I15** Non-empty-segment renderings mirror their segment (§6;
+  restated segment-relative and composition-closed for the finalize loop,
+  cosmetic-forks A24 — the original statement was structural-depth W3's).
   Field half: every `texture_world` beat names an existing twin in
-  `mirrors` that is not itself an arm beat, not gated, commits nothing,
-  and ends nothing; the arm beat is ungated and carries the twin's
-  *effective* annotations. Shape half (the projection rule): every
-  ordering edge incident to a texture beat projects, via `mirrors`, onto
-  an existing trunk edge — which pins arm contiguity, fork/convergence
-  parity (the arm rejoins exactly where its stretch does), twin
-  injectivity, and catches any splice that would let the arm bypass a
-  later graft, all as local edge checks.
+  `mirrors`; the twin may itself be a mirror beat (worlds nest), so
+  mirror chains must be acyclic and **ground out** in a non-mirror beat;
+  the direct twin is not gated, commits nothing, and ends nothing (nested
+  twins are mirror beats, so the rule composes link-by-link); the
+  rendering beat is ungated and carries the twin's *effective*
+  annotations. Shape half (the projection rule): on the beat graph with
+  every *un-mirrored* `false_branch` beat contracted away (edge-scale
+  decoration a later round spliced inside either world; a mirrored
+  `false_branch` beat is a legacy cadence twin's counterpart and stays),
+  every edge incident to a mirror beat projects — one `mirrors` step at
+  either or both endpoints — onto an edge of that same contracted graph.
+  This pins rendering contiguity and fork/convergence parity (the
+  rendering rejoins exactly where its segment does) as local edge checks,
+  and nested constructs project level-by-level. Structural choice-topology
+  parity between renderings is deliberately **not** required (budget
+  parity, ratified cosmetic-forks decision 1): each rendering grows its
+  own forks under the loop's budgets, and per-walk B6 owns choice
+  fairness.
+- **I16** Cosmetic-gate locality (cosmetic-forks §4, the obligation
+  boundary made structural): a cosmetic flag may be required only inside
+  constructs that converge by construction — a beat gated on a cosmetic
+  flag is itself a cosmetic-fork rendering beat, and a choice requiring
+  one enters a rendering's passage; never a GROW beat, never a passage
+  outside a cosmetic construct. With I16, "downstream depends on a
+  keyword" is impossible to *express* in the graph: a keyword is
+  permission (prose may color, a gated rendering may acknowledge), never
+  a promise — anything downstream must honor is a dilemma in costume and
+  belongs in GROW.
 
 ## 9. Where the mapping breaks (danger zones)
 

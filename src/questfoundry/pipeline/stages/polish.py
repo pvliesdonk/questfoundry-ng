@@ -1,24 +1,31 @@
 """POLISH — compile the frozen beat DAG to passages (design doc 02).
 
-Four passes sharing gate G4:
+Passes sharing gate G4:
 
-1. *finalize* — DAG additions only (I9 holds throughout): the LLM
-   writes a flag-gated residue arm per path for every light-residue
-   soft convergence (the residue diamond — an arm may carry a followup
-   beat, and an identically gated chain collapses into one passage)
-   and may propose false-branch diamonds on long linear runs; the
-   engine splices them in. Skipped when nothing is needed.
+1. *finalize* — the loop (cosmetic-forks §3/§6), DAG additions only (I9
+   holds throughout). Round 0 (`finalize:0`) is residue: the LLM writes
+   a flag-gated arm per path for every light-residue soft convergence
+   (an arm may carry a followup beat; an identically gated chain
+   collapses into one passage) — obligations before decoration. Budget
+   rounds (`finalize:<n>`, n >= 1) are engine-only planners: each
+   recomputes `pc.fork_plan` on the current graph and expands into one
+   small `fork:<n>:<k>` pass per admitted cosmetic-fork site (shape and
+   arm count engine-assigned; the model words premises and beats; the
+   apply splices via the one cosmetic-fork primitive and mints one
+   keyword per non-empty rendering). A terminal round expands into the
+   passage passes.
 2. *passages* — the engine computes collapse groups and the complete
    choice topology (endpoints, requires, grants); the LLM contributes
    only words: passage summaries, choice labels, ending titles, and —
    for heavy-residue soft convergences — one variant summary per path
    flag (the engine wires the gated variant passages). Not one call:
-   finalize *expands* into independent, minimal-context passes — one
-   `summary:<group>` per collapse group (its own beats are all the
-   context a beat-derived summary needs) and one `labels:<group>` per
-   source group with outgoing choices — because a single greedy call
-   over the whole passage layer overran the context window at medium
-   scope for no per-item benefit (docs/plans/passages-chunking.md).
+   the terminal round *expands* into independent, minimal-context
+   passes — one `summary:<group>` per collapse group (its own beats are
+   all the context a beat-derived summary needs) and one
+   `labels:<group>` per source group with outgoing choices — because a
+   single greedy call over the whole passage layer overran the context
+   window at medium scope for no per-item benefit
+   (docs/plans/passages-chunking.md).
 3. *audit* — the prose-feasibility audit: the engine computes each
    passage's possibly-active flags; the LLM marks the flags a passage's
    prose must not address; gate I12 enforces the cap on the rest.
@@ -27,14 +34,12 @@ Four passes sharing gate G4:
    lever that paces specific aspects of a character per scene (plan:
    docs/plans/prose-quality.md W5).
 
-M3 scope notes (tracked in docs/STATUS.md): false branches carry no
-cosmetic flags yet. The pacing report is built (advisory B8, over beat
-scene_type — graph/validate.py check_b8_pacing).
+The pacing report is built (advisory B8, over beat scene_type —
+graph/validate.py check_b8_pacing).
 """
 
 from __future__ import annotations
 
-import copy
 from collections.abc import Callable
 from itertools import product
 
@@ -45,10 +50,16 @@ from questfoundry.graph.validate import I12_AMBIGUOUS_CAP, run_checks
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma
 from questfoundry.models.presentation import Choice, Ending, Passage
-from questfoundry.models.structure import Beat, BeatClass, StateFlag, StructuralPurpose
+from questfoundry.models.structure import (
+    Beat,
+    BeatClass,
+    FlagSource,
+    StateFlag,
+    StructuralPurpose,
+)
 from questfoundry.models.world import ArcPivot, Entity, EntityArc, PathEnd
 from questfoundry.pipeline import passages as pc
-from questfoundry.pipeline.refpin import entity_ref_ids, pin
+from questfoundry.pipeline.refpin import entity_ref_ids, enum_type, pin
 from questfoundry.pipeline.types import (
     ApplyError,
     PassSpec,
@@ -95,115 +106,20 @@ class ResidueSpec(BaseModel):
     fork: ForkSpec | None = None  # a second branch: the tensored arm
 
 
-class ArmSpec(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    id: str
-    summary: str
-    entities: list[str] = []
-    followup: FollowupSpec | None = None  # optional second beat when the flavor needs room
-
-
-class FalseBranchSpec(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    before: str  # linear beat edge to fork
-    after: str
-    # arm count = the engine-assigned shape (PR-3): 1 = sidetrack (the direct
-    # edge stays, an optional detour the reader may decline), 2 = diamond, 3 =
-    # diamond with a third arm. The count is mandatory per the CADENCE table.
-    arms: list[ArmSpec] = Field(min_length=1, max_length=3)
-
-
-class TextureBeatSpec(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    id: str
-    summary: str
-    entities: list[str] = []
-
-
-class TextureWorldSpec(BaseModel):
-    """A parallel texture world over an offered stretch (structural-depth
-    W3, invariant I15): the same events re-textured — one beat per trunk
-    beat, in order; the engine mirrors annotations and wires the fork."""
-
-    model_config = ConfigDict(extra="forbid")
-
-    site: int  # index into the offered TEXTURE WORLDS sites
-    premise: str  # the fresh rendering's backdrop, one line (any consequence-free axis)
-    # rendering 0's backdrop — the trunk segment's own premise (cosmetic-forks
-    # §2): grounded in what the trunk beats already carry, sharpening where the
-    # weave left it vague. Renderings are peers, so the trunk names its axis too
-    # (FILL grounds both worlds' prose, the entry label names both).
-    trunk_premise: str
-    beats: list[TextureBeatSpec] = Field(min_length=1)
-
-
 class FinalizeProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     residue: list[ResidueSpec] = []
-    false_branches: list[FalseBranchSpec] = []
-    texture_worlds: list[TextureWorldSpec] = []
 
 
 def _light_needs(project: Project) -> list[pc.ConvergenceNeed]:
     return [n for n in pc.convergence_needs(project.graph) if n.weight == "light"]
 
 
-def _texture_and_cadence(project: Project) -> tuple[list[list[str]], list[dict], set[str]]:
-    """The two engine-sized fork budgets, computed together so they agree
-    (context and apply both call this — deterministic either way):
-    texture sites first (structural-depth W3 — the cheapest choices in
-    reader-words, capped by the words budget), then the words-aware
-    diamond budget (M8) sized on a scratch graph already carrying probe
-    arms, so the cadence the model sees accounts for the worlds it is
-    asked to write. Returns (texture stretches, cadence table, the beats
-    of long runs false branches may target — arm beats excluded: theirs
-    arrive mirrored from the trunk). Both budgets' counts are mandatory,
-    enforced by _finalize_apply (a weak tier proposed zero sites against
-    a full budget and shipped a flat book, 2026-07-14)."""
-    g = project.graph
-    preset = project.vision.preset
-    sites = pc.texture_plan(g, preset, words_target=project.vision.words_target)
-    scratch = copy.deepcopy(g)
-    for k, run in enumerate(sites):
-        arm = [
-            Beat(
-                id=f"beat:texture-probe-{k}-{i}",
-                created_by=Stage.POLISH,
-                summary="probe",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.TEXTURE_WORLD,
-            )
-            for i in range(len(run))
-        ]
-        pc.insert_texture_world(scratch, arm, run)
-    runs = pc.collapse_groups(scratch)
-    plan = pc.cadence_plan(scratch, preset)
-    cadence = [
-        {
-            "beats": runs[i],
-            "edges": [(before, after) for before, after, _ in sites],
-            "arm_counts": [arms for _, _, arms in sites],
-        }
-        for i, sites in sorted(plan.items())
-    ]
-    arm_ids = {
-        b.id for b in scratch.nodes_of(Beat) if b.purpose == StructuralPurpose.TEXTURE_WORLD
-    }
-    long_run_beats = {
-        b for i in pc.long_linear_runs(runs) for b in runs[i]
-    } - arm_ids
-    return sites, cadence, long_run_beats
-
-
 def _finalize_skip(project: Project) -> str | None:
-    sites, cadence, _ = _texture_and_cadence(project)
-    if _light_needs(project) or cadence or sites:
+    if _light_needs(project):
         return None
-    return "no light-residue convergences, no texture sites, and no cadence budget"
+    return "no light-residue convergences"
 
 
 def _finalize_context(project: Project) -> dict:
@@ -221,10 +137,23 @@ def _finalize_context(project: Project) -> dict:
                 },
             }
         )
-    # Reserved dilemmas are POLISH's texture feedstock (structural-depth
-    # W2): real story material for false-branch arms, so the model grafts
-    # instead of inventing. Advisory context only — never woven.
-    reserve = [
+    return {
+        "vision": project.vision,
+        # The roster of ids every `entities` field must draw from. Without
+        # it a summary naming "Sheriff Harold Finch" leads the model to coin
+        # `character:finch` when the id is `character:marshal` (the live
+        # weak-tier finalize halt, 2026-07-15): the schema pins entities to
+        # these ids but the prompt never showed them.
+        "cast": _arc_entities(g),
+        "needs": needs,
+    }
+
+
+def _reserve_context(g) -> list[dict]:
+    """Reserved dilemmas are POLISH's texture feedstock (structural-depth
+    W2): real story material for cosmetic-fork renderings, so the model
+    grafts instead of inventing. Advisory context only — never woven."""
+    return [
         {
             "dilemma": d,
             "entities": [
@@ -235,23 +164,6 @@ def _finalize_context(project: Project) -> dict:
         for d in sorted(g.nodes_of(Dilemma), key=lambda n: n.id)
         if d.reserved
     ]
-    sites, cadence, _ = _texture_and_cadence(project)
-    return {
-        "vision": project.vision,
-        # The roster of ids every `entities` field must draw from. Texture
-        # sites are shown as beat summaries only, so without this a summary
-        # naming "Sheriff Harold Finch" leads the model to coin
-        # `character:finch` when the id is `character:marshal` (the live
-        # weak-tier finalize halt, 2026-07-15): the schema pins entities to
-        # these ids but the prompt never showed them.
-        "cast": _arc_entities(g),
-        "needs": needs,
-        "cadence": cadence,
-        "texture_sites": [
-            {"index": i, "beats": [g.node(b) for b in run]} for i, run in enumerate(sites)
-        ],
-        "reserve": reserve,
-    }
 
 
 def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, str]:
@@ -265,172 +177,13 @@ def _convergence_tails(project: Project, need: pc.ConvergenceNeed) -> dict[str, 
 
 
 def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
+    """Round 0 of the finalize loop: residue only (cosmetic-forks §6).
+    Obligations land before decoration — the budget rounds (`finalize:<n>`,
+    n >= 1) compute their fork sites on the graph residue has already
+    rerouted, so no splice-order subtlety survives."""
     g = project.graph
-    # Residue arms and cadence false branches are both additions to the
-    # *frozen* pre-finalize topology, so both validate against the pristine
-    # structure the model was shown (and the schema pinned against). Snapshot
-    # the long runs and convergence needs now, and splice the false branches
-    # BEFORE residue: residue splicing shortens the runs it neighbours, so a
-    # beat inside a long run at proposal time can fall out of one once
-    # residue lands — and its diamond would be wrongly rejected against a
-    # structure the model never saw (live gpt-oss:120b cloud, 2026-07-11: a
-    # cadence diamond at a bridge beat that residue at the adjacent
-    # convergence broke out of its run). The two never target the same
-    # region — false branches sit in choice-free runs, residue at
-    # convergence rejoins — so the order is a consistency choice, not a
-    # semantic one.
     needs = {(n.dilemma, n.world): n for n in _light_needs(project)}
-    # Both fork budgets are requirements, not suggestions: they are sized
-    # to bring words-per-choice into the B6 band, and a proposal that
-    # leaves either unfilled ships a book-shaped story (live gpt-oss:120b,
-    # 2026-07-14: four finalize rounds each proposed zero sites against a
-    # full budget — the medium landed at 10 branch points over 112
-    # passages). Checked before any splice so a shortfall mutates nothing.
-    sites, cadence, long_run_beats = _texture_and_cadence(project)
-    proposed_sites = sorted(spec.site for spec in proposal.texture_worlds)
-    if proposed_sites != list(range(len(sites))):
-        wanted = "; ".join(
-            f"site {i}: {run[0]} .. {run[-1]} ({len(run)} beats)"
-            for i, run in enumerate(sites)
-        )
-        raise ApplyError(
-            "the texture-world budget is mandatory, not advisory: emit exactly "
-            f"one texture_worlds entry per offered site — {wanted or 'none'}; "
-            f"this proposal covers sites {proposed_sites}. Each entry names its "
-            "site index, a one-line premise, and one beat per trunk beat, in order"
-        )
-    for spec in proposal.texture_worlds:
-        if not spec.premise.strip():
-            raise ApplyError(
-                f"texture world at site {spec.site} has an empty premise; state "
-                "in one line what differs in this rendering — name a story "
-                "element the beats, cast, or reserved material already carry "
-                "and how this rendering varies it (any consequence-free axis)"
-            )
-        if not spec.trunk_premise.strip():
-            raise ApplyError(
-                f"texture world at site {spec.site} has an empty trunk_premise; "
-                "rendering 0 (the trunk segment) names its own backdrop too — "
-                "state in one line the world the trunk beats already carry, "
-                "sharpening it only where the weave left it vague"
-            )
-        if len(spec.beats) != len(sites[spec.site]):
-            raise ApplyError(
-                f"texture world at site {spec.site} has {len(spec.beats)} beat(s) "
-                f"against a {len(sites[spec.site])}-beat stretch; the arm mirrors "
-                "the trunk beat-for-beat (I15) — write exactly one beat per trunk "
-                "beat, in order"
-            )
-    run_of = {b: i for i, run in enumerate(cadence) for b in run["beats"]}
-    # Per run, the multiset of arm counts placed must match the engine-assigned
-    # shape mix (PR-3): shape is mandatory, not model-chosen — given the choice
-    # a weak tier placed 44/44 sidetracks. This enforces count AND shape at once.
-    placed_arms: dict[int, list[int]] = {}
-    for spec in proposal.false_branches:
-        if spec.before in run_of:
-            placed_arms.setdefault(run_of[spec.before], []).append(len(spec.arms))
-    mismatched = [
-        (run, sorted(run["arm_counts"]), sorted(placed_arms.get(i, [])))
-        for i, run in enumerate(cadence)
-        if sorted(run["arm_counts"]) != sorted(placed_arms.get(i, []))
-    ]
-    if mismatched:
-        detail = "; ".join(
-            f"the run {run['beats'][0]} -> {run['beats'][-1]} needs sites with arm "
-            f"counts {want} (1=sidetrack, 2=diamond, 3=diamond+3rd-arm), this proposal "
-            f"placed {got}"
-            for run, want, got in mismatched
-        )
-        raise ApplyError(
-            f"the cadence budget is mandatory, not advisory: {detail} — the engine "
-            "assigns the shape mix; place exactly the arm counts listed for each run "
-            "under CADENCE (each on any of that run's suggested seam edges), keeping "
-            "the sites you already placed correctly"
-        )
-    lines = []
-    # Texture worlds splice first: the cadence table was sized on a graph
-    # carrying them, and a diamond landing inside a mirrored stretch needs
-    # the real arms present to mirror into (pc.insert_cadence_diamond).
-    for spec in sorted(proposal.texture_worlds, key=lambda s: s.site):
-        try:
-            arm = [
-                Beat(
-                    id=b.id,
-                    created_by=Stage.POLISH,
-                    summary=b.summary,
-                    beat_class=BeatClass.STRUCTURAL,
-                    purpose=StructuralPurpose.TEXTURE_WORLD,
-                    texture_premise=spec.premise.strip(),
-                    entities=[resolve_entity_ref(g, e) for e in b.entities],
-                )
-                for b in spec.beats
-            ]
-        except ValidationError as e:
-            raise ApplyError(
-                f"invalid texture-world beat at site {spec.site}: "
-                f"{format_validation_error(e)}"
-            ) from e
-        try:
-            pc.insert_texture_world(g, arm, sites[spec.site])
-            # Rendering 0's premise: the trunk segment names its own backdrop
-            # too (renderings are peers, §2). A legal presentation addition on
-            # the frozen trunk beats (the freeze is topological — 01 §6).
-            for trunk_beat in sites[spec.site]:
-                mutations.set_beat_texture_premise(g, trunk_beat, spec.trunk_premise.strip())
-        except (mutations.MutationError, KeyError) as e:
-            # duplicate ids arrive pre-converted by add_beat; MutationError
-            # messages from the splice carry their own correctives
-            raise ApplyError(f"texture world at site {spec.site}: {e}") from e
-        lines.append(
-            f"texture world '{spec.premise.strip()}' (trunk '{spec.trunk_premise.strip()}') "
-            f"parallels {sites[spec.site][0]} .. {sites[spec.site][-1]} ({len(arm)} beats)"
-        )
-    for spec in proposal.false_branches:
-        if spec.before not in long_run_beats or spec.after not in long_run_beats:
-            raise ApplyError(
-                f"false branch at {spec.before} -> {spec.after} is not inside a long "
-                "linear run — place both endpoints on adjacent beats of one of the "
-                "runs listed under CADENCE in the prompt (the suggested seam edges "
-                "there are always valid), or drop this site"
-            )
-        try:
-            chains = [
-                [
-                    Beat(
-                        id=b.id,
-                        created_by=Stage.POLISH,
-                        summary=b.summary,
-                        beat_class=BeatClass.STRUCTURAL,
-                        purpose=StructuralPurpose.FALSE_BRANCH,
-                        entities=[resolve_entity_ref(g, e) for e in b.entities],
-                    )
-                    for b in ([arm] if arm.followup is None else [arm, arm.followup])
-                ]
-                for arm in spec.arms
-            ]
-        except ValidationError as e:
-            raise ApplyError(f"invalid false-branch arm: {format_validation_error(e)}") from e
-        try:
-            # the cadence splices mirror themselves into any texture arm
-            # paralleling the edge (structural-depth W3; both worlds keep
-            # the same choice topology)
-            if len(chains) == 1:
-                pc.insert_cadence_sidetrack(g, chains[0], spec.before, spec.after)
-            else:
-                pc.insert_cadence_diamond(g, chains, spec.before, spec.after)
-        except (mutations.MutationError, KeyError) as e:
-            # add_beat already converts a duplicate-id KeyError into an
-            # actionable MutationError; the KeyError arm here catches the
-            # store's GraphError family (its messages carry their own
-            # correctives), so the wrap adds location, not a diagnosis
-            raise ApplyError(f"false branch {spec.before} -> {spec.after}: {e}") from e
-        if len(chains) == 1:
-            lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
-        else:
-            lines.append(
-                f"diamond {' / '.join(c[0].id for c in chains)} "
-                f"between {spec.before} -> {spec.after}"
-            )
+    lines: list[str] = []
 
     covered: set[tuple[str, str, str]] = set()
     for spec in proposal.residue:
@@ -515,6 +268,322 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
         )
 
     return lines or ["nothing inserted"]
+
+
+# -- pass 1b: the fork rounds (finalize:<n>, cosmetic-forks §3/§6) -------------
+#
+# Finalize is a fixed-point iteration of the one cosmetic-fork splice. Each
+# round `finalize:<n>` (n >= 1) is an engine-only planner pass — it always
+# skips (no LLM call) and its `expand` recomputes `pc.fork_plan` on the
+# *current* graph: one small `fork:<n>:<k>` pass per admitted site, then the
+# next round's planner. A terminal round (empty plan) expands into the
+# passage passes instead. Every planning input is a pure function of the
+# graph, so ledger resume reproduces the same pass names (A16).
+
+
+class ForkBeatSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    summary: str
+    entities: list[str] = []
+
+
+class RenderingSpec(BaseModel):
+    """One fresh rendering: its premise (the value on the consequence-free
+    axis this rendering varies) and its beats — exactly one per segment beat
+    for a segment-scale site (I15), one or two for an edge-scale arm."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    premise: str
+    beats: list[ForkBeatSpec] = Field(min_length=1)
+
+
+class ForkProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # rendering 0's backdrop — required (non-empty) iff the site is
+    # segment-scale: the trunk segment names its own axis value too
+    # (renderings are peers, cosmetic-forks §2)
+    trunk_premise: str = ""
+    renderings: list[RenderingSpec] = Field(min_length=1)
+
+
+class GatedRenderingSpec(RenderingSpec):
+    keyword: str
+
+
+class GatedForkProposal(ForkProposal):
+    """Edge-scale sites with offered keywords MAY attach one keyword-gated
+    extra rendering — visible only to holders, same size budget as any
+    rendering (acknowledges, never rewards; cosmetic-forks §4). Consumption
+    is always optional, never assigned."""
+
+    gated: GatedRenderingSpec | None = None
+
+
+def _fork_schema(site: pc.ForkSite) -> Callable[[Project], type[BaseModel]]:
+    """Per-site schema: `renderings` pinned to exactly the assigned arm
+    count, beat counts pinned (segment length, or 1-2 for an edge arm),
+    entities pinned to the roster, and — on an edge site with offers — the
+    gated rendering's `keyword` pinned to the offered set. A site without
+    offers (or any segment-scale site) uses the gated-less base model, so a
+    disallowed consumption is unrepresentable."""
+
+    def schema(project: Project) -> type[BaseModel]:
+        entities = entity_ref_ids(project.graph)
+        beat_spec = pin(
+            ForkBeatSpec, "ForkBeatSpec", {("ForkBeatSpec", "entities"): entities}
+        )
+        n = len(site.segment)
+        lo, hi = (n, n) if n else (1, 2)
+        rendering = create_model(
+            "RenderingSpec",
+            __base__=RenderingSpec,
+            beats=(list[beat_spec], Field(min_length=lo, max_length=hi)),  # type: ignore[valid-type]
+        )
+        fields: dict = {
+            "renderings": (
+                list[rendering],  # type: ignore[valid-type]
+                Field(min_length=site.arms, max_length=site.arms),
+            ),
+        }
+        if site.keywords and not site.segment:
+            gated = create_model(
+                "GatedRenderingSpec",
+                __base__=GatedRenderingSpec,
+                beats=(list[beat_spec], Field(min_length=1, max_length=2)),  # type: ignore[valid-type]
+                keyword=(enum_type(list(site.keywords)), ...),
+            )
+            fields["gated"] = (gated | None, Field(default=None))
+            return create_model("GatedForkProposal", __base__=GatedForkProposal, **fields)
+        return create_model("ForkProposal", __base__=ForkProposal, **fields)
+
+    return schema
+
+
+def _fork_context(site: pc.ForkSite) -> Callable[[Project], dict]:
+    def build(project: Project) -> dict:
+        g = project.graph
+        anchor = site.segment[0] if site.segment else site.before
+        return {
+            "vision": project.vision,
+            "cast": _arc_entities(g),
+            "reserve": _reserve_context(g),
+            "segment": [g.node(b) for b in site.segment],
+            "before": g.node(site.before) if not site.segment else None,
+            "after": g.node(site.after) if not site.segment else None,
+            "arms": site.arms,
+            "keywords": [
+                (f, g.node(f).description)  # type: ignore[union-attr]
+                for f in site.keywords
+            ],
+            # a site inside an existing rendering inherits its backdrop: the
+            # summaries written here must stay inside that world (the FILL
+            # premise-stack lever is deferred — BACKLOG — so consistency is
+            # carried by the summaries themselves)
+            "host_premise": g.node(anchor).texture_premise,  # type: ignore[union-attr]
+        }
+
+    return build
+
+
+def _mint_keyword(g, head_id: str, premise: str) -> str:
+    """Mint one cosmetic keyword for a non-empty rendering at splice time
+    (engine-deterministic, never model-proposed): `flag:cw-<head-slug>`,
+    suffixed on collision; the description is the rendering's premise — it
+    is what later consumption prompts read (cosmetic-forks §4)."""
+    slug = head_id.split(":", 1)[1]
+    flag_id = f"flag:cw-{slug}"
+    n = 2
+    while g.get(flag_id) is not None:
+        flag_id = f"flag:cw-{slug}-{n}"
+        n += 1
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=flag_id,
+            created_by=Stage.POLISH,
+            description=premise,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    mutations.add_beat_flag_grant(g, head_id, flag_id)
+    return flag_id
+
+
+def _fork_apply(site: pc.ForkSite) -> Callable[[BaseModel, Project], list[str]]:
+    def apply(proposal: ForkProposal, project: Project) -> list[str]:
+        g = project.graph
+        segment = list(site.segment)
+        where = (
+            f"{segment[0]} .. {segment[-1]}" if segment else f"{site.before} -> {site.after}"
+        )
+        renderings = list(proposal.renderings)
+        gated = getattr(proposal, "gated", None)
+        for k, spec in enumerate([*renderings, *([gated] if gated else [])]):
+            if not spec.premise.strip():
+                raise ApplyError(
+                    f"rendering {k} at {where} has an empty premise; state in one "
+                    "line what differs in this rendering — name a story element "
+                    "the beats, cast, or reserved material already carry and how "
+                    "this rendering varies it (any consequence-free axis)"
+                )
+        if segment:
+            if not proposal.trunk_premise.strip():
+                raise ApplyError(
+                    f"the fork at {where} has an empty trunk_premise; rendering 0 "
+                    "(the trunk segment) names its own backdrop too — state in one "
+                    "line the world the trunk beats already carry, sharpening it "
+                    "only where the weave left it vague"
+                )
+            for spec in renderings:
+                if len(spec.beats) != len(segment):
+                    raise ApplyError(
+                        f"a rendering at {where} has {len(spec.beats)} beat(s) "
+                        f"against a {len(segment)}-beat segment; a rendering "
+                        "re-expresses the segment beat-for-beat (I15) — write "
+                        "exactly one beat per segment beat, in order"
+                    )
+        elif proposal.trunk_premise.strip():
+            raise ApplyError(
+                f"the fork at {where} is edge-scale — its segment is empty, so "
+                "there is no rendering 0 to describe; re-emit with trunk_premise "
+                'left out (or "")'
+            )
+
+        purpose = (
+            StructuralPurpose.TEXTURE_WORLD if segment else StructuralPurpose.FALSE_BRANCH
+        )
+
+        def build_chain(spec: RenderingSpec, requires: list[str]) -> list[Beat]:
+            try:
+                return [
+                    Beat(
+                        id=b.id,
+                        created_by=Stage.POLISH,
+                        summary=b.summary,
+                        beat_class=BeatClass.STRUCTURAL,
+                        purpose=purpose,
+                        texture_premise=spec.premise.strip(),
+                        requires_flags=list(requires),
+                        entities=[resolve_entity_ref(g, e) for e in b.entities],
+                    )
+                    for b in spec.beats
+                ]
+            except ValidationError as e:
+                raise ApplyError(
+                    f"invalid rendering beat at {where}: {format_validation_error(e)}"
+                ) from e
+
+        fresh = [build_chain(spec, []) for spec in renderings]
+        if gated is not None:
+            fresh.append(build_chain(gated, [gated.keyword]))
+        try:
+            if segment:
+                pc.insert_cosmetic_fork(g, [pc.SEGMENT_RENDERING, *fresh], segment=segment)
+                # Rendering 0's premise: a legal presentation addition on the
+                # frozen trunk beats (the freeze is topological — 01 §6).
+                for trunk_beat in segment:
+                    mutations.set_beat_texture_premise(
+                        g, trunk_beat, proposal.trunk_premise.strip()
+                    )
+            elif site.arms == 1:
+                pc.insert_cosmetic_fork(
+                    g, [pc.EMPTY_RENDERING, *fresh], before=site.before, after=site.after
+                )
+            else:
+                pc.insert_cosmetic_fork(g, fresh, before=site.before, after=site.after)
+        except (mutations.MutationError, KeyError) as e:
+            # duplicate ids arrive pre-converted by add_beat; MutationError
+            # messages from the splice carry their own correctives
+            raise ApplyError(f"cosmetic fork at {where}: {e}") from e
+
+        # Mint one keyword per non-empty rendering — rendering 0's frozen head
+        # included, the gated rendering included, the empty rendering excluded
+        # (ratified decision 3: walking past a sidetrack leaves no mark).
+        heads = []
+        if segment:
+            heads.append((segment[0], proposal.trunk_premise.strip()))
+        heads.extend((chain[0].id, chain[0].texture_premise) for chain in fresh)
+        minted = [_mint_keyword(g, head, premise) for head, premise in heads]
+
+        shape = {True: "two-worlds", False: {1: "sidetrack", 2: "diamond", 3: "diamond+3"}}
+        name = shape[True] if segment else shape[False][site.arms]  # type: ignore[index]
+        lines = [
+            f"{name} at {where}: rendering(s) "
+            + " / ".join(spec.premise.strip() for spec in renderings)
+            + (f" (trunk: {proposal.trunk_premise.strip()})" if segment else "")
+            + f"; minted {', '.join(minted)}"
+        ]
+        if gated is not None:
+            lines.append(
+                f"gated rendering '{gated.premise.strip()}' consumes {gated.keyword}"
+            )
+        return lines
+
+    return apply
+
+
+def _fork_pass(n: int, k: int, site: pc.ForkSite) -> PassSpec:
+    return PassSpec(
+        name=f"fork:{n}:{k}",
+        role="writer",
+        template="polish_fork.j2",
+        schema=_fork_schema(site),
+        build_context=_fork_context(site),
+        apply=_fork_apply(site),
+    )
+
+
+def _round_spec(n: int) -> PassSpec:
+    """An engine-only planner pass: always skipped (its skip reason reports
+    the round decision), never calls the LLM; the work is in `expand`.
+
+    ``fork_plan`` is expensive (a scratch deep-copy plus repeated walk
+    projections per candidate site), and the runner calls ``skip_if`` and
+    ``expand`` back to back on the same graph — the pass always skips, so
+    nothing mutates in between. ``skip_if`` therefore stashes its plan for
+    ``expand`` to consume once (popped, so any other path recomputes; the
+    result is identical either way — the plan is a pure function of the
+    unchanged graph, which is also what ledger resume relies on)."""
+    stash: dict[str, list[pc.ForkSite]] = {}
+
+    def skip(project: Project) -> str:
+        plan = pc.fork_plan(
+            project.graph, project.vision.preset, project.vision.words_target
+        )
+        stash["plan"] = plan
+        if plan:
+            return f"engine round {n}: {len(plan)} fork site(s) scheduled"
+        return (
+            f"engine round {n}: terminal — B6 target reached, or no qualifying "
+            "site fits the words headroom"
+        )
+
+    def expand(project: Project) -> list[PassSpec]:
+        plan = stash.pop("plan", None)
+        if plan is None:
+            plan = pc.fork_plan(
+                project.graph, project.vision.preset, project.vision.words_target
+            )
+        if not plan:
+            return _polish_expand(project)
+        passes = [_fork_pass(n, k, site) for k, site in enumerate(plan)]
+        passes.append(_round_spec(n + 1))
+        return passes
+
+    return PassSpec(
+        name=f"finalize:{n}",
+        role="writer",
+        template="polish_fork.j2",  # never rendered — the pass always skips
+        schema=ForkProposal,
+        build_context=lambda project: {},
+        apply=lambda proposal, project: [],
+        skip_if=skip,
+        expand=expand,
+    )
 
 
 # -- pass 2: passages (finalize-expanded per-group summary + per-source labels) --
@@ -1063,8 +1132,13 @@ def _audit_one_context(pid: str) -> Callable[[Project], dict]:
     ``passages``; here it is a single-element list)."""
 
     def build(project: Project) -> dict:
+        # ``p["passage"]`` is the Passage NODE: compare its id, never the
+        # object (the object==str comparison rendered every per-passage audit
+        # prompt with an EMPTY passage list while the schema still demanded
+        # the entry — the undiagnosed audit halt of the 2026-07-15 medium
+        # validation run, found by PR-5's offline loop fixture)
         ctx = _audit_context(project)
-        ctx["passages"] = [p for p in ctx["passages"] if p["passage"] == pid]
+        ctx["passages"] = [p for p in ctx["passages"] if p["passage"].id == pid]
         return ctx
 
     return build
@@ -1194,27 +1268,15 @@ def _arcs_apply(proposal: ArcsProposal, project: Project) -> list[str]:
 
 
 def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
-    """Pin finalize's references: each residue's `dilemma`/`world`/`path`
-    to the light-residue convergences' own values, false-branch `before`/
-    `after` to the long-linear-run beats, and every `entities` ref to the
-    entity ids. The apply still enforces the joint (dilemma, world, path)
-    constraint the independent enums cannot express (pipeline/refpin.py).
-
-    A false branch splices only into a long linear run, so when there is
-    none the list must be empty — an empty `before`/`after` enum can't
-    express "no items", so forbid the list outright (`max_length=0`). This
-    is the reference discipline's list cousin: a reference *list* whose
-    valid target set is empty must itself be empty. Without it a model
-    (live gpt-oss:120b cloud, 2026-07-11) proposed a cadence diamond where
-    none was structurally possible and exhausted repairs. `texture_worlds`
-    gets the same treatment when no sites are offered; its `site` index
-    is an int the pin machinery cannot enum, so exact coverage stays the
-    apply's job (checked before any splice, with the sites named)."""
+    """Pin the residue references: each entry's `dilemma`/`world`/`path` to
+    the light-residue convergences' own values and every `entities` ref to
+    the entity ids. The apply still enforces the joint (dilemma, world,
+    path) constraint the independent enums cannot express
+    (pipeline/refpin.py). The fork halves left with the loop (cosmetic-forks
+    §6): round 0 is residue only, and the budget rounds pin per site."""
     needs = _light_needs(project)
     entities = entity_ref_ids(project.graph)
-    sites, _, long_run_beats = _texture_and_cadence(project)
-    long_beats = sorted(long_run_beats)
-    schema = pin(
+    return pin(
         FinalizeProposal,
         "FinalizeProposal",
         {
@@ -1224,20 +1286,8 @@ def finalize_proposal_schema(project: Project) -> type[FinalizeProposal]:
             ("ResidueSpec", "entities"): entities,
             ("FollowupSpec", "entities"): entities,
             ("ForkSpec", "entities"): entities,
-            ("ArmSpec", "entities"): entities,
-            ("TextureBeatSpec", "entities"): entities,
-            ("FalseBranchSpec", "before"): long_beats,
-            ("FalseBranchSpec", "after"): long_beats,
         },
     )
-    overrides: dict = {}
-    if not long_beats:
-        overrides["false_branches"] = (list[FalseBranchSpec], Field(default=[], max_length=0))
-    if not sites:
-        overrides["texture_worlds"] = (list[TextureWorldSpec], Field(default=[], max_length=0))
-    if overrides:
-        schema = create_model("FinalizeProposal", __base__=schema, **overrides)
-    return schema
 
 
 def arcs_proposal_schema(project: Project) -> type[ArcsProposal]:
@@ -1306,16 +1356,18 @@ POLISH_STAGE = StageImpl(
     stage=Stage.POLISH,
     passes=(
         PassSpec(
-            name="finalize",
+            name="finalize:0",
             role="writer",
             template="polish_finalize.j2",
             schema=finalize_proposal_schema,
             build_context=_finalize_context,
             apply=_finalize_apply,
             skip_if=_finalize_skip,
-            # The passage layer: finalize expands into per-group summary + per-source
-            # label passes (their count is unknown until finalize's additions land).
-            expand=_polish_expand,
+            # Round 0 is residue — obligations before decoration. Its expand
+            # schedules the first budget round; the fork rounds iterate until
+            # a terminal (empty) plan, which expands into the passage passes
+            # (their count is unknown until every fork has landed).
+            expand=lambda project: [_round_spec(1)],
         ),
         PassSpec(
             name="audit",

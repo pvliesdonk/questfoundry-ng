@@ -114,36 +114,41 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    validation. Watch finalize there: texture arms are its largest
    proposal yet; exhaustion means decomposing the pass (A21 precedent),
    not softening the requirement.
-3. **Next epic designed and ratified — cosmetic forks** (2026-07-15): the
-   author unified diamonds/sidetracks/texture worlds into one mechanism
-   (k ≥ 2 renderings of a trunk segment, renderings as peers, finalize as
-   a loop, residue keywords); contract + ratified decisions + PR slices in
-   [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md) (mini-ADR A24,
-   roadmap "Next"). **PR-0 (exit-label residue, §5) and PR-1 (01 §6
-   one-mechanism framing, current-state truth) are merged** (#87, #90).
-   The engine rework (PR-2+) waits on the step-1/2 medium validation run.
+3. **Current epic — cosmetic forks** (unified 2026-07-15; k ≥ 2 renderings
+   of a trunk segment, renderings as peers, finalize as a loop, residue
+   keywords). Contract + ratified decisions + PR slices in
+   [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md) (mini-ADR A24).
+   **PR-0 through PR-4 are MERGED:** PR-0 exit-label residue §5 (#87), PR-1
+   01 §6 one-mechanism framing (#90), PR-2 symmetry engine — one splice
+   primitive `insert_cosmetic_fork` + premise per rendering incl. rendering
+   0 (#97), PR-3 engine-assigned cadence shape mix + 3-arm diamonds (#98,
+   resolves the 44/44-sidetracks finding), PR-4 the cosmetic **grant model**
+   — `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10 for cosmetic
+   flags (#99). Plus the validation-run fixes: finalize entity-roster (#92),
+   audit per-passage decomposition (#95), PR-0 shape-neutral vocab + BACKLOG
+   close-outs (#96), and the findings record (#94).
 
-   **That validation run ran (2026-07-15, DREAM→POLISH, medium, band-top
-   `--words-target`, `gpt-oss:120b-cloud`, unbilled) and is the current
-   thread.** It measured the machinery as shipped (scorecard in the
-   decision log): finalize planted the whole proposal in one shot — 3
-   texture worlds + 44 cadence forks + 6 residue, no site-count exhaustion
-   (the plan's top risk retired for this run). It surfaced four
-   prompt/budget findings, now in [`BACKLOG.md`](BACKLOG.md): the finalize
-   entity-roster halt (**fixed, PR #92, awaiting merge**); a cadence
-   prompt bias that placed 44/44 sidetracks (→ plan PR-3 makes shape
-   engine-assigned); a PR-0 residue-paragraph regression (sidetrack-only
-   vocabulary); and texture worlds overshooting the words budget (+38%).
-   The run **halted at the audit pass** (undiagnosed — audit prompt +
-   "audited twice" message are first suspects, then the A21 giant-call
-   decomposition); it is resumable free (399 passes journaled).
+   **The medium validation run completed gate-clean through POLISH** once
+   the audit was decomposed (0 errors, 83 advisories; I12 71→0; 312 beats,
+   277 passages incl. 132 audit-split variants). The exemplar lives at
+   `/mnt/code/qf-validation-runs/cc-struct-medium` (NOT committed;
+   `gpt-oss:120b-cloud`, unbilled). Confirmed on that run: **no ~60-site
+   finalize exhaustion** (the whole proposal landed in one shot) — the
+   plan's top loop-risk did not manifest.
 
-   **Next:** merge PR #92 → diagnose/fix the audit halt → resume the run
-   to a completed medium exemplar for the author read → then PR-2 → PR-3
-   (resolves the 44/44 shape finding) → PR-4 → PR-5. GitHub *issues* are
-   NOT used for this repo (author, 2026-07-15) — work is tracked here and
-   in the BACKLOG; the caveat under AGENTS.md §"Documentation contract"
-   holds until the backlog moves to issues.
+   **Next: PR-5 (the loop) — sub-sliced, and its ORDER is an OPEN DECISION
+   for this session.** Reading the code against the plan surfaced (a) a
+   coupling — retiring mirrored cadence is inseparable from recursion +
+   budget parity, so 5a is the loop *mechanism* only (mirrored cadence stays;
+   retirement → 5c); and (b) that the loop's headline value (decompose
+   finalize to avoid ~60-site exhaustion) is **speculative** — the medium run
+   didn't exhaust — while **minting + I16 (PR-5b) is independent of the loop,
+   builds directly on the just-landed PR-4 grant model, is smaller, and needs
+   no fixture re-record.** An agent recommended flipping to **minting + I16
+   first**; the author paused to decide in a fresh session. Both the coupling
+   and the refined 5a/5b/5c slices are recorded in the plan's PR-slicing
+   table. GitHub *issues* are NOT used for this repo — work is tracked here
+   and in the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

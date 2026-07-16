@@ -16,6 +16,30 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-16 (cosmetic forks PR-2 → PR-4 shipped; PR-5 sub-sliced, order
+  left open):** Landed the epic's engine core across three merged PRs: **PR-2**
+  (#97) the one splice primitive `insert_cosmetic_fork` behind the three shapes
+  + premise per rendering incl. rendering 0 (guard relaxed, a frozen-beat-safe
+  `set_beat_texture_premise` mutation — the freeze clarification — FILL/entry-
+  labels reading it, 01 §6); **PR-3** (#98) engine-assigned cadence shape mix
+  (`ScopePreset.cadence_arm_cycle`, front-loaded) + 3-arm diamonds — takes shape
+  out of the model's hands, resolving the 44/44-sidetracks finding; **PR-4**
+  (#99) the cosmetic grant model (`Beat.grants_flags`, `grant_beats`/
+  `choice_grants`/I10 now cover `path=None` flags, the B6 held-note). Each PR's
+  automated review found no correctness issues; small review suggestions
+  (degenerate-marker guard, 3-arm apply-summary, doc-table consistency) were
+  taken. **PR-5 (the loop) is sub-sliced (5a loop mechanism / 5b minting + I16 /
+  5c recursion + retire mirrored cadence + budget parity + I15 restatement)**
+  after reading the code surfaced a coupling — mirrored-cadence retirement is
+  inseparable from recursion + budget parity, so it moves out of 5a into 5c
+  (recorded in the plan's PR table). A second finding: the loop's headline
+  value (decompose finalize to avoid ~60-site exhaustion) is speculative — the
+  medium validation run produced the whole finalize proposal in one shot, no
+  exhaustion — whereas minting + I16 is independent of the loop and builds on
+  PR-4. The agent recommended flipping to **minting + I16 first**; the author
+  paused to decide the order in a fresh session. Provenance for the validation
+  exemplar and the audit/entity-roster fixes: entries below and the BACKLOG.
+
 - **2026-07-15 (structural-depth medium validation run — machinery
   measured, four findings, two prompt defects):** Ran DREAM→POLISH at
   medium on `gpt-oss:120b-cloud` (unbilled, via the LAN daemon's cloud

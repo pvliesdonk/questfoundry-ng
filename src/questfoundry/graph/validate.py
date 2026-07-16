@@ -1,4 +1,4 @@
-"""The invariant registry (I1-I14) and gate runner.
+"""The invariant registry (I1-I16) and gate runner.
 
 Each check cites the invariant it enforces (design doc 01 §8) and the
 gate it belongs to (design doc 02). `run_checks` runs every gate at or
@@ -24,6 +24,7 @@ from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
+    FlagSource,
     IntersectionGroup,
     StateFlag,
     StructuralPurpose,
@@ -900,6 +901,49 @@ def check_i15_texture_worlds(ctx: Context) -> None:
             )
 
 
+def check_i16_cosmetic_gate_locality(ctx: Context) -> None:
+    """I16 (cosmetic-gate locality, 01 §8; cosmetic-forks §4): a cosmetic
+    flag may be required only inside constructs that converge by
+    construction — a beat gated on one is itself a cosmetic-fork rendering
+    beat, and a choice requiring one enters a rendering's passage. With
+    this, "downstream depends on a keyword" is impossible to express in
+    the graph: a keyword is permission (prose may color), never a promise
+    (a required callback is a dilemma in costume and belongs in GROW)."""
+    cosmetic = {f.id for f in ctx.g.nodes_of(StateFlag) if f.source == FlagSource.COSMETIC}
+    if not cosmetic:
+        return
+    rendering = (StructuralPurpose.FALSE_BRANCH, StructuralPurpose.TEXTURE_WORLD)
+    for beat in ctx.g.nodes_of(Beat):
+        gated_on = sorted(set(beat.requires_flags) & cosmetic)
+        if gated_on and beat.purpose not in rendering:
+            ctx.error(
+                "I16",
+                f"beat {beat.id} requires cosmetic keyword(s) {gated_on} but is "
+                "not a cosmetic-fork rendering beat; a keyword may gate only a "
+                "rendering that converges by construction — if downstream "
+                "genuinely depends on this mark, it is a dilemma in costume and "
+                "belongs in GROW",
+            )
+    for e in ctx.g.edges:
+        if e.kind != EdgeKind.CHOICE:
+            continue
+        gated_on = sorted(set(e.payload.get("requires", [])) & cosmetic)
+        if not gated_on:
+            continue
+        dst_beats = queries.beats_of_passage(ctx.g, e.dst)
+        if not all(
+            isinstance(b := ctx.g.node(bid), Beat) and b.purpose in rendering
+            for bid in dst_beats
+        ):
+            ctx.error(
+                "I16",
+                f"choice {e.src} -> {e.dst} requires cosmetic keyword(s) "
+                f"{gated_on} but {e.dst} is not a cosmetic-fork rendering's "
+                "passage; a keyword may gate only a rendering that converges "
+                "by construction",
+            )
+
+
 def check_g4_choice_labels(ctx: Context) -> None:
     """G4: sibling choice labels are non-empty and distinct. Same-label
     siblings are allowed only behind different gates (variant passages:
@@ -1355,6 +1399,7 @@ GATES: dict[Stage, list] = {
         check_i13_passage_graph,
         check_i14_passage_viewpoint,
         check_i15_texture_worlds,
+        check_i16_cosmetic_gate_locality,
         check_g4_choice_labels,
         check_g4_residue_coverage,
         check_g4_arc_references,

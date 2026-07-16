@@ -712,6 +712,16 @@ design.
   parity, ratified cosmetic-forks decision 1): each rendering grows its
   own forks under the loop's budgets, and per-walk B6 owns choice
   fairness.
+- **I16** Cosmetic-gate locality (cosmetic-forks §4, the obligation
+  boundary made structural): a cosmetic flag may be required only inside
+  constructs that converge by construction — a beat gated on a cosmetic
+  flag is itself a cosmetic-fork rendering beat, and a choice requiring
+  one enters a rendering's passage; never a GROW beat, never a passage
+  outside a cosmetic construct. With I16, "downstream depends on a
+  keyword" is impossible to *express* in the graph: a keyword is
+  permission (prose may color, a gated rendering may acknowledge), never
+  a promise — anything downstream must honor is a dilemma in costume and
+  belongs in GROW.
 
 ## 9. Where the mapping breaks (danger zones)
 

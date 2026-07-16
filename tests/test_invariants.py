@@ -514,3 +514,82 @@ def test_b6_walker_holds_cosmetic_flags_only_via_traversed_grants(vision):
     # have counted 2 decisions (450, in band) and stayed silent.
     b6 = [i for i in run_checks(g, vision, Stage.FILL) if i.check == "B6"]
     assert b6 and "900" in b6[0].message
+
+
+def _i16(g, vision):
+    return [
+        i
+        for i in run_checks(g, vision, Stage.POLISH)
+        if i.check == "I16" and i.severity == Severity.ERROR
+    ]
+
+
+def _cosmetic_flag(g, slug):
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=f"flag:cw-{slug}",
+            created_by=Stage.POLISH,
+            description=slug,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    return f"flag:cw-{slug}"
+
+
+def test_i16_cosmetic_gate_on_non_rendering_beat_is_an_error(vision):
+    """I16 (cosmetic-gate locality): a keyword may gate only a cosmetic-fork
+    rendering — a narrative beat depending on one is a dilemma in costume."""
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    cw = _cosmetic_flag(g, "pine")
+    beat = g.node("beat:one-pre")
+    beat.requires_flags = [cw]
+    issues = _i16(g, vision)
+    assert issues and "beat:one-pre" in issues[0].message
+    assert "rendering" in issues[0].message
+
+
+def test_i16_cosmetic_gate_on_ordinary_choice_is_an_error(vision):
+    from questfoundry.models.presentation import Choice, Passage
+
+    g = StoryGraph()
+    d, pa, pb = make_dilemma(g, "one")
+    make_y_scaffold(g, "one", d, pa, pb)
+    cw = _cosmetic_flag(g, "pine")
+    mutations.add_passage(
+        g,
+        Passage(id="passage:src", created_by=Stage.POLISH, summary="s"),
+        ["beat:one-pre"],
+    )
+    mutations.add_passage(
+        g,
+        Passage(id="passage:dst", created_by=Stage.POLISH, summary="d"),
+        ["beat:one-commit-a"],
+    )
+    mutations.add_choice(
+        g, "passage:src", "passage:dst", Choice(label="go", requires=[cw])
+    )
+    issues = _i16(g, vision)
+    assert issues and "passage:dst" in issues[0].message
+
+
+def test_i16_accepts_a_gated_rendering(vision):
+    g = StoryGraph()
+    cw = _cosmetic_flag(g, "pine")
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:gated-arm",
+            created_by=Stage.POLISH,
+            summary="only holders see this",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+            requires_flags=[cw],
+        ),
+        [],
+    )
+    assert _i16(g, vision) == []

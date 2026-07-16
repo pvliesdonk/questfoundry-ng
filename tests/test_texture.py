@@ -178,7 +178,7 @@ def _micro_vision_preset():
     return SCOPE_PRESETS["micro"]  # cap = 5
 
 
-def test_texture_sites_excise_around_disqualified_beats():
+def test_fork_segments_excise_around_disqualified_beats():
     g = StoryGraph()
     preset = _micro_vision_preset()
     # 12-beat run behind a root: beats 0..11 after head "r"
@@ -187,125 +187,59 @@ def test_texture_sites_excise_around_disqualified_beats():
     g.node("beat:b7").requires_flags = ["flag:x"]
     mutations.add_beat(g, setup_beat("tail"), [])
     mutations.add_ordering(g, ids[-1], "beat:tail")
-    sites = pc.texture_sites(g, preset)
-    # run = [r, b0..b11, tail?] -- tail merges into the run; windows split at b7.
-    # window [r..b6] snaps to [cap..]: starts at offset 5, ends at offset 4? --
-    # assert instead the invariant-level facts: every site is >= cap, aligned,
-    # qualifying, and none contains the gated beat
-    for site in sites:
-        assert len(site) >= preset.passage_beats_max
-        assert "beat:b7" not in site
-        assert all(not g.node(b).requires_flags for b in site)
+    segments, _ = pc.fork_segments(g, preset)
+    # every segment is qualifying, seam-aligned at its start, and excised
+    # around the gated beat; scene-tier segments stay >= cap
+    for seg in segments:
+        assert "beat:b7" not in seg
+        assert all(not g.node(b).requires_flags for b in seg)
 
 
-def test_texture_sites_skip_short_and_rootless():
+def test_fork_segments_skip_short_and_rootless():
     g = StoryGraph()
     preset = _micro_vision_preset()
     chain(g, [f"c{i}" for i in range(4)])  # rootless-headed short chain
-    assert pc.texture_sites(g, preset) == []
+    assert pc.fork_segments(g, preset) == ([], [])
 
 
 # -- plan + cadence interplay ----------------------------------------------------
 
 
-def test_cadence_diamond_mirrored_into_arm(vision):
+def test_legacy_mirrored_cadence_structures_still_validate(vision):
+    """The mirrored-cadence machinery is retired (cosmetic-forks ratified
+    decision 1), but the checked-in exemplars carry its output: texture
+    twins whose `mirrors` point at FALSE_BRANCH beats spliced inside a
+    mirrored stretch, with the trunk edge removed. The restated I15 keeps
+    those structures valid — a mirrored FALSE_BRANCH beat is not contracted
+    and the twin edges project onto it."""
     g = StoryGraph()
-    preset = _micro_vision_preset()
     ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
-    stretch = ids[1:11]
-    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], stretch)
-    fb = [
-        Beat(
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    # the legacy shape, built by hand: a diamond on trunk t4->t5 (edge
+    # removed), each fb arm twinned into the texture arm between a4->a5
+    fb = []
+    for side in ("a", "b"):
+        beat = Beat(
             id=f"beat:fb-{side}",
             created_by=Stage.POLISH,
             summary="flavor",
             beat_class=BeatClass.STRUCTURAL,
             purpose=StructuralPurpose.FALSE_BRANCH,
         )
-        for side in ("a", "b")
-    ]
-    pc.insert_cadence_diamond(g, [[fb[0]], [fb[1]]], "beat:t4", "beat:t5")
-    # trunk got the diamond; the arm got mirrored texture twins of it
-    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")
-    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", "beat:a5")
-    twins = [b for b in g.nodes_of(Beat) if b.mirrors in ("beat:fb-a", "beat:fb-b")]
-    assert len(twins) == 2
-    assert all(b.purpose == StructuralPurpose.TEXTURE_WORLD for b in twins)
-    assert i15_errors(g, vision) == []
-    del preset
-
-
-def test_cadence_sidetrack_mirrored_into_arm(vision):
-    g = StoryGraph()
-    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
-    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
-    detour = Beat(
-        id="beat:st-detour",
-        created_by=Stage.POLISH,
-        summary="detour",
-        beat_class=BeatClass.STRUCTURAL,
-        purpose=StructuralPurpose.FALSE_BRANCH,
-    )
-    pc.insert_cadence_sidetrack(g, [detour], "beat:t4", "beat:t5")
-    # both direct edges survive (declining the detour is the choice)...
-    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")
-    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", "beat:a5")
-    # ...and the detour exists in both worlds, the arm's as a mirrored twin
-    twins = [b for b in g.nodes_of(Beat) if b.mirrors == "beat:st-detour"]
-    assert len(twins) == 1
-    assert twins[0].purpose == StructuralPurpose.TEXTURE_WORLD
-    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", twins[0].id)
-    assert g.has_edge(EdgeKind.PREDECESSOR, twins[0].id, "beat:a5")
-    assert i15_errors(g, vision) == []
-
-
-def test_cadence_plan_skips_arm_runs():
-    g = StoryGraph()
-    preset = _micro_vision_preset()
-    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
-    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
-    plan = pc.cadence_plan(g, preset)
-    offered = {b for sites in plan.values() for before, after, _ in sites for b in (before, after)}
-    assert not any(b.startswith("beat:a") for b in offered)
-
-
-def test_texture_plan_caps_and_adds_free_decisions():
-    preset = SCOPE_PRESETS["short"]
-    from questfoundry.pipeline import weave
-    from tests.scale import SimShape, _derive_flags, add_residue_arms, build_seeded
-
-    g = build_seeded(preset, SimShape.band_max(preset.shape))
-    planned = weave.plan(g)
-    weave.realize(g, planned, weave.candidates(planned)[0])
-    _derive_flags(g)
-    add_residue_arms(g)
-    before = pc.projected_walks(g, preset)
-    plan = pc.texture_plan(g, preset)
-    assert 0 < len(plan) <= pc.TEXTURE_WORLDS_MAX
-    for k, run in enumerate(plan):
-        pc.insert_texture_world(
-            g, [arm_beat(f"tex-{k}-{i}") for i in range(len(run))], run
+        fb.append(beat)
+    pc.insert_cosmetic_fork(g, [[fb[0]], [fb[1]]], before="beat:t4", after="beat:t5")
+    mutations.remove_ordering(g, "beat:a4", "beat:a5")
+    for side in ("a", "b"):
+        twin = arm_beat(
+            f"tw-{side}",
+            mirrors=f"beat:fb-{side}",
+            scene_type=SceneType.MICRO_BEAT,
+            narration_scope=NarrationScope.LIMITED,
         )
-    after = pc.projected_walks(g, preset)
-    words_before = sum(w for w, _ in before)
-    words_after = sum(w for w, _ in after)
-    decisions_before = sum(d for _, d in before)
-    decisions_after = sum(d for _, d in after)
-    assert decisions_after > decisions_before
-    # near-zero traversed-word cost: the walk reads one world
-    assert words_after <= words_before * 1.05
-
-
-def test_texture_plan_respects_the_words_budget():
-    g = StoryGraph()
-    preset = _micro_vision_preset()
-    chain(g, ["r"] + [f"b{i}" for i in range(20)])
-    # uncapped: the band top admits the fork; a floor words_target does not
-    assert pc.texture_plan(g, preset) != []
-    assert pc.texture_plan(g, preset, words_target=2400) == []
-
-
-# -- finalize integration (PR-4) --------------------------------------------------
+        mutations.add_beat(g, twin, [])
+        mutations.add_ordering(g, "beat:a4", twin.id)
+        mutations.add_ordering(g, twin.id, "beat:a5")
+    assert i15_errors(g, vision) == []
 
 
 def _finalize_project(tmp_path, vision):
@@ -457,17 +391,6 @@ def test_fork_apply_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path)
         _fork_apply(site)(no_trunk, project)
 
 
-def test_sim_with_texture_keeps_b6_in_band():
-    from tests.scale import SimShape, build_seeded, compile_story, measure
-
-    preset = SCOPE_PRESETS["medium"]
-    g = build_seeded(preset, SimShape.band_max(preset.shape))
-    compiled, diamonds = compile_story(g, preset, texture_worlds=True)
-    y = measure(compiled, preset, diamonds=diamonds)
-    lo, hi = 250, 800
-    assert lo <= y.b6[0] and y.b6[1] <= hi
-
-
 def test_cosmetic_fork_primitive_reproduces_the_three_shapes():
     """The one splice (01 §6) behind the three shipped adapters: an edge-scale
     diamond (two fresh, no walk-on) removes the direct edge; an edge-scale
@@ -557,51 +480,6 @@ def test_texture_premise_legal_on_any_beat_engine_set_on_frozen_trunk():
     assert g.node("beat:t0").texture_premise == "the coast road"
     with pytest.raises(mutations.MutationError, match="empty"):
         mutations.set_beat_texture_premise(g, "beat:t0", "   ")
-
-
-def test_cadence_plan_assigns_the_engine_shape_mix():
-    """PR-3: shape is engine-assigned, not model-chosen (given the choice a
-    weak tier placed 44/44 sidetracks). cadence_plan tags each site with an
-    arm count cycled from the preset mix, front-loaded so even a few-site book
-    gets a diamond — the diamond/sidetrack ratio holds book-wide."""
-    g = StoryGraph()
-    preset = _micro_vision_preset()  # cadence_arm_cycle default (2, 1, 1, 3, 1, 1)
-    chain(g, ["r"] + [f"b{i}" for i in range(20)] + ["s"])
-    plan = pc.cadence_plan(g, preset)
-    counts = [n for sites in plan.values() for _, _, n in sites]
-    assert counts and set(counts) <= {1, 2, 3}
-    assert counts[0] >= 2  # the 44/44 fix: never all-sidetracks — a diamond leads
-    assert counts == list(preset.cadence_arm_cycle)[: len(counts)]  # the cycle, in order
-
-
-def test_cadence_diamond_three_arms_splices_and_mirrors(vision):
-    """PR-3: a diamond may carry a third arm. insert_cadence_diamond takes k
-    fresh arms, splices them all before->after (direct edge gone), and mirrors
-    each into any texture arm paralleling the edge."""
-    g = StoryGraph()
-    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
-    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
-    arms = [
-        [
-            Beat(
-                id=f"beat:fb-{j}",
-                created_by=Stage.POLISH,
-                summary="flavor",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.FALSE_BRANCH,
-            )
-        ]
-        for j in range(3)
-    ]
-    pc.insert_cadence_diamond(g, arms, "beat:t4", "beat:t5")
-    from questfoundry.graph import queries
-
-    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")  # spine removed
-    assert set(queries.successors(g, "beat:t4")) == {"beat:fb-0", "beat:fb-1", "beat:fb-2"}
-    # all three arms mirrored into the parallel texture arm (both worlds match)
-    twins = [b for b in g.nodes_of(Beat) if b.mirrors in {"beat:fb-0", "beat:fb-1", "beat:fb-2"}]
-    assert len(twins) == 3
-    assert i15_errors(g, vision) == []
 
 
 # -- PR-5: segment tiers, recursion, scene-fork counting ---------------------------
@@ -748,12 +626,16 @@ def test_fork_plan_shape_cycle_offsets_by_minted_keywords():
     cycle = preset.cadence_arm_cycle
     g = StoryGraph()
     chain(g, ["r"] + [f"b{i}" for i in range(20)])
-    plan = pc.fork_plan(g, preset, words_target=2700)
-    assert sorted(s.arms for s in plan) == sorted(cycle[: len(plan)])
+    plan = pc.fork_plan(g, preset, words_target=3200)
+    assert plan and all(not s.segment for s in plan)
+    # the first-admitted edge (bisection order: the run's middle seam, b8->b9)
+    # has ample headroom, so its shape is the pure cycle value — later sites
+    # may be degraded to sidetracks at the budget boundary
+    first = next(s for s in plan if s.before == "beat:b8")
+    assert first.arms == cycle[0]
     _cosmetic(g, "minted")
-    shifted = pc.fork_plan(g, preset, words_target=2700)
-    assert sorted(s.arms for s in shifted) == sorted(cycle[1 : 1 + len(shifted)])
-    assert sorted(s.arms for s in shifted) != sorted(s.arms for s in plan)
+    shifted = pc.fork_plan(g, preset, words_target=3200)
+    assert next(s for s in shifted if s.before == "beat:b8").arms == cycle[1]
 
 
 def test_offered_keywords_upstream_unconsumed_capped():

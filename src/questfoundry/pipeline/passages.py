@@ -396,93 +396,6 @@ def _bisection_order(n: int) -> list[int]:
     return order
 
 
-def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str, int]]]:
-    """Words-aware cadence budget (M8): uncapped-run index -> the sites to
-    fork as ``(before, after, arm_count)``, sized by iterated projection
-    rather than a closed form, with the engine-assigned shape mix (PR-3).
-
-    Only cap-aligned edges are offered — the seams between complete
-    passage chunks — so a diamond costs the reader one arm's words and
-    yields one offered choice; a mid-chunk split would mint a whole
-    extra passage per choice, a marginal cost so close to the target
-    that sizing saturates instead of converging. Probe diamonds go into
-    a scratch copy (largest runs first, each run's aligned edges in
-    bisection order) and the playthrough is re-projected until its mean
-    words-per-choice reaches the B6 band's upper middle — low enough to
-    feel played, no denser — or aligned capacity runs out (the band is
-    advisory; the cap owns prose volume, this budget owns choices).
-    Scratch insertion prices for free what closed forms undercount: a
-    diamond in a per-world run is only met by that world's readers.
-    """
-    from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
-
-    lo, hi = B6_WORDS_PER_CHOICE
-    target = (lo + 2 * hi) // 3
-    cap = preset.passage_beats_max
-    runs = collapse_groups(g)
-    # Texture arms host no independent diamonds — theirs arrive mirrored
-    # from the trunk (insert_cadence_diamond), so both worlds keep the
-    # same choice topology. Mirrored trunk stretches stay in capacity:
-    # a diamond there is planted on both sides at once.
-    arms = {b.id for b in g.nodes_of(Beat) if b.purpose == StructuralPurpose.TEXTURE_WORLD}
-    capacity: dict[int, list[int]] = {}
-    for i in long_linear_runs(runs):
-        if arms & set(runs[i]):
-            continue
-        aligned = [e for e in range(len(runs[i]) - 1) if (e + 1) % cap == 0]
-        if aligned:
-            capacity[i] = [aligned[j] for j in _bisection_order(len(aligned))]
-    if not capacity:
-        return {}
-
-    def projected_mean(scratch: StoryGraph) -> float:
-        walks = projected_walks(scratch, preset)
-        return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
-
-    scratch = copy.deepcopy(g)
-    taken: dict[int, int] = dict.fromkeys(capacity, 0)
-    probe = 0
-    while projected_mean(scratch) > target:
-        open_runs = [i for i in capacity if taken[i] < len(capacity[i])]
-        if not open_runs:
-            break
-        run_idx = max(open_runs, key=lambda i: (len(capacity[i]) - taken[i], -i))
-        run = runs[run_idx]
-        edge = capacity[run_idx][taken[run_idx]]
-        probe_arms = [
-            Beat(
-                id=f"beat:cadence-probe-{probe}-{side}",
-                created_by=_beat(g, run[0]).created_by,
-                summary="probe",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.FALSE_BRANCH,
-            )
-            for side in ("a", "b")
-        ]
-        # mirrored-stretch edges get the paired splice so the projection
-        # counts both worlds' choices, exactly as the apply will. A 2-arm
-        # probe sizes the choice budget (one decision per site regardless of
-        # arm count; the walk traverses one arm); shapes are assigned after.
-        probe_chains = [[probe_arms[0]], [probe_arms[1]]]
-        insert_cadence_diamond(scratch, probe_chains, run[edge], run[edge + 1])
-        taken[run_idx] += 1
-        probe += 1
-    # Assign a shape (arm count) to each chosen site, cycling the scope's mix
-    # across all sites in a deterministic global order (sorted run, then edge)
-    # so the diamond/sidetrack ratio holds book-wide — the mandatory mix that
-    # takes shape out of the model's hands (PR-3).
-    cycle = preset.cadence_arm_cycle
-    plan: dict[int, list[tuple[str, str, int]]] = {}
-    k = 0
-    for i in sorted(capacity):
-        if not taken[i]:
-            continue
-        edges = [(runs[i][e], runs[i][e + 1]) for e in sorted(capacity[i][: taken[i]])]
-        plan[i] = [(b, a, cycle[(k + j) % len(cycle)]) for j, (b, a) in enumerate(edges)]
-        k += len(edges)
-    return plan
-
-
 class _Rendering:
     """A non-fresh rendering of a cosmetic fork (a sentinel, not a beat chain)."""
 
@@ -658,60 +571,6 @@ def insert_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, after: str
 TEXTURE_WORLDS_MAX = 3
 
 
-def texture_sites(g: StoryGraph, preset) -> list[list[str]]:
-    """Stretches a texture fork may parallel — v1: **cap-aligned
-    sub-stretches** of maximal linear runs. Every beat in the stretch is
-    ungated, commits nothing, ends nothing, and is not itself a texture
-    arm (a real weave's long shared run always carries locked resolutions,
-    so whole runs almost never qualify — the stretch excises around them);
-    boundaries snap to the collapse cap so the trunk's passage chunking
-    survives the fork edges (cadence's aligned-seam logic, run-scale); at
-    least one full chunk long (scene-scale, not a graft); with a
-    predecessor to fork from (a root-headed stretch would mint a second
-    root, I4); and touching no soft rejoin frontier at either boundary —
-    a later residue splice reroutes the trunk edges around a frontier,
-    and a parallel arm's edge would bypass the memory beat (the I15
-    projection rule catches that bypass loudly; the site rule avoids
-    creating it). One candidate per qualifying window: its largest
-    aligned stretch."""
-    cap = preset.passage_beats_max
-    frontier_beats = {b for need in convergence_needs(g) for b in need.rejoin}
-
-    def qualifies(beat_id: str) -> bool:
-        b = _beat(g, beat_id)
-        return not (
-            b.requires_flags
-            or b.commits_dilemmas
-            or b.is_ending
-            or b.purpose == StructuralPurpose.TEXTURE_WORLD
-        )
-
-    sites = []
-    for run in collapse_groups(g):
-        i = 0
-        while i < len(run):
-            if not qualifies(run[i]):
-                i += 1
-                continue
-            j = i
-            while j + 1 < len(run) and qualifies(run[j + 1]):
-                j += 1
-            start = i if i % cap == 0 else i + (cap - i % cap)
-            if start == 0 and not queries.predecessors(g, run[0]):
-                start = cap
-            end = j if j == len(run) - 1 else (j + 1) // cap * cap - 1
-            if end == len(run) - 1 and not queries.successors(g, run[-1]):
-                end = (j + 1) // cap * cap - 1
-            if end - start + 1 >= cap:
-                stretch = run[start : end + 1]
-                head_frontier = stretch[0] in frontier_beats
-                tail_frontier = set(queries.successors(g, stretch[-1])) & frontier_beats
-                if not head_frontier and not tail_frontier:
-                    sites.append(stretch)
-            i = j + 1
-    return sites
-
-
 def fork_segments(
     g: StoryGraph, preset
 ) -> tuple[list[list[str]], list[list[tuple[str, str]]]]:
@@ -719,7 +578,7 @@ def fork_segments(
     ``(segments, seam_edges)`` — the segment tiers and the edge tier of the
     unified table.
 
-    Segments generalize ``texture_sites``'s aligned-window walk: a window's
+    Segments generalize the one-shot texture-sites aligned-window walk: a window's
     seam-aligned span of >= cap beats is a *scene* segment (texture world);
     a run-tail span of 1..cap-1 beats — seam-aligned start, ending at a run
     end that has an exit — is a *small two-worlds* segment, the admission of
@@ -906,16 +765,20 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     qualifying sites and both budgets on the *current* graph and assign shape
     and arm count per admitted site — the same graph-pure machinery the
     one-shot pass used (``fork_segments`` for the tiers, ``projected_walks``
-    for the B6 projection, the words-admission rule of the old
-    ``texture_plan``), iterated to a fixed point by the round loop.
+    for the B6 projection, the one-shot texture plan's words-admission
+    rule), iterated to a fixed point by the round loop.
 
-    Segments admit first (scene then small, longest first — the cheapest
-    choices in reader-words), scene-scale ones under the story-total
-    ``TEXTURE_WORLDS_MAX`` (existing worlds counted via ``scene_fork_count``,
-    so the cap holds across rounds); then seam edges, largest-remaining-run
-    first in bisection order, shapes cycled from the scope's
-    ``cadence_arm_cycle`` offset by the cosmetic flags already minted (the
-    cycle position stays a pure function of the graph — resume determinism).
+    Admission order follows marginal story-words per decision: scene
+    segments first (near-zero traversed words; capped story-total at
+    ``TEXTURE_WORLDS_MAX`` — existing worlds counted via ``scene_fork_count``,
+    so the cap holds across rounds), then seam edges (a micro chunk per arm,
+    the cheapest tier), then small two-worlds segments last (a re-printed
+    chunk buys one decision — real substance, but the dearest ratio, so they
+    take only the budget the cheaper tiers leave). Edges go
+    largest-remaining-run first in bisection order, shapes cycled from the
+    scope's ``cadence_arm_cycle`` offset by the cosmetic flags already
+    minted (the cycle position stays a pure function of the graph — resume
+    determinism).
     Every site's marginal story words must fit the headroom (``words_target``
     or the band top). An empty plan is the loop's terminal round: the B6 mean
     is at target, or no site fits the remaining words, or capacity is out.
@@ -928,9 +791,9 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     limit = words_target if words_target is not None else preset.words_total[1]
     segments, edge_runs = fork_segments(g, preset)
 
-    def projected_mean(scratch: StoryGraph) -> float:
+    def projected_worst(scratch: StoryGraph) -> float:
         walks = projected_walks(scratch, preset)
-        return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
+        return max(w / max(d, 1) for w, d in walks)
 
     scratch = copy.deepcopy(g)
     total = projected_total_words(g, preset)
@@ -939,15 +802,11 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     admitted_beats: set[str] = set()
     probe = 0
 
-    for seg in sorted(segments, key=lambda run: (-len(run), run[0])):
-        if projected_mean(scratch) <= target:
-            break
-        scene = len(seg) >= cap
-        if scene and scenes >= TEXTURE_WORLDS_MAX:
-            continue
+    def admit_segment(seg: list[str]) -> None:
+        nonlocal probe, total, scenes
         marginal = _stretch_words(g, seg, preset)
         if total + marginal > limit:
-            continue  # a shorter site may still fit the words budget
+            return  # a shorter site may still fit the words budget
         arm = [
             Beat(
                 id=f"beat:fork-probe-{probe}-{i}",
@@ -961,11 +820,19 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
         insert_texture_world(scratch, arm, seg)
         probe += 1
         total += marginal
-        scenes += scene
+        scenes += len(seg) >= cap
         admitted_beats.update(seg)
         sites.append(
             ForkSite(before=seg[0], after="", segment=tuple(seg), arms=1, keywords=())
         )
+
+    ordered = sorted(segments, key=lambda run: (-len(run), run[0]))
+    for seg in ordered:
+        if len(seg) < cap or scenes >= TEXTURE_WORLDS_MAX:
+            continue
+        if projected_worst(scratch) <= target:
+            break
+        admit_segment(seg)
 
     # Edge tier: skip seams touching an admitted segment (its fork boundaries
     # land there this round; next round they are ordinary run seams again).
@@ -981,7 +848,7 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     offset = sum(1 for f in g.nodes_of(StateFlag) if f.path is None)
     k = 0
     arm_words = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
-    while projected_mean(scratch) > target:
+    while projected_worst(scratch) > target:
         open_runs = [i for i in range(len(capacity)) if taken[i] < len(capacity[i])]
         if not open_runs:
             break
@@ -990,7 +857,12 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
         taken[run_idx] += 1
         arms = cycle[(offset + k) % len(cycle)]
         if total + arms * arm_words > limit:
-            continue  # a later (cheaper-shaped) admission may still fit
+            # degrade to the cheapest shape at the budget boundary: a
+            # sidetrack site beats no site (the mix is taste, the words
+            # ceiling is a contract)
+            arms = 1
+        if total + arms * arm_words > limit:
+            continue  # no shape fits here; cheaper sites may remain elsewhere
         probe_arms = [
             Beat(
                 id=f"beat:fork-probe-{probe}-{side}",
@@ -1022,6 +894,14 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
             )
         )
 
+    edge_beats = {b for site in sites if not site.segment for b in (site.before, site.after)}
+    for seg in ordered:
+        if len(seg) >= cap or set(seg) & edge_beats:
+            continue
+        if projected_worst(scratch) <= target:
+            break
+        admit_segment(seg)
+
     return sorted(sites, key=lambda s: s.before)
 
 
@@ -1037,97 +917,10 @@ def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[s
     is deliberately NOT copied: the arm's whole point is a different
     backdrop — a different place, company, or detail of things and people
     (any consequence-free axis; 01 §6) — so its entities belong to
-    whoever words the arm (PR-4's proposal); ``_twin_chain``'s fresh
-    cadence twins copy them only as verbatim placeholders for that same
-    wording pass."""
+    whoever words the arm (the fork pass's proposal)."""
     if not arm:
         raise mutations.MutationError("a texture arm needs at least one beat")
     insert_cosmetic_fork(g, [SEGMENT_RENDERING, list(arm)], segment=list(stretch))
-
-
-def _arm_pairs(g: StoryGraph, before: str, after: str) -> list[tuple[str, str]]:
-    """Texture-arm beat pairs mirroring the trunk edge (before, after) —
-    one per arm paralleling that stretch."""
-    by_mirror: dict[str, list[str]] = {}
-    for b in g.nodes_of(Beat):
-        if b.mirrors:
-            by_mirror.setdefault(b.mirrors, []).append(b.id)
-    return sorted(
-        (a, z)
-        for a in by_mirror.get(before, [])
-        for z in by_mirror.get(after, [])
-        if g.has_edge(EdgeKind.PREDECESSOR, a, z)
-    )
-
-
-def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int, premise: str) -> list[Beat]:
-    """Texture twins of freshly spliced trunk false-branch beats: same
-    summary for now (words for texture worlds are the wording pass's job —
-    structure is copied by the engine, words are rewritten per world,
-    A14's doctrine), mirrored annotations, the host arm's premise,
-    engine-suffixed ids."""
-    return [
-        Beat(
-            id=f"{fb.id}--tw{k}",
-            created_by=fb.created_by,
-            summary=fb.summary,
-            beat_class=BeatClass.STRUCTURAL,
-            purpose=StructuralPurpose.TEXTURE_WORLD,
-            entities=list(fb.entities),
-            mirrors=fb.id,
-            texture_premise=premise,
-            scene_type=effective_scene_type(fb),
-            narration_scope=effective_narration_scope(fb),
-            viewpoint=fb.viewpoint,
-            interlude=fb.interlude,
-        )
-        for fb in chain
-    ]
-
-
-def insert_cadence_diamond(
-    g: StoryGraph, arms: Sequence[Sequence[Beat]], before: str, after: str
-) -> None:
-    """The cadence diamond finalize applies: k ≥ 2 fresh arms on an ordinary
-    edge (2 = a plain diamond, 3 = a third-arm diamond, PR-3); on a trunk edge
-    inside a mirrored stretch, the same diamond is additionally mirrored into
-    every texture arm paralleling it — engine-suffixed twins of the fresh arms,
-    wired identically — so both worlds keep the same choice topology and the
-    I15 projection stays edge-exact (a one-sided diamond would remove the trunk
-    edge the arm's edge projects onto, and hand the trunk world choices the
-    parallel world lacks)."""
-    arms = [list(a) for a in arms]
-    pairs = _arm_pairs(g, before, after)
-    insert_cosmetic_fork(g, arms, before=before, after=after)
-    for k, (ai, aj) in enumerate(pairs):
-        premise = _beat(g, ai).texture_premise
-        twins = [_twin_chain(g, chain, k, premise) for chain in arms]
-        for chain in twins:
-            for beat in chain:
-                mutations.add_beat(g, beat, [])
-        mutations.remove_ordering(g, ai, aj)
-        for chain in twins:
-            prev = ai
-            for beat in chain:
-                mutations.add_ordering(g, prev, beat.id)
-                prev = beat.id
-            mutations.add_ordering(g, prev, aj)
-
-
-def insert_cadence_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, after: str) -> None:
-    """Sidetrack counterpart of ``insert_cadence_diamond``: the direct
-    edge stays on both sides; the detour is mirrored into every arm."""
-    pairs = _arm_pairs(g, before, after)
-    insert_sidetrack(g, arm, before, after)
-    for k, (ai, aj) in enumerate(pairs):
-        twins = _twin_chain(g, arm, k, _beat(g, ai).texture_premise)
-        for beat in twins:
-            mutations.add_beat(g, beat, [])
-        prev = ai
-        for beat in twins:
-            mutations.add_ordering(g, prev, beat.id)
-            prev = beat.id
-        mutations.add_ordering(g, prev, aj)
 
 
 def projected_total_words(g: StoryGraph, preset) -> int:
@@ -1143,56 +936,5 @@ def _stretch_words(g: StoryGraph, stretch: Sequence[str], preset) -> int:
     cap = preset.passage_beats_max
     chunks = [list(stretch[i : i + cap]) for i in range(0, len(stretch), cap)]
     return sum(projected_group_words(g, chunk, preset) for chunk in chunks)
-
-
-def texture_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[list[str]]:
-    """Run-scale fork budget: the stretches finalize parallels, sized by
-    the same iterated projection as ``cadence_plan`` but budgeted FIRST —
-    a texture fork adds a decision at near-zero traversed words, so it
-    takes the cheap wins before beat diamonds spend arm-words on the
-    rest. Longest qualifying runs first (the most scene-scale substance),
-    until the projected mean reaches the same upper-middle B6 target,
-    the cap (TEXTURE_WORLDS_MAX) is hit, or sites run out. A fork also
-    costs *story* words the reader never traverses twice (the stretch is
-    written and printed twice), so each is admitted only while the
-    projected story total stays inside the words budget — the author's
-    ``words_target`` when set, the scope band's top otherwise (a scope
-    earns its length; structural-depth W1/W3)."""
-    from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
-
-    lo, hi = B6_WORDS_PER_CHOICE
-    target = (lo + 2 * hi) // 3
-    limit = words_target if words_target is not None else preset.words_total[1]
-    sites = sorted(texture_sites(g, preset), key=lambda run: (-len(run), run[0]))
-    if not sites:
-        return []
-
-    def projected_mean(scratch: StoryGraph) -> float:
-        walks = projected_walks(scratch, preset)
-        return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
-
-    scratch = copy.deepcopy(g)
-    total_words = projected_total_words(g, preset)
-    chosen: list[list[str]] = []
-    for run in sites:
-        if len(chosen) >= TEXTURE_WORLDS_MAX or projected_mean(scratch) <= target:
-            break
-        marginal = _stretch_words(g, run, preset)
-        if total_words + marginal > limit:
-            continue  # a shorter site may still fit the words budget
-        arm = [
-            Beat(
-                id=f"beat:texture-probe-{len(chosen)}-{i}",
-                created_by=_beat(g, run[0]).created_by,
-                summary="probe",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.TEXTURE_WORLD,
-            )
-            for i in range(len(run))
-        ]
-        insert_texture_world(scratch, arm, run)
-        total_words += marginal
-        chosen.append(run)
-    return chosen
 
 

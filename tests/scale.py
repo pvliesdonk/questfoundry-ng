@@ -193,53 +193,49 @@ def add_residue_arms(g: StoryGraph, *, arm_beats: int = 1, fork: bool = False) -
                 pc.insert_residue_chain(g, branch(""), path, list(need.rejoin))
 
 
-def fill_cadence_budget(g: StoryGraph, preset: ScopePreset) -> int:
-    """Insert the engine-computed diamond budget (pc.cadence_plan) with
-    1-beat arms at the suggested edges, as the finalize prompt asks the
-    model to. Returns the number of diamonds inserted."""
-    plan = pc.cadence_plan(g, preset)
-    inserted = 0
-    for _run_idx, sites in sorted(plan.items()):
-        for before, after, n_arms in sites:
-            arms = [
-                [
+def fill_fork_budget(g: StoryGraph, preset: ScopePreset) -> int:
+    """Drive the finalize loop's planner to its fixed point, splicing probe
+    content at every admitted site — the same machinery POLISH's fork rounds
+    run (pc.fork_plan), so calibration measures what the engine yields.
+    Returns the number of edge-scale sites (the diamond/sidetrack count)."""
+    edge_sites = 0
+    k = 0
+    while plan := pc.fork_plan(g, preset):
+        for site in plan:
+            if site.segment:
+                arm = [
                     Beat(
-                        id=f"beat:fb-{inserted}-{j}",
+                        id=f"beat:fork-{k}-{i}",
                         created_by=Stage.POLISH,
-                        summary="flavor",
+                        summary="texture world",
                         beat_class=BeatClass.STRUCTURAL,
-                        purpose=StructuralPurpose.FALSE_BRANCH,
+                        purpose=StructuralPurpose.TEXTURE_WORLD,
                     )
+                    for i in range(len(site.segment))
                 ]
-                for j in range(n_arms)
-            ]
-            if n_arms == 1:
-                pc.insert_cadence_sidetrack(g, arms[0], before, after)
+                pc.insert_texture_world(g, arm, list(site.segment))
             else:
-                pc.insert_cadence_diamond(g, arms, before, after)
-            inserted += 1
-    return inserted
-
-
-def fill_texture_budget(g: StoryGraph, preset: ScopePreset) -> int:
-    """Insert the engine-computed run-scale texture forks (pc.texture_plan,
-    structural-depth W3) with mirrored arms, as POLISH finalize will —
-    before the cadence budget, which tops up around them. Returns the
-    number of forks inserted."""
-    plan = pc.texture_plan(g, preset)
-    for k, run in enumerate(plan):
-        arm = [
-            Beat(
-                id=f"beat:tex-{k}-{i}",
-                created_by=Stage.POLISH,
-                summary="texture world",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.TEXTURE_WORLD,
-            )
-            for i in range(len(run))
-        ]
-        pc.insert_texture_world(g, arm, run)
-    return len(plan)
+                chains = [
+                    [
+                        Beat(
+                            id=f"beat:fork-{k}-{j}",
+                            created_by=Stage.POLISH,
+                            summary="flavor",
+                            beat_class=BeatClass.STRUCTURAL,
+                            purpose=StructuralPurpose.FALSE_BRANCH,
+                        )
+                    ]
+                    for j in range(site.arms)
+                ]
+                if site.arms == 1:
+                    pc.insert_sidetrack(g, chains[0], site.before, site.after)
+                else:
+                    pc.insert_cosmetic_fork(
+                        g, chains, before=site.before, after=site.after
+                    )
+                edge_sites += 1
+            k += 1
+    return edge_sites
 
 
 def compile_story(
@@ -249,23 +245,19 @@ def compile_story(
     order_index: int = 0,
     arm_beats: int = 1,
     tensored_arms: bool = False,
-    texture_worlds: bool = False,
 ) -> tuple[StoryGraph, int]:
     """GROW + the structural half of POLISH, deterministically: weave one
-    candidate order, derive flags, splice residue arms, optionally plant
-    the texture-world forks (off by default — the density calibration
-    constants in models/concept.py were measured without them; flip the
-    default only alongside a recalibration), fill the cadence budget.
-    Returns (compiled graph, diamonds inserted)."""
+    candidate order, derive flags, splice residue arms (round 0), then run
+    the finalize loop's fork budget to its fixed point (segments and seam
+    edges together — the unified machinery the pipeline ships, PR-5).
+    Returns (compiled graph, edge-scale fork sites inserted)."""
     g = copy.deepcopy(g)
     planned = weave.plan(g)
     orders = weave.candidates(planned)
     weave.realize(g, planned, orders[min(order_index, len(orders) - 1)])
     _derive_flags(g)
     add_residue_arms(g, arm_beats=arm_beats, fork=tensored_arms)
-    if texture_worlds:
-        fill_texture_budget(g, preset)
-    diamonds = fill_cadence_budget(g, preset)
+    diamonds = fill_fork_budget(g, preset)
     return g, diamonds
 
 

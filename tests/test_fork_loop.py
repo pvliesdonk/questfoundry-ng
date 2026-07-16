@@ -211,9 +211,11 @@ def test_loop_expansion_names_are_deterministic(tmp_path):
     """The `finalize:<n>` chain resumes from the ledger iff the expansion is
     a pure function of the checkpointed graph (open question 4): the same
     graph must yield the same pass names, twice."""
-    from questfoundry.pipeline.stages.polish import _round_expand
+    from questfoundry.pipeline.stages.polish import _round_spec
 
     project = _loop_project(tmp_path)
-    names = [s.name for s in _round_expand(1)(project)]
-    assert names == [s.name for s in _round_expand(1)(project)]
+    expand = _round_spec(1).expand
+    assert expand is not None
+    names = [s.name for s in expand(project)]
+    assert names == [s.name for s in expand(project)]
     assert names[-1] == "finalize:2" and names[0] == "fork:1:0"

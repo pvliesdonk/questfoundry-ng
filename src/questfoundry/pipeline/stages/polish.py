@@ -537,11 +537,24 @@ def _fork_pass(n: int, k: int, site: pc.ForkSite) -> PassSpec:
     )
 
 
-def _round_skip(n: int) -> Callable[[Project], str | None]:
+def _round_spec(n: int) -> PassSpec:
+    """An engine-only planner pass: always skipped (its skip reason reports
+    the round decision), never calls the LLM; the work is in `expand`.
+
+    ``fork_plan`` is expensive (a scratch deep-copy plus repeated walk
+    projections per candidate site), and the runner calls ``skip_if`` and
+    ``expand`` back to back on the same graph — the pass always skips, so
+    nothing mutates in between. ``skip_if`` therefore stashes its plan for
+    ``expand`` to consume once (popped, so any other path recomputes; the
+    result is identical either way — the plan is a pure function of the
+    unchanged graph, which is also what ledger resume relies on)."""
+    stash: dict[str, list[pc.ForkSite]] = {}
+
     def skip(project: Project) -> str:
         plan = pc.fork_plan(
             project.graph, project.vision.preset, project.vision.words_target
         )
+        stash["plan"] = plan
         if plan:
             return f"engine round {n}: {len(plan)} fork site(s) scheduled"
         return (
@@ -549,26 +562,18 @@ def _round_skip(n: int) -> Callable[[Project], str | None]:
             "site fits the words headroom"
         )
 
-    return skip
-
-
-def _round_expand(n: int) -> Callable[[Project], list[PassSpec]]:
     def expand(project: Project) -> list[PassSpec]:
-        plan = pc.fork_plan(
-            project.graph, project.vision.preset, project.vision.words_target
-        )
+        plan = stash.pop("plan", None)
+        if plan is None:
+            plan = pc.fork_plan(
+                project.graph, project.vision.preset, project.vision.words_target
+            )
         if not plan:
             return _polish_expand(project)
         passes = [_fork_pass(n, k, site) for k, site in enumerate(plan)]
         passes.append(_round_spec(n + 1))
         return passes
 
-    return expand
-
-
-def _round_spec(n: int) -> PassSpec:
-    """An engine-only planner pass: always skipped (its skip reason reports
-    the round decision), never calls the LLM; the work is in `expand`."""
     return PassSpec(
         name=f"finalize:{n}",
         role="writer",
@@ -576,8 +581,8 @@ def _round_spec(n: int) -> PassSpec:
         schema=ForkProposal,
         build_context=lambda project: {},
         apply=lambda proposal, project: [],
-        skip_if=_round_skip(n),
-        expand=_round_expand(n),
+        skip_if=skip,
+        expand=expand,
     )
 
 

@@ -399,7 +399,19 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
     arm_ids = [f"beat:mountain-{i}" for i in range(len(site))]
     assert fill_premise(site) == ["the crossing goes along the coast road"]  # FILL: trunk world
     assert fill_premise(arm_ids) == ["the crossing goes over the mountain pass"]  # FILL: arm world
-    assert g.node(site[0]).texture_premise and g.node(arm_ids[0]).texture_premise  # entry labels
+    # entry labels: _labels_context itself surfaces each destination's head-beat
+    # premise (the "premise" key polish_labels.j2 consumes), naming both worlds
+    from questfoundry.pipeline.stages.polish import _groups, _labels_context
+
+    groups = _groups(project)
+    entry_premises = {
+        d["premise"]
+        for a in sorted({x for x, _ in pc.group_edges(groups, g)})
+        for d in _labels_context(a)(project)["dests"]
+        if d["premise"]
+    }
+    assert "the crossing goes along the coast road" in entry_premises  # rendering 0 (trunk)
+    assert "the crossing goes over the mountain pass" in entry_premises  # the fresh arm
     # cadence diamonds inside the mirrored stretch got mirrored twins
     # carrying the arm's premise (both worlds keep the same topology)
     twins = [b for b in g.nodes_of(Beat) if b.mirrors and b.mirrors.startswith("beat:fb-")]
@@ -499,14 +511,33 @@ def test_cosmetic_fork_primitive_reproduces_the_three_shapes():
 
 
 def test_cosmetic_fork_rejects_degenerate_rendering_sets():
-    from questfoundry.pipeline.passages import EMPTY_RENDERING, insert_cosmetic_fork
+    from questfoundry.pipeline.passages import (
+        EMPTY_RENDERING,
+        SEGMENT_RENDERING,
+        insert_cosmetic_fork,
+    )
 
     g = StoryGraph()
-    chain(g, ["a", "b"])
+    chain(g, ["a", "b", "c", "d"])
+    fresh = [setup_beat("x")]
     with pytest.raises(mutations.MutationError, match="at least two renderings"):
-        insert_cosmetic_fork(g, [[setup_beat("x")]], before="beat:a", after="beat:b")
+        insert_cosmetic_fork(g, [fresh], before="beat:a", after="beat:b")
     with pytest.raises(mutations.MutationError, match="at least one fresh"):
         insert_cosmetic_fork(g, [EMPTY_RENDERING, EMPTY_RENDERING], before="beat:a", after="beat:b")
+    # scale/marker contract (hardened for PR-5's looser callers): at most one of
+    # each marker, and the two scales are exclusive
+    with pytest.raises(mutations.MutationError, match="at most one"):
+        insert_cosmetic_fork(
+            g, [EMPTY_RENDERING, EMPTY_RENDERING, fresh], before="beat:a", after="beat:b"
+        )
+    with pytest.raises(mutations.MutationError, match="SEGMENT_RENDERING needs a non-empty"):
+        insert_cosmetic_fork(g, [SEGMENT_RENDERING, fresh], before="beat:a", after="beat:b")
+    with pytest.raises(mutations.MutationError, match="EMPTY_RENDERING is edge-scale only"):
+        insert_cosmetic_fork(
+            g, [SEGMENT_RENDERING, EMPTY_RENDERING, [arm_beat("y")]], segment=["beat:b"]
+        )
+    with pytest.raises(mutations.MutationError, match="exactly one SEGMENT_RENDERING"):
+        insert_cosmetic_fork(g, [[arm_beat("y")], [arm_beat("z")]], segment=["beat:b"])
 
 
 def test_texture_premise_legal_on_any_beat_engine_set_on_frozen_trunk():

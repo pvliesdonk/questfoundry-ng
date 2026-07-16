@@ -466,7 +466,7 @@ SEGMENT_RENDERING = _Rendering("SEGMENT_RENDERING")  # the trunk segment itself 
 
 def insert_cosmetic_fork(
     g: StoryGraph,
-    renderings: Sequence,
+    renderings: Sequence[Sequence[Beat] | _Rendering],
     *,
     before: str | None = None,
     after: str | None = None,
@@ -486,7 +486,7 @@ def insert_cosmetic_fork(
     ``EMPTY_RENDERING`` is offered. Additions only, save the diamond's spine
     removal (I9). The three shipped shapes are adapters below."""
     renderings = list(renderings)
-    fresh = [list(r) for r in renderings if r is not EMPTY_RENDERING and r is not SEGMENT_RENDERING]
+    fresh = [list(r) for r in renderings if not isinstance(r, _Rendering)]
     segment = list(segment)
     if len(renderings) < 2:
         raise mutations.MutationError("a cosmetic fork needs at least two renderings")
@@ -495,6 +495,30 @@ def insert_cosmetic_fork(
     for chain in fresh:
         if not chain:
             raise mutations.MutationError("a fresh rendering needs at least one beat")
+    # There is one trunk segment and one direct edge, so at most one of each
+    # marker; and the two scales are exclusive — a segment-scale fork's
+    # rendering 0 IS the segment (no walk-on edge), an edge-scale fork has no
+    # segment to render 0 (PR-5's loop will call this with looser inputs).
+    n_empty = sum(1 for r in renderings if r is EMPTY_RENDERING)
+    n_segment = sum(1 for r in renderings if r is SEGMENT_RENDERING)
+    if n_empty > 1 or n_segment > 1:
+        raise mutations.MutationError(
+            "a cosmetic fork offers at most one EMPTY_RENDERING and one SEGMENT_RENDERING"
+        )
+    if segment:
+        if n_segment != 1:
+            raise mutations.MutationError(
+                "a segment-scale fork's rendering 0 is the trunk segment — offer "
+                "exactly one SEGMENT_RENDERING"
+            )
+        if n_empty:
+            raise mutations.MutationError(
+                "a segment-scale fork has no walk-on edge; EMPTY_RENDERING is edge-scale only"
+            )
+    elif n_segment:
+        raise mutations.MutationError(
+            "an edge-scale fork has no trunk segment; SEGMENT_RENDERING needs a non-empty segment"
+        )
 
     if segment:
         # Segment-scale: the trunk stays (rendering 0), each fresh chain mirrors

@@ -95,6 +95,16 @@ class ScopePreset(BaseModel):
     # sidetracks); the mix is author taste, revisit on a medium read
     # (open question 1).
     cadence_arm_cycle: tuple[int, ...] = (2, 1, 1, 3, 1, 1)
+    # The choice-stretch cap (author metric, 2026-07-16): along any
+    # playthrough walk, at most this many consecutive passages may offer no
+    # choice — a no-choice passage is inherently a cost, and the *length* of
+    # a no-choice stretch is what reads as a book instead of a game (the
+    # measured medium desert was 14). Break sites that enforce it are
+    # mandatory machinery in the finalize loop, exempt from the words
+    # ceiling (interruption outranks length until the density calibration
+    # lands); B10 reports it advisorily at the gate. Default matches the
+    # region the author judged reasonable on the first loop-built graph.
+    choice_stretch_max: int = 4
 
     def budget_for(self, words_target: int | None) -> DilemmaBudget:
         """B1's dilemma budget. With a ``words_target`` the soft count

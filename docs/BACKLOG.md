@@ -116,9 +116,12 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   — mechanism replaced, re-measure live.** The one-shot admission that
   produced +38% B7 is retired: PR-5's `fork_plan` charges every site's
   marginal story words against the headroom (`words_target` or band top)
-  per admission, edge shapes degrade at the boundary, and the sim lands at
-  the band top instead of past it. Confirm on the next live medium
-  (band-top `--words-target`) that B7 stays inside the target.
+  per admission with probe-measured exact pricing, edge shapes degrade at
+  the boundary — but mandatory stretch-break sites are words-EXEMPT
+  (author, 2026-07-16: interruption outranks the ceiling; calibration
+  later), so B7 may exceed the target by the break surplus (~+14% on the
+  live graph). The density calibration should restore honest headroom;
+  re-measure then.
 - [ ] **Intersections over post-commit (exclusive) beats** — M2 only groups
   shared pre-commit beats; exclusive-beat intersections are meaningful but
   interact with arc membership in ways the spine model doesn't cover. Same for

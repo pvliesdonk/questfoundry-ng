@@ -454,6 +454,22 @@ author-ratified, recorded so the next session doesn't re-derive:
    words budget rarely buys depth ≥ 2, and the fork prompt shows the host
    rendering's premise so summaries stay world-consistent.
 
+### Post-PR-5 author direction (2026-07-16, first loop-built graph read)
+
+Reading the first loop-built medium graph, the author ruled the long
+no-choice stretches (a 14-passage desert on every walk) **must be
+interrupted** — braided like the ending region — and named the metric: the
+count of passages offering no choice, and the length of a no-choice
+stretch. Implemented as the stretch-cap rework (same day): the scope knob
+`choice_stretch_max` (default 4), the DAG-wide conservative stretch metric
+(`projected_stretches` — a walk-based measure is blind to the desert inside
+the rendering it didn't take; a keyword-gated choice breaks no stretch for
+readers without the key), advisory **B10**, and `fork_plan`'s three-phase
+admission: depth (words-gated, probe-measured exact pricing — the analytic
+marginal undercharged re-chunking), mandatory breaks (words-EXEMPT:
+interruption outranks the words ceiling until the density calibration
+lands — author: "we'll do calibration later"), then B6 fine-tuning.
+
 ## Open questions (for the author or a later frontier session)
 
 1. **The mix ratio** (diamond : sidetrack : two-worlds per scope) is author

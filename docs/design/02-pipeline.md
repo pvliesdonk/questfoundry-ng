@@ -290,7 +290,7 @@ central commitment point.
 |---|---|
 | In | Frozen beat DAG, flags, overlays, residue weights |
 | Out | Passage graph: passages (collapse), choice edges (labels, requires, grants), variant passages, residue arms, cosmetic forks (sidetracks, diamonds, small two-worlds, texture worlds — one mechanism, I15) with one minted cosmetic keyword per non-empty rendering; character-arc metadata per entity |
-| Gate G4 | I10–I16 (I15: non-empty-segment renderings mirror their segment — content and boundary parity, composition-closed under nesting and decoration, structural choice-topology parity deliberately retired for per-walk budget parity; I16: a cosmetic keyword gates only cosmetic-fork renderings; 01 §6, §8); every choice label distinct and non-spoiling; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
+| Gate G4 | I10–I16 (I15: non-empty-segment renderings mirror their segment — content and boundary parity, composition-closed under nesting and decoration, structural choice-topology parity deliberately retired for per-walk budget parity; I16: a cosmetic keyword gates only cosmetic-fork renderings; 01 §6, §8); every choice label distinct and non-spoiling; the **B10 choice-stretch report** (advisory; the author metric, 2026-07-16): per arc view, no more than `choice_stretch_max` consecutive passages may offer no choice — DAG-wide, so the desert inside an unwalked rendering counts, and conservatively, so a keyword-gated choice does not break a stretch for readers without the key; the **B8 pacing report** (advisory): along each playthrough, a run of more than N same-`scene_type` **beats** warns — beat-level, not passage-level, because `passage_intensity` is a max and passages read scene-heavy (01 §Beat annotations); per world, every heavy-residue convergence has variants at every frontier beat and every light one a residue arm per path; character-arc references resolve (a dangling pivot beat or path fails loud at the gate, not inside FILL) |
 
 Two phases:
 
@@ -326,9 +326,16 @@ Two phases:
    offered up to 8 holdable, unconsumed keywords minted in earlier
    rounds (grants strictly upstream), and a pass MAY attach one
    keyword-gated extra rendering consuming one — acknowledges, never
-   rewards; one consumer per keyword; I16 holds the locality. The loop
-   terminates when a round admits nothing: every projected walk at the
-   B6 target, or no site fits the remaining words or seam capacity.
+   rewards; one consumer per keyword; I16 holds the locality. Admission
+   runs in three phases (author direction, 2026-07-16): **depth first**
+   (scene then small segments, words-gated with probe-measured exact
+   pricing), then **mandatory stretch breaks** — along every arc view at
+   most `choice_stretch_max` consecutive passages may offer no choice,
+   and the break sites that enforce it are choice machinery, EXEMPT from
+   the words ceiling (interruption outranks length until the density
+   calibration lands; a stretch with no free seam is left to B10) — then
+   **B6 fine-tuning** on the remaining seams, words-gated. The loop
+   terminates when a round admits nothing.
    Because a segment inside a rendering is just a segment a later round
    may fork, recursion falls out — worlds nest, diamonds land inside
    arms — and renderings keep budget parity, not structural parity:

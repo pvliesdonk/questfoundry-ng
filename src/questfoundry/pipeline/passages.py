@@ -320,14 +320,14 @@ def projected_group_words(g: StoryGraph, group: list[str], preset) -> int:
     return round(preset.words_for(intensity=intensity, ending=ending)[1] * 0.9)
 
 
-def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
-    """Per arc selection, a deterministic playthrough over the capped
-    collapse groups: (projected walk words, decisions offered). At every
-    step the walk counts a decision when >= 2 choices are live (gate
-    satisfiable on this arc's history — target in view or not, B6
-    semantics) and follows the first live in-view successor. One diamond
-    arm is traversed, not both — the projection measures what a reader
-    experiences, which is what the arc view over-counted."""
+def _projected_steps(g: StoryGraph, preset) -> tuple[list[list[str]], list[list[tuple[int, int]]]]:
+    """The shared playthrough walker (B6 semantics): per arc selection, the
+    deterministic walk over the capped collapse groups as a list of
+    ``(group_index, live_choice_count)`` steps — a choice is live when its
+    gate is satisfiable on this walk's history, and the walk follows the
+    first live in-view successor (one diamond arm, not both). Returns
+    ``(groups, walks)``; ``projected_walks`` and ``projected_stretches``
+    are its two readings."""
     groups = collapse_groups(g, max_beats=preset.passage_beats_max, split_viewpoints=True)
     edges = group_edges(groups, g)
     succ: dict[int, list[int]] = {}
@@ -335,7 +335,6 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
         succ.setdefault(a, []).append(b)
     group_of = {b: i for i, grp in enumerate(groups) for b in grp}
     root_groups = {group_of[r] for r in queries.roots(g)}
-    results = []
     # Cosmetic grants are per-walk, not per-view: a rendering head sits in
     # every arc view, so view-derived holding counted keywords from detours a
     # walk never took (cosmetic-forks §4, open question 5 — resolved). A
@@ -346,6 +345,7 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
             for grant in queries.grant_beats(g, f.id):
                 if grant in group_of:
                     cosmetic_grants.setdefault(group_of[grant], set()).add(f.id)
+    walks: list[list[tuple[int, int]]] = []
     for selection in queries.arc_selections(g):
         view = queries.arc_view(g, selection)
         # Dilemma flags stay view-derived: a commit is on exactly the arcs
@@ -357,24 +357,117 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
             and any(grant in view for grant in queries.grant_beats(g, f.id))
         }
         in_view = [all(b in view for b in grp) for grp in groups]
-        cur = min(i for i in root_groups if in_view[i])
-        words = decisions = 0
+        live_roots = [i for i in root_groups if in_view[i]]
+        if not live_roots:
+            # a degenerate view (e.g. a lone gated beat with no grant in
+            # sight) has no walkable route; the gates that own that defect
+            # report it — the projection just records an empty walk
+            walks.append([])
+            continue
+        cur = min(live_roots)
+        steps: list[tuple[int, int]] = []
         while True:
             held |= cosmetic_grants.get(cur, set())
-            words += projected_group_words(g, groups[cur], preset)
             live = [
                 t
                 for t in succ.get(cur, [])
                 if all(req in held for req in choice_requires(g, groups[t]))
             ]
-            if len(live) >= 2:
-                decisions += 1
+            steps.append((cur, len(live)))
             nxt = [t for t in live if in_view[t]]
             if not nxt:
                 break
             cur = nxt[0]
-        results.append((words, decisions))
-    return results
+        walks.append(steps)
+    return groups, walks
+
+
+def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
+    """Per arc selection: (projected walk words, decisions offered) — the
+    B6 projection over ``_projected_steps``."""
+    groups, walks = _projected_steps(g, preset)
+    return [
+        (
+            sum(projected_group_words(g, groups[i], preset) for i, _ in steps),
+            sum(1 for _, live in steps if live >= 2),
+        )
+        for steps in walks
+    ]
+
+
+def _stretch_chains(g: StoryGraph, preset) -> list[list[tuple[int, list[str]]]]:
+    """Per arc view, the maximal no-choice chains — every path of consecutive
+    passages offering fewer than two live choices, as ``(length, beats)`` at
+    each chain end. DAG-wide, not walk-based: a playthrough walk traverses one
+    rendering of every cosmetic fork, so a walk-based measure is blind to the
+    desert inside the arm it didn't take. ``live`` is conservative — a choice
+    gated on a cosmetic keyword does not break a stretch (the poorest reader,
+    who lacks the key, never sees it); dilemma gates are per-view facts."""
+    groups = collapse_groups(g, max_beats=preset.passage_beats_max, split_viewpoints=True)
+    edges = group_edges(groups, g)
+    succ: dict[int, list[int]] = {}
+    for a, b in edges:
+        succ.setdefault(a, []).append(b)
+    cosmetic = {f.id for f in g.nodes_of(StateFlag) if f.path is None}
+    out: list[list[tuple[int, list[str]]]] = []
+    for selection in queries.arc_selections(g):
+        view = queries.arc_view(g, selection)
+        held = {
+            f.id
+            for f in g.nodes_of(StateFlag)
+            if f.path is not None
+            and any(grant in view for grant in queries.grant_beats(g, f.id))
+        }
+        in_view = [all(b in view for b in grp) for grp in groups]
+
+        def live(v: int, in_view=in_view, held=held) -> int:
+            count = 0
+            for t in succ.get(v, []):
+                req = choice_requires(g, groups[t])
+                if any(r in cosmetic for r in req):
+                    continue
+                if all(r in held for r in req):
+                    count += 1
+            return count
+
+        lives = {v: live(v) for v in range(len(groups)) if in_view[v]}
+        # group index order is topological (collapse builds in head order)
+        len_at: dict[int, int] = {}
+        parent: dict[int, int | None] = {}
+        for v in sorted(lives):
+            if lives[v] >= 2:
+                continue
+            best_u, best = None, 0
+            for a, b in edges:
+                if b == v and a in len_at and lives.get(a, 2) < 2 and len_at[a] > best:
+                    best_u, best = a, len_at[a]
+            len_at[v] = best + 1
+            parent[v] = best_u
+        chains: list[tuple[int, list[str]]] = []
+        for v in len_at:
+            if any(t in len_at for t in succ.get(v, []) if lives.get(t, 2) < 2):
+                continue  # not a chain end
+            members: list[int] = []
+            cur: int | None = v
+            while cur is not None:
+                members.append(cur)
+                cur = parent[cur]
+            members.reverse()
+            chains.append((len_at[v], [b for x in members for b in groups[x]]))
+        out.append(chains)
+    return out
+
+
+def projected_stretches(g: StoryGraph, preset) -> list[list[int]]:
+    """Per arc view, the no-choice stretch lengths (the author metric,
+    2026-07-16: a no-choice passage is inherently a cost, and the stretch
+    length is what reads as a book instead of a game) — one entry per
+    maximal chain, DAG-wide via ``_stretch_chains``. The scope's
+    ``choice_stretch_max`` caps these; the finalize loop's break sites
+    enforce the cap and B10 reports what remains."""
+    return [
+        [length for length, _ in chains] or [0] for chains in _stretch_chains(g, preset)
+    ]
 
 
 def _bisection_order(n: int) -> list[int]:
@@ -764,25 +857,35 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     """One finalize round's admissions (cosmetic-forks §3, §6): recompute the
     qualifying sites and both budgets on the *current* graph and assign shape
     and arm count per admitted site — the same graph-pure machinery the
-    one-shot pass used (``fork_segments`` for the tiers, ``projected_walks``
-    for the B6 projection, the one-shot texture plan's words-admission
-    rule), iterated to a fixed point by the round loop.
+    one-shot pass used (``fork_segments`` for the tiers, ``_projected_steps``
+    for the walk projections), iterated to a fixed point by the round loop.
 
-    Admission order follows marginal story-words per decision: scene
-    segments first (near-zero traversed words; capped story-total at
-    ``TEXTURE_WORLDS_MAX`` — existing worlds counted via ``scene_fork_count``,
-    so the cap holds across rounds), then seam edges (a micro chunk per arm,
-    the cheapest tier), then small two-worlds segments last (a re-printed
-    chunk buys one decision — real substance, but the dearest ratio, so they
-    take only the budget the cheaper tiers leave). Edges go
-    largest-remaining-run first in bisection order, shapes cycled from the
-    scope's ``cadence_arm_cycle`` offset by the cosmetic flags already
-    minted (the cycle position stays a pure function of the graph — resume
-    determinism).
-    Every site's marginal story words must fit the headroom (``words_target``
-    or the band top). An empty plan is the loop's terminal round: the B6 mean
-    is at target, or no site fits the remaining words, or capacity is out.
-    Deterministic: same graph, same plan."""
+    Admission runs in three phases (author direction, 2026-07-16):
+
+    **A — mandatory stretch breaks, words-exempt.** Along every walk at most
+    ``choice_stretch_max`` consecutive passages may offer no choice (the
+    author metric; B10 reports it at the gate). Each offending stretch —
+    longest first — gets an edge site at the seam nearest its middle, shapes
+    cycled from ``cadence_arm_cycle`` offset by the keywords already minted.
+    Breaks are choice machinery, not length padding, so the words ceiling
+    does not gate them (interruption outranks length until the density
+    calibration lands); a stretch with no free seam is left to B10.
+
+    **B — depth, words-gated with exact pricing.** Scene segments (capped
+    story-total at ``TEXTURE_WORLDS_MAX`` via ``scene_fork_count``) then
+    small two-worlds, longest first, while the worst walk sits above the B6
+    target. Each candidate's marginal is measured as the probe's actual
+    projected-total delta on a trial graph — the analytic estimate
+    undercharged the re-chunking a fork's boundaries cause (live medium,
+    2026-07-16: the plan overshot the very ceiling it was enforcing).
+
+    **C — B6 fine-tuning.** Remaining seam edges, largest-remaining-run
+    first in bisection order, words-gated against the live projected total
+    (a shape that no longer fits degrades to a sidetrack), while the worst
+    walk sits above the target.
+
+    An empty plan is the loop's terminal round. Deterministic: every input
+    is a pure function of the graph — same graph, same plan."""
     from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
 
     lo, hi = B6_WORDS_PER_CHOICE
@@ -791,22 +894,66 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
     limit = words_target if words_target is not None else preset.words_total[1]
     segments, edge_runs = fork_segments(g, preset)
 
-    def projected_worst(scratch: StoryGraph) -> float:
-        walks = projected_walks(scratch, preset)
-        return max(w / max(d, 1) for w, d in walks)
+    def projected_worst(sg: StoryGraph) -> float:
+        walks = projected_walks(sg, preset)
+        return max((w / max(d, 1) for w, d in walks), default=0.0)
 
     scratch = copy.deepcopy(g)
-    total = projected_total_words(g, preset)
     scenes = scene_fork_count(g, cap)
     sites: list[ForkSite] = []
     admitted_beats: set[str] = set()
+    used_edges: set[tuple[str, str]] = set()
+    removed_edges: set[tuple[str, str]] = set()  # diamonds drop the direct edge
     probe = 0
+    cycle = preset.cadence_arm_cycle
+    offset = sum(1 for f in g.nodes_of(StateFlag) if f.path is None)
+    k = 0
+    arm_words = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
 
+    def splice_edge(sg: StoryGraph, before: str, after: str, arms: int) -> None:
+        nonlocal probe
+        probe_arms = [
+            Beat(
+                id=f"beat:fork-probe-{probe}-{side}",
+                created_by=_beat(g, before).created_by,
+                summary="probe",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.FALSE_BRANCH,
+            )
+            for side in ("a", "b")[: min(arms, 2)]
+        ]
+        if arms == 1:
+            insert_sidetrack(sg, probe_arms, before, after)
+        else:
+            # a 2-arm probe sizes the choice budget for any diamond (the walk
+            # traverses one arm; one decision per site regardless of arm count)
+            insert_cosmetic_fork(sg, [[b] for b in probe_arms], before=before, after=after)
+        probe += 1
+
+    def admit_edge(before: str, after: str, arms: int) -> None:
+        nonlocal k
+        splice_edge(scratch, before, after, arms)
+        k += 1
+        used_edges.add((before, after))
+        if arms >= 2:
+            removed_edges.add((before, after))
+        sites.append(
+            ForkSite(
+                before=before,
+                after=after,
+                segment=(),
+                arms=arms,
+                keywords=tuple(offered_keywords(g, before)),
+            )
+        )
+
+    # Phase B — depth, words-gated with exact (probe-measured) pricing.
     def admit_segment(seg: list[str]) -> None:
-        nonlocal probe, total, scenes
-        marginal = _stretch_words(g, seg, preset)
-        if total + marginal > limit:
-            return  # a shorter site may still fit the words budget
+        nonlocal probe, scratch, scenes
+        # a diamond removed an interior edge: the mirror splice would fail
+        # its contiguity check at apply — this segment is off the table
+        if any((a, b) in removed_edges for a, b in zip(seg, seg[1:], strict=False)):
+            return
         arm = [
             Beat(
                 id=f"beat:fork-probe-{probe}-{i}",
@@ -817,9 +964,13 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
             )
             for i in range(len(seg))
         ]
-        insert_texture_world(scratch, arm, seg)
+        trial = copy.deepcopy(scratch)
+        insert_texture_world(trial, arm, seg)
+        delta = projected_total_words(trial, preset) - projected_total_words(scratch, preset)
+        if projected_total_words(scratch, preset) + delta > limit:
+            return  # a shorter site may still fit the words budget
+        scratch = trial
         probe += 1
-        total += marginal
         scenes += len(seg) >= cap
         admitted_beats.update(seg)
         sites.append(
@@ -834,20 +985,66 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
             break
         admit_segment(seg)
 
-    # Edge tier: skip seams touching an admitted segment (its fork boundaries
-    # land there this round; next round they are ordinary run seams again).
+    # Phase A — mandatory stretch breaks (words-exempt), AFTER depth so a
+    # mandatory diamond never lands mid-segment and forecloses a scene site;
+    # the DAG-wide chains cover the deserts inside fresh renderings too.
+    stretch_cap = preset.choice_stretch_max
+    all_seams = [e for run in edge_runs for e in run]
+    unbreakable: set[frozenset[str]] = set()
+    while True:
+        offenders: list[list[str]] = []
+        seen: set[tuple[str, ...]] = set()
+        for chains in _stretch_chains(scratch, preset):
+            for length, beats_in in chains:
+                key = tuple(beats_in)
+                if length <= stretch_cap or key in seen:
+                    continue
+                if frozenset(beats_in) not in unbreakable:
+                    seen.add(key)
+                    offenders.append(beats_in)
+        offenders.sort(key=lambda o: (-len(o), o[0]))
+        progressed = False
+        for beats_in in offenders:
+            pos = {b: i for i, b in enumerate(beats_in)}
+            # seams inside a segment admitted THIS round are off the table —
+            # a break there would remove an edge the mirror splice still
+            # needs at apply; the next round breaks the spliced construct's
+            # interiors as ordinary runs (recursion)
+            candidates = [
+                e
+                for e in all_seams
+                if e not in used_edges
+                and e[0] in pos
+                and e[1] in pos
+                and e[0] not in admitted_beats
+                and e[1] not in admitted_beats
+            ]
+            if not candidates:
+                unbreakable.add(frozenset(beats_in))
+                continue
+            mid = len(beats_in) / 2
+            before, after = min(candidates, key=lambda e: (abs(pos[e[0]] - mid), e[0]))
+            admit_edge(before, after, cycle[(offset + k) % len(cycle)])
+            progressed = True
+            break  # stretches shift with every break: re-measure
+        if not progressed:
+            break
+
+    # Phase C — B6 fine-tuning on the remaining seams, words-gated against
+    # the live projected total (edge bias cannot accumulate: every admission
+    # re-reads the true total).
     capacity = [
-        [e for e in run if e[0] not in admitted_beats and e[1] not in admitted_beats]
+        [
+            e
+            for e in run
+            if e not in used_edges
+            and e[0] not in admitted_beats
+            and e[1] not in admitted_beats
+        ]
         for run in edge_runs
     ]
-    capacity = [
-        [run[j] for j in _bisection_order(len(run))] for run in capacity if run
-    ]
+    capacity = [[run[j] for j in _bisection_order(len(run))] for run in capacity if run]
     taken = [0] * len(capacity)
-    cycle = preset.cadence_arm_cycle
-    offset = sum(1 for f in g.nodes_of(StateFlag) if f.path is None)
-    k = 0
-    arm_words = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
     while projected_worst(scratch) > target:
         open_runs = [i for i in range(len(capacity)) if taken[i] < len(capacity[i])]
         if not open_runs:
@@ -856,47 +1053,18 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
         before, after = capacity[run_idx][taken[run_idx]]
         taken[run_idx] += 1
         arms = cycle[(offset + k) % len(cycle)]
-        if total + arms * arm_words > limit:
+        current = projected_total_words(scratch, preset)
+        if current + arms * arm_words > limit:
             # degrade to the cheapest shape at the budget boundary: a
-            # sidetrack site beats no site (the mix is taste, the words
-            # ceiling is a contract)
+            # sidetrack site beats no site (the mix is taste; the words
+            # ceiling is a contract for optional depth)
             arms = 1
-        if total + arms * arm_words > limit:
+        if current + arms * arm_words > limit:
             continue  # no shape fits here; cheaper sites may remain elsewhere
-        probe_arms = [
-            Beat(
-                id=f"beat:fork-probe-{probe}-{side}",
-                created_by=_beat(g, before).created_by,
-                summary="probe",
-                beat_class=BeatClass.STRUCTURAL,
-                purpose=StructuralPurpose.FALSE_BRANCH,
-            )
-            for side in ("a", "b")[: min(arms, 2)]
-        ]
-        if arms == 1:
-            insert_sidetrack(scratch, probe_arms, before, after)
-        else:
-            # a 2-arm probe sizes the choice budget for any diamond (the walk
-            # traverses one arm; one decision per site regardless of count)
-            insert_cosmetic_fork(
-                scratch, [[b] for b in probe_arms], before=before, after=after
-            )
-        probe += 1
-        k += 1
-        total += arms * arm_words
-        sites.append(
-            ForkSite(
-                before=before,
-                after=after,
-                segment=(),
-                arms=arms,
-                keywords=tuple(offered_keywords(g, before)),
-            )
-        )
+        admit_edge(before, after, arms)
 
-    edge_beats = {b for site in sites if not site.segment for b in (site.before, site.after)}
     for seg in ordered:
-        if len(seg) >= cap or set(seg) & edge_beats:
+        if len(seg) >= cap or set(seg) & {b for e in used_edges for b in e}:
             continue
         if projected_worst(scratch) <= target:
             break

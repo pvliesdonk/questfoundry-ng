@@ -1344,3 +1344,78 @@ def test_finalize_cadence_residue_instruction_is_shape_neutral(vision):
     mark = out[out.index("Each arm's beat summaries") : out.index("which these are not")]
     assert "diamond arm" in mark  # the mark rule speaks to both shapes
     assert "detour" not in mark and "declined" not in mark  # not sidetrack-only
+
+
+# -- cosmetic grant model (cosmetic-forks PR-4) --------------------------------
+
+
+def _cosmetic_grant_graph(*, grant: bool, require: bool):
+    """root -> grant_head -> gated -> end. The cosmetic flag cw is granted by
+    grant_head (grants_flags) iff `grant`, and required by gated iff `require`."""
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = StoryGraph()
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:cw",
+            created_by=Stage.POLISH,
+            source=FlagSource.COSMETIC,
+            description="the pine path",
+        ),
+    )
+
+    def beat(slug, **kw):
+        b = Beat(
+            id=f"beat:{slug}",
+            created_by=Stage.POLISH,
+            summary=slug,
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+            **kw,
+        )
+        mutations.add_beat(g, b, [])
+        return b.id
+
+    root = beat("root")
+    head = beat("grant-head", grants_flags=["flag:cw"] if grant else [])
+    gated = beat("gated", requires_flags=["flag:cw"] if require else [])
+    end = beat("end", is_ending=True)
+    mutations.add_ordering(g, root, head)
+    mutations.add_ordering(g, head, gated)
+    mutations.add_ordering(g, gated, end)
+    return g
+
+
+def test_grant_beats_and_choice_grants_cover_cosmetic_flags():
+    g = _cosmetic_grant_graph(grant=True, require=False)
+    # grant_beats returns the rendering head that lists the flag (was [] pre-PR-4)
+    assert queries.grant_beats(g, "flag:cw") == ["beat:grant-head"]
+    # choice_grants projects it: an entry into the passage holding the head grants it
+    assert pc.choice_grants(g, ["beat:grant-head"]) == ["flag:cw"]
+    assert pc.choice_grants(g, ["beat:root"]) == []  # a passage without the head grants nothing
+
+
+def test_i10_accepts_a_granted_cosmetic_flag(vision):
+    g = _cosmetic_grant_graph(grant=True, require=True)
+    # gated requires cw, granted upstream at grant-head (its DAG ancestor) — I10 clean
+    i10 = [i for i in run_checks(g, vision, Stage.POLISH) if i.check == "I10"]
+    assert i10 == []
+
+
+def test_i10_flags_an_ungranted_cosmetic_requirement(vision):
+    g = _cosmetic_grant_graph(grant=False, require=True)  # required, never granted
+    i10 = [i for i in run_checks(g, vision, Stage.POLISH) if i.check == "I10"]
+    assert any(
+        "beat:gated requires" in i.message and "no arc can satisfy" in i.message for i in i10
+    )
+
+
+def test_grants_flags_round_trips(vision, tmp_path):
+    from questfoundry.project.io import load_project, save_project
+
+    g = _cosmetic_grant_graph(grant=True, require=False)
+    save_project(Project(root=tmp_path, name="t", stage=Stage.POLISH, vision=vision, graph=g))
+    reloaded = load_project(tmp_path)
+    assert reloaded.graph.node("beat:grant-head").grants_flags == ["flag:cw"]
+    assert reloaded.graph.node("beat:root").grants_flags == []  # default preserved

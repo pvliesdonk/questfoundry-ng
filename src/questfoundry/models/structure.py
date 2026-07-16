@@ -108,6 +108,13 @@ class Beat(Node):
     dilemma_impacts: list[DilemmaImpact] = []
     entities: list[str] = []
     requires_flags: list[str] = []  # conditional traversal (residue beats)
+    # Cosmetic flags this beat grants (cosmetic-forks PR-4): symmetric with
+    # `requires_flags`, set by the cosmetic-fork splice on each non-empty
+    # rendering's head beat — rendering 0's frozen head included (a legal
+    # presentation addition, §2). This is the beat-layer grant, mirroring how
+    # a dilemma flag is granted at its path's commit; `choice_grants` projects
+    # it onto the rendering's entry edges for the runtime. Engine-set only.
+    grants_flags: list[str] = []
     is_ending: bool = False
     temporal_hints: list[TemporalHint] = []  # SEED -> GROW interleave guidance
     flexibility: str = ""  # SEED -> GROW intersection invitation
@@ -277,7 +284,8 @@ def passage_intensity(beats: Iterable[Beat]) -> SceneType:
 
 class FlagSource(StrEnum):
     DILEMMA = "dilemma"  # derived from a path consequence, granted at its commit beat
-    COSMETIC = "cosmetic"  # granted by a false-branch choice edge
+    COSMETIC = "cosmetic"  # granted by a cosmetic-fork rendering head
+    # (`Beat.grants_flags`), projected onto its entry choice edge (PR-4)
 
 
 class StateFlag(Node):

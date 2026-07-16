@@ -115,14 +115,19 @@ def commit_beats(g: StoryGraph, path_id: str) -> list[str]:
 
 
 def grant_beats(g: StoryGraph, flag_id: str) -> list[str]:
-    """The beats at which a dilemma flag becomes active (the path's
-    commits — one per world). A flag is active once ANY of them is in a
-    walk's history; an arc only ever reaches one."""
+    """The beats at which a flag becomes active. A dilemma flag: the path's
+    commits (one per world; an arc only ever reaches one). A cosmetic flag
+    (path=None, cosmetic-forks PR-4): the beats that list it in
+    ``grants_flags`` — a cosmetic-fork rendering's head beat(s). Either way a
+    flag is active once ANY grant beat is in a walk's history, which is exactly
+    the optional-arm semantics: the rendering's beats are DAG ancestors of
+    everything past the rejoin, so the flag is held iff that rendering was
+    taken. I10's ancestor walk is then already correct for both."""
     flag = g.node(flag_id)
     assert isinstance(flag, StateFlag)
-    if flag.path is None:
-        return []
-    return commit_beats(g, flag.path)
+    if flag.path is not None:
+        return commit_beats(g, flag.path)
+    return sorted(b.id for b in g.nodes_of(Beat) if flag_id in b.grants_flags)
 
 
 def hard_commit_beats(g: StoryGraph) -> set[str]:

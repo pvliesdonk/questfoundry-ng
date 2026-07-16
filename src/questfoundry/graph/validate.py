@@ -1016,10 +1016,16 @@ def check_b6_choice_cadence(ctx: Context) -> None:
     averages = []
     for selection in queries.arc_selections(ctx.g):
         view = queries.arc_view(ctx.g, selection)
+        # Dilemma flags are view-derived (a commit is on exactly the arcs the
+        # view selects); cosmetic flags accrue from the grants of choices the
+        # walk actually takes — a rendering head sits in every arc view, so
+        # view-derived holding would count keywords from detours this walk
+        # never took (cosmetic-forks §4, open question 5 — resolved).
         held = {
             f.id
             for f in ctx.g.nodes_of(StateFlag)
-            if any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
+            if f.path is not None
+            and any(grant in view for grant in queries.grant_beats(ctx.g, f.id))
         }
 
         def on_arc(passage_id: str, view=view) -> bool:
@@ -1046,7 +1052,11 @@ def check_b6_choice_cadence(ctx: Context) -> None:
             )
             if len(live) >= 2:
                 decisions += 1
-            cur = next((e.dst for e in live if on_arc(e.dst)), None)
+            taken = next((e for e in live if on_arc(e.dst)), None)
+            if taken is None:
+                break
+            held.update(taken.payload.get("grants", []))
+            cur = taken.dst
         if words:
             averages.append(words / max(decisions, 1))
     if not averages:

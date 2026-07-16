@@ -11,6 +11,7 @@ from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.graph.validate import Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
+from questfoundry.models.concept import SCOPE_PRESETS
 from questfoundry.models.drama import DilemmaRole, ResidueWeight
 from questfoundry.models.presentation import Choice, Passage
 from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
@@ -1419,3 +1420,75 @@ def test_grants_flags_round_trips(vision, tmp_path):
     reloaded = load_project(tmp_path)
     assert reloaded.graph.node("beat:grant-head").grants_flags == ["flag:cw"]
     assert reloaded.graph.node("beat:root").grants_flags == []  # default preserved
+
+
+def _cosmetic_flag(g, slug):
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=f"flag:cw-{slug}",
+            created_by=Stage.POLISH,
+            description=slug,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    return f"flag:cw-{slug}"
+
+
+def _fb_beat(slug, **kwargs):
+    return Beat(
+        id=f"beat:{slug}",
+        created_by=Stage.POLISH,
+        summary=slug,
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+        **kwargs,
+    )
+
+
+def _bridge(slug):
+    return Beat(
+        id=f"beat:{slug}",
+        created_by=Stage.GROW,
+        summary=slug,
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.BRIDGE,
+    )
+
+
+def _diamond_keyword_graph(gated_on: str) -> StoryGraph:
+    """a -> {x, y} -> b -> d -> {gd?, f}: a cosmetic diamond whose arms grant
+    cw-x / cw-y, then a later entry gated on ``gated_on``. The projected walk
+    deterministically takes arm x (topological group order)."""
+    g = StoryGraph()
+    for slug in ("a", "b", "d", "f"):
+        mutations.add_beat(g, _bridge(slug), [])
+    cw_x, cw_y = _cosmetic_flag(g, "x"), _cosmetic_flag(g, "y")
+    mutations.add_beat(g, _fb_beat("x", grants_flags=[cw_x]), [])
+    mutations.add_beat(g, _fb_beat("y", grants_flags=[cw_y]), [])
+    mutations.add_beat(g, _fb_beat("gd", requires_flags=[gated_on]), [])
+    for src, dst in [
+        ("a", "x"), ("a", "y"), ("x", "b"), ("y", "b"), ("b", "d"),
+        ("d", "gd"), ("gd", "f"), ("d", "f"),
+    ]:
+        mutations.add_ordering(g, f"beat:{src}", f"beat:{dst}")
+    return g
+
+
+def test_projected_walks_hold_cosmetic_flags_only_when_walked():
+    """Open question 5, resolved: a cosmetic grant sits in every arc view,
+    so view-derived holding counted keywords from detours the walk never
+    took. Cosmetic flags accrue as the walk traverses the granting group;
+    dilemma flags stay view-derived."""
+    preset = SCOPE_PRESETS["micro"]
+    # the walk takes arm x, so a cw-y-gated entry is never live: only the
+    # diamond itself offers a decision
+    g = _diamond_keyword_graph("flag:cw-y")
+    ((_, decisions),) = pc.projected_walks(g, preset)
+    assert decisions == 1
+    # gated on the arm the walk DOES take, the entry is live: two decisions
+    g = _diamond_keyword_graph("flag:cw-x")
+    ((_, decisions),) = pc.projected_walks(g, preset)
+    assert decisions == 2

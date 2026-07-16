@@ -335,25 +335,31 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
     group_of = {b: i for i, grp in enumerate(groups) for b in grp}
     root_groups = {group_of[r] for r in queries.roots(g)}
     results = []
+    # Cosmetic grants are per-walk, not per-view: a rendering head sits in
+    # every arc view, so view-derived holding counted keywords from detours a
+    # walk never took (cosmetic-forks §4, open question 5 — resolved). A
+    # cosmetic flag accrues when the walk traverses its granting group.
+    cosmetic_grants: dict[int, set[str]] = {}
+    for f in g.nodes_of(StateFlag):
+        if f.path is None:
+            for grant in queries.grant_beats(g, f.id):
+                if grant in group_of:
+                    cosmetic_grants.setdefault(group_of[grant], set()).add(f.id)
     for selection in queries.arc_selections(g):
         view = queries.arc_view(g, selection)
-        # `held` is derived from grant-beats-in-view, not grant-beats-actually-
-        # walked. For dilemma flags the two agree (a commit is on exactly the
-        # arcs the view selects). For cosmetic flags (PR-4) they can diverge: a
-        # rendering head sits in every arc view, so this over-holds keywords
-        # from detours this walk didn't take. It affects only which gated
-        # entries B6 counts as live decisions (no cosmetic flag gates anything
-        # until PR-5 mints and consumes them); fix or refine when B6 is next
-        # touched (cosmetic-forks §4, open question 5).
+        # Dilemma flags stay view-derived: a commit is on exactly the arcs
+        # the view selects, so view membership IS the walk's holding.
         held = {
             f.id
             for f in g.nodes_of(StateFlag)
-            if any(grant in view for grant in queries.grant_beats(g, f.id))
+            if f.path is not None
+            and any(grant in view for grant in queries.grant_beats(g, f.id))
         }
         in_view = [all(b in view for b in grp) for grp in groups]
         cur = min(i for i in root_groups if in_view[i])
         words = decisions = 0
         while True:
+            held |= cosmetic_grants.get(cur, set())
             words += projected_group_words(g, groups[cur], preset)
             live = [
                 t

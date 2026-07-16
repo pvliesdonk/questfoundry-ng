@@ -224,7 +224,7 @@ def test_cadence_diamond_mirrored_into_arm(vision):
         )
         for side in ("a", "b")
     ]
-    pc.insert_cadence_diamond(g, [fb[0]], [fb[1]], "beat:t4", "beat:t5")
+    pc.insert_cadence_diamond(g, [[fb[0]], [fb[1]]], "beat:t4", "beat:t5")
     # trunk got the diamond; the arm got mirrored texture twins of it
     assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")
     assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:a4", "beat:a5")
@@ -265,9 +265,7 @@ def test_cadence_plan_skips_arm_runs():
     ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
     pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
     plan = pc.cadence_plan(g, preset)
-    runs = pc.collapse_groups(g)
-    offered = {b for i, edges in plan.items() for e in edges for b in e}
-    del runs
+    offered = {b for sites in plan.values() for before, after, _ in sites for b in (before, after)}
     assert not any(b.startswith("beat:a") for b in offered)
 
 
@@ -368,13 +366,12 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
             FalseBranchSpec(
                 before=before,
                 after=after,
-                arms=[
-                    ArmSpec(id=f"beat:fb-{i}-a", summary="s"),
-                    ArmSpec(id=f"beat:fb-{i}-b", summary="s"),
-                ],
+                arms=[ArmSpec(id=f"beat:fb-{i}-{j}", summary="s") for j in range(n)],
             )
-            for i, (before, after) in enumerate(
-                edge for run in cadence for edge in run["edges"]
+            for i, (before, after, n) in enumerate(
+                (b, a, n)
+                for run in cadence
+                for (b, a), n in zip(run["edges"], run["arm_counts"], strict=True)
             )
         ],
     )
@@ -562,3 +559,48 @@ def test_texture_premise_legal_on_any_beat_engine_set_on_frozen_trunk():
     assert g.node("beat:t0").texture_premise == "the coast road"
     with pytest.raises(mutations.MutationError, match="empty"):
         mutations.set_beat_texture_premise(g, "beat:t0", "   ")
+
+
+def test_cadence_plan_assigns_the_engine_shape_mix():
+    """PR-3: shape is engine-assigned, not model-chosen (given the choice a
+    weak tier placed 44/44 sidetracks). cadence_plan tags each site with an
+    arm count cycled from the preset mix, front-loaded so even a few-site book
+    gets a diamond — the diamond/sidetrack ratio holds book-wide."""
+    g = StoryGraph()
+    preset = _micro_vision_preset()  # cadence_arm_cycle default (2, 1, 1, 3, 1, 1)
+    chain(g, ["r"] + [f"b{i}" for i in range(20)] + ["s"])
+    plan = pc.cadence_plan(g, preset)
+    counts = [n for sites in plan.values() for _, _, n in sites]
+    assert counts and set(counts) <= {1, 2, 3}
+    assert counts[0] >= 2  # the 44/44 fix: never all-sidetracks — a diamond leads
+    assert counts == list(preset.cadence_arm_cycle)[: len(counts)]  # the cycle, in order
+
+
+def test_cadence_diamond_three_arms_splices_and_mirrors(vision):
+    """PR-3: a diamond may carry a third arm. insert_cadence_diamond takes k
+    fresh arms, splices them all before->after (direct edge gone), and mirrors
+    each into any texture arm paralleling the edge."""
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    arms = [
+        [
+            Beat(
+                id=f"beat:fb-{j}",
+                created_by=Stage.POLISH,
+                summary="flavor",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.FALSE_BRANCH,
+            )
+        ]
+        for j in range(3)
+    ]
+    pc.insert_cadence_diamond(g, arms, "beat:t4", "beat:t5")
+    from questfoundry.graph import queries
+
+    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t4", "beat:t5")  # spine removed
+    assert set(queries.successors(g, "beat:t4")) == {"beat:fb-0", "beat:fb-1", "beat:fb-2"}
+    # all three arms mirrored into the parallel texture arm (both worlds match)
+    twins = [b for b in g.nodes_of(Beat) if b.mirrors in {"beat:fb-0", "beat:fb-1", "beat:fb-2"}]
+    assert len(twins) == 3
+    assert i15_errors(g, vision) == []

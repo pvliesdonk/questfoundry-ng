@@ -589,8 +589,9 @@ def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypat
     project = Project(root=tmp_path, name="t", stage=Stage.GROW, vision=vision, graph=g)
     mutations.freeze_topology(g)
     run = pc.collapse_groups(g)[pc.long_linear_runs(pc.collapse_groups(g))[0]]
+    # the engine assigned this run one diamond and one sidetrack (PR-3 mix)
     budget = [
-        {"beats": run, "edges": [(run[0], run[1]), (run[1], run[2])]},
+        {"beats": run, "edges": [(run[0], run[1]), (run[1], run[2])], "arm_counts": [2, 1]},
     ]
     long_beats = {b for r in pc.collapse_groups(g) for b in r}
     monkeypatch.setattr(
@@ -598,7 +599,8 @@ def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypat
     )
 
     before = {b.id for b in g.nodes_of(Beat)}
-    with pytest.raises(ApplyError, match="mandatory.*needs 2 site\\(s\\), this proposal places 1"):
+    # too few sites: placed [1] against the required [1, 2] — rejected
+    with pytest.raises(ApplyError, match=r"mandatory.*arm counts \[1, 2\].*placed \[1\]"):
         _finalize_apply(
             FinalizeProposal(
                 false_branches=[
@@ -610,6 +612,22 @@ def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypat
             project,
         )
     assert {b.id for b in g.nodes_of(Beat)} == before  # shortfall spliced nothing
+    # right count, WRONG shape: two sidetracks placed [1, 1] against [1, 2] — rejected
+    with pytest.raises(ApplyError, match=r"mandatory.*arm counts \[1, 2\].*placed \[1, 1\]"):
+        _finalize_apply(
+            FinalizeProposal(
+                false_branches=[
+                    FalseBranchSpec(
+                        before=run[0], after=run[1], arms=[ArmSpec(id="beat:d1", summary="s")]
+                    ),
+                    FalseBranchSpec(
+                        before=run[1], after=run[2], arms=[ArmSpec(id="beat:d2", summary="s")]
+                    ),
+                ]
+            ),
+            project,
+        )
+    assert {b.id for b in g.nodes_of(Beat)} == before  # wrong shape spliced nothing
 
     # the same budget, filled, applies clean — one site per required edge
     _finalize_apply(
@@ -619,10 +637,15 @@ def test_finalize_rejects_an_unfilled_cadence_budget(vision, tmp_path, monkeypat
                 ResidueSpec(dilemma="dilemma:sub", path="path:sub-b", id="beat:mem-b", summary="s"),
             ],
             false_branches=[
-                FalseBranchSpec(
-                    before=run[0], after=run[1], arms=[ArmSpec(id="beat:detour", summary="s")]
+                FalseBranchSpec(  # the required 2-arm diamond
+                    before=run[0],
+                    after=run[1],
+                    arms=[
+                        ArmSpec(id="beat:detour", summary="s"),
+                        ArmSpec(id="beat:detour-b", summary="s"),
+                    ],
                 ),
-                FalseBranchSpec(
+                FalseBranchSpec(  # and the required 1-arm sidetrack
                     before=run[1], after=run[2], arms=[ArmSpec(id="beat:detour-2", summary="s")]
                 ),
             ]
@@ -1311,7 +1334,9 @@ def test_finalize_cadence_residue_instruction_is_shape_neutral(vision):
         needs=[],
         reserve=[],
         texture_sites=[],
-        cadence=[{"beats": ["beat:a", "beat:b"], "edges": [("beat:a", "beat:b")]}],
+        cadence=[
+            {"beats": ["beat:a", "beat:b"], "edges": [("beat:a", "beat:b")], "arm_counts": [2]}
+        ],
         notes=None,
         repair_errors=None,
         research=None,

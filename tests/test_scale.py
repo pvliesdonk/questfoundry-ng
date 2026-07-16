@@ -142,8 +142,8 @@ def test_cadence_plan_offers_only_cap_aligned_seams():
     ids = _chain(g, 13)
     preset = SCOPE_PRESETS["medium"]  # cap 3
     plan = pc.cadence_plan(g, preset)
-    for edges in plan.values():
-        for before, _after in edges:
+    for sites in plan.values():
+        for before, _after, _arms in sites:
             assert (ids.index(before) + 1) % preset.passage_beats_max == 0
 
 

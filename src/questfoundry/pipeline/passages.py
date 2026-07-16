@@ -376,9 +376,10 @@ def _bisection_order(n: int) -> list[int]:
     return order
 
 
-def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
-    """Words-aware diamond budget (M8): uncapped-run index -> the edges
-    to fork, sized by iterated projection rather than a closed form.
+def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str, int]]]:
+    """Words-aware cadence budget (M8): uncapped-run index -> the sites to
+    fork as ``(before, after, arm_count)``, sized by iterated projection
+    rather than a closed form, with the engine-assigned shape mix (PR-3).
 
     Only cap-aligned edges are offered — the seams between complete
     passage chunks — so a diamond costs the reader one arm's words and
@@ -439,15 +440,27 @@ def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
             for side in ("a", "b")
         ]
         # mirrored-stretch edges get the paired splice so the projection
-        # counts both worlds' choices, exactly as the apply will
-        insert_cadence_diamond(scratch, [probe_arms[0]], [probe_arms[1]], run[edge], run[edge + 1])
+        # counts both worlds' choices, exactly as the apply will. A 2-arm
+        # probe sizes the choice budget (one decision per site regardless of
+        # arm count; the walk traverses one arm); shapes are assigned after.
+        probe_chains = [[probe_arms[0]], [probe_arms[1]]]
+        insert_cadence_diamond(scratch, probe_chains, run[edge], run[edge + 1])
         taken[run_idx] += 1
         probe += 1
-    return {
-        i: [(runs[i][e], runs[i][e + 1]) for e in sorted(capacity[i][: taken[i]])]
-        for i in capacity
-        if taken[i]
-    }
+    # Assign a shape (arm count) to each chosen site, cycling the scope's mix
+    # across all sites in a deterministic global order (sorted run, then edge)
+    # so the diamond/sidetrack ratio holds book-wide — the mandatory mix that
+    # takes shape out of the model's hands (PR-3).
+    cycle = preset.cadence_arm_cycle
+    plan: dict[int, list[tuple[str, str, int]]] = {}
+    k = 0
+    for i in sorted(capacity):
+        if not taken[i]:
+            continue
+        edges = [(runs[i][e], runs[i][e + 1]) for e in sorted(capacity[i][: taken[i]])]
+        plan[i] = [(b, a, cycle[(k + j) % len(cycle)]) for j, (b, a) in enumerate(edges)]
+        k += len(edges)
+    return plan
 
 
 class _Rendering:
@@ -743,21 +756,22 @@ def _twin_chain(g: StoryGraph, chain: Sequence[Beat], k: int, premise: str) -> l
 
 
 def insert_cadence_diamond(
-    g: StoryGraph, arm_a: Sequence[Beat], arm_b: Sequence[Beat], before: str, after: str
+    g: StoryGraph, arms: Sequence[Sequence[Beat]], before: str, after: str
 ) -> None:
-    """The cadence splice finalize applies: a plain diamond on an ordinary
-    edge; on a trunk edge inside a mirrored stretch, the same diamond is
-    additionally mirrored into every texture arm paralleling it —
-    engine-suffixed twins of the fresh arms, wired identically — so both
-    worlds keep the same choice topology and the I15 projection stays
-    edge-exact (a one-sided diamond would remove the trunk edge the arm's
-    edge projects onto, and hand the trunk world choices the parallel
-    world lacks)."""
+    """The cadence diamond finalize applies: k ≥ 2 fresh arms on an ordinary
+    edge (2 = a plain diamond, 3 = a third-arm diamond, PR-3); on a trunk edge
+    inside a mirrored stretch, the same diamond is additionally mirrored into
+    every texture arm paralleling it — engine-suffixed twins of the fresh arms,
+    wired identically — so both worlds keep the same choice topology and the
+    I15 projection stays edge-exact (a one-sided diamond would remove the trunk
+    edge the arm's edge projects onto, and hand the trunk world choices the
+    parallel world lacks)."""
+    arms = [list(a) for a in arms]
     pairs = _arm_pairs(g, before, after)
-    insert_false_branch(g, arm_a, arm_b, before, after)
+    insert_cosmetic_fork(g, arms, before=before, after=after)
     for k, (ai, aj) in enumerate(pairs):
         premise = _beat(g, ai).texture_premise
-        twins = [_twin_chain(g, chain, k, premise) for chain in (arm_a, arm_b)]
+        twins = [_twin_chain(g, chain, k, premise) for chain in arms]
         for chain in twins:
             for beat in chain:
                 mutations.add_beat(g, beat, [])

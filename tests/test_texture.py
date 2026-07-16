@@ -318,86 +318,83 @@ def _finalize_project(tmp_path, vision):
     )
 
 
-def test_finalize_texture_budget_is_mandatory(vision, tmp_path):
-    from questfoundry.pipeline.stages.polish import (
-        FinalizeProposal,
-        _finalize_apply,
-        _texture_and_cadence,
-    )
-    from questfoundry.pipeline.types import ApplyError
+def test_fork_schema_pins_arm_count_and_beat_count(vision, tmp_path):
+    """The budgets stopped being model-fillable (the engine plans and
+    assigns); what remains model-facing is pinned at the schema: exactly the
+    assigned rendering count, exact beat counts for a segment site, and no
+    `gated` field at all when the site offers no keywords."""
+    from questfoundry.pipeline.stages.polish import _fork_schema
 
     project = _finalize_project(tmp_path, vision)
-    sites, _, _ = _texture_and_cadence(project)
-    assert sites  # the chain offers a stretch
-    before = {b.id for b in project.graph.nodes_of(Beat)}
-    with pytest.raises(ApplyError, match="texture-world budget is mandatory"):
-        _finalize_apply(FinalizeProposal(), project)
-    assert {b.id for b in project.graph.nodes_of(Beat)} == before  # nothing spliced
+    (site,) = [s for s in pc.fork_plan(project.graph, vision.preset) if s.segment]
+    schema = _fork_schema(site)(project)
+    props = schema.model_json_schema()
+    assert props["properties"]["renderings"]["minItems"] == site.arms
+    assert props["properties"]["renderings"]["maxItems"] == site.arms
+    assert "gated" not in props["properties"]
+    beats = props["$defs"]["RenderingSpec"]["properties"]["beats"]
+    assert beats["minItems"] == len(site.segment)
+    assert beats["maxItems"] == len(site.segment)
 
 
-def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
+def test_fork_apply_splices_segment_site_with_premises(vision, tmp_path):
     from questfoundry.pipeline.stages.polish import (
-        ArmSpec,
-        FalseBranchSpec,
-        FinalizeProposal,
-        TextureBeatSpec,
-        TextureWorldSpec,
-        _finalize_apply,
-        _texture_and_cadence,
+        ForkBeatSpec,
+        ForkProposal,
+        RenderingSpec,
+        _fork_apply,
     )
 
     project = _finalize_project(tmp_path, vision)
     g = project.graph
-    sites, cadence, _ = _texture_and_cadence(project)
-    (site,) = sites
-    proposal = FinalizeProposal(
-        texture_worlds=[
-            TextureWorldSpec(
-                site=0,
+    (site,) = [s for s in pc.fork_plan(g, vision.preset) if s.segment]
+    segment = list(site.segment)
+    proposal = ForkProposal(
+        trunk_premise="the crossing goes along the coast road",
+        renderings=[
+            RenderingSpec(
                 premise="the crossing goes over the mountain pass",
-                trunk_premise="the crossing goes along the coast road",
                 beats=[
-                    TextureBeatSpec(id=f"beat:mountain-{i}", summary=f"m{i}")
-                    for i in range(len(site))
+                    ForkBeatSpec(id=f"beat:mountain-{i}", summary=f"m{i}")
+                    for i in range(len(segment))
                 ],
             )
         ],
-        false_branches=[
-            FalseBranchSpec(
-                before=before,
-                after=after,
-                arms=[ArmSpec(id=f"beat:fb-{i}-{j}", summary="s") for j in range(n)],
-            )
-            for i, (before, after, n) in enumerate(
-                (b, a, n)
-                for run in cadence
-                for (b, a), n in zip(run["edges"], run["arm_counts"], strict=True)
-            )
-        ],
     )
-    lines = _finalize_apply(proposal, project)
-    assert any("texture world" in line for line in lines)
+    lines = _fork_apply(site)(proposal, project)
+    assert any("two-worlds" in line for line in lines)
     arm0 = g.node("beat:mountain-0")
     assert arm0.purpose == StructuralPurpose.TEXTURE_WORLD
-    assert arm0.mirrors == site[0]
+    assert arm0.mirrors == segment[0]
     assert arm0.texture_premise == "the crossing goes over the mountain pass"
     # rendering 0 (PR-2 §2): the trunk segment's own (frozen) beats carry the
     # trunk premise — renderings are peers, both worlds named
     assert all(
-        g.node(tb).texture_premise == "the crossing goes along the coast road" for tb in site
+        g.node(tb).texture_premise == "the crossing goes along the coast road"
+        for tb in segment
     )
+    # minting (PR-5 §4): one keyword per non-empty rendering, granted on the
+    # rendering heads — rendering 0's segment head included
+    from questfoundry.graph import queries
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    minted = [f for f in g.nodes_of(StateFlag) if f.source == FlagSource.COSMETIC]
+    assert len(minted) == 2
+    grant_heads = {b for f in minted for b in queries.grant_beats(g, f.id)}
+    assert grant_heads == {segment[0], "beat:mountain-0"}
+    # descriptions carry the premises (what later consumption prompts read)
+    assert {f.description for f in minted} == {
+        "the crossing goes along the coast road",
+        "the crossing goes over the mountain pass",
+    }
     # both premises reach their readers on the exact expressions those readers
-    # use: FILL's per-passage gathering (fill.py `{b.texture_premise for b in
-    # beats}`) yields each rendering's world, and the entry-label context reads
-    # the destination group's head-beat premise (_labels_context).
+    # use: FILL's per-passage gathering and the entry-label context
     def fill_premise(beats):
         return sorted({g.node(b).texture_premise for b in beats if g.node(b).texture_premise})
 
-    arm_ids = [f"beat:mountain-{i}" for i in range(len(site))]
-    assert fill_premise(site) == ["the crossing goes along the coast road"]  # FILL: trunk world
-    assert fill_premise(arm_ids) == ["the crossing goes over the mountain pass"]  # FILL: arm world
-    # entry labels: _labels_context itself surfaces each destination's head-beat
-    # premise (the "premise" key polish_labels.j2 consumes), naming both worlds
+    arm_ids = [f"beat:mountain-{i}" for i in range(len(segment))]
+    assert fill_premise(segment) == ["the crossing goes along the coast road"]
+    assert fill_premise(arm_ids) == ["the crossing goes over the mountain pass"]
     from questfoundry.pipeline.stages.polish import _groups, _labels_context
 
     groups = _groups(project)
@@ -407,56 +404,57 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
         for d in _labels_context(a)(project)["dests"]
         if d["premise"]
     }
-    assert "the crossing goes along the coast road" in entry_premises  # rendering 0 (trunk)
-    assert "the crossing goes over the mountain pass" in entry_premises  # the fresh arm
-    # cadence diamonds inside the mirrored stretch got mirrored twins
-    # carrying the arm's premise (both worlds keep the same topology)
-    twins = [b for b in g.nodes_of(Beat) if b.mirrors and b.mirrors.startswith("beat:fb-")]
-    assert twins
-    assert all(b.texture_premise == arm0.texture_premise for b in twins)
+    assert "the crossing goes along the coast road" in entry_premises
+    assert "the crossing goes over the mountain pass" in entry_premises
     assert i15_errors(g, vision) == []
 
 
-def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
+def test_fork_apply_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
     from questfoundry.pipeline.stages.polish import (
-        FinalizeProposal,
-        TextureBeatSpec,
-        TextureWorldSpec,
-        _finalize_apply,
-        _texture_and_cadence,
+        ForkBeatSpec,
+        ForkProposal,
+        RenderingSpec,
+        _fork_apply,
     )
     from questfoundry.pipeline.types import ApplyError
 
     project = _finalize_project(tmp_path, vision)
-    sites, _, _ = _texture_and_cadence(project)
-    (site,) = sites
-    short = FinalizeProposal(
-        texture_worlds=[
-            TextureWorldSpec(
-                site=0,
-                premise="p",
-                trunk_premise="q",
-                beats=[TextureBeatSpec(id="beat:m0", summary="m")],
-            )
-        ]
+    (site,) = [s for s in pc.fork_plan(project.graph, vision.preset) if s.segment]
+    short = ForkProposal(
+        trunk_premise="q",
+        renderings=[
+            RenderingSpec(premise="p", beats=[ForkBeatSpec(id="beat:m0", summary="m")])
+        ],
     )
     with pytest.raises(ApplyError, match="beat-for-beat"):
-        _finalize_apply(short, project)
-    blank = FinalizeProposal(
-        texture_worlds=[
-            TextureWorldSpec(
-                site=0,
+        _fork_apply(site)(short, project)
+    blank = ForkProposal(
+        trunk_premise="the trunk backdrop",
+        renderings=[
+            RenderingSpec(
                 premise="  ",
-                trunk_premise="the trunk backdrop",
                 beats=[
-                    TextureBeatSpec(id=f"beat:m{i}", summary="m")
-                    for i in range(len(site))
+                    ForkBeatSpec(id=f"beat:m{i}", summary="m")
+                    for i in range(len(site.segment))
                 ],
             )
-        ]
+        ],
     )
     with pytest.raises(ApplyError, match="empty premise"):
-        _finalize_apply(blank, project)
+        _fork_apply(site)(blank, project)
+    no_trunk = ForkProposal(
+        renderings=[
+            RenderingSpec(
+                premise="p",
+                beats=[
+                    ForkBeatSpec(id=f"beat:m{i}", summary="m")
+                    for i in range(len(site.segment))
+                ],
+            )
+        ],
+    )
+    with pytest.raises(ApplyError, match="trunk_premise"):
+        _fork_apply(site)(no_trunk, project)
 
 
 def test_sim_with_texture_keeps_b6_in_band():

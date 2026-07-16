@@ -604,3 +604,81 @@ def test_cadence_diamond_three_arms_splices_and_mirrors(vision):
     twins = [b for b in g.nodes_of(Beat) if b.mirrors in {"beat:fb-0", "beat:fb-1", "beat:fb-2"}]
     assert len(twins) == 3
     assert i15_errors(g, vision) == []
+
+
+# -- PR-5: segment tiers, recursion, scene-fork counting ---------------------------
+
+
+def test_fork_segments_tiers_and_seam_edges():
+    """fork_segments generalizes texture_sites (cosmetic-forks §1): the same
+    aligned-window walk, but a run-tail span shorter than the cap — seam-
+    aligned start, ending at a run end that has an exit — is admitted as a
+    *small two-worlds* segment instead of discarded, and the cap-aligned
+    interior seam edges of long runs ride along as the edge-scale tier."""
+    preset = SCOPE_PRESETS["short"]  # cap = 3
+    g = StoryGraph()
+    # run [r, p, c0, c1, c2] (len 5) feeding a convergence with a second
+    # parent: the span [3..4] is a 2-beat aligned tail with an exit
+    ids = chain(g, ["r", "p", "c0", "c1", "c2"])
+    mutations.add_beat(g, setup_beat("q"), [])
+    mutations.add_beat(g, setup_beat("cv"), [])
+    mutations.add_ordering(g, ids[-1], "beat:cv")
+    mutations.add_ordering(g, "beat:q", "beat:cv")
+    segments, edges = pc.fork_segments(g, preset)
+    assert [["beat:c1", "beat:c2"]] == [s for s in segments if len(s) < 3]
+    assert ("beat:c1", "beat:c2") not in edges  # smalls are segments, not seams
+    assert ("beat:c0", "beat:c1") in edges  # (e+1) % cap == 0 seam of the 5-run
+
+
+def test_fork_segments_include_arm_interiors_and_exclude_decoration():
+    """Recursion (cosmetic-forks §3): a texture arm's interior seam edges
+    and sub-stretches qualify like any run — a segment inside a rendering is
+    just a segment the next round may fork. FALSE_BRANCH decoration never
+    qualifies as segment content (it is never re-rendered)."""
+    preset = SCOPE_PRESETS["short"]  # cap = 3
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    detour = Beat(
+        id="beat:st-detour",
+        created_by=Stage.POLISH,
+        summary="detour",
+        beat_class=BeatClass.STRUCTURAL,
+        purpose=StructuralPurpose.FALSE_BRANCH,
+    )
+    pc.insert_sidetrack(g, [detour], "beat:t4", "beat:t5")
+    segments, edges = pc.fork_segments(g, preset)
+    assert any(b.startswith("beat:a") for b, _ in edges)  # arm seams offered
+    assert all("beat:st-detour" not in seg for seg in segments)
+
+
+def test_scene_fork_count_counts_only_cap_or_longer_chains():
+    preset = SCOPE_PRESETS["short"]  # cap = 3
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    assert pc.scene_fork_count(g, preset.passage_beats_max) == 0
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    assert pc.scene_fork_count(g, preset.passage_beats_max) == 1
+    # a small two-worlds fork (2 mirror beats) does not count as scene-scale
+    mutations.add_beat(g, setup_beat("u0"), [])
+    mutations.add_beat(g, setup_beat("u1"), [])
+    mutations.add_ordering(g, "beat:s", "beat:u0")
+    mutations.add_ordering(g, "beat:u0", "beat:u1")
+    mutations.add_beat(g, setup_beat("v"), [])
+    mutations.add_ordering(g, "beat:u1", "beat:v")
+    pc.insert_texture_world(g, [arm_beat("w0"), arm_beat("w1")], ["beat:u0", "beat:u1"])
+    assert pc.scene_fork_count(g, preset.passage_beats_max) == 1
+
+
+def test_nested_texture_splice_is_legal():
+    """Worlds nest (cosmetic-forks §3): a stretch inside an existing arm is
+    just a segment; its rendering mirrors arm beats, grounding out in the
+    trunk transitively."""
+    g = StoryGraph()
+    ids = chain(g, ["p"] + [f"t{i}" for i in range(10)] + ["s"])
+    pc.insert_texture_world(g, [arm_beat(f"a{i}") for i in range(10)], ids[1:11])
+    inner = [arm_beat(f"n{i}") for i in range(3)]
+    pc.insert_texture_world(g, inner, ["beat:a3", "beat:a4", "beat:a5"])
+    assert g.node("beat:n0").mirrors == "beat:a3"
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a2", "beat:n0")
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:n2", "beat:a6")

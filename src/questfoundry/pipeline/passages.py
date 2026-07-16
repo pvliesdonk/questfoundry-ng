@@ -618,11 +618,8 @@ def _mirror_onto_segment(g: StoryGraph, arm: Sequence[Beat], segment: Sequence[s
                 "a texture fork parallels only consequence-free stretches — "
                 "shrink the stretch to exclude it"
             )
-        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
-            raise mutations.MutationError(
-                f"stretch beat {twin_id} is itself a texture arm; worlds do "
-                "not nest — parallel the trunk, not an arm"
-            )
+        # the twin may itself be a mirror beat: worlds nest (cosmetic-forks
+        # §3) — mirror chains ground out in trunk beats transitively (I15)
         if beat.purpose != StructuralPurpose.TEXTURE_WORLD:
             raise mutations.MutationError(
                 f"texture arm beat {beat.id} must carry purpose texture_world"
@@ -712,6 +709,126 @@ def texture_sites(g: StoryGraph, preset) -> list[list[str]]:
                     sites.append(stretch)
             i = j + 1
     return sites
+
+
+def fork_segments(
+    g: StoryGraph, preset
+) -> tuple[list[list[str]], list[tuple[str, str]]]:
+    """One round's candidate cosmetic-fork sites (cosmetic-forks §1, §6), as
+    ``(segments, seam_edges)`` — the segment tiers and the edge tier of the
+    unified table.
+
+    Segments generalize ``texture_sites``'s aligned-window walk: a window's
+    seam-aligned span of >= cap beats is a *scene* segment (texture world);
+    a run-tail span of 1..cap-1 beats — seam-aligned start, ending at a run
+    end that has an exit — is a *small two-worlds* segment, the admission of
+    shorter segments into the same machinery (interior spans snap to seams
+    on both sides, so they are always cap-multiples; only a run tail can be
+    small). ``qualifies`` drops the texture-arm exclusion — a segment inside
+    a rendering is just a segment the next round may fork (recursion, §3) —
+    and excludes FALSE_BRANCH decoration, which is never re-rendered.
+
+    Seam edges are the cap-aligned interior edges of long linear runs
+    (today's cadence capacity), arm runs included: with the mirrored-cadence
+    machinery retired, a detour inside one rendering is simply budgeted on
+    that rendering's own walks (per-walk B6 owns choice fairness)."""
+    cap = preset.passage_beats_max
+    frontier_beats = {b for need in convergence_needs(g) for b in need.rejoin}
+
+    def qualifies(beat_id: str) -> bool:
+        b = _beat(g, beat_id)
+        return not (
+            b.requires_flags
+            or b.commits_dilemmas
+            or b.is_ending
+            or b.purpose == StructuralPurpose.FALSE_BRANCH
+        )
+
+    segments: list[list[str]] = []
+    runs = collapse_groups(g)
+    for run in runs:
+        i = 0
+        while i < len(run):
+            if not qualifies(run[i]):
+                i += 1
+                continue
+            j = i
+            while j + 1 < len(run) and qualifies(run[j + 1]):
+                j += 1
+            start = i if i % cap == 0 else i + (cap - i % cap)
+            if start == 0 and not queries.predecessors(g, run[0]):
+                start = cap
+            end = j if j == len(run) - 1 else (j + 1) // cap * cap - 1
+            if end == len(run) - 1 and not queries.successors(g, run[-1]):
+                end = (j + 1) // cap * cap - 1
+            if end >= start:
+                stretch = run[start : end + 1]
+                head_frontier = stretch[0] in frontier_beats
+                tail_frontier = set(queries.successors(g, stretch[-1])) & frontier_beats
+                if not head_frontier and not tail_frontier:
+                    segments.append(stretch)
+            i = j + 1
+
+    seam_edges: list[tuple[str, str]] = []
+    for idx in long_linear_runs(runs):
+        run = runs[idx]
+        for e in range(len(run) - 1):
+            if (e + 1) % cap == 0:
+                seam_edges.append((run[e], run[e + 1]))
+    return segments, seam_edges
+
+
+def scene_fork_count(g: StoryGraph, cap: int) -> int:
+    """Existing scene-scale renderings — maximal mirror-beat chains of
+    >= cap beats — so the story-total ``TEXTURE_WORLDS_MAX`` holds across
+    finalize rounds as a pure function of the graph (resume determinism).
+    Chain steps skip through un-mirrored FALSE_BRANCH decoration on either
+    side (the same contraction the I15 shape rule applies), so a diamond a
+    later round spliced inside a rendering does not split the count."""
+    beats = {b.id: b for b in g.nodes_of(Beat)}
+    mirror = {bid: b.mirrors for bid, b in beats.items() if b.mirrors}
+    twins = set(mirror.values())
+
+    def effective_successors(bid: str) -> list[str]:
+        out, stack, seen = [], list(queries.successors(g, bid)), set()
+        while stack:
+            s = stack.pop()
+            if s in seen:
+                continue
+            seen.add(s)
+            b = beats.get(s)
+            if (
+                b is not None
+                and b.purpose == StructuralPurpose.FALSE_BRANCH
+                and b.mirrors is None
+                and s not in twins
+            ):
+                stack.extend(queries.successors(g, s))
+            else:
+                out.append(s)
+        return out
+
+    def chain_next(bid: str) -> str | None:
+        twin_succ = set(effective_successors(mirror[bid]))
+        for s in effective_successors(bid):
+            nb = beats.get(s)
+            if nb is not None and nb.mirrors and nb.mirrors in twin_succ:
+                return s
+        return None
+
+    heads = set(mirror)
+    for bid in mirror:
+        nxt = chain_next(bid)
+        if nxt is not None:
+            heads.discard(nxt)
+    count = 0
+    for head in sorted(heads):
+        length, cur = 1, head
+        while (cur := chain_next(cur)) is not None:
+            length += 1
+        if length >= cap:
+            count += 1
+    return count
 
 
 def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[str]) -> None:

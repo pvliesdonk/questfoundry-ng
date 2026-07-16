@@ -38,7 +38,7 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   run (2026-07-15).** Concrete instances of the template-audit item above,
   found running DREAM→POLISH at medium on `gpt-oss:120b-cloud` (unbilled;
   scorecard in the decision log):
-  - **Finalize entity roster — FIXED** (PR #92, awaiting merge):
+  - **Finalize entity roster — FIXED** (PR #92, merged):
     `_finalize_context` pinned `entities` to the retained cast's ids but never
     showed the roster, so the writer coined a name-derived id
     (`character:finch` for the sheriff whose id is `character:marshal`) and
@@ -52,18 +52,30 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
     steering, not model discretion (44 samples, zero variance). Plan **PR-3**
     (engine-assigned mandatory shape) is the real fix; the descriptive
     imbalance is the prompt-quality remainder.
-  - **PR-0 residue paragraph is sidetrack-only vocabulary** (regression): the
-    exit-label residue paragraph PR-0 added ("the detour", "declined", "the
-    arm rejoins the same road") is wrong for a diamond arm — a shape-neutral
-    rewrite is owed regardless of PR-3.
-  - **Audit pass halt — undiagnosed**: the `polish_audit` single call (one
-    entry per ambiguous-state passage, ~70 at medium, several near-identical
-    texture renderings) produced duplicate entries and did not converge.
-    First suspects per AGENTS.md: the audit *prompt* clarity and the "audited
-    twice" *message* actionability; only if both are clean is it the A21
-    giant-call format → decompose per-passage (the I12 cap is already
-    per-passage). **Blocks the medium run from completing** (399 passes
-    journaled, resumable free). Its own PR.
+  - **PR-0 residue paragraph is sidetrack-only vocabulary — FIXED** (this PR):
+    the exit-label residue paragraph PR-0 added ("the detour", "declined",
+    "the arm rejoins the same road") was wrong for a diamond arm; rewritten
+    shape-neutral (an arm rejoins a shared destination alongside its siblings,
+    trunk or diamond arm), the SIDETRACK bullet keeping "detour" as its own
+    shape. Render test guards it.
+  - **Audit pass halt — FIXED** (PR #95): the `polish_audit` single call over
+    every ambiguous-state passage (137 at medium, many near-identical texture
+    renderings) degenerated into wholesale repetition — the A21 giant-call
+    defect, confirmed against a clean prompt + message. Decomposed per passage
+    (planner + `audit:<pid>` expand); a follow-up marks endings unsplittable
+    in the prompt (the rule had lived only in the apply's error message).
+    Live-validated: the resumed medium run completed POLISH gate-clean, I12
+    **71 → 0**, 132 audit-split variants, 0 halts.
+  - **Over-cap ending with every state relevant** (edge case, PR #95 review,
+    not yet observed): the endings fix resolves an over-cap ending by marking
+    a non-addressed dilemma irrelevant — which works only while such a dilemma
+    exists. An ending that is over the I12 cap AND genuinely turns on every
+    state has no honest audit resolution (endings cannot split, and marking a
+    truly-relevant state irrelevant violates the audit's honesty rule). Per
+    AGENTS.md "fix structure upstream, never patch with prose" that is a
+    GROW/POLISH routing defect (too many soft threads collecting at one
+    finale — route their payoffs into gated residue before it), which the
+    audit should fail loudly on, not a prompt fix. Flag for a run that hits it.
 
 - [ ] **Echo guard vs canonical utterances (two live instances, 2026-07-14).**
   The window-echo floor (8 shared tokens) collides with fixed statements the

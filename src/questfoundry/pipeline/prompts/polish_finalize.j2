@@ -110,12 +110,15 @@ Two shapes, pick per site:
 An arm is one 1-sentence beat, plus an optional "followup" beat when its
 flavor genuinely needs a breath more room.
 Each arm's beat summaries must state the MARK it leaves — the mood, image, or
-small knowing the reader carries on with — not only what happens on the detour.
-The arm rejoins the same road; if a summary states only the detour's content,
-the label that rejoins it will echo the onward step the reader already
-declined. Give every arm a residue its exit can voice. That mark is textural
-memory, never consequence: nothing an arm establishes may be true after the
-rejoin (that would make it a real choice, which these are not).
+small knowing the reader carries on with — not only the events along it. Every
+arm rejoins a shared destination alongside its siblings (the trunk it forks
+from, or the other diamond arm), and the rejoin labels are worded from these
+summaries; so if a summary carries only its own events, the sibling labels
+collapse onto the same onward step and the choice reads as a mechanical
+sidestep. Give every arm a residue its exit label can voice, distinct from its
+siblings'. That mark is textural memory, never consequence: nothing an arm
+establishes may be true after the rejoin (that would make it a real choice,
+which these are not).
 {% for run in cadence %}
 - run: {{ run.beats | join(" -> ") }}
   insert {{ run.edges | length }} site(s); suggested edges (scene seams — prefer these):

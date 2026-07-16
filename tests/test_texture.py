@@ -440,3 +440,51 @@ def test_sim_with_texture_keeps_b6_in_band():
     y = measure(compiled, preset, diamonds=diamonds)
     lo, hi = 250, 800
     assert lo <= y.b6[0] and y.b6[1] <= hi
+
+
+def test_cosmetic_fork_primitive_reproduces_the_three_shapes():
+    """The one splice (01 §6) behind the three shipped adapters: an edge-scale
+    diamond (two fresh, no walk-on) removes the direct edge; an edge-scale
+    sidetrack (walk-on + fresh) keeps it; a segment-scale texture (segment +
+    fresh) keeps the trunk and mirrors it beat-for-beat."""
+    from questfoundry.graph import queries
+    from questfoundry.pipeline.passages import (
+        EMPTY_RENDERING,
+        SEGMENT_RENDERING,
+        insert_cosmetic_fork,
+    )
+
+    g = StoryGraph()
+    chain(g, ["t0", "t1", "t2", "t3", "t4", "t5"])
+    # diamond on t0 -> t1: two fresh arms, direct edge gone
+    insert_cosmetic_fork(
+        g, [[setup_beat("da")], [setup_beat("db")]], before="beat:t0", after="beat:t1"
+    )
+    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t0", "beat:t1")
+    assert set(queries.successors(g, "beat:t0")) == {"beat:da", "beat:db"}
+    assert set(queries.predecessors(g, "beat:t1")) == {"beat:da", "beat:db"}
+    # sidetrack on t1 -> t2: the walk-on edge stays, one fresh detour added
+    insert_cosmetic_fork(
+        g, [EMPTY_RENDERING, [setup_beat("sd")]], before="beat:t1", after="beat:t2"
+    )
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t1", "beat:t2")
+    assert "beat:sd" in queries.successors(g, "beat:t1")
+    # texture over [t3, t4]: the trunk stays, one fresh arm mirrors it
+    insert_cosmetic_fork(
+        g, [SEGMENT_RENDERING, [arm_beat("wa"), arm_beat("wb")]], segment=["beat:t3", "beat:t4"]
+    )
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t3", "beat:t4")  # trunk untouched
+    assert (g.node("beat:wa").mirrors, g.node("beat:wb").mirrors) == ("beat:t3", "beat:t4")
+    assert "beat:wa" in queries.successors(g, "beat:t2")  # arm forks from the boundary
+    assert "beat:t5" in queries.successors(g, "beat:wb")  # and rejoins it
+
+
+def test_cosmetic_fork_rejects_degenerate_rendering_sets():
+    from questfoundry.pipeline.passages import EMPTY_RENDERING, insert_cosmetic_fork
+
+    g = StoryGraph()
+    chain(g, ["a", "b"])
+    with pytest.raises(mutations.MutationError, match="at least two renderings"):
+        insert_cosmetic_fork(g, [[setup_beat("x")]], before="beat:a", after="beat:b")
+    with pytest.raises(mutations.MutationError, match="at least one fresh"):
+        insert_cosmetic_fork(g, [EMPTY_RENDERING, EMPTY_RENDERING], before="beat:a", after="beat:b")

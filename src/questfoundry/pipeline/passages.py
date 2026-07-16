@@ -450,41 +450,150 @@ def cadence_plan(g: StoryGraph, preset) -> dict[int, list[tuple[str, str]]]:
     }
 
 
+class _Rendering:
+    """A non-fresh rendering of a cosmetic fork (a sentinel, not a beat chain)."""
+
+    def __init__(self, name: str) -> None:
+        self._name = name
+
+    def __repr__(self) -> str:  # pragma: no cover - debugging aid
+        return self._name
+
+
+EMPTY_RENDERING = _Rendering("EMPTY_RENDERING")  # the direct before->after edge (walk-on)
+SEGMENT_RENDERING = _Rendering("SEGMENT_RENDERING")  # the trunk segment itself (rendering 0)
+
+
+def insert_cosmetic_fork(
+    g: StoryGraph,
+    renderings: Sequence,
+    *,
+    before: str | None = None,
+    after: str | None = None,
+    segment: Sequence[str] = (),
+) -> None:
+    """The one cosmetic-fork splice (01 §6): k ≥ 2 *renderings* of a trunk
+    *segment*, all rejoining where it ends. Each rendering is
+    ``EMPTY_RENDERING`` (the direct ``before -> after`` edge — a walk-on),
+    ``SEGMENT_RENDERING`` (the trunk segment's own beats — rendering 0), or a
+    fresh ``list[Beat]`` chain. ``segment`` is the trunk beats between the
+    boundary: empty for an *edge-scale* fork (diamond / sidetrack, where
+    ``before``/``after`` name the edge), non-empty for a *segment-scale* fork
+    (texture world / small two-worlds, where the boundary is the segment's
+    predecessors and successors and the trunk stays put). A fresh chain over a
+    non-empty segment mirrors it beat-for-beat (I15); over an empty segment it
+    invents a breath of texture. The direct edge is kept iff an
+    ``EMPTY_RENDERING`` is offered. Additions only, save the diamond's spine
+    removal (I9). The three shipped shapes are adapters below."""
+    renderings = list(renderings)
+    fresh = [list(r) for r in renderings if r is not EMPTY_RENDERING and r is not SEGMENT_RENDERING]
+    segment = list(segment)
+    if len(renderings) < 2:
+        raise mutations.MutationError("a cosmetic fork needs at least two renderings")
+    if not fresh:
+        raise mutations.MutationError("a cosmetic fork needs at least one fresh rendering")
+    for chain in fresh:
+        if not chain:
+            raise mutations.MutationError("a fresh rendering needs at least one beat")
+
+    if segment:
+        # Segment-scale: the trunk stays (rendering 0), each fresh chain mirrors
+        # it. Check order matches the shipped texture splice so its message
+        # tests hold: length -> boundary -> contiguity -> per-beat.
+        for chain in fresh:
+            if len(chain) != len(segment):
+                raise mutations.MutationError(
+                    f"texture arm has {len(chain)} beat(s) against a {len(segment)}-beat "
+                    "stretch; the arm mirrors the trunk beat-for-beat (I15) — give "
+                    "every trunk beat exactly one arm twin, in order"
+                )
+        entry = queries.predecessors(g, segment[0])
+        exit_ = queries.successors(g, segment[-1])
+        if not entry or not exit_:
+            raise mutations.MutationError(
+                f"stretch {segment[0]} .. {segment[-1]} has no predecessor or no "
+                "successor to fork around; a root or ending stretch cannot be "
+                "paralleled — pick an interior stretch"
+            )
+        for a, b in zip(segment, segment[1:], strict=False):
+            if not g.has_edge(EdgeKind.PREDECESSOR, a, b):
+                raise mutations.MutationError(
+                    f"stretch beats {a} -> {b} are not adjacent; the stretch must "
+                    "be a contiguous linear chain"
+                )
+        for chain in fresh:
+            _mirror_onto_segment(g, chain, segment)
+    else:
+        # Edge-scale: the direct before->after edge is the spine; keep it iff a
+        # walk-on (EMPTY) rendering is offered.
+        if before is None or after is None:
+            raise mutations.MutationError("an edge-scale cosmetic fork needs `before` and `after`")
+        if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
+            raise mutations.MutationError(f"no linear edge {before} -> {after} to fork")
+        if EMPTY_RENDERING not in renderings:
+            mutations.remove_ordering(g, before, after)
+        entry, exit_ = [before], [after]
+
+    for chain in fresh:
+        for beat in chain:
+            mutations.add_beat(g, beat, [])
+        for p in sorted(entry):
+            mutations.add_ordering(g, p, chain[0].id)
+        prev = chain[0].id
+        for beat in chain[1:]:
+            mutations.add_ordering(g, prev, beat.id)
+            prev = beat.id
+        for s in sorted(exit_):
+            mutations.add_ordering(g, prev, s)
+
+
+def _mirror_onto_segment(g: StoryGraph, arm: Sequence[Beat], segment: Sequence[str]) -> None:
+    """Texture mirroring (I15): each fresh arm beat twins the segment beat at
+    its position — the twin's *effective* annotations engine-copied,
+    ``mirrors`` recorded — and the segment must be consequence-free and
+    non-nesting. ``entities`` is deliberately NOT copied: the arm's whole point
+    is a different backdrop (01 §6), so its entities belong to whoever words
+    the arm. Length was checked by the caller (message order)."""
+    for beat, twin_id in zip(arm, segment, strict=True):
+        twin = _beat(g, twin_id)
+        if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
+            raise mutations.MutationError(
+                f"stretch beat {twin_id} is gated, commits, or ends the story; "
+                "a texture fork parallels only consequence-free stretches — "
+                "shrink the stretch to exclude it"
+            )
+        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
+            raise mutations.MutationError(
+                f"stretch beat {twin_id} is itself a texture arm; worlds do "
+                "not nest — parallel the trunk, not an arm"
+            )
+        if beat.purpose != StructuralPurpose.TEXTURE_WORLD:
+            raise mutations.MutationError(
+                f"texture arm beat {beat.id} must carry purpose texture_world"
+            )
+        beat.mirrors = twin.id
+        beat.scene_type = effective_scene_type(twin)
+        beat.narration_scope = effective_narration_scope(twin)
+        beat.viewpoint = twin.viewpoint
+        beat.interlude = twin.interlude
+
+
 def insert_false_branch(
     g: StoryGraph, arm_a: Sequence[Beat], arm_b: Sequence[Beat], before: str, after: str
 ) -> None:
-    """Splice a cosmetic diamond into a linear edge: before -> chain a /
-    chain b -> after. Arms are short chains (1-2 beats), two flavors of
-    the same forward motion."""
-    if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
-        raise mutations.MutationError(f"no linear edge {before} -> {after} to fork")
-    for chain in (arm_a, arm_b):
-        for beat in chain:
-            mutations.add_beat(g, beat, [])
-    mutations.remove_ordering(g, before, after)
-    for chain in (arm_a, arm_b):
-        prev = before
-        for beat in chain:
-            mutations.add_ordering(g, prev, beat.id)
-            prev = beat.id
-        mutations.add_ordering(g, prev, after)
+    """Cosmetic diamond — edge-scale, two fresh renderings, no walk-on: the
+    direct edge is removed and two flavors of the same forward motion fork and
+    rejoin. Adapter over ``insert_cosmetic_fork``."""
+    insert_cosmetic_fork(g, [list(arm_a), list(arm_b)], before=before, after=after)
 
 
 def insert_sidetrack(g: StoryGraph, arm: Sequence[Beat], before: str, after: str) -> None:
-    """Splice a cosmetic sidetrack onto a linear edge (01 §6): the direct
-    edge stays, and a short detour forks off and rejoins — the reader may
-    decline it, which is a choice that costs no words."""
-    if not g.has_edge(EdgeKind.PREDECESSOR, before, after):
-        raise mutations.MutationError(f"no linear edge {before} -> {after} to fork")
+    """Cosmetic sidetrack — edge-scale, walk-on + one fresh rendering: the
+    direct edge stays and a short detour forks off and rejoins, the reader free
+    to decline it. Adapter over ``insert_cosmetic_fork``."""
     if not arm:
         raise mutations.MutationError("a sidetrack needs at least one detour beat")
-    for beat in arm:
-        mutations.add_beat(g, beat, [])
-    prev = before
-    for beat in arm:
-        mutations.add_ordering(g, prev, beat.id)
-        prev = beat.id
-    mutations.add_ordering(g, prev, after)
+    insert_cosmetic_fork(g, [EMPTY_RENDERING, list(arm)], before=before, after=after)
 
 
 # -- texture worlds (structural-depth W3; invariant I15) -------------------------
@@ -566,56 +675,7 @@ def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[s
     wording pass."""
     if not arm:
         raise mutations.MutationError("a texture arm needs at least one beat")
-    if len(arm) != len(stretch):
-        raise mutations.MutationError(
-            f"texture arm has {len(arm)} beat(s) against a {len(stretch)}-beat "
-            "stretch; the arm mirrors the trunk beat-for-beat (I15) — give "
-            "every trunk beat exactly one arm twin, in order"
-        )
-    preds = queries.predecessors(g, stretch[0])
-    succs = queries.successors(g, stretch[-1])
-    if not preds or not succs:
-        raise mutations.MutationError(
-            f"stretch {stretch[0]} .. {stretch[-1]} has no predecessor or no "
-            "successor to fork around; a root or ending stretch cannot be "
-            "paralleled — pick an interior stretch"
-        )
-    for a, b in zip(stretch, stretch[1:], strict=False):
-        if not g.has_edge(EdgeKind.PREDECESSOR, a, b):
-            raise mutations.MutationError(
-                f"stretch beats {a} -> {b} are not adjacent; the stretch must "
-                "be a contiguous linear chain"
-            )
-    for beat, twin_id in zip(arm, stretch, strict=True):
-        twin = _beat(g, twin_id)
-        if twin.requires_flags or twin.commits_dilemmas or twin.is_ending:
-            raise mutations.MutationError(
-                f"stretch beat {twin_id} is gated, commits, or ends the story; "
-                "a texture fork parallels only consequence-free stretches — "
-                "shrink the stretch to exclude it"
-            )
-        if twin.purpose == StructuralPurpose.TEXTURE_WORLD:
-            raise mutations.MutationError(
-                f"stretch beat {twin_id} is itself a texture arm; worlds do "
-                "not nest — parallel the trunk, not an arm"
-            )
-        if beat.purpose != StructuralPurpose.TEXTURE_WORLD:
-            raise mutations.MutationError(
-                f"texture arm beat {beat.id} must carry purpose texture_world"
-            )
-        beat.mirrors = twin.id
-        beat.scene_type = effective_scene_type(twin)
-        beat.narration_scope = effective_narration_scope(twin)
-        beat.viewpoint = twin.viewpoint
-        beat.interlude = twin.interlude
-    for beat in arm:
-        mutations.add_beat(g, beat, [])
-    for p in sorted(preds):
-        mutations.add_ordering(g, p, arm[0].id)
-    for prev, beat in zip(arm, arm[1:], strict=False):
-        mutations.add_ordering(g, prev.id, beat.id)
-    for s in sorted(succs):
-        mutations.add_ordering(g, arm[-1].id, s)
+    insert_cosmetic_fork(g, [SEGMENT_RENDERING, list(arm)], segment=list(stretch))
 
 
 def _arm_pairs(g: StoryGraph, before: str, after: str) -> list[tuple[str, str]]:

@@ -162,14 +162,19 @@ def choice_requires(g: StoryGraph, target_group: list[str]) -> list[str]:
 
 
 def choice_grants(g: StoryGraph, target_group: list[str]) -> list[str]:
-    """Entering a passage that contains a path's commit beat locks the
-    choice in: the choice edge grants that path's flags. Commits are per
-    world; each world's commit passage grants the same flag."""
+    """Entering a passage that contains a flag's grant beat locks the choice
+    in: the choice edge grants that flag. A dilemma flag's grant is its path's
+    commit (per world; each world's commit passage grants the same flag); a
+    cosmetic flag's grant is a rendering head that lists it in `grants_flags`
+    (cosmetic-forks PR-4) — the entry choice into that rendering carries it, so
+    the play engine and exports (which already honor edge grants) hold it for
+    exactly the readers who took the rendering."""
     beats = set(target_group)
-    grants = []
-    for flag in g.nodes_of(StateFlag):
-        if flag.path is not None and beats & set(queries.grant_beats(g, flag.id)):
-            grants.append(flag.id)
+    grants = [
+        flag.id
+        for flag in g.nodes_of(StateFlag)
+        if beats & set(queries.grant_beats(g, flag.id))
+    ]
     return sorted(grants)
 
 
@@ -332,6 +337,14 @@ def projected_walks(g: StoryGraph, preset) -> list[tuple[int, int]]:
     results = []
     for selection in queries.arc_selections(g):
         view = queries.arc_view(g, selection)
+        # `held` is derived from grant-beats-in-view, not grant-beats-actually-
+        # walked. For dilemma flags the two agree (a commit is on exactly the
+        # arcs the view selects). For cosmetic flags (PR-4) they can diverge: a
+        # rendering head sits in every arc view, so this over-holds keywords
+        # from detours this walk didn't take. It affects only which gated
+        # entries B6 counts as live decisions (no cosmetic flag gates anything
+        # until PR-5 mints and consumes them); fix or refine when B6 is next
+        # touched (cosmetic-forks §4, open question 5).
         held = {
             f.id
             for f in g.nodes_of(StateFlag)

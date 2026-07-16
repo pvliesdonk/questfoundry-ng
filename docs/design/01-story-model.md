@@ -425,8 +425,11 @@ beats, and arcs emerge.
 A **state flag** is a boolean world-state marker, always phrased as state
 ("the cartographer knows"), never as player action ("player chose to
 tell"). Sources: derived from consequences at commit beats (dilemma
-flags), or granted by false-branch choices (cosmetic flags). Flags do
-three jobs:
+flags), or granted at a cosmetic-fork rendering's head beat
+(`grants_flags`, symmetric with `requires_flags`) and projected onto its
+entry choice (cosmetic flags — the beat-layer grant mirrors how a dilemma
+flag is granted at its commit, so `grant_beats`/I10 reason about both
+uniformly; cosmetic-forks PR-4). Flags do three jobs:
 
 1. **Routing** — gating choices/variants after a soft dilemma converges
    (hard dilemmas need no routing flags; their graphs never rejoin).

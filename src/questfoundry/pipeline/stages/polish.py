@@ -1127,8 +1127,13 @@ def _audit_one_context(pid: str) -> Callable[[Project], dict]:
     ``passages``; here it is a single-element list)."""
 
     def build(project: Project) -> dict:
+        # ``p["passage"]`` is the Passage NODE: compare its id, never the
+        # object (the object==str comparison rendered every per-passage audit
+        # prompt with an EMPTY passage list while the schema still demanded
+        # the entry — the undiagnosed audit halt of the 2026-07-15 medium
+        # validation run, found by PR-5's offline loop fixture)
         ctx = _audit_context(project)
-        ctx["passages"] = [p for p in ctx["passages"] if p["passage"] == pid]
+        ctx["passages"] = [p for p in ctx["passages"] if p["passage"].id == pid]
         return ctx
 
     return build

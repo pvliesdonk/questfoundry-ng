@@ -624,7 +624,8 @@ def test_fork_segments_tiers_and_seam_edges():
     mutations.add_beat(g, setup_beat("cv"), [])
     mutations.add_ordering(g, ids[-1], "beat:cv")
     mutations.add_ordering(g, "beat:q", "beat:cv")
-    segments, edges = pc.fork_segments(g, preset)
+    segments, edge_runs = pc.fork_segments(g, preset)
+    edges = [e for run in edge_runs for e in run]
     assert [s for s in segments if len(s) < 3] == [["beat:c1", "beat:c2"]]
     assert ("beat:c1", "beat:c2") not in edges  # smalls are segments, not seams
     assert ("beat:c0", "beat:c1") in edges  # (e+1) % cap == 0 seam of the 5-run
@@ -647,7 +648,8 @@ def test_fork_segments_include_arm_interiors_and_exclude_decoration():
         purpose=StructuralPurpose.FALSE_BRANCH,
     )
     pc.insert_sidetrack(g, [detour], "beat:t4", "beat:t5")
-    segments, edges = pc.fork_segments(g, preset)
+    segments, edge_runs = pc.fork_segments(g, preset)
+    edges = [e for run in edge_runs for e in run]
     assert any(b.startswith("beat:a") for b, _ in edges)  # arm seams offered
     assert all("beat:st-detour" not in seg for seg in segments)
 
@@ -682,3 +684,91 @@ def test_nested_texture_splice_is_legal():
     assert g.node("beat:n0").mirrors == "beat:a3"
     assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a2", "beat:n0")
     assert g.has_edge(EdgeKind.PREDECESSOR, "beat:n2", "beat:a6")
+
+
+# -- PR-5: the round planner -------------------------------------------------------
+
+
+def _cosmetic(g, slug, path=None):
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id=f"flag:cw-{slug}",
+            created_by=Stage.POLISH,
+            description=slug,
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    return f"flag:cw-{slug}"
+
+
+def test_fork_plan_is_deterministic_and_terminal_at_target():
+    preset = _micro_vision_preset()
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    plan = pc.fork_plan(g, preset)
+    assert plan == pc.fork_plan(g, preset)
+    assert plan  # a choice-less 21-beat run is far above the B6 target
+    # a short chain projects under the target: nothing to admit
+    g2 = StoryGraph()
+    chain(g2, ["r", "a", "b"])
+    assert pc.fork_plan(g2, preset) == []
+
+
+def test_fork_plan_words_admission_blocks_scenes_before_edges():
+    """The words budget is per-site marginal (cosmetic-forks §6): a scene
+    segment costs its stretch re-printed, an edge site a micro chunk per
+    arm — a tight target starves the scene tier first."""
+    preset = _micro_vision_preset()
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    wide = pc.fork_plan(g, preset)  # band top: the scene segment fits
+    assert any(s.segment for s in wide)
+    tight = pc.fork_plan(g, preset, words_target=2700)
+    assert tight and all(not s.segment for s in tight)
+
+
+def test_fork_plan_caps_scene_forks_story_total():
+    preset = SCOPE_PRESETS["short"]  # cap 3, TEXTURE_WORLDS_MAX 3
+    g = StoryGraph()
+    chain(g, [f"c{i}" for i in range(18)])
+    for k, lo in enumerate((3, 6, 9)):
+        stretch = [f"beat:c{i}" for i in range(lo, lo + 3)]
+        pc.insert_texture_world(g, [arm_beat(f"w{k}-{i}") for i in range(3)], stretch)
+    assert pc.scene_fork_count(g, 3) == 3
+    plan = pc.fork_plan(g, preset)
+    cap = preset.passage_beats_max
+    assert all(len(s.segment) < cap for s in plan)
+
+
+def test_fork_plan_shape_cycle_offsets_by_minted_keywords():
+    """Resume determinism: the shape-mix cycle position is a pure function
+    of the graph — offset by the cosmetic flags already minted."""
+    preset = _micro_vision_preset()
+    cycle = preset.cadence_arm_cycle
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    plan = pc.fork_plan(g, preset, words_target=2700)
+    assert sorted(s.arms for s in plan) == sorted(cycle[: len(plan)])
+    _cosmetic(g, "minted")
+    shifted = pc.fork_plan(g, preset, words_target=2700)
+    assert sorted(s.arms for s in shifted) == sorted(cycle[1 : 1 + len(shifted)])
+    assert sorted(s.arms for s in shifted) != sorted(s.arms for s in plan)
+
+
+def test_offered_keywords_upstream_unconsumed_capped():
+    g = StoryGraph()
+    chain(g, ["a", "b", "c", "d"])
+    flags = [_cosmetic(g, f"k{i}") for i in range(10)]
+    downstream = _cosmetic(g, "late")
+    consumed = _cosmetic(g, "used")
+    for f in [*flags, consumed]:
+        mutations.add_beat_flag_grant(g, "beat:a", f)
+    mutations.add_beat_flag_grant(g, "beat:d", downstream)
+    g.node("beat:c").requires_flags = [consumed]
+    offered = pc.offered_keywords(g, "beat:c")
+    assert len(offered) == 8
+    assert consumed not in offered and downstream not in offered
+    assert set(offered) <= set(flags)

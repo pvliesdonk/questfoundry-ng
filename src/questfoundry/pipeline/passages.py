@@ -24,6 +24,7 @@ from questfoundry.models.drama import Dilemma, DilemmaRole, ResidueWeight
 from questfoundry.models.structure import (
     Beat,
     BeatClass,
+    SceneType,
     StateFlag,
     StructuralPurpose,
     effective_narration_scope,
@@ -713,7 +714,7 @@ def texture_sites(g: StoryGraph, preset) -> list[list[str]]:
 
 def fork_segments(
     g: StoryGraph, preset
-) -> tuple[list[list[str]], list[tuple[str, str]]]:
+) -> tuple[list[list[str]], list[list[tuple[str, str]]]]:
     """One round's candidate cosmetic-fork sites (cosmetic-forks §1, §6), as
     ``(segments, seam_edges)`` — the segment tiers and the edge tier of the
     unified table.
@@ -769,12 +770,14 @@ def fork_segments(
                     segments.append(stretch)
             i = j + 1
 
-    seam_edges: list[tuple[str, str]] = []
+    seam_edges: list[list[tuple[str, str]]] = []
     for idx in long_linear_runs(runs):
         run = runs[idx]
-        for e in range(len(run) - 1):
-            if (e + 1) % cap == 0:
-                seam_edges.append((run[e], run[e + 1]))
+        aligned = [
+            (run[e], run[e + 1]) for e in range(len(run) - 1) if (e + 1) % cap == 0
+        ]
+        if aligned:
+            seam_edges.append(aligned)
     return segments, seam_edges
 
 
@@ -808,11 +811,39 @@ def scene_fork_count(g: StoryGraph, cap: int) -> int:
                 out.append(s)
         return out
 
+    def effective_predecessors(bid: str) -> set[str]:
+        out, stack, seen = set(), list(queries.predecessors(g, bid)), set()
+        while stack:
+            s = stack.pop()
+            if s in seen:
+                continue
+            seen.add(s)
+            b = beats.get(s)
+            if (
+                b is not None
+                and b.purpose == StructuralPurpose.FALSE_BRANCH
+                and b.mirrors is None
+                and s not in twins
+            ):
+                stack.extend(queries.predecessors(g, s))
+            else:
+                out.add(s)
+        return out
+
     def chain_next(bid: str) -> str | None:
+        # a chain step stays inside ONE fresh rendering: the twins are
+        # consecutive AND the current beat is the candidate's only effective
+        # predecessor — a rendering head inherits its segment entry's fan-in
+        # (adjacent constructs' tails included), which marks the boundary
         twin_succ = set(effective_successors(mirror[bid]))
         for s in effective_successors(bid):
             nb = beats.get(s)
-            if nb is not None and nb.mirrors and nb.mirrors in twin_succ:
+            if (
+                nb is not None
+                and nb.mirrors
+                and nb.mirrors in twin_succ
+                and effective_predecessors(s) == {bid}
+            ):
                 return s
         return None
 
@@ -829,6 +860,169 @@ def scene_fork_count(g: StoryGraph, cap: int) -> int:
         if length >= cap:
             count += 1
     return count
+
+
+@dataclass(frozen=True)
+class ForkSite:
+    """One admitted cosmetic-fork site of a finalize round (cosmetic-forks
+    §6). Edge-scale: ``segment`` is empty and ``(before, after)`` names the
+    seam edge; ``arms`` is the engine-assigned fresh-rendering count (1 =
+    sidetrack, 2-3 = diamond). Segment-scale: ``segment`` carries the trunk
+    beats, ``before`` doubles as the sort anchor (the segment head), ``after``
+    is empty, and ``arms`` is 1 (two-worlds: the segment itself + one fresh
+    rendering). ``keywords`` are the holdable, unconsumed cosmetic flags the
+    site's call may let one gated extra rendering consume — pinned at
+    round-plan time, so offers are strictly from earlier rounds; empty for
+    segment-scale sites (a keyword never gates a scene-scale world; the v1
+    gated rendering is edge-scale only)."""
+
+    before: str
+    after: str
+    segment: tuple[str, ...]
+    arms: int
+    keywords: tuple[str, ...]
+
+
+def offered_keywords(g: StoryGraph, before_id: str, limit: int = 8) -> list[str]:
+    """Cosmetic keywords a fork at ``before_id``'s outgoing edge may consume:
+    unconsumed (no beat requires them — one consumer per keyword), every
+    grant strictly upstream of ``before_id`` (so a holder provably made the
+    granting choice before reaching the fork; I10 by construction), capped
+    at ``limit`` as a context-bloat guard (cosmetic-forks §6)."""
+    consumed = {f for b in g.nodes_of(Beat) for f in b.requires_flags}
+    upstream = queries.ancestors(g, before_id)
+    out = []
+    for flag in sorted(g.nodes_of(StateFlag), key=lambda f: f.id):
+        if flag.path is not None or flag.id in consumed:
+            continue
+        grants = queries.grant_beats(g, flag.id)
+        if grants and all(b in upstream for b in grants):
+            out.append(flag.id)
+    return out[:limit]
+
+
+def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[ForkSite]:
+    """One finalize round's admissions (cosmetic-forks §3, §6): recompute the
+    qualifying sites and both budgets on the *current* graph and assign shape
+    and arm count per admitted site — the same graph-pure machinery the
+    one-shot pass used (``fork_segments`` for the tiers, ``projected_walks``
+    for the B6 projection, the words-admission rule of the old
+    ``texture_plan``), iterated to a fixed point by the round loop.
+
+    Segments admit first (scene then small, longest first — the cheapest
+    choices in reader-words), scene-scale ones under the story-total
+    ``TEXTURE_WORLDS_MAX`` (existing worlds counted via ``scene_fork_count``,
+    so the cap holds across rounds); then seam edges, largest-remaining-run
+    first in bisection order, shapes cycled from the scope's
+    ``cadence_arm_cycle`` offset by the cosmetic flags already minted (the
+    cycle position stays a pure function of the graph — resume determinism).
+    Every site's marginal story words must fit the headroom (``words_target``
+    or the band top). An empty plan is the loop's terminal round: the B6 mean
+    is at target, or no site fits the remaining words, or capacity is out.
+    Deterministic: same graph, same plan."""
+    from questfoundry.graph.validate import B6_WORDS_PER_CHOICE
+
+    lo, hi = B6_WORDS_PER_CHOICE
+    target = (lo + 2 * hi) // 3
+    cap = preset.passage_beats_max
+    limit = words_target if words_target is not None else preset.words_total[1]
+    segments, edge_runs = fork_segments(g, preset)
+
+    def projected_mean(scratch: StoryGraph) -> float:
+        walks = projected_walks(scratch, preset)
+        return sum(w for w, _ in walks) / max(sum(d for _, d in walks), 1)
+
+    scratch = copy.deepcopy(g)
+    total = projected_total_words(g, preset)
+    scenes = scene_fork_count(g, cap)
+    sites: list[ForkSite] = []
+    admitted_beats: set[str] = set()
+    probe = 0
+
+    for seg in sorted(segments, key=lambda run: (-len(run), run[0])):
+        if projected_mean(scratch) <= target:
+            break
+        scene = len(seg) >= cap
+        if scene and scenes >= TEXTURE_WORLDS_MAX:
+            continue
+        marginal = _stretch_words(g, seg, preset)
+        if total + marginal > limit:
+            continue  # a shorter site may still fit the words budget
+        arm = [
+            Beat(
+                id=f"beat:fork-probe-{probe}-{i}",
+                created_by=_beat(g, seg[0]).created_by,
+                summary="probe",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.TEXTURE_WORLD,
+            )
+            for i in range(len(seg))
+        ]
+        insert_texture_world(scratch, arm, seg)
+        probe += 1
+        total += marginal
+        scenes += scene
+        admitted_beats.update(seg)
+        sites.append(
+            ForkSite(before=seg[0], after="", segment=tuple(seg), arms=1, keywords=())
+        )
+
+    # Edge tier: skip seams touching an admitted segment (its fork boundaries
+    # land there this round; next round they are ordinary run seams again).
+    capacity = [
+        [e for e in run if e[0] not in admitted_beats and e[1] not in admitted_beats]
+        for run in edge_runs
+    ]
+    capacity = [
+        [run[j] for j in _bisection_order(len(run))] for run in capacity if run
+    ]
+    taken = [0] * len(capacity)
+    cycle = preset.cadence_arm_cycle
+    offset = sum(1 for f in g.nodes_of(StateFlag) if f.path is None)
+    k = 0
+    arm_words = round(preset.words_for(intensity=SceneType.MICRO_BEAT)[1] * 0.9)
+    while projected_mean(scratch) > target:
+        open_runs = [i for i in range(len(capacity)) if taken[i] < len(capacity[i])]
+        if not open_runs:
+            break
+        run_idx = max(open_runs, key=lambda i: (len(capacity[i]) - taken[i], -i))
+        before, after = capacity[run_idx][taken[run_idx]]
+        taken[run_idx] += 1
+        arms = cycle[(offset + k) % len(cycle)]
+        if total + arms * arm_words > limit:
+            continue  # a later (cheaper-shaped) admission may still fit
+        probe_arms = [
+            Beat(
+                id=f"beat:fork-probe-{probe}-{side}",
+                created_by=_beat(g, before).created_by,
+                summary="probe",
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.FALSE_BRANCH,
+            )
+            for side in ("a", "b")[: min(arms, 2)]
+        ]
+        if arms == 1:
+            insert_sidetrack(scratch, probe_arms, before, after)
+        else:
+            # a 2-arm probe sizes the choice budget for any diamond (the walk
+            # traverses one arm; one decision per site regardless of count)
+            insert_cosmetic_fork(
+                scratch, [[b] for b in probe_arms], before=before, after=after
+            )
+        probe += 1
+        k += 1
+        total += arms * arm_words
+        sites.append(
+            ForkSite(
+                before=before,
+                after=after,
+                segment=(),
+                arms=arms,
+                keywords=tuple(offered_keywords(g, before)),
+            )
+        )
+
+    return sorted(sites, key=lambda s: s.before)
 
 
 def insert_texture_world(g: StoryGraph, arm: Sequence[Beat], stretch: Sequence[str]) -> None:

@@ -1,6 +1,7 @@
 # Cosmetic forks — one mechanism, renderings as peers, residue keywords (milestone plan)
 
-> Status: **DESIGNED, not started** (2026-07-15). The unifying insight is the
+> Status: **PR-0..PR-5 SHIPPED** (PR-5 built 2026-07-16; PR-6 deferred
+> until a live run mints keywords). The unifying insight is the
 > **author's, directed 2026-07-15**: "diamonds, sidetracks and texture worlds
 > are all intrinsically the exact same mechanism"; "one arm should not have a
 > different treatment than the other" (the texture trunk is currently
@@ -420,6 +421,39 @@ build lives only in the 2026-07-15 design session; if a seam turns out
 underspecified anyway, that is a plan bug — sharpen this doc in the same PR
 rather than deriving silently (AGENTS.md, doc-silent territory).
 
+## PR-5 build decisions (2026-07-16, the build session's frontier calls)
+
+Seams §6 left open, frozen at build time — each is an agent ruling, not
+author-ratified, recorded so the next session doesn't re-derive:
+
+1. **Gated renderings are edge-scale only in v1** (purpose `FALSE_BRANCH`):
+   §4's v1 form is the diamond's extra arm, "a keyword never gates a
+   scene-scale world" holds by construction, and I15's field half keeps
+   texture beats ungated. Sites without offers get a schema with no `gated`
+   field at all (the empty-enum list discipline's successor).
+2. **The restated I15 shape rule** contracts every *un-mirrored*
+   `FALSE_BRANCH` beat (new-loop decoration) before projecting, and projects
+   one `mirrors` step at either or both endpoints — legacy mirrored-cadence
+   twins keep their `FALSE_BRANCH` counterparts in place, so every
+   checked-in exemplar validates unchanged; nested constructs project
+   level-by-level (composition).
+3. **Cycle offset** = count of existing cosmetic flags; **keyword offers**
+   pinned at round-plan time (rounds < n by construction); **minting** =
+   `flag:cw-<head-slug>` (suffixed on collision), description = the premise.
+4. **Small-segment tier** = the seam-aligned run-tail spans of 1..cap−1
+   beats the old `>= cap` test discarded (interior spans snap to seams on
+   both sides and are always cap-multiples). Admission order is marginal
+   story-words per decision: scenes (capped), edges, smalls last; a cycled
+   shape that no longer fits the words headroom degrades to a sidetrack.
+5. **Per-walk targeting**: the planner drives the WORST projected walk to
+   the B6 upper-middle target, not the mean — budget parity means every
+   walk lands in band on its own. Recalibration flagged: forks now price
+   their story words honestly, so at the words band top the budget and
+   seam capacity bind before B6's top (the sim asserts the fixed point).
+6. **FILL premise stack** (§3's consequence) deferred to BACKLOG: the
+   words budget rarely buys depth ≥ 2, and the fork prompt shows the host
+   rendering's premise so summaries stay world-consistent.
+
 ## Open questions (for the author or a later frontier session)
 
 1. **The mix ratio** (diamond : sidetrack : two-worlds per scope) is author
@@ -430,8 +464,11 @@ rather than deriving silently (AGENTS.md, doc-silent territory).
 3. **Nesting depth in practice** — the loop admits recursion structurally,
    but words-budget admission may never buy depth ≥ 2 below long scope;
    confirm the budgets are the only limiter rather than adding a depth cap.
-4. **Runner resume determinism for the `finalize:<n>` chain** — verify
-   against `runner.py` when PR-5 is built (expected to hold: the next-round
-   decision is a pure function of the checkpointed graph).
-5. **B6 walker over-holding** cosmetic keywords (grant-beats-in-view vs
-   actually-walked) — fix or explicitly document when B6 is next touched.
+4. **Runner resume determinism for the `finalize:<n>` chain** — ANSWERED
+   (PR-5): every planning input is a pure function of the graph (cycle
+   offset from minted-flag count, offers from graph-derived consumption);
+   pinned by `tests/test_fork_loop.py::test_loop_expansion_names_are_deterministic`.
+5. **B6 walker over-holding** — FIXED (PR-5): cosmetic holds are
+   walk-accumulated in both walkers (`projected_walks` accrues at the
+   granting group, the B6 gate walker from traversed choice grants);
+   dilemma flags stay view-derived.

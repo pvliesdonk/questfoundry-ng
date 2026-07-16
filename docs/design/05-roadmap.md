@@ -115,9 +115,10 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   later keyword-gated renderings (obligation boundary made structural:
   I16). Contract, ratified decisions, and PR slicing in
   [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md) (mini-ADR
-  A24). PR-0 (the exit-label residue fix) ships ahead of the epic; the
-  structural-depth medium validation runs before the engine rework so it
-  measures the machinery as shipped. **Exit:** a generated story plants
+  A24). **Engine complete through PR-5** (2026-07-16: the loop, minting,
+  v1 consumption, I15 restated + I16, mirrored cadence retired —
+  offline-validated); PR-6 (DRESS print acknowledgments) waits on a live
+  run that mints keywords. **Exit:** a generated story plants
   nested/mixed cosmetic forks from the loop, mints and consumes keywords,
   every walk lands in the B6 band, and an author read finds the fake
   branching leaves felt residue.

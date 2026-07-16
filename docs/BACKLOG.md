@@ -25,7 +25,7 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   `dress_codex_review`, `dress_direction`, `fill_review`, `fill_summary`,
   `fill_voice`, `fill_write`, `grow_annotate`, `grow_bridge`,
   `grow_contextualize`, `grow_intersections`, `grow_weave`, `polish_arcs`,
-  `polish_audit`, `polish_finalize`, `polish_labels`, `polish_summary`,
+  `polish_audit`, `polish_finalize`, `polish_fork`, `polish_labels`, `polish_summary`,
   `research`, `seed_order`, `seed_scaffold`, `seed_triage`. Known open
   question to fold in: DREAM's envision rewrote an authored rotating
   `pov_hint` into a single-head scheme (observed live 2026-07-14, root cause
@@ -44,14 +44,9 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
     (`character:finch` for the sheriff whose id is `character:marshal`) and
     finalize halted. Fix: pass the cast, list `name (id): concept`.
     Live-validated.
-  - **Cadence shape bias toward sidetracks** (`polish_finalize.j2` FALSE
-    BRANCHES): the diamond is undersold (no reader hook, no "use it when"
-    trigger, denigrated as "look left / look right") while the sidetrack is
-    oversold with a near-universal trigger ("use it where lingering is
-    plausible"). The run placed **44/44 sidetracks, 0 diamonds** — the prompt
-    steering, not model discretion (44 samples, zero variance). Plan **PR-3**
-    (engine-assigned mandatory shape) is the real fix; the descriptive
-    imbalance is the prompt-quality remainder.
+  - **Cadence shape bias toward sidetracks — FIXED** (PR-3 #98: the
+    engine assigns shape and count; PR-5: the loop's per-site schema pins
+    the assigned rendering count, so the model never chooses a shape).
   - **PR-0 residue paragraph is sidetrack-only vocabulary — FIXED** (this PR):
     the exit-label residue paragraph PR-0 added ("the detour", "declined",
     "the arm rejoins the same road") was wrong for a diamond arm; rewritten
@@ -117,35 +112,31 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   at **59 passages against the 90–160 band** (its B3 advisory). Provenance:
   observed live in that scratch run (not committed) — treat as an
   unverified agent observation until reproduced.
-- [ ] **Texture worlds overshoot the words budget (medium run, 2026-07-15).**
-  A DREAM→POLISH *Closed Circle* medium run with `--words-target 55000` (band
-  top) projected **76,160 words (B7, +38% over target)** and **B6 971
-  words/choice** (above the 800 band top): 3 max-size texture worlds (~12–29
-  beats each, written twice) inflate the book past its own target while
-  crowding out cadence choices. Open: does texture/cadence admission honor
-  `words_target` (`texture_plan`'s `limit` vs the post-cadence projection),
-  or is the W1 coupling not biting on texture inflation? Data for the plan's
-  open-question 1 (mix ratio, small-segment appetite) and a possible
-  admission bug — investigate when PR-2/PR-3 touch the budget. Provenance:
-  the resumable scratch run measured by replaying its cached POLISH proposals
-  (decision log, 2026-07-15) — reproduce before treating as confirmed.
+- [ ] **Texture worlds overshoot the words budget (medium run, 2026-07-15)
+  — mechanism replaced, re-measure live.** The one-shot admission that
+  produced +38% B7 is retired: PR-5's `fork_plan` charges every site's
+  marginal story words against the headroom (`words_target` or band top)
+  per admission, edge shapes degrade at the boundary, and the sim lands at
+  the band top instead of past it. Confirm on the next live medium
+  (band-top `--words-target`) that B7 stays inside the target.
 - [ ] **Intersections over post-commit (exclusive) beats** — M2 only groups
   shared pre-commit beats; exclusive-beat intersections are meaningful but
   interact with arc membership in ways the spine model doesn't cover. Same for
   **temporal hints inside atomic fork units** (a hint there has nothing to
   move). Revisit when a generated story demands one.
-- [ ] *(moved)* **Cosmetic-fork threads — keywords, cadence vocabulary, exit
-  labels** — the three 2026-07-15 branching ideas (residue keywords, the
-  deliberate shape mix / small two-worlds / recursion / 3+ arms, the
-  sidetrack exit-label convergence) were thought through with the author
-  the same day, unified ("diamonds, sidetracks and texture worlds are all
-  intrinsically the exact same mechanism" — author), and are now owned by
-  the roadmap epic **Cosmetic forks** and its contract,
-  [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md). Delete this pointer
-  when the epic starts; the pre-unification analyses live in git history
-  (this file, 2026-07-15).
-
 ## Prose & annotations
+
+- [ ] **FILL premise *stack* for nested renderings (cosmetic-forks §3,
+  deferred at PR-5).** A beat carries one `texture_premise` (its own
+  rendering's); a beat inside a nested construct — decoration inside an
+  arm, a world within a world — should render under the host rendering's
+  backdrop too (outer + inner, stacked like world truths after hard
+  forks). Deferred: the words budget rarely buys depth ≥ 2 (plan open
+  question 3) and the fork prompt shows the host premise so summaries stay
+  world-consistent; FILL still reads only the beat's own premise. Build
+  when a live read shows a nested passage contradicting its host world:
+  derive the stack by chasing `mirrors` grounds and, for decoration, the
+  construct's entry beat's premise.
 
 - [ ] **Shadows: prompt what explicitly did NOT happen (author idea,
   2026-07-15, prose-quality scope).** FILL's write context already carries

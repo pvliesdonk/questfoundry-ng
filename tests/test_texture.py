@@ -625,7 +625,7 @@ def test_fork_segments_tiers_and_seam_edges():
     mutations.add_ordering(g, ids[-1], "beat:cv")
     mutations.add_ordering(g, "beat:q", "beat:cv")
     segments, edges = pc.fork_segments(g, preset)
-    assert [["beat:c1", "beat:c2"]] == [s for s in segments if len(s) < 3]
+    assert [s for s in segments if len(s) < 3] == [["beat:c1", "beat:c2"]]
     assert ("beat:c1", "beat:c2") not in edges  # smalls are segments, not seams
     assert ("beat:c0", "beat:c1") in edges  # (e+1) % cap == 0 seam of the 5-run
 

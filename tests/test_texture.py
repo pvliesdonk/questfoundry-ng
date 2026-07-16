@@ -357,6 +357,7 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="the crossing goes over the mountain pass",
+                trunk_premise="the crossing goes along the coast road",
                 beats=[
                     TextureBeatSpec(id=f"beat:mountain-{i}", summary=f"m{i}")
                     for i in range(len(site))
@@ -383,6 +384,22 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
     assert arm0.purpose == StructuralPurpose.TEXTURE_WORLD
     assert arm0.mirrors == site[0]
     assert arm0.texture_premise == "the crossing goes over the mountain pass"
+    # rendering 0 (PR-2 §2): the trunk segment's own (frozen) beats carry the
+    # trunk premise — renderings are peers, both worlds named
+    assert all(
+        g.node(tb).texture_premise == "the crossing goes along the coast road" for tb in site
+    )
+    # both premises reach their readers on the exact expressions those readers
+    # use: FILL's per-passage gathering (fill.py `{b.texture_premise for b in
+    # beats}`) yields each rendering's world, and the entry-label context reads
+    # the destination group's head-beat premise (_labels_context).
+    def fill_premise(beats):
+        return sorted({g.node(b).texture_premise for b in beats if g.node(b).texture_premise})
+
+    arm_ids = [f"beat:mountain-{i}" for i in range(len(site))]
+    assert fill_premise(site) == ["the crossing goes along the coast road"]  # FILL: trunk world
+    assert fill_premise(arm_ids) == ["the crossing goes over the mountain pass"]  # FILL: arm world
+    assert g.node(site[0]).texture_premise and g.node(arm_ids[0]).texture_premise  # entry labels
     # cadence diamonds inside the mirrored stretch got mirrored twins
     # carrying the arm's premise (both worlds keep the same topology)
     twins = [b for b in g.nodes_of(Beat) if b.mirrors and b.mirrors.startswith("beat:fb-")]
@@ -409,6 +426,7 @@ def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="p",
+                trunk_premise="q",
                 beats=[TextureBeatSpec(id="beat:m0", summary="m")],
             )
         ]
@@ -420,6 +438,7 @@ def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="  ",
+                trunk_premise="the trunk backdrop",
                 beats=[
                     TextureBeatSpec(id=f"beat:m{i}", summary="m")
                     for i in range(len(site))
@@ -488,3 +507,27 @@ def test_cosmetic_fork_rejects_degenerate_rendering_sets():
         insert_cosmetic_fork(g, [[setup_beat("x")]], before="beat:a", after="beat:b")
     with pytest.raises(mutations.MutationError, match="at least one fresh"):
         insert_cosmetic_fork(g, [EMPTY_RENDERING, EMPTY_RENDERING], before="beat:a", after="beat:b")
+
+
+def test_texture_premise_legal_on_any_beat_engine_set_on_frozen_trunk():
+    """PR-2 §2: premise per rendering. The model guard no longer couples
+    texture_premise to texture_world purpose (rendering 0's beats are GROW
+    beats), and the freeze permits it as a presentation addition on a frozen
+    trunk beat (a topological freeze — no beat moves)."""
+    from questfoundry.graph.store import FreezeRecord
+
+    # the model accepts a premise on a plain (non-texture) beat
+    b = setup_beat("trunk", texture_premise="the road runs along the coast")
+    assert b.purpose is not StructuralPurpose.TEXTURE_WORLD
+    assert b.texture_premise == "the road runs along the coast"
+
+    # and the mutation sets it on a FROZEN beat (scene_type/summary would reject)
+    g = StoryGraph()
+    mutations.add_beat(g, setup_beat("t0"), [])
+    g.frozen = FreezeRecord(beats=["beat:t0"], forks={}, convergences={})
+    with pytest.raises(mutations.MutationError, match="frozen"):
+        mutations.set_beat_summary(g, "beat:t0", "reworded")  # content: rejected
+    mutations.set_beat_texture_premise(g, "beat:t0", "the coast road")  # addition: allowed
+    assert g.node("beat:t0").texture_premise == "the coast road"
+    with pytest.raises(mutations.MutationError, match="empty"):
+        mutations.set_beat_texture_premise(g, "beat:t0", "   ")

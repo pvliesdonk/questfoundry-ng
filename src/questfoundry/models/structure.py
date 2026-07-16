@@ -144,10 +144,11 @@ class Beat(Node):
     def _class_consistency(self) -> Beat:
         if self.mirrors is not None and self.purpose != StructuralPurpose.TEXTURE_WORLD:
             raise ValueError(f"beat {self.id} carries mirrors but is not a texture_world beat")
-        if self.texture_premise and self.purpose != StructuralPurpose.TEXTURE_WORLD:
-            raise ValueError(
-                f"beat {self.id} carries a texture_premise but is not a texture_world beat"
-            )
+        # texture_premise is legal on ANY beat: it names the consequence-free
+        # axis a cosmetic-fork rendering varies, and rendering 0 — the trunk
+        # segment's own (GROW) beats — carries its premise too (cosmetic-forks
+        # §2; premise per rendering). Engine-set only (finalize apply), not a
+        # model-set field, so no purpose coupling constrains it.
         if self.beat_class == BeatClass.STRUCTURAL:
             if self.dilemma_impacts:
                 raise ValueError(f"structural beat {self.id} must not carry dilemma_impacts")

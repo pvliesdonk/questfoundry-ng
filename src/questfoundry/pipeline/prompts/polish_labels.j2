@@ -11,7 +11,8 @@ THIS PASSAGE (group {{ index }}) — the moment the player is choosing from:
 
 CHOICES LEAVING IT (write one label per destination):
 {% for d in dests %}
-- to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}{% if d.siblings %}
+- to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}{% if d.premise %}
+  ENTERS A RENDERING — this choice steps into a world where {{ d.premise }}; the label may name that world so the reader chooses between the offered backdrops.{% endif %}{% if d.siblings %}
   ALREADY OFFERED into this same destination by parallel passages: {% for s in d.siblings %}"{{ s }}"{% if not loop.last %}, {% endif %}{% endfor %} — do NOT re-offer that action.{% endif %}
 {% endfor %}
 

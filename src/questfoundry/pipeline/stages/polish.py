@@ -131,7 +131,12 @@ class TextureWorldSpec(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     site: int  # index into the offered TEXTURE WORLDS sites
-    premise: str  # what differs in this rendering, one line (any consequence-free axis)
+    premise: str  # the fresh rendering's backdrop, one line (any consequence-free axis)
+    # rendering 0's backdrop — the trunk segment's own premise (cosmetic-forks
+    # §2): grounded in what the trunk beats already carry, sharpening where the
+    # weave left it vague. Renderings are peers, so the trunk names its axis too
+    # (FILL grounds both worlds' prose, the entry label names both).
+    trunk_premise: str
     beats: list[TextureBeatSpec] = Field(min_length=1)
 
 
@@ -295,6 +300,13 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
                 "element the beats, cast, or reserved material already carry "
                 "and how this rendering varies it (any consequence-free axis)"
             )
+        if not spec.trunk_premise.strip():
+            raise ApplyError(
+                f"texture world at site {spec.site} has an empty trunk_premise; "
+                "rendering 0 (the trunk segment) names its own backdrop too — "
+                "state in one line the world the trunk beats already carry, "
+                "sharpening it only where the weave left it vague"
+            )
         if len(spec.beats) != len(sites[spec.site]):
             raise ApplyError(
                 f"texture world at site {spec.site} has {len(spec.beats)} beat(s) "
@@ -346,13 +358,18 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             ) from e
         try:
             pc.insert_texture_world(g, arm, sites[spec.site])
+            # Rendering 0's premise: the trunk segment names its own backdrop
+            # too (renderings are peers, §2). A legal presentation addition on
+            # the frozen trunk beats (the freeze is topological — 01 §6).
+            for trunk_beat in sites[spec.site]:
+                mutations.set_beat_texture_premise(g, trunk_beat, spec.trunk_premise.strip())
         except (mutations.MutationError, KeyError) as e:
             # duplicate ids arrive pre-converted by add_beat; MutationError
             # messages from the splice carry their own correctives
             raise ApplyError(f"texture world at site {spec.site}: {e}") from e
         lines.append(
-            f"texture world '{spec.premise.strip()}' parallels "
-            f"{sites[spec.site][0]} .. {sites[spec.site][-1]} ({len(arm)} beats)"
+            f"texture world '{spec.premise.strip()}' (trunk '{spec.trunk_premise.strip()}') "
+            f"parallels {sites[spec.site][0]} .. {sites[spec.site][-1]} ({len(arm)} beats)"
         )
     for spec in proposal.false_branches:
         if spec.before not in long_run_beats or spec.after not in long_run_beats:
@@ -714,6 +731,10 @@ def _labels_context(a: int) -> Callable[[Project], dict]:
                     "grants": pc.choice_grants(g, groups[b]),
                     "is_ending": pc.ending_beat(g, groups[b]) is not None,
                     "siblings": _sibling_labels(g, passages) if is_rendering else [],
+                    # a cosmetic-fork rendering's head beat carries its premise
+                    # (the fresh arm's, or rendering 0's trunk_premise) — the
+                    # entry label may name the world this choice enters (§2)
+                    "premise": g.node(groups[b][0]).texture_premise,
                 }
             )
         return {

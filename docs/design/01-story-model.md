@@ -561,14 +561,21 @@ proposal (one beat per trunk beat, in order, behind a declared one-line
 arm beats (`texture_premise`, the `Passage.variant_flag`
 persist-for-a-later-pass precedent) so FILL's write prompt names the world
 the passage grounds — the different-context lever (W4) that makes parallel
-beats read as genuinely different scenes. **Today the premise lives on the
-fresh rendering's beats only**; the trunk stretch — rendering 0 — carries
-none, so FILL grounds only the arm's prose and its entry label cannot name
-the trunk-side backdrop. Likewise the mirrored cadence keeps the two worlds'
-*choice topology* structurally identical. Both are current asymmetries the
-epic removes: A24 makes the premise a per-rendering value (rendering 0
-included) and retires the mirrored-cadence twinning in favor of per-walk
-budget parity. Until those PRs land, this paragraph is current behavior.
+beats read as genuinely different scenes. **The premise is a per-rendering
+value** (renderings are peers, cosmetic-forks §2): rendering 0 — the trunk
+segment's own beats — carries its own `trunk_premise` too, so FILL grounds
+*both* worlds' prose and the fork's entry label can name *both* backdrops.
+Rendering 0's premise is grounded in what the trunk beats already carry,
+sharpening only where the weave left the backdrop vague (never contradicting a
+beat). **Freeze clarification:** the freeze (I9, iron rule 4) is *topological*
+— no beat deleted, no dilemma fork or convergence moved — so a presentation
+annotation POLISH adds to a frozen beat (a `texture_premise` on rendering 0's
+trunk beats, set only through the mutation layer) is a legal addition, not a
+content rewrite (`set_beat_texture_premise`, deliberately unlike the
+freeze-rejecting `set_beat_summary`/`set_beat_scene_type`). One asymmetry
+remains: the mirrored cadence still keeps the two worlds' *choice topology*
+structurally identical — A24 retires that twinning for per-walk budget parity
+when the finalize loop lands (PR-5); until then this clause is current behavior.
 
 **Two shapes that look like renderings but are not** (the fence). A
 **residue arm** (§5) is the same *shape* — a parallel chain rejoining the

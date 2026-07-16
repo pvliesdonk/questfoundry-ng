@@ -498,6 +498,23 @@ def set_beat_viewpoint(
     beat.interlude = interlude
 
 
+def set_beat_texture_premise(g: StoryGraph, beat_id: str, premise: str) -> None:
+    """POLISH's finalize write path: the consequence-free axis a cosmetic-fork
+    rendering varies, named on each of its beats so FILL grounds the prose and
+    the fork's entry label can name it (01 §6). Unlike ``scene_type`` and the
+    other beat annotations, this is a presentation *addition*, not intrinsic
+    content — a rendering-0 premise lands on the *frozen* trunk beats it
+    describes, and the freeze (I9) is topological (no beat deleted, no fork or
+    convergence moved), so an added annotation is legal. Engine-set only: the
+    finalize apply derives the premise, models never set it directly."""
+    beat = g.get(beat_id)
+    if not isinstance(beat, Beat):
+        raise MutationError(f"{beat_id!r} is not a beat")
+    if not premise.strip():
+        raise MutationError(f"texture_premise for {beat_id} is empty")
+    beat.texture_premise = premise
+
+
 def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:
     """GROW's realization: a nested hard fork de-ends the first-forking
     dilemma's tails (the story continues into the climax fork)."""

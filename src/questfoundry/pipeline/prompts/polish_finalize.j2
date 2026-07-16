@@ -72,20 +72,26 @@ the small facts of things and people along the way. The reader chooses a
 rendering where the stretch begins and both converge exactly where it
 ends: a different backdrop, never different consequences — nothing may
 happen in one rendering that changes what is true after the convergence.
-For EACH site: declare a one-line "premise" stating what differs, and
-anchor it in a story element the beats, cast, or RESERVED MATERIAL above
-already carry or clearly imply — the premise names that element and how
-this rendering varies it. Then write exactly ONE beat per trunk beat, IN
-ORDER: the same event the trunk beat carries, re-expressed with that
-difference present. Summaries in plain declarative present tense (a brief
-for the writer, never the prose).
+For EACH site, BOTH renderings name their backdrop — they are peers, not an
+original and a variant. The FRESH rendering: a one-line "premise" stating its
+backdrop, anchored in a story element the beats, cast, or RESERVED MATERIAL
+above already carry or clearly imply. The TRUNK rendering (rendering 0, the
+existing beats): a one-line "trunk_premise" naming the backdrop those beats
+ALREADY carry — extract it from them; only where the weave left the backdrop
+vague may you sharpen it, never contradicting what a beat states. The two must
+vary the SAME consequence-free axis (both a road, both a companion, both a
+detail of the place), so the reader chooses between two named worlds. Then
+write exactly ONE beat per trunk beat, IN ORDER: the same event the trunk beat
+carries, re-expressed with the fresh rendering's difference present. Summaries
+in plain declarative present tense (a brief for the writer, never the prose).
 {% for site in texture_sites %}
 - site {{ site.index }} ({{ site.beats | length }} beats to mirror):
 {% for b in site.beats %}
     {{ b.id }} — "{{ b.summary }}"
 {% endfor %}
 {% endfor %}
-Each entry: {"site": the site index above, "premise": one line, "beats":
+Each entry: {"site": the site index above, "premise": the fresh rendering's
+backdrop (one line), "trunk_premise": rendering 0's backdrop (one line), "beats":
 [{"id": "beat:slug", "summary", "entities": [...]}] — exactly one per trunk
 beat, in order}. Every "id" names a NEW beat: coin fresh, unique
 "beat:slug"s no existing beat uses (a colliding id is rejected); a

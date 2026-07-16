@@ -326,8 +326,12 @@ def test_finalize_texture_premise_is_anchored_and_uncontaminated():
     location only)."""
     source = (PROMPTS_DIR / "polish_finalize.j2").read_text(encoding="utf-8")
     flat = " ".join(source.split())
-    assert "the premise names that element" in flat
+    assert "anchored in a story element" in flat  # positive, structural constraint
     assert "never different consequences" in flat
+    # premise per rendering (PR-2 §2): rendering 0 names its backdrop too,
+    # extracted from the trunk beats and only sharpened where the weave is vague
+    assert "trunk_premise" in flat
+    assert "extract it from them" in flat and "sharpen" in flat
     assert "beat:tw0-1" in flat  # mechanical, not a place name
     assert "forest" not in flat and "mountain" not in flat
 

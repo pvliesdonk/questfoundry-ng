@@ -357,6 +357,7 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="the crossing goes over the mountain pass",
+                trunk_premise="the crossing goes along the coast road",
                 beats=[
                     TextureBeatSpec(id=f"beat:mountain-{i}", summary=f"m{i}")
                     for i in range(len(site))
@@ -383,6 +384,34 @@ def test_finalize_splices_texture_world_with_premise(vision, tmp_path):
     assert arm0.purpose == StructuralPurpose.TEXTURE_WORLD
     assert arm0.mirrors == site[0]
     assert arm0.texture_premise == "the crossing goes over the mountain pass"
+    # rendering 0 (PR-2 §2): the trunk segment's own (frozen) beats carry the
+    # trunk premise — renderings are peers, both worlds named
+    assert all(
+        g.node(tb).texture_premise == "the crossing goes along the coast road" for tb in site
+    )
+    # both premises reach their readers on the exact expressions those readers
+    # use: FILL's per-passage gathering (fill.py `{b.texture_premise for b in
+    # beats}`) yields each rendering's world, and the entry-label context reads
+    # the destination group's head-beat premise (_labels_context).
+    def fill_premise(beats):
+        return sorted({g.node(b).texture_premise for b in beats if g.node(b).texture_premise})
+
+    arm_ids = [f"beat:mountain-{i}" for i in range(len(site))]
+    assert fill_premise(site) == ["the crossing goes along the coast road"]  # FILL: trunk world
+    assert fill_premise(arm_ids) == ["the crossing goes over the mountain pass"]  # FILL: arm world
+    # entry labels: _labels_context itself surfaces each destination's head-beat
+    # premise (the "premise" key polish_labels.j2 consumes), naming both worlds
+    from questfoundry.pipeline.stages.polish import _groups, _labels_context
+
+    groups = _groups(project)
+    entry_premises = {
+        d["premise"]
+        for a in sorted({x for x, _ in pc.group_edges(groups, g)})
+        for d in _labels_context(a)(project)["dests"]
+        if d["premise"]
+    }
+    assert "the crossing goes along the coast road" in entry_premises  # rendering 0 (trunk)
+    assert "the crossing goes over the mountain pass" in entry_premises  # the fresh arm
     # cadence diamonds inside the mirrored stretch got mirrored twins
     # carrying the arm's premise (both worlds keep the same topology)
     twins = [b for b in g.nodes_of(Beat) if b.mirrors and b.mirrors.startswith("beat:fb-")]
@@ -409,6 +438,7 @@ def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="p",
+                trunk_premise="q",
                 beats=[TextureBeatSpec(id="beat:m0", summary="m")],
             )
         ]
@@ -420,6 +450,7 @@ def test_finalize_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path):
             TextureWorldSpec(
                 site=0,
                 premise="  ",
+                trunk_premise="the trunk backdrop",
                 beats=[
                     TextureBeatSpec(id=f"beat:m{i}", summary="m")
                     for i in range(len(site))
@@ -440,3 +471,94 @@ def test_sim_with_texture_keeps_b6_in_band():
     y = measure(compiled, preset, diamonds=diamonds)
     lo, hi = 250, 800
     assert lo <= y.b6[0] and y.b6[1] <= hi
+
+
+def test_cosmetic_fork_primitive_reproduces_the_three_shapes():
+    """The one splice (01 §6) behind the three shipped adapters: an edge-scale
+    diamond (two fresh, no walk-on) removes the direct edge; an edge-scale
+    sidetrack (walk-on + fresh) keeps it; a segment-scale texture (segment +
+    fresh) keeps the trunk and mirrors it beat-for-beat."""
+    from questfoundry.graph import queries
+    from questfoundry.pipeline.passages import (
+        EMPTY_RENDERING,
+        SEGMENT_RENDERING,
+        insert_cosmetic_fork,
+    )
+
+    g = StoryGraph()
+    chain(g, ["t0", "t1", "t2", "t3", "t4", "t5"])
+    # diamond on t0 -> t1: two fresh arms, direct edge gone
+    insert_cosmetic_fork(
+        g, [[setup_beat("da")], [setup_beat("db")]], before="beat:t0", after="beat:t1"
+    )
+    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:t0", "beat:t1")
+    assert set(queries.successors(g, "beat:t0")) == {"beat:da", "beat:db"}
+    assert set(queries.predecessors(g, "beat:t1")) == {"beat:da", "beat:db"}
+    # sidetrack on t1 -> t2: the walk-on edge stays, one fresh detour added
+    insert_cosmetic_fork(
+        g, [EMPTY_RENDERING, [setup_beat("sd")]], before="beat:t1", after="beat:t2"
+    )
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t1", "beat:t2")
+    assert "beat:sd" in queries.successors(g, "beat:t1")
+    # texture over [t3, t4]: the trunk stays, one fresh arm mirrors it
+    insert_cosmetic_fork(
+        g, [SEGMENT_RENDERING, [arm_beat("wa"), arm_beat("wb")]], segment=["beat:t3", "beat:t4"]
+    )
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:t3", "beat:t4")  # trunk untouched
+    assert (g.node("beat:wa").mirrors, g.node("beat:wb").mirrors) == ("beat:t3", "beat:t4")
+    assert "beat:wa" in queries.successors(g, "beat:t2")  # arm forks from the boundary
+    assert "beat:t5" in queries.successors(g, "beat:wb")  # and rejoins it
+
+
+def test_cosmetic_fork_rejects_degenerate_rendering_sets():
+    from questfoundry.pipeline.passages import (
+        EMPTY_RENDERING,
+        SEGMENT_RENDERING,
+        insert_cosmetic_fork,
+    )
+
+    g = StoryGraph()
+    chain(g, ["a", "b", "c", "d"])
+    fresh = [setup_beat("x")]
+    with pytest.raises(mutations.MutationError, match="at least two renderings"):
+        insert_cosmetic_fork(g, [fresh], before="beat:a", after="beat:b")
+    with pytest.raises(mutations.MutationError, match="at least one fresh"):
+        insert_cosmetic_fork(g, [EMPTY_RENDERING, EMPTY_RENDERING], before="beat:a", after="beat:b")
+    # scale/marker contract (hardened for PR-5's looser callers): at most one of
+    # each marker, and the two scales are exclusive
+    with pytest.raises(mutations.MutationError, match="at most one"):
+        insert_cosmetic_fork(
+            g, [EMPTY_RENDERING, EMPTY_RENDERING, fresh], before="beat:a", after="beat:b"
+        )
+    with pytest.raises(mutations.MutationError, match="SEGMENT_RENDERING needs a non-empty"):
+        insert_cosmetic_fork(g, [SEGMENT_RENDERING, fresh], before="beat:a", after="beat:b")
+    with pytest.raises(mutations.MutationError, match="EMPTY_RENDERING is edge-scale only"):
+        insert_cosmetic_fork(
+            g, [SEGMENT_RENDERING, EMPTY_RENDERING, [arm_beat("y")]], segment=["beat:b"]
+        )
+    with pytest.raises(mutations.MutationError, match="exactly one SEGMENT_RENDERING"):
+        insert_cosmetic_fork(g, [[arm_beat("y")], [arm_beat("z")]], segment=["beat:b"])
+
+
+def test_texture_premise_legal_on_any_beat_engine_set_on_frozen_trunk():
+    """PR-2 §2: premise per rendering. The model guard no longer couples
+    texture_premise to texture_world purpose (rendering 0's beats are GROW
+    beats), and the freeze permits it as a presentation addition on a frozen
+    trunk beat (a topological freeze — no beat moves)."""
+    from questfoundry.graph.store import FreezeRecord
+
+    # the model accepts a premise on a plain (non-texture) beat
+    b = setup_beat("trunk", texture_premise="the road runs along the coast")
+    assert b.purpose is not StructuralPurpose.TEXTURE_WORLD
+    assert b.texture_premise == "the road runs along the coast"
+
+    # and the mutation sets it on a FROZEN beat (scene_type/summary would reject)
+    g = StoryGraph()
+    mutations.add_beat(g, setup_beat("t0"), [])
+    g.frozen = FreezeRecord(beats=["beat:t0"], forks={}, convergences={})
+    with pytest.raises(mutations.MutationError, match="frozen"):
+        mutations.set_beat_summary(g, "beat:t0", "reworded")  # content: rejected
+    mutations.set_beat_texture_premise(g, "beat:t0", "the coast road")  # addition: allowed
+    assert g.node("beat:t0").texture_premise == "the coast road"
+    with pytest.raises(mutations.MutationError, match="empty"):
+        mutations.set_beat_texture_premise(g, "beat:t0", "   ")

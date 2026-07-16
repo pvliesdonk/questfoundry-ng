@@ -428,7 +428,7 @@ def _finalize_apply(proposal: FinalizeProposal, project: Project) -> list[str]:
             lines.append(f"sidetrack {chains[0][0].id} off {spec.before} -> {spec.after}")
         else:
             lines.append(
-                f"diamond {chains[0][0].id} / {chains[1][0].id} "
+                f"diamond {' / '.join(c[0].id for c in chains)} "
                 f"between {spec.before} -> {spec.after}"
             )
 

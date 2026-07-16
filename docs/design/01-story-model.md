@@ -493,7 +493,7 @@ segment's own beats*, or a *fresh* invented chain:
 | Shape | Segment | Renderings |
 |---|---|---|
 | Sidetrack | empty (an edge) | empty ("walk on") + one fresh chain |
-| Diamond | empty (an edge) | two fresh chains |
+| Diamond | empty (an edge) | two or three fresh chains |
 | Texture world | a cap-aligned run | the segment's own beats + one fresh chain |
 
 The engine splices these through three entry points today
@@ -505,8 +505,8 @@ and admits a fourth parameterization — a *small two-worlds* over a
 
 **The content regime follows segment length, not shape.** An empty segment
 has no events, so each fresh rendering invents a breath of texture — a
-diamond's two flavors of the same forward motion, a sidetrack's optional
-detour. A non-empty segment carries real events, so every rendering
+diamond's two or three flavors of the same forward motion, a sidetrack's
+optional detour. A non-empty segment carries real events, so every rendering
 re-expresses *the same events* against another backdrop, beat for beat and
 in order (the texture-world mirror rule, invariant I15 in §8).
 

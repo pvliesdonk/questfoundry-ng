@@ -22,7 +22,6 @@ from questfoundry.pipeline.stages.grow import (
     annotate_proposal_schema,
     scheme_proposal_schema,
 )
-from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
 from tests.conftest import make_dilemma, narrative_beat
 from tests.test_invariants import errors_for
@@ -215,43 +214,53 @@ def test_scheme_context_renders_hint_and_cast(project):
     assert "character:eleanor" in ids and "location:manor" not in ids
 
 
-# -- the roster pins the (per-beat, PR-A interim) annotate schema --------------
+# -- the roster pins the annotate heads enum (PR-B: sequence-unit) ------------
 
 
-def test_annotate_viewpoint_enum_shrinks_to_roster_plus_carrier(project):
+def test_annotate_head_enum_shrinks_to_the_roster(project):
     g = project.graph
     mutations.set_pov_head(g, "character:eleanor", True)
     mutations.set_interlude_carrier(g, "character:milo", True)
     schema = annotate_proposal_schema(project)
-    ann = {
-        "beat": "beat:b1",
-        "scene_type": "sequel",
-        "narration_scope": "limited",
-        "interlude": False,
-    }
-    ok = schema.model_validate({"annotations": [{**ann, "viewpoint": "character:eleanor"}]})
-    assert ok.annotations[0].viewpoint == "character:eleanor"
-    # the carrier is representable (interlude beats need it)...
-    schema.model_validate({"annotations": [{**ann, "viewpoint": "character:milo"}]})
-    # ...an off-roster head is not
+    ok = schema.model_validate(
+        {
+            "annotations": [],
+            "heads": [{"sequence": "beat:b1", "head": "character:eleanor", "splits": []}],
+        }
+    )
+    assert ok.heads[0].head == "character:eleanor"
+    # the carrier is NOT a legal base-register segment head (I17)...
     with pytest.raises(ValidationError):
-        schema.model_validate({"annotations": [{**ann, "viewpoint": "character:charles"}]})
+        schema.model_validate(
+            {
+                "annotations": [],
+                "heads": [{"sequence": "beat:b1", "head": "character:milo", "splits": []}],
+            }
+        )
+    # ...and neither is any off-roster character
+    with pytest.raises(ValidationError):
+        schema.model_validate(
+            {
+                "annotations": [],
+                "heads": [{"sequence": "beat:b1", "head": "character:charles", "splits": []}],
+            }
+        )
 
 
-def test_annotate_viewpoint_enum_without_roster_is_all_retained(project):
+def test_annotate_head_enum_without_roster_is_all_retained(project):
     schema = annotate_proposal_schema(project)
-    ann = {
-        "beat": "beat:b1",
-        "scene_type": "sequel",
-        "narration_scope": "limited",
-        "interlude": False,
-    }
-    ok = schema.model_validate({"annotations": [{**ann, "viewpoint": "character:charles"}]})
-    assert ok.annotations[0].viewpoint == "character:charles"
+    ok = schema.model_validate(
+        {
+            "annotations": [],
+            "heads": [{"sequence": "beat:b1", "head": "character:charles", "splits": []}],
+        }
+    )
+    assert ok.heads[0].head == "character:charles"
 
 
-def test_annotate_apply_holds_interlude_beats_to_the_carrier(project):
-    # failure mode 15: an interlude beat's head is the carrier, mechanically
+def test_annotate_apply_gives_interlude_beats_the_carrier(project):
+    # failure mode 15/16's pipeline half: the interlude head is never
+    # named per beat — the engine expands it to the declared carrier
     from questfoundry.pipeline.stages.grow import _annotate_apply
 
     g = project.graph
@@ -265,11 +274,12 @@ def test_annotate_apply_holds_interlude_beats_to_the_carrier(project):
                     "beat": "beat:b1",
                     "scene_type": "sequel",
                     "narration_scope": "limited",
-                    "viewpoint": "character:eleanor",
                     "interlude": True,
                 }
-            ]
+            ],
+            "heads": [{"sequence": "beat:b1", "head": "character:eleanor", "splits": []}],
         }
     )
-    with pytest.raises(ApplyError, match="carrier"):
-        _annotate_apply(proposal, project)
+    _annotate_apply(proposal, project)
+    beat = g.node("beat:b1")
+    assert beat.viewpoint == "character:milo" and beat.interlude is True

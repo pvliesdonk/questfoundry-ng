@@ -342,11 +342,22 @@ the beat*, not topology (§10.3 governs which the model keeps):
   first-person journal entries, letters); an interlude beat needs a viewpoint,
   is never `wide`, never shares a passage with base-register beats, and FILL
   writes/reviews its passage against the interlude register instead of the
-  book-default pov/tense. ~~Rotation cadence is deliberately *not* engine-
-  constrained~~ — that v1 decision's reserved escalation has fired (the live
-  medium showed per-beat head-hopping; author-directed 2026-07-17,
-  `docs/plans/pov-sequences.md`): the head roster is now declared and
-  structural, and PR-B moves assignment to the sequence unit.
+  book-default pov/tense. **The unit of viewpoint assignment is the
+  *sequence*** — the maximal choice-free linear run of beats (computed,
+  never stored, like arcs; `grow_sequences`). v1 assigned heads per beat
+  with cadence as trusted prose guidance; the live medium showed the
+  predicted whiplash (58% of linear annotated pairs hopped heads and I14
+  shattered the passage layer — 76 of 172 passages were pure POV splits),
+  so the reserved escalation fired (author-directed 2026-07-17,
+  `docs/plans/pov-sequences.md`): annotate assigns ONE head per sequence,
+  may split a sequence only with a stated dramatic-center justification,
+  and may mark a segment `""` as a justified **wide cutaway** (its beats
+  must be wide); the engine expands sequence heads to the per-beat
+  `viewpoint` field, which remains the stored form everything downstream
+  reads. Interlude beats take the declared carrier as head, engine-side.
+  B11 (advisory) keeps sequence health visible: mid-sequence switches
+  (justified or not — each is a no-choice page-turn), non-coda wides, a
+  declared register with zero interludes, and per-head share.
 
 - **`pov_head` + `interlude_carrier` (entity marks, characters only)** — the
   **declared POV scheme**, resolved from the prose `Vision.pov_hint` by

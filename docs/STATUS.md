@@ -53,12 +53,16 @@ Details now live in the roadmap Shipped section and the plan docs; PR-6
    author read (does it feel interactive?), then DRESS on the same
    project — which is the prose epic's DRESS-at-scale exit and unblocks
    PR-6 (print acknowledgments, BACKLOG).
-2. **POV sequences: PR-A (the roster) is built** — scheme pass resolving
-   `pov_hint` into `pov_head`/`interlude_carrier` marks, I17, the
-   roster-pinned annotate enum + interlude-carrier apply rule, voice
-   reading the roster; offline-green (contract:
-   [`plans/pov-sequences.md`](plans/pov-sequences.md)). **Next: PR-B** —
-   the sequence-unit annotate restructure + B11.
+2. **POV sequences: PR-A merged (#106), PR-B built** — the sequence-unit
+   annotate restructure: `grow_sequences`, one head per sequence with
+   justified splits and wide cutaways, engine expansion to per-beat
+   viewpoints, B11 sequence health, the annotate prompt rewritten
+   (mini-ADR A25; contract:
+   [`plans/pov-sequences.md`](plans/pov-sequences.md)). **Next: the live
+   A/B** — rerun grow on a COPY of cc-struct-medium with every pass but
+   scheme/annotate kept (unbilled), then POLISH; acceptance: B11 quiet or
+   justified, passages toward the −28% counterfactual, the register
+   finally firing.
 3. **Then:** PR-6 once DRESS runs on a keyword-consuming project, and the
    recalibration items (BACKLOG) as calibration data accumulates.
 

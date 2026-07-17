@@ -1,9 +1,11 @@
 # POV sequences — run-unit viewpoint annotation (Build Contract)
 
-> Status: **PR-A BUILT** (the roster: scheme pass, `pov_head` /
-> `interlude_carrier`, I17, roster-pinned annotate enum + carrier apply
-> rule, voice reads the roster; offline-green). PR-B (sequence-unit
-> annotate + B11) is next. Design ratified 2026-07-17. The decisions below are
+> Status: **BUILT** — PR-A (the roster: scheme pass, `pov_head` /
+> `interlude_carrier`, I17, pinned enums, voice reads the roster; merged
+> #106) and PR-B (sequence-unit annotate: `grow_sequences`, one head per
+> sequence, justified splits, wide cutaways, engine expansion, B11;
+> mini-ADR A25) are offline-green. Open: the live A/B below. Design
+> ratified 2026-07-17. The decisions below are
 > **author-confirmed 2026-07-17**, in-session, from the author's own read of
 > the run-6 passage graph (the sketches "keep the PoV unless impossible" /
 > "cover this stretch with minimal PoV change" are the author's; the

@@ -520,23 +520,55 @@ def _scheme_roster(g) -> tuple[list[str], str | None]:
     return roster, carrier
 
 
+def grow_sequences(g) -> list[list[str]]:
+    """The engine's sequence computation (pov-sequences.md): the maximal
+    choice-free linear runs of the current beat graph, in topological
+    order of their heads — the unit of viewpoint assignment. Computed,
+    never stored (iron rule 2's spirit); the annotate schema, apply, and
+    the B11 gate all call this, so they can never disagree."""
+    from questfoundry.pipeline.passages import collapse_groups
+
+    return collapse_groups(g, max_beats=None, split_viewpoints=False)
+
+
 class BeatScene(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     beat: str
     scene_type: SceneType
     narration_scope: NarrationScope
-    # pinned to the declared head roster plus the interlude carrier plus ""
-    # (= no head: wide codas carry no viewpoint by construction) — or, on a
-    # pre-roster graph, the retained character ids (rotating-pov-build.md)
-    viewpoint: str
+    # the beat belongs to the scheme's deviant register (its head is the
+    # declared carrier — engine-expanded, never named per beat)
     interlude: bool
+
+
+class SequenceSplit(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # the beat AFTER which the head changes (inside the sequence, never
+    # its last beat) and the new head for the rest of the sequence
+    after: str
+    head: str
+    # the dramatic-center shift that earns the page-turn — required
+    why: str = Field(min_length=1)
+
+
+class SequenceHead(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # a sequence is named by its first beat (pinned to the engine's list)
+    sequence: str
+    # pinned to the head roster plus "" (= a justified wide cutaway); the
+    # carrier is NOT a legal base-register head (I17)
+    head: str
+    splits: list[SequenceSplit] = []
 
 
 class AnnotateProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     annotations: list[BeatScene]
+    heads: list[SequenceHead]
 
 
 def _annotate_beats(project: Project) -> list[dict]:
@@ -554,29 +586,49 @@ def _annotate_beats(project: Project) -> list[dict]:
 def _annotate_context(project: Project) -> dict:
     g = project.graph
     characters = [g.node(cid) for cid in retained_character_ids(g)]
-    return {"vision": project.vision, "beats": _annotate_beats(project), "characters": characters}
+    roster, carrier = _scheme_roster(g)
+    rows = {r["beat"].id: r for r in _annotate_beats(project)}
+    sequences = []
+    for seq in grow_sequences(g):
+        # roster heads on the page in this sequence, with presence counts —
+        # advisory (a head may witness without being listed); an empty list
+        # is the split-or-wide signal, stated in the prompt
+        present: dict[str, int] = {}
+        for bid in seq:
+            beat = g.node(bid)
+            assert isinstance(beat, Beat)
+            for eid in beat.entities:
+                if eid in roster:
+                    present[eid] = present.get(eid, 0) + 1
+        sequences.append(
+            {
+                "head_beat": seq[0],
+                "beats": [rows[bid] for bid in seq],
+                "candidates": [
+                    (eid, n, len(seq)) for eid, n in sorted(present.items(), key=lambda x: -x[1])
+                ],
+            }
+        )
+    return {
+        "vision": project.vision,
+        "sequences": sequences,
+        "characters": characters,
+        "roster": [g.node(r) for r in roster],
+        "carrier": g.node(carrier) if carrier else None,
+    }
 
 
 def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
     g = project.graph
     expected = set(queries.topological_order(g) or [])
-    characters = set(retained_character_ids(g))
     roster, carrier = _scheme_roster(g)
+    sequences = grow_sequences(g)
+    seq_by_head = {seq[0]: seq for seq in sequences}
+
+    # -- beat coverage (validate everything before mutating anything) --------
     seen: set[str] = set()
+    specs: dict[str, BeatScene] = {}
     for spec in proposal.annotations:
-        # the declared register's voice is scheme-level, not per beat: an
-        # interlude beat is narrated by the carrier (I17; pov-sequences.md)
-        if spec.interlude and roster:
-            if carrier is None:
-                raise ApplyError(
-                    f"{spec.beat} is marked interlude but the scheme declares no "
-                    "deviant register — drop the interlude mark"
-                )
-            if spec.viewpoint != carrier:
-                raise ApplyError(
-                    f"{spec.beat}: an interlude is narrated in the declared "
-                    f"register's voice — set viewpoint to the carrier {carrier}"
-                )
         if spec.beat not in expected:
             raise ApplyError(
                 f"{spec.beat} is not a beat to annotate; annotate exactly these "
@@ -585,24 +637,92 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
         if spec.beat in seen:
             raise ApplyError(f"{spec.beat} annotated twice — keep one entry per beat")
         seen.add(spec.beat)
+        specs[spec.beat] = spec
         if spec.narration_scope == NarrationScope.WIDE and spec.interlude:
             raise ApplyError(
                 f"{spec.beat} is marked both wide and interlude — an interlude is "
-                "narrated inside one head; make it limited with a viewpoint, or "
-                "drop the interlude mark"
+                "narrated inside one head; make it limited, or drop the interlude mark"
             )
-        if spec.narration_scope == NarrationScope.LIMITED and not spec.viewpoint:
+        if spec.interlude and carrier is None:
             raise ApplyError(
-                f"{spec.beat} is limited but names no viewpoint; set viewpoint to "
-                "the character whose head narrates it — one of "
-                f"{sorted(characters)}"
+                f"{spec.beat} is marked interlude but the scheme declares no "
+                "deviant register — drop the interlude mark"
             )
     missing = expected - seen
     if missing:
         raise ApplyError(
-            "every beat needs a scene_type, narration_scope, and viewpoint — the "
-            f"writer paces and frames the whole story from them; missing {sorted(missing)}"
+            "every beat needs a scene_type and narration_scope — the writer "
+            f"paces and frames the whole story from them; missing {sorted(missing)}"
         )
+
+    # -- sequence coverage and split validation ------------------------------
+    covered: set[str] = set()
+    for entry in proposal.heads:
+        if entry.sequence in covered:
+            raise ApplyError(
+                f"sequence {entry.sequence} is assigned twice — assign each "
+                "sequence exactly once"
+            )
+        covered.add(entry.sequence)
+        seq = seq_by_head[entry.sequence]
+        last_idx = -1
+        for split in entry.splits:
+            if split.after not in seq:
+                raise ApplyError(
+                    f"split point {split.after} is not inside the sequence at "
+                    f"{entry.sequence}; valid split points are "
+                    f"{seq[:-1]} (never the last beat)"
+                )
+            idx = seq.index(split.after)
+            if idx == len(seq) - 1:
+                raise ApplyError(
+                    f"split after {split.after} is the sequence's last beat — "
+                    "a split needs a non-empty tail; use an earlier beat"
+                )
+            if idx <= last_idx:
+                raise ApplyError(
+                    f"split points at {entry.sequence} repeat or run out of "
+                    "order — list each once, in story order"
+                )
+            last_idx = idx
+    missing_seqs = set(seq_by_head) - covered
+    if missing_seqs:
+        raise ApplyError(
+            "every sequence needs a head (one entry per sequence, keyed by its "
+            f"first beat); missing {sorted(missing_seqs)}"
+        )
+
+    # -- expansion: sequence heads -> per-beat viewpoints --------------------
+    beat_head: dict[str, str | None] = {}
+    cutaways = 0
+    for entry in proposal.heads:
+        seq = seq_by_head[entry.sequence]
+        bounds = {seq.index(s.after): s.head for s in entry.splits}
+        head: str | None = entry.head or None
+        for i, bid in enumerate(seq):
+            spec = specs[bid]
+            if spec.interlude:
+                # the register's voice is scheme-level (I17); pre-roster
+                # graphs have no carrier and no interludes reach here
+                beat_head[bid] = carrier
+            elif spec.narration_scope == NarrationScope.WIDE:
+                beat_head[bid] = None  # a coda has no head, ever
+            elif head is None:
+                raise ApplyError(
+                    f'{bid} is limited inside a ""-headed segment — a headless '
+                    "segment is a wide CUTAWAY: mark its beats wide, or give "
+                    "the segment a head from the roster"
+                )
+            else:
+                beat_head[bid] = head
+            if i in bounds:
+                head = bounds[i] or None
+                if head is None:
+                    cutaways += 1
+        if entry.head == "":
+            cutaways += 1
+
+    # -- write ---------------------------------------------------------------
     counts = {SceneType.SCENE: 0, SceneType.SEQUEL: 0, SceneType.MICRO_BEAT: 0}
     scopes = {NarrationScope.LIMITED: 0, NarrationScope.WIDE: 0}
     heads: dict[str, int] = {}
@@ -610,10 +730,7 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
     for spec in proposal.annotations:
         mutations.set_beat_scene_type(g, spec.beat, spec.scene_type)
         mutations.set_beat_narration_scope(g, spec.beat, spec.narration_scope)
-        # a wide coda has no head, whatever the proposal carried
-        viewpoint = spec.viewpoint or None
-        if spec.narration_scope == NarrationScope.WIDE:
-            viewpoint = None
+        viewpoint = beat_head.get(spec.beat)
         mutations.set_beat_viewpoint(g, spec.beat, viewpoint, interlude=spec.interlude)
         counts[spec.scene_type] += 1
         scopes[spec.narration_scope] += 1
@@ -621,13 +738,22 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
             heads[viewpoint.split(":", 1)[1]] = heads.get(viewpoint.split(":", 1)[1], 0) + 1
         interludes += spec.interlude
     head_note = ", ".join(f"{h} {n}" for h, n in sorted(heads.items(), key=lambda x: -x[1]))
-    return [
-        f"annotated {len(seen)} beats: {counts[SceneType.SCENE]} scene, "
+    lines = [
+        f"annotated {len(seen)} beats over {len(sequences)} sequences: "
+        f"{counts[SceneType.SCENE]} scene, "
         f"{counts[SceneType.SEQUEL]} sequel, {counts[SceneType.MICRO_BEAT]} micro_beat; "
         f"{scopes[NarrationScope.LIMITED]} limited, {scopes[NarrationScope.WIDE]} wide; "
         f"heads: {head_note or 'none'}"
         + (f"; {interludes} interlude{'s' if interludes != 1 else ''}" if interludes else "")
+        + (f"; {cutaways} wide cutaway{'s' if cutaways != 1 else ''}" if cutaways else "")
     ]
+    for entry in proposal.heads:
+        for split in entry.splits:
+            lines.append(
+                f"split at {entry.sequence} after {split.after} -> "
+                f"{split.head or 'wide cutaway'}: {split.why}"
+            )
+    return lines
 
 
 # -- pass 5: bridge -----------------------------------------------------------
@@ -787,26 +913,28 @@ def contextualize_proposal_schema(project: Project) -> type[ContextualizeProposa
 def annotate_proposal_schema(project: Project) -> type[AnnotateProposal]:
     """Pin `annotations[].beat` to every beat present pre-freeze (the
     annotatable set — SEED scaffold + GROW clones; bridge/residue/
-    false-branch are added later and ride the purpose fallback) and
-    `viewpoint` to the declared head roster plus the interlude carrier
-    plus "" (no head — wide codas), so an off-scheme head is
-    unrepresentable (I17's schema half). A pre-roster graph falls back to
-    the retained character ids — today's behavior, the legal degenerate
-    case. Resolved after scheme/weave/contextualize rewire the graph
-    (PassSpec.schema_for)."""
-    beats = queries.topological_order(project.graph) or []
-    roster, carrier = _scheme_roster(project.graph)
-    heads = (
-        sorted({*roster, *([carrier] if carrier else [])})
-        if roster
-        else retained_character_ids(project.graph)
-    )
+    false-branch are added later and ride the purpose fallback),
+    `heads[].sequence` to the engine's sequence heads, and every head
+    field to the roster plus "" (an off-scheme segment head is
+    unrepresentable — I17's schema half; the carrier is deliberately NOT
+    in the segment-head enum, interlude beats reach it per beat). A
+    pre-roster graph falls back to the retained character ids — the
+    legal degenerate case. Resolved after scheme/weave/contextualize
+    rewire the graph (PassSpec.schema_for)."""
+    g = project.graph
+    beats = queries.topological_order(g) or []
+    roster, _carrier = _scheme_roster(g)
+    heads = list(roster) if roster else retained_character_ids(g)
+    seq_heads = [seq[0] for seq in grow_sequences(g)]
     return pin(
         AnnotateProposal,
         "AnnotateProposal",
         {
             ("BeatScene", "beat"): beats,
-            ("BeatScene", "viewpoint"): heads + [""],
+            ("SequenceHead", "sequence"): seq_heads,
+            ("SequenceHead", "head"): heads + [""],
+            ("SequenceSplit", "after"): beats,
+            ("SequenceSplit", "head"): heads + [""],
         },
     )
 

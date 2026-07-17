@@ -26,6 +26,7 @@ from questfoundry.models.structure import (
     BeatClass,
     FlagSource,
     IntersectionGroup,
+    NarrationScope,
     StateFlag,
     StructuralPurpose,
     effective_narration_scope,
@@ -539,6 +540,98 @@ def check_i17_scheme_conformance(ctx: Context) -> None:
                 f"beat {beat.id}: viewpoint {beat.viewpoint!r} is outside the "
                 f"declared head roster ({', '.join(sorted(roster))})",
             )
+
+
+def check_b11_sequence_health(ctx: Context) -> None:
+    """B11 (advisory; pov-sequences.md): sequence health under a declared
+    scheme. Reports (a) mid-sequence head switches — every switch inside a
+    choice-free run mints a no-choice page-turn, justified or not, so the
+    count stays visible (measured with the planner's own sequence
+    computation, the B10 precedent); (b) non-coda ``wide`` beats (a wide
+    cutaway is a real device, but it licenses leaving the viewpoint —
+    counted so overuse shows); (c) a declared interlude register with zero
+    marked beats (the live gap, both tiers, 2026-07-14/15); (d) per-head
+    share of headed beats when the roster rotates (a one-passage head is
+    visible taste, not a violation). Skips entirely without a roster —
+    pre-scheme projects have nothing declared to be healthy against."""
+    from questfoundry.pipeline.stages.grow import grow_sequences
+
+    roster = {
+        e.id
+        for e in ctx.g.nodes_of(Entity)
+        if e.category == EntityCategory.CHARACTER and e.pov_head
+    }
+    if not roster:
+        return
+    if not ctx.g.nodes_of(Beat) or queries.topological_order(ctx.g) is None:
+        return
+    carrier = next(
+        (
+            e.id
+            for e in ctx.g.nodes_of(Entity)
+            if e.category == EntityCategory.CHARACTER and e.interlude_carrier
+        ),
+        None,
+    )
+    beats = {b.id: b for b in ctx.g.nodes_of(Beat)}
+
+    switches: list[tuple[str, str]] = []
+    for seq in grow_sequences(ctx.g):
+        settled: tuple[str, bool] | None = None
+        settled_at = ""
+        for bid in seq:
+            beat = beats[bid]
+            if beat.viewpoint is None:
+                continue
+            head = (beat.viewpoint, beat.interlude)
+            if settled is not None and head != settled:
+                switches.append((settled_at, bid))
+            settled, settled_at = head, bid
+    for prev, nxt in switches:
+        ctx.warn(
+            "B11",
+            f"head switch inside a choice-free sequence ({prev} -> {nxt}) — "
+            "each one mints a no-choice page-turn; keep only the switches a "
+            "dramatic-center shift earns",
+        )
+
+    for beat in sorted(beats.values(), key=lambda b: b.id):
+        if (
+            effective_narration_scope(beat) == NarrationScope.WIDE
+            and queries.successors(ctx.g, beat.id)
+            and beat.purpose != StructuralPurpose.EPILOGUE
+        ):
+            ctx.warn(
+                "B11",
+                f"beat {beat.id} is wide mid-story (a cutaway, not a coda) — "
+                "a real device, counted so overuse shows",
+            )
+
+    interludes = sum(1 for b in beats.values() if b.interlude)
+    if carrier is not None and interludes == 0:
+        ctx.warn(
+            "B11",
+            f"the scheme declares an interlude register (carrier {carrier}) but "
+            "zero beats are marked interlude — the register never fires",
+        )
+
+    if len(roster) > 1:
+        # the rotation only: interlude beats expand to the carrier (who may
+        # be off-roster) and would dilute the roster shares — the register
+        # has its own line above
+        headed = [
+            b.viewpoint for b in beats.values() if b.viewpoint is not None and not b.interlude
+        ]
+        if headed:
+            # counts first, percent as color: a 1-beat head must read as
+            # "1", never round to "0%" — the one-passage head is the very
+            # case this line exists to surface (author, 2026-07-17)
+            share = ", ".join(
+                f"{h.split(':', 1)[1]} {headed.count(h)} "
+                f"({round(100 * headed.count(h) / len(headed))}%)"
+                for h in sorted(set(headed), key=lambda h: -headed.count(h))
+            )
+            ctx.warn("B11", f"head share of {len(headed)} headed beats: {share}")
 
 
 def check_g3_flag_derivation(ctx: Context) -> None:
@@ -1474,6 +1567,7 @@ GATES: dict[Stage, list] = {
         check_i9_freeze,
         check_g3_viewpoint_refs,
         check_i17_scheme_conformance,
+        check_b11_sequence_health,
         check_g3_flag_derivation,
         check_budget_arc_beats,
         check_b9_bridge_share,

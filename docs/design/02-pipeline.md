@@ -250,17 +250,21 @@ The hardest stage, split deliberately:
   followed characters and at most one `interlude_carrier` — the declared
   register's voice, roster membership not required; marks are reset per
   run, `docs/plans/pov-sequences.md`); annotating every beat with its
-  `scene_type`, `narration_scope`, **and** `viewpoint` (the *annotate*
-  pass, after scheme and before the freeze: scene/sequel/micro_beat
-  prose-intensity, limited/wide POV-coda register, and the character whose
-  head narrates the beat — plus its `interlude` mark when the scheme
-  declares a register, in which case the interlude beat's head is the
-  carrier — a beat's intrinsic craft signals, 01 §Beat annotations; the
-  first two advisory with a purpose fallback, the viewpoint schema-pinned
-  to the declared roster ∪ carrier (pre-roster graphs: the retained
-  character ids), checked referentially at G3 and against the scheme at
-  I17, with unannotated later-added beats as wildcards); writing bridge
-  beats where adjacent scenes share no entities or place.
+  `scene_type` and `narration_scope` **and assigning each *sequence* one
+  viewpoint head** (the *annotate* pass, after scheme and before the
+  freeze: the engine computes the sequences — maximal choice-free linear
+  runs, `grow_sequences` — and renders them with their roster-candidate
+  presence; the model returns per-beat scene/scope/interlude plus one
+  head per sequence, splitting a sequence only with a stated
+  dramatic-center justification and marking a `""`-headed segment as a
+  wide cutaway whose beats must be wide; the engine expands sequence
+  heads to the per-beat `viewpoint`, interlude beats taking the declared
+  carrier — 01 §Beat annotations; scene/scope advisory with a purpose
+  fallback, every head enum-pinned to the roster (pre-roster graphs: the
+  retained character ids), checked referentially at G3, against the
+  scheme at I17, and for sequence health at B11, with unannotated
+  later-added beats as wildcards); writing bridge beats where adjacent
+  scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a

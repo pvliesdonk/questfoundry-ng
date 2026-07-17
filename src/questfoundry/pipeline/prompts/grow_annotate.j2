@@ -1,15 +1,31 @@
-Tag every beat with three per-beat signals the writer reads later: its
-prose-INTENSITY (where the prose rises vs. stays plain), its narration SCOPE
-(whether it is narrated inside a limited point of view or steps back to a
-detached coda), and its VIEWPOINT (whose head narrates it).
+Tag every beat with two per-beat signals the writer reads later — its
+prose-INTENSITY (where the prose rises vs. stays plain) and its narration
+SCOPE (inside a limited point of view, or a detached coda) — and assign each
+SEQUENCE below one VIEWPOINT head (whose head narrates that whole stretch).
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 POINT OF VIEW SCHEME (advisory): {{ vision.pov_hint or "one limited viewpoint" }}.
 
+{% if roster %}
+THE HEAD ROSTER (already resolved — heads come from this list and no other):
+{% for c in roster %}
+- {{ c.id }} — {{ c.name }}: {{ c.concept }}
+{% endfor %}
+{% if carrier %}
+THE SCHEME'S REGISTER: occasional interlude beats in {{ carrier.name }}'s
+voice ({{ carrier.id }}). Mark a beat "interlude" when it reads as that
+register — a reflective beat that works as {{ carrier.name }}'s journal
+entry, letter, or record of the moment. A story with a declared register
+normally marks a handful of such beats; marking none means the register
+never fires. An interlude beat's head IS {{ carrier.name }} — the engine
+assigns it; you only mark the beat.
+{% endif %}
+{% else %}
 THE CHARACTERS (viewpoint values are these exact ids):
 {% for c in characters %}
 - {{ c.id }} — {{ c.name }}: {{ c.concept }}
 {% endfor %}
+{% endif %}
 
 This is the story's MODULATION: most beats are quiet and load-bearing; only a few
 are charged. A story where every beat runs hot is exhausting to read — a plain
@@ -38,61 +54,54 @@ MODULATION across the whole story: a plain baseline of sequels and micro-beats
 with scenes reserved for the charged turns. Do NOT label everything a scene — that
 is the exact failure this pass exists to prevent.
 
-Also assign each beat one NARRATION SCOPE — whether it can be narrated from inside
-a single character's viewpoint:
+Also assign each beat one NARRATION SCOPE:
 
-- limited — narrated inside that viewpoint. Almost every beat is limited: the
-  reader is with the viewpoint character, so no other character's private thoughts
+- limited — narrated inside the sequence's viewpoint. Almost every beat is
+  limited: the reader is with the head, so no other character's private thoughts
   are stated. (This does NOT forbid stating a world fact the narrator could
-  plausibly know or observe — reporting the weather, a rumor, an event they witness
-  is still limited; scope is about whose knowledge the narration is bound to, not
-  how wide the camera pulls back.)
+  plausibly know or observe; scope is about whose knowledge the narration is
+  bound to, not how wide the camera pulls back.)
 - wide — a detached CODA, narrated from BEYOND any single character's perception.
-  Use this ONLY for a beat whose content the viewpoint character could not deliver
-  at all: a world aftermath once the story's dilemmas have resolved (an event
-  elsewhere, a faction's rise, a fate that unfolds over time), or a character's
-  reputation or fate AFTER they have exited the story (including after death). An
-  EPILOGUE beat is wide by default. A narrative aftermath or post-commit beat is
-  wide only when it genuinely narrates such out-of-horizon events — if a character
-  in the scene could witness or infer it, it is limited.
+  Use this ONLY for a beat whose content no viewpoint character could deliver
+  at all: a world aftermath once the story's dilemmas have resolved, or a
+  character's reputation or fate AFTER they have exited the story. An EPILOGUE
+  beat is wide by default. When in doubt, choose limited — defaulting to wide
+  licenses the writer to leave the viewpoint.
 
-wide is the MARKED EXCEPTION, not a convenience: defaulting a beat to wide licenses
-the writer to leave the viewpoint, so reserve it for true codas. When in doubt,
-choose limited.
+THE SEQUENCES. The engine has computed the story's sequences — the maximal
+stretches with no choice inside them. The reader turns no page mid-sequence
+except where YOU put one, and a head-switch is always a page-turn; so the
+unit of viewpoint is the sequence, not the beat. For each sequence assign ONE
+head: the character whose perception, stakes, and inner reaction the stretch
+lives in — who uncovers, notices, suspects, decides, fears across it — not
+merely someone present. A rotating scheme rotates BETWEEN sequences, where
+page-turns already exist; a single-head scheme names the same head on every
+sequence (correct, not a failure to vary).
 
-Also assign each limited beat its VIEWPOINT — the id of the ONE character whose
-head narrates it. The writer will render that beat's interiority through this
-character and no other mind, so choose the perceiving center, not merely someone
-present: whose perception, stakes, and inner reaction does the summary live in —
-who uncovers, notices, suspects, decides, fears? A beat "Eleanor uncovers the
-letters while Charles watches" is Eleanor's beat.
+Split a sequence ONLY where its dramatic center genuinely moves mid-stretch:
+name the beat after which the head changes and state the shift in one line
+("the discovery is hers, the aftermath is his") — an unearned split is a
+page-turn the reader pays for nothing. A head of "" makes the rest of the
+segment a WIDE CUTAWAY: every beat in it must be marked wide, and the cutaway
+should be as rare as wide itself. When no roster head spans a sequence (the
+listing says so), split it where the center shifts or justify a cutaway.
 
-- The POV SCHEME above governs the range. A single-viewpoint scheme names the SAME
-  character on every limited beat — that is correct, not a failure to vary. A
-  rotating scheme rotates where the drama's center moves.
-- PREFER RUNS. Consecutive beats that stay with the same thread stay in the same
-  head; rotate at a real shift of dramatic center, never beat-by-beat. Each
-  head-switch becomes a page-turn for the reader, so a switch must earn its place.
-- A wide beat has NO head: set its viewpoint to "" (a coda is narrated from beyond
-  any single character).
-
-Set interlude to true ONLY when the POV scheme above names a marked deviant
-register (occasional first-person journal entries, letters, diary pages) AND this
-beat belongs to it — a reflective beat in the named character's voice. An
-interlude beat needs a viewpoint (whose voice) and is never wide. A scheme that
-names no such register means interlude is false on every beat.
-
-BEATS (in story order):
-{% for r in beats %}
+{% for s in sequences %}
+SEQUENCE {{ loop.index }} (key: {{ s.head_beat }}{% if s.candidates %}; on the page: {% for id, n, total in s.candidates %}{{ id }} in {{ n }}/{{ total }} beats{% if not loop.last %}, {% endif %}{% endfor %}{% elif roster %}; NO roster head appears in these beats — split, or justify a wide cutaway{% endif %}):
+{% for r in s.beats %}
 - {{ r.beat.id }} [{{ r.beat.beat_class.value }}{% if r.beat.purpose %}/{{ r.beat.purpose.value }}{% endif %}{% if r.effects %}; {{ r.effects | join(", ") }}{% endif %}{% if r.beat.is_ending %}; ENDING{% endif %}]{% if r.beat.entities %} (on the page: {{ r.beat.entities | join(", ") }}){% endif %}: {{ r.beat.summary }}
+{% endfor %}
 {% endfor %}
 
 REQUIREMENTS:
-- Annotate every beat listed above, exactly once, keyed by its full beat id.
-- Assign exactly one scene_type (scene, sequel, micro_beat) AND one narration_scope
-  (limited, wide) to each.
-- Assign every limited beat a viewpoint from the character ids above; give every
-  wide beat viewpoint "". Set interlude true only for beats of the scheme's named
-  deviant register.
+- "annotations": every beat listed above, exactly once, keyed by its full beat
+  id — exactly one scene_type (scene, sequel, micro_beat), one narration_scope
+  (limited, wide), and interlude true/false ({% if carrier %}true only for beats
+  of {{ carrier.name }}'s register{% else %}false on every beat: the scheme
+  declares no register{% endif %}).
+- "heads": one entry per sequence, keyed by the sequence's first beat id
+  (shown above), with its head{% if roster %} from the roster{% endif %} (or ""
+  for a wide cutaway) and its splits — each split names the beat after which
+  the head changes, the new head, and the one-line why.
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

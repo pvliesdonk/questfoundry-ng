@@ -79,9 +79,15 @@ live run), so words ≈ passages × 0.9·cap; passages come from beats via
 the collapse cap (§6) plus the cadence diamonds; beats come from the
 shape bands through the weave (units after a hard fork instantiate per
 world). The *feel* of size — how often the reader genuinely chooses —
-is checked separately (B6, words per choice along a *playthrough walk*,
-target ≈250–800; a walk traverses one diamond arm, not both, which is
-what an arc-view sum over-counted). Total words are checked as B7.
+is checked separately — primarily as the **choice-stretch cap** (B10;
+author metric 2026-07-16): per arc view at most `choice_stretch_max`
+consecutive passages may offer no choice, because a no-choice passage is
+inherently a cost and the stretch length is what reads as a book instead
+of a game; and advisorily as B6 (words per choice along a *playthrough
+walk*, target ≈250–800; a walk traverses one diamond arm, not both,
+which is what an arc-view sum over-counted). Total words are checked as
+B7; mandatory stretch-break sites are exempt from the words ceiling
+until the density calibration lands.
 Scale by adding structure (locked dilemmas §4, deeper Ys), never by
 padding prose — and the word budgets enforce the converse: texture
 passages (residue and false-branch arms) write toward a short band,

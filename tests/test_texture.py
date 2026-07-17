@@ -252,6 +252,16 @@ def _finalize_project(tmp_path, vision):
     )
 
 
+def _segment_site(g, preset) -> pc.ForkSite:
+    """A segment-scale site built straight from the tier walk — the schema
+    and apply contracts don't depend on the planner having admitted it (on
+    this fixture Phase A's breaks satisfy the stretch cap before depth is
+    worth its words)."""
+    segments, _ = pc.fork_segments(g, preset)
+    seg = max(segments, key=len)
+    return pc.ForkSite(before=seg[0], after="", segment=tuple(seg), arms=1, keywords=())
+
+
 def test_fork_schema_pins_arm_count_and_beat_count(vision, tmp_path):
     """The budgets stopped being model-fillable (the engine plans and
     assigns); what remains model-facing is pinned at the schema: exactly the
@@ -260,7 +270,7 @@ def test_fork_schema_pins_arm_count_and_beat_count(vision, tmp_path):
     from questfoundry.pipeline.stages.polish import _fork_schema
 
     project = _finalize_project(tmp_path, vision)
-    (site,) = [s for s in pc.fork_plan(project.graph, vision.preset) if s.segment]
+    site = _segment_site(project.graph, vision.preset)
     schema = _fork_schema(site)(project)
     props = schema.model_json_schema()
     assert props["properties"]["renderings"]["minItems"] == site.arms
@@ -281,7 +291,7 @@ def test_fork_apply_splices_segment_site_with_premises(vision, tmp_path):
 
     project = _finalize_project(tmp_path, vision)
     g = project.graph
-    (site,) = [s for s in pc.fork_plan(g, vision.preset) if s.segment]
+    site = _segment_site(g, vision.preset)
     segment = list(site.segment)
     proposal = ForkProposal(
         trunk_premise="the crossing goes along the coast road",
@@ -353,7 +363,7 @@ def test_fork_apply_rejects_wrong_arm_length_and_empty_premise(vision, tmp_path)
     from questfoundry.pipeline.types import ApplyError
 
     project = _finalize_project(tmp_path, vision)
-    (site,) = [s for s in pc.fork_plan(project.graph, vision.preset) if s.segment]
+    site = _segment_site(project.graph, vision.preset)
     short = ForkProposal(
         trunk_premise="q",
         renderings=[
@@ -695,3 +705,78 @@ def test_i15_mirror_cycle_does_not_ground_out(vision):
         mutations.add_ordering(g, "beat:p", f"beat:{slug}")
         mutations.add_ordering(g, f"beat:{slug}", "beat:s")
     assert any("ground out" in i.message for i in i15_errors(g, vision))
+
+
+# -- stretch cap (author metric, 2026-07-16) ----------------------------------------
+
+
+def test_projected_stretches_measure_no_choice_runs():
+    """The author metric: consecutive no-choice passages along a walk.
+    A 21-beat micro chain (cap 5 -> 5 groups, no choices) is one stretch of
+    5; a diamond mid-chain splits it."""
+    preset = _micro_vision_preset()
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    ((stretches),) = pc.projected_stretches(g, preset)
+    assert max(stretches) == 5 and len(stretches) == 1
+    fb = [
+        Beat(
+            id=f"beat:d-{s}",
+            created_by=Stage.POLISH,
+            summary=s,
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.FALSE_BRANCH,
+        )
+        for s in ("a", "b")
+    ]
+    pc.insert_false_branch(g, [fb[0]], [fb[1]], "beat:b8", "beat:b9")
+    ((stretches),) = pc.projected_stretches(g, preset)
+    assert max(stretches) < 5 and len(stretches) >= 2
+
+
+def test_fork_plan_breaks_stretches_even_against_a_tight_words_target():
+    """Author direction (2026-07-16): a choice every few pages is what makes
+    it a gamebook — break sites that enforce the stretch cap are mandatory
+    machinery, exempt from the words ceiling (depth stays words-gated;
+    density calibration comes later)."""
+    preset = _micro_vision_preset()
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    # a words target with zero headroom: depth is unaffordable, breaks are not
+    plan = pc.fork_plan(g, preset, words_target=2400)
+    assert plan and all(not s.segment for s in plan)
+    scratch = StoryGraph()
+    # apply the plan's edge sites as probe content and re-measure the metric
+    import copy as _copy
+
+    scratch = _copy.deepcopy(g)
+    for k, site in enumerate(plan):
+        arms = [
+            [
+                Beat(
+                    id=f"beat:brk-{k}-{j}",
+                    created_by=Stage.POLISH,
+                    summary="s",
+                    beat_class=BeatClass.STRUCTURAL,
+                    purpose=StructuralPurpose.FALSE_BRANCH,
+                )
+            ]
+            for j in range(site.arms)
+        ]
+        if site.arms == 1:
+            pc.insert_sidetrack(scratch, arms[0], site.before, site.after)
+        else:
+            pc.insert_cosmetic_fork(scratch, arms, before=site.before, after=site.after)
+    for stretches in pc.projected_stretches(scratch, preset):
+        assert max(stretches) <= preset.choice_stretch_max
+
+
+def test_b10_warns_on_a_choice_desert(vision):
+    g = StoryGraph()
+    chain(g, ["r"] + [f"b{i}" for i in range(20)])
+    issues = [
+        i
+        for i in run_checks(g, vision, Stage.POLISH)
+        if i.check == "B10" and i.severity == Severity.WARNING
+    ]
+    assert issues and "no-choice" in issues[0].message

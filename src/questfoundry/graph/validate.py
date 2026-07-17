@@ -1170,6 +1170,35 @@ def check_b6_choice_cadence(ctx: Context) -> None:
         )
 
 
+def check_b10_choice_stretch(ctx: Context) -> None:
+    """B10 (advisory; the author metric, 2026-07-16): along each projected
+    playthrough walk, at most ``choice_stretch_max`` consecutive passages may
+    offer no choice — a no-choice passage is inherently a cost, and the
+    stretch length is what reads as a book instead of a game (the measured
+    pre-fix medium desert was 14 passages). The finalize loop's break sites
+    enforce the cap words-exempt; this reports what remains (a stretch with
+    no free seam, or a hand-edited graph). Uses the planner's own projection
+    (``projected_stretches``) so the gate and the loop can never disagree."""
+    from questfoundry.pipeline import passages as pc
+
+    if not ctx.g.nodes_of(Beat) or queries.topological_order(ctx.g) is None:
+        return
+    cap = ctx.vision.preset.choice_stretch_max
+    over: list[int] = []
+    for stretches in pc.projected_stretches(ctx.g, ctx.vision.preset):
+        worst = max(stretches)
+        if worst > cap:
+            over.append(worst)
+    if over:
+        ctx.warn(
+            "B10",
+            f"{len(over)} walk(s) run up to {max(over)} consecutive no-choice "
+            f"passages; scope '{ctx.vision.preset.name}' caps a no-choice "
+            f"stretch at {cap} — a choice every few pages is what makes it a "
+            "gamebook; add break sites (or accept the desert) (advisory)",
+        )
+
+
 def check_b7_total_words(ctx: Context) -> None:
     """B7 (advisory): total prose words within the scope's words_total —
     the scale table's primary anchor (A19). Checked once prose exists."""
@@ -1393,6 +1422,7 @@ GATES: dict[Stage, list] = {
         check_b9_bridge_share,
     ],
     Stage.POLISH: [
+        check_b10_choice_stretch,
         check_i10_gates_satisfiable,
         check_i11_grouping,
         check_i12_feasibility,

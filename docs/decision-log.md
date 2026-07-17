@@ -16,6 +16,34 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-16, evening (stretch cap — the author metric lands; first
+  loop-built graph read):** The first live loop-built medium graph
+  (rerun POLISH on the cc-struct-medium GROW checkpoint, `gpt-oss:120b`,
+  unbilled) validated the PR-5 prompts outright — residue + all 7 fork
+  sites + 400 passage/audit passes, zero repair rounds in the loop — but
+  the words ceiling starved interruption: 1 productive round, walks at
+  ~2,700 words/choice, a 14-passage no-choice desert on every walk.
+  **Author direction (verbatim intent): the long stretches must be
+  interrupted, braided like the ending; the metric is the number of
+  passages with no choice and the length of a no-choice stretch; words
+  calibration comes later.** Implemented same day
+  (`cosmetic-forks-stretch-cap`): `ScopePreset.choice_stretch_max`
+  (default 4, the region the author judged reasonable), the DAG-wide
+  conservative stretch metric (`projected_stretches`/`_stretch_chains` —
+  walk-based measurement is blind to the desert inside the rendering a
+  walk didn't take; a keyword-gated choice breaks no stretch for readers
+  without the key), advisory **B10**, and `fork_plan` re-phased: depth
+  first (words-gated, probe-measured exact pricing — the analytic
+  marginal undercharged fork-boundary re-chunking, which is how the
+  first run overshot the ceiling it enforced), then mandatory breaks
+  (words-EXEMPT; same-round segment interiors deferred to the next
+  round's recursion — a dry-run against the live GROW graph caught the
+  apply-order collision), then B6 fine-tuning. Dry-run on the live
+  graph: worst stretch 14 → 5 (the 5 has no free seam; B10 reports it),
+  walks ~2,700 → ~1,600 w/d, 22 sites over 2 rounds, words +14% over
+  target (the ratified trade). B6 stays advisory; the stretch cap is the
+  primary structural criterion (sim exit criteria updated accordingly).
+
 - **2026-07-16, later (cosmetic forks PR-5 built whole — the finalize
   loop; the order question mooted):** The 5a/5b/5c order decision the
   same-day hand-off left open resolved itself: one session built all three

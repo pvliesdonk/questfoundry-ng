@@ -339,6 +339,17 @@ def test_b11_share_line_shows_counts_so_a_one_beat_head_is_visible(project, visi
     assert "eleanor 6 (" in share and "charles 1 (" in share  # the 1-beat head reads as 1
 
 
+def test_b11_share_line_excludes_the_register(project, vision):
+    # review follow-up (#107): interlude beats expand to the carrier, who
+    # may be off-roster — the share line reports the ROTATION, so the
+    # register stays out of both the entries and the denominator
+    overrides = {"beat:setup-2": _ann("beat:setup-2", interlude=True)}
+    _annotate_apply(_proposal(project, _full_heads(), overrides), project)
+    share = next(i.message for i in _b11(project.graph, vision) if "share" in i.message)
+    assert "milo" not in share
+    assert "of 6 headed beats" in share  # 7 headed minus the interlude
+
+
 def test_b11_skips_without_a_roster(story, vision):
     for cid in ("character:eleanor", "character:charles"):
         mutations.set_pov_head(story, cid, False)

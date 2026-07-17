@@ -616,7 +616,12 @@ def check_b11_sequence_health(ctx: Context) -> None:
         )
 
     if len(roster) > 1:
-        headed = [b.viewpoint for b in beats.values() if b.viewpoint is not None]
+        # the rotation only: interlude beats expand to the carrier (who may
+        # be off-roster) and would dilute the roster shares — the register
+        # has its own line above
+        headed = [
+            b.viewpoint for b in beats.values() if b.viewpoint is not None and not b.interlude
+        ]
         if headed:
             # counts first, percent as color: a 1-beat head must read as
             # "1", never round to "0%" — the one-passage head is the very

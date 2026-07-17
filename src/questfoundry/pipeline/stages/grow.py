@@ -55,6 +55,7 @@ from questfoundry.models.structure import (
     StateFlag,
     StructuralPurpose,
 )
+from questfoundry.models.world import Entity, EntityCategory
 from questfoundry.pipeline import weave
 from questfoundry.pipeline.refpin import (
     entity_ref_ids,
@@ -451,14 +452,83 @@ def _contextualize_apply(proposal: ContextualizeProposal, project: Project) -> l
 # -- pass 4: annotate ---------------------------------------------------------
 
 
+class SchemeProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    # the head roster: the characters the narration follows (pinned to the
+    # retained character ids; a single-viewpoint scheme is a roster of one)
+    heads: list[str] = Field(min_length=1)
+    # the deviant register's voice, when the POV hint declares one (pinned
+    # to the retained character ids plus "" = no register); the carrier
+    # need not be a roster head (pov-sequences.md decision 6)
+    interlude_head: str = ""
+
+
+def scheme_proposal_schema(project: Project) -> type[SchemeProposal]:
+    """Pin `heads` and `interlude_head` to the retained character ids, so
+    an off-cast head is unrepresentable (I17's schema half)."""
+    ids = retained_character_ids(project.graph)
+    return pin(
+        SchemeProposal,
+        "SchemeProposal",
+        {
+            ("SchemeProposal", "heads"): ids,
+            ("SchemeProposal", "interlude_head"): ids + [""],
+        },
+    )
+
+
+def _scheme_context(project: Project) -> dict:
+    g = project.graph
+    characters = [g.node(cid) for cid in retained_character_ids(g)]
+    return {"vision": project.vision, "characters": characters}
+
+
+def _scheme_apply(proposal: SchemeProposal, project: Project) -> list[str]:
+    """Resolve the prose POV scheme into graph marks: `pov_head` on every
+    roster character, `interlude_carrier` on the register's voice. Marks
+    are RESET, not accumulated — a rerun's fresh roster replaces the old
+    one entirely (stale marks would widen I17's legal set silently)."""
+    g = project.graph
+    heads = set(proposal.heads)
+    carrier = proposal.interlude_head or None
+    for entity in g.nodes_of(Entity):
+        if entity.category != EntityCategory.CHARACTER:
+            continue
+        mutations.set_pov_head(g, entity.id, entity.id in heads)
+        mutations.set_interlude_carrier(g, entity.id, entity.id == carrier)
+    log = [f"head roster: {', '.join(sorted(heads))}"]
+    log.append(f"interlude carrier: {carrier}" if carrier else "no interlude register")
+    return log
+
+
+def _scheme_roster(g) -> tuple[list[str], str | None]:
+    """The declared roster and carrier, empty/None on pre-scheme graphs."""
+    roster = sorted(
+        e.id
+        for e in g.nodes_of(Entity)
+        if e.category == EntityCategory.CHARACTER and e.pov_head
+    )
+    carrier = next(
+        (
+            e.id
+            for e in g.nodes_of(Entity)
+            if e.category == EntityCategory.CHARACTER and e.interlude_carrier
+        ),
+        None,
+    )
+    return roster, carrier
+
+
 class BeatScene(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     beat: str
     scene_type: SceneType
     narration_scope: NarrationScope
-    # pinned to the retained character ids plus "" (= no head: wide codas
-    # carry no viewpoint by construction — rotating-pov-build.md)
+    # pinned to the declared head roster plus the interlude carrier plus ""
+    # (= no head: wide codas carry no viewpoint by construction) — or, on a
+    # pre-roster graph, the retained character ids (rotating-pov-build.md)
     viewpoint: str
     interlude: bool
 
@@ -491,8 +561,22 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
     g = project.graph
     expected = set(queries.topological_order(g) or [])
     characters = set(retained_character_ids(g))
+    roster, carrier = _scheme_roster(g)
     seen: set[str] = set()
     for spec in proposal.annotations:
+        # the declared register's voice is scheme-level, not per beat: an
+        # interlude beat is narrated by the carrier (I17; pov-sequences.md)
+        if spec.interlude and roster:
+            if carrier is None:
+                raise ApplyError(
+                    f"{spec.beat} is marked interlude but the scheme declares no "
+                    "deviant register — drop the interlude mark"
+                )
+            if spec.viewpoint != carrier:
+                raise ApplyError(
+                    f"{spec.beat}: an interlude is narrated in the declared "
+                    f"register's voice — set viewpoint to the carrier {carrier}"
+                )
         if spec.beat not in expected:
             raise ApplyError(
                 f"{spec.beat} is not a beat to annotate; annotate exactly these "
@@ -704,16 +788,25 @@ def annotate_proposal_schema(project: Project) -> type[AnnotateProposal]:
     """Pin `annotations[].beat` to every beat present pre-freeze (the
     annotatable set — SEED scaffold + GROW clones; bridge/residue/
     false-branch are added later and ride the purpose fallback) and
-    `viewpoint` to the retained character ids plus "" (no head — wide
-    codas). Resolved after weave/contextualize rewire the graph
+    `viewpoint` to the declared head roster plus the interlude carrier
+    plus "" (no head — wide codas), so an off-scheme head is
+    unrepresentable (I17's schema half). A pre-roster graph falls back to
+    the retained character ids — today's behavior, the legal degenerate
+    case. Resolved after scheme/weave/contextualize rewire the graph
     (PassSpec.schema_for)."""
     beats = queries.topological_order(project.graph) or []
+    roster, carrier = _scheme_roster(project.graph)
+    heads = (
+        sorted({*roster, *([carrier] if carrier else [])})
+        if roster
+        else retained_character_ids(project.graph)
+    )
     return pin(
         AnnotateProposal,
         "AnnotateProposal",
         {
             ("BeatScene", "beat"): beats,
-            ("BeatScene", "viewpoint"): retained_character_ids(project.graph) + [""],
+            ("BeatScene", "viewpoint"): heads + [""],
         },
     )
 
@@ -754,6 +847,14 @@ GROW_STAGE = StageImpl(
             build_context=_contextualize_context,
             apply=_contextualize_apply,
             skip_if=_contextualize_skip,
+        ),
+        PassSpec(
+            name="scheme",
+            role="utility",
+            template="grow_scheme.j2",
+            schema=scheme_proposal_schema,
+            build_context=_scheme_context,
+            apply=_scheme_apply,
         ),
         PassSpec(
             name="annotate",

@@ -1,0 +1,27 @@
+Resolve this story's narration scheme into exact character ids. The scheme
+below is prose; downstream passes need the ids it means. You decide WHO the
+narration follows — nothing else here is a judgment call.
+
+POINT OF VIEW SCHEME: {{ vision.pov_hint or "one limited viewpoint" }}.
+
+THE RETAINED CAST (ids are exact — copy them verbatim, never derive one from
+a name):
+{% for c in characters %}
+- {{ c.id }} — {{ c.name }}: {{ c.concept }}
+{% endfor %}
+
+Return two fields:
+
+- "heads": the characters whose heads the narration follows — the story's
+  viewpoint roster. A single-viewpoint scheme names exactly ONE character
+  (the scheme's protagonist — the perceiving center of the premise). A
+  rotating scheme names each character the scheme rotates among: where it
+  says "the suspects", "the crew", "each sibling", list those characters
+  individually. Follow the scheme's own scope — do not add a character the
+  scheme excludes (a victim, a bystander) and do not trim one it includes.
+- "interlude_head": ONLY when the scheme names a deviant register — journal
+  entries, letters, diary pages, recordings in a specific character's voice
+  — the character who narrates that register. This may be a character NOT in
+  "heads" (an investigator's journal amid rotating suspects is normal). When
+  the scheme names no such register, return "".
+{% include "_shared.j2" %}

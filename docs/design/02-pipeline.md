@@ -245,15 +245,22 @@ The hardest stage, split deliberately:
   beats every player sees — shared pre-commit beats and locked-chain
   beats alike (each accepted intersection resolves the scene's
   location/entities); contextualizing per-world beat instances (below);
-  annotating every beat with its `scene_type`, `narration_scope`, **and**
-  `viewpoint` (the *annotate* pass, after contextualize and before the freeze:
-  scene/sequel/micro_beat prose-intensity, limited/wide POV-coda register, and
-  the character whose head narrates the beat — plus its `interlude` mark when
-  the POV scheme names a deviant register — a beat's intrinsic craft signals,
-  01 §Beat annotations; the first two advisory with a purpose fallback, the
-  viewpoint schema-pinned to the retained character ids and checked
-  referentially at G3, with unannotated later-added beats as wildcards);
-  writing bridge beats where adjacent scenes share no entities or place.
+  resolving the prose POV scheme into ids (the *scheme* pass, utility
+  role, after contextualize: `vision.pov_hint` → `pov_head` marks on the
+  followed characters and at most one `interlude_carrier` — the declared
+  register's voice, roster membership not required; marks are reset per
+  run, `docs/plans/pov-sequences.md`); annotating every beat with its
+  `scene_type`, `narration_scope`, **and** `viewpoint` (the *annotate*
+  pass, after scheme and before the freeze: scene/sequel/micro_beat
+  prose-intensity, limited/wide POV-coda register, and the character whose
+  head narrates the beat — plus its `interlude` mark when the scheme
+  declares a register, in which case the interlude beat's head is the
+  carrier — a beat's intrinsic craft signals, 01 §Beat annotations; the
+  first two advisory with a purpose fallback, the viewpoint schema-pinned
+  to the declared roster ∪ carrier (pre-roster graphs: the retained
+  character ids), checked referentially at G3 and against the scheme at
+  I17, with unannotated later-added beats as wildcards); writing bridge
+  beats where adjacent scenes share no entities or place.
 
 Sequencing matters: intersections are proposed *before* the interleaving
 is chosen, so member adjacency enters the candidate enumeration as a

@@ -485,6 +485,60 @@ def check_g3_viewpoint_refs(ctx: Context) -> None:
             )
 
 
+def check_i17_scheme_conformance(ctx: Context) -> None:
+    """I17: declared-scheme conformance (pov-sequences.md; design doc 01
+    §8). When a head roster exists (any character marked ``pov_head``),
+    every base-register beat's viewpoint is a roster member, and every
+    interlude beat's viewpoint is the declared ``interlude_carrier`` (who
+    may be off-roster — the register's voice need not be a followed head).
+    At most one carrier per story. No roster → the check skips entirely:
+    pre-roster projects are the legal degenerate case. The scheme/annotate
+    schemas make pipeline violations unrepresentable; the gate holds
+    hand-edited files to the same rule (iron rule 1)."""
+    roster = {
+        e.id
+        for e in ctx.g.nodes_of(Entity)
+        if e.category == EntityCategory.CHARACTER and e.pov_head
+    }
+    carriers = sorted(
+        e.id
+        for e in ctx.g.nodes_of(Entity)
+        if e.category == EntityCategory.CHARACTER and e.interlude_carrier
+    )
+    if len(carriers) > 1:
+        ctx.error(
+            "I17",
+            f"{len(carriers)} interlude carriers marked ({', '.join(carriers)}) — "
+            "a scheme declares at most one deviant-register voice",
+        )
+    if not roster:
+        return
+    carrier = carriers[0] if carriers else None
+    for beat in ctx.g.nodes_of(Beat):
+        if beat.viewpoint is None:
+            continue
+        if beat.interlude:
+            if carrier is None:
+                ctx.error(
+                    "I17",
+                    f"beat {beat.id} is an interlude but no character is marked "
+                    "interlude_carrier — the register's voice is declared by the "
+                    "scheme, not per beat",
+                )
+            elif beat.viewpoint != carrier:
+                ctx.error(
+                    "I17",
+                    f"beat {beat.id}: interlude viewpoint {beat.viewpoint!r} is not "
+                    f"the declared carrier {carrier!r}",
+                )
+        elif beat.viewpoint not in roster:
+            ctx.error(
+                "I17",
+                f"beat {beat.id}: viewpoint {beat.viewpoint!r} is outside the "
+                f"declared head roster ({', '.join(sorted(roster))})",
+            )
+
+
 def check_g3_flag_derivation(ctx: Context) -> None:
     """G3: flag derivation is total over branched paths — every
     consequence of a branched explored path yields at least one state
@@ -1417,6 +1471,7 @@ GATES: dict[Stage, list] = {
         check_i8_intersections,
         check_i9_freeze,
         check_g3_viewpoint_refs,
+        check_i17_scheme_conformance,
         check_g3_flag_derivation,
         check_budget_arc_beats,
         check_b9_bridge_share,

@@ -323,6 +323,22 @@ def test_b11_reports_head_shares_for_a_rotating_roster(project, vision):
     assert any("share" in i.message for i in issues)
 
 
+def test_b11_share_line_shows_counts_so_a_one_beat_head_is_visible(project, vision):
+    # review follow-up (#107): percentages alone floor a 1-of-N head to
+    # "0%" — the exact case this line exists to surface; counts lead
+    heads = [
+        _entry(
+            SEQ_TRUNK,
+            splits=[{"after": "beat:setup-2", "head": "character:charles", "why": "w"}],
+        ),
+        _entry(SEQ_A),
+        _entry(SEQ_B, "character:eleanor"),
+    ]
+    _annotate_apply(_proposal(project, heads), project)
+    share = next(i.message for i in _b11(project.graph, vision) if "share" in i.message)
+    assert "eleanor 6 (" in share and "charles 1 (" in share  # the 1-beat head reads as 1
+
+
 def test_b11_skips_without_a_roster(story, vision):
     for cid in ("character:eleanor", "character:charles"):
         mutations.set_pov_head(story, cid, False)

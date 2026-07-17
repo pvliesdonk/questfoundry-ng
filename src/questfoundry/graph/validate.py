@@ -618,11 +618,15 @@ def check_b11_sequence_health(ctx: Context) -> None:
     if len(roster) > 1:
         headed = [b.viewpoint for b in beats.values() if b.viewpoint is not None]
         if headed:
+            # counts first, percent as color: a 1-beat head must read as
+            # "1", never round to "0%" — the one-passage head is the very
+            # case this line exists to surface (author, 2026-07-17)
             share = ", ".join(
-                f"{h.split(':', 1)[1]} {100 * headed.count(h) // len(headed)}%"
+                f"{h.split(':', 1)[1]} {headed.count(h)} "
+                f"({round(100 * headed.count(h) / len(headed))}%)"
                 for h in sorted(set(headed), key=lambda h: -headed.count(h))
             )
-            ctx.warn("B11", f"head share of headed beats: {share}")
+            ctx.warn("B11", f"head share of {len(headed)} headed beats: {share}")
 
 
 def check_g3_flag_derivation(ctx: Context) -> None:

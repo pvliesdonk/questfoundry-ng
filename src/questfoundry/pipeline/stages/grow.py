@@ -648,6 +648,17 @@ def _annotate_apply(proposal: AnnotateProposal, project: Project) -> list[str]:
                 f"{spec.beat} is marked interlude but the scheme declares no "
                 "deviant register — drop the interlude mark"
             )
+        if spec.interlude:
+            beat = g.node(spec.beat)
+            assert isinstance(beat, Beat)
+            if beat.commits_dilemmas:
+                # stated in the prompt and violated on 5 of 7 marks (probe
+                # series 2026-07-17) — enforced here, repairably
+                raise ApplyError(
+                    f"{spec.beat} COMMITS a dilemma — the drama's peak stays in "
+                    "scene and is never the register's entry; move the interlude "
+                    "mark to the reflective beat AFTER this turn"
+                )
     missing = expected - seen
     if missing:
         raise ApplyError(

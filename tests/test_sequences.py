@@ -252,6 +252,16 @@ def test_interlude_beats_expand_to_the_carrier(project):
     assert beat.viewpoint == "character:milo" and beat.interlude is True
 
 
+def test_interlude_on_a_commit_beat_is_rejected(project):
+    # probe series 2026-07-17: the prompt stated "never the commit beat"
+    # verbatim and the model marked 5 of 7 interludes on commits anyway -
+    # the rule graduates from stated to enforced (repairable, so the pass
+    # self-corrects in-run)
+    overrides = {"beat:y-commit-a": _ann("beat:y-commit-a", interlude=True)}
+    with pytest.raises(ApplyError, match="commit"):
+        _annotate_apply(_proposal(project, _full_heads(), overrides), project)
+
+
 def test_interlude_without_a_carrier_is_rejected(project):
     mutations.set_interlude_carrier(project.graph, "character:milo", False)
     overrides = {"beat:setup-2": _ann("beat:setup-2", interlude=True)}
@@ -294,6 +304,17 @@ def test_b11_justified_splits_still_count_as_switches(project, vision):
     _annotate_apply(_proposal(project, heads), project)
     issues = _b11(project.graph, vision)
     assert any("switch" in i.message for i in issues)
+
+
+def test_b11_switch_lines_skip_the_register(project, vision):
+    # an interlude mid-sequence is the register's known page cost (its own
+    # line reports the register) — the switch signal is base-register only,
+    # else 8 interludes drown genuine hops in ~16 switch lines (probe,
+    # 2026-07-17)
+    overrides = {"beat:setup-2": _ann("beat:setup-2", interlude=True)}
+    _annotate_apply(_proposal(project, _full_heads(), overrides), project)
+    issues = _b11(project.graph, vision)
+    assert not any("switch" in i.message for i in issues)
 
 
 def test_b11_reports_a_silent_register(project, vision):

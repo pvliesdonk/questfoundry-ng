@@ -364,6 +364,25 @@ def test_fork_keywords_section_sells_the_gated_arm():
     assert "never rewards it" in flat
 
 
+def test_annotate_register_block_asks_for_moments_not_shapes():
+    """Zero interludes live, three runs across two tiers (the last with the
+    expectation stated — A/B 2026-07-17): the block asked the model to find
+    beats that "read as" journal entries, but summaries are ordinary
+    dramatic briefs, so zero was the honest answer to the wrong question.
+    The rebalanced block states the moment-based criterion (a beat WORTH an
+    entry, which the register re-frames), names the natural candidates, and
+    instructs choosing — with the none-marked case framed as breaking the
+    scheme's promise, not as the safe default."""
+    source = (PROMPTS_DIR / "grow_annotate.j2").read_text(encoding="utf-8")
+    flat = " ".join(source.split())
+    assert 'No summary below "reads as" a journal entry' in flat
+    assert "a moment WORTH an entry" in flat  # the criterion, positive
+    assert "CHOOSE a handful of such moments" in flat  # instruction, not option
+    assert "roughly one per act" in flat  # a concrete pulse, not "some"
+    assert "broken the scheme's promise" in flat  # the none case costs
+    assert "true only for beats" not in flat  # the old fence framing is gone
+
+
 def test_contextualize_renders_the_entities_it_requires():
     """GROW HIGH: the rule 'keep the exact entities' now has the entities in
     context, not withheld."""

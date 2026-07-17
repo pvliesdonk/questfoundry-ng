@@ -12,13 +12,21 @@ THE HEAD ROSTER (already resolved — heads come from this list and no other):
 - {{ c.id }} — {{ c.name }}: {{ c.concept }}
 {% endfor %}
 {% if carrier %}
-THE SCHEME'S REGISTER: occasional interlude beats in {{ carrier.name }}'s
-voice ({{ carrier.id }}). Mark a beat "interlude" when it reads as that
-register — a reflective beat that works as {{ carrier.name }}'s journal
-entry, letter, or record of the moment. A story with a declared register
-normally marks a handful of such beats; marking none means the register
-never fires. An interlude beat's head IS {{ carrier.name }} — the engine
-assigns it; you only mark the beat.
+THE SCHEME'S REGISTER: occasional interludes in {{ carrier.name }}'s voice
+({{ carrier.id }}) — the scheme promises the reader these pages, and YOU
+choose which moments become them. No summary below "reads as" a journal
+entry — the beats were all written as ordinary dramatic briefs; an
+interlude is a moment WORTH an entry, which the register then re-frames.
+The natural candidates: a reflective sequel beat right AFTER a discovery,
+a death, or a turn — {{ carrier.name }} recording what was just
+witnessed, weighing what it means. The turn itself stays in scene: a beat
+that COMMITS a dilemma is the drama's peak and is never the entry — the
+entry is the exhale that follows it. CHOOSE a handful of such moments
+spread across the story (roughly one per act is the register's natural
+pulse) and mark each "interlude": true. An interlude beat's head IS
+{{ carrier.name }} — the engine assigns it; you only mark the beat. Leave
+a beat unmarked when its moment carries no reflective pause — but a story
+that marks none has broken the scheme's promise.
 {% endif %}
 {% else %}
 THE CHARACTERS (viewpoint values are these exact ids):
@@ -96,8 +104,9 @@ SEQUENCE {{ loop.index }} (key: {{ s.head_beat }}{% if s.candidates %}; on the p
 REQUIREMENTS:
 - "annotations": every beat listed above, exactly once, keyed by its full beat
   id — exactly one scene_type (scene, sequel, micro_beat), one narration_scope
-  (limited, wide), and interlude true/false ({% if carrier %}true only for beats
-  of {{ carrier.name }}'s register{% else %}false on every beat: the scheme
+  (limited, wide), and interlude true/false ({% if carrier %}true on the
+  handful of moments you chose for {{ carrier.name }}'s register, per THE
+  SCHEME'S REGISTER above{% else %}false on every beat: the scheme
   declares no register{% endif %}).
 - "heads": one entry per sequence, keyed by the sequence's first beat id
   (shown above), with its head{% if roster %} from the roster{% endif %} (or ""

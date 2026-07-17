@@ -1,6 +1,14 @@
 # Rotating limited POV — Build Contract
 
-> Status: **DESIGNED, building** (2026-07-14). The design decisions below are
+> Status: **SHIPPED** (A22, PR #74; live-validated 2026-07-14). Decision 3's
+> reserved escalation has since fired: the live medium showed the
+> over-rotation whiplash this file's Risks section predicted, and the
+> structural follow-up is designed in
+> [`pov-sequences.md`](pov-sequences.md) (2026-07-17) — sequence-unit head
+> assignment; everything else here (per-beat storage, I14, collapse cut,
+> FILL enforcement) stands unchanged.
+>
+> Original status: **DESIGNED, building** (2026-07-14). The design decisions below are
 > **author-confirmed 2026-07-14** — answered directly by the author in the
 > session that wrote this file, via explicit per-question prompts (not an
 > agent's scope call recorded under the author's name; cf. the provenance

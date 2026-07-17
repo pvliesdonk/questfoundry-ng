@@ -102,7 +102,9 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   annotate pins the viewpoint enum (closes the off-scheme-head gap);
   wide-cutaway as a justified escape valve; B11 advisory (mid-sequence
   splits, non-coda wides, per-head share); `Voice` reads the roster at
-  FILL. Numbers in the decision log (2026-07-17) and BACKLOG.
+  FILL. Contract, failure modes, and PR slicing in
+  [`../plans/pov-sequences.md`](../plans/pov-sequences.md); numbers in the
+  decision log (2026-07-17).
 
 ## Next
 

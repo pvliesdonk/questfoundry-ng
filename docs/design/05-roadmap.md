@@ -77,7 +77,9 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   #103), `choice_stretch_max` + B10. Contract + mini-ADR A24:
   [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md). Exemplar:
   the cc-struct-medium run-6 graph (author-read: "a much better shape").
-  Residual: PR-6 (DRESS print acknowledgments) in BACKLOG.
+  No residual: PR-6 (DRESS print acknowledgments) was scoped and closed
+  without building, 2026-07-17 — form 1 already delivers print
+  consumption end-to-end (decision log).
 
 ## Now
 

@@ -50,8 +50,12 @@ the next comprehensive run, see "immediate next steps".
 **Shipped 2026-07-17 (author call): structural depth** (#77/#78/#79/#81;
 texture-trial through DRESS gate-clean, `examples/letter-and-frontier`)
 **and cosmetic forks** (#87–#103; run-6 author-read "a much better shape").
-Details now live in the roadmap Shipped section and the plan docs; PR-6
-(print acknowledgments) is the one residual, in BACKLOG.
+Details now live in the roadmap Shipped section and the plan docs.
+**No residual: PR-6 (print acknowledgments) was scoped and closed without
+building, 2026-07-17** — form 1 (keyword-gated rendering) already delivers
+real print consumption end-to-end; an unconsumed keyword already gets zero
+print footprint today, which is correct (decision log). The epic is
+complete.
 
 ## Immediate next steps
 
@@ -70,26 +74,17 @@ lapse (directories left at `/mnt/code/qf-validation-runs/{cc-struct-medium,cc-se
 NOT committed, NOT resumed) and re-run clean once the next comprehensive
 run is scoped (below).
 
-1. **Quick win first: PR-6 — DRESS print acknowledgments** (cosmetic-forks
-   §4 consumption form 3; the shipped epic's one residual, BACKLOG).
-   "If you noted PINE: …" inline conditional paragraphs in print export.
-   No live run needed to build it — the plumbing is already eager
-   (`projected_flags` picks up tested cosmetic flags, `StateFlag.codeword`
-   + DRESS naming exist); only the export form is new. Small, self-
-   contained, unblocked (keywords already mint and consume live per PR
-   #103 and the interlude-probe series). Good use of a session between
-   live-run cycles.
-2. **Then: one new comprehensive live run from a clean worktree on
-   current `main`** (not a resume) — DREAM→DRESS at medium,
-   `gpt-oss:120b-cloud` unbilled, exercising everything landed since the
-   last clean run: the PR-5 finalize loop, the stretch cap (B10), the
-   POV-sequences roster + sequence-unit annotate + interlude register
-   (PR-A/B/C), and PR-6 above if it lands first. This single run replaces
-   both abandoned ones and is this cycle's DRESS-at-scale exit for the
-   prose-quality epic *and* the live A/B acceptance for POV sequences
-   (B11 quiet or justified, passages toward the −28% counterfactual,
-   interlude register firing) — no need to run them separately again.
-3. **Then:** the recalibration items (BACKLOG) as calibration data
+1. **One new comprehensive live run from a clean worktree on current
+   `main`** (not a resume) — DREAM→DRESS at medium, `gpt-oss:120b-cloud`
+   unbilled, exercising everything landed since the last clean run: the
+   PR-5 finalize loop, the stretch cap (B10), the POV-sequences roster +
+   sequence-unit annotate + interlude register (PR-A/B/C). This single
+   run replaces both abandoned ones and is this cycle's DRESS-at-scale
+   exit for the prose-quality epic *and* the live A/B acceptance for POV
+   sequences (B11 quiet or justified, passages toward the −28%
+   counterfactual, interlude register firing) — no need to run them
+   separately again.
+2. **Then:** the recalibration items (BACKLOG) as calibration data
    accumulates from the new run.
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is

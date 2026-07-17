@@ -1,7 +1,12 @@
 # Cosmetic forks — one mechanism, renderings as peers, residue keywords (milestone plan)
 
-> Status: **PR-0..PR-5 SHIPPED** (PR-5 built 2026-07-16; PR-6 deferred
-> until a live run mints keywords). The unifying insight is the
+> Status: **PR-0..PR-5 SHIPPED — epic COMPLETE.** PR-6 (§4 consumption form
+> 3, print acknowledgment paragraphs) was scoped 2026-07-17 and closed
+> without building: form 1 (keyword-gated rendering) already delivers real
+> consumption end-to-end in every export format, including print, with no
+> new code; form 3 would have surfaced a "write it down" instruction for
+> keywords that never resolve to anything, which is friction, not
+> consumption (decision log 2026-07-17). The unifying insight is the
 > **author's, directed 2026-07-15**: "diamonds, sidetracks and texture worlds
 > are all intrinsically the exact same mechanism"; "one arm should not have a
 > different treatment than the other" (the texture trunk is currently
@@ -253,10 +258,20 @@ Ranked by machinery cost; v1 is form (1) only:
    partitioning needs gate-precedence semantics ("most specific wins") in
    every runtime. Real machinery, no driver yet.
 3. **Print codeword acknowledgment** ("If you noted PINE: …" as an inline
-   conditional paragraph) — a DRESS/export device; the plumbing is eager
-   (`projected_flags` already picks up tested cosmetic flags,
-   `StateFlag.codeword` + DRESS naming exist) but the export form is new.
-   Own PR, after a live run mints keywords.
+   conditional paragraph) — **closed without building, 2026-07-17 (PR-6
+   scoping).** The mint's reader-facing agency is delivered by the
+   rendering's prose itself, unconditionally, the moment the reader takes
+   the arm — the flag is bookkeeping underneath that, not a second
+   payoff. `projected_flags` already gates print's "write it down"
+   instruction on the flag having a real downstream test (form 1), so an
+   unconsumed keyword already gets zero print footprint today, which is
+   correct: asking a reader to track a codeword that never resolves is
+   friction, not agency. A genuine inline-paragraph consumer (content that
+   actually differs for holders, wired to a real site) would be new
+   machinery comparable in size to form 1 itself — an engine-side
+   consumption-site selection plus a new authoring pass — not an
+   export-only PR, and nothing currently calls for it. See the decision
+   log, 2026-07-17.
 
 **Consumption discipline — acknowledges, never rewards.** If keyword-gated
 content is systematically richer, the detour stops being declinable without
@@ -370,7 +385,7 @@ made; system descriptions are not).
 | PR-3 | 3+ arms + engine shape/count assignment (mandatory mix) — small, and the consumer shape for PR-5. Lands in the *one-shot* finalize (before the loop exists): `cadence_plan` gains the per-site shape, the prompt's CADENCE table states it, `_finalize_apply` enforces it like it enforces counts | mid-tier against this contract |
 | PR-4 | Grant model: `Beat.grants_flags`, `grant_beats`/`choice_grants`/I10/round-trip + violating-construction tests; B6 held-note | mid-tier against this contract |
 | PR-5 | The loop — **delivered whole** (PR #101, 2026-07-16): a same-day hand-off sub-sliced it (5a mechanism / 5b minting + I16 / 5c recursion + retirement + I15 restatement) and left the order open, but the build session delivered all three together — the recorded coupling (retiring mirrored cadence is inseparable from recursion + budget parity) held, and slicing would have re-serialized against itself. Contents as §6 specifies: `finalize:<n>` rounds + per-site `fork:<n>:<k>` passes, minting + gated-rendering consumption + I16, recursion + small-segment admission, probe-scratch and mirrored cadence retired, I15 restated with check and violating constructions, 02's POLISH contract names the loop. Build decisions below | frontier (freeze/arc/I15 seams) |
-| PR-6 | DRESS print acknowledgment paragraphs | deferred until a live run mints keywords |
+| PR-6 | ~~DRESS print acknowledgment paragraphs~~ | **closed, not built** (2026-07-17) — form 1 already covers real consumption in print; see §4 Consumption and the decision log |
 
 **Acceptance criteria per PR** (what "done" means, checkable without this
 plan's authoring session):

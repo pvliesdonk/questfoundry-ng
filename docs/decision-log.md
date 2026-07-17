@@ -16,6 +16,40 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-17, late (PR-6 scoped and closed without building — mint is
+  not a reader-facing event):** Session-recovery investigation after a
+  host crash found two unbilled validation runs abandoned (worktree
+  pinned to a now-merged commit; see the entry below) and, with a live
+  run free, used the gap to scope cosmetic-forks' one remaining BACKLOG
+  item: PR-6, §4 consumption form 3, "If you noted PINE: …" print
+  acknowledgment paragraphs. Investigation of `gamebook.py` and
+  `queries.projected_flags` found form 1 (keyword-gated rendering, the
+  diamond's extra arm) already delivers real print consumption
+  end-to-end with zero new code: the gate is a genuine `requires` on a
+  choice, so DRESS names it a codeword and print both hoists "write down
+  X" and prints "if you have X, turn to Y." An initial scoping pass
+  proposed a cheap fallback — a back-matter acknowledgment line for every
+  minted-but-unconsumed cosmetic keyword, reusing the flag's stored
+  `description` — but the author corrected the framing: **a cosmetic
+  flag's mint is not itself a reader-facing event.** The agency a
+  cosmetic fork delivers comes from the rendering's prose — genuinely
+  different content, given unconditionally the moment the reader takes
+  that arm — not from the flag underneath it, which is bookkeeping for a
+  *possible* later reference. An unconsumed flag has no later reference,
+  so nothing was withheld from the reader; printing a "write this down"
+  instruction for it would be pure friction, asking the reader to track
+  state that never resolves. Checked against current behavior:
+  `projected_flags` already gates print's write-down instruction on a
+  real downstream test, so an unconsumed keyword already gets zero print
+  footprint today — the system was already correct, no gap to fill. A
+  genuine inline-paragraph consumer (content that actually differs for
+  holders, wired to a real site) would need new engine-side
+  consumption-site selection plus a new authoring pass, comparable in
+  size to form 1 itself, not an export-only PR — parked as a future
+  option, not built. PR-6 closed (deleted from BACKLOG; plan doc §4 and
+  the PR-slicing table marked closed-not-built; roadmap's cosmetic-forks
+  entry now reads "no residual"). The cosmetic-forks epic is complete.
+
 - **2026-07-17, evening (the interlude register fires — a three-probe
   doctrine exhibit):** The register had never fired live (three runs, two
   tiers, zero `interlude` marks). PR-C closed it with a probe series on

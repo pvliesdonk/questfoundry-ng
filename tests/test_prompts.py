@@ -338,6 +338,32 @@ def test_fork_texture_premise_is_anchored_and_uncontaminated():
     assert "forest" not in flat and "mountain" not in flat
 
 
+def test_fork_keywords_section_sells_the_gated_arm():
+    """Zero live consumptions (run-6 medium, 0/~18 offers — decision log
+    2026-07-17): the KEYWORDS section was structurally tilted toward
+    declining — it opened "(optional)", its one vivid sentence was the
+    don't-reward warning, it named no positive criterion for when a keyword
+    echoes, and its final sentence was the decline instruction. The
+    rebalanced section states the payoff first, gives a positive echo
+    criterion and an ADD instruction, narrows the decline case to a
+    mid-section clause, and keeps size parity as the one constraint
+    (acknowledges, never rewards — plan §4; consumption stays optional,
+    never assigned)."""
+    source = (PROMPTS_DIR / "polish_fork.j2").read_text(encoding="utf-8")
+    flat = " ".join(source.split())
+    assert "KEYWORDS (optional)" not in flat  # the underselling header
+    assert "how the story remembers" in flat  # the payoff, stated first
+    assert "plausibly touches this site" in flat  # a positive echo criterion
+    assert "ADD the gated arm" in flat  # an instruction, not a permission
+    # the decline case survives, narrowed, and does not close the section:
+    # the constraint sentence comes after it
+    assert 'Leave "gated" out only when' in flat
+    assert flat.index('Leave "gated" out only when') < flat.index("never rewards it")
+    # the one constraint survives verbatim in spirit
+    assert "same size and the same rules" in flat
+    assert "never rewards it" in flat
+
+
 def test_contextualize_renders_the_entities_it_requires():
     """GROW HIGH: the rule 'keep the exact entities' now has the entities in
     context, not withheld."""

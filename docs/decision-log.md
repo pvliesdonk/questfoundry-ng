@@ -16,6 +16,31 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-17 (run-6 read and ratified; the zero-consumption finding):**
+  The stretch-capped loop's live run (run-6, rerun POLISH on the
+  cc-struct-medium GROW checkpoint, `gpt-oss:120b`, unbilled) was read by
+  the author and #102 merged on it: gate-clean, 0 errors + B10 ×1 (the
+  seam-less 5-stretch), worst stretch 14 → 5, walks 2,324–3,241 →
+  1,531–1,660 words/choice, ~25 sites / 3 rounds, 35 keywords minted,
+  zero repair rounds, 62.8k words (+14% — the ratified break surplus).
+  The run's one open finding: **zero keywords consumed live** — rounds
+  2–3 offered round-1 keywords at every edge site (~18 offers) and the
+  model omitted the optional `gated` rendering every time (confirmed
+  against the run's LLM cache: no fork response contains a `gated`
+  entry). Prompt-first diagnosis (this session's agent, reading
+  `polish_fork.j2`): the KEYWORDS section is structurally tilted toward
+  declining — it opens "(optional)"; its only vivid sentence is the
+  failure-mode warning ("an arm richer than its siblings turns a
+  declinable detour into a loss"); it names no positive criterion for
+  when a keyword *does* echo or what a good gated arm delivers; and its
+  final sentence is the decline instruction ("when no keyword genuinely
+  echoes here, leave `gated` out"). Under that asymmetry — adding risks
+  breaking a stated rule, omitting breaks nothing — the modal sample on
+  any tier is to decline, 18/18. The fix is rebalancing the existing
+  section (state the positive purpose and an echo criterion, keep the
+  size-parity rule, move the decline case to a subordinate clause), not
+  adding rules; consumption stays optional-never-assigned (§4).
+
 - **2026-07-16, evening (stretch cap — the author metric lands; first
   loop-built graph read):** The first live loop-built medium graph
   (rerun POLISH on the cc-struct-medium GROW checkpoint, `gpt-oss:120b`,

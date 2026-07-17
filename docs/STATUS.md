@@ -15,7 +15,7 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-16._
+_Last updated: 2026-07-17._
 
 ## Current epics (two threads, roadmap "Now")
 
@@ -136,29 +136,47 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    finalize exhaustion** (the whole proposal landed in one shot) — the
    plan's top loop-risk did not manifest.
 
-**Next: PR-5 is BUILT — whole — as draft PR #101** (2026-07-16, branch
-   `cosmetic-forks-pr5-finalize-loop`): the order decision the last hand-off
-   left open (5b-first vs 5a-first) is mooted — one session delivered
-   5a+5b+5c together, and the recorded coupling held (retiring mirrored
-   cadence was inseparable from recursion + budget parity, so slicing would
-   have re-serialized against itself). Iterative engine-planned fork rounds,
-   keyword minting + v1 consumption (I16), I15 restated composition-closed,
-   mirrored cadence retired, offline-validated end to end
-   (`tests/test_fork_loop.py`). **Drive-by fix:** the acceptance fixture
-   exposed that `_audit_one_context` compared the Passage NODE to the
-   passage id, so every per-passage `audit:<pid>` prompt rendered with an
-   EMPTY passage list — a severe prompt defect the live run survived only
-   because the schema pins the passage enum (the halt itself was the
-   giant-call, fixed by #95; this is its remaining prompt half). Fixed and
-   pinned. Recalibration flags from PR-5 (details in the PR body): forks
-   now price story words honestly, so at the words band top B6 lands a few
-   percent over its top; arc-VIEW beat counts inflate with renderings a
-   walk never traverses (the known B3/B4 post-modulation item, BACKLOG).
-   After #101 merges: the author read of the POLISH-clean medium exemplar
-   (does it feel interactive?), its FILL/DRESS continuation, then PR-6
-   (DRESS print acknowledgments) once a live run mints keywords. GitHub
-   *issues* are NOT used for this repo (author, 2026-07-15) — work is
-   tracked here and in the BACKLOG.
+**PR-5 MERGED (#101), and the stretch cap MERGED (#102)** — the author
+   read of the first loop-built graph (run-5: one productive round, walks
+   at ~2,700 words/choice, a 14-passage no-choice desert on every walk)
+   directed: interruption is the metric, braided like the ending; words
+   calibration later. #102 delivers `choice_stretch_max` (default 4), the
+   DAG-wide conservative stretch metric, advisory **B10**, and the
+   three-phase `fork_plan` admission (mandatory words-exempt stretch
+   breaks → probe-priced depth → B6 fine-tuning). Recalibration flags
+   still open (BACKLOG): B6 lands a few percent over its top at the words
+   band top; arc-VIEW beat counts inflate with renderings a walk never
+   traverses (B3/B4 post-modulation).
+
+   **Run-6 (2026-07-16/17) — the stretch-capped loop live, author-read
+   and approved:** rerun POLISH on the cc-struct-medium GROW checkpoint
+   (`gpt-oss:120b`, unbilled), gate-clean — 0 errors, B10 ×1 (the one
+   seam-less 5-stretch, reported as designed). Worst no-choice stretch 14
+   → 5 (everything else ≤ 4, 1s–4s throughout); walk words/choice
+   2,324–3,241 → 1,531–1,660; ~25 fork sites over 3 rounds (run-5: 7/1);
+   35 keywords minted; zero repair rounds across all fork passes. Words
+   62.8k, +14% over the 55k target (the ratified break surplus, to be
+   reclaimed by calibration). Exemplar still at
+   `/mnt/code/qf-validation-runs/cc-struct-medium` (NOT committed; graph
+   SVG beside the project; run-5 kept as `.run5-pr5-loop-backup`).
+
+   **Open finding — zero keywords consumed live (0/~18 offers):** rounds
+   2–3 offered round-1 keywords at every edge site and the model declined
+   the optional gated rendering every time (confirmed in the LLM cache: no
+   fork response carries a `gated` entry). Machinery-legal — consumption
+   is optional, never assigned, and offline tests prove the path — but the
+   consumption prompt has never fired live. Prompt-read diagnosis
+   (2026-07-17, decision log): `polish_fork.j2`'s KEYWORDS section
+   undersells the option — it opens "(optional)", spends its weight on the
+   don't-reward warning, states no positive criterion for when a keyword
+   *does* echo, and closes on the decline instruction ("leave `gated`
+   out"), so the safe sample is always to decline. Rebalance the existing
+   text (not more rules) before PR-6.
+
+   After the rebalance fires live: FILL on this project for the actual
+   read, then PR-6 (DRESS print acknowledgments — keywords now exist to
+   acknowledge). GitHub *issues* are NOT used for this repo (author,
+   2026-07-15) — work is tracked here and in the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

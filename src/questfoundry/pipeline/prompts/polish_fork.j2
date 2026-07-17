@@ -93,15 +93,20 @@ echo their material as texture, never advance, reveal, or decide them.
 {% endif %}
 {% if keywords %}
 
-KEYWORDS (optional). Some readers arrive here carrying a mark from an earlier
-rendering they chose. You MAY add ONE extra arm visible only to those
-readers, by returning a "gated" entry: {"keyword": one id from the list
-below, copied verbatim, "premise", "beats": [...]} — the same size and the
-same rules as any arm. It ACKNOWLEDGES the mark (the arm may echo what the
-keyword remembers), it never rewards it: an arm richer than its siblings
+KEYWORDS. Some readers arrive here carrying a mark from an earlier rendering
+they chose — a world they walked that the story has not spoken of since. A
+"gated" extra arm, visible only to those readers, is how the story remembers
+their world: the small pleasure of a book that noticed. Read the list below
+for a keyword whose world plausibly touches this site — the same ground or
+road, an entity both share, a mood or rumor that would have traveled — and
+when one does, ADD the gated arm: {"keyword": that id copied verbatim,
+"premise", "beats": [...]}. Leave "gated" out only when no keyword shares
+any ground with this site. The gated arm's premise echoes what its keyword
+remembers, re-expressed in this site's own moment, and it obeys ONE
+constraint: the same size and the same rules as its sibling arms — it
+acknowledges the mark, never rewards it (an arm richer than its siblings
 turns a declinable detour into a loss, which makes the earlier choice a
-consequence. Adding it is always optional — when no keyword genuinely echoes
-here, leave "gated" out.
+consequence).
 {% for f, description in keywords %}
 - {{ f }}: {{ description }}
 {% endfor %}

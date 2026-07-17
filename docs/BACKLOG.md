@@ -84,7 +84,20 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   short runs inside quotation marks in both passages), weighed against the
   laundering risk (a lifted run dressed as a quote) — frontier judgment, its
   own PR. Until then the operator move is a fresh re-roll of the stuck
-  passage's cached call chain.
+  passage's cached call chain. **New mechanism, same class (run-6 FILL
+  halt, 2026-07-17, `write:p-gord-remarks`):** *dovetail beat summaries
+  across a passage boundary* — consecutive beat summaries written as
+  overlapping chains ("Finch's warning hangs, and Gord mutters…" /
+  "Gord mutters that the dead man…") mandate the same on-page moment in
+  two passages when a boundary (here a POV split) lands between them; the
+  writer renders the moment twice and the echo guard correctly fires,
+  unrecoverable in 4 repairs. Measured on the run-6 graph: 8 boundary
+  pairs share a ≥5-token summary run (arm and trunk alike, several at
+  `gap-*` bridge seams). Root candidates, both upstream: the fork/bridge
+  summary style should give each beat ITS OWN event (no neighbor
+  restating), and the POV-sequences redesign removes most of the
+  boundaries. Until either lands: expect a few re-rolls per FILL run at
+  these seams.
 
 ## Structure & scale
 

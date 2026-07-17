@@ -77,7 +77,9 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   #103), `choice_stretch_max` + B10. Contract + mini-ADR A24:
   [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md). Exemplar:
   the cc-struct-medium run-6 graph (author-read: "a much better shape").
-  Residual: PR-6 (DRESS print acknowledgments) in BACKLOG.
+  No residual: PR-6 (DRESS print acknowledgments) was scoped and closed
+  without building, 2026-07-17 — form 1 already delivers print
+  consumption end-to-end (decision log).
 
 ## Now
 
@@ -87,10 +89,12 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   structured review contract) and offline-green. FILL at medium is
   demonstrated twice (gate-clean on `gpt-oss:120b`, author prose verdict
   "good for a 120b model"; the kimi-k2.5 A/B). **Open:** DRESS — no weak
-  tier has completed a clean DRESS at scale. The current run (FILL on the
-  run-6 cc-struct-medium graph, 2026-07-17) continues toward it. **Exit:** a
-  corpus-grounded weak-tier story completes FILL and DRESS gate-clean,
-  exports round-trip, and reads without prose-quality rework.
+  tier has completed a clean DRESS at scale. The prior run (FILL on the
+  run-6 cc-struct-medium graph) was abandoned mid-stall after a host
+  crash (2026-07-17; worktree pinned to a now-merged commit, STATUS.md);
+  a fresh comprehensive DREAM→DRESS run from a clean worktree is next.
+  **Exit:** a corpus-grounded weak-tier story completes FILL and DRESS
+  gate-clean, exports round-trip, and reads without prose-quality rework.
 
 - **POV sequences — run-unit viewpoint annotation** (design agreed
   2026-07-17; the author read of the run-6 graph). Annotate head-hops at

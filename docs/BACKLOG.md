@@ -168,13 +168,6 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Export & tooling
 
-- [ ] **PR-6 — DRESS print acknowledgments (cosmetic-forks §4 consumption
-  form 3; the shipped epic's one residual).** "If you noted PINE: …" inline
-  conditional paragraphs in print export; plumbing is eager
-  (`projected_flags` picks up tested cosmetic flags, `StateFlag.codeword` +
-  DRESS naming exist), the export form is new. Unblocked: keywords now both
-  mint and consume live (run-6 + the 8/8 probe, PR #103). Own PR, per
-  [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md).
 - [ ] **Non-digit codeword fallback** — derived fallback codewords may contain
   digits (slugs allow them; `^[A-Z]{3,12}$` binds only DRESS-stored codewords).
   Cosmetic; a print warning already tells authors to run DRESS.

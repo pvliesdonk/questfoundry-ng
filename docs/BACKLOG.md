@@ -162,13 +162,6 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   route, the events that did not occur (the rival path's commits, the
   foreclosed flags' descriptions) stated explicitly as absences the prose
   can honestly shade around — negative space as a prose-quality lever.
-- [ ] **Interludes never fire at annotate (both tiers, 2026-07-14/15).**
-  Two live mediums declared a journal interlude register in `Voice` and
-  marked zero `interlude` beats at GROW annotate — tier-independent, so a
-  prompt under-determination in `grow_annotate.j2` (the interlude option
-  is offered but nothing states when taking it is expected). Fold into the
-  prompt-template audit or fix directly; the register machinery itself is
-  offline-tested and has never run live.
 - [ ] **`exit_mood` beat annotation** — deferred with the annotation family (01
   §10.3); add only on a demonstrated FILL quality gap (the `scene_type` /
   `narration_scope` precedent).

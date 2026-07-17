@@ -81,7 +81,22 @@ unrepresentable.
    across its beats) and *says so* when the intersection with the roster is
    empty — the model then splits or goes wide, justified. No hard presence
    gate.
-6. **Reordering beats for head contiguity is out of scope here.** It is
+6. **The interludes gap folds in (author-confirmed 2026-07-17).** The
+   BACKLOG item "interludes never fire at annotate" (both tiers, zero
+   marked beats under a declared register) is owned by this epic: the
+   scheme pass also resolves the deviant register's **carrier** from the
+   `pov_hint` (which character's voice; enum-pinned to retained
+   characters — the carrier may be OFF-roster: *Closed Circle*'s journal
+   entries belong to the investigator, who is not a rotating suspect
+   head), and the annotate prompt then carries an explicit expectation
+   ("the scheme declares a register carried by {name}; a reflective beat
+   in that voice is a candidate — a story with a declared register
+   normally marks a handful") instead of an unused option. B11 reports a
+   declared register with zero marked beats. Expansion rule: an
+   `interlude` beat's viewpoint is the carrier, regardless of its
+   segment's head; the (viewpoint, interlude) collapse tuple already
+   makes it its own passage — no split entry needed.
+7. **Reordering beats for head contiguity is out of scope here.** It is
    mechanically feasible (stable cross-thread interleavings; within-thread
    order, intersection adjacencies, and temporal hints stay pinned) and
    belongs **weave-side, pre-contextualize** — after contextualize the
@@ -96,20 +111,25 @@ unrepresentable.
 
 ### The scheme pass (`stages/grow.py`, new pass before `annotate`)
 
-- **Model:** the character entity gains `pov_head: bool = False` — the
-  roster is per-entity, graph-native, round-trips through the project
-  format, and hand-edited files face the same mutation layer (iron rule 1).
-  Roster = the retained characters with the mark. Default `False` means
-  pre-roster projects load unchanged and degrade gracefully (empty roster =
-  no pinning, no I17 — exactly today's behavior).
-- **Mutation:** `set_pov_head(g, entity_id, flag)` — reject non-character
+- **Model:** the character entity gains `pov_head: bool = False` and
+  `interlude_carrier: bool = False` — per-entity, graph-native,
+  round-trips through the project format, and hand-edited files face the
+  same mutation layer (iron rule 1). Roster = the retained characters
+  with the `pov_head` mark; the carrier (at most one) is the declared
+  register's voice, roster membership not required (decision 6). Defaults
+  `False` mean pre-roster projects load unchanged and degrade gracefully
+  (empty roster = no pinning, no I17 — exactly today's behavior).
+- **Mutation:** `set_pov_head(g, entity_id, flag)` and
+  `set_interlude_carrier(g, entity_id, flag)` — reject non-character
   entities; no freeze interaction (entity annotation, not beat).
 - **Pass:** `scheme`, utility role, runs after `contextualize`, before
   `annotate` (it needs the retained cast, nothing else). Context:
   `vision.pov_hint` verbatim + the retained characters (`name (id):
-  concept`). Proposal: `{heads: [character ids], min 1}`, enum-pinned to
-  retained character ids. A single-viewpoint scheme is a roster of one —
-  correct, not degenerate. Apply sets the marks and logs the roster.
+  concept`). Proposal: `{heads: [character ids], min 1,
+  interlude_head: character id or ""}`, both enum-pinned to retained
+  character ids (`""` = the scheme declares no deviant register). A
+  single-viewpoint scheme is a roster of one — correct, not degenerate.
+  Apply sets the marks and logs the roster + carrier.
 - **Skip:** none — every story has a scheme, even the default "one limited
   viewpoint" (the pass resolves *who* that one head is).
 
@@ -127,7 +147,11 @@ watch-item: if a live run degenerates, decompose by act, never per beat.
   characters present across the sequence's beats; rendered as "any of: …"
   or "NO roster head spans this sequence — split it where the center
   shifts, or justify a wide cutaway"). The roster (with names/concepts) and
-  `pov_hint` render once. The scene-type/narration-scope doctrine is
+  `pov_hint` render once; when a carrier is declared, the register renders
+  as an explicit expectation ("the scheme declares a register carried by
+  {name}; a reflective beat in that voice is a candidate — a story with a
+  declared register normally marks a handful"), replacing today's unused
+  option (decision 6). The scene-type/narration-scope doctrine is
   unchanged.
 - **Schema (two sections, one proposal):**
   - `beat_annotations`: exactly today's per-beat `scene_type` +
@@ -144,7 +168,9 @@ watch-item: if a live run degenerates, decompose by act, never per beat.
   `splits[].after` must lie inside the sequence, not last, strictly
   ordered, no duplicates; the engine then **expands** sequence heads to
   per-beat `set_beat_viewpoint` — `limited` beats get the segment's head,
-  `wide` beats normalize to `None` exactly as today. The run log records
+  `wide` beats normalize to `None` exactly as today, and `interlude`
+  beats get the carrier as viewpoint regardless of their segment's head
+  (an interlude with no declared carrier is a repairable error). The run log records
   the head distribution, every split with its justification, and every
   wide cutaway (the justifications live in the log and the proposal
   snapshot, not on the graph — the gate reports counts, the log holds the
@@ -158,8 +184,10 @@ watch-item: if a live run degenerates, decompose by act, never per beat.
 ### Gates: I17 (error) and B11 (advisory), per iron rule 6
 
 - **I17 — declared-scheme conformance** (01 §8 entry, `validate.py` check,
-  violating-construction test): when the roster is non-empty, every beat
-  `viewpoint` is a roster member. Errors; skipped entirely when no roster
+  violating-construction test): when the roster is non-empty, every
+  base-register beat's `viewpoint` is a roster member, and every
+  `interlude` beat's `viewpoint` is the declared carrier (who may be
+  off-roster — decision 6). Errors; skipped entirely when no roster
   exists (pre-roster projects, the current golden). The annotate schema
   makes violations unrepresentable at proposal time; I17 is the guard for
   every other writer (hand edits, future passes) per iron rule 1.
@@ -169,6 +197,8 @@ watch-item: if a live run degenerates, decompose by act, never per beat.
     disagree — the B10 precedent);
   - non-coda `wide` beats (wide with a successor, outside the
     epilogue/ending region);
+  - a declared interlude register with zero marked beats (the live gap,
+    now visible at the gate);
   - the per-head share of headed beats (report-only — a one-passage head is
     visible taste, not a violation).
 
@@ -197,13 +227,19 @@ structured truth beside it). FILL's write/review machinery is untouched.
 | 12 | pre-roster project loads | empty roster → no pinning, I17 skips, prompts degrade to today's — regression test |
 | 13 | bridge/arm beats after annotate | wildcards / mirror copy — unchanged-behavior tests |
 | 14 | mid-sequence switch sneaks through (justified split) | B11 reports it; test the count |
+| 15 | `interlude` beat with no declared carrier | repairable `ApplyError` (the register is scheme-licensed — today's rule, now mechanical) |
+| 16 | interlude beat's viewpoint ≠ carrier (hand edit) | I17 (error) |
+| 17 | declared register, zero interlude beats | B11 advisory (the live gap made visible) |
 
 ## PR slicing (sequential, each offline-green)
 
-- **PR-A — the roster:** `pov_head` field + mutation, the scheme pass,
-  I17 + violating construction, `fill_voice` context, golden untouched
+- **PR-A — the roster:** `pov_head` + `interlude_carrier` fields +
+  mutations, the scheme pass (heads + carrier), I17 + violating
+  construction, `fill_voice` context (roster + carrier), golden untouched
   (no roster = degenerate case), e2e fixture gains a scheme proposal.
-  Docs: 01 §5/§8, 02 GROW contract (the scheme pass), this plan's status.
+  Closes the BACKLOG "interludes never fire" item's *resolution* half
+  (the expectation lands in PR-B's prompt). Docs: 01 §5/§8, 02 GROW
+  contract (the scheme pass), this plan's status.
 - **PR-B — sequence-unit annotate:** context (sequences + candidate
   heads), schema (two sections; enum pins), apply (coverage, splits,
   expansion), `grow_annotate.j2` rewrite, B11, fixtures re-recorded.
@@ -223,18 +259,17 @@ POLISH. Direct A/B against run-6 on identical structure. Acceptance:
 mid-sequence switches ≈ 0 (B11 quiet or every switch justified), passage
 count on the same graph falls toward the ~114 counterfactual (+ audit
 variants), B3 in band, stretch metric honest, head shares matching the
-scheme. Then read one head-switch boundary for craft (does the rotation
+scheme — and the register finally fires (the cc-struct-medium `pov_hint`
+declares journal interludes; both prior tiers marked zero — a handful of
+carrier-headed interlude beats is the acceptance, B11's register line
+quiet). Then read one head-switch boundary for craft (does the rotation
 land at a real shift?).
 
 ## Open questions (flagged, not preempted)
 
-1. **Fold the interludes gap in?** (BACKLOG: "interludes never fire at
-   annotate", both tiers.) The scheme pass is the natural home — it could
-   also resolve the deviant register's carrier head and expected use from
-   the `pov_hint`, giving annotate an explicit expectation instead of an
-   unused option. Recommended: fold into PR-A (one small field, one prompt
-   sentence). Author sign-off wanted because it touches the register
-   semantics.
+1. ~~Fold the interludes gap in?~~ **Resolved — folded (author-confirmed
+   2026-07-17, decision 6).** The scheme pass resolves the carrier; the
+   annotate prompt carries the expectation; B11 reports a silent register.
 2. **Roster changes on rerun.** `qf rerun grow` re-runs the scheme pass; a
    different roster invalidates downstream heads by construction (annotate
    re-runs with it — consistent). No action; noted for operators.

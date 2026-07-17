@@ -73,6 +73,14 @@ class Entity(Node):
     overlays: list[Overlay] = []
     retained: bool = True  # SEED triage disposition
     arc: EntityArc | None = None  # POLISH arcs pass; FILL-facing only
+    # The POV scheme roster (pov-sequences.md): characters only, set by
+    # GROW's scheme pass from vision.pov_hint. `pov_head` = a followed
+    # head (I17 holds base-register beats to the roster); at most one
+    # `interlude_carrier` = the declared deviant register's voice, roster
+    # membership not required. Both default False: pre-roster projects
+    # load unchanged and I17 skips (graceful degradation).
+    pov_head: bool = False
+    interlude_carrier: bool = False
 
     @model_validator(mode="after")
     def _category_prefix(self) -> Entity:

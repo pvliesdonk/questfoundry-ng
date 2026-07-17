@@ -170,7 +170,7 @@ def test_grow_bridge_pass_skipped_when_no_gaps(grown):
     assert bridge.attempts == 0
     assert bridge.applied == ["skipped: no entity-disjoint adjacencies"]
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    assert len(ledger) == 8  # 5 through SEED + intersections + weave + annotate
+    assert len(ledger) == 9  # 5 through SEED + intersections + weave + scheme + annotate
 
 
 def test_grown_project_roundtrips_frozen(grown):
@@ -196,9 +196,9 @@ def test_pipeline_reaches_polish(polished):
     assert all(r.success for r in reports), [r.error or r.issues for r in reports]
     assert project.stage == Stage.POLISH
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    # 8 through GROW + finalize + 8 summary:<group> + 6 labels:<group>
+    # 9 through GROW + finalize + 8 summary:<group> + 6 labels:<group>
     # + 3 audit:<pid> (per-passage, A21) + arcs
-    assert len(ledger) == 27
+    assert len(ledger) == 28
 
 
 def test_polish_builds_the_passage_layer(polished):
@@ -271,7 +271,7 @@ def test_pipeline_reaches_fill_through_one_review_round(filled):
     assert by_name["write:p-wrong-depths"].attempts == 2
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
     # 27 through POLISH + voice + 8x(write+review+summarize) + 1 revision pair
-    assert len(ledger) == 54
+    assert len(ledger) == 55
 
 
 def test_fill_wrote_every_passage_within_budget(filled):
@@ -415,7 +415,7 @@ def test_pipeline_reaches_dress_through_one_review_round(dressed):
     assert by_name["codewords"].attempts == 1
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
     # 54 through FILL + direction + briefs + 2x(codex propose + review) + codewords
-    assert len(ledger) == 61
+    assert len(ledger) == 62
 
 
 def test_dress_populates_enrichment(dressed):

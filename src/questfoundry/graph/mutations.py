@@ -23,7 +23,7 @@ from questfoundry.models.structure import (
     SceneType,
     StateFlag,
 )
-from questfoundry.models.world import Entity, EntityArc
+from questfoundry.models.world import Entity, EntityArc, EntityCategory
 
 CODEWORD_RE = re.compile(r"^[A-Z]{3,12}$")
 
@@ -496,6 +496,32 @@ def set_beat_viewpoint(
         raise MutationError(f"beat {beat_id}: an interlude beat must name a viewpoint")
     beat.viewpoint = viewpoint
     beat.interlude = interlude
+
+
+def set_pov_head(g: StoryGraph, entity_id: str, flag: bool) -> None:
+    """GROW's scheme write path: mark a character as a followed POV head
+    (the roster; pov-sequences.md). Characters only — a head is always a
+    character (rotating-pov-build.md). Entity annotation, no freeze
+    interaction; scheme conformance of beat heads is I17's job."""
+    entity = g.get(entity_id)
+    if not isinstance(entity, Entity) or entity.category != EntityCategory.CHARACTER:
+        raise MutationError(f"{entity_id!r} is not a character; only characters head a POV")
+    entity.pov_head = flag
+
+
+def set_interlude_carrier(g: StoryGraph, entity_id: str, flag: bool) -> None:
+    """GROW's scheme write path: mark the character whose voice carries the
+    scheme's deviant register (journal entries, letters). At most one
+    carrier per story — the scheme schema makes a second unrepresentable,
+    I17 catches a hand edit. Roster membership is not required (the
+    *Closed Circle* investigator carries the journal without being a
+    rotating head)."""
+    entity = g.get(entity_id)
+    if not isinstance(entity, Entity) or entity.category != EntityCategory.CHARACTER:
+        raise MutationError(
+            f"{entity_id!r} is not a character; only a character's voice carries a register"
+        )
+    entity.interlude_carrier = flag
 
 
 def set_beat_texture_premise(g: StoryGraph, beat_id: str, premise: str) -> None:

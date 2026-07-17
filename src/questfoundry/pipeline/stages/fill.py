@@ -131,12 +131,19 @@ def _voice_context(project: Project) -> dict:
         ),
         key=lambda e: e.id,
     )
+    # the declared scheme (GROW's scheme pass; pov-sequences.md): when a
+    # roster exists, the voice DESCRIBES it rather than re-deciding it —
+    # the graph marks are the single source of truth
+    roster = [e for e in cast if e.pov_head]
+    carrier = next((e for e in cast if e.interlude_carrier), None)
     return {
         "vision": project.vision,
         "dilemmas": [d for d in g.nodes_of(Dilemma) if not d.reserved],
         "endings": endings,
         "passage_count": len(g.nodes_of(Passage)),
         "cast": cast,
+        "roster": roster,
+        "carrier": carrier,
     }
 
 

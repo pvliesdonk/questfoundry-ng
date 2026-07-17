@@ -1,1 +1,1 @@
-{"text": "{\n \"audit\": [\n  {\n   \"passage\": \"passage:p-long-watch\",\n   \"irrelevant\": [\n    \"flag:elias-knows\",\n    \"flag:lie-between\"\n   ]\n  }\n ]\n}"}
+{"text": "{\n \"labels\": [\n  {\n   \"to\": 6,\n   \"label\": \"Cap the lamp and step aboard\"\n  },\n  {\n   \"to\": 7,\n   \"label\": \"Send the ship away and trim the wick\"\n  }\n ]\n}"}

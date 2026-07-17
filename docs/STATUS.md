@@ -53,14 +53,12 @@ Details now live in the roadmap Shipped section and the plan docs; PR-6
    author read (does it feel interactive?), then DRESS on the same
    project — which is the prose epic's DRESS-at-scale exit and unblocks
    PR-6 (print acknowledgments, BACKLOG).
-2. **POV sequences: write the design docs, then build.** 01 terminology
-   (*sequence*) + §10 annotation family, the 02 GROW annotate contract,
-   then offline-TDD implementation (schema pins the roster enum; splits
-   and wide-cutaways justified; B11 advisory). Contract sketch in the
-   roadmap "Now" entry; ratified decisions in the decision log
-   (2026-07-17): split-with-justification, roster resolved before
-   annotate, reordering deferred to the weave-linearization epic
-   (pre-contextualize, engine-side).
+2. **POV sequences: PR-A (the roster) is built** — scheme pass resolving
+   `pov_hint` into `pov_head`/`interlude_carrier` marks, I17, the
+   roster-pinned annotate enum + interlude-carrier apply rule, voice
+   reading the roster; offline-green (contract:
+   [`plans/pov-sequences.md`](plans/pov-sequences.md)). **Next: PR-B** —
+   the sequence-unit annotate restructure + B11.
 3. **Then:** PR-6 once DRESS runs on a keyword-consuming project, and the
    recalibration items (BACKLOG) as calibration data accumulates.
 

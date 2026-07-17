@@ -39,6 +39,11 @@ or imitate a note's wording.
 
 {{ research }}
 {% endif %}
+{% if roster %}
+THE DECLARED SCHEME (already resolved — describe it, do not re-decide it).
+The narration follows exactly these heads: {% for r in roster %}{{ r.name }}{% if not loop.last %}, {% endif %}{% endfor %}.
+{% if carrier %}The scheme's deviant register is carried by {{ carrier.name }}.{% endif %}
+{% endif %}
 Decide:
 - pov: the story's viewpoint SCHEME — whose head(s), how close. A single fixed
   viewpoint reads "second person", or "third person limited (NAME)". A rotating
@@ -47,6 +52,8 @@ Decide:
   inside ONE of those heads (the engine assigns which). Every NAME must be a
   viewpoint character's name spelled exactly as the cast lists it. Never coin or
   vary a name here: every passage and its review will be held to this string.
+  When a DECLARED SCHEME is shown above, its heads are the scheme — name
+  exactly those, no more, no fewer.
 - tense: past or present.
 - interlude: "" for almost every story. Set it ONLY when the POV hint names a
   marked deviant register woven into the scheme (occasional first-person journal
@@ -54,9 +61,10 @@ Decide:
   with the narrator's name IN PARENTHESES exactly as the pov names its
   viewpoint — "first-person past-tense journal entries (NAME)" — spelled
   exactly as the cast lists it. The parenthetical is required: it is how the
-  engine checks the narrator against the cast. Passages the engine marks as
-  interludes are written and reviewed against this line instead of the
-  pov/tense above.
+  engine checks the narrator against the cast. When a DECLARED SCHEME above
+  names a register carrier, the narrator is that character. Passages the
+  engine marks as interludes are written and reviewed against this line
+  instead of the pov/tense above.
 - diction: the register in a phrase ("spare, salt-worn, literary").
 - rhythm: one line of sentence-rhythm rules — set a PLAIN baseline (most
   sentences straightforward and complete, varied in length) and reserve

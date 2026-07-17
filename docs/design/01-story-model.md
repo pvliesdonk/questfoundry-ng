@@ -342,9 +342,24 @@ the beat*, not topology (§10.3 governs which the model keeps):
   first-person journal entries, letters); an interlude beat needs a viewpoint,
   is never `wide`, never shares a passage with base-register beats, and FILL
   writes/reviews its passage against the interlude register instead of the
-  book-default pov/tense. Rotation cadence is deliberately *not* engine-
-  constrained (author decision): the annotate prompt prefers head-runs and
-  rotates at shifts of dramatic center.
+  book-default pov/tense. ~~Rotation cadence is deliberately *not* engine-
+  constrained~~ — that v1 decision's reserved escalation has fired (the live
+  medium showed per-beat head-hopping; author-directed 2026-07-17,
+  `docs/plans/pov-sequences.md`): the head roster is now declared and
+  structural, and PR-B moves assignment to the sequence unit.
+
+- **`pov_head` + `interlude_carrier` (entity marks, characters only)** — the
+  **declared POV scheme**, resolved from the prose `Vision.pov_hint` by
+  GROW's *scheme* pass before annotate (`docs/plans/pov-sequences.md`).
+  `pov_head` marks each followed head (the roster); at most one
+  `interlude_carrier` marks the deviant register's voice, roster membership
+  **not required** (an investigator's journal amid rotating suspects). The
+  annotate schema pins `viewpoint` to roster ∪ carrier, so an off-scheme
+  head is unrepresentable in the pipeline; invariant **I17** (§8) holds
+  every other writer to the same rule, and FILL's voice pass *describes*
+  the declared roster instead of re-deciding it. No marks = a pre-scheme
+  project — the legal degenerate case (I17 skips, the pins fall back to the
+  retained cast).
 
 Whatever its class, a beat's summary is a **brief for the prose writer,
 never the prose**: plain declarative present tense stating who does what,
@@ -750,6 +765,14 @@ design.
   permission (prose may color, a gated rendering may acknowledge), never
   a promise — anything downstream must honor is a dilemma in costume and
   belongs in GROW.
+- **I17** Declared-scheme conformance (`docs/plans/pov-sequences.md`;
+  author-ratified 2026-07-17): when a head roster exists (any character
+  marked `pov_head`), every base-register beat's `viewpoint` is a roster
+  member and every `interlude` beat's `viewpoint` is the declared
+  `interlude_carrier` (who may be off-roster); at most one carrier per
+  story. No roster → the check skips (pre-scheme projects are the legal
+  degenerate case). The scheme/annotate schemas make pipeline violations
+  unrepresentable; the gate holds hand edits to the same rule.
 
 ## 9. Where the mapping breaks (danger zones)
 

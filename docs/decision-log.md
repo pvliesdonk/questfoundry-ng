@@ -16,6 +16,34 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-17, later still (two epics shipped — author call; roadmap
+  reconciled):** The author called **structural depth** and **cosmetic
+  forks** shipped ("should have shipped already") — both epics' machinery
+  is merged and live-validated (texture-trial through DRESS;
+  run-6 author-read "a much better shape"; consumption 8/8 on the probe).
+  Moved to the roadmap Shipped section; PR-6 (print acknowledgments) is
+  cosmetic forks' one residual, now a BACKLOG item. The roadmap "Now"
+  gains **POV sequences** (the run-unit annotate redesign, design agreed
+  same day — the *sequence* term ratified by the author over "scene",
+  which Swain's `scene_type` already owns) and "Next" gains **weave
+  linearization — drama-layer braiding** (capsule interleaving +
+  head-aware reordering; design constraint recorded: linearization is
+  weave-side, pre-contextualize, because contextualize chains summaries
+  narratively — reordering after it would force re-contextualization,
+  before it reorder is a pure engine step; on today's capsule-shaped
+  weave output there is little to reorder, so the primitive builds with
+  that epic, not with POV sequences). Head-roster decisions ratified same
+  session: resolve `pov_hint` → an explicit roster before annotate and
+  pin the viewpoint enum to it (closes the ungated off-scheme-head
+  BACKLOG item structurally — the kimi victim-head class becomes
+  unrepresentable); `Voice` reads the roster at FILL; a
+  no-roster-head sequence resolves by justified split or justified
+  wide-cutaway (wide stays doctrinally a coda register, never an
+  automatic fallback — if the valve fires often that is a weave/roster
+  defect to fix upstream); B11 advisory reports mid-sequence splits,
+  non-coda wides, and per-head share (a one-passage head is visible
+  taste, not a hard rule).
+
 - **2026-07-17, later (the beat/passage collapse read — two findings under
   one graph):** Reading the run-6 passage graph beside its beat graph, the
   author observed (a) a dilemma "very quickly playing out" in a straight

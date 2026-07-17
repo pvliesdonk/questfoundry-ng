@@ -149,31 +149,6 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   route, the events that did not occur (the rival path's commits, the
   foreclosed flags' descriptions) stated explicitly as absences the prose
   can honestly shade around — negative space as a prose-quality lever.
-- [ ] **Annotate head-hops at beat granularity; I14 shatters passages (author
-  read of the run-6 graph, 2026-07-17).** On the stretch-capped medium graph,
-  58% of consecutive annotated linear beat pairs switch heads
-  (`grow_annotate.j2`'s "PREFER RUNS … never beat-by-beat" is stated but
-  structurally unenforced), and I14's one-head-per-passage split then mints a
-  no-choice page-turn at every hop: 76 of the graph's no-choice passage
-  boundaries (~44% of 172 passages) are pure POV splits — vs 37 passages that
-  end in a real choice. Counterfactual with the repo's own collapse: heads
-  held per run → 159→114 passages (−28%), singletons 59→18. Compounds:
-  texture arms inherit trunk heads via `mirrors` (fragmentation duplicates
-  into every arm), the choice-stretch metric counts passages (the fork loop
-  spends words interrupting deserts that are partly this artifact), and B3's
-  172>160 overflow is largely the same. **Agreed direction (author,
-  2026-07-17): restructure the annotation task rather than add rules —
-  make the run, not the beat, the unit of viewpoint assignment** (design
-  discussion in the decision log; the beat keeps per-beat `scene_type`/
-  `narration_scope`). Numbers and boundary-cause table in the decision log.
-- [ ] **Head-scheme conformance is ungated (live kimi A/B, 2026-07-15).**
-  GROW annotate assigned the *victim* (Bernard Croft) as viewpoint head for
-  4 passages while `Voice.pov` declares a four-head rotation without him —
-  I14 (one head per passage) and G3 (head is a retained character) both
-  pass; nothing checks head ∈ the declared scheme. Decide: gate it (the
-  scheme is authoritative), or bless off-scheme heads as legitimate
-  (prologue/epilogue/victim's-eyes passages are a real device) and make
-  the voice pass *declare* what annotate assigned. Frontier judgment.
 - [ ] **Interludes never fire at annotate (both tiers, 2026-07-14/15).**
   Two live mediums declared a journal interlude register in `Voice` and
   marked zero `interlude` beats at GROW annotate — tier-independent, so a
@@ -187,6 +162,13 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Export & tooling
 
+- [ ] **PR-6 — DRESS print acknowledgments (cosmetic-forks §4 consumption
+  form 3; the shipped epic's one residual).** "If you noted PINE: …" inline
+  conditional paragraphs in print export; plumbing is eager
+  (`projected_flags` picks up tested cosmetic flags, `StateFlag.codeword` +
+  DRESS naming exist), the export form is new. Unblocked: keywords now both
+  mint and consume live (run-6 + the 8/8 probe, PR #103). Own PR, per
+  [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md).
 - [ ] **Non-digit codeword fallback** — derived fallback codewords may contain
   digits (slugs allow them; `^[A-Z]{3,12}$` binds only DRESS-stored codewords).
   Cosmetic; a print warning already tells authors to run DRESS.

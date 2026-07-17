@@ -149,14 +149,6 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   route, the events that did not occur (the rival path's commits, the
   foreclosed flags' descriptions) stated explicitly as absences the prose
   can honestly shade around — negative space as a prose-quality lever.
-- [ ] **Head-scheme conformance is ungated (live kimi A/B, 2026-07-15).**
-  GROW annotate assigned the *victim* (Bernard Croft) as viewpoint head for
-  4 passages while `Voice.pov` declares a four-head rotation without him —
-  I14 (one head per passage) and G3 (head is a retained character) both
-  pass; nothing checks head ∈ the declared scheme. Decide: gate it (the
-  scheme is authoritative), or bless off-scheme heads as legitimate
-  (prologue/epilogue/victim's-eyes passages are a real device) and make
-  the voice pass *declare* what annotate assigned. Frontier judgment.
 - [ ] **Interludes never fire at annotate (both tiers, 2026-07-14/15).**
   Two live mediums declared a journal interlude register in `Voice` and
   marked zero `interlude` beats at GROW annotate — tier-independent, so a
@@ -170,6 +162,13 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Export & tooling
 
+- [ ] **PR-6 — DRESS print acknowledgments (cosmetic-forks §4 consumption
+  form 3; the shipped epic's one residual).** "If you noted PINE: …" inline
+  conditional paragraphs in print export; plumbing is eager
+  (`projected_flags` picks up tested cosmetic flags, `StateFlag.codeword` +
+  DRESS naming exist), the export form is new. Unblocked: keywords now both
+  mint and consume live (run-6 + the 8/8 probe, PR #103). Own PR, per
+  [`plans/cosmetic-forks.md`](plans/cosmetic-forks.md).
 - [ ] **Non-digit codeword fallback** — derived fallback codewords may contain
   digits (slugs allow them; `^[A-Z]{3,12}$` binds only DRESS-stored codewords).
   Cosmetic; a print warning already tells authors to run DRESS.

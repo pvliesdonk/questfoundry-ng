@@ -55,73 +55,72 @@ collapse head-switch cut, per-passage FILL enforcement, `Voice.interlude`;
 live-validated by the first weak-tier medium to finish FILL gate-clean —
 `examples/closed-circle-medium`). See `docs/plans/` and the decision log.
 
+- **Structural depth — material density & texture worlds** (author-directed
+  2026-07-14; shipped 2026-07-17, author call). The flat-book fix: dilemma
+  budget coupled to the words budget (+B9 bridge tripwire, #77), brainstorm
+  surplus reserved as feedstock (#78), the texture-worlds engine (mirrored
+  parallel-world splice, I15, #79), finalize integration + the FILL
+  premise lever (#81). Live-validated by the short-scope texture-trial
+  (first project ever through DRESS gate-clean, W1–W4 exercised;
+  `examples/letter-and-frontier`). Contract:
+  [`../plans/structural-depth.md`](../plans/structural-depth.md).
+  Residuals: band recalibration items in BACKLOG.
+
+- **Cosmetic forks — one branching mechanism, renderings as peers, residue
+  keywords** (author-directed 2026-07-15; shipped 2026-07-17, author
+  call). One construct (k ≥ 2 renderings of a trunk segment, premises as
+  peers), finalize as a fixed-point loop with engine-planned rounds and
+  three-phase admission (mandatory stretch breaks / probe-priced depth /
+  B6 tuning, #101/#102), engine-assigned shapes (#97/#98), the cosmetic
+  grant model + I16 (#99), keyword minting + v1 consumption (validated
+  live: run-6 minted 35; the rebalanced consumption prompt fires 8/8,
+  #103), `choice_stretch_max` + B10. Contract + mini-ADR A24:
+  [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md). Exemplar:
+  the cc-struct-medium run-6 graph (author-read: "a much better shape").
+  Residual: PR-6 (DRESS print acknowledgments) in BACKLOG.
+
 ## Now
 
 - **Prose quality at scale — the remaining live validation.** The engine half is
   built (echo check, rolling story-so-far, input-role framing, richer Voice,
   character-arc metadata, `scene_type`/`narration_scope` modulation, the
-  structured review contract) and offline-green. FILL at medium is now
-  demonstrated (2026-07-14: the *Closed Circle* run finished FILL gate-clean
-  on `gpt-oss:120b`, and the author's read verdict was "the prose is good,
-  for a 120b model"). **Open:** DRESS — no weak tier has completed a clean
-  DRESS at scale. The next validation run also proves the now-mandatory
-  cadence budget live (its enforcement shipped after the flat exemplar; the
-  deeper structural work is the sibling milestone below). **Exit:** a
+  structured review contract) and offline-green. FILL at medium is
+  demonstrated twice (gate-clean on `gpt-oss:120b`, author prose verdict
+  "good for a 120b model"; the kimi-k2.5 A/B). **Open:** DRESS — no weak
+  tier has completed a clean DRESS at scale. The current run (FILL on the
+  run-6 cc-struct-medium graph, 2026-07-17) continues toward it. **Exit:** a
   corpus-grounded weak-tier story completes FILL and DRESS gate-clean,
   exports round-trip, and reads without prose-quality rework.
 
-- **Structural depth — material density & texture worlds**
-  (author-directed, 2026-07-14; picked up the same day). Opened by the
-  first reading of `examples/closed-circle-medium`: gate-clean yet
-  "essentially a flat story" — the author's diagnosis is *stretching* ("if
-  we do not have enough branching material we may not be able to sustain
-  such a long story and need more dilemmas"), and false branching "may
-  help, but cannot compensate something as bare as the finished run"; the
-  structural A/B agrees (the stretched run carried 89 bridge beats vs 27
-  and 33; even kimi's budget-saturated structure projects 1020
-  words/choice — texture saturates on a bare trunk). Four author-directed
-  ingredients: **material density** (dilemma budget coupled to the words
-  budget, bridge share bounded), **brainstorm surplus retained** as
-  branching feedstock (tagged, not woven), **tensored texture worlds**
-  (the false branch generalized to a diamond over a whole run — parallel
-  texture-worlds, different textures, never different consequences), and
-  **the context lever** (FILL's per-world context makes parallel beats
-  read as genuinely different scenes). Design, mechanics, and PR slicing
-  live in [`../plans/structural-depth.md`](../plans/structural-depth.md)
-  — the authoritative contract. **Status:** all four PRs built — PR-1
-  (words-target budget coupling + B9, #77), PR-2 (the `reserve` triage
-  disposition, #78), PR-3 (the texture-worlds engine: mirrored
-  parallel-world splice, invariant I15, #79), PR-4 (finalize
-  integration: mandatory texture sites, words-budget cap, the FILL
-  context lever). **Open: the live validation run** — the milestone's
-  exit criterion below. **Exit:** a fresh weak-tier medium at a band-top words
-  target derives its budget, plants texture forks, lands B6 mid-band with
-  B9 quiet, and an author read finds actual interactivity.
+- **POV sequences — run-unit viewpoint annotation** (design agreed
+  2026-07-17; the author read of the run-6 graph). Annotate head-hops at
+  beat granularity and I14 shatters linear runs into thin no-choice
+  passages (76 of 172 passages are pure POV splits; counterfactual −28%).
+  Redesign: the **sequence** (maximal choice-free run, computed) becomes
+  the unit of viewpoint assignment — one head per sequence, split only
+  with justification; a **head roster** resolved from `pov_hint` before
+  annotate pins the viewpoint enum (closes the off-scheme-head gap);
+  wide-cutaway as a justified escape valve; B11 advisory (mid-sequence
+  splits, non-coda wides, per-head share); `Voice` reads the roster at
+  FILL. Numbers in the decision log (2026-07-17) and BACKLOG.
 
 ## Next
 
-- **Cosmetic forks — one branching mechanism, renderings as peers, residue
-  keywords** (author-directed 2026-07-15; shape ratified same day). The
-  author's unification of the day's three branching ideas: "diamonds,
-  sidetracks and texture worlds are all intrinsically the exact same
-  mechanism" — one construct (k ≥ 2 renderings of a trunk segment), with
-  renderings as *peers* ("one arm should not have a different treatment
-  than the other": a premise per rendering including the trunk segment, an
-  engine-minted cosmetic keyword per non-empty rendering), finalize as a
-  fixed-point **loop** of the one splice (recursion "basically means
-  running the same phase several times in a loop"; choice parity between
-  renderings becomes budget-derived — every walk in the B6 band — retiring
-  the mirrored-cadence twinning), and **residue keywords** consumable by
-  later keyword-gated renderings (obligation boundary made structural:
-  I16). Contract, ratified decisions, and PR slicing in
-  [`../plans/cosmetic-forks.md`](../plans/cosmetic-forks.md) (mini-ADR
-  A24). **Engine complete through PR-5** (2026-07-16: the loop, minting,
-  v1 consumption, I15 restated + I16, mirrored cadence retired —
-  offline-validated); PR-6 (DRESS print acknowledgments) waits on a live
-  run that mints keywords. **Exit:** a generated story plants
-  nested/mixed cosmetic forks from the loop, mints and consumes keywords,
-  every walk lands in the B6 band, and an author read finds the fake
-  branching leaves felt residue.
+- **Weave linearization — drama-layer braiding** (from the author read of
+  the run-6 graph, 2026-07-17). An unexplored dilemma's beats weave as one
+  consecutive capsule (`call-out-farmers`: 6 uninterrupted beats right
+  after setup, no other thread interleaved) — the fork loop braids the
+  *choice* layer; nothing braids the *drama* layer. The epic: use the
+  weave's linearization freedom deliberately — interleave capsule blocks
+  thread-by-thread, and reorder for head-candidate contiguity (legal moves
+  are stable cross-thread interleavings: within-thread order, intersection
+  adjacencies, and temporal hints stay pinned). **Design constraint
+  (recorded 2026-07-17): linearization policy is weave-side and
+  pre-contextualize** — after contextualize the summaries chain
+  narratively and reordering would force re-contextualization; before it,
+  reorder is a pure engine step. Builds on the sequence concept from the
+  POV-sequences redesign. Touches the scaffold shape, intersections, and
+  the capsule placement the shape presets encode.
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved

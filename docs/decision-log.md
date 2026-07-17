@@ -16,6 +16,65 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-17, later still (two epics shipped — author call; roadmap
+  reconciled):** The author called **structural depth** and **cosmetic
+  forks** shipped ("should have shipped already") — both epics' machinery
+  is merged and live-validated (texture-trial through DRESS;
+  run-6 author-read "a much better shape"; consumption 8/8 on the probe).
+  Moved to the roadmap Shipped section; PR-6 (print acknowledgments) is
+  cosmetic forks' one residual, now a BACKLOG item. The roadmap "Now"
+  gains **POV sequences** (the run-unit annotate redesign, design agreed
+  same day — the *sequence* term ratified by the author over "scene",
+  which Swain's `scene_type` already owns) and "Next" gains **weave
+  linearization — drama-layer braiding** (capsule interleaving +
+  head-aware reordering; design constraint recorded: linearization is
+  weave-side, pre-contextualize, because contextualize chains summaries
+  narratively — reordering after it would force re-contextualization,
+  before it reorder is a pure engine step; on today's capsule-shaped
+  weave output there is little to reorder, so the primitive builds with
+  that epic, not with POV sequences). Head-roster decisions ratified same
+  session: resolve `pov_hint` → an explicit roster before annotate and
+  pin the viewpoint enum to it (closes the ungated off-scheme-head
+  BACKLOG item structurally — the kimi victim-head class becomes
+  unrepresentable); `Voice` reads the roster at FILL; a
+  no-roster-head sequence resolves by justified split or justified
+  wide-cutaway (wide stays doctrinally a coda register, never an
+  automatic fallback — if the valve fires often that is a weave/roster
+  defect to fix upstream); B11 advisory reports mid-sequence splits,
+  non-coda wides, and per-head share (a one-passage head is visible
+  taste, not a hard rule).
+
+- **2026-07-17, later (the beat/passage collapse read — two findings under
+  one graph):** Reading the run-6 passage graph beside its beat graph, the
+  author observed (a) a dilemma "very quickly playing out" in a straight
+  line and (b) linear no-choice beat runs shattering into many thin
+  no-choice passages. Session analysis on the run-6 graph confirmed both
+  and separated three layers. **Boundary census (172 passages):** 37 end in
+  a real choice, 36 are fork rejoins, **76 are pure POV splits** (no
+  choice, no gate — I14 refusing to merge across a head switch), ~17 are
+  `passage_beats_max=3` cap splits, 6 gates. **Head-hop rate:** 58% of
+  consecutive annotated linear beat pairs switch heads
+  (e.g. `call-out-farmers` lead-1..resolution runs gord,gord,HARPER,gord);
+  `grow_annotate.j2` says "PREFER RUNS … rotate at a real shift of
+  dramatic center, never beat-by-beat" — stated and trusted, i.e. a prompt
+  defect by the repo's own doctrine. Texture arms inherit trunk heads via
+  `mirrors`, so the fragmentation duplicates into every arm.
+  **Counterfactual (repo's own `collapse_groups`):** heads held per run →
+  159→114 passages (−28%), singletons 59→18, avg beats/passage 1.79→2.49;
+  the raw choice topology is 78 runs (longest 9 beats). **Interaction:**
+  the choice-stretch metric counts passages, so POV fragmentation inflates
+  the deserts the fork loop then spends words interrupting — part of the
+  +14% break surplus buys interruption of an artifact — and B3's 172>160
+  is largely the same artifact. **Separately (drama layer):** the
+  `call-out-farmers` capsule — 6 consecutive beats, no other thread
+  interleaved — is a GROW weave gap, recorded as a roadmap "Later" epic
+  (drama-layer braiding). **Author direction: fix the annotate layer
+  first, by restructuring the task rather than adding prose rules — the
+  run, not the beat, becomes the unit of viewpoint assignment; author
+  sketches: stateful "we are at PoV X, keep unless impossible", or
+  cluster-level "cover this stretch with minimal PoV change".** Design to
+  be ratified before building; BACKLOG item carries the numbers.
+
 - **2026-07-17 (run-6 read and ratified; the zero-consumption finding):**
   The stretch-capped loop's live run (run-6, rerun POLISH on the
   cc-struct-medium GROW checkpoint, `gpt-oss:120b`, unbilled) was read by

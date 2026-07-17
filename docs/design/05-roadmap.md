@@ -139,6 +139,20 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
 
 ## Later
 
+- **Drama-layer braiding — dilemma capsules** (author read of the run-6
+  graph, 2026-07-17). An unexplored/locked dilemma's beats weave as one
+  consecutive run — `call-out-farmers` opens and resolves in 6 uninterrupted
+  beats right after setup (lead-1..3 → resolution → aftermath), zero beats of
+  any other thread interleaved — so it reads as a self-contained episode that
+  plays out too quickly, not a thread braided through the story. The cosmetic
+  fork loop braids the *choice* layer; nothing braids the *drama* layer:
+  GROW's weave places each dilemma's beats as a contiguous block and only
+  bridges connect blocks. The fix is a GROW weave-contract question
+  (distribute a capsule's lead/aftermath across the neighborhood, or
+  interleave blocks thread-by-thread), epic-scale: it touches the scaffold
+  shape, intersections, and the freeze. Evidence and numbers in the decision
+  log (2026-07-17).
+
 - **Pipeline operator loop** (author-proposed, 2026-07-14). A frontier-tier AI
   operator supervising live runs as part of the pipeline itself, doing what
   this session's external loop did for the *Closed Circle* validation: watch

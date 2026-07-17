@@ -160,23 +160,30 @@ AGENTS.md, the author has the HTML/PDF). Previous epic **Rotating limited POV sh
    `/mnt/code/qf-validation-runs/cc-struct-medium` (NOT committed; graph
    SVG beside the project; run-5 kept as `.run5-pr5-loop-backup`).
 
-   **Open finding — zero keywords consumed live (0/~18 offers):** rounds
-   2–3 offered round-1 keywords at every edge site and the model declined
-   the optional gated rendering every time (confirmed in the LLM cache: no
-   fork response carries a `gated` entry). Machinery-legal — consumption
-   is optional, never assigned, and offline tests prove the path — but the
-   consumption prompt has never fired live. Prompt-read diagnosis
-   (2026-07-17, decision log): `polish_fork.j2`'s KEYWORDS section
-   undersells the option — it opens "(optional)", spends its weight on the
-   don't-reward warning, states no positive criterion for when a keyword
-   *does* echo, and closes on the decline instruction ("leave `gated`
-   out"), so the safe sample is always to decline. Rebalance the existing
-   text (not more rules) before PR-6.
+   **Keyword consumption fixed and live-proven (PR #103, merged
+   2026-07-17):** run-6 consumed zero of ~18 offers; diagnosis was the
+   KEYWORDS section of `polish_fork.j2` structurally tilted toward
+   declining (decision log). Rebalanced (payoff first, positive echo
+   criterion, decline narrowed) and validated on a throwaway rerun of the
+   run-6 checkpoint: round 2 consumed **8/8** offered sites (old prompt:
+   0/~18). Consumption stays optional-never-assigned.
 
-   After the rebalance fires live: FILL on this project for the actual
-   read, then PR-6 (DRESS print acknowledgments — keywords now exist to
-   acknowledge). GitHub *issues* are NOT used for this repo (author,
-   2026-07-15) — work is tracked here and in the BACKLOG.
+   **FILL is running on the run-6 project** (started 2026-07-17,
+   `gpt-oss:120b-cloud`, unbilled, 346 passes) — the actual-read
+   continuation. Then PR-6 (DRESS print acknowledgments — keywords now
+   both mint and consume).
+
+   **New findings from the author's read of the run-6 graph (2026-07-17,
+   decision log + BACKLOG):** (a) annotate head-hops at beat granularity
+   (58% of linear annotated pairs switch heads) and I14 then shatters
+   linear runs — 76 of 172 passages exist only as POV splits; heads held
+   per run would give 114 passages (−28%). **Next work item (author-
+   agreed): restructure viewpoint annotation so the run, not the beat, is
+   the unit** — design first, then build. (b) Drama-layer braiding: an
+   unexplored dilemma weaves as a 6-beat consecutive capsule — epic-scale
+   GROW question, recorded under roadmap "Later". GitHub *issues* are NOT
+   used for this repo (author, 2026-07-15) — work is tracked here and in
+   the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
 

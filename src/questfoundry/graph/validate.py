@@ -577,16 +577,18 @@ def check_b11_sequence_health(ctx: Context) -> None:
 
     switches: list[tuple[str, str]] = []
     for seq in grow_sequences(ctx.g):
-        settled: tuple[str, bool] | None = None
+        settled: str | None = None
         settled_at = ""
         for bid in seq:
             beat = beats[bid]
-            if beat.viewpoint is None:
+            # wildcards AND interlude beats skip: an interlude's page-turn
+            # is the register's known cost (its own line reports it) — the
+            # switch signal here is base-register hops only
+            if beat.viewpoint is None or beat.interlude:
                 continue
-            head = (beat.viewpoint, beat.interlude)
-            if settled is not None and head != settled:
+            if settled is not None and beat.viewpoint != settled:
                 switches.append((settled_at, bid))
-            settled, settled_at = head, bid
+            settled, settled_at = beat.viewpoint, bid
     for prev, nxt in switches:
         ctx.warn(
             "B11",

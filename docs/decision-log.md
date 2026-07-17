@@ -16,6 +16,24 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-17, evening (the interlude register fires — a three-probe
+  doctrine exhibit):** The register had never fired live (three runs, two
+  tiers, zero `interlude` marks). PR-C closed it with a probe series on
+  the sequence-A/B graph (one unbilled annotate call each, roster/carrier
+  replayed): **probe 0** (PR-B's stated expectation) — 0 marks; **probe 1**
+  (moment-based rebalance: "a moment WORTH an entry — no summary reads as
+  a journal entry") — 8 marks, all on COMMIT beats (the model re-framed
+  the drama's peaks); **probe 2** (+ "the turn itself stays in scene …
+  never the commit beat" stated verbatim) — 7 marks, 5 still on commits;
+  **probe 3** (the rule ENFORCED: a repairable ApplyError with the
+  corrective "move the mark to the reflective beat AFTER this turn") —
+  **14 marks, all sequels, all post-turn, zero on commits, one repair
+  round**. Stated-and-trusted was ignored twice; only the mechanical
+  check converged — the enum-pin doctrine with receipts. Also in PR-C:
+  B11's switch signal skips interlude beats (their page-turn is the
+  register's known cost, reported by its own line; 8 interludes would
+  otherwise drown genuine hops in ~16 switch warnings).
+
 - **2026-07-17, later still (two epics shipped — author call; roadmap
   reconciled):** The author called **structural depth** and **cosmetic
   forks** shipped ("should have shipped already") — both epics' machinery

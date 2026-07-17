@@ -140,6 +140,17 @@ def test_i17_interlude_without_any_carrier_is_an_error(story, vision):
     assert any("carrier" in i.message for i in issues)
 
 
+def test_i17_two_carriers_without_a_roster_still_skips(story, vision):
+    # the documented contract (01 §8, the plan): NO roster -> I17 skips
+    # ENTIRELY — including the carrier-count check. A half-scheme is only
+    # reachable by hand edit and is inert (no consumer reads a carrier
+    # without a roster: the voice prompt renders it inside the roster
+    # block), so erroring on it would contradict the degenerate case.
+    mutations.set_interlude_carrier(story, "character:milo", True)
+    mutations.set_interlude_carrier(story, "character:charles", True)
+    assert errors_for("I17", story, vision) == []
+
+
 def test_i17_two_carriers_is_an_error(story, vision):
     # only reachable by hand edit: the scheme schema carries one interlude_head
     mutations.set_pov_head(story, "character:eleanor", True)

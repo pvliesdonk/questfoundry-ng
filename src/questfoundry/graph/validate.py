@@ -505,14 +505,16 @@ def check_i17_scheme_conformance(ctx: Context) -> None:
         for e in ctx.g.nodes_of(Entity)
         if e.category == EntityCategory.CHARACTER and e.interlude_carrier
     )
+    if not roster:
+        # no roster = no scheme: the whole check skips, carrier marks
+        # included — a roster-less carrier is inert (no consumer reads it)
+        return
     if len(carriers) > 1:
         ctx.error(
             "I17",
             f"{len(carriers)} interlude carriers marked ({', '.join(carriers)}) — "
             "a scheme declares at most one deviant-register voice",
         )
-    if not roster:
-        return
     carrier = carriers[0] if carriers else None
     for beat in ctx.g.nodes_of(Beat):
         if beat.viewpoint is None:

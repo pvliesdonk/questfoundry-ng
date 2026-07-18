@@ -1187,3 +1187,63 @@ def test_review_prompt_renders_the_cast_for_actor_resolution(golden_fill):
     assert "THE CAST ON THIS PAGE" in rendered
     assert "Maren Voss (character:keeper)" in rendered
     assert "resolve the role against the cast" in rendered
+
+
+# -- cosmetic flags are permission, not world state (cosmetic-forks §4, I16) ---
+
+
+def test_write_context_excludes_ungated_cosmetic_flags(golden_fill):
+    """A cosmetic keyword flag is permission, not world state: it enters the
+    write context ONLY at a gated consumer (where the reader provably holds
+    it). An ungated passage must not see it — otherwise the cosmetic-fork
+    loop's minted keywords flood WORLD STATE as spurious "possible" facts the
+    beats then contradict. Live medium halt 2026-07-18 (`write:p-knife-bomb`,
+    escalated 3x): ~9 "missing Ornate Knife" rumor keywords marked the knife
+    uncertain while the beat had Harriet spot it, an unresolvable
+    state_dishonesty finding every repair round. cosmetic-forks.md §4."""
+    from questfoundry.graph import mutations
+    from questfoundry.models.base import Stage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = golden_fill.graph
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:cw-whisper",
+            created_by=Stage.POLISH,
+            description="a whisper about the knife",
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    ctx = _write_context_for("passage:p-arrival")(golden_fill)
+    ids = [f["flag"].id for f in ctx["flags"]]
+    assert "flag:cw-whisper" not in ids
+    # dilemma flags still surface as before
+    assert any(f["flag"].path is not None for f in ctx["flags"])
+
+
+def test_write_context_includes_a_gated_cosmetic_flag_as_certain(golden_fill):
+    """The one place a cosmetic flag DOES belong in WORLD STATE: a gated
+    consumer, where the gate guarantees the reader holds it — there it is a
+    certain fact the writer may state, the "may color" side of I16."""
+    from questfoundry.graph import mutations, queries
+    from questfoundry.models.base import Stage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    g = golden_fill.graph
+    mutations.add_flag(
+        g,
+        StateFlag(
+            id="flag:cw-whisper",
+            created_by=Stage.POLISH,
+            description="a whisper about the knife",
+            source=FlagSource.COSMETIC,
+        ),
+    )
+    # make p-arrival a consumer: its beat is gated on the cosmetic flag
+    bid = queries.beats_of_passage(g, "passage:p-arrival")[0]
+    g.node(bid).requires_flags = ["flag:cw-whisper"]
+    ctx = _write_context_for("passage:p-arrival")(golden_fill)
+    entry = next((f for f in ctx["flags"] if f["flag"].id == "flag:cw-whisper"), None)
+    assert entry is not None
+    assert entry["status"] == "certain"

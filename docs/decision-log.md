@@ -16,6 +16,35 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-18 (FILL — cosmetic keyword flags flooded WORLD STATE, an
+  unresolvable state_dishonesty halt):** The comprehensive medium run's FILL
+  operator-loop escalated at `write:p-knife-bomb` after the 3-strike guard —
+  the pass failed ~12 writer attempts (3 fresh-sampling chains × 4 repair
+  rounds) on a *stable* review finding: the prose asserted the Ornate Knife
+  present (its beat has Harriet spot it half-buried) while the reviewer read
+  the knife as merely *possible*, `state_dishonesty`, every round. Doctrine
+  read (write prompt first, then review prompt): both were correct — the
+  reviewer was reading the WORLD STATE block the write context handed it,
+  which listed **~9 cosmetic `flag:cw-*` keywords** (rumors of the *missing*
+  Ornate Knife, from other cosmetic renderings) all marked "possible". Root
+  cause: `_write_context_for` included **every** `StateFlag`, and
+  `_flag_status` returns "possible" for any `path is None` flag — so *every*
+  minted cosmetic keyword surfaced as a spurious "possible" world-fact in
+  *every* passage, and where a beat asserted the object a rumor-keyword named,
+  the two contradicted with no draft able to satisfy both. This is a plain
+  code-vs-doc divergence: cosmetic-forks §4 already specifies "cosmetic flags
+  never enter FILL's write context except at a gated consumer, where the gate
+  makes them certain-held — the mechanical form of 'may color, never must'"
+  (I16); the filter was never implemented. Fix: in `_write_context_for`, a
+  cosmetic flag enters WORLD STATE only when the passage is gated on it
+  (`_gate_certain_flags`), as "certain"; otherwise it is excluded. Two
+  violating-construction tests (ungated → excluded; gated consumer →
+  certain). End-to-end: `p-knife-bomb`'s context drops from ~9 cosmetic
+  "possible" flags to 0, and the pass that failed 12× converges in 2
+  attempts. Doctrine, a third time today: it was the plumbing (a write-context
+  builder ignoring a documented I16 rule), not the model — the escalation
+  guard correctly refused to re-roll a deterministic defect into oblivion.
+
 - **2026-07-18 (I13 reachability walk — a powerset blowup on cosmetic
   keyword grants, ~62 GiB):** The comprehensive medium run's POLISH gate
   ran for minutes at 100% CPU and **~62 GiB RSS** before the host OOM'd (it

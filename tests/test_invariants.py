@@ -207,6 +207,83 @@ def test_i13_second_start_and_choiceless_passage_flagged(vision):
     assert any("exactly one start" in i.message for i in issues)
 
 
+def _cosmetic_diamond_chain(g, n: int) -> None:
+    """A spine of n+1 rejoin passages F0..Fn chained by n cosmetic-fork
+    diamonds: F_i forks into two arm passages that each grant a distinct
+    *unconsumed* cosmetic flag (nothing ever `requires` them — the common
+    cosmetic mint, PR-6 discussion) and reconverge at F_{i+1}. A reader
+    reaching F_i can hold any subset of the granted flags, so F_n is reachable
+    with 2**n distinct flag-sets. This is the shape the live medium run built
+    via the cosmetic-fork loop; before the fix, I13's BFS keyed its
+    visited-set on (passage, accumulated-flag-set) and blew up to 2**n states
+    (~62 GiB on the real graph). No dilemmas → one arc, so the explosion is
+    the cosmetic grants alone."""
+    from questfoundry.models.presentation import Choice, Ending, Passage
+    from questfoundry.models.structure import FlagSource, StateFlag
+
+    def node(slug: str, *, ending: bool = False) -> None:
+        mutations.add_beat(
+            g,
+            Beat(
+                id=f"beat:{slug}",
+                created_by=Stage.POLISH,
+                summary=slug,
+                beat_class=BeatClass.STRUCTURAL,
+                purpose=StructuralPurpose.BRIDGE,
+            ),
+            [],
+        )
+        mutations.add_passage(
+            g,
+            Passage(
+                id=f"passage:{slug}",
+                created_by=Stage.POLISH,
+                summary=slug,
+                ending=Ending(id="e-end", title="end") if ending else None,
+            ),
+            [f"beat:{slug}"],
+        )
+
+    for i in range(n + 1):
+        node(f"f{i}", ending=(i == n))
+    for i in range(n):
+        for arm in ("a", "b"):
+            node(f"arm{i}{arm}")
+            fid = f"flag:cw-{i}-{arm}"
+            mutations.add_flag(
+                g,
+                StateFlag(
+                    id=fid, created_by=Stage.POLISH, description=fid, source=FlagSource.COSMETIC
+                ),
+            )
+            # beat diamond (keeps every beat in the single arc view) + passage
+            # diamond with the cosmetic grant on the entering choice
+            mutations.add_ordering(g, f"beat:f{i}", f"beat:arm{i}{arm}")
+            mutations.add_ordering(g, f"beat:arm{i}{arm}", f"beat:f{i + 1}")
+            mutations.add_choice(
+                g, f"passage:f{i}", f"passage:arm{i}{arm}", Choice(label=f"{i}{arm}", grants=[fid])
+            )
+            mutations.add_choice(
+                g, f"passage:arm{i}{arm}", f"passage:f{i + 1}", Choice(label=f"on{i}{arm}")
+            )
+
+
+def test_i13_unconsumed_cosmetic_grants_do_not_explode_the_reachability_walk(vision):
+    """Regression: I13's per-arc BFS must not track flags no choice requires.
+    Unconsumed cosmetic keyword grants (minted per rendering) once entered the
+    visited-set key, making it a powerset over grants — 2**n states, ~62 GiB on
+    the live medium run. With n=24 the pre-fix walk is hopeless; the fix keeps
+    it linear because those flags gate nothing and drop out of the state."""
+    from questfoundry.graph.validate import Context, check_i13_passage_graph
+
+    g = StoryGraph()
+    _cosmetic_diamond_chain(g, 24)
+    ctx = Context(g=g, vision=vision)
+    check_i13_passage_graph(ctx)
+    # correctness: one start, every arc reaches the ending, no passage orphaned
+    assert [i for i in ctx.issues if i.check == "I13"] == []
+
+
 def test_g3_underived_consequence_flagged(vision):
     g = StoryGraph()
     d, pa, pb = make_dilemma(g, "one")

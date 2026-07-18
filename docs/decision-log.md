@@ -16,6 +16,32 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-18 (I13 reachability walk — a powerset blowup on cosmetic
+  keyword grants, ~62 GiB):** The comprehensive medium run's POLISH gate
+  ran for minutes at 100% CPU and **~62 GiB RSS** before the host OOM'd (it
+  took the Claude Code terminal with it — compounded by an agent mistake:
+  polling with repeated full-replay `qf status` calls while the gate ran).
+  Root-caused by reproducing the gate under a hard `RLIMIT_AS` cap +
+  `faulthandler.dump_traceback_later` (a safe stand-in for the debugger the
+  process was already dead for): the sampler pinned it to
+  `check_i13_passage_graph`. Its per-arc BFS keyed the visited-set on
+  `(passage, accumulated-flag-set)` and accumulated **every** choice grant.
+  Pre-cosmetic-forks that was a handful of dilemma routing flags; the PR-4/5
+  grant model now mints a `flag:cw-*` per rendering, almost all unconsumed
+  (the PR-6 finding), so the state became a powerset over grants —
+  `2**(#grants)` states, ~62 GiB here. Fix: project the accumulated flags to
+  the **gate-relevant** set (flags some choice actually `requires`) before
+  using them as the visited-set key — a grant nothing tests cannot change
+  which choices are takeable, so this never changes what I13 decides; it
+  restores the pre-cosmetic-forks bound. Violating-construction test (24
+  unconsumed-cosmetic diamonds → 2**24 states pre-fix, `MemoryError` under a
+  4 GiB cap; linear and instant post-fix). End-to-end: the real POLISH gate
+  now completes and checkpoints (stage → polish, 159 passages) under a 30 GiB
+  cap, 0 errors. Doctrine, again: it was the plumbing (an algorithmic bug in
+  a gate walk), not the model. Process note: never poll a large in-flight run
+  with repeated `qf status` (each is a full ledger replay into memory); grep
+  the log instead.
+
 - **2026-07-18 (labels pass — the single-exit double-label, a
   constraint-completeness fix):** The first comprehensive medium run on
   current `main` (unbilled `gpt-oss:120b-cloud`, fresh scaffold — NOT a

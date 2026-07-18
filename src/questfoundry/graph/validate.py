@@ -872,6 +872,20 @@ def check_i13_passage_graph(ctx: Context) -> None:
         if p.ending is not None and outgoing:
             ctx.error("I13", f"ending passage {p.id} has outgoing choices")
 
+    # The walk only needs to remember flags some choice actually gates on: a
+    # grant of a flag nothing `requires` cannot change which choices are
+    # takeable, so carrying it in the visited-set key is dead weight that turns
+    # the state into a powerset over grants. The cosmetic-fork loop mints a
+    # keyword per rendering, almost all unconsumed (PR-6), so before this
+    # projection the BFS blew up to 2**(#grants) states (~62 GiB on the live
+    # medium run). Bounding the state to gate-relevant flags restores the
+    # pre-cosmetic-forks behaviour without changing what I13 decides.
+    gate_relevant = frozenset(
+        f
+        for e in ctx.g.edges
+        if e.kind == EdgeKind.CHOICE
+        for f in e.payload.get("requires", [])
+    )
     visited_any: set[str] = set()
     for selection in queries.arc_selections(ctx.g):
         label = "/".join(selection[d] for d in sorted(selection)) or "(single arc)"
@@ -896,7 +910,7 @@ def check_i13_passage_graph(ctx: Context) -> None:
                     continue
                 if not set(queries.beats_of_passage(ctx.g, e.dst)) <= view:
                     continue
-                frontier.append((e.dst, flags | set(choice.grants)))
+                frontier.append((e.dst, (flags | set(choice.grants)) & gate_relevant))
         if not reached_ending:
             ctx.error("I13", f"arc {label} cannot reach any ending through the passage graph")
     for p in passages:

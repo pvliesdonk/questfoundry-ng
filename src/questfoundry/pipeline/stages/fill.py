@@ -526,9 +526,24 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
         beats = [g.node(b) for b in queries.beats_of_passage(g, passage.id)]
         order = {b: i for i, b in enumerate(queries.topological_order(g) or [])}
         beats.sort(key=lambda b: order[b.id])
+        # Cosmetic flags are permission, not world state (cosmetic-forks §4,
+        # I16): "may color, never must". They enter the write context ONLY at
+        # a gated consumer, where the gate guarantees the reader holds the
+        # keyword — there it is a certain fact the writer may state. Everywhere
+        # else a cosmetic flag (`path is None`, so `_flag_status` always reads
+        # "possible") would flood WORLD STATE with spurious "possible" facts
+        # the beats contradict: the `write:p-knife-bomb` halt (live medium
+        # 2026-07-18) piled ~9 "missing Ornate Knife" rumor keywords into a
+        # passage whose beat has Harriet spot the knife, an unresolvable
+        # state_dishonesty finding every repair round.
+        gate_certain = _gate_certain_flags(g, passage.id)
         flags = []
         for flag in sorted(g.nodes_of(StateFlag), key=lambda f: f.id):
             if flag.id in passage.irrelevant_flags:
+                continue
+            if flag.path is None:  # cosmetic
+                if flag.id in gate_certain:
+                    flags.append({"flag": flag, "status": "certain"})
                 continue
             status = _flag_status(g, passage.id, flag)
             if status != "foreclosed":

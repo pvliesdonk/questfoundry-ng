@@ -4,12 +4,15 @@ only the label the player reads, one per outgoing choice.
 
 VISION: {{ vision.genre }}, {{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
 
-THIS PASSAGE (group {{ index }}) — the moment the player is choosing from:
+THIS PASSAGE (group {{ index }}) — the situation the player is in as they choose.
+These beats are CONTEXT, not choices: a passage often narrates several actions
+in a row, but the player leaves it through the exits listed below, not through
+each action described here.
 {% for b in beats %}
 - {{ b.id }}: {{ b.summary }}
 {% endfor %}
 
-CHOICES LEAVING IT (write one label per destination):
+CHOICES LEAVING IT — write exactly {{ dests | length }} label{{ "s" if dests | length != 1 }}, one per destination below (no more, even when the beats above describe several actions):
 {% for d in dests %}
 - to group {{ d.index }}{% if d.is_ending %} [ENDING]{% endif %}{% if d.requires %} (only shown to a player who has {{ d.requires | join(", ") }}){% endif %}{% if d.grants %} (taking it locks in {{ d.grants | join(", ") }}){% endif %}: {{ d.summary }}{% if d.premise %}
   ENTERS A RENDERING — this choice steps into a world where {{ d.premise }}; the label may name that world so the reader chooses between the offered backdrops.{% endif %}{% if d.siblings %}
@@ -17,12 +20,12 @@ CHOICES LEAVING IT (write one label per destination):
 {% endfor %}
 
 REQUIREMENTS:
-- labels: one entry per destination above, {"to": N, "label": "..."}.
+- labels: exactly one entry per destination above, {"to": N, "label": "..."}.
 - A label is the player's voice: a concrete present-tense action, no outcomes
   revealed. No meta-language — "continue", "go to the next scene" are failures;
   even a single onward choice deserves a diegetic line.
-- Labels leaving this passage must differ from one another.
-- Match the tone. Never mention flags, dilemmas, or structure in a label.
+{% if dests | length > 1 %}- Labels leaving this passage must differ from one another.
+{% endif %}- Match the tone. Never mention flags, dilemmas, or structure in a label.
 {% if is_rendering %}
 - THIS PASSAGE is one rendering of a cosmetic fork, rejoining a road the reader
   could have walked plainly. Its rejoin label must voice THIS rendering's

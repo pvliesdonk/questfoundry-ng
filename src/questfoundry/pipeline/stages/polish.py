@@ -831,6 +831,37 @@ def _labels_context(a: int) -> Callable[[Project], dict]:
     return build
 
 
+def _labels_schema(a: int) -> Callable[[Project], type[BaseModel]]:
+    """Pin the labels list to exactly this source group's out-destinations:
+    each `to` is a `Literal` of the real destination groups and the list length
+    is fixed to the number of exits. A single-exit passage is then structurally
+    incapable of carrying two labels — the live failure (medium run 2026-07-18,
+    `labels:34`): a passage whose beats *narrate* several actions ("she ignores
+    the passage… she scours the woods") drew one label per described action, all
+    onto the group's single exit, and no repair round recovered because the
+    schema let the malformed shape be expressed. Length + enum narrow the space
+    to what the pass can mean; the apply-layer checks stay the joint-constraint
+    guard for the multi-exit case an independent enum cannot express (no
+    duplicate destination, exact coverage) — the refpin.py division of labor."""
+
+    def schema(project: Project) -> type[BaseModel]:
+        out = [b for x, b in pc.group_edges(_groups(project), project.graph) if x == a]
+        if not out:  # no labels pass is created for an exit-less group; be total
+            return LabelsProposal
+        pinned = create_model(
+            "EdgeLabelSpec",
+            __base__=EdgeLabelSpec,
+            dst=(enum_type(out), EdgeLabelSpec.model_fields["dst"]),
+        )
+        return create_model(
+            "LabelsProposal",
+            __base__=LabelsProposal,
+            labels=(list[pinned], Field(min_length=len(out), max_length=len(out))),  # type: ignore[valid-type]
+        )
+
+    return schema
+
+
 def _labels_apply(a: int) -> Callable[[BaseModel, Project], list[str]]:
     def apply(proposal: LabelsProposal, project: Project) -> list[str]:
         g = project.graph
@@ -924,7 +955,7 @@ def _polish_expand(project: Project) -> list[PassSpec]:
                 name=f"labels:{a}",
                 role="writer",
                 template="polish_labels.j2",
-                schema=LabelsProposal,
+                schema=_labels_schema(a),
                 build_context=_labels_context(a),
                 apply=_labels_apply(a),
             )

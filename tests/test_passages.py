@@ -6,6 +6,7 @@ compute."""
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.store import StoryGraph
@@ -34,6 +35,7 @@ from questfoundry.pipeline.stages.polish import (
     _groups,
     _labels_apply,
     _labels_context,
+    _labels_schema,
     _light_needs,
     _polish_expand,
     _summary_apply,
@@ -1388,3 +1390,131 @@ def test_projected_walks_hold_cosmetic_flags_only_when_walked():
     g = _diamond_keyword_graph("flag:cw-x")
     ((_, decisions),) = pc.projected_walks(g, preset)
     assert decisions == 2
+
+
+# ---------------------------------------------------------------------------
+# labels schema pin (medium run 2026-07-18, `labels:34`): a single-exit
+# passage whose beats narrated several actions drew one label per action, all
+# onto its one destination, and no repair round recovered because the schema
+# let the malformed shape be expressed. The per-pass schema now pins `to` to
+# the real out-destinations and fixes the list length to the exit count.
+# ---------------------------------------------------------------------------
+
+
+def _single_exit_source(project) -> int:
+    """A source group with exactly one out-edge (the sidetrack arm's rejoin is
+    one; assert we found a genuine single-exit group)."""
+    groups = _groups(project)
+    edges = pc.group_edges(groups, project.graph)
+    from collections import Counter
+
+    outdeg = Counter(x for x, _ in edges)
+    return next(a for a, n in outdeg.items() if n == 1)
+
+
+def test_labels_schema_forbids_two_labels_on_a_single_exit(vision, tmp_path):
+    g = StoryGraph()
+    project, _, _ = _sidetrack_project(g, vision, tmp_path)
+    a = _single_exit_source(project)
+    (dst,) = [b for x, b in pc.group_edges(_groups(project), g) if x == a]
+    Schema = _labels_schema(a)(project)
+
+    # the live failure shape — two labels onto the one exit — cannot validate
+    with pytest.raises(ValidationError):
+        Schema.model_validate(
+            {"labels": [{"to": dst, "label": "one"}, {"to": dst, "label": "two"}]}
+        )
+    # the correct single label validates
+    ok = Schema.model_validate({"labels": [{"to": dst, "label": "walk on"}]})
+    assert len(ok.labels) == 1
+
+
+def test_labels_schema_pins_destination_to_the_real_exits(vision, tmp_path):
+    g = StoryGraph()
+    project, _, _ = _sidetrack_project(g, vision, tmp_path)
+    a = _single_exit_source(project)
+    (dst,) = [b for x, b in pc.group_edges(_groups(project), g) if x == a]
+    Schema = _labels_schema(a)(project)
+
+    # a destination that is not an actual out-edge is unrepresentable
+    bogus = dst + 9999
+    with pytest.raises(ValidationError):
+        Schema.model_validate({"labels": [{"to": bogus, "label": "nowhere"}]})
+
+
+def test_labels_schema_fixes_length_to_the_exit_count(vision, tmp_path):
+    g = StoryGraph()
+    project, before, _ = _sidetrack_project(g, vision, tmp_path)
+    groups = _groups(project)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    out = [b for x, b in pc.group_edges(groups, g) if x == before_idx]
+    assert len(out) >= 2  # the fork source has multiple exits
+    Schema = _labels_schema(before_idx)(project)
+
+    # too few entries (one label for a multi-exit passage) cannot validate
+    with pytest.raises(ValidationError):
+        Schema.model_validate({"labels": [{"to": out[0], "label": "only one"}]})
+    # exactly one per exit validates
+    ok = Schema.model_validate(
+        {"labels": [{"to": b, "label": f"go {b}"} for b in out]}
+    )
+    assert len(ok.labels) == len(out)
+
+
+def test_labels_apply_still_guards_duplicate_destination(vision, tmp_path):
+    """The multi-exit duplicate the enum cannot forbid (both `to` values are
+    valid members) stays caught by the apply-layer joint-constraint guard —
+    the refpin.py division of labor, so the contract holds even if a provider
+    ignores the schema length pin."""
+    g = StoryGraph()
+    project, before, _ = _sidetrack_project(g, vision, tmp_path)
+    groups = _groups(project)
+    before_idx = next(i for i, grp in enumerate(groups) if before in grp)
+    out = [b for x, b in pc.group_edges(groups, g) if x == before_idx]
+    _apply_summaries(project)
+    with pytest.raises(ApplyError, match="labeled twice"):
+        _labels_apply(before_idx)(
+            LabelsProposal(
+                labels=[
+                    EdgeLabelSpec.model_validate({"to": out[0], "label": "a"}),
+                    EdgeLabelSpec.model_validate({"to": out[0], "label": "b"}),
+                ]
+            ),
+            project,
+        )
+
+
+def test_labels_prompt_drops_the_plural_differ_line_for_a_single_exit(vision, tmp_path):
+    """The nudge behind the live failure: an unconditional 'labels must differ
+    from one another' presupposes several labels even when a passage has one
+    exit. It renders only when there is genuinely more than one destination."""
+    from questfoundry.pipeline import runner
+
+    env = runner._environment()
+    tmpl = env.get_template("polish_labels.j2")
+
+    def render(dests):
+        return tmpl.render(
+            vision=vision,
+            index=0,
+            beats=[],
+            dests=dests,
+            is_rendering=False,
+            notes="",
+            repair_errors=[],
+            research="",
+        )
+
+    one = render([{"index": 5, "summary": "s", "requires": [], "grants": [],
+                   "is_ending": False, "siblings": [], "premise": ""}])
+    assert "must differ from one another" not in one
+    assert "write exactly 1 label," in one
+
+    two = render([
+        {"index": 5, "summary": "s", "requires": [], "grants": [],
+         "is_ending": False, "siblings": [], "premise": ""},
+        {"index": 6, "summary": "t", "requires": [], "grants": [],
+         "is_ending": False, "siblings": [], "premise": ""},
+    ])
+    assert "must differ from one another" in two
+    assert "write exactly 2 labels," in two

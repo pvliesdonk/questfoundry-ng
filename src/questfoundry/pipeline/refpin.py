@@ -28,6 +28,7 @@ survive — `enum_type` is exposed for that and other bespoke wiring.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from types import UnionType
 from typing import Any, Literal, Union, get_args, get_origin
 
@@ -36,8 +37,10 @@ from pydantic import BaseModel, create_model
 from questfoundry.models.world import Entity, EntityCategory
 
 
-def enum_type(ids: list[str]) -> Any:
-    """`Literal[id0, id1, ...]` for the given ids, in the order supplied."""
+def enum_type(ids: Sequence[object]) -> Any:
+    """`Literal[id0, id1, ...]` for the given ids, in the order supplied.
+    Values are usually string ids; ints are also valid Literal members (the
+    labels pass pins `to` to its destination group indices)."""
     return Literal[tuple(ids)]  # type: ignore[valid-type]
 
 

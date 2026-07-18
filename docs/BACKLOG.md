@@ -25,7 +25,9 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   `dress_codex_review`, `dress_direction`, `fill_review`, `fill_summary`,
   `fill_voice`, `fill_write`, `grow_annotate`, `grow_bridge`,
   `grow_contextualize`, `grow_intersections`, `grow_weave`, `polish_arcs`,
-  `polish_audit`, `polish_finalize`, `polish_fork`, `polish_labels`, `polish_summary`,
+  `polish_audit`, `polish_finalize`, `polish_fork`, ~~`polish_labels`~~ (done
+  2026-07-18 — the single-exit action→label nudge + schema pin, decision log),
+  `polish_summary`,
   `research`, `seed_order`, `seed_scaffold`, `seed_triage`. Known open
   question to fold in: DREAM's envision rewrote an authored rotating
   `pov_hint` into a single-head scheme (observed live 2026-07-14, root cause

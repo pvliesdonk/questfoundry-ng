@@ -16,6 +16,36 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-18 (labels pass — the single-exit double-label, a
+  constraint-completeness fix):** The first comprehensive medium run on
+  current `main` (unbilled `gpt-oss:120b-cloud`, fresh scaffold — NOT a
+  resume of an abandoned run) survived a transient empty-response drop at
+  `labels:111` (cleared free on re-invoke; the M10 auto-resume gap, one
+  data point) but then hit a deterministic halt at `labels:34`: "group 34:
+  destination group 36 labeled twice." Diagnosis (author suspected a prompt
+  nudge, confirmed): group 34 has exactly one exit, but its beats *narrate*
+  two distinct actions ("she stays above ground, ignoring the passage… she
+  scours the woods"), and the model reliably emitted one label per described
+  action — both onto the single destination. Two faces of one gap: the
+  prompt (`polish_labels.j2`) invited an action→label reading by showing the
+  passage beats immediately above "CHOICES LEAVING IT" with an unconditional
+  plural "labels must differ from one another," and the schema (`dst: int`,
+  free list) could not forbid the malformed shape, so no repair round
+  recovered. Fix, both faces (per the constraint-completeness doctrine — the
+  same lesson as PR-C's interlude commit-guard: stated-and-trusted lost, only
+  the mechanical check converged): a per-pass `_labels_schema(a)` pins `to`
+  to the real out-destinations and fixes the list length to the exit count,
+  so a single-exit passage is structurally incapable of two labels; the
+  prompt marks the beats as CONTEXT (not choices), states the exact label
+  count, and drops the plural "must differ" line for a single exit. The
+  apply-layer checks stay the joint-constraint guard for the multi-exit
+  duplicate an independent enum cannot forbid (refpin.py division of labor).
+  Five violating-construction/render tests; `enum_type` broadened to
+  `Sequence[object]` (it always supported int Literal members; the labels
+  `to` is the first int caller). One instance of the `polish_labels` line in
+  the standing prompt-template audit (BACKLOG). Run resumes against the fixed
+  code from its ledger (labels 0–33 stay valid; 34 re-runs fresh).
+
 - **2026-07-17, late (PR-6 scoped and closed without building — mint is
   not a reader-facing event):** Session-recovery investigation after a
   host crash found two unbilled validation runs abandoned (worktree

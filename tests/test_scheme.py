@@ -214,6 +214,36 @@ def test_scheme_context_renders_hint_and_cast(project):
     assert "character:eleanor" in ids and "location:manor" not in ids
 
 
+def test_scheme_prompt_frames_the_hint_as_an_inclination_to_translate(project):
+    """The pov_hint is vision and a HINT, not law: the scheme pass must
+    translate an authorial inclination into a scheme that can narrate the
+    whole story, not implement its wording literally. A prior prompt told the
+    model "nothing is a judgment call" and blessed confining an investigator to
+    a journal register ("an investigator's journal amid rotating suspects is
+    normal") — which left every scene the investigator centers with no valid
+    base-register head, so annotate hung a bystander on it (live medium halt
+    2026-07-18, write:p-diner-evacuation). The stance must instead make a
+    scene-driving character a head even when the hint names them only for a
+    deviant register."""
+    from questfoundry.pipeline import runner
+
+    env = runner._environment()
+    rendered = env.get_template("grow_scheme.j2").render(
+        **_scheme_context(project), notes="", repair_errors=[], research=""
+    )
+    flat = " ".join(rendered.split())  # line-break insensitive
+    # the hint is an inclination to translate, not a spec to obey
+    assert "nothing else here is a judgment call" not in flat
+    assert "INCLINATION" in flat and "TRANSLATE" in flat
+    # a deviant register is ADDITIVE, not a demotion out of the head roster
+    assert "an investigator's journal amid rotating suspects is normal" not in flat
+    assert (
+        "a character who drives central scenes is a head even if the hint "
+        "named them only for a deviant register"
+    ) in flat
+    assert "ADDED to her role" in flat
+
+
 # -- the roster pins the annotate heads enum (PR-B: sequence-unit) ------------
 
 

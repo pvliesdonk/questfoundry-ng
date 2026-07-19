@@ -16,6 +16,27 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-19 (the I13 powerset blowup had two more copies in export — fix
+  the class, not the instance):** `qf export html` on the finished
+  comprehensive-medium story OOM-ed the host (~62 GiB, took Claude Code with
+  it), then `qf export pdf` would have too. Same defect as #111 (the I13
+  reachability walk keyed on `(passage, accumulated-flags)` → a powerset over
+  the cosmetic-fork loop's mostly-unconsumed keyword grants), but in two
+  copies #111 never touched: `export/runtime_json.py:validate_runtime` (the
+  self-validating round-trip the HTML/JSON export runs) and
+  `export/gamebook.py:lint_gamebook` (the PDF paper-reachability lint). When
+  #111 fixed `graph/validate.py:check_i13_passage_graph` it should have swept
+  the repo for the walk pattern — there were three copies, one got fixed. Fix:
+  the same gate-relevant projection (`& gate_relevant` before the visited-set
+  key; a grant nothing `requires` cannot change a takeable choice) applied to
+  both export copies. Violating-construction test (24 unconsumed cosmetic
+  diamonds → 2**24 states → `MemoryError` under a 4 GiB cap pre-fix; instant
+  post-fix). End-to-end: both `qf export html` (313 KiB, round-trip 0 problems)
+  and `qf export pdf` (647 KiB) now complete on the 159-passage story, well
+  under a 20 GiB cap. Lesson (CLAUDE.md "fix the class, not the instance"): on
+  the first finding of a walk-blowup class, grep every copy —
+  `grep -rn "frozenset())" | grep deque` finds all three.
+
 - **2026-07-18 (the scheme pass treated the `pov_hint` as law, not a hint —
   the deepest of the day's four defects):** The comprehensive medium run's
   FILL escalated a second time at `write:p-diner-evacuation` — POV break every

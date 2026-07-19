@@ -472,6 +472,15 @@ def lint_gamebook(book: Gamebook) -> list[str]:
                     "does not resolve to a section"
                 )
 
+    # Only gate-relevant flags (those some choice tests) belong in the walk
+    # state key; an unconsumed grant cannot change a takeable choice, and
+    # tracking it makes the state a powerset over grants (the cosmetic-keyword
+    # OOM — see runtime_json.validate_runtime and I13). `reachable[pid]` is read
+    # below for the codeword-before-test lint; projecting to gate-relevant keeps
+    # every flag a `requires` could test, so that check is unchanged.
+    gate_relevant = frozenset(
+        f for sec in by_passage.values() for c in sec.choices for f in c["requires"]
+    )
     reachable: dict[str, set[frozenset]] = {}
     endings_reached: set[str] = set()
     took_any: set[str] = set()
@@ -491,7 +500,7 @@ def lint_gamebook(book: Gamebook) -> list[str]:
             if set(c["requires"]) <= held:
                 took_any.add(pid)
                 if c["to"] in by_passage:
-                    frontier.append((c["to"], held | set(c["grants"])))
+                    frontier.append((c["to"], (held | set(c["grants"])) & gate_relevant))
 
     for s in book.sections:
         if s.passage not in reachable:

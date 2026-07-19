@@ -134,7 +134,16 @@ def validate_runtime(data: dict) -> list[str]:
         if entry["passage"] not in passages:
             problems.append(f"art entry references unknown passage {entry['passage']!r}")
 
-    # walk with flag state, as every player will
+    # Walk with flag state, as every player will. The visited-set key carries
+    # only GATE-RELEVANT flags (those some choice `requires`): a grant nothing
+    # tests cannot change which choices are takeable, so tracking it would make
+    # the state a powerset over grants. The cosmetic-fork loop mints a keyword
+    # per rendering, almost all unconsumed, so without this projection the walk
+    # blew up to 2**(#grants) states and OOM-ed the export (~62 GiB, live medium
+    # 2026-07-19) — the same class as I13's fix in graph/validate.py.
+    gate_relevant = frozenset(
+        f for p in passages.values() for c in p["choices"] for f in c["requires"]
+    )
     visited: set[str] = set()
     endings_reached: set[str] = set()
     seen: set[tuple[str, frozenset[str]]] = set()
@@ -151,7 +160,7 @@ def validate_runtime(data: dict) -> list[str]:
             continue
         for c in p["choices"]:
             if set(c["requires"]) <= flags:
-                frontier.append((c["to"], flags | set(c["grants"])))
+                frontier.append((c["to"], (flags | set(c["grants"])) & gate_relevant))
     for pid in passages:
         if pid not in visited:
             problems.append(f"passage {pid} is unreachable in the exported runtime")

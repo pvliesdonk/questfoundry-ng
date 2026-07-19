@@ -1507,7 +1507,7 @@ def test_labels_prompt_drops_the_plural_differ_line_for_a_single_exit(vision, tm
 
     one = render([{"index": 5, "summary": "s", "requires": [], "grants": [],
                    "is_ending": False, "siblings": [], "premise": ""}])
-    assert "must differ from one another" not in one
+    assert "must differ by naming different" not in one
     assert "write exactly 1 label," in one
 
     two = render([
@@ -1516,5 +1516,33 @@ def test_labels_prompt_drops_the_plural_differ_line_for_a_single_exit(vision, tm
         {"index": 6, "summary": "t", "requires": [], "grants": [],
          "is_ending": False, "siblings": [], "premise": ""},
     ])
-    assert "must differ from one another" in two
+    assert "must differ by naming different" in two
     assert "write exactly 2 labels," in two
+
+
+def test_labels_prompt_shapes_a_short_action_not_an_atmospheric_line(vision, tmp_path):
+    """A recurring live defect (closed-circle-oss, passage 64): labels came out
+    as 'action, + atmospheric clause naming an object' — "Enter the diner
+    district, the firepit ablaze with the Blackwood Ledger". The prompt gave no
+    label SHAPE and invited a 'diegetic line', so tone filled the vacuum with
+    scenery. The fix shapes a short imperative action and keeps mood/scenery in
+    the prose, not the label."""
+    from questfoundry.pipeline import runner
+
+    env = runner._environment()
+    tmpl = env.get_template("polish_labels.j2")
+    rendered = tmpl.render(
+        vision=vision, index=0, beats=[],
+        dests=[{"index": 5, "summary": "s", "requires": [], "grants": [],
+                "is_ending": False, "siblings": [], "premise": ""}],
+        is_rendering=True, notes="", repair_errors=[], research="",
+    )
+    flat = " ".join(rendered.split())
+    # the shape is stated positively (say what to do)
+    assert "SHORT ACTION" in flat
+    assert "keep them OUT of the label" in flat
+    # the loose 'diegetic line' invitation is gone
+    assert "deserves a diegetic line" not in flat
+    # the rendering-residue rule no longer asks for a mood clause
+    assert "voice THIS rendering's residue" not in flat
+    assert "NOT a mood clause tacked onto it" in flat

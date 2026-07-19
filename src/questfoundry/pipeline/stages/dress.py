@@ -1,6 +1,6 @@
 """DRESS — art and codex (design doc 02, 01 §7).
 
-Four passes sharing gate G6. DRESS reads the finished story; it never
+Five passes sharing gate G6. DRESS reads the finished story; it never
 changes it — the one exception is print codewords, presentation metadata
 stored on flags via `mutations.set_flag_codeword`, not a structural edit.
 
@@ -18,6 +18,11 @@ stored on flags via `mutations.set_flag_codeword`, not a structural edit.
 4. *codewords* — one memorable print codeword per flag the print export
    will need to gate on (`queries.projected_flags`); skipped once every
    projected flag already has one, including the zero-flags case.
+5. *cover* — the atmospheric, spoiler-safe front-page image prompt, built
+   from the established direction and reviewed for spoiler safety through
+   `PassSpec.review` like the codex (the cover is seen before reading, so
+   "no plot, no ending" is enforced, not merely stated). Ordered last: it
+   depends only on *direction*.
 """
 
 from __future__ import annotations
@@ -59,6 +64,15 @@ CODEX_REVIEW_RULES = (
     "ending_title_named",
 )
 CODEX_REVIEW_SCHEMA = build_verdict_schema("CodexReview", CODEX_REVIEW_RULES)
+
+# The cover is seen before reading, so it is spoiler-sensitive the same way the
+# codex is — and gets the same structural review rather than trusting the
+# prompt (AGENTS.md: a rule the reviewer must apply is enforced, not stated).
+COVER_REVIEW_RULES = (
+    "plot_event_shown",  # depicts a specific narrative event/twist, not atmosphere
+    "ending_shown",  # shows how it turns out — an ending scene, a fate, the outcome
+)
+COVER_REVIEW_SCHEMA = build_verdict_schema("CoverReview", COVER_REVIEW_RULES)
 
 
 # -- pass 1: direction ---------------------------------------------------------
@@ -166,6 +180,48 @@ def _cover_apply(proposal: CoverProposal, project: Project) -> list[str]:
         raise ApplyError("the cover prompt is empty; describe an atmospheric, spoiler-safe cover")
     project.enrichment.cover = CoverBrief(prompt=proposal.prompt)
     return ["cover set"]
+
+
+def _cover_review_for():
+    # the same anchored + arbitrated envelope as the codex review: a second
+    # spoiler failure is architect-arbitrated before it may halt the stage.
+    prior: list[str] = []
+
+    def review(proposal: CoverProposal, project: Project, adapter: Any) -> list[str]:
+        from questfoundry.pipeline import runner
+
+        env = runner._environment()
+
+        def rendered(arbitration: list[str] | None) -> str:
+            return env.get_template("dress_cover_review.j2").render(
+                vision=project.vision,
+                prompt=proposal.prompt,
+                ending_titles=_ending_titles(project.graph),
+                prior_issues=list(prior),
+                arbitration=arbitration,
+            )
+
+        verdict = adapter.complete(
+            system=REVIEW_SYSTEM, prompt=rendered(None), schema=COVER_REVIEW_SCHEMA, role="utility"
+        )
+        issues = evaluate_review(verdict)
+        if not issues:
+            return []
+        if prior:
+            final = adapter.complete(
+                system=REVIEW_SYSTEM,
+                prompt=rendered([render_finding(f) for f in verdict.findings]),
+                schema=COVER_REVIEW_SCHEMA,
+                role="architect",
+            )
+            final_issues = evaluate_review(final)
+            if not final_issues:
+                return []
+            issues = final_issues
+        prior.extend(issues)
+        return issues
+
+    return review
 
 
 # -- pass 2: briefs -------------------------------------------------------------
@@ -547,6 +603,7 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             schema=CoverProposal,
             build_context=_cover_context,
             apply=_cover_apply,
+            review=_cover_review_for(),
             skip_if=_cover_skip,
         ),
     )

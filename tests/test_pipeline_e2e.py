@@ -415,8 +415,9 @@ def test_pipeline_reaches_dress_through_one_review_round(dressed):
     assert by_name["codewords"].attempts == 1
     assert by_name["cover"].attempts == 1
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
-    # 54 through FILL + direction + briefs + 2x(codex propose + review) + codewords + cover
-    assert len(ledger) == 63
+    # 54 through FILL + direction + briefs + 2x(codex propose + review) + codewords
+    # + (cover propose + cover review)
+    assert len(ledger) == 64
 
 
 def test_dress_populates_enrichment(dressed):

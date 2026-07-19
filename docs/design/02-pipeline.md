@@ -541,7 +541,7 @@ inference ("as if weighing") is the narrator's own mind.
 |---|---|
 | In | Finished prose, entities, vision, voice |
 | Out | Art direction; entity visual profiles; illustration briefs (prioritized) per key passage; a cover brief (the front-page image); illustrations (via pluggable image backend, optional); codex entries; print codewords on projected flags |
-| Gate G6 | Every brief references only established visual facts; codex is spoiler-safe (entries reveal nothing the earliest-reaching arc hasn't); every gate-tested flag carries a well-formed, unique codeword |
+| Gate G6 | Every brief references only established visual facts (and none claims the reserved `cover` slug); the cover brief, when present, is non-empty and spoiler-safe (reviewed like the codex); codex is spoiler-safe (entries reveal nothing the earliest-reaching arc hasn't); every gate-tested flag carries a well-formed, unique codeword |
 
 DRESS reads the story; it never changes it — its outputs live beside the
 graph (the enrichment bundle, like the Voice), except codewords, which
@@ -560,9 +560,12 @@ A fifth pass, *cover*, writes the prompt for the book's front-page
 illustration — atmospheric and spoiler-safe (setting, mood, genre
 iconography, an emblematic object; no plot or ending reveals, since the
 cover is seen before reading), built from the established art direction so
-it matches the interior. It runs last (it depends only on *direction*) and
-is optional to render; `qf illustrate` draws it first to
-`art/images/cover.png`, and the exports lay the title over it (04 §2, §4).
+it matches the interior. Because the cover is spoiler-sensitive exactly as
+the codex is, its "no plot, no ending" rule is **structurally reviewed**
+(`PassSpec.review`, the codex's pattern), not merely stated in the prompt.
+It runs last (it depends only on *direction*) and is optional to render;
+`qf illustrate` draws it first to `art/images/cover.png`, and the exports
+lay the title over it (04 §2, §4).
 
 ### SHIP — export
 

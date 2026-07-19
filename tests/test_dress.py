@@ -89,6 +89,31 @@ def test_g6_missing_profile_flagged(golden):
     )
 
 
+def test_g6_brief_with_reserved_cover_slug_flagged(golden):
+    from questfoundry.models.enrichment import IllustrationBrief
+
+    # a passage brief whose slug is "cover" would render to art/images/cover.png
+    # and overwrite the cover — the gate rejects the collision
+    enrichment = golden.enrichment.model_copy(deep=True)
+    enrichment.briefs = [
+        IllustrationBrief(passage="passage:cover", priority=1, caption="c", prompt="p")
+    ]
+    assert any("reserved slug 'cover'" in i.message
+               for i in g6_errors(golden.graph, golden.vision, enrichment))
+
+
+def test_g6_empty_cover_prompt_flagged_but_absent_cover_is_fine(golden):
+    from questfoundry.models.enrichment import CoverBrief
+
+    # a present-but-empty cover is a G6 error (matches every other artifact)
+    enrichment = golden.enrichment.model_copy(update={"cover": CoverBrief(prompt="   ")})
+    assert any("cover brief has an empty prompt" in i.message
+               for i in g6_errors(golden.graph, golden.vision, enrichment))
+    # no cover at all is legal (the artifact is optional)
+    no_cover = golden.enrichment.model_copy(update={"cover": None})
+    assert g6_errors(golden.graph, golden.vision, no_cover) == []
+
+
 def test_g6_brief_entity_outside_passage_flagged(golden):
     enrichment = golden.enrichment.model_copy(deep=True)
     brief = enrichment.briefs[0]
@@ -286,6 +311,55 @@ def test_cover_prompt_is_atmospheric_and_spoiler_safe(golden):
     assert "no ending imagery" in flat
     # the cover must inherit the story's look
     assert golden.enrichment.direction.style in flat
+
+
+def test_cover_review_blocks_a_spoiler_and_passes_a_safe_cover(golden, monkeypatch):
+    """The cover is spoiler-sensitive like the codex, so it gets the same
+    structural review rather than trusting the prompt (AGENTS.md: enforced,
+    not stated). A high-confidence `ending_shown`/`plot_event_shown` fail
+    blocks; a clean cover, or a taste-level warn, passes."""
+    from jinja2 import DictLoader, Environment
+
+    from questfoundry.pipeline import runner
+    from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
+    from questfoundry.pipeline.stages.dress import _cover_review_for
+
+    class ScriptedAdapter:
+        def __init__(self, verdict):
+            self.verdict = verdict
+
+        def complete(self, *, system, prompt, schema, role):
+            return self.verdict
+
+    env = Environment(loader=DictLoader({"dress_cover_review.j2": "review {{ prompt }}"}))
+    monkeypatch.setattr(runner, "_environment", lambda: env)
+    proposal = CoverProposal(prompt="the murderer plunges the knife into the mayor at the climax")
+
+    spoiler = ReviewVerdict(
+        verdict="needs_work",
+        findings=[
+            ReviewFinding(
+                rule="ending_shown", assessment="fail", confidence="high",
+                quote="the murderer plunges the knife", reason="shows the climactic reveal",
+                recovery_action="show the empty town at dusk instead",
+            )
+        ],
+    )
+    assert _cover_review_for()(proposal, golden, ScriptedAdapter(spoiler))  # blocks
+
+    approved = ReviewVerdict(verdict="approved", findings=[])
+    assert _cover_review_for()(proposal, golden, ScriptedAdapter(approved)) == []
+
+    warn = ReviewVerdict(
+        verdict="needs_work",
+        findings=[
+            ReviewFinding(
+                rule="plot_event_shown", assessment="warn", confidence="low",
+                quote="x", reason="taste", recovery_action="consider",
+            )
+        ],
+    )
+    assert _cover_review_for()(proposal, golden, ScriptedAdapter(warn)) == []
 
 
 def test_cover_brief_roundtrips(golden, tmp_path):

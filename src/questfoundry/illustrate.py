@@ -47,8 +47,24 @@ class IllustrateError(Exception):
     pass
 
 
+COVER_SLUG = "cover"
+
+
 def passage_slug(brief: IllustrationBrief) -> str:
-    return brief.passage.split(":", 1)[1]
+    # [-1] tolerates the cover's colon-less sentinel key ("cover") as well as
+    # a real "passage:slug" id.
+    return brief.passage.split(":", 1)[-1]
+
+
+def _cover_brief(cover) -> IllustrationBrief:
+    """The cover as a synthetic priority-0 brief so it flows through the same
+    plan/render/ledger machinery as passage briefs. It depicts no entity (a
+    spoiler-safe atmospheric cover), so `assemble_prompt` renders just the art
+    direction + the cover scene. It is never added to `enrichment.briefs`, so
+    it never leaks into the per-passage `art` list."""
+    return IllustrationBrief(
+        passage=COVER_SLUG, priority=0, caption="Cover", prompt=cover.prompt, entities=[]
+    )
 
 
 def image_path(root: Path, brief: IllustrationBrief) -> Path:
@@ -106,7 +122,10 @@ def plan_renders(
     existing files skip unless --force; the priority floor drops briefs
     below it (priority > floor); the budget caps renders per invocation."""
     plan = RenderPlan(to_render=[])
-    ordered = sorted(project.enrichment.briefs, key=lambda b: (b.priority, passage_slug(b)))
+    briefs = list(project.enrichment.briefs)
+    if project.enrichment.cover is not None:
+        briefs.append(_cover_brief(project.enrichment.cover))  # priority 0 -> sorts first
+    ordered = sorted(briefs, key=lambda b: (b.priority, passage_slug(b)))
     for brief in ordered:
         if priority_floor is not None and brief.priority > priority_floor:
             plan.skipped_priority.append(brief)

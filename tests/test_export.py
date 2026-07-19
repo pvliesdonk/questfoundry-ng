@@ -55,6 +55,36 @@ def test_html_player_is_self_contained(golden):
     assert html.count("</script>") == 1
 
 
+def test_html_cover_screen_when_image_exists(golden, tmp_path):
+    import base64
+    import shutil
+
+    from questfoundry.project import load_project
+
+    dest = tmp_path / "keepers-bargain"
+    shutil.copytree(golden.root, dest)
+    png = base64.b64decode(
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk"
+        "+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+    )
+    (dest / "art" / "images").mkdir(parents=True, exist_ok=True)
+    (dest / "art" / "images" / "cover.png").write_bytes(png)
+
+    html = build_html(load_project(dest))
+    # the cover screen, its image inlined as a data URI, and a Begin control
+    assert 'id="cover"' in html
+    assert '"cover": {"image": "data:image/png;base64,' in html
+    assert 'id="begin"' in html
+    # still self-contained
+    assert "http://" not in html and "https://" not in html
+
+
+def test_html_no_cover_screen_without_image(golden):
+    # the golden ships a cover brief but no rendered cover.png -> no cover in JSON
+    html = build_html(golden)
+    assert '"cover":' not in html
+
+
 def test_twee_export_shape(golden):
     twee = build_twee(golden, "TEST-IFID-1234")
     assert ":: StoryTitle" in twee and ":: StoryData" in twee

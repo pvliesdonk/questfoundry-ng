@@ -413,6 +413,49 @@ def golden_copy(tmp_path):
     return dest
 
 
+def _write_cover_png(root: Path) -> None:
+    import io
+
+    from PIL import Image
+
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 12), (30, 40, 50)).save(buf, format="PNG")
+    (root / "art" / "images").mkdir(parents=True, exist_ok=True)
+    (root / "art" / "images" / "cover.png").write_bytes(buf.getvalue())
+
+
+def test_print_cover_page_when_image_exists(golden_copy):
+    _write_cover_png(golden_copy)
+    project = load_project(golden_copy)
+    runtime = build_runtime(project)  # the golden has a cover brief
+    assert runtime.get("cover")  # cover ships now that the image exists
+    book = build_gamebook(
+        runtime, seed=1, images_dir=golden_copy / "art" / "images", root=golden_copy
+    )
+    # a full-page cover renders ahead of the title page, with the title over it
+    assert "art/images/cover.png" in book.typst
+    assert book.typst.count(_escape_title(runtime["meta"]["title"])) >= 2  # cover + title page
+    # it compiles
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def _escape_title(title: str) -> str:
+    from questfoundry.export.gamebook import _escape_typst
+
+    return _escape_typst(title)
+
+
+def test_no_cover_page_without_image(golden_copy):
+    # the golden has a cover brief but no rendered cover.png -> no cover page
+    project = load_project(golden_copy)
+    runtime = build_runtime(project)
+    assert "cover" not in runtime
+    book = build_gamebook(
+        runtime, seed=1, images_dir=golden_copy / "art" / "images", root=golden_copy
+    )
+    assert "art/images/cover.png" not in book.typst
+
+
 def test_cli_export_pdf_writes_files_and_persists_seed(golden_copy):
     runner = CliRunner()
     result = runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy)])

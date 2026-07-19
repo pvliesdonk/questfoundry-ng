@@ -540,7 +540,7 @@ inference ("as if weighing") is the narrator's own mind.
 | | |
 |---|---|
 | In | Finished prose, entities, vision, voice |
-| Out | Art direction; entity visual profiles; illustration briefs (prioritized) per key passage; illustrations (via pluggable image backend, optional); codex entries; print codewords on projected flags |
+| Out | Art direction; entity visual profiles; illustration briefs (prioritized) per key passage; a cover brief (the front-page image); illustrations (via pluggable image backend, optional); codex entries; print codewords on projected flags |
 | Gate G6 | Every brief references only established visual facts; codex is spoiler-safe (entries reveal nothing the earliest-reaching arc hasn't); every gate-tested flag carries a well-formed, unique codeword |
 
 DRESS reads the story; it never changes it — its outputs live beside the
@@ -556,6 +556,13 @@ reveals, per the review-legibility lessons), and *codewords* (memorable
 single words for every flag some choice gate tests — suggested here, not
 at POLISH, because "drawn from the story's diction" needs the diction to
 exist: there is no voice and no prose until after FILL; see mini-ADR A12).
+A fifth pass, *cover*, writes the prompt for the book's front-page
+illustration — atmospheric and spoiler-safe (setting, mood, genre
+iconography, an emblematic object; no plot or ending reveals, since the
+cover is seen before reading), built from the established art direction so
+it matches the interior. It runs last (it depends only on *direction*) and
+is optional to render; `qf illustrate` draws it first to
+`art/images/cover.png`, and the exports lay the title over it (04 §2, §4).
 
 ### SHIP — export
 

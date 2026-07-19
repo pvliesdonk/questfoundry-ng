@@ -16,6 +16,28 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-19 (DRESS cover page — author-requested):** DRESS now writes a
+  **cover brief** (the book's front-page image) alongside its per-passage
+  briefs. Author-agreed shape (brainstorm 2026-07-19): an *illustrated*
+  cover (not typographic-only), *atmospheric and spoiler-safe* (setting,
+  mood, genre iconography, an emblematic object; no plot/ending reveals —
+  it is seen before reading), rendered in **HTML + print**. Design chosen:
+  a dedicated `Enrichment.cover: CoverBrief | None` (persisted as
+  `art/cover.yaml`) rather than smuggling a `"cover"` entry into the
+  passage-keyed `briefs` list — a cover is not a passage, so a dedicated
+  field keeps the special-casing to the two places that care (illustrate,
+  the export cover page) instead of every briefs consumer. Flow: a fifth
+  DRESS pass *cover* (last; depends only on *direction*, so its recorded
+  fixture appends without renumbering) → `enrichment.cover` → `qf
+  illustrate` renders it first (priority-0 synthetic brief through the
+  existing plan/render/ledger machinery, so `--budget 1` draws the cover)
+  → `art/images/cover.png` → runtime JSON ships a top-level `cover` field
+  once the image exists (mirrors `art`) → HTML shows a cover opening screen
+  (image + title + Begin), print lays a full-page cover with the title over
+  the art ahead of the title page. Golden extended (`examples/keepers-bargain`
+  gains `art/cover.yaml`; the keeper e2e fixture gains call 062). Docs: 01
+  §7, 02 DRESS, 04 §2/§4. Built brainstorm→implementation this session, TDD.
+
 - **2026-07-19 (choice labels over-stuffed with atmosphere — a prompt
   shape defect):** Author read of `examples/closed-circle-oss` (passage 64)
   flagged choice labels as "weird/farfetched" and recurring — e.g. "Enter

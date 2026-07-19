@@ -63,7 +63,7 @@ def build_runtime(project: Project) -> dict:
         for e in sorted(g.nodes_of(Entity), key=lambda e: e.id)
         if e.retained
     }
-    return {
+    data = {
         "format": FORMAT,
         "version": VERSION,
         "meta": {"title": project.name, "scope": project.vision.scope},
@@ -74,6 +74,22 @@ def build_runtime(project: Project) -> dict:
         "codex": _codex(project),
         "art": _art(project),
     }
+    cover = _cover(project)
+    if cover is not None:
+        data["cover"] = cover
+    return data
+
+
+def _cover(project: Project) -> dict | None:
+    """The cover ships only once its image exists (`art/images/cover.png`),
+    mirroring `_art`: a cover brief without a rendered image simply doesn't
+    ship (design doc 04 §4). The title is already in `meta.title` — the export
+    layout draws it over the art."""
+    if project.enrichment.cover is None:
+        return None
+    if not (project.root / "art" / "images" / "cover.png").exists():
+        return None
+    return {"image": "art/images/cover.png"}
 
 
 def _codex(project: Project) -> list[dict]:
@@ -133,6 +149,9 @@ def validate_runtime(data: dict) -> list[str]:
     for entry in data.get("art", []):
         if entry["passage"] not in passages:
             problems.append(f"art entry references unknown passage {entry['passage']!r}")
+    cover = data.get("cover")
+    if cover is not None and not str(cover.get("image", "")).strip():
+        problems.append("cover entry has no image")
 
     # Walk with flag state, as every player will. The visited-set key carries
     # only GATE-RELEVANT flags (those some choice `requires`): a grant nothing

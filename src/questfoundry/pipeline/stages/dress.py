@@ -33,6 +33,7 @@ from questfoundry.models.drama import Consequence, Dilemma
 from questfoundry.models.enrichment import (
     ArtDirection,
     CodexEntry,
+    CoverBrief,
     IllustrationBrief,
     VisualProfile,
 )
@@ -137,6 +138,34 @@ def _direction_apply(proposal: DirectionProposal, project: Project) -> list[str]
     return [f"direction: {proposal.style}"] + [
         f"profile: {p.entity}" for p in project.enrichment.profiles
     ]
+
+
+# -- cover ---------------------------------------------------------------------
+
+
+class CoverProposal(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    prompt: str
+
+
+def _cover_skip(project: Project) -> str | None:
+    if project.enrichment.cover is not None:
+        return "cover already set"
+    if project.enrichment.direction is None:
+        return "no art direction to base a cover on"
+    return None
+
+
+def _cover_context(project: Project) -> dict:
+    return {"vision": project.vision, "direction": project.enrichment.direction}
+
+
+def _cover_apply(proposal: CoverProposal, project: Project) -> list[str]:
+    if not proposal.prompt.strip():
+        raise ApplyError("the cover prompt is empty; describe an atmospheric, spoiler-safe cover")
+    project.enrichment.cover = CoverBrief(prompt=proposal.prompt)
+    return ["cover set"]
 
 
 # -- pass 2: briefs -------------------------------------------------------------
@@ -507,6 +536,18 @@ def _passes(project: Project) -> tuple[PassSpec, ...]:
             build_context=_codewords_context,
             apply=_codewords_apply,
             skip_if=_codewords_skip,
+        ),
+        # Cover last: it depends only on `direction` (first), so ordering it
+        # here keeps its generation independent of the passes between and lets
+        # its recorded fixture append without renumbering the others.
+        PassSpec(
+            name="cover",
+            role="architect",
+            template="dress_cover.j2",
+            schema=CoverProposal,
+            build_context=_cover_context,
+            apply=_cover_apply,
+            skip_if=_cover_skip,
         ),
     )
 

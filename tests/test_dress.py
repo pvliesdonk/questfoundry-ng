@@ -21,10 +21,14 @@ from questfoundry.pipeline.stages.dress import (
     CodewordsProposal,
     CodexItem,
     CodexProposal,
+    CoverProposal,
     DirectionProposal,
     ProfileItem,
     _codewords_apply,
     _codex_apply,
+    _cover_apply,
+    _cover_context,
+    _cover_skip,
     _direction_apply,
 )
 from questfoundry.pipeline.types import ApplyError
@@ -242,6 +246,77 @@ def test_enrichment_and_codewords_roundtrip(golden, tmp_path):
     assert [i for i in issues if i.severity == Severity.ERROR] == []
 
 
+def test_cover_apply_sets_the_cover(golden):
+    project = copy.deepcopy(golden)
+    project.enrichment.cover = None
+    log = _cover_apply(CoverProposal(prompt="A foghorn glow over a black harbor"), project)
+    assert project.enrichment.cover is not None
+    assert project.enrichment.cover.prompt == "A foghorn glow over a black harbor"
+    assert log == ["cover set"]
+
+
+def test_cover_apply_rejects_empty_prompt(golden):
+    with pytest.raises(ApplyError, match="cover prompt is empty"):
+        _cover_apply(CoverProposal(prompt="   "), copy.deepcopy(golden))
+
+
+def test_cover_skips_without_direction_or_when_already_set(golden):
+    project = copy.deepcopy(golden)
+    # golden is dressed: direction exists, cover not yet set -> runs
+    project.enrichment.cover = None
+    assert _cover_skip(project) is None
+    # already set -> skip
+    _cover_apply(CoverProposal(prompt="x"), project)
+    assert (_cover_skip(project) or "").startswith("cover already")
+    # no direction -> skip (a cover has nothing to match)
+    project.enrichment.cover = None
+    project.enrichment.direction = None
+    assert "no art direction" in (_cover_skip(project) or "")
+
+
+def test_cover_prompt_is_atmospheric_and_spoiler_safe(golden):
+    from questfoundry.pipeline import runner
+
+    ctx = _cover_context(golden)
+    rendered = runner._environment().get_template("dress_cover.j2").render(
+        **ctx, notes="", repair_errors=[], research=""
+    )
+    flat = " ".join(rendered.split())
+    assert "SPOILER-SAFE" in flat
+    assert "no ending imagery" in flat
+    # the cover must inherit the story's look
+    assert golden.enrichment.direction.style in flat
+
+
+def test_cover_brief_roundtrips(golden, tmp_path):
+    """The DRESS cover brief persists as art/cover.yaml (design doc 04 §4)."""
+    from questfoundry.models.enrichment import CoverBrief
+    from questfoundry.project import load_project, save_project
+
+    enrichment = golden.enrichment.model_copy(
+        update={"cover": CoverBrief(prompt="A lantern on an empty pier at dusk, salt fog rolling")}
+    )
+    save_project(
+        Project(
+            root=tmp_path,
+            name=golden.name,
+            stage=golden.stage,
+            vision=golden.vision,
+            graph=golden.graph,
+            voice=golden.voice,
+            ifid=golden.ifid,
+            enrichment=enrichment,
+        )
+    )
+    assert (tmp_path / "art" / "cover.yaml").exists()
+    reloaded = load_project(tmp_path)
+    assert reloaded.enrichment.cover == enrichment.cover
+    # a project directory with no art/cover.yaml reloads with cover None
+    # (graceful default — pre-cover projects still load)
+    (tmp_path / "art" / "cover.yaml").unlink()
+    assert load_project(tmp_path).enrichment.cover is None
+
+
 # -- runtime_json: codex/art -------------------------------------------------------
 
 
@@ -293,6 +368,31 @@ def test_runtime_json_validate_rejects_codex_for_unknown_entity(golden):
     data["codex"].append({"entity": "character:nope", "title": "t", "body": "b"})
     problems = validate_runtime(data)
     assert any("character:nope" in p for p in problems)
+
+
+def test_runtime_json_cover_ships_only_when_image_exists(golden, tmp_path):
+    from questfoundry.export.runtime_json import build_runtime, validate_runtime
+
+    # the golden has a cover brief but no rendered cover.png -> no cover field
+    assert "cover" not in build_runtime(golden)
+
+    (tmp_path / "art" / "images").mkdir(parents=True)
+    (tmp_path / "art" / "images" / "cover.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    project = Project(
+        root=tmp_path,
+        name=golden.name,
+        stage=golden.stage,
+        vision=golden.vision,
+        graph=golden.graph,
+        voice=golden.voice,
+        enrichment=golden.enrichment,
+    )
+    data = build_runtime(project)
+    assert data["cover"] == {"image": "art/images/cover.png"}
+    assert validate_runtime(data) == []
+    # a cover with no image is a validation error
+    data["cover"] = {"image": ""}
+    assert any("cover entry has no image" in p for p in validate_runtime(data))
 
 
 def test_runtime_json_validate_rejects_art_for_unknown_passage(golden):

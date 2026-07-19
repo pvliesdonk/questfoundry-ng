@@ -1,0 +1,28 @@
+Write the image prompt for this story's COVER — the single illustration a reader
+sees before they have read a word. Return one field: prompt (the image
+generator's instructions for the cover art).
+
+The cover is ATMOSPHERIC and SPOILER-SAFE. It sets the mood and genre a reader is
+about to enter — like a back-cover blurb in a picture. Show setting, atmosphere,
+genre iconography, and at most one emblematic object or silhouette. Do NOT show
+how the story turns out: no plot events, no ending imagery, no character's fate,
+no reveal of who did what. When in doubt, stay wide and evocative rather than
+specific.
+
+VISION: {{ vision.genre }}{% if vision.subgenre %} ({{ vision.subgenre }}){% endif %},
+{{ vision.tone }}. Themes: {{ vision.themes | join("; ") }}.
+Premise: {{ vision.premise }}
+
+ART DIRECTION (the cover must look like the rest of the book):
+- style: {{ direction.style }}
+- palette: {{ direction.palette }}
+{% if direction.influences %}- influences: {{ direction.influences | join(", ") }}
+{% endif %}{% if direction.notes %}- notes: {{ direction.notes }}
+{% endif %}
+
+Write the prompt as a single vivid description an image model can render directly:
+the scene or emblem, the light and mood, and a line pinning the style/palette
+above. Leave room at the top or bottom of the frame for a title to be set later in
+the layout — describe the composition so it does not fill every corner. Name no
+specific plot beat; establish the world, not its outcome.
+{% include "_shared.j2" %}

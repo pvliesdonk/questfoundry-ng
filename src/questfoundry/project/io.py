@@ -22,6 +22,7 @@ from questfoundry.models.drama import Answer, Consequence, Dilemma, Path
 from questfoundry.models.enrichment import (
     ArtDirection,
     CodexEntry,
+    CoverBrief,
     Enrichment,
     IllustrationBrief,
     VisualProfile,
@@ -288,6 +289,10 @@ def _load_enrichment(root: FSPath) -> Enrichment:
         raw = _read(direction_file)
         profiles = [VisualProfile.model_validate(p) for p in raw.pop("profiles", [])]
         direction = ArtDirection.model_validate(raw)
+    cover = None
+    cover_file = root / "art" / "cover.yaml"
+    if cover_file.exists():
+        cover = CoverBrief.model_validate(_read(cover_file))
     briefs = [IllustrationBrief.model_validate(_read(f)) for f in _files(root / "art" / "briefs")]
     codex = []
     codex_dir = root / "codex"
@@ -297,7 +302,9 @@ def _load_enrichment(root: FSPath) -> Enrichment:
     # Canonical order, not filename order, so round-trips are list-stable.
     briefs.sort(key=lambda b: b.priority)
     codex.sort(key=lambda c: c.entity)
-    return Enrichment(direction=direction, profiles=profiles, briefs=briefs, codex=codex)
+    return Enrichment(
+        direction=direction, cover=cover, profiles=profiles, briefs=briefs, codex=codex
+    )
 
 
 def _parse_codex_entry(path: FSPath) -> CodexEntry:
@@ -474,6 +481,8 @@ def _save_enrichment(root: FSPath, enrichment: Enrichment) -> None:
                 for p in sorted(enrichment.profiles, key=lambda p: p.entity)
             ]
         _write(root / "art" / "direction.yaml", data)
+    if enrichment.cover is not None:
+        _write(root / "art" / "cover.yaml", enrichment.cover.model_dump(mode="json"))
     for brief in enrichment.briefs:
         data = brief.model_dump(mode="json", exclude_defaults=True)
         _write(root / "art" / "briefs" / f"{_slug(brief.passage)}.yaml", data)

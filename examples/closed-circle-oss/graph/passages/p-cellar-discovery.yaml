@@ -1,0 +1,27 @@
+id: passage:p-cellar-discovery
+summary: Harriet follows the riddle into the shadowy cellar beneath the old mill, where Lucy's
+  flashlight cuts through dust on stacked tables. In Marjorie's diner, Lucy uncovers a clunky
+  concealed device hidden beneath a table.
+entities:
+- character:harriet-wellman
+- location:old-mill
+- character:lucy-frost
+- character:marjorie-lynch
+prose_summary: Edgar stands at hatch; Harriet Wellman enters opening, follows riddle to tables,
+  badge. Lucy Frost scans with flashlight, finds ash‑caked table and gap. Harriet gestures;
+  Lucy exits cellar. At Marjorie Lynch’s diner Lucy lifts plank, finds ticking iron device,
+  touches wire, revealing scar. Edgar feels revolver, badge tight; stone stair up, wooden
+  doors open to community hall echoing ticking.
+beats:
+- beat:diner-bomb-pre-1
+- beat:edgar-riddle-resolution
+- bridge:gap-16
+choices:
+- label: Enter Marjorie's diner, the device’s tick shaking the air
+  grants:
+  - flag:cw-diner-bomb-pre-2
+  to: passage:p-ticking-urgency
+- label: Cross into the community hall, the device’s tick rattling the room
+  grants:
+  - flag:cw-hall-bomb-1
+  to: passage:p-bombed-hall

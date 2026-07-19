@@ -1,0 +1,17 @@
+id: beat:choose-witness-arrest-post-1--defuse-diner
+created_by: grow
+summary: Harriet cuffs Edgar, his bleeding scar pulsing as he protests while jeering townsfolk
+  press in; Lucy bolts a wrench to the bomb and methodically dismantles it, sustaining a shallow
+  cut. The arrest ignites suspicion, and Lucy’s injuries underscore the cost of defiance.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

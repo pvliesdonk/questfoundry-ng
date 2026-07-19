@@ -1,0 +1,19 @@
+id: passage:p-quiet-rupture
+summary: Harriet logs Edgar's arrest as a distant gunshot echoes, and Lucy emerges bruised
+  but alive after defusing the bomb; the world hangs between law and chaos.
+entities:
+- character:harriet-wellman
+ending:
+  id: e-quiet-rupture
+  title: Silence After the Crackle
+irrelevant_flags:
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+prose_summary: On June 14, 1887 the deputy records that Edgar Barnes is cuffed and moved to
+  the holding cell. Lucy Frost arrives bruised from a slipped wrench, reports the bomb’s red
+  wire snapped and the device lies inert, its ornate knife sheath missing. Townsfolk murmur
+  disapproval of the teacher’s arrest, and the deputy exits into the cold night.
+beats:
+- beat:choose-witness-arrest-post-4--defuse-diner

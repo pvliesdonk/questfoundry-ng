@@ -1,0 +1,10 @@
+id: bridge:gap-48
+created_by: grow
+summary: The union's vow of revenge lingers as Caldwell thanks Harriet, his polished image
+  showing cracks.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:farmer-union
+- character:mayor-caldwell
+- character:harriet-wellman

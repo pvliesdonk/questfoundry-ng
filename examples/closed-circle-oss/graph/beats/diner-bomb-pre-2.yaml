@@ -1,0 +1,19 @@
+id: beat:diner-bomb-pre-2
+summary: A faint ticking ticks, and the metallic scent of gunpowder fills the air, raising
+  panic.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: complicates
+entities:
+- character:lucy-frost
+grants_flags:
+- flag:cw-diner-bomb-pre-2
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.
+belongs_to:
+- path:defuse-diner
+- path:evacuate-diner

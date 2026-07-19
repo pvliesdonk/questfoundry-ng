@@ -1,0 +1,25 @@
+id: passage:p-ink-confess-aftermath
+summary: Thea’s confession draws applause and a heated debate on accountability, then the
+  diner's patrons quiet down, settling into a tentative calm as they discuss reforms and a
+  cautious hope.
+entities:
+- character:thea-swan
+- character:marjorie-lynch
+irrelevant_flags:
+- flag:above-ground-search
+- flag:killer-escape
+- flag:secret-passage-used
+- flag:trap-risk
+prose_summary: Thea confesses; townsfolk applaud, then debate accountability versus mercy.
+  A farmer proposes reform to tighten records and monitor infirmary ledgers; a shopkeeper
+  proposes improving street safety. The discussion ends with diners drawing chairs closer
+  and adopting tentative calm. No new resource cost is introduced.
+beats:
+- beat:secret-ink-confess-post-3
+- beat:secret-ink-confess-post-4
+- bridge:gap-39
+choices:
+- label: Listen as Thea confesses her hidden past
+  requires:
+  - flag:thea-allies
+  to: passage:p-thea-revelation

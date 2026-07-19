@@ -1,0 +1,14 @@
+id: beat:diner-bomb-defuse-post-3
+summary: Clifford darts for the exit; Lucy grabs his coat, dragging him out as blood drips.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: reveals
+entities:
+- character:clifford-moon
+- character:lucy-frost
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:defuse-diner

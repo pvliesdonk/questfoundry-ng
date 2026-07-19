@@ -1,0 +1,10 @@
+id: bridge:gap-24
+created_by: grow
+summary: The sealed ledger rests in the clerk's vault as farmer union voices rise demanding
+  transparency.
+beat_class: structural
+purpose: bridge
+entities:
+- object:ledger-blackwood
+- character:mayor-caldwell
+- faction:farmer-union

@@ -1,0 +1,14 @@
+id: beat:fork-1a
+created_by: polish
+summary: Marjorie whispers that the ledger details Mayor Caldwell’s hidden debts, leaving
+  a sour taste of looming corruption.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marjorie-lynch
+- object:ledger-blackwood
+- character:mayor-caldwell
+grants_flags:
+- flag:cw-fork-1a
+texture_premise: A hushed conversation about the Blackwood Ledger erupts in the diner’s back
+  room.

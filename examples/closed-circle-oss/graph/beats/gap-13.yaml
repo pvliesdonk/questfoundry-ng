@@ -1,0 +1,11 @@
+id: bridge:gap-13
+created_by: grow
+summary: Harriet questions Lucy's frantic report while Thea rushes in, tray clenched tight.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- character:thea-swan
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.

@@ -1,0 +1,24 @@
+id: passage:p-old-mill-basement
+summary: Lucy sets up a makeshift counter and Thea tends the lanterns while Mayor Caldwell
+  arrives to promise calm amid the gossip‑filled basement hall, which hums with tension. In
+  a cramped corner, Clifford lifts and polishes an ornate ivory‑handled knife, its glint catching
+  the dim lamplight.
+entities:
+- character:marjorie-lynch
+- character:lucy-frost
+- character:thea-swan
+- character:mayor-caldwell
+- character:clifford-moon
+- object:ornate-knife
+prose_summary: Lucy places a crate as counter, puts a mug and torn ledger on it. Thea installs
+  lanterns in iron‑bound beams, lighting the vaulted hall. Mayor Caldwell enters, raises hands
+  to promise calm. Clifford Moon draws Lucy’s recovered ivory‑handled knife, sharpens it on
+  the scarred table, and receives Lucy’s urgent note slipped into his pocket. Furnace hums
+  below.
+beats:
+- beat:alt-01
+- beat:alt-02
+- beat:alt-03
+choices:
+- label: Slip the urgent note into Clifford's pocket
+  to: passage:p-note-ledger

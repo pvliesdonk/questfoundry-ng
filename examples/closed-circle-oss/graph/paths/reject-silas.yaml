@@ -1,0 +1,7 @@
+id: path:reject-silas
+explores: answer:reject-silas
+consequences:
+- id: consequence:above-ground-search
+  text: Harriet searches above ground, missing secret route.
+- id: consequence:killer-escape
+  text: Murderer may slip away.

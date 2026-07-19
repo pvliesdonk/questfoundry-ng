@@ -1,0 +1,17 @@
+id: dilemma:mill-fire
+question: When the old mill ignites, should the townsfolk battle the flames, risking exposure
+  of hidden evidence, or let it burn to cover tracks?
+why_it_matters: Putting out the fire may preserve vital clues, but endangers lives; letting
+  it burn erases evidence but could save people from harm.
+role: hard
+residue_weight: heavy
+ending_salience: high
+reserved: true
+answers:
+- id: answer:fight-fire
+  text: The community forms a bucket brigade to extinguish the blaze.
+- id: answer:let-burn
+  text: They abandon the mill, allowing it to consume the evidence.
+anchored_to:
+- location:old-mill
+- faction:farmer-union

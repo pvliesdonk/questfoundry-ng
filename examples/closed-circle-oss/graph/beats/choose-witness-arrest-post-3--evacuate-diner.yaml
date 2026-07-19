@@ -1,0 +1,17 @@
+id: beat:choose-witness-arrest-post-3--evacuate-diner
+created_by: grow
+summary: Harriet shoves handcuffs on Edgar while the ornate knife glints in his desk, a damning
+  clue; Lucy blows the whistle and rushes patrons to safety, the bomb left ticking in the
+  empty kitchen. The knife’s reveal fuels the town’s wrath as the immediate danger slips away.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:edgar-barnes
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

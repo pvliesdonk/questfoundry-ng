@@ -1,0 +1,18 @@
+id: passage:p-union-calm
+summary: A weary calm settles over the district. Murmurs of dissent echo through the streets
+  while the union’s banner flutters against a gray sky, suggesting an uneasy pause before
+  conflict.
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+- faction:farmer-union
+- character:mayor-caldwell
+prose_summary: Clifford Moon enters the market square, notes Harriet Wellman’s badge, deputy,
+  and union leaders. He finds an envelope demanding his ornate knife be returned, removes
+  the knife, reads the note, and perceives a pending choice to keep or surrender the blade,
+  increasing tension.
+beats:
+- beat:union-strike-support-calm
+choices:
+- label: Clutch the ornate blade and unfold the cryptic note
+  to: passage:p-knife-harriet-riddle

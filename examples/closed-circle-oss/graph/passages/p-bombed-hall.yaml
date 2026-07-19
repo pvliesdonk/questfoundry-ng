@@ -1,0 +1,18 @@
+id: passage:p-bombed-hall
+summary: A faint ticking and the metallic scent of gunpowder fill the community hall, sparking
+  panic as Lucy’s alarmed stare meets Marjorie’s hopeful smile; Marjorie urges the doors to
+  stay open, arguing the evening crowd’s morale depends on it.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+prose_summary: Edgar hears ticking and gunpowder scent, crowd panics. Lucy Frost looks at
+  bar, scar visible. Marjorie Lynch smiles, locks gaze with Lucy, then urges doors stay open
+  for rally morale. Harriet Wellman guards oak doors, badge flashing, hand on latch. Edgar
+  feels revolver at hip as ticking rises.
+beats:
+- beat:hall-bomb-1
+- beat:hall-bomb-2
+- beat:hall-bridge-1
+choices:
+- label: Step toward Deputy Harriet, demanding to know what’s ticking
+  to: passage:p-harriet-bridge

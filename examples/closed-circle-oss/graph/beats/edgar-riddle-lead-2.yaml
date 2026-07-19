@@ -1,0 +1,13 @@
+id: beat:edgar-riddle-lead-2
+summary: Harriet studies the riddle, recalling old myths tied to the abandoned mill.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: complicates
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:pursue-clue

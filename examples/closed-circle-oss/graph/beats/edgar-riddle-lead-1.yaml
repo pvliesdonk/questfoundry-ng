@@ -1,0 +1,15 @@
+id: beat:edgar-riddle-lead-1
+summary: Edgar hands Harriet a folded note containing a cryptic riddle about "the heart of
+  stone and river's mouth".
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: reveals
+entities:
+- character:edgar-barnes
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:pursue-clue

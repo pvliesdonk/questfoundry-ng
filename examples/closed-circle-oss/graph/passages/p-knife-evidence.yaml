@@ -1,0 +1,28 @@
+id: passage:p-knife-evidence
+summary: Harriet follows Silas's whispered directions, places the ornate knife in the evidence
+  locker, records fresh fingerprints, and notes the missing sheath, suggesting another weapon
+  was used.
+entities:
+- character:old-man-well
+- character:harriet-wellman
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Silas tells Harriet to take the ornate ivory-handled knife. Harriet puts the
+  knife in the evidence locker, leaving fresh fingerprints; the sheath is missing, indicating
+  another weapon was used. Clifford notes the missing sheath clue and the dark tunnel hatch
+  beyond the locker.
+beats:
+- beat:knife-disposal-aftermath-1
+- beat:knife-disposal-aftermath-2
+- bridge:gap-34
+choices:
+- label: Enter the rain‑soaked tunnels beneath the Old Mill
+  to: passage:p-clifford-escape-leak

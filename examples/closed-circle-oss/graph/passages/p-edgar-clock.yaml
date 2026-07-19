@@ -1,0 +1,15 @@
+id: passage:p-edgar-clock
+summary: Retired teacher Edgar Barnes mutters a cryptic clock riddle that mirrors the bomb’s
+  steady tick, underscoring a looming collapse concealed within the ordered routine.
+entities:
+- character:edgar-barnes
+variant_flag: flag:above-ground-search
+prose_summary: Edgar Barnes enters the mill doorway, feels bomb tick, reads his folded note,
+  mutters the rhyme, steps toward the iron latch that seals a hidden cellar, while Deputy
+  Harriet Wellman holds a flickering lantern. The ticking bomb creates time pressure; the
+  latch rattles, and Edgar steadies breath, using the rhyme as a map.
+beats:
+- beat:arm-edgar-1
+choices:
+- label: Step past the ticking riddle, heart syncing with the bomb
+  to: passage:p-bomb-evacuation

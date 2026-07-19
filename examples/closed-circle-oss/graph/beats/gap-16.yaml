@@ -1,0 +1,11 @@
+id: bridge:gap-16
+created_by: grow
+summary: Harriet follows the riddle into the mill’s shadowed cellar, where Lucy's flashlight
+  sweeps across dust‑laden tables.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- location:old-mill
+- character:lucy-frost
+- character:marjorie-lynch

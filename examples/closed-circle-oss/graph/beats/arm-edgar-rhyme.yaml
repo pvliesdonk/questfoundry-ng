@@ -1,0 +1,12 @@
+id: beat:arm-edgar-rhyme
+created_by: polish
+summary: Edgar's riddling tone lingers, casting Thea's anxiety into a veil of puzzling omen.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+- character:thea-swan
+- character:marjorie-lynch
+grants_flags:
+- flag:cw-arm-edgar-rhyme
+texture_premise: Edgar murmurs a cryptic rhyme to Thea as she passes the diner.

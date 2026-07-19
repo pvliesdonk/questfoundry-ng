@@ -1,0 +1,16 @@
+id: beat:diner-bomb-defuse-post-4
+summary: Lucy disables the bomb, sustaining a gash that drips blood onto the shattered floor;
+  Harriet journals the violent climax, describing Lucy’s sacrifice and the diner’s ruin. The
+  decision to charge Edgar stays unresolved, the town’s fate still balanced on a razor.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: advances
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:harriet-wellman
+interlude: true
+belongs_to:
+- path:defuse-diner

@@ -1,0 +1,11 @@
+id: beat:detour-knife-2
+created_by: polish
+summary: She watches Edgar Barnes slip a folded note under Marjorie Lynch's mug, imprinting
+  the notion that hidden messages already circulate.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- character:marjorie-lynch
+texture_premise: A tense whisper over the diner's counter about the missing Ornate Knife.

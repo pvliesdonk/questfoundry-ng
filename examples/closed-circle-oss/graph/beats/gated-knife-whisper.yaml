@@ -1,0 +1,15 @@
+id: beat:gated-knife-whisper
+created_by: polish
+summary: Across the diner's counter, Lucy Frost leans in, whispering that the Ornate Knife
+  has vanished, and the room tightens with a sour warning.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:marjorie-lynch
+requires_flags:
+- flag:cw-detour-knife-1
+grants_flags:
+- flag:cw-gated-knife-whisper
+texture_premise: A murmured alarm spreads about the missing Ornate Knife

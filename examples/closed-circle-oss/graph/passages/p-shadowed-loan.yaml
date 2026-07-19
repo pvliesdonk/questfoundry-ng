@@ -1,0 +1,20 @@
+id: passage:p-shadowed-loan
+summary: The ledger reveals a loan tied to his own family, and his expression darkens as the
+  mayor’s face hardens over the entry. From the makeshift bar, Lucy watches the uneasy exchange
+  as Harriet presses Clifford.
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+- character:harriet-wellman
+- character:clifford-moon
+prose_summary: Lucy keeps her revolver at hip, leans on makeshift bar. Mayor Caldwell opens
+  Blackwood ledger, reads loan entry tying Moon family debt to him. Clifford Moon reads same
+  entry, brow tightens. Harriet Wellman places hand on Clifford, repeats question. Rumors
+  claim ledger can ruin families. Furnace hums louder. Lucy feels revolver warm, faces choices.
+beats:
+- beat:alt-10
+- beat:alt-11
+- beat:alt-12
+choices:
+- label: Guide Harriet toward the Old Mill’s furnace
+  to: passage:p-ledger-conspiracy

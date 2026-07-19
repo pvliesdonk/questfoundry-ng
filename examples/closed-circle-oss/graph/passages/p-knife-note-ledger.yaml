@@ -1,0 +1,19 @@
+id: passage:p-knife-note-ledger
+summary: A smeared threatening note demanding the knife's return slides into Clifford's pocket
+  just as Mayor Caldwell opens the Blackwood Ledger, scanning the stained names and debts.
+entities:
+- character:clifford-moon
+- object:ornate-knife
+- character:mayor-caldwell
+- object:ledger-blackwood
+prose_summary: Lucy stands at bar, receives folded note demanding return of ivory-handled
+  knife. Clifford lifts knife, puts note in coat pocket. Mayor Caldwell enters firepit room,
+  opens missing leather ledger, reads his own name among debts, confirming ledger's return.
+  Lucy grips revolver, weighs next move, which now costs a shot.
+beats:
+- beat:knife-disposal-lead-2
+- beat:ledger-burn-pre-1
+- bridge:gap-18
+choices:
+- label: Confront Clifford about the knife in the diner district
+  to: passage:p-knife-confrontation

@@ -1,0 +1,13 @@
+id: bridge:gap-28
+created_by: grow
+summary: The mayor's face hardens over the ledger entry, and Lucy notes the uneasy tension
+  as Harriet presses Clifford.
+beat_class: structural
+purpose: bridge
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+- character:clifford-moon
+- character:harriet-wellman
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

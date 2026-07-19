@@ -1,0 +1,11 @@
+id: beat:fork-1-1
+created_by: polish
+summary: Harriet hears Old Man Well mutter about unseen gears under the floor, tasting the
+  metallic hint of fear, and pockets the warning note with a fresh suspicion of hidden tunnels.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+grants_flags:
+- flag:cw-fork-1-1
+texture_premise: A rumor of a secret passage beneath the diner

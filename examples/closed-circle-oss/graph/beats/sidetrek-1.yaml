@@ -1,0 +1,16 @@
+id: beat:sidetrek-1
+created_by: polish
+summary: Lucy Frost slides a whiskey to Marjorie, then leans close to hint that the ledger
+  binds Mayor Caldwell to the Farmer Union, leaving the reader uneasy about hidden leverage.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- object:ledger-blackwood
+- character:mayor-caldwell
+- faction:farmer-union
+grants_flags:
+- flag:cw-sidetrek-1
+texture_premise: A low‑key murmur over the Blackwood Ledger spreads at Marjorie's diner, exposing
+  the town's concealed debts.

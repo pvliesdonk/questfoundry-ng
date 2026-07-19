@@ -1,0 +1,13 @@
+id: beat:detour-knife-whisper-1
+created_by: polish
+summary: Harriet Wellman mutters that the blood‑stained knife is a trap, casting a cold suspicion
+  over the altar; the reader carries the mark of doubt.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+grants_flags:
+- flag:cw-detour-knife-whisper-1
+texture_premise: A whispered accusation that the Ornate Knife was deliberately placed as a
+  false clue

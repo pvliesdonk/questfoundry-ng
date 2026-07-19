@@ -1,0 +1,16 @@
+id: passage:p-old-man-reject-notebook
+summary: Harriet flips through her notebook, recording the missed chance, as the old mill's
+  cold, unlit interior presses deeper around her.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- location:old-mill
+prose_summary: Harriet opens the cracked leather notebook on the stone slab, reads her entry
+  about protest arrests, writes a note marking a missed hidden passage, notes her scar, badge,
+  and revolver, observes Lucy’s soot‑dull flashlight and a lantern, sees a dark doorway to
+  a cellar, sets the notebook down, and the mill stone urges her forward.
+beats:
+- beat:old-man-reject-notebook
+choices:
+- label: Enter the shadowy cellar, flashlight in hand
+  to: passage:p-cellar-discovery

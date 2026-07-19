@@ -1,0 +1,20 @@
+id: passage:p-hall-shadow-knife
+summary: A shadowy figure flees, leaving dusty footprints, as Harriet secures the bloodied
+  knife as evidence while Thea watches and Lucy lingers with a wary glance, intensifying the
+  mystery.
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+- character:thea-swan
+- character:lucy-frost
+prose_summary: Edgar watches shadow and footprints, Harriet secures bloodied ivory-handled
+  knife in evidence locker, notes missing sheath implying second weapon, Thea watches closing
+  doors, Lucy watches townsfolk, Edgar slips through iron infirmary door, hides scar under
+  sleeve, bomb pulse grows louder.
+beats:
+- beat:hall-bridge-5
+- beat:hall-riddle-2
+- beat:hall-riddle-3
+choices:
+- label: Sneak into the infirmary, hiding my scarred wrist as the hall’s bomb ticks
+  to: passage:p-hall-secret

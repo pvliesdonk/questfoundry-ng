@@ -1,0 +1,9 @@
+The town square lay under a thin veil of frost, the cobblestones glinting like dull steel. Harriet Wellman stepped onto the makeshift platform beside the Union banners, her trench coat flaring against the chill. She raised her hand and spoke, refusing to raise a weapon against the farmers whose chants rose in low, steady rhythm. Marjorie Lynch watched the crowd settle, the farmers' faces hardening with a quiet strength that seemed to push back the cold.
+
+When Harriet finished, a few of the Union leaders stepped forward, their arms spreading wide as if to catch the words. Their applause rolled across the square, louder than the wind, and hope swelled among the farmers, visible in the way they straightened their backs and clutched their tools tighter. Marjorie felt the shift, a subtle lift in the air that made the frost on her boots sparkle a shade brighter.
+
+From the town hall balcony, the council members emerged, their coats buttoned up to the chin. Their eyes narrowed, and their mouths formed thin lines as they regarded the scene below. The cheers from the Union faded as the council’s stern gazes cut across the crowd, a silent rebuke that settled over the square like a blade. Marjorie noted the way one of the elite, Mayor Caldwell, adjusted his gold tie, the gesture more about posture than comfort.
+
+Nearby, Edgar Barnes lingered at the edge of the crowd, his voice low. He bent toward Lucy Frost and whispered a riddle about the Blackwood ledger, his words curling into the winter air. The murmured phrase sank into the background, unnoticed by most but caught by Marjorie's sharp ears.
+
+The square remained tense, the Union's optimism now tempered by the council’s disapproval, and Marjorie sensed the fragile peace hanging on a thin thread. The council’s stare settled like a blade over the gathering.

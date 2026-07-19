@@ -1,0 +1,28 @@
+id: object:ornate-knife
+name: Ornate Knife
+concept: a heavy ivory‑handled hunting knife, missing its sheath
+base:
+  polish: bright
+  location: stone slab
+  sheath_missing: 'true'
+arc:
+  begins: The Ornate Knife is a heavy ivory‑handled hunting knife, missing its sheath.
+  pivots:
+  - beat: beat:knife-disposal-lead-1
+    becomes: Knife is meticulously polished, its ivory handle gleaming.
+  - beat: beat:knife-disposal-lead-4
+    becomes: Knife is identified as linked to the council clerk's murder.
+  - beat: beat:knife-disposal-resolution
+    becomes: Clifford hands the ornate knife over to Harriet for evidence.
+  - beat: beat:knife-disposal-aftermath-1
+    becomes: Harriet places the knife in the evidence locker, noting fresh fingerprints.
+  - beat: beat:knife-disposal-aftermath-2
+    becomes: The knife's sheath is missing, suggesting a second weapon.
+  - beat: beat:knife-glint-lucy
+    becomes: Lucy notices the knife flash in peripheral vision, reinforcing danger.
+  - beat: beat:knife-glint-clifford
+    becomes: Clifford glimpses the knife catch a stray beam, recognizing the thin line between
+      order and chaos.
+  ends:
+  - path: path:give-knife
+    state: Ornate Knife secured in the evidence locker.

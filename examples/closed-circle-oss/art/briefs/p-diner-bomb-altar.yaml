@@ -1,0 +1,11 @@
+passage: passage:p-diner-bomb-altar
+priority: 19
+caption: Thea finds the blood‑stained Ornate Knife placed on an altar in the old mill cellar.
+prompt: Noir illustration, heavy shadows, muted earth tones, deep crimson on fresh blood.
+  Show Thea Swan in a white coat with bob haircut, kneeling before a stone altar in the dim
+  cellar of the old mill, an ivory‑handled ornate knife lying on the altar, its blade stained
+  with fresh blood, lantern light casting an eerie glow.
+entities:
+- character:thea-swan
+- object:ornate-knife
+- location:old-mill

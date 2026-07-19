@@ -1,0 +1,18 @@
+id: passage:p-loyalty-ash
+summary: Harriet overhears Lucy Frost whisper an urgent promise to protect her brother near
+  the Old Mill, and the Blackwood Ledger’s hidden truths pulse like unseen smoke, leaving
+  Lucy’s loyalty tangled in ash.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ledger-blackwood
+- location:old-mill
+prose_summary: Harriet leans against the Old Mill stone while Lucy, revolver at hip, promises
+  to protect an unnamed brother. The Blackwood Ledger ignites, ash rises and settles across
+  the floor. Harriet touches the gray ash, noting the ledger’s secrets and the lingering loyalty
+  now reduced to dust, feeling resolved.
+beats:
+- beat:side-loyalty-1
+choices:
+- label: Grip the lingering ash of whispered loyalty
+  to: passage:p-ledger-chill

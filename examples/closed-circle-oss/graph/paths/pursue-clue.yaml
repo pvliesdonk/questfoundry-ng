@@ -1,0 +1,7 @@
+id: path:pursue-clue
+explores: answer:pursue-clue
+consequences:
+- id: consequence:clue-followed
+  text: Harriet deciphers riddle, leading to suspect's hideout.
+- id: consequence:danger-looming
+  text: Path is fraught with peril.

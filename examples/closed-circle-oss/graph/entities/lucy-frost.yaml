@@ -1,0 +1,33 @@
+id: character:lucy-frost
+name: Lucy Frost
+concept: the brash bartender, former boxer, quick with a stone‑cold stare
+pronouns: she/her
+base:
+  appearance: muscular, shaved head
+  manner: blunt, protective
+  burn_scar_hand: fresh dark scar on right palm
+arc:
+  begins: Lucy is a brash bartender, former boxer, blunt and protective.
+  pivots:
+  - beat: beat:knife-disposal-lead-4
+    becomes: Lucy watches from the bar as Harriet presses Clifford about the knife.
+  - beat: beat:diner-bomb-defuse-commit
+    becomes: Lucy grabs a wrench and attempts to defuse the bomb herself.
+  - beat: beat:whispered-loyalty-1
+    becomes: Lucy hears a patron whisper that her brother was seen handling the ledger.
+  - beat: beat:whispered-loyalty-2
+    becomes: Lucy notes the smell of smoldering timber, hinting at hidden fire‑brand evidence.
+  - beat: beat:lucy-knife-glance
+    becomes: Lucy catches a glint of the ornate knife half‑buried in ash.
+  - beat: beat:lucy-urgency-1
+    becomes: Lucy shouts a jagged warning, rallying patrons as the bomb ticks.
+  - beat: beat:lucy-guard-2
+    becomes: Lucy shields a trembling patron, protecting them from the chaos.
+  - beat: beat:knife-glint-lucy
+    becomes: Lucy sees the ornate knife flash in her peripheral vision, reinforcing danger.
+  ends:
+  - path: path:defuse-diner
+    state: Lucy successfully defused the bomb, saving the diner.
+  - path: path:evacuate-diner
+    state: Lucy led the patrons to safety while the bomb remained unexploded.
+pov_head: true

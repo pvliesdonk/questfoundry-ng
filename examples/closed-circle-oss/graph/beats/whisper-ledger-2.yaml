@@ -1,0 +1,11 @@
+id: beat:whisper-ledger-2
+created_by: polish
+summary: Edgar Barnes, half‑in‑shadow, slips a cryptic rhyme about numbers melting in fire,
+  reinforcing the notion that truth is being forged in flames.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+- object:ledger-blackwood
+- location:old-mill
+texture_premise: A whispered rumor about the Blackwood Ledger spreads through the mill’s shadows.

@@ -1,0 +1,13 @@
+id: beat:arm1-footprints
+created_by: polish
+summary: The dust swirls around fresh footprints, imprinting a frantic trail that shivers
+  the cellar with a pulse of panic.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marjorie-lynch
+- location:old-mill
+- object:ornate-knife
+grants_flags:
+- flag:cw-arm1-footprints
+texture_premise: Footprints' frantic trail

@@ -1,0 +1,15 @@
+id: passage:gated-ink
+summary: A muddy imprint on the floor indicates someone slipped away unnoticed, and the scene
+  feels watched by unseen eyes.
+entities:
+- character:clifford-moon
+- object:ledger-blackwood
+prose_summary: Lucy inspects the firepit, noting a half‑burned ledger, an ivory‑handled knife,
+  and a fresh bootprint leading to the doorway. Harriet grips Clifford’s coat tightly. The
+  salesman’s smile fades as he hides a note in his coat pocket. Lucy holds her revolver, listening
+  to the town’s murmur. The scene reveals a hidden escape and a secret that must not vanish.
+beats:
+- beat:gated-ink-1
+choices:
+- label: Follow the faint mud trail, eyes watching from the shadows
+  to: passage:p-firepit-gleam

@@ -1,0 +1,19 @@
+id: passage:p-ledger-chill
+summary: A cold tension settles over Grayhaven as Harriet's drifting notes spread a chill
+  that tightens around Caldwell's shoulders, and the town feels the empty weight of the missing
+  ledger.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+prose_summary: Mayor Caldwell sits at council table; Harriet's notes lie on oak. He has ordered
+  the furnace keeper to burn the Blackwood Ledger, turning it to ash. The ledger’s removal
+  leaves families exposed, council authority trembling, and debts no longer hidden. Frost
+  blankets Grayhaven’s streets and the council room, chilling everyone present.
+beats:
+- beat:ledger-burn-burn-post-4
+- bridge:gap-23
+choices:
+- label: Press forward through the frost‑cloaked streets
+  requires:
+  - flag:ledger-destroyed
+  to: passage:p-frost-void

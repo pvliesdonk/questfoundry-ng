@@ -1,0 +1,7 @@
+id: path:give-knife
+explores: answer:give-knife
+consequences:
+- id: consequence:knife-surrendered
+  text: Clifford hands over the ornate knife to Harriet.
+- id: consequence:evidence-secured
+  text: Police gain critical evidence.

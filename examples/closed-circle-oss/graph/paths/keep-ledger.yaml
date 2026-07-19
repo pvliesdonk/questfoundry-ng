@@ -1,0 +1,7 @@
+id: path:keep-ledger
+explores: answer:keep-ledger
+consequences:
+- id: consequence:ledger-hidden
+  text: Ledger retained, evidence preserved.
+- id: consequence:mayor-ambivalence
+  text: Mayor faces dilemma over its use.

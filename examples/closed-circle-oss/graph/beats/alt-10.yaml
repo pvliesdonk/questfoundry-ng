@@ -1,0 +1,13 @@
+id: beat:alt-10
+created_by: polish
+summary: He spots his own family's loan listed, his expression darkening with realization.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:mayor-caldwell
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:ledger-burn-pre-2
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

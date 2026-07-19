@@ -1,0 +1,25 @@
+id: passage:p-ledger-whisper
+summary: A low voice mutters that the Blackwood Ledger lies hidden beneath the floorboards,
+  casting a cold weight of secret debts over the room.
+entities:
+- object:ledger-blackwood
+- character:edgar-barnes
+- location:old-mill
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Harriet enters the cellar, opens the iron latch, finds a bloodied knife on
+  a stone slab and an open ledger. A voice reveals the Blackwood Ledger is hidden beneath
+  floorboards. Thea stands at the doorway, trembling; Lucy watches with revolver as a bomb
+  ticks. Harriet touches the ledger edge, notes fresh dust.
+beats:
+- beat:arm2-ledger-whisper
+choices:
+- label: push through Marjorie's door as the bomb ticks louder
+  to: passage:p-shadow-knife

@@ -1,0 +1,12 @@
+id: beat:lantern-shadow-1
+created_by: polish
+summary: The wavering lantern casts long shadows, etching a feeling of looming treachery into
+  Marjorie's mind.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:clifford-moon
+- character:lucy-frost
+grants_flags:
+- flag:cw-lantern-shadow-1
+texture_premise: Flickering lanterns

@@ -1,0 +1,10 @@
+id: beat:side-ink-2
+created_by: polish
+summary: Lucy mutters that the knife once belonged to a town legend, planting the notion that
+  old grudges may surface even as the ledger burns.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- character:old-man-well
+texture_premise: A glint of ivory catches in the firepit's ash, hinting at a hidden weapon.

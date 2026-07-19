@@ -1,0 +1,15 @@
+id: beat:ledger-burn-keep-post-1
+summary: The ledger is locked away; Harriet suspects Caldwell's motives grow more opaque.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: reveals
+entities:
+- object:ledger-blackwood
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:keep-ledger

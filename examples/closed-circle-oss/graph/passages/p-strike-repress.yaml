@@ -1,0 +1,27 @@
+id: passage:p-strike-repress
+summary: Harriet orders the arrests of the protesting farmers, handcuffing them and silencing
+  their chants; the union vows revenge as many farmers leave town in anger.
+entities:
+- faction:farmer-union
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Mayor Caldwell stands beside the brass‑bound safe holding the sealed Blackwood
+  Ledger; Harriet Wellman orders the watchman to cuff the farmer‑union members, who are arrested
+  and forced to kneel. The farmers file out angry, promising retaliation. Marjorie Lynch warns
+  Caldwell that the ledger contains ruinous debts. Caldwell thanks Harriet, aware the union
+  threat lingers.
+beats:
+- beat:union-strike-suppress-commit
+- beat:union-strike-suppress-post-1
+- beat:union-strike-suppress-post-2
+choices:
+- label: Eavesdrop on Marjorie's hushed warning about the Blackwood Ledger
+  grants:
+  - flag:cw-fork-1a
+  to: passage:p-hidden-ledger
+- label: Observe Mayor Caldwell thank Harriet, feeling the union's threat linger
+  to: passage:p-caldwell-revenge-cracks

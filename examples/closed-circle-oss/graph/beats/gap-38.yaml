@@ -1,0 +1,8 @@
+id: bridge:gap-38
+created_by: grow
+summary: The unseen tunnel delivers the killer, and soon another body surfaces, chilling the
+  town.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman

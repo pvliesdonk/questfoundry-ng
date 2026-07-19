@@ -1,0 +1,20 @@
+id: passage:p-harriet-confronts
+summary: Deputy Harriet steps forward, badge flashing beside Lucy's trembling hands, and demands
+  to know what troubles the patrons; Lucy's frantic report and Marjorie's lingering plea hang
+  in the air as Thea bursts in, tray clenched tight.
+entities:
+- character:marjorie-lynch
+- character:harriet-wellman
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Harriet Wellman questions Lucy Frost about a concealed device under the counter;
+  Lucy gives a frantic report. Marjorie Lynch pleads to keep the diner doors open. Thea Swan
+  bursts in, places a tray, and eyes the rusted iron cellar door. Harriet rests her badge
+  on her chest, demands more specifics, and tension mounts.
+beats:
+- beat:diner-bomb-pre-4
+- bridge:gap-12
+- bridge:gap-13
+choices:
+- label: Follow Thea into the cellar
+  to: passage:p-diner-bomb-altar

@@ -1,0 +1,23 @@
+id: passage:p-diner-knife
+summary: At Marjorie's diner Lucy wipes the bar, Thea begins her shift, and Mayor Caldwell
+  arrives to assure calm amid the gossip, while the diner's hum catches Clifford lifting an
+  ornate ivory‑handled knife; he then retreats to his cramped room to polish the blade, its
+  glint sharpening the uneasy tension.
+entities:
+- character:marjorie-lynch
+- character:lucy-frost
+- character:thea-swan
+- character:mayor-caldwell
+- character:clifford-moon
+- object:ornate-knife
+prose_summary: Lucy wipes bar. Thea Swan serves cups. Mayor Caldwell enters, promises order
+  after recent murder. Clifford Moon lifts ivory-handled knife, sees note demanding its return,
+  hides knife in coat, leaves through back door to his quarters, rubs knife on cloth to restore
+  shine. Lucy observes the glint.
+beats:
+- beat:knife-disposal-lead-1
+- beat:setup-3
+- bridge:gap-41
+choices:
+- label: Slip the threatening note into Clifford's pocket
+  to: passage:p-knife-note-ledger

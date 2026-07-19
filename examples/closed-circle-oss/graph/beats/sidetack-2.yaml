@@ -1,0 +1,10 @@
+id: beat:sidetack-2
+created_by: polish
+summary: A flash of orange firelight catches an ornate-knife jutting from a splintered beam,
+  imprinting a cold, violent image that haunts the night.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- location:old-mill
+texture_premise: A hushed rumor about the Blackwood ledger drifts through the Old Mill.

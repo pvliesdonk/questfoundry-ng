@@ -1,0 +1,11 @@
+passage: passage:p-knife-evidence
+priority: 13
+caption: Old Man Well hands the Ornate Knife to Harriet for evidence storage.
+prompt: Noir drawing with heavy shadows, muted palette, crimson glint on the knife. Depict
+  wiry old-man-well leaning over a wooden table in a dim room, passing the ivory‑handled ornate
+  knife to Harriet Wellman, who receives it with gloved hands. A single lantern overhead casts
+  a narrow beam, highlighting the knife’s polished surface.
+entities:
+- character:old-man-well
+- character:harriet-wellman
+- object:ornate-knife

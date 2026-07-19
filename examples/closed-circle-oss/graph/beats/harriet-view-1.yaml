@@ -1,0 +1,13 @@
+id: beat:harriet-view-1
+created_by: polish
+summary: Harriet steels herself while Lucy shouts, the bomb ticking louder, and the scar on
+  her cheek gleams in firelight, imprinting a cold reminder of unyielding duty.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- character:mayor-caldwell
+grants_flags:
+- flag:cw-harriet-view-1
+texture_premise: Harriet’s iron resolve as the bomb’s echo shatters the diner’s calm

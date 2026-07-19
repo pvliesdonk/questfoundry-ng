@@ -1,0 +1,11 @@
+id: beat:union-strike-suppress-commit
+summary: Harriet orders arrests, cracking down on the farmer protest.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:suppress-protest

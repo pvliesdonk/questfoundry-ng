@@ -1,0 +1,13 @@
+id: beat:lucy-guard-2
+created_by: polish
+summary: Lucy darts through the diner, shielding a trembling patron, and catches the glint
+  of the Ornate Knife beneath a table, sealing a silent promise to guard her own secrets.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- location:old-mill
+grants_flags:
+- flag:cw-lucy-guard-2
+texture_premise: Lucy's fierce protectiveness flickers amid the panic

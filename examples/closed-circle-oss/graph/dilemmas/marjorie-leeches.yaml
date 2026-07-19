@@ -1,0 +1,16 @@
+id: dilemma:marjorie-leeches
+question: Should Marjorie publicly confront Clifford about suspected smuggling or gather proof
+  silently?
+why_it_matters: A public accusation could scare off the smuggler or provoke violence; a silent
+  approach preserves safety but risks losing evidence.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:public-confront
+  text: Marjorie challenges Clifford in front of the diner crowd.
+- id: answer:silent-investigate
+  text: Marjorie tails Clifford, hoping to catch him red‑handed.
+anchored_to:
+- character:marjorie-lynch
+- character:clifford-moon

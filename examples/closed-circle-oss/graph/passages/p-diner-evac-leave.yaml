@@ -1,0 +1,20 @@
+id: passage:p-diner-evac-leave
+summary: Harriet records the echo of gunfire as she secures Edgar’s arrest, while Lucy shepherds
+  the remaining diners to safety and the doors slam shut on the inactive bomb, leaving a fragile
+  calm before the next choice.
+entities:
+- character:harriet-wellman
+ending:
+  id: e-diner-evac-leave
+  title: The Quiet Before the Storm
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Edgar remains handcuffed, revolver at hip; Harriet logs gunfire, re‑handcuffs
+  Edgar; Lucy directs patrons out the swinging door, closes it; bomb in back room deactivates,
+  timer stops; ornate knife missing; diner lights dim, wind howls; situation calm but tension
+  remains, next choice required.
+beats:
+- beat:choose-witness-arrest-post-4--evacuate-diner

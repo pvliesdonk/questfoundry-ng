@@ -1,0 +1,13 @@
+id: beat:hall-bridge-1
+created_by: polish
+summary: Lucy’s alarmed stare meets Marjorie’s hopeful smile as the ticking grows louder.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-11
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

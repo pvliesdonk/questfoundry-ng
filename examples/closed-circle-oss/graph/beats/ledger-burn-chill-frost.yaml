@@ -1,0 +1,11 @@
+id: beat:ledger-burn-chill-frost
+created_by: polish
+summary: A thin frost clings to the streets, the ledger’s absence a hollow echo in the town’s
+  chatter.
+beat_class: structural
+purpose: residue
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+requires_flags:
+- flag:ledger-destroyed

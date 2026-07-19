@@ -1,0 +1,15 @@
+id: beat:diner-bomb-evacuate-post-4
+summary: Lucy guides the terrified patrons out, the empty diner echoing with their footsteps;
+  Marjorie watches the silent aftermath as Harriet records the night’s dread in her journal.
+  The question of Edgar’s arrest remains open, the tension lingering like smoke.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: advances
+entities:
+- character:marjorie-lynch
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:evacuate-diner

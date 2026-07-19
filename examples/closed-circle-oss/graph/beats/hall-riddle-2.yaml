@@ -1,0 +1,11 @@
+id: beat:hall-riddle-2
+created_by: polish
+summary: A shadowy figure—a possible killer—flees, leaving a trail of footprints in the dust.
+beat_class: structural
+purpose: texture_world
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+mirrors: beat:edgar-riddle-aftermath-2
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

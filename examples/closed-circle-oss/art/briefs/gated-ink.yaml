@@ -1,0 +1,12 @@
+passage: passage:gated-ink
+priority: 2
+caption: Clifford Moon studies a half‑burned ledger and an ivory‑handled knife while a fresh
+  bootprint marks the floor.
+prompt: Noir illustration, tight line work, deep shadows, muted greys and browns with a crimson
+  highlight on the ledger's edge. Depict Clifford Moon, tall slender man with slicked‑back
+  hair in a glossy suit, standing over a blackened slab where the leather‑bound ledger-blackwood
+  lies half‑burned. An ivory‑handled ornate knife protrudes from ash, and a dark bootprint
+  sinks into the mud‑streaked floor.
+entities:
+- character:clifford-moon
+- object:ledger-blackwood

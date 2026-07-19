@@ -1,0 +1,13 @@
+id: beat:whispers-dissent
+created_by: polish
+summary: Edgar murmurs a cryptic riddle to Lucy about the Blackwood ledger, planting doubt
+  that the strike masks a deeper conspiracy.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+- character:lucy-frost
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-whispers-dissent
+texture_premise: Whispers of dissent

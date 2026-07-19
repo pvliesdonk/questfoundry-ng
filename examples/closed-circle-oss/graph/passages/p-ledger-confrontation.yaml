@@ -1,0 +1,20 @@
+id: passage:p-ledger-confrontation
+summary: The protagonist spots his family's loan in the ledger, his expression darkening;
+  the mayor's face hardens over the entry as Harriet presses Clifford, while Lucy watches
+  the uneasy exchange from the bar.
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+- character:clifford-moon
+- character:harriet-wellman
+prose_summary: Mayor Caldwell opens Blackwood ledger, reads Moon surname with red‑ink debt.
+  Clifford Moon sees his name, jaw tightens. Harriet Wellman confronts Clifford, demands the
+  ivory‑handled knife. Lucy watches, notes his tense posture and brief reply, keeps her revolver
+  steady. Ledger stays open, red ink threatens families.
+beats:
+- beat:knife-disposal-lead-4
+- beat:ledger-burn-pre-2
+- bridge:gap-28
+choices:
+- label: Stoke the rusted firepit behind town hall
+  to: passage:p-ledger-burn

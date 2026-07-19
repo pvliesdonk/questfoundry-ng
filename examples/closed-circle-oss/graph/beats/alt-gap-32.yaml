@@ -1,0 +1,15 @@
+id: beat:alt-gap-32
+created_by: polish
+summary: Clifford's low whisper drifts as Lucy Frost steps in, cautioning Marjorie about accusing
+  without proof.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:marjorie-lynch
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-32
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

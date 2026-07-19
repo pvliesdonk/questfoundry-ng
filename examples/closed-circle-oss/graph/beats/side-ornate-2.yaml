@@ -1,0 +1,11 @@
+id: beat:side-ornate-2
+created_by: polish
+summary: A muffled whisper from Old Man Well hints at hidden tunnels beneath the mill, leaving
+  the reader with a sense of concealed routes awaiting discovery.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- location:old-mill
+texture_premise: A side echo through the Old Mill’s stone walls, exposing the lingering metallic
+  chill of the missing Ornate Knife.

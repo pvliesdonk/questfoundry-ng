@@ -1,0 +1,10 @@
+id: beat:arm-old-mill-2
+created_by: polish
+summary: A low murmur from the Farmer Union drifts through the smoke, imprinting a wary awareness
+  of collective silence, a note of suppressed accountability that clings to the air.
+beat_class: structural
+purpose: false_branch
+entities:
+- faction:farmer-union
+- object:ledger-blackwood
+texture_premise: Smoldering whispers at the Old Mill

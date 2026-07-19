@@ -1,0 +1,17 @@
+id: beat:edgar-riddle-aftermath-3
+summary: Harriet retrieves the knife, the riddle's purpose fulfilled, but the deeper mystery
+  intensifies.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: advances
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.
+belongs_to:
+- path:pursue-clue

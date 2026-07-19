@@ -1,0 +1,12 @@
+id: bridge:gap-41
+created_by: grow
+summary: The bustling diner hums while Clifford lifts the ornate knife, its ivory handle catching
+  the light.
+beat_class: structural
+purpose: bridge
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+- object:ornate-knife
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

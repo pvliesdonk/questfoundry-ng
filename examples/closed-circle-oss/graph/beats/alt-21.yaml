@@ -1,0 +1,14 @@
+id: beat:alt-21
+created_by: polish
+summary: The farmers chant in the square as Harriet watches from the perimeter, noting the
+  growing rift.
+beat_class: structural
+purpose: texture_world
+entities:
+- faction:farmer-union
+- character:harriet-wellman
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-42
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

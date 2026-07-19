@@ -1,0 +1,17 @@
+id: beat:edgar-riddle-lead-3
+summary: The note mentions a "shadow beneath the turning gears," hinting at a concealed location.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: reveals
+entities:
+- character:harriet-wellman
+grants_flags:
+- flag:cw-edgar-riddle-lead-3
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:pursue-clue

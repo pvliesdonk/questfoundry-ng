@@ -1,0 +1,29 @@
+id: passage:p-footprints-panic
+summary: Dust swirls around fresh footprints, tracing a frantic trail that makes the cellar
+  pulse with panic. The atmosphere tightens as the panic becomes palpable.
+entities:
+- character:marjorie-lynch
+- location:old-mill
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Edgar Barnes follows fresh footprints past a stone altar with a blood‑slick
+  ivory knife, notes a ticking bomb beside a cracked pipe, a ledger, Thea Swan at the iron
+  door, Lucy Frost with a revolver saying the knife vanished, measures distance to bomb, then
+  rushes out to Marjorie's diner where the timer sounds and the crowd silences.
+beats:
+- beat:arm1-footprints
+choices:
+- label: rush into Marjorie's diner as the ticking bomb clicks in the air
+  to: passage:p-shadow-knife

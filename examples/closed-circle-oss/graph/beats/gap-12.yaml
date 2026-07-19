@@ -1,0 +1,12 @@
+id: bridge:gap-12
+created_by: grow
+summary: Marjorie's plea hangs in the air as Harriet steps forward, badge flashing beside
+  Lucy's trembling hands.
+beat_class: structural
+purpose: bridge
+entities:
+- character:marjorie-lynch
+- character:harriet-wellman
+- character:lucy-frost
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.

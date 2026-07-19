@@ -1,0 +1,16 @@
+id: passage:gated-knife-whisper
+summary: Lucy Frost leans across the diner’s counter and whispers that the Ornate Knife has
+  vanished, and the room tightens with a sour warning.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:marjorie-lynch
+prose_summary: Lucy enters Marjorie's diner, brandishing an ivory-handled knife and showing
+  a scar. She tells Marjorie Lynch the Ornate Knife is missing, then inserts the empty sheath
+  into the cash‑drawer counter. Thea Swan stands at the doorway with a tray; Lucy ignores
+  her. The furnace hums.
+beats:
+- beat:gated-knife-whisper
+choices:
+- label: cross into Marjorie's diner, the sealed knife in hand
+  to: passage:p-shadow-knife

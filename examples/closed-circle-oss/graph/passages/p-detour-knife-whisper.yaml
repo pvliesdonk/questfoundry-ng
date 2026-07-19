@@ -1,0 +1,18 @@
+id: passage:p-detour-knife-whisper
+summary: Harriet Wellman mutters that the blood‑stained knife is a trap, casting doubt over
+  the altar, and a faint scrape follows as a shadowy figure flees, leaving dust‑caked footprints
+  that seal the tension.
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+prose_summary: Edgar stands on stone floor, lantern sputters. Harriet approaches altar, brandishes
+  ivory-handled knife slick with fresh blood, claims trap. A shadowy figure darts past altar,
+  leaves dusty footprints toward stairwell and vanishes. Edgar grabs the knife, blood stains
+  his hand, feels its weight equal to his badge, tightens grip, notes the trail promising
+  pursuit.
+beats:
+- beat:detour-knife-whisper-1
+- beat:detour-knife-whisper-2
+choices:
+- label: clutch the blood‑stained knife, its cold doubt biting my palm
+  to: passage:p-hall-shadow-knife

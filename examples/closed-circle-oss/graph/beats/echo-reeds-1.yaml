@@ -1,0 +1,12 @@
+id: beat:echo-reeds-1
+created_by: polish
+summary: Lucy pauses as Silas "Old Man" Well leans against a rusted beam, his eyes tracing
+  the faint tick of a hidden clock, imprinting a sense of watches that never stop.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- location:old-mill
+grants_flags:
+- flag:cw-echo-reeds-1
+texture_premise: A whisper of lingering time and steel drifts through the mill’s shadows.

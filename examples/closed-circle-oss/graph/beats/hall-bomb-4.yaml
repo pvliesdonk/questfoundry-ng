@@ -1,0 +1,14 @@
+id: beat:hall-bomb-4
+created_by: polish
+summary: Thea rushes in, eyes widening at the tension, clutching a tray tightly.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:thea-swan
+- character:lucy-frost
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+mirrors: beat:diner-bomb-pre-5
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

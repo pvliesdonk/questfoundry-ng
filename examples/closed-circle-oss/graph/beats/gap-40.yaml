@@ -1,0 +1,9 @@
+id: bridge:gap-40
+created_by: grow
+summary: Harriet's journal entry closes as the diner's doors swing open, conversation spilling
+  into the night.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:marjorie-lynch

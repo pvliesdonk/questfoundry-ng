@@ -1,0 +1,14 @@
+id: beat:cosmetic-fork-1
+created_by: polish
+summary: A low murmur reaches the reader that the ledger is tucked behind the Old Mill's rusted
+  machinery, a secret that stains the air with distrust.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ledger-blackwood
+- location:old-mill
+- faction:farmer-union
+grants_flags:
+- flag:cw-cosmetic-fork-1
+texture_premise: A hushed rumor that the Blackwood Ledger lies concealed within the Old Mill,
+  echoing the bridge's rising tension.

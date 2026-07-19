@@ -1,0 +1,9 @@
+id: bridge:gap-9
+created_by: grow
+summary: Harriet calls the bomb squad, her voice steady, while Marjorie watches the empty
+  doorway.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:marjorie-lynch

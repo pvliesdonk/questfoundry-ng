@@ -1,0 +1,12 @@
+id: beat:arm1-1
+created_by: polish
+summary: Lucy catches a flash of the missing Ornate Knife on the floor; the cold ivory handle
+  whispers danger, leaving a steel‑cold memory as the bomb is disarmed.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+grants_flags:
+- flag:cw-arm1-1
+texture_premise: Material evidence of violence

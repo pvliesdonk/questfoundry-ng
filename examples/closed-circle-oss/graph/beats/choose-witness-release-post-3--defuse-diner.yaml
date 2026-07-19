@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-3--defuse-diner
+created_by: grow
+summary: The farmer union rallies behind Harriet, offering their backing against elite pressure;
+  Harriet releases Edgar. Lucy bolts the bomb apart, a bead of sweat tracing her temple. Union
+  solidarity breathes hope into a volatile scene.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:harriet-wellman
+- faction:farmer-union
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

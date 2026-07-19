@@ -1,0 +1,30 @@
+id: passage:p-harriet-union-support
+summary: Harriet publicly refuses to use force against the striking farmers, prompting union
+  leaders to applaud and a surge of hope among the protesters. Elite council members watch
+  from the town hall with stern looks, their disapproval beginning to undercut the celebration.
+entities:
+- faction:farmer-union
+- character:harriet-wellman
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Harriet speaks on Union platform, refusing a weapon; farmers chant and clutch
+  tools. Union leaders applaud, raising hope. Council members appear on balcony, stare and
+  rebuke; Mayor Caldwell adjusts gold tie. Edgar Barnes whispers a riddle about the Blackwood
+  ledger to Lucy Frost. Square remains tense, fragile peace.
+beats:
+- beat:union-strike-support-commit
+- beat:union-strike-support-post-1
+- bridge:gap-46
+choices:
+- label: Brace yourself under the council’s unforgiving stare
+  grants:
+  - flag:cw-authority-gaze
+  to: passage:p-authority-gaze
+- label: Lean in as Edgar whispers the Blackwood ledger riddle
+  grants:
+  - flag:cw-whispers-dissent
+  to: passage:p-whispers-dissent

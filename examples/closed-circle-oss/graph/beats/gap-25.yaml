@@ -1,0 +1,8 @@
+id: bridge:gap-25
+created_by: grow
+summary: The union's chants echo while Lucy steals a glance at the still‑locked ledger.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:farmer-union
+- character:lucy-frost

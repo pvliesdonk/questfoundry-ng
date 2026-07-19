@@ -1,0 +1,31 @@
+id: passage:p-old-mill-confrontation
+summary: Clifford meets Silas “Old Man” Well beside the smoldering Old Mill; the cracked Ornate
+  Knife catches firelight among the ash, and the air rings with the cold clang of an impending
+  collapse.
+entities:
+- character:clifford-moon
+- character:old-man-well
+- location:old-mill
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:union-empowered
+prose_summary: Clifford leaves market square, walks to Old Mill, meets Silas Well who warns
+  'Force shatters peace'. Gear clatters, an Ornate Knife lies on ash; its sheath missing suggests
+  another hidden weapon. Clifford takes the knife, stores it in coat, nods to Silas, and heads
+  to the evidence locker to give the weapon to Harriet.
+beats:
+- beat:arm-b-old-mill-clock
+choices:
+- label: trace the cracked knife’s glint in the ash
+  to: passage:p-quiet-rupture

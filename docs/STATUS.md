@@ -15,17 +15,24 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-17._
+_Last updated: 2026-07-19._
 
 ## Current epics (two threads, roadmap "Now")
 
-**Prose quality at scale — the remaining live validation**: FILL at medium
-is demonstrated twice (the *Closed Circle* run gate-clean on
-`gpt-oss:120b`, author prose verdict "good for a 120b model"; the
-kimi-k2.5 A/B). The open half is **DRESS at scale** — the prior run-6 FILL
-attempt was abandoned mid-stall after a host crash (worktree pinned to a
-now-merged commit; see "immediate next steps"); a fresh comprehensive run
-on current `main` is next.
+**Prose quality at scale — DRESS at scale reached (2026-07-19)**: a fresh
+comprehensive medium run on current `main` (`gpt-oss:120b-cloud`, unbilled)
+completed **DREAM→DRESS gate-clean**, its HTML/PDF exports round-tripped
+(0 problems), and it was then illustrated (20 Gemini images, 0 refusals) —
+the first project ever taken all the way through DRESS + illustration +
+export. Checked in as [`examples/closed-circle-oss/`](../examples/closed-circle-oss/)
+(with rendered art — a first for the examples; exports stay out per
+convention, the author holds the HTML/PDF). The run's real yield was
+**five pipeline defects fixed** (#110 labels schema+nudge, #111 I13
+powerset OOM, #112 cosmetic flags flooding FILL WORLD STATE, #113 scheme
+treating `pov_hint` as law, #114 the I13 blowup's two export copies) plus
+two operator-loop refinements — every one confirming the doctrine (never
+the model). **Remaining for the epic's full exit:** a *corpus-grounded*
+run (this one skipped research — no craft corpus) and an author prose read.
 
 **POV sequences — run-unit viewpoint annotation** (design agreed with the
 author 2026-07-17, from their read of the run-6 graph): annotate head-hops
@@ -43,9 +50,9 @@ live across three prior runs on two tiers, now fires — a three-probe live
 series (`cc-int-probe`, moment-based criterion + an enforced commit-guard
 apply check) took it from 0 marks to 14/14 correctly placed in one repair
 round; recorded as a doctrine exhibit in the decision log (2026-07-17).
-**Open: the live A/B itself** — the prior attempt was abandoned mid-run
-after a host crash (worktree pinned to a now-merged commit); folded into
-the next comprehensive run, see "immediate next steps".
+**Open: the live A/B itself** — the scheme half was validated on the
+2026-07-19 comprehensive run (the `pov_hint`-as-law fix, #113); the formal
+A/B measurement against the run-6 counterfactual is still owed (next steps).
 
 **Shipped 2026-07-17 (author call): structural depth** (#77/#78/#79/#81;
 texture-trial through DRESS gate-clean, `examples/letter-and-frontier`)
@@ -59,33 +66,22 @@ complete.
 
 ## Immediate next steps
 
-**The two in-flight validation runs found on session recovery
-(2026-07-17) are ABANDONED, not resumed — author call.** Both
-(`cc-struct-medium`'s run-6 FILL, `cc-seq-ab`'s POV-sequences live A/B)
-were driven from a worktree pinned to a specific pre-merge commit
-(`bridge-cse_01YVyfGboiN3WsuhY2BgfAVt`); since the crash, that branch
-(pov-sequences-pr-c) and its siblings merged into `main` (#101, #102,
-#108). Resuming a checkpoint against pipeline code that has since moved
-— different prompts, schemas, gate logic than what produced the
-checkpoint — risks silent, hard-to-attribute behavior; a resume is only
-as trustworthy as "the code that continues it is the code that started
-it," which is no longer true here. Cheaper and more honest to let both
-lapse (directories left at `/mnt/code/qf-validation-runs/{cc-struct-medium,cc-seq-ab}`,
-NOT committed, NOT resumed) and re-run clean once the next comprehensive
-run is scoped (below).
-
-1. **One new comprehensive live run from a clean worktree on current
-   `main`** (not a resume) — DREAM→DRESS at medium, `gpt-oss:120b-cloud`
-   unbilled, exercising everything landed since the last clean run: the
-   PR-5 finalize loop, the stretch cap (B10), the POV-sequences roster +
-   sequence-unit annotate + interlude register (PR-A/B/C). This single
-   run replaces both abandoned ones and is this cycle's DRESS-at-scale
-   exit for the prose-quality epic *and* the live A/B acceptance for POV
-   sequences (B11 quiet or justified, passages toward the −28%
-   counterfactual, interlude register firing) — no need to run them
-   separately again.
-2. **Then:** the recalibration items (BACKLOG) as calibration data
-   accumulates from the new run.
+1. **The comprehensive run: DONE (2026-07-19).** DREAM→DRESS gate-clean,
+   exports round-trip, illustrated — checked in as
+   [`examples/closed-circle-oss/`](../examples/closed-circle-oss/). It
+   surfaced and fixed five pipeline defects (#110–#114, all merged) — the
+   record is in the decision log (2026-07-18/19). **Still open** from the
+   prose epic's exit: a *corpus-grounded* run (this skipped research) and
+   an author prose read of the generated story.
+2. **POV sequences — the scheme half validated, the A/B still owed.** The
+   `pov_hint`-as-law defect (#113) was found and fixed on this run (the
+   investigator was resolvable to carrier-only, leaving her own scenes
+   bystander-headed); the fix's outcome was applied to this run's graph to
+   let it finish. NOT yet done: the formal live A/B against the run-6
+   counterfactual (B11 quiet/justified, passages toward −28%, interlude
+   register firing) — a clean rerun-grow measurement, still owed.
+3. **Then:** the recalibration items (BACKLOG) as calibration data
+   accumulates.
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.

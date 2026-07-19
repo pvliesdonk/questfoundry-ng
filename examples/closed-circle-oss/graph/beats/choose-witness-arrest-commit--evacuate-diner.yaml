@@ -1,0 +1,14 @@
+id: beat:choose-witness-arrest-commit--evacuate-diner
+created_by: grow
+summary: Harriet arrests Edgar publicly, the townsfolk’s gasp echoing over the clatter of
+  plates. Lucy screams the alarm, her voice cutting through the panic as she shepherds every
+  patron out of the diner. The immediate threat recedes, but the murder accusation hangs heavy.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

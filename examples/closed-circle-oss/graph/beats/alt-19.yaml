@@ -1,0 +1,14 @@
+id: beat:alt-19
+created_by: polish
+summary: Thea's eyes linger on the fire before the distant chant of the farmer union rises
+  in the town square.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:thea-swan
+- faction:farmer-union
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-31
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

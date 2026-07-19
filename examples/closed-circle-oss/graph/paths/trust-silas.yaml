@@ -1,0 +1,7 @@
+id: path:trust-silas
+explores: answer:trust-silas
+consequences:
+- id: consequence:secret-passage-used
+  text: Harriet enters hidden mill passage.
+- id: consequence:trap-risk
+  text: Potential trap awaits.

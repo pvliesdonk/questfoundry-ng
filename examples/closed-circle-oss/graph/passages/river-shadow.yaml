@@ -1,0 +1,15 @@
+id: passage:river-shadow
+summary: The cold river's hush settles over the path, creating an atmosphere of inevitable
+  foreboding.
+entities:
+- character:clifford-moon
+- location:old-mill
+prose_summary: Clifford Moon walks along the river path, sees a courier stop at a rusted hatch
+  then continue onward. He recalls Harriet Wellman’s warning, feels the ivory-handled knife,
+  decides to give it to Harriet at the mill, puts the knife in his coat pocket, and quickens
+  toward the mill while the river hush persists.
+beats:
+- beat:river-shadow-1
+choices:
+- label: Tail the courier through the river's cold hush
+  to: passage:p-leeches-aftermath

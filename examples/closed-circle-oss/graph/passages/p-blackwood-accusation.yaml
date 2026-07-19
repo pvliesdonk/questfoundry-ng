@@ -1,0 +1,16 @@
+id: passage:p-blackwood-accusation
+summary: The Blackwood family glares at Caldwell, whispering accusations of betrayal and mourning
+  their loss, while Harriet records the emerging power vacuum.
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+prose_summary: Mayor Caldwell stands in a furnace hall as the Blackwood family confronts him.
+  Harriet Wellman kneels and records the widening power vacuum caused by the ledger’s destruction
+  in her notebook. The burned ledger turns to ash; the stone hatch latch is touched. Rumors
+  begin spreading; Caldwell tightens his gold tie, risking a spark and the fracture he created.
+beats:
+- beat:ledger-burn-burn-post-2
+- bridge:gap-22
+choices:
+- label: Note how the power vacuum widens
+  to: passage:p-power-vacuum

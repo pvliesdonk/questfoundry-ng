@@ -1,0 +1,30 @@
+id: passage:p-diner-defuse-witness
+summary: Harriet confronts Edgar’s dubious alibi amid growing gossip that he’s framed, while
+  Lucy, wrench in hand, methodically disables the bomb as sparks fly, tightening the diner’s
+  fraught atmosphere.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- character:marjorie-lynch
+- character:lucy-frost
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Lucy uses a wrench to open a bomb, removes a blue wire with a screwdriver,
+  then presses the final wire, defusing it; Harriet arrives with a badge and a torn Blackwood
+  Ledger fragment, demanding truth about Edgar Barnes, who recites a rhyme; Mayor Caldwell
+  urges arrest; Lucy’s palm scars, the knife and ledger remain visible, town hushes, Lucy
+  leaves shaken.
+beats:
+- beat:choose-witness-pre-1--defuse-diner
+- beat:choose-witness-pre-2--defuse-diner
+- beat:choose-witness-pre-3--defuse-diner
+choices:
+- label: Examine the ivory‑handled knife and the torn ledger fragment
+  grants:
+  - flag:cw-arm1-1
+  to: passage:p-ornate-knife-ledger
+- label: Confront Mayor Caldwell while Lucy battles the bomb’s splintered heart
+  to: passage:p-ledger-bomb-2

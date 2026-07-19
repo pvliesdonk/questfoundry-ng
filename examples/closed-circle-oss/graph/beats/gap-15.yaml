@@ -1,0 +1,13 @@
+id: bridge:gap-15
+created_by: grow
+summary: Harriet seals the bloodied knife in evidence while Thea watches, Lucy lingering nearby
+  with a wary glance.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+- character:thea-swan
+- character:lucy-frost
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.

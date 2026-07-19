@@ -1,0 +1,31 @@
+id: passage:p-mill-knife
+summary: Lucy Frost steps into the abandoned Old Mill as the wind rattles loose boards and
+  a hidden clockwork ticks, marking the town’s halted time. She catches the glint of an ornate
+  knife half‑buried in ash, a cold reminder of violence.
+entities:
+- location:old-mill
+- character:old-man-well
+- character:lucy-frost
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:union-empowered
+prose_summary: Lucy Frost enters the mill, lights lantern, notices an ivory-handled knife
+  in ash, kneels, grasps and removes it, discovering its missing sheath and a hidden clockwork
+  tick; she now carries the ornate knife as a new resource, hinting at another concealed weapon.
+beats:
+- beat:lucy-knife-glance
+- beat:old-mill-gear-whisper
+choices:
+- label: Pull the Ornate Knife from the ash
+  to: passage:p-release-defuse

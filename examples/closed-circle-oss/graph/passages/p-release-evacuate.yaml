@@ -1,0 +1,29 @@
+id: passage:p-release-evacuate
+summary: Harriet releases Edgar, defying the mayor and the elite, while Lucy rushes the diners
+  out as the bomb timer counts down; the town fractures between the mayor’s fury, the farmer
+  union’s support, and Harriet’s solitary resolve.
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+- faction:farmer-union
+ending:
+  id: e-release-evacuate
+  title: The Clock Ticks Behind Closed Doors
+irrelevant_flags:
+- flag:above-ground-search
+- flag:killer-escape
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+prose_summary: Mayor Caldwell enters diner, warns Harriet Wellman that freeing Edgar Barnes
+  will trigger fines and freeze merchants’ credits. Harriet releases Edgar, Lucy Frost orders
+  evacuation through swinging doors while a lantern-lit bomb ticks down. Farmer union members
+  rally behind Harriet. Harriet records a distant gunshot in a notebook. Lucy escorts crowd
+  out; mayor stays alone as bomb continues counting down.
+beats:
+- beat:choose-witness-release-post-2--evacuate-diner
+- beat:choose-witness-release-post-3--evacuate-diner
+- beat:choose-witness-release-post-4--evacuate-diner

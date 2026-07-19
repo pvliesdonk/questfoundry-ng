@@ -1,0 +1,18 @@
+id: beat:choose-witness-pre-5--defuse-diner
+created_by: grow
+summary: Mayor Caldwell pressures Harriet for a swift arrest to protect the town’s reputation;
+  Harriet feels the weight of political eyes. Lucy grabs a wrench, her resolve hardening as
+  she disarms the bomb. Authority collides with personal risk.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

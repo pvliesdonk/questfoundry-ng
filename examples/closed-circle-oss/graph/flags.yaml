@@ -1,0 +1,432 @@
+flags:
+- id: flag:above-ground-search
+  description: Harriet searches above ground, missing secret route.
+  source: dilemma
+  path: path:reject-silas
+  codeword: OVERLOOK
+  derived_from:
+  - consequence:above-ground-search
+- id: flag:bomb-defused
+  description: Lucy disables the bomb, capturing the saboteur.
+  source: dilemma
+  path: path:defuse-diner
+  derived_from:
+  - consequence:bomb-defused
+- id: flag:bomb-escaped
+  description: Bomber flees, leaving the device unexploded.
+  source: dilemma
+  path: path:evacuate-diner
+  derived_from:
+  - consequence:bomb-escaped
+- id: flag:cw-alt-01
+  created_by: polish
+  description: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+    the firepit and the townsfolk gather under its iron beams.'
+  source: cosmetic
+  codeword: FURNACE
+- id: flag:cw-alt-edgar-riddle-lead-3
+  created_by: polish
+  description: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as the
+    investigation unfolds.
+  source: cosmetic
+- id: flag:cw-arm-1-1
+  created_by: polish
+  description: A whispered rumor about the missing Ornate Knife circulates among the gathered.
+  source: cosmetic
+- id: flag:cw-arm-a-diner-riddle
+  created_by: polish
+  description: A whispered riddle trails Edgar through Marjorie's diner, veiling the night
+    in cryptic cadence.
+  source: cosmetic
+- id: flag:cw-arm-b-old-mill-clock
+  created_by: polish
+  description: A clatter of gears follows Clifford into the Old Mill, where the ancient clockmaker's
+    shadows tick against the firelight.
+  source: cosmetic
+- id: flag:cw-arm-edgar-1
+  created_by: polish
+  description: Edgar's riddling chant about relentless time
+  source: cosmetic
+- id: flag:cw-arm-edgar-rhyme
+  created_by: polish
+  description: Edgar murmurs a cryptic rhyme to Thea as she passes the diner.
+  source: cosmetic
+- id: flag:cw-arm-harriet-1
+  created_by: polish
+  description: Harriet's vigilant glimpse of a hidden blade
+  source: cosmetic
+- id: flag:cw-arm-harriet-observe
+  created_by: polish
+  description: Harriet watches Thea's tremor from the precinct desk.
+  source: cosmetic
+- id: flag:cw-arm-lucy-warning
+  created_by: polish
+  description: Lucy slides a warning to Thea over the clatter of mugs.
+  source: cosmetic
+- id: flag:cw-arm-old-mill-1
+  created_by: polish
+  description: Smoldering whispers at the Old Mill
+  source: cosmetic
+- id: flag:cw-arm-thea-1
+  created_by: polish
+  description: Thea hurries past clutching a vial of serum
+  source: cosmetic
+- id: flag:cw-arm1-1
+  created_by: polish
+  description: Material evidence of violence
+  source: cosmetic
+- id: flag:cw-arm1-footprints
+  created_by: polish
+  description: Footprints' frantic trail
+  source: cosmetic
+- id: flag:cw-arm2-ledger-whisper
+  created_by: polish
+  description: Ledger whisper in the shadows
+  source: cosmetic
+- id: flag:cw-arm3-water-drip
+  created_by: polish
+  description: Water drip hints at hidden passage
+  source: cosmetic
+- id: flag:cw-authority-gaze
+  created_by: polish
+  description: Authority's gaze
+  source: cosmetic
+- id: flag:cw-clifford-watch-1
+  created_by: polish
+  description: Clifford’s detached observation of the chaos
+  source: cosmetic
+- id: flag:cw-cosmetic-fork-1
+  created_by: polish
+  description: A hushed rumor that the Blackwood Ledger lies concealed within the Old Mill,
+    echoing the bridge's rising tension.
+  source: cosmetic
+- id: flag:cw-detour-knife-1
+  created_by: polish
+  description: A tense whisper over the diner's counter about the missing Ornate Knife.
+  source: cosmetic
+  codeword: ORNATE
+- id: flag:cw-detour-knife-whisper-1
+  created_by: polish
+  description: A whispered accusation that the Ornate Knife was deliberately placed as a false
+    clue
+  source: cosmetic
+- id: flag:cw-diner-bomb-pre-2
+  created_by: polish
+  description: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden murder
+    mystery.
+  source: cosmetic
+- id: flag:cw-diner-escape-harriet-1
+  created_by: polish
+  description: Through Deputy Harriet's scarred stare
+  source: cosmetic
+- id: flag:cw-diner-escape-knife-1
+  created_by: polish
+  description: Through the gleam of the Ornate Knife
+  source: cosmetic
+- id: flag:cw-diner-escape-well-1
+  created_by: polish
+  description: Through Old Man Well's concealed passage
+  source: cosmetic
+- id: flag:cw-echo-reeds-1
+  created_by: polish
+  description: A whisper of lingering time and steel drifts through the mill’s shadows.
+  source: cosmetic
+- id: flag:cw-edgar-riddle-lead-3
+  created_by: polish
+  description: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+    investigation unfolds.
+  source: cosmetic
+- id: flag:cw-fork-1-1
+  created_by: polish
+  description: A rumor of a secret passage beneath the diner
+  source: cosmetic
+- id: flag:cw-fork-1a
+  created_by: polish
+  description: A hushed conversation about the Blackwood Ledger erupts in the diner’s back
+    room.
+  source: cosmetic
+- id: flag:cw-fork-eddie-riddle-1
+  created_by: polish
+  description: Overhearing Edgar Barnes' cryptic riddle in Marjorie's diner.
+  source: cosmetic
+- id: flag:cw-fork-harriet-1
+  created_by: polish
+  description: Deputy Harriet Wellman's solitary patrol, where she quietly argues with herself
+    about the farmer union's strike.
+  source: cosmetic
+- id: flag:cw-fork-ledger-whisper-1
+  created_by: polish
+  description: Muted evidence of hidden crimes flickers in the bridge shadows.
+  source: cosmetic
+- id: flag:cw-fork-lucy-1
+  created_by: polish
+  description: Lucy Frost polishing the bar, her stare fixed on a stone‑cold grin as she contemplates
+    protecting her brother.
+  source: cosmetic
+- id: flag:cw-fork-lucy-fist-1
+  created_by: polish
+  description: Seeing Lucy Frost's clenched fist as the old mill erupts in flames.
+  source: cosmetic
+- id: flag:cw-fork-old-man-1
+  created_by: polish
+  description: A hushed exchange in Old Man Well's workshop, where the ticking clocks mask
+    secret words.
+  source: cosmetic
+- id: flag:cw-gate-1-1
+  created_by: polish
+  description: A clank from the furnace awakens a memory of the ledger blackened with coal
+    dust.
+  source: cosmetic
+- id: flag:cw-gated-furnace-1
+  created_by: polish
+  description: A fleeting flash of the furnace’s roar that earlier readers sensed, now felt
+    as a pulse of heat.
+  source: cosmetic
+- id: flag:cw-gated-ink-1
+  created_by: polish
+  description: A fresh bootprint lies beside the smoldering ledger, reminding you of the firepit's
+    soot‑stained reputation.
+  source: cosmetic
+- id: flag:cw-gated-knife-whisper
+  created_by: polish
+  description: A murmured alarm spreads about the missing Ornate Knife
+  source: cosmetic
+- id: flag:cw-gated-knife-whisper-1
+  created_by: polish
+  description: A tense whisper in the hall echoes the diner's rumor about the missing Ornate
+    Knife
+  source: cosmetic
+- id: flag:cw-hall-bomb-1
+  created_by: polish
+  description: In the town's community hall, a ticking bomb triggers panic and uncovers a
+    hidden murder mystery.
+  source: cosmetic
+- id: flag:cw-harriet-debt-1
+  created_by: polish
+  description: Harriet's watchful eye sharpens, catching whispers of hidden debts.
+  source: cosmetic
+- id: flag:cw-harriet-farmers-1
+  created_by: polish
+  description: Harriet's watchful eye narrows, sensing the farmers' silent panic.
+  source: cosmetic
+- id: flag:cw-harriet-view-1
+  created_by: polish
+  description: Harriet’s iron resolve as the bomb’s echo shatters the diner’s calm
+  source: cosmetic
+- id: flag:cw-harriet-vow-1
+  created_by: polish
+  description: Harriet recalls the town's vow to erase the Blackwood Ledger's sins.
+  source: cosmetic
+- id: flag:cw-lantern-shadow-1
+  created_by: polish
+  description: Flickering lanterns
+  source: cosmetic
+- id: flag:cw-lucy-guard-2
+  created_by: polish
+  description: Lucy's fierce protectiveness flickers amid the panic
+  source: cosmetic
+- id: flag:cw-lucy-urgency-1
+  created_by: polish
+  description: Lucy’s frantic urgency as the bomb hisses
+  source: cosmetic
+- id: flag:cw-mayor-calc-3
+  created_by: polish
+  description: Caldwell’s calculated calm manipulates the evacuation
+  source: cosmetic
+- id: flag:cw-old-mill-gear-whisper
+  created_by: polish
+  description: A murmuring echo of rusted gears in the Old Mill’s shadow.
+  source: cosmetic
+- id: flag:cw-river-shadow-1
+  created_by: polish
+  description: Silence of the river
+  source: cosmetic
+- id: flag:cw-setup-3
+  created_by: polish
+  description: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+    town hall as a makeshift incinerator for the Blackwood Ledger.'
+  source: cosmetic
+  codeword: BLACKWOOD
+- id: flag:cw-side-1
+  created_by: polish
+  description: A hushed side‑scene of lingering suspicion in the diner’s back hallway.
+  source: cosmetic
+- id: flag:cw-side-ink-1
+  created_by: polish
+  description: A glint of ivory catches in the firepit's ash, hinting at a hidden weapon.
+  source: cosmetic
+- id: flag:cw-side-loyalty-1
+  created_by: polish
+  description: Loyalty vs. duty at the Old Mill
+  source: cosmetic
+- id: flag:cw-side-oldman-whisper
+  created_by: polish
+  description: 'Hidden infrastructure: rumors of a secret hatch beneath the Old Mill.'
+  source: cosmetic
+- id: flag:cw-side-ornate-1
+  created_by: polish
+  description: A side echo through the Old Mill’s stone walls, exposing the lingering metallic
+    chill of the missing Ornate Knife.
+  source: cosmetic
+- id: flag:cw-side-secret-1
+  created_by: polish
+  description: A hushed exchange of forgotten debts in the diner’s backroom
+  source: cosmetic
+- id: flag:cw-sidetack-1
+  created_by: polish
+  description: A hushed rumor about the Blackwood ledger drifts through the Old Mill.
+  source: cosmetic
+- id: flag:cw-sidetrek-1
+  created_by: polish
+  description: A low‑key murmur over the Blackwood Ledger spreads at Marjorie's diner, exposing
+    the town's concealed debts.
+  source: cosmetic
+- id: flag:cw-sidetrek-knife-glint
+  created_by: polish
+  description: A cold glint of metal under emergency lights hints at unseen peril.
+  source: cosmetic
+- id: flag:cw-whisper-ledger-1
+  created_by: polish
+  description: A whispered rumor about the Blackwood Ledger spreads through the mill’s shadows.
+  source: cosmetic
+- id: flag:cw-whispered-loyalty-1
+  created_by: polish
+  description: A hushed claim that the ledger's missing page implicates an unexpected ally.
+  source: cosmetic
+- id: flag:cw-whispers-dissent
+  created_by: polish
+  description: Whispers of dissent
+  source: cosmetic
+- id: flag:diner-evacuated
+  description: Patrons escape unharmed.
+  source: dilemma
+  path: path:evacuate-diner
+  derived_from:
+  - consequence:diner-evacuated
+- id: flag:edgar-freed
+  description: Edgar walks free, leaving doubt about his innocence.
+  source: dilemma
+  path: path:release-edgar
+  derived_from:
+  - consequence:edgar-freed
+- id: flag:edgar-imprisoned
+  description: Edgar is detained, stirring town suspicion.
+  source: dilemma
+  path: path:arrest-edgar
+  derived_from:
+  - consequence:edgar-imprisoned
+- id: flag:harriet-credibility-boost
+  description: Harriet's trust in intuition earns respect.
+  source: dilemma
+  path: path:release-edgar
+  derived_from:
+  - consequence:harriet-credibility-boost
+- id: flag:harriet-scrutiny
+  description: Harriet faces criticism for arresting a beloved teacher.
+  source: dilemma
+  path: path:arrest-edgar
+  derived_from:
+  - consequence:harriet-scrutiny
+- id: flag:harriet-unpopularity
+  description: Harriet's reputation among farmers declines.
+  source: dilemma
+  path: path:suppress-protest
+  codeword: FARMERS
+  derived_from:
+  - consequence:harriet-unpopularity
+- id: flag:killer-escape
+  description: Murderer may slip away.
+  source: dilemma
+  path: path:reject-silas
+  derived_from:
+  - consequence:killer-escape
+- id: flag:ledger-destroyed
+  description: Blackwood ledger incinerated, secrets vanish.
+  source: dilemma
+  path: path:burn-ledger
+  codeword: ASHEN
+  derived_from:
+  - consequence:ledger-destroyed
+- id: flag:ledger-hidden
+  description: Ledger retained, evidence preserved.
+  source: dilemma
+  path: path:keep-ledger
+  codeword: HIDDEN
+  derived_from:
+  - consequence:ledger-hidden
+- id: flag:lucy-injured
+  description: Lucy sustains injuries in the process.
+  source: dilemma
+  path: path:defuse-diner
+  derived_from:
+  - consequence:lucy-injured
+- id: flag:mayor-ambivalence
+  description: Mayor faces dilemma over its use.
+  source: dilemma
+  path: path:keep-ledger
+  derived_from:
+  - consequence:mayor-ambivalence
+- id: flag:mayor-power-boost
+  description: Mayor Caldwell consolidates power.
+  source: dilemma
+  path: path:burn-ledger
+  derived_from:
+  - consequence:mayor-power-boost
+- id: flag:political-strain
+  description: Town council debates law enforcement limits.
+  source: dilemma
+  path: path:support-protest
+  codeword: COUNCIL
+  derived_from:
+  - consequence:political-strain
+- id: flag:protest-quashed
+  description: Union protest is arrested, law upheld.
+  source: dilemma
+  path: path:suppress-protest
+  derived_from:
+  - consequence:protest-quashed
+- id: flag:secret-passage-used
+  description: Harriet enters hidden mill passage.
+  source: dilemma
+  path: path:trust-silas
+  codeword: PASSAGE
+  derived_from:
+  - consequence:secret-passage-used
+- id: flag:thea-allies
+  description: Some townsfolk admire her honesty.
+  source: dilemma
+  path: path:confess-thea
+  codeword: TRUST
+  derived_from:
+  - consequence:thea-allies
+- id: flag:thea-paranoia
+  description: Thea lives in constant fear of discovery.
+  source: dilemma
+  path: path:hide-thea
+  codeword: SHADOWS
+  derived_from:
+  - consequence:thea-paranoia
+- id: flag:thea-secret-kept
+  description: Thea's past remains hidden, granting her fragile stability.
+  source: dilemma
+  path: path:hide-thea
+  derived_from:
+  - consequence:thea-secret-kept
+- id: flag:thea-truth-known
+  description: Thea's scandal is exposed, damaging her reputation.
+  source: dilemma
+  path: path:confess-thea
+  derived_from:
+  - consequence:thea-truth-known
+- id: flag:trap-risk
+  description: Potential trap awaits.
+  source: dilemma
+  path: path:trust-silas
+  derived_from:
+  - consequence:trap-risk
+- id: flag:union-empowered
+  description: Harriet backs union, tension with elite rises.
+  source: dilemma
+  path: path:support-protest
+  derived_from:
+  - consequence:union-empowered

@@ -1,0 +1,22 @@
+id: character:edgar-barnes
+name: Edgar Barnes
+concept: the reclusive retired schoolteacher, known for cryptic riddles
+pronouns: he/him
+base:
+  appearance: tall, thin, spectacles
+  manner: eccentric, observant
+arc:
+  begins: Edgar is a reclusive retired schoolteacher, known for cryptic riddles.
+  pivots:
+  - beat: beat:edgar-riddle-lead-1
+    becomes: Edgar presents a cryptic riddle about the heart of stone and river's mouth.
+  - beat: beat:edgar-riddle-lead-2
+    becomes: Edgar continues his riddling, hinting at hidden locations.
+  - beat: beat:edgar-riddle-resolution
+    becomes: Edgar's riddle guides Harriet to the hidden cellar beneath the old mill.
+  ends:
+  - path: path:arrest-edgar
+    state: Edgar is arrested, becoming a suspect in the murder.
+  - path: path:release-edgar
+    state: Edgar is released, his alibi upheld.
+pov_head: true

@@ -1,0 +1,18 @@
+id: passage:p-note-ledger
+summary: A smeared, urgent note demanding the knife's return slides into Clifford's pocket
+  while Mayor Caldwell opens the Blackwood Ledger and scans its stained names and debts.
+entities:
+- character:clifford-moon
+- character:mayor-caldwell
+- object:ledger-blackwood
+prose_summary: Lucy reads a note demanding the ivory‑handled knife be returned, then hides
+  the note in Clifford Moon’s coat pocket. Mayor Caldwell opens the Blackwood Ledger, sees
+  his name marked with a black scrawl among red lines. The ivory‑handled knife lies on the
+  table, Lucy keeps her revolver ready, and the furnace continues humming.
+beats:
+- beat:alt-04
+- beat:alt-05
+- beat:alt-06
+choices:
+- label: Observe the furnace‑lit basement
+  to: passage:p-ledger-question

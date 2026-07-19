@@ -1,0 +1,20 @@
+id: passage:p-authority-gaze
+summary: Harriet feels the council’s stare tighten like a vice, indicating an imminent crackdown
+  and heightening the oppressive atmosphere.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Harriet Wellman stands at the council chamber edge; council members rise and
+  fix her with cold stares. Mayor Caldwell adjusts his gold tie and offers a brittle smile.
+  Harriet grips her revolver, notes the blank ledger, feels the ticking clock, tightens her
+  badge strap, and resolves not to hesitate, accepting the risk of appearing weak.
+beats:
+- beat:authority-gaze
+choices:
+- label: brace against the council’s tightening stare
+  to: passage:union-strike-caldwell

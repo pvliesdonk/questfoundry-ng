@@ -1,0 +1,11 @@
+id: beat:old-man-trust-bruised
+created_by: polish
+summary: Harriet emerges bruised, the secret passage walls slick with blood, the weight of
+  evidence pressing her shoulders.
+beat_class: structural
+purpose: residue
+entities:
+- character:harriet-wellman
+- character:old-man-well
+requires_flags:
+- flag:secret-passage-used

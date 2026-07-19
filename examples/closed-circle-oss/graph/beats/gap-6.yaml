@@ -1,0 +1,10 @@
+id: bridge:gap-6
+created_by: grow
+summary: Lucy drags a blood‑stained Clifford into the hallway, and later Harriet records the
+  frantic climax in her journal.
+beat_class: structural
+purpose: bridge
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:harriet-wellman

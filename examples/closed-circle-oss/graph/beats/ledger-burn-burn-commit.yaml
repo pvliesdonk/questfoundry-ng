@@ -1,0 +1,11 @@
+id: beat:ledger-burn-burn-commit
+summary: Mayor Caldwell orders the ledger incinerated in the town hall furnace.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:burn-ledger

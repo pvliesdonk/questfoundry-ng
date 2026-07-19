@@ -1,0 +1,25 @@
+id: character:old-man-well
+name: Silas "Old Man" Well
+concept: the town's ancient clockmaker, knows hidden passages
+pronouns: he/him
+base:
+  appearance: stooped, wiry
+  manner: cryptic, patient
+  advice: force shatters peace
+arc:
+  begins: Silas "Old Man" Well is the town's ancient clockmaker, keeper of hidden passages.
+  pivots:
+  - beat: beat:side-oldman-whisper
+    becomes: Old Man whispers that the ledger‑blackwood is tucked near the furnace soot.
+  - beat: beat:old-man-secret-pre-1
+    becomes: Old Man reveals a hidden passage beneath the old mill that could trap the murderer.
+  - beat: beat:old-man-secret-reject-commit
+    becomes: Harriet deems Silas's tale nonsense and ignores the passage.
+  - beat: beat:old-man-secret-trust-commit
+    becomes: Harriet follows Silas into the mill's secret passage.
+  ends:
+  - path: path:reject-silas
+    state: Harriet ignored the hidden passage, staying above ground.
+  - path: path:trust-silas
+    state: Harriet explored the hidden tunnel, pursuing the murderer.
+pov_head: true

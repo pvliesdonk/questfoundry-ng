@@ -1,0 +1,16 @@
+id: beat:knife-disposal-aftermath-1
+summary: Harriet accepts the knife, places it in the evidence locker, noting fresh fingerprints.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:knife-disposal
+  effect: advances
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:give-knife

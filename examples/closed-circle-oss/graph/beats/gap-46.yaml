@@ -1,0 +1,9 @@
+id: bridge:gap-46
+created_by: grow
+summary: Union cheers for Harriet fade as elite council members cast stern looks toward the
+  town hall.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:farmer-union
+- character:mayor-caldwell

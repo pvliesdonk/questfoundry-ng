@@ -88,13 +88,16 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   character-arc metadata, `scene_type`/`narration_scope` modulation, the
   structured review contract) and offline-green. FILL at medium is
   demonstrated twice (gate-clean on `gpt-oss:120b`, author prose verdict
-  "good for a 120b model"; the kimi-k2.5 A/B). **Open:** DRESS — no weak
-  tier has completed a clean DRESS at scale. The prior run (FILL on the
-  run-6 cc-struct-medium graph) was abandoned mid-stall after a host
-  crash (2026-07-17; worktree pinned to a now-merged commit, STATUS.md);
-  a fresh comprehensive DREAM→DRESS run from a clean worktree is next.
-  **Exit:** a corpus-grounded weak-tier story completes FILL and DRESS
-  gate-clean, exports round-trip, and reads without prose-quality rework.
+  "good for a 120b model"; the kimi-k2.5 A/B). **DRESS at scale reached
+  2026-07-19:** a comprehensive medium run on `gpt-oss:120b-cloud`
+  (unbilled) completed DREAM→DRESS gate-clean, exports round-tripped
+  (0 problems), and was illustrated (20 Gemini images) — checked in as
+  `examples/closed-circle-oss`. The run's yield was five pipeline defects
+  fixed (#110–#114; decision log). **Remaining for the exit:** the run
+  skipped research (no craft corpus), so a *corpus-grounded* run and an
+  author prose read still close it. **Exit:** a corpus-grounded weak-tier
+  story completes FILL and DRESS gate-clean, exports round-trip, and reads
+  without prose-quality rework.
 
 - **POV sequences — run-unit viewpoint annotation** (design agreed
   2026-07-17; the author read of the run-6 graph). Annotate head-hops at

@@ -1,0 +1,10 @@
+id: bridge:gap-3
+created_by: grow
+summary: Harriet hears a far‑off gunshot while logging the knife evidence, the sound threading
+  through the diner’s chaos.
+beat_class: structural
+purpose: bridge
+entities:
+- character:edgar-barnes
+- object:ornate-knife
+- character:harriet-wellman

@@ -1,0 +1,14 @@
+id: beat:alt-23
+created_by: polish
+summary: Harriet's observant stare meets Mayor Caldwell's promise of mediation, the tension
+  palpable.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-43
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

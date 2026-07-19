@@ -1,0 +1,14 @@
+passage: passage:p-frost-knife
+priority: 11
+caption: Lucy whispers about the ledger’s power while Harriet eyes the gleaming Ornate Knife
+  on the table.
+prompt: Noir illustration, deep shadows, muted tones, crimson accent on Lucy's scar. Feature
+  Lucy Frost standing behind the bar, a whispering expression, while Harriet Wellman leans
+  forward, eyeing an ivory‑handled ornate knife polished on the tabletop. Marjorie Lynch in
+  a flour‑dusted apron serves coffee nearby, a leather‑bound ledger‑blackwood peeks from under
+  a stack.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- object:ornate-knife
+- character:harriet-wellman

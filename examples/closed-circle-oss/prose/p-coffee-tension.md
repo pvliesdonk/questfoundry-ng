@@ -1,0 +1,7 @@
+Mayor Caldwell's warning lingered in the smoky air as Lucy moved behind the makeshift bar. She poured steaming coffee into tin cups and handed them to the gathered protestors, the clinked metal against stone echoing off the furnace walls. The crowd pressed close, their faces grim, the heat from the furnace mixing with the bitter scent of the brew. Lucy watched the tension coil around the crowd like a rope, the town's fragile order humming just beyond the crack of murmurs.
+
+She set a cup before a farmer in a weathered coat and said the unrest threatened the town's fragile order. Her voice cut through the clamor, plain and blunt, landing on ears already strained by fear. Around her, hands tightened around mugs, eyes flicked to the ledger table where Caldwell still held the Blackwood Ledger.
+
+A sudden clang rang from the far side as Old Man Well stepped toward Harriet, his stooped frame outlined by the furnace glow. He rested a hand on her shoulder and spoke low, force could shatter the peace we barely keep. The copper cups on Lucy's tray rang in her ears as the words settled over the crowd.
+
+Lucy noted Harriet's jaw set, the scar on her cheek catching a flash of firelight. The furnace hissed, sending thin plumes of coal dust across the vaulted space. The iron door behind the bar loomed, its cold hinges waiting. The path deeper into the furnace‑lit basement of the Old Mill waited, its doorway yawning.

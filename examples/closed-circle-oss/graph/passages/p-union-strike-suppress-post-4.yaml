@@ -1,0 +1,22 @@
+id: passage:p-union-strike-suppress-post-4
+summary: Harriet records in her journal that the enforced order has exacted a heavy toll,
+  and a weight of guilt settles on her conscience.
+entities:
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Officer writes in journal about arresting Harriet Wellman's farmer union; the
+  cuffed men march out, chants fade, townsfolk suspect, mothers whisper, market stalls empty,
+  union banners droop, arrested men enter jail, promises of retaliation echo, the scar on
+  his cheek presses the journal, widening the gap between his badge and the people, costing
+  his conscience.
+beats:
+- beat:union-strike-suppress-post-4
+choices:
+- label: scribble the cost of order into my journal
+  requires:
+  - flag:harriet-unpopularity
+  to: passage:harriet-journal-weights

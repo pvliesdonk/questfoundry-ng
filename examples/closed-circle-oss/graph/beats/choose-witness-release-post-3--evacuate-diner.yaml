@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-3--evacuate-diner
+created_by: grow
+summary: The farmer union throws its weight behind Harriet as she lets Edgar walk; Harriet
+  defies the elites. Lucy sounds the alarm, her breath ragged, guiding a panicked crowd out
+  while the bomb’s timer clicks down. Collective labor stands with her as danger recedes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:harriet-wellman
+- faction:farmer-union
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

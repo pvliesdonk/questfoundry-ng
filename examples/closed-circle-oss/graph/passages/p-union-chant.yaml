@@ -1,0 +1,29 @@
+id: passage:p-union-chant
+summary: The farmer union gathers in the town square, chanting for fair rates, while Thea
+  watches the lingering fire and Harriet observes from the perimeter, noting the growing rift.
+entities:
+- character:thea-swan
+- faction:farmer-union
+- character:harriet-wellman
+prose_summary: Lucy watches Thea look at furnace fire while the farmers chant. Harriet observes
+  crowd. Lucy lifts furnace lid, exposing Ornate Knife. She follows clock ticking to a charred
+  ledger, descends to basement, where Mayor Caldwell stands by furnace and touches ledger.
+  The chant echoes, furnace hisses, knife glints, Lucy feels revolver at hip, facing a decision.
+beats:
+- beat:alt-19
+- beat:alt-20
+- beat:alt-21
+choices:
+- label: Step toward Lucy as she lifts the furnace lid, exposing the Ornate Knife’s cold blade.
+  grants:
+  - flag:cw-arm-1-1
+  to: passage:ornate-knife-reveal
+- label: Follow the ticking of Silas’s clocks, guiding my hand to the soot‑blackened ledger.
+  requires:
+  - flag:cw-alt-01
+  grants:
+  - flag:cw-gate-1-1
+  to: passage:p-looming-ledger
+- label: Walk into the Old Mill’s basement, meeting Mayor Caldwell beneath the iron‑wrought
+    furnace.
+  to: passage:p-rift-mediation

@@ -1,0 +1,14 @@
+id: beat:ledger-burn-burn-post-3
+summary: Harriet notes the power vacuum widening as hidden debts surface elsewhere.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: complicates
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:harriet-wellman
+interlude: true
+belongs_to:
+- path:burn-ledger

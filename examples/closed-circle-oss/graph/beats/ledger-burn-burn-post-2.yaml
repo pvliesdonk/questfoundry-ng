@@ -1,0 +1,13 @@
+id: beat:ledger-burn-burn-post-2
+summary: Blackwood family members glare at Caldwell, whispering of betrayal and loss.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: reveals
+entities:
+- character:mayor-caldwell
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:burn-ledger

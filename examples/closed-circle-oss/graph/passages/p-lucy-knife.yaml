@@ -1,0 +1,15 @@
+id: passage:p-lucy-knife
+summary: Lucy slides the Ornate Knife onto the shadowed shelf, its glint hinting at loyalty
+  or betrayal and cementing her cold resolve, heightening the tension.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+prose_summary: Lucy backs against the bar, Harriet grabs Clifford's coat and demands the ledger.
+  Lucy notices the clerk's ivory-handled knife on the shelf, touches it, then slides it back
+  onto the shelf and hides it. She keeps her revolver at her hip. She decides to conceal the
+  knife, pledging to protect her brother.
+beats:
+- beat:fork-lucy-1
+choices:
+- label: secure the hidden blade
+  to: passage:p-calm-dissent

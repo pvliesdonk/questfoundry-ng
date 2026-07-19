@@ -1,0 +1,22 @@
+id: passage:p-eddie-riddle
+summary: Harriet feels a knot of dread as Edgar riddles about the vanished Blackwood Ledger,
+  implying its dangerous secrets may be burning in the old mill.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+- location:old-mill
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Harriet stands in the old mill with lantern; Edgar Barnes leans nearby and
+  recites a riddle about a lost ledger burning beneath gears. She notes the rusted iron hatch
+  to the cellar, a battered journal of protest arrests, and the missing ledger. Harriet fastens
+  her badge, places her revolver against the lantern base, and prepares to choose.
+beats:
+- beat:fork-eddie-riddle-1
+choices:
+- label: Open my journal, the pages feeling like cold ash
+  to: passage:p-old-man-reflection

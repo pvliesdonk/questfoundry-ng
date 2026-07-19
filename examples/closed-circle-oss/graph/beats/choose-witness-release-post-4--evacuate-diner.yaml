@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-4--evacuate-diner
+created_by: grow
+summary: Harriet writes of a distant gunshot echoing in the night, yet she releases Edgar.
+  Lucy shepherds the last diners out, the empty kitchen echoing their footsteps. The written
+  resolve underscores a story unfinished.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: advances
+entities:
+- character:harriet-wellman
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

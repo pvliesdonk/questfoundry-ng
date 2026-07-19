@@ -1,0 +1,23 @@
+id: passage:p-diner-ink
+summary: Edgar slips a folded page of the Blackwood Ledger into Marjorie's coffee, the stale
+  pie aroma mingling with the echo of a distant gunshot, leaving a lingering taste of concealed
+  danger.
+entities:
+- character:edgar-barnes
+- character:marjorie-lynch
+- object:ledger-blackwood
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Edgar, still cuffed, watches Harriet badge‑order the diner under a brass lantern
+  while Lucy, copper‑stained and blood‑smeared, trembles near the bomb. Marjorie works the
+  espresso machine. A distant gunshot echoes. Edgar slips a folded ledger page from his pocket
+  and places it beneath Marjorie's coffee foam as she pours, hiding the secret in the townsfolk’s
+  drink.
+beats:
+- beat:arm-a-diner-riddle
+choices:
+- label: Sip the coffee, tasting hidden betrayal
+  to: passage:p-quiet-rupture

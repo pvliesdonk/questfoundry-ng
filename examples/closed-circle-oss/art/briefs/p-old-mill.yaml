@@ -1,0 +1,12 @@
+passage: passage:p-old-mill
+priority: 14
+caption: Inside the old mill, the Blackwood Ledger rests among debris as the Farmer Union
+  murmurs.
+prompt: Noir line illustration, deep shadows, muted earth tones, a touch of deep crimson on
+  the ledger. Show the crumbling stone interior of the old mill, shafts of ash‑colored light
+  through cracked windows, a leather‑bound ledger‑blackwood open on a stone slab, and a few
+  weather‑worn farmer union members in overalls standing wary in the background.
+entities:
+- location:old-mill
+- object:ledger-blackwood
+- faction:farmer-union

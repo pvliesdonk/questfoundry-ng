@@ -1,0 +1,10 @@
+id: beat:lucy-knife-glance
+created_by: polish
+summary: Lucy Frost steps into the doorway, her stare catching the shimmer of the Ornate Knife
+  half‑buried in ash, imprinting a cold, sharp memory of violence amid the quiet.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+texture_premise: A murmuring echo of rusted gears in the Old Mill’s shadow.

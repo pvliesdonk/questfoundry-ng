@@ -1,0 +1,17 @@
+id: passage:p-hidden-ledger
+summary: Marjorie whispers that the ledger details Mayor Caldwell's hidden debts, exposing
+  looming corruption.
+entities:
+- character:marjorie-lynch
+- object:ledger-blackwood
+- character:mayor-caldwell
+prose_summary: Mayor Caldwell feels floor vibrate as furnace rumbles; brass‑bound safe with
+  iron latch stands near lantern. Harriet leans on metal rail, watching patrons. Marjorie
+  leans to safe, sees thin glass sealing the Blackwood Ledger, whispers that it records Caldwell’s
+  hidden debts. Caldwell grasps Harriet’s forearm, thanks her, and smiles; the ledger stays
+  locked, secrets intact.
+beats:
+- beat:fork-1a
+choices:
+- label: notice Caldwell’s tight grin as he thanks Harriet
+  to: passage:p-caldwell-revenge-cracks

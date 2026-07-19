@@ -1,0 +1,34 @@
+id: passage:p-thea-confession
+summary: Thea publicly admits the scandal that forced her exile; Lucy softens the atmosphere
+  with a whiskey and supportive glance, while Mayor Caldwell urges her to leave to protect
+  the town’s image, and Harriet confronts his request.
+entities:
+- character:lucy-frost
+- character:thea-swan
+- character:mayor-caldwell
+- character:harriet-wellman
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Thea confesses forged records and betrayal, triggering a town debate. Lucy
+  gives Thea a glass of amber whiskey, sharing resolve. Mayor Caldwell urges Thea to leave
+  Grayhaven to protect its image. Harriet challenges him, demanding truth and accountability.
+  The Old Mill’s back door is ajar, possibly containing the Blackwood ledger. Thea must stay
+  for debate or enter the mill.
+beats:
+- beat:secret-ink-confess-commit
+- beat:secret-ink-confess-post-1
+- beat:secret-ink-confess-post-2
+choices:
+- label: Step into the Old Mill’s ash‑colored gloom
+  grants:
+  - flag:cw-arm-old-mill-1
+  to: passage:p-old-mill
+- label: Listen as the diner debates accountability
+  to: passage:p-ink-confess-aftermath

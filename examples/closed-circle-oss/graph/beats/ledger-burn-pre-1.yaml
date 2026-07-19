@@ -1,0 +1,17 @@
+id: beat:ledger-burn-pre-1
+summary: Mayor Caldwell opens the Blackwood Ledger, eyes scanning stained names and debts.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: reveals
+entities:
+- character:mayor-caldwell
+- object:ledger-blackwood
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'
+belongs_to:
+- path:burn-ledger
+- path:keep-ledger

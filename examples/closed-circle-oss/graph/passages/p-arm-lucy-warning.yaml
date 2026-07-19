@@ -1,0 +1,16 @@
+id: passage:p-arm-lucy-warning
+summary: Lucy meets Thea with a frosty stare, delivering a thin, blade‑like warning that sharpens
+  the tension between them. The warning hangs in the air, urging Thea to heed the looming
+  danger.
+entities:
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Thea tightens her coat, sits on a bench beside the hearth; Lucy, scarred, slides
+  a folded scrap of paper to her. Thea reads a warning that eavesdroppers sit in the dark,
+  glances at empty booths and shadows, notes Harriet’s open notebook with a trembling question,
+  folds the paper, and watches the dim corners.
+beats:
+- beat:arm-lucy-warning
+choices:
+- label: keep my eyes on the empty booths
+  to: passage:p-whisper-night

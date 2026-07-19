@@ -1,0 +1,26 @@
+id: passage:p-gated-knife-whisper
+summary: Marjorie Lynch leans over the altar, discovers the knife is missing from the ledger,
+  and the hall reverberates with a remembered whispered warning, emphasizing the concealed
+  ledger link.
+entities:
+- character:marjorie-lynch
+- object:ornate-knife
+- object:ledger-blackwood
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Marjorie leans over stone altar, brushes her apron on it, and reads Blackwood
+  ledger beside a candle. She notes the blank line for the ivory-handled knife. A murmur sounds,
+  altar trembles, and her palm feels an echo of gears, indicating ledger’s secret ties to
+  mill mechanisms. She links missing knife to a record; tremor urges her onward.
+beats:
+- beat:gated-knife-whisper-1
+choices:
+- label: press my palm to the trembling stone, hunting the hidden ledger
+  to: passage:p-hall-shadow-knife

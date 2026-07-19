@@ -1,0 +1,19 @@
+id: passage:p-clifford-package
+summary: Clifford Moon watches the interrogation room doors shut, the empty sheath on the
+  floor, and after being released he monitors the police questioning other suspects; meanwhile
+  Marjorie Lynch sees him slip a tightly‑wrapped package into his coat while serving coffee.
+entities:
+- character:clifford-moon
+- character:marjorie-lynch
+prose_summary: Clifford Moon watches doors slam, guard lifts chair latch and gestures him
+  to stand. He rises, exits into precinct light, lingers by detectives questioning two suspects
+  with recorder. Marjorie Lynch serves coffee at a temporary counter, flour on apron. She
+  notices Clifford slip a small tightly‑wrapped bundle into his coat pocket and widens eyes
+  before steadying. Clifford mutters "leeches".
+beats:
+- beat:alt-gap-17
+- beat:alt-knife-disposal-aftermath-3
+- beat:alt-marjorie-leeches-lead-1
+choices:
+- label: Listen as Clifford mutters "leeches"
+  to: passage:p-leeches-whispers

@@ -1,0 +1,13 @@
+id: beat:diner-bomb-defuse-post-2
+summary: The device erupts partially, shrapnel tearing Lucy's forearm, leaving her wounded.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: complicates
+entities:
+- character:lucy-frost
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:defuse-diner

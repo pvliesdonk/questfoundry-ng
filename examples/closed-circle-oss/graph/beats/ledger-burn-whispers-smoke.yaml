@@ -1,0 +1,11 @@
+id: beat:ledger-burn-whispers-smoke
+created_by: polish
+summary: Whispers coil like smoke, the hidden ledger’s secrets pulsing beneath conversations.
+beat_class: structural
+purpose: residue
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+- character:marjorie-lynch
+requires_flags:
+- flag:ledger-hidden

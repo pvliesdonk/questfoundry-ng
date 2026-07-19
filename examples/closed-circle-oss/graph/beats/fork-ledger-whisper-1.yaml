@@ -1,0 +1,14 @@
+id: beat:fork-ledger-whisper-1
+created_by: polish
+summary: Harriet catches a fragment of Old Man Well's mutter linking the Blackwood Ledger
+  to the distant gunshot, imprinting a sense of concealed corruption as the diner doors swing
+  shut.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:old-man-well
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-fork-ledger-whisper-1
+texture_premise: Muted evidence of hidden crimes flickers in the bridge shadows.

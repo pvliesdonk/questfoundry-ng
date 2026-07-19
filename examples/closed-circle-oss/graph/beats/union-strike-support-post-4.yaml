@@ -1,0 +1,13 @@
+id: beat:union-strike-support-post-4
+summary: An uneasy calm settles, yet undercurrents of dissent ripple through Grayhaven.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: advances
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:marjorie-lynch
+belongs_to:
+- path:support-protest

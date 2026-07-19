@@ -1,0 +1,13 @@
+passage: passage:p-union-calm
+priority: 17
+caption: A weary calm settles as Clifford, Harriet, the Farmer Union, and Mayor Caldwell stand
+  together.
+prompt: Noir illustration, heavy shadows, muted earth tones, deep crimson on Caldwell's gold
+  tie. Show Mayor Caldwell in a crisp suit with gold tie, standing beside Clifford Moon in
+  a glossy suit, and Harriet Wellman in a trench coat. In the background, a group of farmer
+  union members in overalls murmur, the town square under a gray sky.
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+- faction:farmer-union
+- character:mayor-caldwell

@@ -1,0 +1,11 @@
+id: bridge:gap-44
+created_by: grow
+summary: Caldwell's words linger as Lucy serves coffee to the protestors, the air thick with
+  unrest.
+beat_class: structural
+purpose: bridge
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

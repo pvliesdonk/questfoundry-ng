@@ -1,0 +1,23 @@
+id: passage:p-tunnel-escape
+summary: The murderer slips through the hidden tunnel and evades capture; another corpse emerges,
+  spreading a cold fear through the town.
+entities:
+- object:ornate-knife
+- character:harriet-wellman
+prose_summary: Silas leans in the mill as night falls; Deputy Harriet orders men back while
+  a figure slips into the seam Silas described, and the mud‑soaked murderer exits the hidden
+  tunnel and disappears. Furnace door opens, revealing a second slash‑victim. Harriet urges
+  a perimeter; Lucy grips her revolver as a flare flares. Edgar whispers a cursed‑ledger verse.
+beats:
+- beat:old-man-secret-reject-post-2
+- beat:old-man-secret-reject-post-3
+- bridge:gap-38
+choices:
+- label: listen to Edgar's riddling whispers at Marjorie's diner
+  grants:
+  - flag:cw-fork-eddie-riddle-1
+  to: passage:p-eddie-riddle
+- label: watch Lucy's clenched fist as the mill ignites
+  grants:
+  - flag:cw-fork-lucy-fist-1
+  to: passage:p-lucy-fire-pact

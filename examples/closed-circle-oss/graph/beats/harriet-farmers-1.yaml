@@ -1,0 +1,13 @@
+id: beat:harriet-farmers-1
+created_by: polish
+summary: Harriet feels a tremor in the crowd as Lucy Frost slams a glass and members of the
+  Farmer Union glance nervously at the flames, leaving a knot of unease about hidden alliances.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- faction:farmer-union
+grants_flags:
+- flag:cw-harriet-farmers-1
+texture_premise: Harriet's watchful eye narrows, sensing the farmers' silent panic.

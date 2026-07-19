@@ -1,0 +1,14 @@
+id: beat:alt-02
+created_by: polish
+summary: The echoing basement hums while Clifford lifts the ornate knife, its ivory handle
+  catching the lamplight.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:clifford-moon
+- object:ornate-knife
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-41
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

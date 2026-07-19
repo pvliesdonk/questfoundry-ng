@@ -1,0 +1,214 @@
+beats:
+- beat:choose-witness-arrest-commit--defuse-diner
+- beat:choose-witness-arrest-commit--evacuate-diner
+- beat:choose-witness-arrest-post-1--defuse-diner
+- beat:choose-witness-arrest-post-1--evacuate-diner
+- beat:choose-witness-arrest-post-2--defuse-diner
+- beat:choose-witness-arrest-post-2--evacuate-diner
+- beat:choose-witness-arrest-post-3--defuse-diner
+- beat:choose-witness-arrest-post-3--evacuate-diner
+- beat:choose-witness-arrest-post-4--defuse-diner
+- beat:choose-witness-arrest-post-4--evacuate-diner
+- beat:choose-witness-pre-1--defuse-diner
+- beat:choose-witness-pre-1--evacuate-diner
+- beat:choose-witness-pre-2--defuse-diner
+- beat:choose-witness-pre-2--evacuate-diner
+- beat:choose-witness-pre-3--defuse-diner
+- beat:choose-witness-pre-3--evacuate-diner
+- beat:choose-witness-pre-4--defuse-diner
+- beat:choose-witness-pre-4--evacuate-diner
+- beat:choose-witness-pre-5--defuse-diner
+- beat:choose-witness-pre-5--evacuate-diner
+- beat:choose-witness-release-commit--defuse-diner
+- beat:choose-witness-release-commit--evacuate-diner
+- beat:choose-witness-release-post-1--defuse-diner
+- beat:choose-witness-release-post-1--evacuate-diner
+- beat:choose-witness-release-post-2--defuse-diner
+- beat:choose-witness-release-post-2--evacuate-diner
+- beat:choose-witness-release-post-3--defuse-diner
+- beat:choose-witness-release-post-3--evacuate-diner
+- beat:choose-witness-release-post-4--defuse-diner
+- beat:choose-witness-release-post-4--evacuate-diner
+- beat:diner-bomb-defuse-commit
+- beat:diner-bomb-defuse-post-1
+- beat:diner-bomb-defuse-post-2
+- beat:diner-bomb-defuse-post-3
+- beat:diner-bomb-defuse-post-4
+- beat:diner-bomb-evacuate-commit
+- beat:diner-bomb-evacuate-post-1
+- beat:diner-bomb-evacuate-post-2
+- beat:diner-bomb-evacuate-post-3
+- beat:diner-bomb-evacuate-post-4
+- beat:diner-bomb-pre-1
+- beat:diner-bomb-pre-2
+- beat:diner-bomb-pre-3
+- beat:diner-bomb-pre-4
+- beat:diner-bomb-pre-5
+- beat:edgar-riddle-aftermath-1
+- beat:edgar-riddle-aftermath-2
+- beat:edgar-riddle-aftermath-3
+- beat:edgar-riddle-lead-1
+- beat:edgar-riddle-lead-2
+- beat:edgar-riddle-lead-3
+- beat:edgar-riddle-lead-4
+- beat:edgar-riddle-resolution
+- beat:knife-disposal-aftermath-1
+- beat:knife-disposal-aftermath-2
+- beat:knife-disposal-aftermath-3
+- beat:knife-disposal-lead-1
+- beat:knife-disposal-lead-2
+- beat:knife-disposal-lead-3
+- beat:knife-disposal-lead-4
+- beat:knife-disposal-resolution
+- beat:ledger-burn-burn-commit
+- beat:ledger-burn-burn-post-1
+- beat:ledger-burn-burn-post-2
+- beat:ledger-burn-burn-post-3
+- beat:ledger-burn-burn-post-4
+- beat:ledger-burn-keep-commit
+- beat:ledger-burn-keep-post-1
+- beat:ledger-burn-keep-post-2
+- beat:ledger-burn-keep-post-3
+- beat:ledger-burn-keep-post-4
+- beat:ledger-burn-pre-1
+- beat:ledger-burn-pre-2
+- beat:ledger-burn-pre-3
+- beat:ledger-burn-pre-4
+- beat:ledger-burn-pre-5
+- beat:marjorie-leeches-aftermath-1
+- beat:marjorie-leeches-aftermath-2
+- beat:marjorie-leeches-aftermath-3
+- beat:marjorie-leeches-lead-1
+- beat:marjorie-leeches-lead-2
+- beat:marjorie-leeches-lead-3
+- beat:marjorie-leeches-lead-4
+- beat:marjorie-leeches-resolution
+- beat:old-man-secret-pre-1
+- beat:old-man-secret-pre-2
+- beat:old-man-secret-pre-3
+- beat:old-man-secret-pre-4
+- beat:old-man-secret-pre-5
+- beat:old-man-secret-reject-commit
+- beat:old-man-secret-reject-post-1
+- beat:old-man-secret-reject-post-2
+- beat:old-man-secret-reject-post-3
+- beat:old-man-secret-reject-post-4
+- beat:old-man-secret-trust-commit
+- beat:old-man-secret-trust-post-1
+- beat:old-man-secret-trust-post-2
+- beat:old-man-secret-trust-post-3
+- beat:old-man-secret-trust-post-4
+- beat:secret-ink-confess-commit
+- beat:secret-ink-confess-post-1
+- beat:secret-ink-confess-post-2
+- beat:secret-ink-confess-post-3
+- beat:secret-ink-confess-post-4
+- beat:secret-ink-hide-commit
+- beat:secret-ink-hide-post-1
+- beat:secret-ink-hide-post-2
+- beat:secret-ink-hide-post-3
+- beat:secret-ink-hide-post-4
+- beat:secret-ink-pre-1
+- beat:secret-ink-pre-2
+- beat:secret-ink-pre-3
+- beat:secret-ink-pre-4
+- beat:secret-ink-pre-5
+- beat:setup-1
+- beat:setup-2
+- beat:setup-3
+- beat:union-strike-pre-1
+- beat:union-strike-pre-2
+- beat:union-strike-pre-3
+- beat:union-strike-pre-4
+- beat:union-strike-pre-5
+- beat:union-strike-support-commit
+- beat:union-strike-support-post-1
+- beat:union-strike-support-post-2
+- beat:union-strike-support-post-3
+- beat:union-strike-support-post-4
+- beat:union-strike-suppress-commit
+- beat:union-strike-suppress-post-1
+- beat:union-strike-suppress-post-2
+- beat:union-strike-suppress-post-3
+- beat:union-strike-suppress-post-4
+- bridge:gap-0
+- bridge:gap-1
+- bridge:gap-10
+- bridge:gap-11
+- bridge:gap-12
+- bridge:gap-13
+- bridge:gap-14
+- bridge:gap-15
+- bridge:gap-16
+- bridge:gap-17
+- bridge:gap-18
+- bridge:gap-19
+- bridge:gap-2
+- bridge:gap-20
+- bridge:gap-21
+- bridge:gap-22
+- bridge:gap-23
+- bridge:gap-24
+- bridge:gap-25
+- bridge:gap-26
+- bridge:gap-27
+- bridge:gap-28
+- bridge:gap-29
+- bridge:gap-3
+- bridge:gap-30
+- bridge:gap-31
+- bridge:gap-32
+- bridge:gap-33
+- bridge:gap-34
+- bridge:gap-35
+- bridge:gap-36
+- bridge:gap-37
+- bridge:gap-38
+- bridge:gap-39
+- bridge:gap-4
+- bridge:gap-40
+- bridge:gap-41
+- bridge:gap-42
+- bridge:gap-43
+- bridge:gap-44
+- bridge:gap-45
+- bridge:gap-46
+- bridge:gap-47
+- bridge:gap-48
+- bridge:gap-5
+- bridge:gap-6
+- bridge:gap-7
+- bridge:gap-8
+- bridge:gap-9
+forks:
+  dilemma:choose-witness:
+  - beat:choose-witness-arrest-commit--defuse-diner
+  - beat:choose-witness-arrest-commit--evacuate-diner
+  - beat:choose-witness-release-commit--defuse-diner
+  - beat:choose-witness-release-commit--evacuate-diner
+  dilemma:secret-ink:
+  - beat:secret-ink-confess-commit
+  - beat:secret-ink-hide-commit
+  dilemma:knife-disposal:
+  - beat:knife-disposal-resolution
+  dilemma:diner-bomb:
+  - beat:diner-bomb-defuse-commit
+  - beat:diner-bomb-evacuate-commit
+  dilemma:ledger-burn:
+  - beat:ledger-burn-burn-commit
+  - beat:ledger-burn-keep-commit
+  dilemma:union-strike:
+  - beat:union-strike-support-commit
+  - beat:union-strike-suppress-commit
+  dilemma:old-man-secret:
+  - beat:old-man-secret-reject-commit
+  - beat:old-man-secret-trust-commit
+  dilemma:marjorie-leeches:
+  - beat:marjorie-leeches-resolution
+  dilemma:edgar-riddle:
+  - beat:edgar-riddle-resolution
+convergences:
+  dilemma:union-strike:
+  - beat:knife-disposal-resolution
+  dilemma:old-man-secret:
+  - beat:edgar-riddle-resolution

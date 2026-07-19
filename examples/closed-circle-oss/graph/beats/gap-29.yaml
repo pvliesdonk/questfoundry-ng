@@ -1,0 +1,11 @@
+id: bridge:gap-29
+created_by: grow
+summary: Harriet overhears the whispered talk of ruin, prompting Lucy to suggest the rusted
+  firepit as a means to destroy documents.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

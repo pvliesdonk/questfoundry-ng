@@ -1,0 +1,11 @@
+id: beat:river-shadow-1
+created_by: polish
+summary: The cold river's hush settles over the path, leaving a lingering sense of inevitability.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:clifford-moon
+- location:old-mill
+grants_flags:
+- flag:cw-river-shadow-1
+texture_premise: Silence of the river

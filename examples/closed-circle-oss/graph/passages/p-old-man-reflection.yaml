@@ -1,0 +1,16 @@
+id: passage:p-old-man-reflection
+summary: Harriet reads her journal, reflecting on a missed chance and sensing the darkness
+  growing deeper.
+entities:
+- character:harriet-wellman
+prose_summary: He opens the cracked leather notebook, reads the last page listing orders that
+  sent uniformed deputies to the farmer protest, writes the date, notes his scar, badge weight,
+  and revolver, realizes he missed intercepting the hidden route to the cellar, and records
+  the loss before darkness deepens, costing him credibility and increasing guilt.
+beats:
+- beat:old-man-secret-reject-post-4
+choices:
+- label: Leaf through the notebook
+  requires:
+  - flag:above-ground-search
+  to: passage:p-old-man-reject-notebook

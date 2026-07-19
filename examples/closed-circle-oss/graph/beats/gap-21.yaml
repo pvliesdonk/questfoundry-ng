@@ -1,0 +1,9 @@
+id: bridge:gap-21
+created_by: grow
+summary: Ash settles as the ledger flames die, and the Blackwood family steps forward with
+  cold stares aimed at Caldwell.
+beat_class: structural
+purpose: bridge
+entities:
+- object:ledger-blackwood
+- character:mayor-caldwell

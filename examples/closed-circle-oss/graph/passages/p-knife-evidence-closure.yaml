@@ -1,0 +1,28 @@
+id: passage:p-knife-evidence-closure
+summary: Harriet Wellman secures the ornate knife in the evidence locker, records fresh fingerprints,
+  and notices the missing sheath, suggesting a second weapon was employed.
+entities:
+- character:old-man-well
+- character:harriet-wellman
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Clifford stands by the evidence room door as furnace hisses. Silas directs
+  Harriet; she takes the ivory-handled knife, locks it in a brass-faced locker, leaves a fresh
+  fingerprint imprint, and records it in the ledger. Harriet notes the missing scabbard, implying
+  a second weapon. Clifford discovers an east arch tunnel, enters, hearing gears, heading
+  toward the old mill.
+beats:
+- beat:alt-gap-34
+- beat:alt-knife-disposal-aftermath-1
+- beat:alt-knife-disposal-aftermath-2
+choices:
+- label: Enter the dawn-lit tunnels beneath the Old Mill
+  to: passage:p-clifford-package

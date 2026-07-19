@@ -1,0 +1,19 @@
+id: passage:p-thea-dash
+summary: Nurse Thea Swan darts across the street, serum trembling in her grip, eyes fixed
+  on the ticking device, embodying fragile urgency and the heavy burden of life‑saving choices.
+entities:
+- character:thea-swan
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Lucy watches Thea throw a glass vial of serum; a ticking bomb pulses behind
+  the diner's back door. Lucy breaks from the crowd, runs, reaches Thea as she jumps the wall,
+  grabs the vial, returns to the diner, places it on a cracked table beside the device, and
+  faces a choice that will decide if the serum saves lives.
+beats:
+- beat:arm-thea-1
+choices:
+- label: Run to meet Thea, serum trembling in the vial
+  to: passage:p-bomb-evacuation

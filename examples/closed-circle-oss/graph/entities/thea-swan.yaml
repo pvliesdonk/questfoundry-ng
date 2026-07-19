@@ -1,0 +1,25 @@
+id: character:thea-swan
+name: Thea Swan
+concept: young nurse, recently arrived, secretly fleeing a scandal
+pronouns: she/her
+base:
+  appearance: bob haircut, medical coat
+  manner: quiet, vigilant
+  confession_status: publicly confessed
+arc:
+  begins: Thea is a quiet nurse, newly arrived and secretly fleeing a scandal.
+  pivots:
+  - beat: beat:secret-ink-pre-4
+    becomes: Thea writes a hidden diary entry with ink that fades unless exposed to light.
+  - beat: beat:secret-ink-confess-commit
+    becomes: Thea decides to confess the scandal that forced her to flee.
+  - beat: beat:secret-ink-hide-commit
+    becomes: Thea chooses to keep the scandal concealed and remain silent.
+  - beat: beat:secret-ink-confess-post-4
+    becomes: Thea's confession echoes through the diner, shifting town sentiment.
+  ends:
+  - path: path:confess-thea
+    state: Thea publicly confessed, exposing her past scandal.
+  - path: path:hide-thea
+    state: Thea kept her scandal hidden, maintaining her secret.
+pov_head: true

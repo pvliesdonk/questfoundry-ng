@@ -1,0 +1,20 @@
+id: dilemma:knife-disposal
+question: Should Clifford keep the ornate knife as leverage or hand it over to the police?
+why_it_matters: Holding the murder weapon gives him power but risks implicating him; surrendering
+  removes that leverage but may seal his fate.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:keep-knife
+  text: Clifford hides the knife, planning to use it later.
+- id: answer:give-knife
+  text: Clifford turns the knife over to Harriet.
+anchored_to:
+- character:clifford-moon
+- object:ornate-knife
+wraps:
+- dilemma:union-strike
+- dilemma:ledger-burn
+serial:
+- dilemma:edgar-riddle

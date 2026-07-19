@@ -1,0 +1,10 @@
+id: bridge:gap-11
+created_by: grow
+summary: Lucy’s alarmed stare meets Marjorie's hopeful smile as the ticking grows louder.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.

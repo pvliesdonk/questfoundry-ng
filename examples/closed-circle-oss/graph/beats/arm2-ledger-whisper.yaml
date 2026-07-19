@@ -1,0 +1,13 @@
+id: beat:arm2-ledger-whisper
+created_by: polish
+summary: A low voice mutters about the Blackwood Ledger hidden beneath the floorboards, layering
+  the air with a cold weight of secret debts.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ledger-blackwood
+- character:edgar-barnes
+- location:old-mill
+grants_flags:
+- flag:cw-arm2-ledger-whisper
+texture_premise: Ledger whisper in the shadows

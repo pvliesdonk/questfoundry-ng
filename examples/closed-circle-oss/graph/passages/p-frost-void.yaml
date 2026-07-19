@@ -1,0 +1,24 @@
+id: passage:p-frost-void
+summary: A thin frost coats the streets, and the missing ledger creates a hollow echo in the
+  town's chatter.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+prose_summary: Harriet Wellman walks Grayhaven market; Blackwood ledger missing after council
+  burned it, scattering power. Vendors discuss debts; union banners droop; townsfolk huddle
+  by furnace. Harriet spots a farmer with rusted pitchfork. Her deputy badge presses her chest;
+  a cold revolver hangs at her hip. A patrol officer places cuffs on a table; Harriet may
+  summon restraints or refrain, risking escalation.
+beats:
+- beat:ledger-burn-chill-frost
+choices:
+- label: Refuse to use force
+  grants:
+  - flag:political-strain
+  - flag:union-empowered
+  to: passage:p-harriet-union-support
+- label: Order the arrests
+  grants:
+  - flag:harriet-unpopularity
+  - flag:protest-quashed
+  to: passage:p-strike-repress

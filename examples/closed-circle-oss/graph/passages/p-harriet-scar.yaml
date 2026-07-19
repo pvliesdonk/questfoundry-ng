@@ -1,0 +1,17 @@
+id: passage:p-harriet-scar
+summary: Harriet's cheek scar catches the flickering light, underscoring that the law carries
+  its own wounds.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+variant_flag: flag:above-ground-search
+prose_summary: Harriet watches Lucy examine the smoldering bomb husk, a bleeding forearm,
+  and a blood‑stained ivory knife; Harriet feels her cheek scar and grips her revolver, while
+  Lucy pulls the iron latch open to reveal a dark passage beneath the table. Lucy’s resolve
+  hardens; Harriet notes the scene in her notebook, incurring Lucy’s wound and Harriet’s lingering
+  scar pain.
+beats:
+- beat:diner-escape-harriet-1
+choices:
+- label: watch Harriet’s scar catch the dim light
+  to: passage:p-clifford-dash

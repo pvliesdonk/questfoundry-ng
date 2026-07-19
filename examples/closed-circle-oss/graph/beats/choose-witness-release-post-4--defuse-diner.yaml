@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-4--defuse-diner
+created_by: grow
+summary: Harriet’s journal records a quiet resolve as distant fires glow on the horizon; she
+  still frees Edgar. Lucy finishes disabling the bomb, her hands trembling from pain. The
+  journal’s calm notes the night’s violence, leaving the arrest question hanging.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: advances
+entities:
+- character:harriet-wellman
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

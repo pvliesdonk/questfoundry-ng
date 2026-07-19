@@ -1,0 +1,17 @@
+id: passage:p-harriet-firepit
+summary: Harriet watches ash curl from the Blackwood Ledger by the firepit as Edgar Barnes
+  mutters a riddle about unpaid favors, underscoring lingering, smoldering secrets.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+prose_summary: Harriet stands beside firepit, examines Blackwood Ledger as Edgar Barnes recites
+  rhyme. She feels scar tighten, hears farmer union chant, grips revolver, notes mud‑streaked
+  bootprint toward narrow arch, sees ash on coat cuff, watches ledger pages curl, and a spark
+  reveals an imprint of a missing ivory‑handled knife beside ledger. Decision pending, tension
+  rises.
+beats:
+- beat:harriet-debt-1
+choices:
+- label: Slip into the diner district, ash clinging to my coat
+  to: passage:p-union-mediation

@@ -1,0 +1,16 @@
+id: passage:p-knife-bomb
+summary: Deputy Harriet Wellman spots an ornate knife half‑buried in the cobblestones while
+  a bomb ticks unnoticed, sharpening the sense of imminent danger.
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+variant_flag: flag:above-ground-search
+prose_summary: Harriet stands at alley mouth, sees ivory-handled knife half‑buried, notes
+  missing sheath and dried blood suggesting a second weapon. She hears a low ticking from
+  behind crates deeper in the wall. Her radio blinks green for bomb squad. She holds knife,
+  then weighs shouting for bomb squad as ticking grows louder.
+beats:
+- beat:arm-harriet-1
+choices:
+- label: Shout for the bomb squad
+  to: passage:p-bomb-evacuation

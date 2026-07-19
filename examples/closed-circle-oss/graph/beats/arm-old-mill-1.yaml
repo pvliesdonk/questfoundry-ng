@@ -1,0 +1,13 @@
+id: beat:arm-old-mill-1
+created_by: polish
+summary: The cracked windows of the Old Mill flicker with ash‑colored light, revealing a faint
+  glimpse of the Blackwood Ledger tucked among the debris, leaving the reader with a lingering
+  unease.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:old-mill
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-arm-old-mill-1
+texture_premise: Smoldering whispers at the Old Mill

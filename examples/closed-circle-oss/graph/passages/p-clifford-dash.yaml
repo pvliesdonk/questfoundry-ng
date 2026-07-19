@@ -1,0 +1,34 @@
+id: passage:p-clifford-dash
+summary: Lucy seizes a blood‑stained Clifford and drags him toward the hallway as he darts
+  for the exit; later, Harriet records the frantic climax in her journal.
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:harriet-wellman
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Lucy disables bomb by snapping red wire; Clifford Moon flees, blood‑soaked
+  coat. Lucy seizes coat, drags him toward kitchen‑stairs arch, leaving scarlet trail. Harriet
+  Wellman watches, records events in leather‑bound journal and pockets it. Lucy’s copper‑tinged
+  wound pulses; she steadies herself for what lies beyond.
+beats:
+- beat:diner-bomb-defuse-post-3
+- bridge:gap-6
+choices:
+- label: Pull the bomb’s red wire with Lucy
+  to: passage:p-diner-bomb-defuse-post

@@ -1,0 +1,22 @@
+id: character:clifford-moon
+name: Clifford Moon
+concept: the traveling salesman with a shady past
+pronouns: he/him
+base:
+  appearance: slicked‑back hair, flashy suit
+  manner: charming, evasive
+arc:
+  begins: Clifford is a slick traveling salesman with a shady past.
+  pivots:
+  - beat: bridge:gap-41
+    becomes: Clifford lifts the ornate knife, its ivory handle catching the light.
+  - beat: beat:knife-disposal-lead-1
+    becomes: Clifford obsessively polishes the ornate knife in his cramped room.
+  - beat: beat:knife-disposal-lead-2
+    becomes: Clifford receives a threatening note demanding the return of the knife.
+  - beat: beat:knife-disposal-resolution
+    becomes: Clifford decides to hand the ornate knife over to Harriet.
+  ends:
+  - path: path:give-knife
+    state: Clifford gave the ornate knife to the police as evidence.
+pov_head: true

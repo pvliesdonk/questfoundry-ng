@@ -1,0 +1,14 @@
+id: beat:sidetack-1
+created_by: polish
+summary: Silas "Old Man" Well leans against the broken wall, whispering that the ledger-blackwood
+  was slipped into a hidden compartment, leaving the reader with a lingering sense of unseen
+  debts.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+- location:old-mill
+grants_flags:
+- flag:cw-sidetack-1
+texture_premise: A hushed rumor about the Blackwood ledger drifts through the Old Mill.

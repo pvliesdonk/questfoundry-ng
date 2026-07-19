@@ -1,0 +1,29 @@
+id: passage:p-bridge-bomb-aftermath
+summary: Harriet steadily calls the bomb squad as Marjorie watches the empty doorway, then
+  Lucy guides terrified patrons out of the diner, leaving an echoing silence while Harriet
+  records the night’s dread in her journal and cross‑checks Edgar’s alibi against testimonies,
+  with Marjorie lingering on the pages.
+entities:
+- character:harriet-wellman
+- character:marjorie-lynch
+- character:edgar-barnes
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Lucy calls bomb squad via radio, pulls alarm lever and evacuates townsfolk.
+  Harriet records bomb, empty doorway, and Edgar Barnes's unknown fate in notebook. Marjorie
+  examines journal, compares Edgar's alibi with gathered statements. Knife on counter and
+  glass of whiskey sit beside each other, awaiting a decision.
+beats:
+- beat:diner-bomb-evacuate-post-4
+- bridge:gap-10
+- bridge:gap-9
+choices:
+- label: Take the whiskey Lucy slides me, eyes on the gleaming knife
+  grants:
+  - flag:cw-sidetrek-1
+  to: passage:p-frost-knife
+- label: Follow Lucy as she raises the alarm and shepherds the diners out
+  to: passage:p-evacuate-diner

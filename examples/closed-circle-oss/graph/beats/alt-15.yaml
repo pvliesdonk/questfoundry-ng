@@ -1,0 +1,14 @@
+id: beat:alt-15
+created_by: polish
+summary: Harriet overhears the whispered talk of ruin, prompting Lucy to suggest the furnace
+  in the mill as a means to destroy documents.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-29
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

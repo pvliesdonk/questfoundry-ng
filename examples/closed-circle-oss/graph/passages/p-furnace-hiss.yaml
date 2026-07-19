@@ -1,0 +1,14 @@
+id: passage:p-furnace-hiss
+summary: The coal‑fed furnace hisses louder, its orange glow reflecting off the iron beams
+  and casting a metallic dread as the heat feels like a watchful presence.
+entities:
+- location:old-mill
+prose_summary: Lucy approaches the coal-furnace; Thea Swan stands rigid nearby. Lucy sees
+  a ledger on the table and feels her revolver against her coat. The furnace hisses louder,
+  heat hums, and sulfur scent fills the air. Lucy tightens her grip, recognises the furnace
+  could destroy the ledger, and faces the decision to burn it.
+beats:
+- beat:gated-furnace-1
+choices:
+- label: Lean into the furnace’s roar, the heat humming like a warning
+  to: passage:p-furnace-glow

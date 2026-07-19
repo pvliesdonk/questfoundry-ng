@@ -1,0 +1,15 @@
+id: passage:p-harriet-notes-thea
+summary: Harriet tightens her notebook and records Thea's clenched hand, sensing a quiet but
+  growing suspicion.
+entities:
+- character:harriet-wellman
+- character:thea-swan
+prose_summary: Harriet sits at precinct desk, opens leather notebook, writes observation of
+  Thea Swan’s clenched hand and trembling forearm, notes ticking clock and pocket watch stopped
+  at midnight, folds notebook, places it beside brass lantern, records that Thea carries hidden
+  secret. No decisions made; cost is time spent observing.
+beats:
+- beat:arm-harriet-observe
+choices:
+- label: hold the night’s watch over the secret
+  to: passage:p-whisper-night

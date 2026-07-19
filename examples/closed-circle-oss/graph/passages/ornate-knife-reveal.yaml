@@ -1,0 +1,18 @@
+id: passage:ornate-knife-reveal
+summary: Lucy Frost leans in and reveals the Ornate Knife hidden beneath the furnace, signaling
+  danger, while Harriet watches the crowd, uneasy about the knife's allure and sensing a lingering
+  concealed threat.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:harriet-wellman
+prose_summary: Lucy leans against furnace, reveals knife hidden beneath coal, and holds revolver
+  at hip. Harriet stands by ledger table, steadies ledger, watches knife then crowd. Furnace
+  hisses, gear ticks in mill, iron door creaks. Lucy steadies breath and prepares to decide,
+  incurring risk of violent conflict.
+beats:
+- beat:arm-1-1
+- beat:arm-1-2
+choices:
+- label: Approach the furnace, the hidden knife flashing in the dim light
+  to: passage:p-rift-mediation

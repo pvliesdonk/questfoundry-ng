@@ -1,0 +1,13 @@
+id: beat:alt-24
+created_by: polish
+summary: Mayor Caldwell promises mediation, but his tone hints at possible suppression.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:mayor-caldwell
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:union-strike-pre-3
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

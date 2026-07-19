@@ -1,0 +1,7 @@
+id: path:burn-ledger
+explores: answer:burn-ledger
+consequences:
+- id: consequence:ledger-destroyed
+  text: Blackwood ledger incinerated, secrets vanish.
+- id: consequence:mayor-power-boost
+  text: Mayor Caldwell consolidates power.

@@ -1,0 +1,11 @@
+id: bridge:gap-30
+created_by: grow
+summary: Lucy points toward the firepit's glow, and Thea watches the flames, memories of scandal
+  flickering.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- character:thea-swan
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

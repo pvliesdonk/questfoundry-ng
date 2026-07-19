@@ -1,0 +1,12 @@
+id: beat:whispered-loyalty-1
+created_by: polish
+summary: A patron whispers that Lucy Frost’s brother was spotted handling the ledger‑blackwood,
+  sowing uneasy suspicion that loyalty may betray justice.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-whispered-loyalty-1
+texture_premise: A hushed claim that the ledger's missing page implicates an unexpected ally.

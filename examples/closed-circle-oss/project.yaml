@@ -1,0 +1,10 @@
+name: Closed Circle (gpt-oss)
+stage: dress
+llm:
+  provider: ollama
+  num_ctx: 65536
+  models:
+    architect: gpt-oss:120b-cloud
+    writer: gpt-oss:120b-cloud
+    utility: gpt-oss:120b-cloud
+print_seed: 1

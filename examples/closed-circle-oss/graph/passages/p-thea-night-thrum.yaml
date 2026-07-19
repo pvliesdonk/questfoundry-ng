@@ -1,0 +1,23 @@
+id: passage:p-thea-night-thrum
+summary: Thea retreats into the night‑filled diner, her concealed secret humming like a low
+  thrum beneath the fluorescent glare, and every glance now bristles with knotted tension.
+entities:
+- character:thea-swan
+- character:lucy-frost
+prose_summary: Thea enters the diner at night, moves to a corner booth, watches patrons, notices
+  a metal wrench on the pegboard, a humming metal box under the counter, a red wire on a bomb
+  circuit, and an alarm lever by the door; Lucy Frost stands behind the bar with a fresh scar;
+  Thea tightens her coat collar, increasing tension.
+beats:
+- beat:secret-ink-hide-thrum
+choices:
+- label: yank the wrench and cut the bomb’s red wire
+  grants:
+  - flag:bomb-defused
+  - flag:lucy-injured
+  to: passage:p-diner-bomb-defuse
+- label: blare the alarm and herd the diners onto the street
+  grants:
+  - flag:bomb-escaped
+  - flag:diner-evacuated
+  to: passage:p-diner-evacuate

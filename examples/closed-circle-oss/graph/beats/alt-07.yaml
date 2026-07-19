@@ -1,0 +1,15 @@
+id: beat:alt-07
+created_by: polish
+summary: Mayor Caldwell's eyes scan the ledger's debts as Harriet steps forward to question
+  Clifford about the knife.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+- character:clifford-moon
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-27
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

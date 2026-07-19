@@ -1,0 +1,14 @@
+id: beat:alt-17
+created_by: polish
+summary: Lucy points toward the furnace's glow, and Thea watches the flames, memories of scandal
+  flickering.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:thea-swan
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-30
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

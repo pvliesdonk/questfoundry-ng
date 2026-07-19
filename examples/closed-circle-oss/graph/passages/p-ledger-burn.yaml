@@ -1,0 +1,30 @@
+id: passage:p-ledger-burn
+summary: Lucy notes Harriet's tense exchange with Clifford and the whispered talk of the ledger’s
+  power to ruin families. Harriet hears the same rumors, and Lucy suggests using the rusted
+  firepit to burn the ledger.
+entities:
+- character:lucy-frost
+- character:clifford-moon
+- character:harriet-wellman
+prose_summary: Lucy watches Harriet leaning on Clifford as a deputy's stare interrupts a whispered
+  warning that the ledger could ruin families. Harriet hears it. Lucy points to town‑hall
+  firepit, proposing to burn the ledger. Heat reveals an ivory‑handled knife tip and a fresh
+  mud‑boot print near smoldering ledger. Lucy steadies her revolver as they weigh destroying
+  or keeping the secret.
+beats:
+- beat:ledger-burn-pre-3
+- bridge:gap-20
+- bridge:gap-29
+choices:
+- label: Reach for the ivory‑handled knife half‑buried in ash
+  grants:
+  - flag:cw-side-ink-1
+  to: passage:p-knife-legend
+- label: Step toward the fresh mud‑boot print beside the smoldering ledger
+  requires:
+  - flag:cw-setup-3
+  grants:
+  - flag:cw-gated-ink-1
+  to: passage:gated-ink
+- label: Approach the rusted firepit behind the town hall as Lucy points
+  to: passage:p-firepit-gleam

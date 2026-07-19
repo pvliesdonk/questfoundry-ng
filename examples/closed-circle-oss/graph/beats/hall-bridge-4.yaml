@@ -1,0 +1,14 @@
+id: beat:hall-bridge-4
+created_by: polish
+summary: Thea pauses at the doorway, breath catching as the ornate knife glints in the hall’s
+  basement dim light.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:thea-swan
+- object:ornate-knife
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-14
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

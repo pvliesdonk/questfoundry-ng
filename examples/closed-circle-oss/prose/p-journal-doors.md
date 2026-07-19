@@ -1,0 +1,7 @@
+March 14, 1847
+
+I sat at the small desk in the coatroom, the lamp throwing a thin circle on the worn leather cover. I recorded the facts of the council clerk’s murder: a body found behind the ledger desk, a clean slice, the ivory‑handled knife vanished, the Blackwood Ledger was reported missing from the vault. I noted the static of fear that now draped the town—farmers whispering at the well, shopkeepers glancing at empty windows, children holding their breath on the street.
+
+The patrols had increased, but no lead had surfaced. I wrote the dates, the names, the number of rounds I had walked the streets, and the weight of the case pressed into each line. Outside, on the cracked porch of Marjorie’s diner, a firepit blazed, its orange light spilling onto the pavement. A singed copy of the ledger rested on a nearby crate, its edges blackened.
+
+I thought of the old mill’s basement, its furnace glowed faintly beneath iron beams, and of a rumor about a hidden passage I had not yet found. The thought lingered as I sealed the journal, the leather snapping shut, just as the diner’s doors swung open. A low hum of late‑night conversation spilled onto the street, plates clattered, and the scent of stew mixed with the chill wind. I set the journal aside and listened as the town kept moving while the murder remained unsolved.

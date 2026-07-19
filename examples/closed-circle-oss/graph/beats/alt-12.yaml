@@ -1,0 +1,16 @@
+id: beat:alt-12
+created_by: polish
+summary: Lucy watches from the makeshift bar, noting the uneasy exchange between Harriet and
+  Clifford.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:harriet-wellman
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:knife-disposal-lead-4
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

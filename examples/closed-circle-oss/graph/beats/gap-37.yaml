@@ -1,0 +1,9 @@
+id: bridge:gap-37
+created_by: grow
+summary: Harriet's futile search in the woods leaves the hidden tunnel untouched as the murderer
+  vanishes.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- object:ornate-knife

@@ -1,0 +1,13 @@
+id: beat:fork-harriet-1
+created_by: polish
+summary: Harriet leans against the bridge, hearing the distant rumble of the Farmer Union's
+  march and feeling the weight of order pressing against rising chaos.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- faction:farmer-union
+grants_flags:
+- flag:cw-fork-harriet-1
+texture_premise: Deputy Harriet Wellman's solitary patrol, where she quietly argues with herself
+  about the farmer union's strike.

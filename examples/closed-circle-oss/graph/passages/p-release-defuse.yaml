@@ -1,0 +1,29 @@
+id: passage:p-release-defuse
+summary: Harriet frees Edgar despite the mayor's budget threats, Lucy disables the bomb while
+  her fingers ache, and a farmer union rallies behind Harriet as her journal records a cold,
+  resolute calm amid rising tensions.
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+- faction:farmer-union
+ending:
+  id: e-release-defuse
+  title: The Quiet Before the Storm
+irrelevant_flags:
+- flag:above-ground-search
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:secret-passage-used
+- flag:trap-risk
+prose_summary: Mayor Caldwell warns Harriet Wellman that mercy costs budget trim; Harriet
+  says evidence does not bind Edgar Barnes, freeing him. Edgar discards singed paper fragment.
+  Lucy Frost uses wrench to cut bomb’s red cord, defuses device, suffers forearm burn, patches
+  it. Farmer union raises tools, chants, supports Harriet. Caldwell notes budget warning persists
+  as town balances caution and union confidence.
+beats:
+- beat:choose-witness-release-post-2--defuse-diner
+- beat:choose-witness-release-post-3--defuse-diner
+- beat:choose-witness-release-post-4--defuse-diner

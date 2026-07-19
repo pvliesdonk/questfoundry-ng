@@ -1,0 +1,19 @@
+id: beat:choose-witness-pre-4--defuse-diner
+created_by: grow
+summary: Harriet uncovers a torn fragment of the Blackwood Ledger in Edgar’s garden, tying
+  him to a debt; she questions his alibi. Lucy wrestles the bomb apart, a splinter of metal
+  digging into her palm. Ledger secrets surface while the explosion is averted.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

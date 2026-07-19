@@ -1,0 +1,12 @@
+id: beat:arm-lucy-warning
+created_by: polish
+summary: The frost in Lucy's stare sharpens, the warning a thin blade of caution humming in
+  Thea's ear.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- character:thea-swan
+grants_flags:
+- flag:cw-arm-lucy-warning
+texture_premise: Lucy slides a warning to Thea over the clatter of mugs.

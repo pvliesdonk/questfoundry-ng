@@ -1,0 +1,7 @@
+id: intersection:oldman-well
+location: character:old-man-well
+rationale: Old Man Well mutters about secret tunnels as Harriet studies Edgar's riddle, blending
+  his cryptic knowledge across both dilemmas.
+members:
+- beat:edgar-riddle-lead-4
+- beat:old-man-secret-pre-1

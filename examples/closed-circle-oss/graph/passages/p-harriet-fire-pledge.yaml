@@ -1,0 +1,18 @@
+id: passage:p-harriet-fire-pledge
+summary: Harriet watches the firepit consume the ledger, recalling Mayor Caldwell's promise
+  to cleanse the town's image, and steels herself with the cold resolve that the flames are
+  burning both truth and cover.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+- object:ledger-blackwood
+prose_summary: Harriet burns the Blackwood ledger at a firepit, recalling Mayor Caldwell’s
+  cleanse promise as a command to burn. She feels her cheek scar and resolves to expose lies.
+  The fire turns ink to ash, destroying records and families’ cover. A gust carries farmers’
+  chant; heat pushes her toward mayor. She grips her revolver and walks away, letting fire
+  decide truth.
+beats:
+- beat:harriet-vow-1
+choices:
+- label: Enter the diner district, the lingering heat urging me onward
+  to: passage:p-union-mediation

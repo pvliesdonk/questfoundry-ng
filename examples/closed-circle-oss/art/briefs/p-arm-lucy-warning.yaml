@@ -1,0 +1,10 @@
+passage: passage:p-arm-lucy-warning
+priority: 5
+caption: Lucy gives Thea a cold, blade‑like warning in the tavern.
+prompt: Noir line art, heavy shadows, muted greys, deep crimson accent on Lucy's scar. Show
+  Lucy Frost, broad‑shouldered, shaved head, confronting Thea Swan, young nurse with bob haircut
+  in a white coat, their faces illuminated by a single low lantern in a tavern, tension sharp
+  as a blade.
+entities:
+- character:lucy-frost
+- character:thea-swan

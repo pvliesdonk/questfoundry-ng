@@ -1,0 +1,22 @@
+id: passage:p-mayor-leverage
+summary: Mayor Caldwell subtly steers the crowd, his hand poised over the Blackwood Ledger
+  while he glances toward the Old Mill, hinting at concealed leverage.
+entities:
+- character:mayor-caldwell
+- object:ledger-blackwood
+- character:marjorie-lynch
+- location:old-mill
+irrelevant_flags:
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+prose_summary: Caldwell lingers in Marjorie's Diner doorway as rain falls; Lucy Frost orders
+  patrons out the swinging doors. Caldwell sweeps evacuees away from street, keeps calm, hovers
+  hand over hidden Blackwood Ledger on the counter. He notes the Old Mill’s shadow and the
+  inactive bomb in the back room. His reputation now costs the ledger’s leverage.
+beats:
+- beat:mayor-calc-3
+choices:
+- label: Step into the Old Mill's shadow as the mayor watches
+  to: passage:p-release-evacuate

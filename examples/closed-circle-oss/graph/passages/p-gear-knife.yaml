@@ -1,0 +1,30 @@
+id: passage:p-gear-knife
+summary: Harriet hears Old Man Well mutter about unseen gears beneath the floor, pockets his
+  warning note, and discovers an ornate ivory‑handled knife lodged in a floorboard, hinting
+  at hidden tunnels and concealed violence.
+entities:
+- character:old-man-well
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:union-empowered
+prose_summary: Harriet stands in the diner's backroom as Old Man Well mentions hidden mechanisms
+  and tunnels under the mill; she places a crumpled warning note into her coat pocket, spots
+  an ivory-handled knife embedded in a loose floorboard, feels the scar on her cheek, and
+  tightens her grip on the note, prepared to follow the hinted tunnel, leaving her shaken.
+beats:
+- beat:fork-1-1
+- beat:fork-1-2
+choices:
+- label: Show Harriet the warning note while the floor’s secret gears echo
+  to: passage:p-arrest-knife-bomb

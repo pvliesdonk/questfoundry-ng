@@ -1,0 +1,14 @@
+id: beat:gated-furnace-1
+created_by: polish
+summary: The coal‑fed furnace hisses louder, its orange glow reflecting off the iron beams,
+  marking the moment with a metallic dread that the heat is watching.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:old-mill
+requires_flags:
+- flag:cw-alt-01
+grants_flags:
+- flag:cw-gated-furnace-1
+texture_premise: A fleeting flash of the furnace’s roar that earlier readers sensed, now felt
+  as a pulse of heat.

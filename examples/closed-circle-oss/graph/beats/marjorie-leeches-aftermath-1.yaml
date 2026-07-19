@@ -1,0 +1,15 @@
+id: beat:marjorie-leeches-aftermath-1
+summary: She follows him to the old mill, where he meets a shadowy figure exchanging goods.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: reveals
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+- location:old-mill
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:silent-investigate

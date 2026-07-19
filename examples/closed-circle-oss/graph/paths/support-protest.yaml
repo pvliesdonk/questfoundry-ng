@@ -1,0 +1,7 @@
+id: path:support-protest
+explores: answer:support-protest
+consequences:
+- id: consequence:union-empowered
+  text: Harriet backs union, tension with elite rises.
+- id: consequence:political-strain
+  text: Town council debates law enforcement limits.

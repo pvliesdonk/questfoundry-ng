@@ -1,0 +1,28 @@
+id: passage:p-footprints-warning
+summary: Lucy discovers odd footprints that lead to a hidden cellar door by the mill, and
+  Mayor Caldwell cautions Harriet to avoid pursuing rumors, urging her to stay cautious.
+entities:
+- character:lucy-frost
+- location:old-mill
+- character:mayor-caldwell
+- character:harriet-wellman
+prose_summary: Clifford stands on the mill slab while Lucy Frost inspects footprints that
+  end at a rusted iron latch on a cellar door. Lucy points the lantern at the latch, then
+  Mayor Caldwell appears and advises Harriet Wellman with badge, who nods. Clifford pulls
+  the latch, descends the cellar, returns, then scouts the forest, weighing the cellar route
+  against the woods.
+beats:
+- beat:old-man-secret-pre-4
+- beat:old-man-secret-pre-5
+- bridge:gap-36
+choices:
+- label: Scout the forest around the mill
+  grants:
+  - flag:above-ground-search
+  - flag:killer-escape
+  to: passage:reject-secret-woods
+- label: Slip into the hidden cellar passage
+  grants:
+  - flag:secret-passage-used
+  - flag:trap-risk
+  to: passage:p-secret-tunnel-encounter

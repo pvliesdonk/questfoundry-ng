@@ -1,0 +1,7 @@
+Harriet flipped the notebook open on the stone slab, the leather cover cracked from years of travel. The ink on the last entry still glowed dark against the ash‑gray page, each line a record of the arrests she had ordered at the farmer protest. Her pen hovered over a blank margin, then she marked the date and wrote a short line: missed the hidden passage. A cold draft seeped from the mill’s vaulted ceiling, wrapping the room in a deeper chill than the night wind outside. The interior was unlit, the soot‑blackened windows barred any stray light, and the only illumination came from a flickering lantern she had set nearby.
+
+She traced the scar on her cheek with a fingertip, feeling the badge press against her chest, the revolver at her hip cold against the worn coat. The notebook crackled as she turned a page, the sound like a distant gear tick in the silent walls. On a nearby workbench lay Lucy’s flashlight, its metal body dulled by soot, the lens pointing toward the dark doorway that led down.
+
+The doorway yawned, a shadowy cellar beyond it, the air thick with dust and the scent of rust. Harriet’s breath clouded in the dimness as she considered the path she had ignored. She set the notebook down, the pages splaying like cracked pine boards under the weight of the missed chance.
+
+She could feel the mill’s stone pressing tighter, urging her forward.

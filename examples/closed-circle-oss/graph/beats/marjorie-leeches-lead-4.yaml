@@ -1,0 +1,15 @@
+id: beat:marjorie-leeches-lead-4
+summary: Thea glances at the package, her eyes widening as she recognizes a symbol from her
+  past.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: reveals
+entities:
+- character:thea-swan
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:silent-investigate

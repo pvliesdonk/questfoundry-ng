@@ -1,0 +1,12 @@
+id: bridge:gap-45
+created_by: grow
+summary: Lucy’s coffee cups clink while Old Man Well advises Harriet that force could shatter
+  fragile peace.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- character:old-man-well
+- character:harriet-wellman
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

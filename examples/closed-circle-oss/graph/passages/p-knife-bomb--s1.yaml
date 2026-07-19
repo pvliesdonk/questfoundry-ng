@@ -1,0 +1,17 @@
+id: passage:p-knife-bomb--s1
+summary: Deputy Harriet Wellman spots an ornate knife half‑buried in the cobblestones while
+  a bomb ticks unnoticed, sharpening the sense of imminent danger.
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+variant_flag: flag:secret-passage-used
+prose_summary: Harriet Wellman enters the alley, finds an ivory-handled knife without its
+  sheath, and discovers a concealed ticking bomb under the floorboards. She notes Lucy’s warning
+  from the diner doorway, feels her badge and revolver, and decides to move toward the building
+  to confront the threat.
+beats:
+- beat:arm-harriet-1
+choices:
+- label: Shout for the bomb
+  to: passage:p-bomb-evacuation
+variant_of: passage:p-knife-bomb

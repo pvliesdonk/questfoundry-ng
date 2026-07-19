@@ -1,0 +1,9 @@
+passage: passage:p-gear-knife
+priority: 18
+caption: Old Man Well discovers the Ornate Knife lodged in a floorboard among unseen gears.
+prompt: Noir drawing, deep shadows, muted palette, crimson glint on the knife. Depict wiry
+  old-man-well crouched near a wooden floorboard in a dim workshop, a half‑exposed ivory‑handled
+  ornate knife embedded in the wood, faint gear mechanisms hinted at in the background.
+entities:
+- character:old-man-well
+- object:ornate-knife

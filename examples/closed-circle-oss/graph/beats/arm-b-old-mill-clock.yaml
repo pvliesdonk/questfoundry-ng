@@ -1,0 +1,15 @@
+id: beat:arm-b-old-mill-clock
+created_by: polish
+summary: Clifford meets Silas "Old Man" Well beside the smoldering Old Mill, the cracked Ornate
+  Knife glinting among the ash, imprinting the scene with the cold clang of inevitable collapse.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:clifford-moon
+- character:old-man-well
+- location:old-mill
+- object:ornate-knife
+grants_flags:
+- flag:cw-arm-b-old-mill-clock
+texture_premise: A clatter of gears follows Clifford into the Old Mill, where the ancient
+  clockmaker's shadows tick against the firelight.

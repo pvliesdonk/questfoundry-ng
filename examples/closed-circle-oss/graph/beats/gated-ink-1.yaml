@@ -1,0 +1,15 @@
+id: beat:gated-ink-1
+created_by: polish
+summary: The muddy imprint hints that someone slipped away unnoticed, leaving a lingering
+  sense of unseen eyes.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:clifford-moon
+- object:ledger-blackwood
+requires_flags:
+- flag:cw-setup-3
+grants_flags:
+- flag:cw-gated-ink-1
+texture_premise: A fresh bootprint lies beside the smoldering ledger, reminding you of the
+  firepit's soot‑stained reputation.

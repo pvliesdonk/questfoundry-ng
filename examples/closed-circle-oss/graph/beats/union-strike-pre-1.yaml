@@ -1,0 +1,16 @@
+id: beat:union-strike-pre-1
+summary: The farmer union gathers in the town square, chanting for fair rates.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: reveals
+entities:
+- faction:farmer-union
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'
+belongs_to:
+- path:support-protest
+- path:suppress-protest

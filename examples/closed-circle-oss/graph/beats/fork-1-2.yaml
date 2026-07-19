@@ -1,0 +1,10 @@
+id: beat:fork-1-2
+created_by: polish
+summary: A faint scrape reveals the Ornate Knife lodged in a floorboard, its ivory handle
+  glinting in the diner's light, leaving a lingering image of concealed violence as the crowd's
+  roar swallows it.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+texture_premise: A rumor of a secret passage beneath the diner

@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-2--evacuate-diner
+created_by: grow
+summary: Mayor Caldwell berates Harriet for releasing Edgar, warning of financial reprisals;
+  Harriet stands firm. Lucy raises the alarm, her voice hoarse, and rushes patrons to safety
+  while the bomb hangs ominously. The mayor’s ire sharpens the town’s fracture.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

@@ -1,0 +1,13 @@
+passage: passage:gated-knife-whisper
+priority: 3
+caption: Lucy whispers to Marjorie that the Ornate Knife has vanished, tension tightening
+  the diner.
+prompt: Noir style drawing with heavy shadows, muted palette, a hint of deep crimson on Lucy's
+  scar. Show Lucy Frost, broad‑shouldered with shaved head and fresh scar on palm, leaning
+  across Marjorie's diner counter. She whispers to Marjorie Lynch, round‑bodied woman in a
+  flour‑dusted apron, as the empty space where the ivory‑handled ornate knife once rested
+  looms in the background, a single lantern casting dim light.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:marjorie-lynch

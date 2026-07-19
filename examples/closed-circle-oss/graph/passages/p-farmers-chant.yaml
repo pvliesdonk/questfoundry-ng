@@ -1,0 +1,30 @@
+id: passage:p-farmers-chant
+summary: Thea watches a fire as the farmer union gathers in the town square, chanting for
+  fair rates, and Harriet observes from the perimeter, noting the widening rift.
+entities:
+- character:thea-swan
+- faction:farmer-union
+- character:harriet-wellman
+prose_summary: Lucy stands by firepit; Thea watches fire; farmer union chants for fair rates
+  in plaza; Harriet observes rift; Lucy smashes crystal glass on pit, creating tremor; tremor
+  damages half‑burned Blackwood Ledger, blackening pages and raising ash; Harriet grips revolver;
+  tension between union and town authority rises.
+beats:
+- beat:union-strike-pre-1
+- bridge:gap-31
+- bridge:gap-42
+choices:
+- label: watch the ash curl over the Blackwood Ledger
+  grants:
+  - flag:cw-harriet-debt-1
+  to: passage:p-harriet-firepit
+- label: feel the tremor ripple as Lucy slams the glass
+  grants:
+  - flag:cw-harriet-farmers-1
+  to: passage:p-farmers-tremor
+- label: stare as the fire engulfs the ledger and steel yourself
+  requires:
+  - flag:cw-setup-3
+  grants:
+  - flag:cw-harriet-vow-1
+  to: passage:p-harriet-fire-pledge

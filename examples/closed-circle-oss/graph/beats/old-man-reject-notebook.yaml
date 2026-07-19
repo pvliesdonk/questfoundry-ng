@@ -1,0 +1,12 @@
+id: beat:old-man-reject-notebook
+created_by: polish
+summary: Harriet’s notebook records the missed chance, the cold air of the old mill feels
+  deeper, unlit.
+beat_class: structural
+purpose: residue
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- location:old-mill
+requires_flags:
+- flag:above-ground-search

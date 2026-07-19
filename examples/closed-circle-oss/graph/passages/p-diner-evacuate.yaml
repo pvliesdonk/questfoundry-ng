@@ -1,0 +1,51 @@
+id: passage:p-diner-evacuate
+summary: Lucy blasts the alarm and herding the diners, escorts every trembling patron onto
+  the street where they flee unharmed, while Clifford melts into the night’s darkness as Lucy
+  maintains order amid the looming chaos.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- character:clifford-moon
+irrelevant_flags:
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+prose_summary: Lucy pulls alarm lever, raises voice, and guides patrons out the swinging door
+  onto rainy street; crowd exits, she points toward dim lane. Clifford Moon slips into kitchen
+  alley, disappears. An ornate ivory-handled knife lies in wet stone. Edgar Barnes mutters
+  a clock rhyme. Thea Swan carries a serum vial. Lucy stands between fleeing crowd and unseen
+  pulse, alarm continues.
+beats:
+- beat:diner-bomb-evacuate-commit
+- beat:diner-bomb-evacuate-post-1
+- bridge:gap-7
+choices:
+- label: Inspect the half‑buried ornate knife
+  requires:
+  - flag:above-ground-search
+  grants:
+  - flag:cw-arm-harriet-1
+  to: passage:p-knife-bomb
+- label: Heed Edgar's ticking clock riddle
+  requires:
+  - flag:above-ground-search
+  grants:
+  - flag:cw-arm-edgar-1
+  to: passage:p-edgar-clock
+- label: Follow Thea as she darts with the serum
+  grants:
+  - flag:cw-arm-thea-1
+  to: passage:p-thea-dash
+- label: Heed Edgar's ticking clock riddle
+  requires:
+  - flag:secret-passage-used
+  grants:
+  - flag:cw-arm-edgar-1
+  to: passage:p-edgar-clock--s1
+- label: Inspect the half‑buried ornate knife
+  requires:
+  - flag:secret-passage-used
+  grants:
+  - flag:cw-arm-harriet-1
+  to: passage:p-knife-bomb--s1

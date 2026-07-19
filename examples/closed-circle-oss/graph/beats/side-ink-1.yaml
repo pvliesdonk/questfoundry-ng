@@ -1,0 +1,12 @@
+id: beat:side-ink-1
+created_by: polish
+summary: The heat flickers, revealing the edge of an ivory‑handled Ornate Knife half‑buried
+  in the ash, leaving the reader with a cold impression of concealed violence.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- character:lucy-frost
+grants_flags:
+- flag:cw-side-ink-1
+texture_premise: A glint of ivory catches in the firepit's ash, hinting at a hidden weapon.

@@ -1,0 +1,13 @@
+id: beat:hall-bomb-2
+created_by: polish
+summary: Marjorie urges the hall to stay open, insisting morale depends on the evening crowd.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:marjorie-lynch
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+mirrors: beat:diner-bomb-pre-3
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

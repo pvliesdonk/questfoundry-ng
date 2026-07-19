@@ -1,0 +1,13 @@
+id: beat:detour-knife-1
+created_by: polish
+summary: Harriet leans against the counter, catching Lucy Frost's low warning about the Ornate
+  Knife, leaving a prickling sense of concealed danger.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ornate-knife
+grants_flags:
+- flag:cw-detour-knife-1
+texture_premise: A tense whisper over the diner's counter about the missing Ornate Knife.

@@ -1,0 +1,23 @@
+id: passage:p-caldwell-revenge-cracks
+summary: Mayor Caldwell thanks Harriet, but the union's lingering vow of revenge exposes cracks
+  in his polished public image.
+entities:
+- faction:farmer-union
+- character:mayor-caldwell
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Mayor Caldwell watches Deputy Sheriff Harriet Wellman cuff farmers; a farmer
+  vows retaliation. Caldwell thanks Harriet, clasps her forearm, then retrieves the Blackwood
+  Ledger from the brass‑bound safe and hides it in a false‑panel compartment, sealing the
+  safe. He notes farmer‑union revenge threat and image damage; a leather‑bound journal lies
+  open for writing.
+beats:
+- beat:union-strike-suppress-post-3
+- bridge:gap-48
+choices:
+- label: scribble my thoughts into the journal
+  to: passage:p-union-strike-suppress-post-4

@@ -1,0 +1,11 @@
+id: beat:diner-bomb-defuse-commit
+summary: Lucy grabs a wrench and begins dismantling the bomb herself.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:defuse-diner

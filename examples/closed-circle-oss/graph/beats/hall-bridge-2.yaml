@@ -1,0 +1,13 @@
+id: beat:hall-bridge-2
+created_by: polish
+summary: Deputy Harriet steps forward, badge flashing beside Lucy’s trembling hands.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-12
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

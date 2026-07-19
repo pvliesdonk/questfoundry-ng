@@ -1,0 +1,18 @@
+id: beat:choose-witness-arrest-post-3--defuse-diner
+created_by: grow
+summary: Harriet arrests Edgar, his scar bleeding under the crowd’s scorn, as a gleaming ornate
+  knife is uncovered in his desk, confirming suspicion. Lucy hammers the bomb apart, her hands
+  shaking from the effort and the sight of blood. The discovery deepens the mystery while
+  the bomb’s death throes end.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:edgar-barnes
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

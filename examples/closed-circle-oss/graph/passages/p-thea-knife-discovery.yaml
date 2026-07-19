@@ -1,0 +1,42 @@
+id: passage:p-thea-knife-discovery
+summary: Thea bursts into the hall, clutching a tray, stops at the basement doorway where
+  the ornate knife glints, and discovers the blade, still dark with fresh blood, placed on
+  an altar.
+entities:
+- character:thea-swan
+- character:lucy-frost
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Edgar watches Thea enter with a tray, halts at the basement door, and sees
+  an ornate knife on a slab. He follows her to a stone altar where the knife rests, hears
+  a whispered accusation that it is false, spots a shadow and dusty footprints, and can (1)
+  listen, (2) lean toward altar, (3) follow footprints. He carries a revolver.
+beats:
+- beat:hall-bomb-4
+- beat:hall-bridge-4
+- beat:hall-riddle-1
+choices:
+- label: listen to the whispered accusation that the knife is a false clue
+  grants:
+  - flag:cw-detour-knife-whisper-1
+  to: passage:p-detour-knife-whisper
+- label: lean toward the altar as a tense whisper warns of the missing knife
+  requires:
+  - flag:cw-detour-knife-1
+  grants:
+  - flag:cw-gated-knife-whisper-1
+  to: passage:p-gated-knife-whisper
+- label: follow the dusty footprints left by the fleeing shadow
+  to: passage:p-hall-shadow-knife

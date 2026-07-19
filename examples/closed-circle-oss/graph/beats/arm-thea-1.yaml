@@ -1,0 +1,12 @@
+id: beat:arm-thea-1
+created_by: polish
+summary: Nurse Thea Swan darts across the street, serum trembling in her grip, eyes locked
+  on the ticking device, leaving a residue of fragile urgency and the weight of life‑saving
+  choices.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:thea-swan
+grants_flags:
+- flag:cw-arm-thea-1
+texture_premise: Thea hurries past clutching a vial of serum

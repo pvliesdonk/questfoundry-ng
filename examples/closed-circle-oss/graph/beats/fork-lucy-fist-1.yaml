@@ -1,0 +1,14 @@
+id: beat:fork-lucy-fist-1
+created_by: polish
+summary: Harriet's scar throbs with a bitter resolve, sensing Lucy's silent decision to let
+  the fire consume evidence, a pact of preservation over justice.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- location:old-mill
+- faction:farmer-union
+grants_flags:
+- flag:cw-fork-lucy-fist-1
+texture_premise: Seeing Lucy Frost's clenched fist as the old mill erupts in flames.

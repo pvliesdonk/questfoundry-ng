@@ -1,0 +1,12 @@
+passage: passage:ornate-knife-reveal
+priority: 4
+caption: Lucy lifts the furnace lid to expose the gleaming Ornate Knife, while Harriet watches
+  uneasy.
+prompt: Noir illustration, deep shadows, muted earth tones, crimson glint on the knife. Feature
+  Lucy Frost with shaved head, scarred palm, shoulders pressed against a coal furnace, pulling
+  back soot to reveal an ivory‑handled ornate knife catching the furnace glow. Across the
+  room, Harriet Wellman, scar on cheek illuminated by lantern, watches with apprehension.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:harriet-wellman

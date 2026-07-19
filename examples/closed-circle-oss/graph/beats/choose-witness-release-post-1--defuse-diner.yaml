@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-1--defuse-diner
+created_by: grow
+summary: Edgar vanishes into the woods, leaving a half‑burned scrap of paper; Harriet releases
+  him, trusting his alibi. Lucy wrestles the bomb apart, blood seeping from a nick as she
+  succeeds. The woods swallow Edgar as the diner’s crisis ends, but the murder charge remains
+  open.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: advances
+entities:
+- character:edgar-barnes
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

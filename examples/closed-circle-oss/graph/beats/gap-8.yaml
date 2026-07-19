@@ -1,0 +1,9 @@
+id: bridge:gap-8
+created_by: grow
+summary: Clifford vanishes into shadows, leaving the ticking device behind as Harriet secures
+  the area.
+beat_class: structural
+purpose: bridge
+entities:
+- character:clifford-moon
+- character:harriet-wellman

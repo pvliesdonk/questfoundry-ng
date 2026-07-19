@@ -1,0 +1,18 @@
+id: beat:choose-witness-pre-5--evacuate-diner
+created_by: grow
+summary: Mayor Caldwell urges Harriet to lock Edgar up quickly, fearing scandal; Harriet wrestles
+  the mayor’s expectations. Lucy raises the alarm, leading a frantic exit as the bomb ticks
+  louder. The mayor’s urgency fuels the looming moral clash.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:harriet-wellman
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

@@ -1,0 +1,15 @@
+id: beat:knife-disposal-aftermath-2
+summary: The knife's sheath is missing, suggesting a second weapon was used in the crime.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:knife-disposal
+  effect: complicates
+entities:
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:give-knife

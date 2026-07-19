@@ -1,0 +1,10 @@
+id: beat:sidetrek-ledger-whisper
+created_by: polish
+summary: From the shadowed hallway, Edgar Barnes mutters about a ledger's cursed names, staining
+  the air with the scent of debts and secrets.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+- object:ledger-blackwood
+texture_premise: A cold glint of metal under emergency lights hints at unseen peril.

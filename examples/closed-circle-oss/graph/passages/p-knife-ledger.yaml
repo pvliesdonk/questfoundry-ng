@@ -1,0 +1,33 @@
+id: passage:p-knife-ledger
+summary: An ornate ivory-handled knife lies slack in dust by the doorway, its edge catching
+  the squad's radio flicker, while Edgar Barnes mutters from the shadowed hallway about a
+  cursed ledger of names, seeding the air with the scent of debts and hidden secrets.
+entities:
+- object:ornate-knife
+- character:harriet-wellman
+- character:marjorie-lynch
+- character:edgar-barnes
+- object:ledger-blackwood
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Lucy Frost stands in back‑room doorway; bomb ticks, rain on walls. An ivory‑handled
+  knife lies on dust near threshold. Edgar Barnes enters, mentions cursed ledger with names.
+  Harriet Wellman enters, badge and revolver, records bomb, muttering, knife, radio in notebook.
+  Radios pulse, rain drums. Lucy feels town’s future balanced on metal and ink.
+beats:
+- beat:sidetrek-knife-glint
+- beat:sidetrek-ledger-whisper
+choices:
+- label: Trace the knife’s cold glint while Harriet logs the night’s dread
+  to: passage:p-bridge-bomb-aftermath

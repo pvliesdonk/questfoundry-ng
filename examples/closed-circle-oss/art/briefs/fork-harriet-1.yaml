@@ -1,0 +1,12 @@
+passage: passage:fork-harriet-1
+priority: 1
+caption: Harriet leans against the stone bridge, watching the distant Farmer Union march through
+  the night fog.
+prompt: Noir line illustration with heavy shadows and muted earth tones, a splash of deep
+  crimson on Harriet's scar. Show Harriet Wellman, short woman with greying hair in a trench
+  coat and a cheek scar, leaning on the railing of a stone bridge over a canal at night. Fog
+  hangs low, and in the distance are weather‑worn farmers in overalls, the Farmer Union, marching
+  with wary expressions.
+entities:
+- character:harriet-wellman
+- faction:farmer-union

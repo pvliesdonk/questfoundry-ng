@@ -1,0 +1,14 @@
+id: beat:fork-eddie-riddle-1
+created_by: polish
+summary: Harriet feels a cold knot of dread as Edgar riddles about a vanished ledger, suggesting
+  the Blackwood Ledger's secrets may be burning in the old mill.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+- location:old-mill
+grants_flags:
+- flag:cw-fork-eddie-riddle-1
+texture_premise: Overhearing Edgar Barnes' cryptic riddle in Marjorie's diner.

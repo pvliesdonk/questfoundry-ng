@@ -1,0 +1,18 @@
+id: passage:p-knife-legend
+summary: The flickering heat reveals the tip of an ivory‑handled ornate knife half‑buried
+  in ash, and Lucy mentions it once belonged to a town legend, suggesting that old grudges
+  may surface as the ledger burns.
+entities:
+- object:ornate-knife
+- character:lucy-frost
+- character:old-man-well
+prose_summary: Lucy discovers ivory-handled knife half‑buried in fire, grips her revolver,
+  and mutters that it belonged to the vengeful clockmaker; Harriet leans forward studying
+  it; the ledger on the table curls from heat; regulars watch; Lucy notes the fire’s hiss,
+  realizes town grudges run deep and that the knife could reignite old wounds.
+beats:
+- beat:side-ink-1
+- beat:side-ink-2
+choices:
+- label: Feel the cold edge of the half‑buried ivory‑handled knife
+  to: passage:p-firepit-gleam

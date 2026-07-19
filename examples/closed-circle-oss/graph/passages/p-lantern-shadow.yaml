@@ -1,0 +1,15 @@
+id: passage:p-lantern-shadow
+summary: Marjorie watches the wavering lantern as its shadows stretch, imprinting a feeling
+  of impending treachery in her mind.
+entities:
+- character:clifford-moon
+- character:lucy-frost
+prose_summary: Marjorie Lynch stands at the register, touches the brass cash drawer while
+  the oil lantern flickers. She watches cloaked figures slip a dark parcel by the doorway,
+  notes Harriet Wellman at a ledger, and feels dread. She tightens her apron, turns toward
+  the old mill, and decides to pursue the hidden danger.
+beats:
+- beat:lantern-shadow-1
+choices:
+- label: Press toward the mill, lantern flickering, to capture the swap
+  to: passage:p-leeches-aftermath

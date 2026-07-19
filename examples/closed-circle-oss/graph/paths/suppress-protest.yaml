@@ -1,0 +1,7 @@
+id: path:suppress-protest
+explores: answer:suppress-protest
+consequences:
+- id: consequence:protest-quashed
+  text: Union protest is arrested, law upheld.
+- id: consequence:harriet-unpopularity
+  text: Harriet's reputation among farmers declines.

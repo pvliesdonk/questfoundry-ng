@@ -1,0 +1,24 @@
+id: passage:p-thea-revelation
+summary: In the diner, Thea calmly confesses her hidden past, filling the space with tentative
+  hope and uneasy optimism.
+entities:
+- character:lucy-frost
+- character:thea-swan
+- character:marjorie-lynch
+prose_summary: Thea reveals forged records and denied care scandal that expelled her from
+  infirmary. Lucy Frost holds wrench, pulls alarm lever twice, rings bell, urges patrons to
+  exit. Patrons leave. Lucy swings wrench, bites red wire, severs circuit, wire snaps, hiss
+  stops. Wrench stays on counter; room quiet, tension rises.
+beats:
+- beat:secret-ink-confess-hum
+choices:
+- label: Grab the wrench and cut the red wire
+  grants:
+  - flag:bomb-defused
+  - flag:lucy-injured
+  to: passage:p-diner-bomb-defuse
+- label: Sound the alarm and usher the patrons outside
+  grants:
+  - flag:bomb-escaped
+  - flag:diner-evacuated
+  to: passage:p-diner-evacuate

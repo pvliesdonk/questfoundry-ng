@@ -1,0 +1,13 @@
+id: beat:arm-harriet-1
+created_by: polish
+summary: Deputy Harriet Wellman spots the Ornate Knife half‑buried in the cobblestones, a
+  cold reminder of looming violence while the bomb ticks unnoticed, leaving the reader with
+  a sharpened sense of danger.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+grants_flags:
+- flag:cw-arm-harriet-1
+texture_premise: Harriet's vigilant glimpse of a hidden blade

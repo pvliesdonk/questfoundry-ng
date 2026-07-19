@@ -1,0 +1,19 @@
+id: passage:p-cosmetic-fork
+summary: The ledger is discovered hidden behind the Old Mill's rusted machinery, while a flickering
+  lantern exposes an ornate knife wedged in a beam, hinting at concealed violence.
+entities:
+- object:ledger-blackwood
+- location:old-mill
+- faction:farmer-union
+- object:ornate-knife
+- character:old-man-well
+prose_summary: Harriet opens the mill hatch, discovers the Blackwood Ledger hidden in a cavity,
+  and notes an ornate knife lodged in a beam. She takes the ledger, keeps the lantern lit,
+  and hears the farmer union chant. The ledger now adds weight to her inventory; the knife
+  remains in place.
+beats:
+- beat:cosmetic-fork-1
+- beat:cosmetic-fork-2
+choices:
+- label: Notice the glint of the Ornate Knife while the chant swells
+  to: passage:p-ledger-tension

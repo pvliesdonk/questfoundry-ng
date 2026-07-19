@@ -1,0 +1,16 @@
+id: beat:diner-bomb-pre-5
+summary: Thea rushes in, eyes widening at the tension, clutching a tray tightly.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: complicates
+entities:
+- character:thea-swan
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.
+belongs_to:
+- path:defuse-diner
+- path:evacuate-diner

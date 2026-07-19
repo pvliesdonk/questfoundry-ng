@@ -1,0 +1,17 @@
+id: beat:diner-bomb-pre-4
+summary: Deputy Harriet arrives, sees Lucy's alarmed face, and asks what troubles the patrons.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: reveals
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.
+belongs_to:
+- path:defuse-diner
+- path:evacuate-diner

@@ -1,0 +1,15 @@
+id: beat:clifford-watch-1
+created_by: polish
+summary: From the shadowed doorway, Clifford Moon watches Harriet cuff Edgar, Thea’s note
+  slipping into Harriet’s palm, while the room vibrates with Lucy’s frantic orders.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+- character:edgar-barnes
+- character:thea-swan
+- character:lucy-frost
+grants_flags:
+- flag:cw-clifford-watch-1
+texture_premise: Clifford’s detached observation of the chaos

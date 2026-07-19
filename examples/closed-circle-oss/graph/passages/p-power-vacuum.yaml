@@ -1,0 +1,19 @@
+id: passage:p-power-vacuum
+summary: Harriet notes the power vacuum widening as hidden debts surface elsewhere, increasing
+  the city’s instability.
+entities:
+- character:harriet-wellman
+prose_summary: Narrator lifts battered notebook, notes furnace hissing on Mayor Caldwell’s
+  coat and gold tie biting his fingers. Ledger burns to ash, names disappear; power vacuum
+  widens and hidden debts surface. Lucy Frost promises to protect her brother. Caldwell’s
+  coat frosts. Missing Blackwood Ledger ruins families; new claims fill void. Unrest spreads,
+  rumors of debts, balance of power uncertain, storm approaches.
+beats:
+- beat:ledger-burn-burn-post-3
+choices:
+- label: Eavesdrop on Lucy's whispered promise at the Old Mill
+  grants:
+  - flag:cw-side-loyalty-1
+  to: passage:p-loyalty-ash
+- label: Observe the cold tightening around Caldwell in Grayhaven
+  to: passage:p-ledger-chill

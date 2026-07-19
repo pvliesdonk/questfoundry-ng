@@ -1,0 +1,34 @@
+id: passage:p-shadow-knife
+summary: A shadowy figure flees, leaving dusty footprints; Harriet retrieves and seals the
+  bloodied knife as evidence, fulfilling the riddle's purpose while the mystery deepens, as
+  Thea watches and Lucy watches warily.
+entities:
+- object:ornate-knife
+- character:harriet-wellman
+- character:thea-swan
+- character:lucy-frost
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Edgar tightens badge, holds revolver; lantern sputters. Figure passes iron
+  doorway, leaves fading footprints, disappears down hallway. Bomb ticks from cracked pipe.
+  Lucy places bloodied ivory knife on slab, steps back. Harriet takes knife, puts it in evidence
+  locker, latch snaps. Thea touches hidden scar, watches locker. Lucy watches locker and bomb.
+  Iron door to Marjorie's diner stays latched.
+beats:
+- beat:edgar-riddle-aftermath-2
+- beat:edgar-riddle-aftermath-3
+- bridge:gap-15
+choices:
+- label: Step into Marjorie's diner as the bomb ticks
+  to: passage:p-secret-ink

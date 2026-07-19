@@ -1,0 +1,33 @@
+id: passage:p-harriet-steels
+summary: Harriet steels herself as Lucy shouts, the bomb ticks louder, and the scar on her
+  cheek glints in the firelight, a cold reminder of her unyielding duty.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Harriet stands behind counter as Lucy orders patrons to flee; a bomb ticks
+  in back room, Edgar Barnes watches uncuffed; Harriet feels revolver, badge, scar, and a
+  ledger exposing mayor’s dealings; Lucy shouts evacuation; Harriet steadies herself for the
+  explosion, bearing duty cost of possible casualties. She is resolute.
+beats:
+- beat:harriet-view-1
+choices:
+- label: Watch Edgar remain free as the bomb thunders
+  to: passage:p-release-evacuate

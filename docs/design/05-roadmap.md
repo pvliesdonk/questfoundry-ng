@@ -81,34 +81,42 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   without building, 2026-07-17 — form 1 already delivers print
   consumption end-to-end (decision log).
 
+- **Prose quality at scale — engine + DRESS at scale** (shipped
+  2026-07-19, author call). The prose-quality engine (echo check, rolling
+  story-so-far, input-role framing, richer Voice, character-arc metadata,
+  `scene_type`/`narration_scope` modulation, the structured review
+  contract) built and offline-green; FILL at medium demonstrated twice
+  (gate-clean on `gpt-oss:120b`, author verdict "good for a 120b model";
+  the kimi-k2.5 A/B). **DRESS at scale reached:** a comprehensive medium
+  run on `gpt-oss:120b-cloud` (unbilled) completed DREAM→DRESS gate-clean,
+  exports round-tripped (0 problems), and was illustrated (20 Gemini
+  images) — checked in as `examples/closed-circle-oss`, the first project
+  through DRESS + illustration + export and the first example with
+  rendered art. The run's yield: **five pipeline defects fixed** (#110–#114,
+  decision log) + two operator-loop refinements. Residuals in BACKLOG: a
+  corpus-grounded run and an author prose read (this run skipped research).
+
+- **POV sequences — run-unit viewpoint annotation** (design 2026-07-17;
+  shipped 2026-07-19, author call). Annotate head-hops at beat granularity
+  + I14 shattered linear runs into thin no-choice passages (76 of 172 pure
+  POV splits, −28% counterfactual). Shipped: the **sequence** (maximal
+  choice-free run, computed) as the unit of viewpoint assignment — one head
+  per sequence, justified splits, a **head roster** resolved from `pov_hint`
+  pinning the viewpoint enum (PR-A #106, closes the off-scheme-head gap);
+  sequence-unit annotate + engine expansion + B11 (PR-B #107, mini-ADR
+  A25); the interlude register firing (PR-C #108). The scheme half was
+  validated + hardened live on the 2026-07-19 run: the `pov_hint`-as-law
+  defect — the investigator resolvable to carrier-only, leaving her own
+  scenes bystander-headed — found and fixed (#113: the scheme translates the
+  hint into a workable roster, not its literal wording). Contract:
+  [`../plans/pov-sequences.md`](../plans/pov-sequences.md) (A25). Residual
+  in BACKLOG: the formal live A/B against the run-6 counterfactual.
+
 ## Now
 
-- **Prose quality at scale — the remaining live validation.** The engine half is
-  built (echo check, rolling story-so-far, input-role framing, richer Voice,
-  character-arc metadata, `scene_type`/`narration_scope` modulation, the
-  structured review contract) and offline-green. FILL at medium is
-  demonstrated twice (gate-clean on `gpt-oss:120b`, author prose verdict
-  "good for a 120b model"; the kimi-k2.5 A/B). **Open:** DRESS — no weak
-  tier has completed a clean DRESS at scale. The prior run (FILL on the
-  run-6 cc-struct-medium graph) was abandoned mid-stall after a host
-  crash (2026-07-17; worktree pinned to a now-merged commit, STATUS.md);
-  a fresh comprehensive DREAM→DRESS run from a clean worktree is next.
-  **Exit:** a corpus-grounded weak-tier story completes FILL and DRESS
-  gate-clean, exports round-trip, and reads without prose-quality rework.
-
-- **POV sequences — run-unit viewpoint annotation** (design agreed
-  2026-07-17; the author read of the run-6 graph). Annotate head-hops at
-  beat granularity and I14 shatters linear runs into thin no-choice
-  passages (76 of 172 passages are pure POV splits; counterfactual −28%).
-  Redesign: the **sequence** (maximal choice-free run, computed) becomes
-  the unit of viewpoint assignment — one head per sequence, split only
-  with justification; a **head roster** resolved from `pov_hint` before
-  annotate pins the viewpoint enum (closes the off-scheme-head gap);
-  wide-cutaway as a justified escape valve; B11 advisory (mid-sequence
-  splits, non-coda wides, per-head share); `Voice` reads the roster at
-  FILL. Contract, failure modes, and PR slicing in
-  [`../plans/pov-sequences.md`](../plans/pov-sequences.md); numbers in the
-  decision log (2026-07-17).
+_Open — the two "Now" epics shipped 2026-07-19 (author call). The next
+milestone is unscoped; small follow-on work is in flight (author), and the
+"Next" candidates below (weave linearization, M9) are the standing options._
 
 ## Next
 
@@ -209,7 +217,7 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
 
 | Risk | Mitigation |
 |---|---|
-| Weak-tier prose quality at scale — a cheap model reaches FILL but exhausts review on the hardest passages | The prose-quality engine (echo check, story-so-far, modulation, review contract) is built; the remaining work is live validation, not new machinery — the "Now" epic |
+| Weak-tier prose quality at scale — a cheap model reaches FILL but exhausts review on the hardest passages | **Largely retired 2026-07-19**: the prose-quality engine (echo check, story-so-far, modulation, review contract) shipped and a weak-tier medium completed DREAM→DRESS gate-clean (`examples/closed-circle-oss`). Remaining: a corpus-grounded run + author read (BACKLOG), and the operator loop handling the residual per-passage stalls (roadmap "Later") |
 | Illustration cost/quality on non-reproducible providers (no seeds, content-policy refusals, character drift) | M7's sample-first gate + budget/priority caps; skip-if-exists makes reruns free; typed refusals get one reformulation; entity visual fragments in every prompt, reference-image conditioning as the escalation |
 | Preset calibration circularity — bands tuned on stories generated under the old bands | Words-primary scale table anchors on the corpus's external 300–600 words/choice band; recalibrate against modulated live runs (BACKLOG: scale recalibration) |
 | Feasibility audit mis-calls (hedged prose) | I12 hard cap at 3 states; heavy residue *must* produce variants. Still open: no live run has stress-tested the audit against genuinely hedged prose |

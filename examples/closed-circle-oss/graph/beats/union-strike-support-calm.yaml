@@ -1,0 +1,13 @@
+id: beat:union-strike-support-calm
+created_by: polish
+summary: A weary calm settles, the streets echo with murmurs of dissent, the union’s banner
+  flutters against a gray sky.
+beat_class: structural
+purpose: residue
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+- faction:farmer-union
+- character:mayor-caldwell
+requires_flags:
+- flag:political-strain

@@ -1,0 +1,28 @@
+id: passage:p-leeches-whisper
+summary: Marjorie overhears Clifford whisper about "the leeches," a term for smuggled contraband,
+  and Lucy intervenes to warn her against making accusations without proof, fearing the town
+  could spiral into chaos.
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:marjorie-lynch
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Clifford Moon whispers code about leeches moving; Marjorie Lynch hears, eyes
+  narrow. Lucy Frost enters, puts hand on Marjorie's shoulder, warns against unproved accusations,
+  cites risk of town chaos. Marjorie puts down cup, leaves, stays near Clifford as a shadow.
+  Tension rises; furnace hisses, indicating danger if rumor spreads.
+beats:
+- beat:marjorie-leeches-lead-2
+- beat:marjorie-leeches-lead-3
+- bridge:gap-32
+choices:
+- label: Tail Clifford silently
+  to: passage:p-package-loom

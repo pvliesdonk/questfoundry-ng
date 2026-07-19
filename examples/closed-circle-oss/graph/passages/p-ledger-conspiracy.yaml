@@ -1,0 +1,32 @@
+id: passage:p-ledger-conspiracy
+summary: Lucy watches Harriet's strained exchange with Clifford and hears the whispered rumors
+  about the ledger's power to ruin families; Harriet overhears the same threat, and Lucy suggests
+  using the mill's furnace to destroy the documents.
+entities:
+- character:lucy-frost
+- character:harriet-wellman
+- character:clifford-moon
+- object:ledger-blackwood
+prose_summary: Lucy watches Harriet grip Clifford’s coat and demand the Blackwood ledger,
+  hearing that its secrets can ruin families and topple houses. Lucy sees flames consuming
+  hidden papers near the furnace, suggests burning the ledger; Harriet hesitates, then rejects
+  the idea, keeping the ledger on the table. Thea Swan watches; Lucy feels her revolver at
+  her hip.
+beats:
+- beat:alt-13
+- beat:alt-14
+- beat:alt-15
+choices:
+- label: Hear Lucy whisper that the Blackwood Ledger could be thrown into the furnace
+  grants:
+  - flag:cw-whisper-ledger-1
+  to: passage:p-whispers-ember
+- label: Step closer to the coal‑fed furnace and feel its orange glow pressing against you
+  requires:
+  - flag:cw-alt-01
+  grants:
+  - flag:cw-gated-furnace-1
+  to: passage:p-furnace-hiss
+- label: Observe the furnace’s orange flames licking the iron beams as they consume hidden
+    papers
+  to: passage:p-furnace-glow

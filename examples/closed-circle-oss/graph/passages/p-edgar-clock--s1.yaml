@@ -1,0 +1,16 @@
+id: passage:p-edgar-clock--s1
+summary: Retired teacher Edgar Barnes mutters a cryptic clock riddle that mirrors the bomb’s
+  steady tick, underscoring a looming collapse concealed within the ordered routine.
+entities:
+- character:edgar-barnes
+variant_flag: flag:secret-passage-used
+prose_summary: Edgar Barnes exits the alley, hears a ticking bomb under the diner, recites
+  a riddle, pockets a folded scrap of paper, notes an ornate ivory knife half‑buried in the
+  alley, observes the bomb’s timer behind crates, and realizes the riddle points to a hidden
+  stone door beneath the old mill.
+beats:
+- beat:arm-edgar-1
+choices:
+- label: Step past the ticking riddle, heart syncing with the bomb
+  to: passage:p-bomb-evacuation
+variant_of: passage:p-edgar-clock

@@ -1,0 +1,13 @@
+id: beat:diner-bomb-evacuate-post-3
+summary: Harriet secures the area, calls for a bomb squad, and watches the town hold its breath.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: complicates
+entities:
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:evacuate-diner

@@ -1,0 +1,11 @@
+id: beat:authority-gaze
+created_by: polish
+summary: Harriet feels the council’s stare tighten like a vice, foretelling an imminent crackdown.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+grants_flags:
+- flag:cw-authority-gaze
+texture_premise: Authority's gaze

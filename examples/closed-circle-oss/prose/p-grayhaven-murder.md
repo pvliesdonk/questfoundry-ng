@@ -1,0 +1,7 @@
+Grayhaven lay under a lingering fog, its streets quiet after the council clerk's murder, tension coiled like a spring.
+
+Lucy Frost moved along the stone road, the damp breath of the city rising in thin clouds before her. She felt the weight of the night settle on her shoulders, the absence of voices that had once echoed from the market stalls. The lamplight flickered behind soot‑blackened panes, casting long shadows that smudged the cobbles. She recalled the clerk's empty desk, the blood‑stained ledger that no one had yet claimed, and the uneasy murmur that had spread through the town like rust.
+
+A narrow alley opened onto Marjorie's diner, its iron sign rusted but still readable. The wooden door stood ajar, a sliver of warm light spilling onto the wet pavement. Lucy paused, listening for any crackle of a concealed device, for any sound that would betray a lingering threat. Her hand rested on the grip of her own revolver, the metal cold against her palm.
+
+From the opposite side of the street, a figure emerged, pulling the door wider. The hinges sang a low note, and the entrance swung open, flooding the interior with chatter that rose above the fog. Lucy saw the patrons huddled beneath the low ceiling, the smell of stew mingling with the damp air. She inhaled, steadied her breath, and stepped toward the threshold, ready to face whatever waited inside.

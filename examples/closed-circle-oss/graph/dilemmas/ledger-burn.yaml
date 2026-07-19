@@ -1,0 +1,15 @@
+id: dilemma:ledger-burn
+question: Should Mayor Caldwell order the Blackwood ledger burned to protect influential families?
+why_it_matters: Destroying the ledger erases dangerous secrets but also destroys evidence
+  that could exonerate victims.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:burn-ledger
+  text: Caldwell orders the ledger incinerated.
+- id: answer:keep-ledger
+  text: Caldwell decides to keep the ledger hidden but intact.
+anchored_to:
+- character:mayor-caldwell
+- object:ledger-blackwood

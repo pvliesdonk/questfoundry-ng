@@ -1,0 +1,15 @@
+id: beat:gate-1-1
+created_by: polish
+summary: Silas "Old Man" Well's ticking clocks echo, hinting the ledger-blackwood is tucked
+  near the furnace soot, a quiet reminder of hidden debts.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+requires_flags:
+- flag:cw-alt-01
+grants_flags:
+- flag:cw-gate-1-1
+texture_premise: A clank from the furnace awakens a memory of the ledger blackened with coal
+  dust.

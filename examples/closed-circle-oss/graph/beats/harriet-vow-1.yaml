@@ -1,0 +1,15 @@
+id: beat:harriet-vow-1
+created_by: polish
+summary: Harriet watches the firepit consume the ledger, recalling Mayor Caldwell's promise
+  to cleanse the town's image, leaving a cold resolve that fire burns both truth and cover.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+- object:ledger-blackwood
+requires_flags:
+- flag:cw-setup-3
+grants_flags:
+- flag:cw-harriet-vow-1
+texture_premise: Harriet recalls the town's vow to erase the Blackwood Ledger's sins.

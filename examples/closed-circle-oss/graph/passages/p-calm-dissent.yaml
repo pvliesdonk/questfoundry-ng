@@ -1,0 +1,21 @@
+id: passage:p-calm-dissent
+summary: A tentative calm settles over Grayhaven, while undercurrents of dissent begin to
+  ripple through the strikers.
+entities:
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Marjorie exits diner onto quiet street, observes sputtering lanterns, sees
+  Harriet Wellman raise hand by union banner, notes Harriet backs farmers despite council,
+  hears low worker chant near fountain, notes town calm but undercurrent of dissent, tightens
+  coat, looks west toward potential unrest; option to listen to murmurs of dissent.
+beats:
+- beat:union-strike-support-post-4
+choices:
+- label: Listen to the murmurs of dissent
+  requires:
+  - flag:political-strain
+  to: passage:p-union-calm

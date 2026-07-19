@@ -1,0 +1,21 @@
+id: passage:p-detour-knife
+summary: Harriet leans against the counter, hears Lucy Frost’s low warning about the Ornate
+  Knife and feels a prickling sense of concealed danger, while she watches Edgar Barnes slip
+  a folded note under Marjorie Lynch’s mug, confirming that hidden messages are already circulating.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ornate-knife
+- character:edgar-barnes
+- character:marjorie-lynch
+prose_summary: Harriet leans on counter; Lucy warns her that the ivory-handled knife vanished
+  from the evidence locker. Edgar Barnes slides a folded note under Marjorie Lynch’s mug.
+  Harriet sees the note, confirming hidden messages among patrons. She recalls a draft from
+  the old mill indicating a secret passage beneath town, and feels her badge tighten as a
+  new clue.
+beats:
+- beat:detour-knife-1
+- beat:detour-knife-2
+choices:
+- label: Step into the chill of the mill’s hidden passage
+  to: passage:p-old-man-secret

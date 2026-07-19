@@ -1,0 +1,14 @@
+id: beat:fork-old-man-1
+created_by: polish
+summary: The clack of gears fades as Old Man Well mutters about a ledger hidden in the Old
+  Mill, leaving a sense of looming hidden debt.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+- location:old-mill
+grants_flags:
+- flag:cw-fork-old-man-1
+texture_premise: A hushed exchange in Old Man Well's workshop, where the ticking clocks mask
+  secret words.

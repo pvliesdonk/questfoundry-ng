@@ -1,0 +1,13 @@
+id: beat:alt-gap-17
+created_by: polish
+summary: The empty sheath lies on the floor as Clifford Moon watches the interrogation room
+  doors close.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:clifford-moon
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-17
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

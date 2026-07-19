@@ -1,0 +1,10 @@
+id: beat:fork-knife-glint-2
+created_by: polish
+summary: Lucy glances at the river's sheen and spots the missing Ornate Knife's tip catching
+  the light, leaving a cold, metallic tension humming beneath the fragile calm.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+texture_premise: Muted evidence of hidden crimes flickers in the bridge shadows.

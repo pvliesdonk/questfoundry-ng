@@ -1,0 +1,12 @@
+passage: passage:p-clifford-dash
+priority: 10
+caption: Lucy drags a blood‑stained Clifford through the hallway as Harriet records the frantic
+  climax.
+prompt: Noir line drawing, heavy shadows, muted palette, a splash of deep crimson on Lucy's
+  scar. Show Lucy Frost with shaved head pulling a struggling Clifford Moon, his glossy suit
+  stained with blood, down a narrow stone hallway. Harriet Wellman watches from a doorway,
+  notebook in hand, lantern light casting stark angles.
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:harriet-wellman

@@ -1,0 +1,15 @@
+id: beat:alt-marjorie-leeches-lead-3
+created_by: polish
+summary: Lucy warns Marjorie not to accuse without evidence, fearing the town could spiral
+  into chaos.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:marjorie-leeches-lead-3
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

@@ -1,0 +1,12 @@
+id: beat:side-oldman-whisper
+created_by: polish
+summary: Silas “Old Man” Well mutters that the old-mill’s stone foundation hides a hatch leading
+  to a forgotten vault, leaving the reader with a nagging image of concealed pathways.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- location:old-mill
+grants_flags:
+- flag:cw-side-oldman-whisper
+texture_premise: 'Hidden infrastructure: rumors of a secret hatch beneath the Old Mill.'

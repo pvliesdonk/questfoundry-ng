@@ -1,0 +1,7 @@
+id: path:silent-investigate
+explores: answer:silent-investigate
+consequences:
+- id: consequence:clifford-surveilled
+  text: Marjorie tails Clifford covertly.
+- id: consequence:evidence-gathered
+  text: She collects incriminating proof.

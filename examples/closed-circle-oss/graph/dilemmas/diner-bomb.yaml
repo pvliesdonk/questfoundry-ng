@@ -1,0 +1,20 @@
+id: dilemma:diner-bomb
+question: When Lucy discovers a bomb in Marjorie's diner, should she evacuate patrons or try
+  to defuse it herself?
+why_it_matters: Evacuating saves lives but gives the bomber time to escape; defusing risks
+  death but could catch the culprit in the act.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:evacuate-diner
+  text: Lucy shouts the alarm and gets everyone out.
+- id: answer:defuse-diner
+  text: Lucy attempts to dismantle the device herself.
+anchored_to:
+- character:lucy-frost
+- character:marjorie-lynch
+wraps:
+- dilemma:secret-ink
+serial:
+- dilemma:choose-witness

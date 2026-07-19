@@ -1,0 +1,34 @@
+id: passage:p-clifford-knife
+summary: Clifford Moon watches from the doorway as Harriet cuffs Edgar and receives Thea’s
+  note while Lucy shouts frantic orders; a stray shaft of light catches the ornate knife,
+  flashing in Clifford’s narrowed eyes and underscoring the thin line between order and chaos.
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+- character:edgar-barnes
+- character:thea-swan
+- character:lucy-frost
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Clifford watches as Harriet handcuffs Edgar, Thea slips note to Harriet and
+  disappears, Lucy orders patrons out while a bomb hisses, patrons flee, Clifford eyes ivory-handled
+  knife on stone slab, its flash highlights his hand reaching for it, Harriet holds the knife
+  missing its sheath, indicating another weapon may remain.
+beats:
+- beat:clifford-watch-1
+- beat:knife-glint-clifford
+choices:
+- label: Clamp Harriet's handcuffs tighter as the knife flashes
+  to: passage:p-knife-evac

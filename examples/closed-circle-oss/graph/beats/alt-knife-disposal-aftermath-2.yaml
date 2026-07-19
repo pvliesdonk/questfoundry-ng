@@ -1,0 +1,13 @@
+id: beat:alt-knife-disposal-aftermath-2
+created_by: polish
+summary: Harriet observes the knife sheath is missing, suggesting a second weapon was used.
+beat_class: structural
+purpose: texture_world
+entities:
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:knife-disposal-aftermath-2
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

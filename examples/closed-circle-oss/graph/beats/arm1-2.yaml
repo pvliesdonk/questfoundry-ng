@@ -1,0 +1,10 @@
+id: beat:arm1-2
+created_by: polish
+summary: Harriet scans the torn ledger fragment in Edgar’s garden, reading a half‑written
+  name that lingers like dust, imprinting the weight of unseen debts.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ledger-blackwood
+texture_premise: Material evidence of violence

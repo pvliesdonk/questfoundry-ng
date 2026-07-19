@@ -1,0 +1,13 @@
+id: beat:fork-lucy-1
+created_by: polish
+summary: Lucy slides the Ornate Knife into the shadowed shelf, the metal glint echoing a promise
+  of loyalty or betrayal, imprinting a cold resolve.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+grants_flags:
+- flag:cw-fork-lucy-1
+texture_premise: Lucy Frost polishing the bar, her stare fixed on a stone‑cold grin as she
+  contemplates protecting her brother.

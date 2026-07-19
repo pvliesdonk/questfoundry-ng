@@ -1,0 +1,9 @@
+id: bridge:gap-23
+created_by: grow
+summary: Harriet's notes drift as a chill spreads over Grayhaven, tightening around Caldwell's
+  shoulders.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell

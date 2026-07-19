@@ -1,0 +1,34 @@
+id: passage:p-diner-bomb-altar
+summary: Thea rushes into the cellar, stops at the doorway as the ornate knife catches the
+  dim light, and finds it placed on an altar, its blade still stained with fresh blood.
+entities:
+- character:thea-swan
+- object:ornate-knife
+- location:old-mill
+prose_summary: Edgar Barnes and Thea Swan enter the diner cellar via the rusted iron door;
+  Thea sees an ivory‑handled knife with fresh blood on a stone altar. Lucy Frost reveals the
+  knife vanished from the evidence locker. Dripping water, a disappearing droplet, dust footprints,
+  and an open ledger hint at a hidden source and older secret. Tension and danger rise.
+beats:
+- beat:diner-bomb-pre-5
+- beat:edgar-riddle-aftermath-1
+- bridge:gap-14
+choices:
+- label: track the frantic footprints through the cellar
+  grants:
+  - flag:cw-arm1-footprints
+  to: passage:p-footprints-panic
+- label: press your ear to the floor and hear the ledger's secret
+  grants:
+  - flag:cw-arm2-ledger-whisper
+  to: passage:p-ledger-whisper
+- label: follow the solitary drip to its hidden source
+  grants:
+  - flag:cw-arm3-water-drip
+  to: passage:p-drip-dark
+- label: turn to Lucy Frost as she whispers the knife has vanished
+  requires:
+  - flag:cw-detour-knife-1
+  grants:
+  - flag:cw-gated-knife-whisper
+  to: passage:gated-knife-whisper

@@ -1,0 +1,16 @@
+id: beat:alt-edgar-riddle-lead-3
+created_by: polish
+summary: Edgar Barnes reads the note about a "shadow beneath the turning gears" and notes
+  the concealed location.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:edgar-barnes
+grants_flags:
+- flag:cw-alt-edgar-riddle-lead-3
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:edgar-riddle-lead-3
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

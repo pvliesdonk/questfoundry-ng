@@ -1,0 +1,15 @@
+id: beat:alt-05
+created_by: polish
+summary: The smeared note slides into Clifford's pocket just as Mayor Caldwell flips open
+  the Blackwood Ledger.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:clifford-moon
+- character:mayor-caldwell
+- object:ledger-blackwood
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-18
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

@@ -1,0 +1,11 @@
+id: bridge:gap-17
+created_by: grow
+summary: The empty sheath lies on the floor as Clifford watches the interrogation room doors
+  close.
+beat_class: structural
+purpose: bridge
+entities:
+- object:ornate-knife
+- character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.

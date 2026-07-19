@@ -1,0 +1,16 @@
+id: passage:p-whispers-dissent
+summary: Edgar murmurs a cryptic riddle to Lucy about the Blackwood ledger, planting doubt
+  that the strike masks a deeper conspiracy.
+entities:
+- character:edgar-barnes
+- character:lucy-frost
+- object:ledger-blackwood
+prose_summary: Edgar Barnes whispers a riddle about the Blackwood ledger to Lucy Frost; Lucy
+  narrows her eyes, the council’s brows tighten, and the protest is revealed as a distraction
+  hiding secret accounts. The riddle forces Lucy to question the labor‑loot tally. Edgar steps
+  back from the balcony as the mill gears hum.
+beats:
+- beat:whispers-dissent
+choices:
+- label: let the whispered riddle knot in my thoughts as I step back from the council
+  to: passage:union-strike-caldwell

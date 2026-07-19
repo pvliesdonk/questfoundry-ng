@@ -1,0 +1,15 @@
+id: beat:alt-edgar-riddle-lead-4
+created_by: polish
+summary: Old Man Well overhears the discussion and mutters about secret tunnels beneath the
+  mill.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:old-man-well
+- character:edgar-barnes
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:edgar-riddle-lead-4
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

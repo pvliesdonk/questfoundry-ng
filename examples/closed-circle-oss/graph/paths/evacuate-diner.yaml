@@ -1,0 +1,7 @@
+id: path:evacuate-diner
+explores: answer:evacuate-diner
+consequences:
+- id: consequence:diner-evacuated
+  text: Patrons escape unharmed.
+- id: consequence:bomb-escaped
+  text: Bomber flees, leaving the device unexploded.

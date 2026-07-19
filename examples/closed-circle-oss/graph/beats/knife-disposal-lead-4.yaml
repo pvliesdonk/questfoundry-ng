@@ -1,0 +1,16 @@
+id: beat:knife-disposal-lead-4
+summary: Lucy watches from the bar, noting the uneasy exchange between Harriet and Clifford.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:knife-disposal
+  effect: reveals
+entities:
+- character:lucy-frost
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'
+belongs_to:
+- path:give-knife

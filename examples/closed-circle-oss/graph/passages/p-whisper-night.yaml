@@ -1,0 +1,19 @@
+id: passage:p-whisper-night
+summary: Lucy slips Thea a discreet warning about eavesdroppers in the diner, and Thea spends
+  the night guarding the secret, a pulse of tension under her skin while the town remains
+  oblivious.
+entities:
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Thea receives Lucy’s crumpled warning note about hidden eavesdroppers, notes
+  Lucy’s shaved head and scar, folds the note and hides it in her inner coat pocket, then
+  patrols the tavern, watching empty booths and the forge, remaining on guard until dawn.
+  She sustains vigilance cost of time and exposure.
+beats:
+- beat:secret-ink-hide-post-3
+- beat:secret-ink-hide-post-4
+choices:
+- label: Slip into the night‑filled diner
+  requires:
+  - flag:thea-paranoia
+  to: passage:p-thea-night-thrum

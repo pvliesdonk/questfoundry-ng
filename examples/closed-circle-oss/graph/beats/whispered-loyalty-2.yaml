@@ -1,0 +1,10 @@
+id: beat:whispered-loyalty-2
+created_by: polish
+summary: The faint smell of smoldering timber from the Old Mill drifts through the diner,
+  leaving a lingering dread that hidden fire‑brand evidence could ignite the town’s fragile
+  order.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:old-mill
+texture_premise: A hushed claim that the ledger's missing page implicates an unexpected ally.

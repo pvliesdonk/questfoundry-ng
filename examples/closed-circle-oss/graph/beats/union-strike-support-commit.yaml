@@ -1,0 +1,11 @@
+id: beat:union-strike-support-commit
+summary: Harriet publicly backs the union, refusing to use force against the protestors.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marjorie-lynch
+belongs_to:
+- path:support-protest

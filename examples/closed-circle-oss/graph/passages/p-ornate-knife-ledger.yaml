@@ -1,0 +1,32 @@
+id: passage:p-ornate-knife-ledger
+summary: Lucy glimpses the ivory‑handled Ornate Knife on the floor as the bomb is disarmed,
+  the weapon's chill lingering as a warning. Harriet scans a torn ledger fragment in Edgar’s
+  garden, reading a half‑written name that hints at unseen debts.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- character:harriet-wellman
+- object:ledger-blackwood
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Lucy holds warm wrench after bomb ends, sees Ornate Knife in ash, presses bomb
+  casing, red wire snapped. Harriet exits back door, goes to garden, finds lantern light on
+  torn ledger fragment, reads half‑written name. Bomb disarmed, red wire removed, knife remains.
+  Night wind blows, pine and iron scent noted.
+beats:
+- beat:arm1-1
+- beat:arm1-2
+choices:
+- label: Study the ledger fragment while Lucy steadies the bomb’s splintered heart
+  to: passage:p-ledger-bomb-2

@@ -1,0 +1,11 @@
+id: bridge:gap-0
+created_by: grow
+summary: Harriet pockets Thea's warning note while the diner's clamor masks the faint glint
+  of metal on Edgar's desk.
+beat_class: structural
+purpose: bridge
+entities:
+- character:thea-swan
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ornate-knife

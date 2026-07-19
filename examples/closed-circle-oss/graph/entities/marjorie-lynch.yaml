@@ -1,0 +1,8 @@
+id: character:marjorie-lynch
+name: Marjorie Lynch
+concept: owner of the local diner, matriarchal gossip hub
+pronouns: she/her
+base:
+  appearance: round, flour‑dusted apron
+  manner: friendly, nosy
+pov_head: true

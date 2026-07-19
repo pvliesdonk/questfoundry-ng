@@ -1,0 +1,21 @@
+id: passage:p-diner-knife-witness
+summary: The ivory-handled knife bears a crimson smear, a silent witness to the recent violence,
+  casting a grim, tense atmosphere over the diner.
+entities:
+- object:ornate-knife
+- character:clifford-moon
+- character:lucy-frost
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Lucy Frost stands behind the bar holding a warm steel wrench after a bomb blast;
+  an ivory-handled knife lies on a stone slab with fresh blood on its handle. Harriet Wellman,
+  badge glinting, watches without a weapon. Lucy tends her forearm wound, notes the missing
+  sheath, an ajar metal latch, and a dark passage beyond the slab.
+beats:
+- beat:diner-escape-knife-1
+choices:
+- label: Snatch the ivory-handled knife and trail Lucy
+  to: passage:p-clifford-dash

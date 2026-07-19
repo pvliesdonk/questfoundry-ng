@@ -1,0 +1,14 @@
+id: beat:alt-marjorie-leeches-lead-2
+created_by: polish
+summary: Marjorie overhears Clifford whisper about "the leeches," a term for smuggled contraband.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:marjorie-leeches-lead-2
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

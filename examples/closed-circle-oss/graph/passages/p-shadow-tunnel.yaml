@@ -1,0 +1,18 @@
+id: passage:p-shadow-tunnel
+summary: A cryptic note mentions a 'shadow beneath the turning gears,' and Old Man Well and
+  Silas reveal a concealed passage beneath the old mill that could trap the murderer, heightening
+  the mystery and danger.
+entities:
+- character:harriet-wellman
+- character:old-man-well
+prose_summary: Clifford reads scrap warning of a shadow under turning gears, pockets note,
+  and heads to mill crowd. Old Man Well mentions tunnels beneath mill foundation. Silas Well
+  whispers a hidden passage runs under mill and could trap murderer. Clifford locates rusted
+  hatch entrance, notes his ornate knife as a possible key, and plans to pursue killer there.
+beats:
+- beat:edgar-riddle-lead-3
+- beat:edgar-riddle-lead-4
+- beat:old-man-secret-pre-1
+choices:
+- label: Slip into the rain‑soaked tunnels beneath the Old Mill
+  to: passage:p-knife-evidence

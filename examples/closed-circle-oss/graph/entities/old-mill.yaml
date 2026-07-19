@@ -1,0 +1,5 @@
+id: location:old-mill
+name: Old Mill
+concept: the abandoned mill on the river, rumored to be a hideout
+base:
+  stone_hatch: rusted iron latch

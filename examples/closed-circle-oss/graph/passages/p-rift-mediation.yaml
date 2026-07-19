@@ -1,0 +1,18 @@
+id: passage:p-rift-mediation
+summary: Harriet observes the widening rift between growers and elites and meets Mayor Caldwell
+  as he promises mediation, his tone suggesting possible suppression.
+entities:
+- character:harriet-wellman
+- faction:farmer-union
+- character:mayor-caldwell
+prose_summary: Lucy stands by the furnace as townsfolk gather; Harriet watches. Mayor Caldwell
+  climbs onto the ledger table, raises his hand, and announces a forced mediation meeting
+  between growers and elite, warning of consequences. Lucy notes his thin reassurance, tightens
+  her revolver strap, and waits, implying imminent conflict.
+beats:
+- beat:alt-22
+- beat:alt-23
+- beat:alt-24
+choices:
+- label: Step into the furnace‑lit basement of the Old Mill
+  to: passage:p-coffee-tension

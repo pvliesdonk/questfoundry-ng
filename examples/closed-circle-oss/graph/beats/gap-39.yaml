@@ -1,0 +1,9 @@
+id: bridge:gap-39
+created_by: grow
+summary: Applause fades as patrons settle into a tentative calm, the diner humming with cautious
+  hope.
+beat_class: structural
+purpose: bridge
+entities:
+- character:thea-swan
+- character:marjorie-lynch

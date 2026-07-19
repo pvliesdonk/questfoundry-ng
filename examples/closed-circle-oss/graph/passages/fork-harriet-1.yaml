@@ -1,0 +1,20 @@
+id: passage:fork-harriet-1
+summary: Harriet leans against the bridge, hearing the Farmer Union's distant march and sensing
+  the oppressive weight of order as chaos gathers.
+entities:
+- character:harriet-wellman
+- faction:farmer-union
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Harriet presses her shoulder to the stone bridge railing, watches the foggy
+  canal as the Farmer Union march approaches. She feels her council badge weight, notices
+  a torch flame catching the rail, feels wind lift leaves, tightens her revolver strap, and
+  remains vigilant, ready to act if the protest escalates.
+beats:
+- beat:fork-harriet-1
+choices:
+- label: lean into the bridge and listen to the union’s rumble
+  to: passage:p-calm-dissent

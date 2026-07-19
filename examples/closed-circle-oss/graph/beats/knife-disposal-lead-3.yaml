@@ -1,0 +1,17 @@
+id: beat:knife-disposal-lead-3
+summary: Harriet confronts Clifford about the knife's link to the murder, tension rising.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:knife-disposal
+  effect: reveals
+entities:
+- character:harriet-wellman
+- character:clifford-moon
+- object:ornate-knife
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'
+belongs_to:
+- path:give-knife

@@ -1,0 +1,13 @@
+id: beat:ledger-burn-burn-post-4
+summary: A chill settles over Grayhaven; the town feels the absence of the ledger's weight.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: advances
+entities:
+- character:mayor-caldwell
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:burn-ledger

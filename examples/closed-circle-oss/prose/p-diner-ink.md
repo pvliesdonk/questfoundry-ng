@@ -1,0 +1,7 @@
+The diner’s brass lantern sputtered, casting a thin amber pool on the scarred floor. Edgar felt the cold of the iron cuffs biting into the skin on his wrists, a reminder of the badge that had once rested on his shoulder. Harriet stood at the counter, badge flashing, her voice low as she called for order. Lucy lingered near the humming bomb, her trembling hands still smeared with copper and blood, while Marjorie moved behind the espresso machine, the flour on her apron dusting the air.
+
+A distant gunshot cracked the night beyond the window, a sharp echo that rattled the glass panes. The stale aroma of pie rose from a cooling slice on a nearby table, mixing with the steam that rose from Marjorie's coffee cups. Edgar watched the dark liquid swirl in a porcelain mug, its surface catching the lantern’s glow.
+
+He slipped the folded page from his pocket, the edge of the ledger's parchment crisp against his fingertips. With a deliberate motion, he placed the paper beneath the foam, just as Marjorie's hand hovered to pour. The page settled unnoticed among the froth, a silent promise hidden beneath the bitter brew.
+
+The scent of burnt sugar lingered, and the gunshot’s echo faded into the clatter of mugs. Edgar’s eyes lingered on the coffee, aware that each sip would carry the weight of a secret, a danger that now rested in the hands of the townsfolk.

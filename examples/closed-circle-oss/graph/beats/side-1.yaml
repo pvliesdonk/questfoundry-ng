@@ -1,0 +1,13 @@
+id: beat:side-1
+created_by: polish
+summary: Lucy lingers by the sealed ledger as Old Man Well’s clock ticks in the shadows, leaving
+  a pulse of uneasy anticipation.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+- character:old-man-well
+grants_flags:
+- flag:cw-side-1
+texture_premise: A hushed side‑scene of lingering suspicion in the diner’s back hallway.

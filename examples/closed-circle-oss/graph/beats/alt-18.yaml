@@ -1,0 +1,13 @@
+id: beat:alt-18
+created_by: polish
+summary: Thea catches a glimpse of flickering flames, reminding her of past scandal's heat.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:thea-swan
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:ledger-burn-pre-5
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

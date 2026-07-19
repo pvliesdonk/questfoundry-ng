@@ -16,6 +16,26 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-19, later (two more epics shipped — author call; roadmap
+  reconciled):** After the comprehensive medium run reached DREAM→DRESS
+  gate-clean + illustration + export (the day's five defect fixes below),
+  the author called **prose quality at scale** and **POV sequences**
+  shipped. Both epics' machinery is merged and live-validated: prose
+  quality — the engine (echo/story-so-far/modulation/review contract) plus
+  a weak-tier medium through DRESS (`examples/closed-circle-oss`, the first
+  project through DRESS + illustration + export and the first example with
+  rendered art); POV sequences — the roster/annotate/interlude machinery
+  (#106/#107/#108, A25) with the scheme half validated + hardened live (the
+  `pov_hint`-as-law fix, #113). Moved both to the roadmap Shipped section;
+  their exit remainders drop to BACKLOG as measurement, not machinery: prose
+  quality's **corpus-grounded run + author prose read** (this run skipped
+  research — no craft corpus), and POV sequences' **formal live A/B** against
+  the run-6 counterfactual. The roadmap "Now" is left **open** — the next
+  milestone is unscoped, with small author follow-on in flight and the
+  "Next" candidates (weave linearization, M9 retrieval refinement) standing.
+  The weak-tier-prose top risk is marked largely retired. Same pattern as
+  the 2026-07-17 two-epic shipping above.
+
 - **2026-07-19 (the I13 powerset blowup had two more copies in export — fix
   the class, not the instance):** `qf export html` on the finished
   comprehensive-medium story OOM-ed the host (~62 GiB, took Claude Code with

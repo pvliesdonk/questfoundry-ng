@@ -1,0 +1,11 @@
+id: beat:setup-2
+summary: Deputy Sheriff Harriet writes in her journal about the unsolved killing, noting the
+  odd static of fear among townsfolk.
+beat_class: structural
+purpose: setup
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:harriet-wellman
+interlude: true

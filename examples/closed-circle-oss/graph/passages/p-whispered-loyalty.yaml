@@ -1,0 +1,24 @@
+id: passage:p-whispered-loyalty
+summary: A patron whispers that Lucy Frost’s brother was seen handling the ledger‑blackwood,
+  raising uneasy suspicion that loyalty may betray justice, and the faint smell of smoldering
+  timber from the Old Mill drifts into the diner, suggesting hidden fire‑brand evidence could
+  ignite the town’s fragile order.
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+- location:old-mill
+irrelevant_flags:
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+prose_summary: Lucy Frost stands in the doorway as a patron whispers that her brother was
+  seen moving the Blackwood ledger. She notices smoke scented of timber from the Old Mill,
+  hears the night alarm, grips the bar, and records the empty seat and ash where the ledger
+  discussion occurred. She feels uneasy.
+beats:
+- beat:whispered-loyalty-1
+- beat:whispered-loyalty-2
+choices:
+- label: Clench your jaw at the whispered betrayal while the scent of burning wood lingers
+  to: passage:p-diner-evacuation

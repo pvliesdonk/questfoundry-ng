@@ -1,0 +1,12 @@
+passage: passage:p-arrest-bomb-defuse
+priority: 6
+caption: Harriet handcuffs Edgar as Thea watches, while Lucy works on the ticking bomb.
+prompt: Noir illustration, thick shadows, muted palette, a splash of deep crimson on Harriet's
+  scar. Depict Harriet Wellman in a trench coat, handcuffing thin Edgar Barnes with round
+  spectacles, a tense crowd behind them. Thea Swan in a white coat watches from the side,
+  her bob haircut visible, while a bomb device with a red wire glints on a stone slab in the
+  background.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- character:thea-swan

@@ -1,0 +1,22 @@
+id: passage:p-ledger-burn-ash
+summary: Mayor Caldwell orders the ledger burned in the town hall furnace; the flames turn
+  the pages to ash and, as the smoke settles, the Blackwood family steps forward with cold
+  stares.
+entities:
+- object:ledger-blackwood
+- character:mayor-caldwell
+prose_summary: Mayor Caldwell stands in town hall basement, orders furnace keeper to burn
+  the Blackwood Ledger. The ledger chars, ash falls, and the Blackwood family enters, staring
+  coldly. A stone hatch with rusted latch sits near the furnace. Caldwell can listen to their
+  accusations or push open the hatch.
+beats:
+- beat:ledger-burn-burn-commit
+- beat:ledger-burn-burn-post-1
+- bridge:gap-21
+choices:
+- label: Push open the stone hatch beneath the mill
+  grants:
+  - flag:cw-side-oldman-whisper
+  to: passage:p-oldman-ash-hatch
+- label: Listen as the Blackwood family accuses Caldwell
+  to: passage:p-blackwood-accusation

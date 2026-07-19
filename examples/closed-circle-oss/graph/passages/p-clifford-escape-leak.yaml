@@ -1,0 +1,29 @@
+id: passage:p-clifford-escape-leak
+summary: Clifford watches the interrogation room doors close as the empty sheath lies on the
+  floor, then is released while police interrogate other suspects, and Marjorie spots him
+  slipping a tightly‑wrapped package into his coat while serving coffee.
+entities:
+- object:ornate-knife
+- character:clifford-moon
+- character:marjorie-lynch
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Clifford watches interrogation doors slam; guard lifts his arm and escorts
+  him out. He notes a missing ivory-handled knife and an empty sheath, a suspect being questioned,
+  and Sergeant’s notebook. Marjorie Lynch serves coffee, glances, and nods as Clifford hides
+  a tightly-wrapped package in his coat pocket. He sees the iron hatch to the Old Mill tunnels,
+  preparing to descend.
+beats:
+- beat:knife-disposal-aftermath-3
+- beat:marjorie-leeches-lead-1
+- bridge:gap-17
+choices:
+- label: Sneak into the rain‑soaked midnight tunnels beneath the Old Mill
+  to: passage:p-leeches-whisper

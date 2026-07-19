@@ -1,0 +1,13 @@
+id: beat:harriet-debt-1
+created_by: polish
+summary: Harriet lingers by the firepit, watching ash curl from the Blackwood Ledger while
+  Edgar Barnes mutters a riddle about unpaid favors, leaving a memory of smoldering secrets.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-harriet-debt-1
+texture_premise: Harriet's watchful eye sharpens, catching whispers of hidden debts.

@@ -1,0 +1,24 @@
+id: passage:p-knife-harriet-riddle
+summary: Clifford hands the ornate knife to Harriet, trusting the law, while Edgar slips her
+  a folded note containing a cryptic riddle about “the heart of stone and river's mouth.”
+  Harriet studies the riddle, recalling the old myths tied to the abandoned mill.
+entities:
+- character:edgar-barnes
+- character:harriet-wellman
+prose_summary: 'Clifford Moon gives his ivory‑handle knife to Harriet Wellman; Edgar Barnes
+  passes a folded riddle note to her. Harriet reads “heart of stone, river mouth,” links it
+  to the abandoned mill, and notes two routes: rain‑soaked tunnels beneath the mill and a
+  dawn‑lit passage. She grips the knife and heads toward the shadows.'
+beats:
+- beat:edgar-riddle-lead-1
+- beat:edgar-riddle-lead-2
+- beat:knife-disposal-resolution
+choices:
+- label: Slip into the rain-soaked tunnels beneath the old mill
+  grants:
+  - flag:cw-edgar-riddle-lead-3
+  to: passage:p-shadow-tunnel
+- label: Enter the crisp, dawn-lit passage beneath the old mill
+  grants:
+  - flag:cw-alt-edgar-riddle-lead-3
+  to: passage:p-shadow-under-gears

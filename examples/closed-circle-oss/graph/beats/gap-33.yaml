@@ -1,0 +1,9 @@
+id: bridge:gap-33
+created_by: grow
+summary: Lucy’s warning hangs while Thea’s gaze lands on a sealed package, the symbol catching
+  her attention.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- character:thea-swan

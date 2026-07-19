@@ -1,0 +1,21 @@
+id: passage:p-coffee-tension
+summary: Lucy serves coffee to the gathering protestors as Caldwell's warning lingers in the
+  charged air; she remarks that the unrest threatens the town's fragile order, and Old Man
+  Well cautions Harriet that resorting to force could shatter any remaining peace.
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+- faction:farmer-union
+- character:old-man-well
+- character:harriet-wellman
+prose_summary: Lucy moves behind bar, pours coffee into tin cups and serves protestors, gives
+  a farmer a cup and declares unrest threatens town’s fragile order. Caldwell holds the Blackwood
+  Ledger on the ledger table. Old Man Well advises Harriet that force could shatter peace.
+  An iron door and the basement doorway of the Old Mill are now visible options.
+beats:
+- beat:alt-25
+- beat:alt-26
+- beat:alt-27
+choices:
+- label: Step into the furnace‑lit basement of the Old Mill
+  to: passage:p-well-caution

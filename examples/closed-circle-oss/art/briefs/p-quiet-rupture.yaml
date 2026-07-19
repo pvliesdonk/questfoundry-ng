@@ -1,0 +1,9 @@
+passage: passage:p-quiet-rupture
+priority: 16
+caption: Harriet records the distant gunshot, the night heavy with dread.
+prompt: Noir sketch, deep shadows, muted palette with a single crimson highlight on Harriet's
+  scar. Depict Harriet Wellman seated at a wooden desk under a dim lantern, pen poised over
+  a leather journal, her scar catching the lamplight, rain pattering against a window, an
+  unseen gunshot echoing.
+entities:
+- character:harriet-wellman

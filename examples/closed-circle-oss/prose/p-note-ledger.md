@@ -1,0 +1,7 @@
+The furnace cast a thin amber glow across the stone floor, the air thick with soot and the distant clang of iron gears. A crumpled note slipped from the crate, ink bleeding black across the paper, the words pressing for the ivory‑handled knife to be returned. Lucy read the demand in a single breath, the urgency cutting like a cold blade.
+
+She slipped the folded note into Clifford Moon’s coat pocket just as Mayor Caldwell flipped open the Blackwood Ledger that rested on the table. The ledger’s leather cover sighed, its pages trembling under the lantern light. His gold tie caught a flicker as his fingers traced the columns of names, each entry marked by a thin red line that seeped through the parchment. He paused on the row that bore his own name, a black scrawl among the crimson marks, and his jaw tightened while the furnace hissed, sending a brief puff of sparks into the stale air.
+
+Around them the gathered townsfolk shifted, their murmurs catching on damp walls. Clifford watched the note disappear, his jaw tightening further, and the ivory‑handled knife lay gleaming on the scarred tabletop, a silent reminder of the murder. Lucy kept her hand near the revolver at her hip, the metal cold against her palm, while the ledger’s secrets seemed to pulse in the dim light.
+
+The furnace’s low growl counted the seconds, a ticking gear in the stone chamber. She observed the furnace‑lit basement, noting the heat radiating from the coal‑fed furnace and the faint hiss that curled through the iron‑bound beams.

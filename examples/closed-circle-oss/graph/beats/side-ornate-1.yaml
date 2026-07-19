@@ -1,0 +1,14 @@
+id: beat:side-ornate-1
+created_by: polish
+summary: Harriet’s flashlight catches a glint on soot‑blackened gears, and the faint clang
+  of an unseen Ornate Knife reverberates, imprinting a cold, foreboding metal scent.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+- location:old-mill
+grants_flags:
+- flag:cw-side-ornate-1
+texture_premise: A side echo through the Old Mill’s stone walls, exposing the lingering metallic
+  chill of the missing Ornate Knife.

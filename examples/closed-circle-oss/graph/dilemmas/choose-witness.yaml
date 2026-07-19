@@ -1,0 +1,15 @@
+id: dilemma:choose-witness
+question: Should Deputy Sheriff Harriet arrest Edgar based on his contradictory alibi?
+why_it_matters: Arresting a respected teacher could alienate townsfolk, but letting a possible
+  murderer walk free risks further bloodshed.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:arrest-edgar
+  text: Harriet cuffs Edgar and books him for the murder.
+- id: answer:release-edgar
+  text: Harriet releases Edgar, believing his alibi holds enough doubt.
+anchored_to:
+- character:harriet-wellman
+- character:edgar-barnes

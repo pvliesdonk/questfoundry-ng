@@ -1,0 +1,11 @@
+id: bridge:gap-43
+created_by: grow
+summary: Harriet's observant stare meets Mayor Caldwell's promise of mediation, the tension
+  palpable.
+beat_class: structural
+purpose: bridge
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

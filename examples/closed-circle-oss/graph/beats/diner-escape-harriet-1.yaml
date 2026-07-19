@@ -1,0 +1,12 @@
+id: beat:diner-escape-harriet-1
+created_by: polish
+summary: Harriet's cheek scar catches the flickering light, a gritty reminder that law bears
+  its own wounds.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+grants_flags:
+- flag:cw-diner-escape-harriet-1
+texture_premise: Through Deputy Harriet's scarred stare

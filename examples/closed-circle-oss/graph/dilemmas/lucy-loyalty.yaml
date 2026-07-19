@@ -1,0 +1,16 @@
+id: dilemma:lucy-loyalty
+question: Should Lucy protect her brother, who is suspected of involvement, or turn him over
+  to the authorities?
+why_it_matters: Shielding her brother preserves family but compromises justice; exposing him
+  may ruin her loyalty but could stop further crimes.
+role: soft
+residue_weight: light
+ending_salience: low
+reserved: true
+answers:
+- id: answer:protect-brother
+  text: Lucy hides her brother's involvement.
+- id: answer:turn-in-brother
+  text: Lucy reports her brother to Harriet.
+anchored_to:
+- character:lucy-frost

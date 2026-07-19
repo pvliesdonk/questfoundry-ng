@@ -1,0 +1,17 @@
+id: passage:p-harriet-scar--s1
+summary: Harriet's cheek scar catches the flickering light, underscoring that the law carries
+  its own wounds.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+variant_flag: flag:secret-passage-used
+prose_summary: Harriet Wellman stands behind the cracked oak counter, badge on chest and revolver
+  at hip, watching ash from the explosion. Lucy Frost cradles a bleeding hand and places a
+  blood‑stained ivory knife on the table. Clifford Moon lurks by the doorway, coat splattered,
+  eyes on the open floorboard latch and dark hallway.
+beats:
+- beat:diner-escape-harriet-1
+choices:
+- label: watch Harriet’s scar catch the dim light
+  to: passage:p-clifford-dash
+variant_of: passage:p-harriet-scar

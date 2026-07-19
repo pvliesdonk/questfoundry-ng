@@ -1,0 +1,10 @@
+id: beat:arm-1-2
+created_by: polish
+summary: Harriet watches the crowd, uneasy about the knife's allure, marking a lingering sense
+  of concealed threat.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+texture_premise: A whispered rumor about the missing Ornate Knife circulates among the gathered.

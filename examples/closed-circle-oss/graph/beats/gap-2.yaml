@@ -1,0 +1,9 @@
+id: bridge:gap-2
+created_by: grow
+summary: The bloodied arrest fades as Harriet notes the distant echo of a gunshot in her journal.
+beat_class: structural
+purpose: bridge
+entities:
+- character:edgar-barnes
+- object:ornate-knife
+- character:harriet-wellman

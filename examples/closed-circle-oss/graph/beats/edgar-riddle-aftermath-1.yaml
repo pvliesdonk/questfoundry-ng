@@ -1,0 +1,17 @@
+id: beat:edgar-riddle-aftermath-1
+summary: In the cellar, she discovers the ornate knife placed on an altar, its blade still
+  dark with fresh blood.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: reveals
+entities:
+- object:ornate-knife
+- location:old-mill
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+texture_premise: In Marjorie's diner, a ticking bomb triggers panic and uncovers a hidden
+  murder mystery.
+belongs_to:
+- path:pursue-clue

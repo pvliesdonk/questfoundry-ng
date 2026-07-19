@@ -1,0 +1,10 @@
+id: beat:side-2
+created_by: polish
+summary: The faint clink of an Ornate Knife against a pipe drifts by, cementing a cold dread
+  that lingers after the moment passes.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- location:old-mill
+texture_premise: A hushed side‑scene of lingering suspicion in the diner’s back hallway.

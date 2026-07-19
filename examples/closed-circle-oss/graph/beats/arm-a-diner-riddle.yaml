@@ -1,0 +1,15 @@
+id: beat:arm-a-diner-riddle
+created_by: polish
+summary: Edgar slips a folded page of the Blackwood Ledger into Marjorie's coffee cup, the
+  scent of stale pie mingling with the echo of the distant gunshot, leaving the reader with
+  a lingering taste of concealed danger.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+- character:marjorie-lynch
+- object:ledger-blackwood
+grants_flags:
+- flag:cw-arm-a-diner-riddle
+texture_premise: A whispered riddle trails Edgar through Marjorie's diner, veiling the night
+  in cryptic cadence.

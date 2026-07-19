@@ -1,0 +1,12 @@
+id: beat:arm-1-1
+created_by: polish
+summary: Lucy Frost leans in, mentioning the Ornate Knife hidden beneath the furnace, leaving
+  a glint of danger in the air.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- object:ornate-knife
+grants_flags:
+- flag:cw-arm-1-1
+texture_premise: A whispered rumor about the missing Ornate Knife circulates among the gathered.

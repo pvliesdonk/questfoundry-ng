@@ -1,0 +1,29 @@
+id: passage:p-lucy-guard
+summary: Lucy darts through the diner, shielding a trembling patron, spots the glint of the
+  Ornate Knife beneath a table, and makes a silent promise to guard her own secrets.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- location:old-mill
+irrelevant_flags:
+- flag:above-ground-search
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+prose_summary: Lucy Frost slips between booths, pushes a trembling patron back and grasps
+  his elbow. She spots an ivory-handled knife blade under a table, removes it, noting its
+  sheath is missing. She holds the blade, vows to guard the missing sheath secret, notes lingering
+  timber smell as firebrand evidence, and exits as winter wind rattles the door.
+beats:
+- beat:lucy-guard-2
+choices:
+- label: Latch onto the Ornate Knife and tighten your grip
+  to: passage:p-release-evacuate

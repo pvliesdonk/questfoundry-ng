@@ -1,0 +1,21 @@
+id: passage:p-ledger-question
+summary: Mayor Caldwell scans the debt ledger, scowling at his own name, while Harriet confronts
+  Clifford about the knife that ties him to the murder, raising the tension.
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+- character:clifford-moon
+- object:ornate-knife
+- object:ledger-blackwood
+prose_summary: Lucy stands at furnace mouth; Mayor Caldwell holds the Blackwood ledger, sees
+  his own debt and scowls. Harriet confronts Clifford Moon about the missing sheath of the
+  ornate ivory knife linked to the murder, demanding explanation while gripping the ledger.
+  Clifford remains silent, tension rises, iron doors loom, Lucy feels her revolver and the
+  stairway pull.
+beats:
+- beat:alt-07
+- beat:alt-08
+- beat:alt-09
+choices:
+- label: Step into the Old Mill’s coal‑furnace basement
+  to: passage:p-shadowed-loan

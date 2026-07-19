@@ -1,0 +1,26 @@
+id: passage:p-bomb-evacuation
+summary: Clifford vanishes into the shadows, leaving the ticking bomb behind, while Harriet
+  secures the area, calls the bomb squad, and the town watches anxiously.
+entities:
+- character:clifford-moon
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Lucy Frost observes a ticking bomb in the diner back room as the crowd exits.
+  Clifford Moon leaves the scene unchanged. Harriet Wellman contacts the bomb squad with her
+  radio, gloved hand on the device, badge visible. An ivory-handled knife lies at the doorway
+  without its sheath. Lucy must either assist Harriet with the radio or take the knife.
+beats:
+- beat:diner-bomb-evacuate-post-2
+- beat:diner-bomb-evacuate-post-3
+- bridge:gap-8
+choices:
+- label: Snatch the ivory-handled knife from the doorway
+  grants:
+  - flag:cw-sidetrek-knife-glint
+  to: passage:p-knife-ledger
+- label: Assist Harriet as she radios the bomb squad
+  to: passage:p-bridge-bomb-aftermath

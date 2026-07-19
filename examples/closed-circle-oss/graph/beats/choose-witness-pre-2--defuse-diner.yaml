@@ -1,0 +1,17 @@
+id: beat:choose-witness-pre-2--defuse-diner
+created_by: grow
+summary: Edgar recites a cryptic rhyme hinting at innocence, unsettling investigators; Harriet
+  weighs his contradictory alibi. Lucy breaks into the bomb’s casing, her breaths shallow
+  as she works to disarm it. The rhyme’s echo fuels suspicion even as the bomb quiets.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:edgar-barnes
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

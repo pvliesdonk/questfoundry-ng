@@ -1,0 +1,17 @@
+id: beat:marjorie-leeches-lead-3
+summary: Lucy warns Marjorie not to accuse without proof, fearing the town could spiral into
+  chaos.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: complicates
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:silent-investigate

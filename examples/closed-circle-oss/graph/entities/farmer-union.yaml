@@ -1,0 +1,21 @@
+id: faction:farmer-union
+name: Farmer Union
+concept: the cooperative of local farmers, fearful of outside influence
+arc:
+  begins: The Farmer Union is a cooperative fearful of outside influence, demanding fair rates.
+  pivots:
+  - beat: beat:union-strike-pre-1
+    becomes: Farmer Union gathers in the town square, chanting for fair rates.
+  - beat: beat:union-strike-support-commit
+    becomes: Union receives Deputy Harriet's public support.
+  - beat: beat:union-strike-suppress-commit
+    becomes: Union faces Harriet's order to arrest protestors.
+  - beat: beat:union-strike-support-post-1
+    becomes: Union leaders applaud Harriet, hope swelling among farmers.
+  - beat: beat:union-strike-suppress-post-1
+    becomes: Farmers are handcuffed, chants fall silent, tension spikes.
+  ends:
+  - path: path:support-protest
+    state: Union gains momentum and public backing.
+  - path: path:suppress-protest
+    state: Union is suppressed, members arrested and silenced.

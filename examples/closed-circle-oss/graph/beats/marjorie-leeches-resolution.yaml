@@ -1,0 +1,11 @@
+id: beat:marjorie-leeches-resolution
+summary: Marjorie decides to tail Clifford silently, hoping to catch him red‑handed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:silent-investigate

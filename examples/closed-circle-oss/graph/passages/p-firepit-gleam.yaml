@@ -1,0 +1,18 @@
+id: passage:p-firepit-gleam
+summary: Lucy tells Thea about a rusted firepit behind the town hall that can quickly consume
+  documents, and points to its glow as Thea watches the flames, which stir memories of a past
+  scandal.
+entities:
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Lucy points Thea to the rusted firepit behind town hall and tells her it can
+  instantly ash any papers or ledger. Thea watches the flame, feels heat on her cheek, and
+  hears a farmer‑union chant. She recalls an old scandal, sets her jaw, and tightens her coat
+  grip.
+beats:
+- beat:ledger-burn-pre-4
+- beat:ledger-burn-pre-5
+- bridge:gap-30
+choices:
+- label: Slip toward the fire's glow as the union chants in the square
+  to: passage:p-farmers-chant

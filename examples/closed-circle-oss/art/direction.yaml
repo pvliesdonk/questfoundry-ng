@@ -1,0 +1,94 @@
+style: Tight, noir‑inspired line work with heavy shadows and occasional splashes of muted
+  colour for narrative emphasis.
+palette: Muted earth tones—grays, browns, and slate—with accents of deep crimson and gold.
+influences:
+- Frank Miller
+- Edward Gorey
+- classic crime comics
+profiles:
+- entity: character:clifford-moon
+  appearance: Tall, slender man with slicked‑back hair, dressed in a glossy, flashy suit that
+    catches the light, projecting a smooth, charming demeanor.
+  iconography:
+  - slicked-back hair
+  - flashy suit
+  - smooth smile
+- entity: character:edgar-barnes
+  appearance: Tall, thin figure wearing modest, slightly dated clothing, with round spectacles
+    perched on his nose and a keen, observant expression.
+  iconography:
+  - spectacles
+  - tall thin frame
+  - riddling expression
+- entity: character:harriet-wellman
+  appearance: Short woman with greying hair, clad in a worn trench coat; a scar marks her
+    cheek and a badge is pressed to her chest, conveying no‑nonsense pragmatism.
+  iconography:
+  - scar on cheek
+  - badge on chest
+  - trench coat
+  - greying hair
+- entity: character:lucy-frost
+  appearance: Broad‑shouldered, muscular woman with a shaved head; a fresh dark scar is visible
+    on her right palm, dressed in practical bartender attire.
+  iconography:
+  - muscular build
+  - shaved head
+  - scar on right palm
+- entity: character:marjorie-lynch
+  appearance: Round‑bodied woman wearing a flour‑dusted apron, her face friendly and inquisitive,
+    embodying the town’s gossip hub.
+  iconography:
+  - flour‑dusted apron
+  - round shape
+  - friendly gaze
+- entity: character:mayor-caldwell
+  appearance: Clean‑cut man in a crisp suit, distinguished by a gold tie, exuding a controlled,
+    charismatic authority.
+  iconography:
+  - gold tie
+  - clean‑cut hair
+  - authoritative posture
+- entity: character:old-man-well
+  appearance: Stooped, wiry elderly man with a thin frame, often seen leaning on a clock‑making
+    tool, his demeanor cryptic yet patient.
+  iconography:
+  - stooped posture
+  - wiry build
+  - clock‑making tool
+- entity: character:thea-swan
+  appearance: Young nurse with a bob haircut, wearing a white medical coat; her eyes are quiet
+    but vigilant.
+  iconography:
+  - bob haircut
+  - medical coat
+  - alert eyes
+- entity: faction:farmer-union
+  appearance: Group of weather‑worn farmers in work overalls, standing together with wary
+    expressions, embodying a cautious cooperative.
+  iconography:
+  - work overalls
+  - wary stance
+  - rural grouping
+- entity: location:old-mill
+  appearance: Crumbling stone mill by the river, its abandoned interior marked by a rusted
+    iron latch on a stone hatch.
+  iconography:
+  - rusted iron latch
+  - stone hatch
+  - river backdrop
+- entity: object:ledger-blackwood
+  appearance: Thick, leather‑bound ledger with worn edges, hidden behind rusted machinery
+    within the old mill’s secret safe.
+  iconography:
+  - leather ledger
+  - rusted machinery
+  - hidden safe
+- entity: object:ornate-knife
+  appearance: Heavy hunting knife with an ivory handle polished to a bright sheen, lying on
+    a stone slab without its sheath.
+  iconography:
+  - ivory handle
+  - bright polish
+  - stone slab
+  - missing sheath

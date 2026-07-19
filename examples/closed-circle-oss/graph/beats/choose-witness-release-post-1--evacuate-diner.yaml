@@ -1,0 +1,16 @@
+id: beat:choose-witness-release-post-1--evacuate-diner
+created_by: grow
+summary: Edgar slips away amid the trees, a smoldering scrap trailing; Harriet declares his
+  freedom. Lucy sounds the alarm, leading a terrified sweep out of the diner while the bomb
+  waits, silent. Edgar’s disappearance leaves the accusation unresolved.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: advances
+entities:
+- character:edgar-barnes
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

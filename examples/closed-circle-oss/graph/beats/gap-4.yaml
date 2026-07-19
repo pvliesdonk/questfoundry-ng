@@ -1,0 +1,10 @@
+id: bridge:gap-4
+created_by: grow
+summary: Edgar's silhouette disappears among the trees as Mayor Caldwell's voice reaches Harriet,
+  warning of budget cuts.
+beat_class: structural
+purpose: bridge
+entities:
+- character:edgar-barnes
+- character:mayor-caldwell
+- character:harriet-wellman

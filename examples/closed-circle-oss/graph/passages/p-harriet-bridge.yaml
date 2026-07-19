@@ -1,0 +1,18 @@
+id: passage:p-harriet-bridge
+summary: Deputy Harriet arrives, badge flashing, questions Lucy's frantic alarm and asks the
+  patrons what troubles them as Thea rushes in clutching a tray, raising the tension.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Edgar stands near hall back, revolver at hip. Deputy Harriet steps forward,
+  badge flashing, asks patrons what troubles them, interrogates Lucy. Lucy reports a ticking
+  device and uneasy crowd. Thea bursts in, carries tray, places it near doorway, glances at
+  blood‑slick ornate knife on stone slab by basement entrance. Tension rises.
+beats:
+- beat:hall-bomb-3
+- beat:hall-bridge-2
+- beat:hall-bridge-3
+choices:
+- label: rush after Thea, eyes locked on the blood‑slick knife
+  to: passage:p-thea-knife-discovery

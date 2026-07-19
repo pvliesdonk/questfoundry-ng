@@ -1,0 +1,15 @@
+id: beat:edgar-riddle-resolution
+summary: Harriet follows the riddle's direction, entering the hidden cellar beneath the old
+  mill.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: commits
+entities:
+- character:harriet-wellman
+- location:old-mill
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:pursue-clue

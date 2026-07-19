@@ -1,0 +1,16 @@
+id: beat:hall-bomb-1
+created_by: polish
+summary: A faint ticking sounds, and the metallic scent of gunpowder fills the community hall,
+  raising panic.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+grants_flags:
+- flag:cw-hall-bomb-1
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+mirrors: beat:diner-bomb-pre-2
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

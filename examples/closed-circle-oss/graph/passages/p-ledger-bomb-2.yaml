@@ -1,0 +1,40 @@
+id: passage:p-ledger-bomb-2
+summary: Harriet discovers a torn fragment of the Blackwood Ledger in Edgar’s garden, confronts
+  his alibi under Mayor Caldwell’s pressure for a swift arrest, while Lucy pries the bomb
+  apart, a splinter of metal cutting her palm, and averts the explosion.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Lucy examines garden, finds bomb under bench; Harriet holds torn ledger fragment
+  and handcuffs Edgar; Mayor Caldwell arrives urging arrest; Lucy pulls red wire, bomb deactivates;
+  Harriet releases Edgar, who escapes; Lucy's palm cut throbs, wrench remains in hand; ledger
+  fragment stays on ground.
+beats:
+- beat:choose-witness-pre-4--defuse-diner
+- beat:choose-witness-pre-5--defuse-diner
+choices:
+- label: handcuff Edgar as Lucy wrestles the bomb
+  grants:
+  - flag:edgar-imprisoned
+  - flag:harriet-scrutiny
+  to: passage:p-arrest-bomb-defuse
+- label: declare Edgar's release while Lucy tears into the bomb
+  grants:
+  - flag:edgar-freed
+  - flag:harriet-credibility-boost
+  to: passage:p-witness-release

@@ -1,0 +1,12 @@
+Edgar Barnes stood behind the counter, the smell of stale coffee heavy in the air. He watched Harriet Wellman slip through the rain‑slick doorway, her trench coat dripping, badge catching the dim light. She paused, glanced at the crowd that had gathered, then turned back into the diner, the scar on her cheek catching a flash from the lantern over the bar. The clatter of plates rose as a gasp rippled through the patrons, and Lucy Frost slammed the alarm lever, a sharp clang that cut the murmurs.
+
+Harriet’s voice was flat as she stepped forward, fingers closing around Edgar’s collar. “You’re under arrest,” she said, and the words fell like a hammer on the stunned silence. Edgar felt the cold steel of her hand graze his scar, a thin line of blood welling beneath his shirt. The crowd stared, eyes flicking between the trembling teacher and the deputy’s steady stare. Lucy’s voice rose, ordering everyone toward the swinging door, the alarm’s red flare sputtering above the exit.
+
+Harriet pressed Edgar against the battered wooden table, the scar oozing as he tried to speak, his breath ragged. “I’m innocent,” he croaked, the declaration swallowed by the din. Lucy moved like a tide, ushering trembling bodies out onto the rain‑slick street. The bomb hidden in the back room hissed, a low metallic whisper that rose with each frantic step.
+
+When the handcuffs finally clicked, Harriet’s grip held firm. Thea Swan slipped through the surge, her hand finding Edgar’s as she slipped a folded note into his palm. The paper was thin, ink barely legible, warning of a threat that lurked unseen. The note’s chill matched the ticking pulse from the bomb’s concealed timer. Lucy shouted orders, her voice a rope pulling the townsfolk out, the night wind rushing in through the open door, carrying the smell of wet stone and iron.
+
+In the doorway, a patron leaned against the frame, eyes fixed on the scene. A stray shaft of light caught the ornate ivory‑handled knife lying on the counter, its surface flashing briefly before the darkness reclaimed it. The bomb’s hiss grew louder, a reminder that danger lingered. Edgar felt the weight of accusation settle like a storm cloud. He turned, heart pounding, and without a second thought hurled himself into the street, the hiss of the bomb echoing behind him as he ran.
+
+- watch the arrest from the doorway, eyes fixed on the flashing knife
+- dash into the street as the bomb hisses

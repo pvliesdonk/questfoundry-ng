@@ -1,0 +1,24 @@
+id: passage:p-ledger-whispers
+summary: Whispers coil like smoke around the protagonist, subtly exposing the hidden ledger’s
+  secret information that now pulses beneath every conversation.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+- character:marjorie-lynch
+prose_summary: Harriet stands on the stone platform with a brass‑bound safe containing the
+  hidden ledger. She raises her right hand, speaks and refuses to draw a pistol. She taps
+  the guard’s shoulder, signaling arrest per watch code. The guard eyes the ledger and crowd,
+  tightens his rifle grip, poised for action.
+beats:
+- beat:ledger-burn-whispers-smoke
+choices:
+- label: Raise my voice and refuse to use force
+  grants:
+  - flag:political-strain
+  - flag:union-empowered
+  to: passage:p-harriet-union-support
+- label: Signal the guard to arrest the protesting farmers
+  grants:
+  - flag:harriet-unpopularity
+  - flag:protest-quashed
+  to: passage:p-strike-repress

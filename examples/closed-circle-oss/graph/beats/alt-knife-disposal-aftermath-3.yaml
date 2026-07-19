@@ -1,0 +1,13 @@
+id: beat:alt-knife-disposal-aftermath-3
+created_by: polish
+summary: Clifford Moon is released but watches nervously while police interrogate other suspects.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+mirrors: beat:knife-disposal-aftermath-3
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

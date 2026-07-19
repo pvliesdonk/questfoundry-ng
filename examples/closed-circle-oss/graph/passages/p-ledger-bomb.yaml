@@ -1,0 +1,18 @@
+id: passage:p-ledger-bomb
+summary: Lucy eyes the sealed ledger, which now pulses like a ticking bomb, its hidden secrets
+  poised to erupt.
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+prose_summary: Mayor Caldwell moves to the furnace, places the Blackwood Ledger on an iron
+  slab, and watches Lucy Frost stare at it. He feels a pulse, judges the ledger a concealed
+  explosive, notes Lucy’s curiosity, hears crowd chant and gears, and senses a murmur. He
+  tightens his coat strap and decides whether to keep the ledger sealed until council decides.
+beats:
+- beat:ledger-burn-keep-post-4
+- bridge:gap-26
+choices:
+- label: lean into the coiling whispers
+  requires:
+  - flag:ledger-hidden
+  to: passage:p-ledger-whispers

@@ -1,0 +1,26 @@
+id: object:ledger-blackwood
+name: Blackwood Ledger
+concept: the Blackwood family's ledger, detailing debts and blackmail
+base:
+  location: hidden safe
+  hidden_location: behind rusted machinery in old mill
+arc:
+  begins: The Blackwood Ledger details debts and blackmail linking influential families.
+  pivots:
+  - beat: beat:ledger-burn-pre-1
+    becomes: Mayor Caldwell opens the ledger, scanning stained names and obligations.
+  - beat: beat:ledger-burn-burn-commit
+    becomes: Mayor orders the ledger incinerated to protect families.
+  - beat: beat:ledger-burn-keep-commit
+    becomes: Mayor decides to lock the ledger away in a secret safe.
+  - beat: beat:ledger-burn-burn-post-1
+    becomes: Flames consume the pages, black ash drifting away.
+  - beat: beat:ledger-burn-keep-post-1
+    becomes: Ledger is locked away, hidden from public view.
+  - beat: beat:cosmetic-fork-1
+    becomes: Ledger is tucked behind the Old Mill's rusted machinery, a secret stash.
+  ends:
+  - path: path:burn-ledger
+    state: Ledger destroyed by fire; its secrets erased.
+  - path: path:keep-ledger
+    state: Ledger concealed, its damaging information preserved.

@@ -1,0 +1,20 @@
+id: passage:p-knife-confrontation
+summary: Harriet confronts Clifford about the knife's connection to the murder while Mayor
+  Caldwell scans the ledger, sees his own name and scowls, and tension rises.
+entities:
+- character:mayor-caldwell
+- object:ledger-blackwood
+- character:harriet-wellman
+- character:clifford-moon
+- object:ornate-knife
+prose_summary: Lucy steadies revolver. Mayor Caldwell reads Blackwood ledger, notes debts
+  and his name. Harriet Wellman, scar trembling, confronts Clifford about ivory-handled knife
+  and council clerk murder, demands truth, cites missing ledger. Clifford denies, shows knife
+  hidden under jacket. Tension rises; firepit burns.
+beats:
+- beat:knife-disposal-lead-3
+- bridge:gap-19
+- bridge:gap-27
+choices:
+- label: Walk toward the rusted firepit behind town hall
+  to: passage:p-ledger-confrontation

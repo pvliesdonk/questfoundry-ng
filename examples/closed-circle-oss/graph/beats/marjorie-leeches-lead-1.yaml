@@ -1,0 +1,17 @@
+id: beat:marjorie-leeches-lead-1
+summary: Marjorie spots Clifford slipping a small, tightly‑wrapped package into his coat while
+  serving coffee.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: reveals
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:silent-investigate

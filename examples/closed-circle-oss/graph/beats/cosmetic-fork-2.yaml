@@ -1,0 +1,12 @@
+id: beat:cosmetic-fork-2
+created_by: polish
+summary: A flickering lantern reveals the faint outline of an Ornate Knife wedged in a beam,
+  hinting at a hidden violence beneath the grain.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- location:old-mill
+- character:old-man-well
+texture_premise: A hushed rumor that the Blackwood Ledger lies concealed within the Old Mill,
+  echoing the bridge's rising tension.

@@ -1,0 +1,7 @@
+The night air hung thick, rain pattered. Edgar Barnes stepped from the alley, his thin frame framed by streetlamp. He brushed the damp stone, his spectacles catching a glint. A low, regular ticking rose from somewhere beneath the diner, the pulse of the bomb left behind. He paused, eyes narrowing, and muttered a half‑spoken riddle:
+
+"Clock that never rests, hands that cannot meet, stone that bows to tide that never ceases."
+
+The words fell into the damp, matching the tick. He slipped a folded scrap of paper into his coat pocket, the paper crinkling like dry leaves. The cadence of his voice seemed to lock with the bomb’s metronome, a fragile rhythm threading through the empty street. As the ticking grew a shade louder, Edgar felt the steady beat settle into his chest, a reminder that order could fracture at any moment.
+
+He turned toward the alley where the ornate ivory knife lay half‑buried, its handle dulled by rain, but his gaze lingered on the faint glow of the bomb’s timer hidden behind a stack of crates. The ticking marked time moving forward, while his riddle hinted at a hidden stone door beneath the old mill. Edgar’s breath fogged in the cold, and he steadied himself, aware that each syllable might be a key to a passage that could save the town—or unleash its collapse.

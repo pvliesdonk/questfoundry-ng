@@ -1,0 +1,17 @@
+id: dilemma:thea-medkit
+question: Should Thea allocate the limited life‑saving serum to the mayor's son (a political
+  asset) or to a random injured stranger?
+why_it_matters: Giving it to the mayor secures political favor but abandons a victim; sharing
+  it equitably saves a life but may cost Thea future protection.
+role: hard
+residue_weight: heavy
+ending_salience: high
+reserved: true
+answers:
+- id: answer:give-to-mayor
+  text: Thea administers the serum to the mayor's son.
+- id: answer:give-to-stranger
+  text: Thea uses the serum on the unknown victim.
+anchored_to:
+- character:thea-swan
+- character:mayor-caldwell

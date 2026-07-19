@@ -1,0 +1,13 @@
+id: bridge:gap-18
+created_by: grow
+summary: The smeared note slides into Clifford's pocket just as Mayor Caldwell flips open
+  the Blackwood Ledger.
+beat_class: structural
+purpose: bridge
+entities:
+- character:clifford-moon
+- object:ornate-knife
+- character:mayor-caldwell
+- object:ledger-blackwood
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

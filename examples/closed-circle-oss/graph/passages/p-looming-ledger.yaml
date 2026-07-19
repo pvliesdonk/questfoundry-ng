@@ -1,0 +1,16 @@
+id: passage:p-looming-ledger
+summary: Silas “Old Man” Well’s relentless ticking clocks echo through the chamber, pointing
+  to the furnace soot where the black‑wood ledger lies hidden, underscoring a mood of quiet
+  menace.
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+prose_summary: Marjorie is in low vaulted chamber. Silas Old Man Well lifts brass cover of
+  largest clock, exposing cavity with soot-covered ledger. Marjorie sees cracked leather ledger
+  with inked names and numbers. Silas turns ledger, dust stirs. Marjorie feels weight of decisions;
+  revolver at hip adds pressure.
+beats:
+- beat:gate-1-1
+choices:
+- label: trace the soot‑blackened ledger toward the furnace’s glow
+  to: passage:p-rift-mediation

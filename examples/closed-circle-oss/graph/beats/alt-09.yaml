@@ -1,0 +1,16 @@
+id: beat:alt-09
+created_by: polish
+summary: Harriet presses Clifford about the knife while Mayor Caldwell scans the ledger and
+  scowls at his own name.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:harriet-wellman
+- character:clifford-moon
+- character:mayor-caldwell
+- object:ledger-blackwood
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-19
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

@@ -1,0 +1,24 @@
+id: passage:p-diner-bomb-defuse-post
+summary: Lucy disables the bomb, sustaining a gash that drips blood onto the shattered floor,
+  and Harriet journals the violent climax; the decision to charge Edgar stays unresolved,
+  leaving the town's fate balanced on a razor.
+entities:
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Protagonist records in leather journal; Lucy snaps red bomb wire with wrench,
+  bloodied forearm stains floor; Edgar stands near wall, damp coat, revolver at hip, gives
+  no answer when questioned; protagonist sits in shadowed booth, watches Lucy tend wound;
+  scene noted, no decision made on charging Edgar, town fate uncertain.
+beats:
+- beat:diner-bomb-defuse-post-4
+choices:
+- label: Slide into the shadowed booth beside Edgar
+  grants:
+  - flag:cw-side-secret-1
+  to: passage:p-secret-booth
+- label: Demand the truth from Edgar as Lucy steadies the bomb
+  to: passage:p-diner-defuse-witness

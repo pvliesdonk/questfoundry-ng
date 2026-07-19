@@ -1,0 +1,14 @@
+id: beat:choose-witness-release-commit--defuse-diner
+created_by: grow
+summary: Harriet decides Edgar’s alibi warrants his release, announcing his freedom to the
+  stunned crowd; Lucy, wrench in hand, tears into the bomb and neutralizes it, sustaining
+  a burn. The town reels from the deputy’s clemency as danger fades.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

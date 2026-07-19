@@ -1,0 +1,19 @@
+id: passage:p-looming-knife
+summary: Lucy lingers by the sealed ledger as Old Man Well’s clock ticks in the shadows, and
+  the faint clink of an ornate knife against a pipe spreads a cold dread through the space.
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+- character:old-man-well
+- object:ornate-knife
+- location:old-mill
+prose_summary: Lucy lingers by the sealed ledger in Old Man Well’s workshop; the clock ticks,
+  the ledger trembles, an ivory‑handled knife clinks against a pipe, and she tightens her
+  revolver strap. She presses her palm to the ledger, feeling its vibration and a cold dread.
+  No new resources are spent; the ledger’s hidden content remains unrevealed.
+beats:
+- beat:side-1
+- beat:side-2
+choices:
+- label: Press your hand to the ledger’s trembling surface
+  to: passage:p-ledger-bomb

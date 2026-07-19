@@ -1,0 +1,17 @@
+id: beat:choose-witness-release-post-2--defuse-diner
+created_by: grow
+summary: Mayor Caldwell scolds Harriet for leniency, threatening budget cuts; Harriet still
+  lets Edgar go. Lucy fights the bomb, her fingers raw as she disables it. Political pressure
+  mounts even as the explosive threat is removed.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:release-edgar

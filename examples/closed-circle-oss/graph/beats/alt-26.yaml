@@ -1,0 +1,14 @@
+id: beat:alt-26
+created_by: polish
+summary: Lucy serves coffee to protestors, remarking how the unrest threatens town order.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- faction:farmer-union
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:union-strike-pre-4
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

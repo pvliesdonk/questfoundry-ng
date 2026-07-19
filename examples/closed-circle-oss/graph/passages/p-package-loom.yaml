@@ -1,0 +1,25 @@
+id: passage:p-package-loom
+summary: Lucy’s warning hangs while Thea’s gaze lands on a sealed package bearing a familiar
+  symbol, and Marjorie decides to tail Clifford silently, heightening tension as she hopes
+  to catch him red‑handed.
+entities:
+- character:lucy-frost
+- character:thea-swan
+- character:clifford-moon
+prose_summary: Clifford stands behind diner counter; Lucy’s warning about rumors lingers.
+  Thea approaches table, examines sealed package with wheat‑hammer emblem, eyes widen, triggering
+  Clifford’s memory. Marjorie hides behind flour sacks, tails Clifford to catch him. Lantern
+  sputters, river hums outside, adding tension.
+beats:
+- beat:marjorie-leeches-lead-4
+- beat:marjorie-leeches-resolution
+- bridge:gap-33
+choices:
+- label: trace the river's hush
+  grants:
+  - flag:cw-river-shadow-1
+  to: passage:river-shadow
+- label: watch the lantern's flicker
+  grants:
+  - flag:cw-lantern-shadow-1
+  to: passage:p-lantern-shadow

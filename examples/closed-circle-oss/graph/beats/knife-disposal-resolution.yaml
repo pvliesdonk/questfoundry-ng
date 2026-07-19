@@ -1,0 +1,11 @@
+id: beat:knife-disposal-resolution
+summary: Clifford decides to hand the ornate knife over to Harriet, trusting the law.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:knife-disposal
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:give-knife

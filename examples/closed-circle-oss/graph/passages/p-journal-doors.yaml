@@ -1,0 +1,24 @@
+id: passage:p-journal-doors
+summary: Deputy Sheriff Harriet records the unsolved killing and the pervasive static of fear
+  among the townsfolk in her journal. As she closes the entry, the diner doors swing open,
+  spilling late-night conversation into the room.
+entities:
+- character:harriet-wellman
+- character:marjorie-lynch
+prose_summary: 'On March 14, 1847 the narrator records the council clerk’s murder: body behind
+  ledger desk, clean slice, missing ivory‑handled knife, missing Blackwood Ledger. Town fear
+  rises; patrols increase without leads. A singed copy of the ledger lies near Marjorie’s
+  diner firepit. He notes a rumor of a hidden mill‑basement passage, seals his journal, and
+  listens as the unsolved case lingers.'
+beats:
+- beat:setup-2
+- bridge:gap-40
+choices:
+- label: Enter the diner district, the firepit ablaze with the Blackwood Ledger
+  grants:
+  - flag:cw-setup-3
+  to: passage:p-diner-knife
+- label: Descend into the Old Mill’s basement, the furnace roaring beneath iron beams
+  grants:
+  - flag:cw-alt-01
+  to: passage:p-old-mill-basement

@@ -1,0 +1,10 @@
+id: beat:echo-reeds-2
+created_by: polish
+summary: A glint of the Ornate Knife catches Lucy's gaze near a cracked cellar wall, leaving
+  the cold impression of a blade waiting for a hand.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- location:old-mill
+texture_premise: A whisper of lingering time and steel drifts through the mill’s shadows.

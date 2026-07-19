@@ -1,0 +1,7 @@
+Lucy watched Harriet clamp a clenched fist into Clifford's coat as their voices fell low in the shadowed alcove. The murmur of their dispute slipped through the stone pillars and Lucy caught a fragment about the Blackwood ledger, a whisper that it could ruin families if its secrets fell free. Harriet’s scarred cheek caught the dim light while she pressed a hard question to Clifford, her grip unyielding.
+
+From the corner near the furnace, Harriet heard another pair of whispered voices speak of the ledger’s power to topple houses and bloodlines. The hushed rumor drifted through the crowd like a chill, and Harriet’s eyes narrowed as the threat settled over the room.
+
+Lucy stepped closer to the coal‑fed furnace, the orange glow pressing against her skin. She saw flames licking the iron beams above, and the fire consumed a stack of loose papers hidden beneath a crate with a soft hiss. She leaned in and whispered, "We could toss the Blackwood Ledger into that fire and let the ash bury its secrets." Harriet’s jaw tightened, softened for a heartbeat, then hardened as she glanced from the furnace’s glow to the ledger on the rough table.
+
+Thea Swan lingered near the furnace, her gaze fixed on the dancing flames, while the room hummed with the furnace’s steady roar. Lucy felt the cold steel of her revolver rest against her hip, a reminder of the thin line she walked between order and chaos.

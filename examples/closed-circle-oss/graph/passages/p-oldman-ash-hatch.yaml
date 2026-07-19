@@ -1,0 +1,17 @@
+id: passage:p-oldman-ash-hatch
+summary: Silas “Old Man” Well mutters that a hatch hidden in the mill’s stone foundation leads
+  to a forgotten vault, and the lingering scent of burnt ledger‑blackwood ash mixes with the
+  cold draft from the opening, contrasting fire with hidden doors.
+entities:
+- character:old-man-well
+- location:old-mill
+- object:ledger-blackwood
+prose_summary: Silas stands in the old mill, finds a rusted iron latch that marks a hidden
+  hatch to a forgotten vault, notes the smell of burnt ledger ash emitting from the opening,
+  tightens his pocket watch strap, turns back toward the hatch and waits for a follower.
+beats:
+- beat:side-ash-contrast
+- beat:side-oldman-whisper
+choices:
+- label: Press your ear to the hatch and inhale the ash‑laden air
+  to: passage:p-blackwood-accusation

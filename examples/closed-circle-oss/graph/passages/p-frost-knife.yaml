@@ -1,0 +1,35 @@
+id: passage:p-frost-knife
+summary: Lucy Frost slides a whiskey to Marjorie and whispers that the ledger ties Mayor Caldwell
+  to the Farmer Union, planting a sense of hidden leverage. Harriet Wellman glances at a gleaming
+  ornate knife on the table, its blade catching light like a silent accusation.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- object:ledger-blackwood
+- character:mayor-caldwell
+- faction:farmer-union
+- character:harriet-wellman
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: 'Lucy serves whiskey to Marjorie, reveals the Blackwood ledger ties Mayor Caldwell
+  to the Farmer Union and is hidden in the mill’s safe; Harriet displays her badge beside
+  an ornate ivory‑handled knife; Lucy keeps the glass, then faces a decision: pursue the ledger’s
+  location through the doorway or attend to the ominous knife.'
+beats:
+- beat:sidetrek-1
+- beat:sidetrek-2
+choices:
+- label: Slip toward the doorway, the ledger’s secret and the knife’s glint heavy on my mind
+  to: passage:p-evacuate-diner

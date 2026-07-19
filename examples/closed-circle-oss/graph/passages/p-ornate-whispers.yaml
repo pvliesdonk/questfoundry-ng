@@ -1,0 +1,28 @@
+id: passage:p-ornate-whispers
+summary: Harriet's flashlight catches a glint on soot‑blackened gears and the faint clang
+  of an unseen Ornate Knife, while Old Man Well whispers of hidden tunnels beneath the mill,
+  suggesting concealed routes.
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+- location:old-mill
+- character:old-man-well
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Harriet explores the mill, discovers a rusted gear with the Ornate Knife embedded
+  and fresh blood, and takes the blade. Silas Well whispers that hidden tunnels lie beneath
+  the mill’s foundation, revealing a secret route deeper. The scene adds the blood‑stained
+  knife to Harriet’s inventory and introduces the tunnel option.
+beats:
+- beat:side-ornate-1
+- beat:side-ornate-2
+choices:
+- label: tighten my grip on the blood‑stained blade as the gears howl
+  to: passage:p-old-man-secret-reveal

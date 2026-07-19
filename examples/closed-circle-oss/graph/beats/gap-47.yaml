@@ -1,0 +1,8 @@
+id: bridge:gap-47
+created_by: grow
+summary: Caldwell's debate ends, leaving an uneasy calm to ripple through Grayhaven.
+beat_class: structural
+purpose: bridge
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman

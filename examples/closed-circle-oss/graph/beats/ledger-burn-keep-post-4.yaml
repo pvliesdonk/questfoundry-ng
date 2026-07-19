@@ -1,0 +1,13 @@
+id: beat:ledger-burn-keep-post-4
+summary: The hidden ledger becomes a ticking time bomb, its secrets waiting to erupt.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: advances
+entities:
+- object:ledger-blackwood
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:keep-ledger

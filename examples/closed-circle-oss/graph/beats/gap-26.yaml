@@ -1,0 +1,8 @@
+id: bridge:gap-26
+created_by: grow
+summary: Lucy's curiosity lingers as the sealed ledger pulses with unseen danger.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- object:ledger-blackwood

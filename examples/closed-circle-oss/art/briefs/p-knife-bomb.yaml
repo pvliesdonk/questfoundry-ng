@@ -1,0 +1,10 @@
+passage: passage:p-knife-bomb
+priority: 12
+caption: Harriet spots the half‑buried Ornate Knife as a ticking bomb lies unnoticed.
+prompt: Noir illustration, thick shadows, muted earth colors, deep crimson on the knife’s
+  edge. Show Harriet Wellman on a rain‑slick cobblestone alley, kneeling to examine an ivory‑handled
+  ornate knife half‑buried in stone, a faint ticking bomb device visible behind her, lantern
+  light catching the knife’s polished surface.
+entities:
+- character:harriet-wellman
+- object:ornate-knife

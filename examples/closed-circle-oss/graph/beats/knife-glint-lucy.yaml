@@ -1,0 +1,11 @@
+id: beat:knife-glint-lucy
+created_by: polish
+summary: A stray beam catches the ornate knife, flashing in Lucy’s peripheral vision and freezing
+  her breath, a sharp flash that etches the moment of peril into her mind.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- character:lucy-frost
+- character:harriet-wellman
+texture_premise: Lucy’s frantic urgency as the bomb hisses

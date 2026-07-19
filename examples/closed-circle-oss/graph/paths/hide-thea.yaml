@@ -1,0 +1,7 @@
+id: path:hide-thea
+explores: answer:hide-thea
+consequences:
+- id: consequence:thea-secret-kept
+  text: Thea's past remains hidden, granting her fragile stability.
+- id: consequence:thea-paranoia
+  text: Thea lives in constant fear of discovery.

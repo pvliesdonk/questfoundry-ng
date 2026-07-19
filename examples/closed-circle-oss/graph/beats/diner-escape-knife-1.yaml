@@ -1,0 +1,13 @@
+id: beat:diner-escape-knife-1
+created_by: polish
+summary: The ivory handle reflects a crimson smear, marking the knife as a silent witness
+  to the violence.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- character:clifford-moon
+- character:lucy-frost
+grants_flags:
+- flag:cw-diner-escape-knife-1
+texture_premise: Through the gleam of the Ornate Knife

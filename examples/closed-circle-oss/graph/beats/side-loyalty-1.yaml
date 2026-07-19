@@ -1,0 +1,15 @@
+id: beat:side-loyalty-1
+created_by: polish
+summary: Harriet overhears Lucy Frost's desperate whisper to protect her brother near the
+  Old Mill, the Blackwood Ledger's secrets humming like unseen smoke, leaving a lingering
+  sense of loyalty tangled in ash.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ledger-blackwood
+- location:old-mill
+grants_flags:
+- flag:cw-side-loyalty-1
+texture_premise: Loyalty vs. duty at the Old Mill

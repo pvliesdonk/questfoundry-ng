@@ -1,0 +1,10 @@
+id: bridge:gap-5
+created_by: grow
+summary: Edgar slips away into the woods while Mayor Caldwell's reprimand reverberates in
+  Harriet's ears.
+beat_class: structural
+purpose: bridge
+entities:
+- character:edgar-barnes
+- character:mayor-caldwell
+- character:harriet-wellman

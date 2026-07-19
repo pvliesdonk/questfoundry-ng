@@ -1,0 +1,19 @@
+id: passage:p-leeches-whispers
+summary: Marjorie overhears Clifford whisper the code word “leeches” for smuggled contraband;
+  Lucy Frost steps in and warns her not to accuse without proof, fearing the claim could plunge
+  the town into chaos.
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+- character:lucy-frost
+prose_summary: Clifford Moon whispers the code word leeches behind the diner counter; Marjorie
+  Lynch hears it. Lucy Frost enters, warns Marjorie not to accuse without proof, saying rumor
+  will spark chaos. Diners fall silent; Clifford feels pressure. Outside market stalls open,
+  cobblestones glisten, and Clifford sees a street path leading deeper into Grayhaven.
+beats:
+- beat:alt-gap-32
+- beat:alt-marjorie-leeches-lead-2
+- beat:alt-marjorie-leeches-lead-3
+choices:
+- label: Shadow Clifford through the market
+  to: passage:p-package-loom

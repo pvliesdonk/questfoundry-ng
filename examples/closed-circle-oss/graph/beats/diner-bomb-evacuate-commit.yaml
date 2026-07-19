@@ -1,0 +1,11 @@
+id: beat:diner-bomb-evacuate-commit
+summary: Lucy shouts the alarm and shepherds every patron out of the diner.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:evacuate-diner

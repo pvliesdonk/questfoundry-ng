@@ -1,0 +1,16 @@
+id: beat:alt-13
+created_by: polish
+summary: Lucy notes Harriet's tense exchange with Clifford, and the whispered talk of the
+  ledger drifts through the shadowed alcove.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:harriet-wellman
+- character:clifford-moon
+- object:ledger-blackwood
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-20
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

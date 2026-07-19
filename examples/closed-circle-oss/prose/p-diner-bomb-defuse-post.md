@@ -1,0 +1,7 @@
+I pressed the leather journal into my coat, the ink cold against my fingertips as the diner's broken windows stared back at me. Lucy stood over the shattered oak table, a wrench in one hand and a ragged forearm exposed. She had snapped the red wire, the humming charge sputtering before it fell silent, and a flash of heat had singed the air. A jagged cut on her arm bled onto the soot‑blackened floor, the copper taste of blood mixing with ash. I recorded each detail, the scratch of my pen matching the distant clank of gears beyond the walls.
+
+Edgar lingered near the far wall, his coat damp with the night’s chill, revolver glinting at his hip. I stepped forward, badge heavy against my chest, and demanded the truth from him. He shifted, eyes flickering, but offered no answer.
+
+A shadowed booth sat opposite Edgar, its darkness a thin shield against the wind that seeped through the broken panes. I slid into the booth, the wooden seat cold beneath my boots, and watched Lucy tend her wound while the ruined diner hummed with the echo of the bomb’s final spark.
+
+The room lay in ruin—splintered boards, a ceiling of torn iron, townsfolk frozen with pale faces. I noted Lucy’s sacrifice, the blood staining the floor, and the way the shattered space framed the scene. My journal ended without a decision; whether I would charge Edgar had remained a question, the town's fate having hung on a razor's edge.

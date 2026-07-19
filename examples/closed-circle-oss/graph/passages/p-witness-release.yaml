@@ -1,0 +1,30 @@
+id: passage:p-witness-release
+summary: Harriet announces Edgar's release, trusting his alibi, while Lucy tears into the
+  bomb and suffers a burn to neutralize it; Edgar vanishes into the woods, leaving a half‑burned
+  scrap, and Mayor Caldwell's warning about budget cuts looms over Harriet as the diner crisis
+  ends but the murder charge remains open.
+entities:
+- character:edgar-barnes
+- character:mayor-caldwell
+- character:harriet-wellman
+irrelevant_flags:
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+prose_summary: Harriet announces Edgar's release, overturning the alibi doubt; Lucy cuts the
+  bomb’s red wire with a wrench, injuring her forearm and defuses the device; Edgar flees,
+  leaving a half‑burned scrap of paper; Mayor Caldwell notes tension easing, warns of upcoming
+  budget cuts; handcuffs fall; the old mill’s broken tower looms under lantern light as a
+  new choice.
+beats:
+- beat:choose-witness-release-commit--defuse-diner
+- beat:choose-witness-release-post-1--defuse-diner
+- bridge:gap-4
+choices:
+- label: Step into the Old Mill’s shadowed walls
+  grants:
+  - flag:cw-old-mill-gear-whisper
+  to: passage:p-mill-knife
+- label: Watch the farmer union rally behind Harriet
+  to: passage:p-release-defuse

@@ -1,0 +1,16 @@
+id: beat:ledger-burn-pre-3
+summary: Harriet overhears a hushed conversation about the ledger's power to ruin families.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: reveals
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'
+belongs_to:
+- path:burn-ledger
+- path:keep-ledger

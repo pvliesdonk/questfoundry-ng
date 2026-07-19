@@ -1,0 +1,18 @@
+id: passage:p-union-mediation
+summary: Harriet watches the widening rift between growers and the elite and meets Mayor Caldwell,
+  who promises mediation while his tone hints at possible suppression, heightening the tension.
+entities:
+- character:harriet-wellman
+- character:mayor-caldwell
+prose_summary: Lucy Frost stands by an iron firepit holding coffee; the half‑burned Blackwood
+  Ledger rests on a tray. Harriet Wellman watches the farmers’ chant and elite silence, noting
+  the widening gap. Mayor Caldwell steps out, declares a mediation to unite factions while
+  hinting enforcement. Lucy grips her revolver, awaiting whether words or force decide the
+  town’s fate.
+beats:
+- beat:union-strike-pre-2
+- beat:union-strike-pre-3
+- bridge:gap-43
+choices:
+- label: Step into the diner district, coffee steaming at the firepit
+  to: passage:p-coffee-bridge

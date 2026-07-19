@@ -1,0 +1,13 @@
+id: beat:sidetrek-knife-glint
+created_by: polish
+summary: The ornate knife lies slack in the dust near the doorway, its ivory handle catching
+  the flicker of the squad’s radios—a cold reminder of hidden violence.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- character:harriet-wellman
+- character:marjorie-lynch
+grants_flags:
+- flag:cw-sidetrek-knife-glint
+texture_premise: A cold glint of metal under emergency lights hints at unseen peril.

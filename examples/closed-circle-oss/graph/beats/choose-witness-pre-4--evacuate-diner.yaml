@@ -1,0 +1,19 @@
+id: beat:choose-witness-pre-4--evacuate-diner
+created_by: grow
+summary: A ledger fragment linking Edgar to a hidden debt lies in his garden; Harriet’s doubts
+  deepen. Lucy sounds the alarm, ushering everyone out as the bomb’s timer winds down. Financial
+  intrigue sharpens the murder mystery.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: complicates
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+scene_type: scene
+narration_scope: limited
+viewpoint: character:harriet-wellman
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

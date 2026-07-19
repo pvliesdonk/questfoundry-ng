@@ -1,0 +1,32 @@
+id: passage:p-evacuate-diner
+summary: Lucy raises the alarm and guides the diner’s occupants to safety as they evacuate,
+  while Harriet reconsiders Edgar’s alibi amid clashing testimonies, a lingering eerie rhyme,
+  and rumors of a framing, heightening uncertainty about the true murderer.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- character:marjorie-lynch
+- character:lucy-frost
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Lucy Frost watches lantern, Harriet Wellman examines ledger fragment linking
+  Edgar Barnes to hidden debt; a patron testifies Edgar near cellar and argues with victim.
+  Lucy orders crowd to the swinging door exit. Edgar recites rhyme; bomb timer ticks under
+  floor. Lucy pulls alarm lever, blows whistle, guides family and elderly man outside. Rumor
+  reveals Lucy’s brother handled Blackwood ledger.
+beats:
+- beat:choose-witness-pre-1--evacuate-diner
+- beat:choose-witness-pre-2--evacuate-diner
+- beat:choose-witness-pre-3--evacuate-diner
+choices:
+- label: Lean in as the patron murmurs that Lucy’s brother was seen with the ledger‑Blackwood,
+    while the scent of smoldering timber drifts through the diner’s air
+  grants:
+  - flag:cw-whispered-loyalty-1
+  to: passage:p-whispered-loyalty
+- label: Watch Harriet trace the ledger fragment linking Edgar to a hidden debt as Lucy’s
+    alarm screams and the bomb’s timer clicks louder
+  to: passage:p-diner-evacuation

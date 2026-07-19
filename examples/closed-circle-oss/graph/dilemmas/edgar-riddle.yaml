@@ -1,0 +1,19 @@
+id: dilemma:edgar-riddle
+question: Should Harriet follow Edgar's puzzling clue that could reveal the killer's identity?
+why_it_matters: Chasing the clue might expose a vital truth or lead her into a deadly dead‑end
+  crafted by the murderer.
+role: hard
+residue_weight: heavy
+ending_salience: high
+answers:
+- id: answer:pursue-clue
+  text: Harriet deciphers the riddle and follows its trail.
+- id: answer:ignore-clue
+  text: Harriet dismisses the riddle as a distraction.
+anchored_to:
+- character:edgar-barnes
+wraps:
+- dilemma:old-man-secret
+- dilemma:marjorie-leeches
+serial:
+- dilemma:diner-bomb

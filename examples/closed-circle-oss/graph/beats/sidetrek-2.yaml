@@ -1,0 +1,12 @@
+id: beat:sidetrek-2
+created_by: polish
+summary: Harriet Wellman glances at a gleaming Ornate Knife resting beside a table, the blade
+  catching light like a silent accusation, imprinting the image of a concealed weapon in the
+  mind.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+texture_premise: A low‑key murmur over the Blackwood Ledger spreads at Marjorie's diner, exposing
+  the town's concealed debts.

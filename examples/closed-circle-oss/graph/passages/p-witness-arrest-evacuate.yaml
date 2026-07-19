@@ -1,0 +1,41 @@
+id: passage:p-witness-arrest-evacuate
+summary: Harriet arrests Edgar in front of the diner crowd as Lucy blares the alarm and ushers
+  every patron out, and the town reels from the public accusation while a hidden danger threatens
+  to erupt.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- character:thea-swan
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Harriet arrests Edgar at the diner, handcuffs click; Lucy orders evacuation
+  through swinging door; bomb hidden in back room hisses; Thea slips a warning note to Edgar;
+  an ivory-handled knife lies on counter; Edgar dashes into street as bomb continues hissing.
+beats:
+- beat:choose-witness-arrest-commit--evacuate-diner
+- beat:choose-witness-arrest-post-1--evacuate-diner
+- beat:choose-witness-arrest-post-2--evacuate-diner
+choices:
+- label: dash into the street as the bomb hisses
+  grants:
+  - flag:cw-lucy-urgency-1
+  to: passage:p-lucy-knife-glint
+- label: watch the arrest from the doorway, eyes fixed on the flashing knife
+  grants:
+  - flag:cw-clifford-watch-1
+  to: passage:p-clifford-knife

@@ -1,0 +1,14 @@
+id: beat:alt-28
+created_by: polish
+summary: Old Man Well cautions Harriet that force could shatter the fragile peace.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:old-man-well
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:union-strike-pre-5
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

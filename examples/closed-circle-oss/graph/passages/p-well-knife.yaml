@@ -1,0 +1,26 @@
+id: passage:p-well-knife
+summary: Lucy watches Silas "Old Man" Well lean against a rusted beam, his eyes fixed on a
+  hidden ticking clock that suggests unending surveillance, then notices the ornate knife
+  glinting from a cracked cellar wall, a cold promise of violence.
+entities:
+- character:old-man-well
+- location:old-mill
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Lucy pauses at cellar stairs. Silas “Old Man” Well leans against rusted beam,
+  watches concealed ticking clock. Lucy spots an ornate ivory‑handled knife gleaming in a
+  cracked wall fissure and can take it. The clock keeps ticking; nothing else changes.
+beats:
+- beat:echo-reeds-1
+- beat:echo-reeds-2
+choices:
+- label: follow the cold glint of the knife into the hidden cellar
+  to: passage:p-footprints-warning

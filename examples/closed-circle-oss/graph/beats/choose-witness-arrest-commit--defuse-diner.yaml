@@ -1,0 +1,14 @@
+id: beat:choose-witness-arrest-commit--defuse-diner
+created_by: grow
+summary: Harriet slaps cuffs on Edgar before the eyes of the diners, branding him the murderer
+  while the crowd mutters. Lucy snatches a wrench and tears into the ticking device, risking
+  burns to neutralize the bomb. Tension spikes as order fractures and danger lurks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: commits
+scene_type: scene
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

@@ -1,0 +1,7 @@
+id: path:release-edgar
+explores: answer:release-edgar
+consequences:
+- id: consequence:edgar-freed
+  text: Edgar walks free, leaving doubt about his innocence.
+- id: consequence:harriet-credibility-boost
+  text: Harriet's trust in intuition earns respect.

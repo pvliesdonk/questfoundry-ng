@@ -1,0 +1,12 @@
+passage: passage:p-caldwell-revenge-cracks
+priority: 8
+caption: Mayor Caldwell thanks Harriet while the Farmer Union's promise of revenge flickers
+  across their faces.
+prompt: Noir style drawing, deep shadows, muted earth tones, deep crimson on Caldwell's gold
+  tie. Feature Mayor Caldwell in a crisp suit with a gold tie, standing beside Harriet Wellman
+  in a trench coat, while a group of Farmer Union members in weather‑worn overalls with wary
+  expressions watch in the background.
+entities:
+- faction:farmer-union
+- character:mayor-caldwell
+- character:harriet-wellman

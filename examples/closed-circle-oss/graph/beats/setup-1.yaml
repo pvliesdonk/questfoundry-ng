@@ -1,0 +1,8 @@
+id: beat:setup-1
+summary: Grayhaven lies under a lingering fog, its streets quiet after the council clerk's
+  murder, tension coiled like a spring.
+beat_class: structural
+purpose: setup
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost

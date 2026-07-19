@@ -1,0 +1,20 @@
+id: passage:p-whispers-ember
+summary: Harriet hears Lucy propose throwing the Blackwood Ledger into the furnace, and Edgar
+  Barnes murmurs a rhyme about numbers melting in fire, underscoring that truth is being forged—or
+  erased—in flame.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ledger-blackwood
+- location:old-mill
+- character:edgar-barnes
+prose_summary: Lucy stands by the iron‑bound furnace with the Blackwood Ledger on the table
+  and a revolver at her hip. Harriet Wellman steps from the shadows, listens, and considers
+  burning the ledger. Edgar Barnes recites a rhyme about fire erasing lies. All three weigh
+  the decision to toss the ledger into the furnace, risking loss of evidence and moral consequences.
+beats:
+- beat:whisper-ledger-1
+- beat:whisper-ledger-2
+choices:
+- label: Feel the furnace’s roar devour the hidden ledger
+  to: passage:p-furnace-glow

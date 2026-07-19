@@ -1,0 +1,14 @@
+passage: passage:p-looming-knife
+priority: 15
+caption: Lucy and Old Man Well examine the ledger as the Ornate Knife glints in the mill’s
+  gloom.
+prompt: Noir illustration, heavy shadows, muted greys, crimson highlight on the knife. Show
+  Lucy Frost holding a lantern inside the old mill, old-man-well standing nearby, an open
+  ledger‑blackwood on a stone table, and the ivory‑handled ornate knife catching the lantern
+  light, the atmosphere tense.
+entities:
+- character:lucy-frost
+- object:ledger-blackwood
+- character:old-man-well
+- object:ornate-knife
+- location:old-mill

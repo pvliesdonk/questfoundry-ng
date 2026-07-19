@@ -1,0 +1,20 @@
+id: passage:p-coffee-bridge
+summary: Lucy serves coffee to the protestors, echoing Caldwell's warning about the unrest
+  threatening town order, while Old Man Well cautions Harriet that resorting to force could
+  shatter the fragile peace.
+entities:
+- character:mayor-caldwell
+- character:lucy-frost
+- character:old-man-well
+- character:harriet-wellman
+prose_summary: Lucy pours coffee, serves a soot‑stained farmer and a fist‑clenching protestor,
+  and reminds them of Caldwell’s warning of unrest threatening town order. Old Man Well tells
+  Harriet that force will shatter fragile peace; Harriet keeps her revolver at her hip and
+  watches the smoldering ledger. Lucy notes rising tension and the cost of possible violence.
+beats:
+- beat:union-strike-pre-4
+- bridge:gap-44
+- bridge:gap-45
+choices:
+- label: Walk toward the rusted firepit behind town hall
+  to: passage:p-well-warning

@@ -1,0 +1,15 @@
+id: beat:lucy-urgency-1
+created_by: polish
+summary: Lucy shouts a jagged warning, her voice slicing through the clatter as terrified
+  townsfolk stumble toward the darkened street, the bomb’s silent tick a thrum beneath her
+  words.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- character:harriet-wellman
+- character:edgar-barnes
+grants_flags:
+- flag:cw-lucy-urgency-1
+texture_premise: Lucy’s frantic urgency as the bomb hisses

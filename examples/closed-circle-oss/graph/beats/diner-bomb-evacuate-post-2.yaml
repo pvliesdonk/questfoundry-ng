@@ -1,0 +1,14 @@
+id: beat:diner-bomb-evacuate-post-2
+summary: The bomb continues ticking; Clifford slips away into darkness, leaving the device
+  unexploded.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: reveals
+entities:
+- character:clifford-moon
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:evacuate-diner

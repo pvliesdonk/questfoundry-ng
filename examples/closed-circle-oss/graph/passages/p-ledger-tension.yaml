@@ -1,0 +1,23 @@
+id: passage:p-ledger-tension
+summary: The Farmer Union members demand transparency as rumors swirl, their chants echoing
+  through the courtyard while Lucy steals a glance at the still‑locked ledger, wondering who
+  will be exposed next.
+entities:
+- faction:farmer-union
+- character:lucy-frost
+prose_summary: Mayor Caldwell appears on square steps as the Farmer Union chants for debt
+  transparency and the Blackwood Ledger. He retrieves the sealed ledger from a hidden safe,
+  places it on a heated metal tray beside the furnace. Lucy Frost glances at it, hand on the
+  tray; the ledger thrums. Caldwell watches her; crowd pressure increases, political risk
+  rises.
+beats:
+- beat:ledger-burn-keep-post-2
+- beat:ledger-burn-keep-post-3
+- bridge:gap-25
+choices:
+- label: linger by the sealed ledger
+  grants:
+  - flag:cw-side-1
+  to: passage:p-looming-knife
+- label: watch the ledger pulse
+  to: passage:p-ledger-bomb

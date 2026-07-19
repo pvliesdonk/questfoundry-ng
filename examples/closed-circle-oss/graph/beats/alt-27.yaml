@@ -1,0 +1,15 @@
+id: beat:alt-27
+created_by: polish
+summary: Lucy’s coffee cups clink while Old Man Well advises Harriet that force could shatter
+  fragile peace.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+- character:old-man-well
+- character:harriet-wellman
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-45
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

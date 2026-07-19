@@ -1,0 +1,18 @@
+id: passage:p-farmers-tremor
+summary: Harriet senses a tremor ripple through the crowd when Lucy Frost slams a glass, and
+  the Farmer Union members stare uneasy at the nearby flames, planting a knot of suspicion
+  about secret alliances.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- faction:farmer-union
+prose_summary: Harriet tightens her revolver as shattered glass rings, creating a tremor amid
+  the Farmer Union chant and firepit crackle. Farmers tense, glance at orange flames on iron
+  ribs, then the crowd. She observes Lucy's empty‑glass stare and the bartender’s tightened
+  jaw. Noticing uneasy union movement, she steps from the cold cobbles toward the neon‑lit
+  diners.
+beats:
+- beat:harriet-farmers-1
+choices:
+- label: Walk toward the diner district, letting the ember‑streaked air fill my lungs
+  to: passage:p-union-mediation

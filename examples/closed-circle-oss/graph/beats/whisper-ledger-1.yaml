@@ -1,0 +1,15 @@
+id: beat:whisper-ledger-1
+created_by: polish
+summary: Harriet overhears Lucy muttering that the Blackwood Ledger could be tossed into the
+  furnace’s hot ash, leaving the reader with a cold certainty that the town’s sins might be
+  reduced to ember.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- object:ledger-blackwood
+- location:old-mill
+grants_flags:
+- flag:cw-whisper-ledger-1
+texture_premise: A whispered rumor about the Blackwood Ledger spreads through the mill’s shadows.

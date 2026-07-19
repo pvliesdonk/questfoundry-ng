@@ -1,0 +1,36 @@
+id: passage:p-evac-diner-witness
+summary: Harriet frees Edgar while Lucy sounds the alarm and leads the patrons out of the
+  diner; the bomb sits silent, and Edgar slips away into the woods, leaving the accusation
+  unresolved.
+entities:
+- character:edgar-barnes
+- character:mayor-caldwell
+- character:harriet-wellman
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Mayor Caldwell stands in diner doorway; Lucy pulls alarm lever; bomb sits in
+  back room; patrons flee. Harriet Wellman returns, flashes badge, removes Edgar Barnes’s
+  handcuffs, whispers, frees him, eyes Blackwood Ledger. Lucy sweeps crowd with torch; player
+  guides patrons, touches ledger, pulls trembling patron, sees ivory-handled knife, watches
+  Edgar escape; Harriet declares his freedom, accusation remains unresolved.
+beats:
+- beat:choose-witness-release-commit--evacuate-diner
+- beat:choose-witness-release-post-1--evacuate-diner
+- bridge:gap-5
+choices:
+- label: Steel my resolve as Harriet's scar catches the firelight
+  grants:
+  - flag:cw-harriet-view-1
+  to: passage:p-harriet-steels
+- label: Dash through the diner, shielding a trembling patron and eyeing the glint of the
+    Ornate Knife
+  grants:
+  - flag:cw-lucy-guard-2
+  to: passage:p-lucy-guard
+- label: Hover my hand over the Blackwood Ledger as I steer the crowd
+  grants:
+  - flag:cw-mayor-calc-3
+  to: passage:p-mayor-leverage

@@ -1,0 +1,7 @@
+I opened the leather notebook that had traveled with me beneath the stone arches of the old mill. Its cover was cracked, the corners softened by years of handling, and the pages inside were stained with the ash of past entries. I turned to the last page, where I had recorded the orders that sent uniformed deputies to the farmer protest. The ink was still dark, each line a reminder of the arrests I had authorized. I wrote the date in the margin, then set the pen down and stared at the blank space that followed.
+
+My thoughts lingered on the moment I had let the opportunity slip. The crowd had surged, voices rising like a low wind, and I had held back the hand that might have steadied the tide. I could have intercepted the hidden route that led to the cellar beneath the mill, but I walked past the cracked floorboards instead, trusting the surface still held the answers. The darkness seemed to thicken around the edges of the room, the shadows in the corners deepening as if the stone itself were swallowing light.
+
+I noted the scar on my cheek, a pale line that caught the faint lantern glow, and the weight of my badge pressed into my chest. The revolver at my hip rested cold against the worn leather of my coat. A slow breath escaped me, pulling the chill from the air deeper into my lungs. The journal lay open, waiting for the next line, the next confession of a chance missed.
+
+The old mill breathed around me, its silence pressing in, urging me to mark the loss before the darkness could settle any further.

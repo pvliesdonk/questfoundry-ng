@@ -1,0 +1,14 @@
+id: beat:mayor-calc-3
+created_by: polish
+summary: Mayor Caldwell subtly directs the crowd, his hand hovering over the Blackwood Ledger
+  while glancing toward the Old Mill, leaving a lingering chill of hidden leverage.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:mayor-caldwell
+- object:ledger-blackwood
+- character:marjorie-lynch
+- location:old-mill
+grants_flags:
+- flag:cw-mayor-calc-3
+texture_premise: Caldwell’s calculated calm manipulates the evacuation

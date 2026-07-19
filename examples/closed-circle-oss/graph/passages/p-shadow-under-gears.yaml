@@ -1,0 +1,27 @@
+id: passage:p-shadow-under-gears
+summary: Edgar Barnes deciphers the note about a shadow beneath the turning gears and pinpoints
+  the concealed location, and Old Man Well, who overhears, whispers that a hidden passage
+  under the Old Mill could trap the murderer.
+entities:
+- character:edgar-barnes
+- character:old-man-well
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Edgar reads a scrap that points to a hidden hollow under the mill gears. Old
+  Man Well mentions old tunnels beneath the Old Mill. Silas warns the passage could trap a
+  pursuer with thin air and iron doors. A narrow east doorway opens to a dawn‑lit tunnel.
+  Clifford grips his ivory knife and weighs entering.
+beats:
+- beat:alt-edgar-riddle-lead-3
+- beat:alt-edgar-riddle-lead-4
+- beat:alt-old-man-secret-pre-1
+choices:
+- label: Enter the crisp dawn‑lit tunnels beneath the Old Mill
+  to: passage:p-knife-evidence-closure

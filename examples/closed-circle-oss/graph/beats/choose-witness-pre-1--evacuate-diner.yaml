@@ -1,0 +1,18 @@
+id: beat:choose-witness-pre-1--evacuate-diner
+created_by: grow
+summary: Harriet learns Edgar’s alibi clashes with testimonies placing him at the scene; Lucy
+  shouts the alarm and corrals the diner’s occupants toward safety. Uncertainty about the
+  murderer thickens as the crowd evacuates.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:arrest-edgar
+- path:release-edgar

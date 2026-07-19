@@ -1,0 +1,7 @@
+Silas Well stood in the dim workshop, the clatter of brass gears dwindling to a thin rasp as the last cog settled. He lifted a greying hand, the knuckles pale against the oil‑stained wood, and spoke low enough that only the shadows seemed to hear. “There’s a ledger tucked behind the furnace soot in the Old Mill,” he muttered, his voice a rasp of rusted iron. The words fell like ash, settling on the cracked pine walls.
+
+He turned his gaze toward the iron‑bound door that led to the river‑bank outbuildings, where the abandoned mill waited like a stone‑crowned coffin. The notion of a hidden debt lingered in the air, a weight he could feel pressing against the backs of the town’s weary shoulders. He did not linger on the thought; instead he tightened the strap of his belt, the click of metal echoing the ticking of the clocks he had tended all his life.
+
+A soft wind slipped through the cracked window, carrying the faint scent of soot and river mud. Old Man Well traced a fingertip along the line of the ledger’s name etched in his memory, a name tied to the Blackwood family and to the ruin he feared would rise if the papers ever saw light. He knew the passage beneath the mill’s stone floor could swallow a man whole, but the ledger’s silence was a bargain he would not break.
+
+He stepped back from the workbench, the mutter still hanging in the stale air, and regarded the empty space where the ledger might lie, its secret waiting beneath the furnace’s glow.

@@ -1,0 +1,12 @@
+id: beat:arm3-water-drip
+created_by: polish
+summary: A solitary drip echoes off stone walls, each plink suggesting a concealed tunnel
+  where darkness gathers, tightening the knot of dread.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- location:old-mill
+grants_flags:
+- flag:cw-arm3-water-drip
+texture_premise: Water drip hints at hidden passage

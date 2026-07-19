@@ -1,0 +1,32 @@
+id: passage:p-arrest-knife-bomb
+summary: Harriet arrests Edgar, his scar bleeding as a gleaming ornamental knife is uncovered
+  in his desk, confirming suspicion. Lucy defuses the sputtering bomb while Harriet notes
+  a distant gunshot in her journal.
+entities:
+- character:thea-swan
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ornate-knife
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Harriet moves through diner, pockets Thea’s warning note, arrests Edgar with
+  badge and iron handcuffs, reopening his scar wound. She lifts desk slab, exposing ivory‑handled
+  knife and torn Blackwood Ledger page. Lucy disables bomb by wrenching and snapping its red
+  wire. Harriet records gunshot, hides ledger page under coffee foam; Edgar sees smoldering
+  Old Mill tower and hears gears.
+beats:
+- beat:choose-witness-arrest-post-3--defuse-diner
+- bridge:gap-0
+- bridge:gap-2
+choices:
+- label: Slip the Blackwood Ledger page into Marjorie's coffee
+  grants:
+  - flag:cw-arm-a-diner-riddle
+  to: passage:p-diner-ink
+- label: Observe the smoldering Old Mill silhouette
+  grants:
+  - flag:cw-arm-b-old-mill-clock
+  to: passage:p-old-mill-confrontation

@@ -1,0 +1,18 @@
+id: passage:p-ticking-urgency
+summary: A faint ticking and the metallic scent of gunpowder raise panic in the diner; Lucy's
+  alarmed stare meets Marjorie's hopeful smile as the ticking intensifies, and Marjorie urges
+  everyone to stay open, claiming the evening crowd is vital for morale.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+prose_summary: Lucy Frost sees the ticking iron box and notes her scar; Marjorie Lynch lifts
+  her flour‑dusted apron, smiles, and declares the doors stay open for town morale; Edgar
+  Barnes flashes his badge, steps forward with his revolver, and demands an explanation of
+  the device; patrons watch, the ticking quickens, and a murmur spreads.
+beats:
+- beat:diner-bomb-pre-2
+- beat:diner-bomb-pre-3
+- bridge:gap-11
+choices:
+- label: Step forward, badge glinting, and demand to know what's happening
+  to: passage:p-harriet-confronts

@@ -1,0 +1,15 @@
+id: passage:p-edgar-riddle
+summary: Edgar’s riddling tone lingers, turning Thea’s anxiety into a veil of puzzling omen.
+entities:
+- character:edgar-barnes
+- character:thea-swan
+- character:marjorie-lynch
+prose_summary: Thea keeps coat buttoned and badge on lapel, watches tavern light. Edgar recites
+  a riddle. Lucy places a folded scrap beside Thea’s cup; Thea takes the paper and tucks it
+  under the cup. She watches moving shadows, notes tension, and decides to stay awake all
+  night, guarding the secret hidden in the tavern.
+beats:
+- beat:arm-edgar-rhyme
+choices:
+- label: trace the pattern of shadows across the booths
+  to: passage:p-whisper-night

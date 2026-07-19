@@ -1,0 +1,14 @@
+id: beat:diner-bomb-evacuate-post-1
+summary: Patrons rush onto the street, breathless but unharmed, following Lucy's lead.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:diner-bomb
+  effect: advances
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+scene_type: scene
+narration_scope: limited
+viewpoint: character:lucy-frost
+belongs_to:
+- path:evacuate-diner

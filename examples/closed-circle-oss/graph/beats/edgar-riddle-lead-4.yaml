@@ -1,0 +1,17 @@
+id: beat:edgar-riddle-lead-4
+summary: Old Man Well overhears the discussion and mutters about secret tunnels beneath the
+  mill.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:edgar-riddle
+  effect: reveals
+entities:
+- character:old-man-well
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.
+belongs_to:
+- path:pursue-clue

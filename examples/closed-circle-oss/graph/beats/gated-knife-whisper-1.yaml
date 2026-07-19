@@ -1,0 +1,17 @@
+id: beat:gated-knife-whisper-1
+created_by: polish
+summary: Marjorie Lynch leans over the altar, noting the knife’s absence from the ledger,
+  and the hall trembles with the memory of a whispered warning; the reader retains the sense
+  of a concealed ledger link.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:marjorie-lynch
+- object:ornate-knife
+- object:ledger-blackwood
+requires_flags:
+- flag:cw-detour-knife-1
+grants_flags:
+- flag:cw-gated-knife-whisper-1
+texture_premise: A tense whisper in the hall echoes the diner's rumor about the missing Ornate
+  Knife

@@ -1,0 +1,12 @@
+id: beat:old-mill-gear-whisper
+created_by: polish
+summary: The wind sweeps through the abandoned Old Mill, rattling loose boards and coaxing
+  the faint tick of a hidden clockwork, a reminder that time has stalled at the town’s edge.
+beat_class: structural
+purpose: false_branch
+entities:
+- location:old-mill
+- character:old-man-well
+grants_flags:
+- flag:cw-old-mill-gear-whisper
+texture_premise: A murmuring echo of rusted gears in the Old Mill’s shadow.

@@ -1,0 +1,19 @@
+id: beat:alt-01
+created_by: polish
+summary: The Old Mill's basement hall buzzes with gossip; Lucy sets up a makeshift counter,
+  Thea tends lanterns, and Mayor Caldwell arrives to assure calm.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:marjorie-lynch
+- character:lucy-frost
+- character:thea-swan
+- character:mayor-caldwell
+grants_flags:
+- flag:cw-alt-01
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:setup-3
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

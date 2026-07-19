@@ -1,0 +1,11 @@
+id: beat:knife-glint-clifford
+created_by: polish
+summary: The ornate knife catches a stray shaft of light, flashing across Clifford’s narrowed
+  eyes, a cold glint that registers the thin line between order and chaos.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ornate-knife
+- character:clifford-moon
+- character:harriet-wellman
+texture_premise: Clifford’s detached observation of the chaos

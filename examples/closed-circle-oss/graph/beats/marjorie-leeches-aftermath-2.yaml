@@ -1,0 +1,13 @@
+id: beat:marjorie-leeches-aftermath-2
+summary: Marjorie snaps a photo of the exchange, securing undeniable proof.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: advances
+entities:
+- character:marjorie-lynch
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:silent-investigate

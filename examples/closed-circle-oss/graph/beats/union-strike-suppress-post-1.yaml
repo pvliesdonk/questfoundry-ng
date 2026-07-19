@@ -1,0 +1,14 @@
+id: beat:union-strike-suppress-post-1
+summary: Farmers are handcuffed; their chants fall silent, tension spikes.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: complicates
+entities:
+- faction:farmer-union
+- character:harriet-wellman
+scene_type: scene
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:suppress-protest

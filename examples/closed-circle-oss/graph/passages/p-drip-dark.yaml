@@ -1,0 +1,28 @@
+id: passage:p-drip-dark
+summary: A solitary drip echoes off the stone walls, each plink suggesting a concealed tunnel
+  where darkness gathers, tightening the knot of dread.
+entities:
+- character:old-man-well
+- location:old-mill
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Edgar presses his badge, follows a drip, finds a fissure, opens a rusted iron
+  latch, lowers his lantern, enters a tunnel that descends then curves upward to a stairwell,
+  climbs into a dim corridor, reaches Marjorie's lit kitchen, hears patrons and mugs, feels
+  his revolver, and faces a decision.
+beats:
+- beat:arm3-water-drip
+choices:
+- label: listen to the dripping stone and slip into Marjorie's diner
+  to: passage:p-shadow-knife

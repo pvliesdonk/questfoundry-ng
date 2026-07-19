@@ -1,0 +1,11 @@
+id: beat:arm-harriet-observe
+created_by: polish
+summary: Harriet's notebook tightens as she notes Thea's clenched hand, a quiet pulse of suspicion.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- character:thea-swan
+grants_flags:
+- flag:cw-arm-harriet-observe
+texture_premise: Harriet watches Thea's tremor from the precinct desk.

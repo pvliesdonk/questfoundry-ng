@@ -1,0 +1,17 @@
+id: beat:choose-witness-arrest-post-4--evacuate-diner
+created_by: grow
+summary: Harriet logs the echo of distant gunfire while sealing Edgar’s fate; Lucy leads the
+  last patrons out, the diner’s doors swinging shut on the dormant bomb. The entry captures
+  a fragile calm before a looming decision.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: advances
+entities:
+- character:harriet-wellman
+is_ending: true
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

@@ -1,0 +1,40 @@
+id: passage:p-diner-evacuation
+summary: Harriet uncovers a ledger fragment tying Edgar to a hidden debt as Mayor Caldwell
+  urges her to lock him up, and Lucy triggers the alarm while the bomb timer ticks louder,
+  forcing everyone to evacuate the diner under growing moral and lethal pressure.
+entities:
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ledger-blackwood
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Harriet leaves diner, takes ledger fragment, finds hidden debt page in garden
+  under bench, lights lantern. Lucy sounds alarm, bomb timer ticks faster. Mayor Caldwell
+  arrives, orders Harriet to detain Edgar. Harriet handcuffs Edgar but leaves cuff slack;
+  Edgar moves toward garden as crowd surges and bomb nears explosion.
+beats:
+- beat:choose-witness-pre-4--evacuate-diner
+- beat:choose-witness-pre-5--evacuate-diner
+choices:
+- label: Harriet handcuffs Edgar as Lucy blares the alarm
+  grants:
+  - flag:edgar-imprisoned
+  - flag:harriet-scrutiny
+  to: passage:p-witness-arrest-evacuate
+- label: Harriet hesitates while Lucy sounds the alarm
+  grants:
+  - flag:edgar-freed
+  - flag:harriet-credibility-boost
+  to: passage:p-evac-diner-witness

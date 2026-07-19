@@ -1,0 +1,26 @@
+id: character:mayor-caldwell
+name: Mayor Caldwell
+concept: charismatic mayor, obsessed with preserving the town's image
+pronouns: he/him
+base:
+  appearance: clean‑cut, gold tie
+  manner: political, controlling
+arc:
+  begins: Mayor Caldwell is charismatic and obsessed with preserving Grayhaven's image.
+  pivots:
+  - beat: beat:ledger-burn-pre-1
+    becomes: Mayor opens the Blackwood Ledger, scanning stained names and debts.
+  - beat: beat:ledger-burn-burn-commit
+    becomes: Mayor orders the Blackwood Ledger burned to protect influential families.
+  - beat: beat:ledger-burn-keep-commit
+    becomes: Mayor decides to hide the Blackwood Ledger in a secret safe.
+  - beat: beat:union-strike-support-post-2
+    becomes: Mayor Caldwell's polished image shows cracks during debate.
+  - beat: beat:mayor-calc-3
+    becomes: Mayor subtly manipulates the crowd, seeking leverage over the union.
+  ends:
+  - path: path:burn-ledger
+    state: Ledger destroyed; mayor's reputation tarnished.
+  - path: path:keep-ledger
+    state: Ledger hidden; mayor retains political leverage.
+pov_head: true

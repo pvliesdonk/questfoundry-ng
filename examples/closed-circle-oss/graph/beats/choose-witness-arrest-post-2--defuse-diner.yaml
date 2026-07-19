@@ -1,0 +1,17 @@
+id: beat:choose-witness-arrest-post-2--defuse-diner
+created_by: grow
+summary: Harriet restrains Edgar amid jeers; Thea slides Harriet a terse note warning of danger
+  beyond the arrest. Lucy, wrench in hand, tears into the bomb, sparks flying as she disables
+  it with a grimace. The warning note leaves Harriet uneasy as the crowd’s fury roars.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:thea-swan
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

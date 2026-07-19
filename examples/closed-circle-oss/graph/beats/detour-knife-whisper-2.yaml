@@ -1,0 +1,12 @@
+id: beat:detour-knife-whisper-2
+created_by: polish
+summary: A faint scrape follows the whisper, the shadowy figure’s hurried steps leaving dust‑caked
+  footprints, sealing the tension before the chase resumes; the reader holds the image of
+  a fleeing silhouette.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:harriet-wellman
+- object:ornate-knife
+texture_premise: A whispered accusation that the Ornate Knife was deliberately placed as a
+  false clue

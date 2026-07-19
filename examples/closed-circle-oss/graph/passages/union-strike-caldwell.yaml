@@ -1,0 +1,29 @@
+id: passage:union-strike-caldwell
+summary: Council members frown, tightening political pressure on Harriet’s department, while
+  Mayor Caldwell’s debate with the council chips away at his public image; when the debate
+  ends, an uneasy calm spreads through Grayhaven.
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+prose_summary: Mayor Caldwell addresses council, faces challenge over union protest; debate
+  ends, city quiets. Deputy Harriet Wellman leaves council, walks bridge with Marjorie hearing
+  farmer march; Lucy Frost polishes bar, notices ornate ivory-handled knife; Old Man Well
+  mutters about hidden ledger in old mill, Marjorie overhears clue. Three future paths await
+  Harriet.
+beats:
+- beat:union-strike-support-post-2
+- beat:union-strike-support-post-3
+- bridge:gap-47
+choices:
+- label: Enter Old Man Well’s workshop and hear his muttered clue about the hidden ledger
+  grants:
+  - flag:cw-fork-old-man-1
+  to: passage:p-old-man-ledger
+- label: Stride along the bridge with Deputy Harriet, the farmer’s march echoing behind her
+  grants:
+  - flag:cw-fork-harriet-1
+  to: passage:fork-harriet-1
+- label: Place the Ornate Knife on the shadowed shelf as Lucy watches the bar polish
+  grants:
+  - flag:cw-fork-lucy-1
+  to: passage:p-lucy-knife

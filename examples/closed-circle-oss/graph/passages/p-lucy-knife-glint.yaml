@@ -1,0 +1,37 @@
+id: passage:p-lucy-knife-glint
+summary: Lucy cries a jagged warning as terrified townsfolk scramble toward the darkened street
+  where a bomb ticks beneath the clatter, and a stray beam flashes off her ornate knife, freezing
+  her breath and marking the moment of imminent danger.
+entities:
+- character:lucy-frost
+- character:marjorie-lynch
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Lucy Frost shouts warning in the crowded diner, spots an ivory-handled knife
+  on a stone slab, and smells smoldering timber. She grabs a brass whistle, blows a note that
+  pulls the townsfolk away from a ticking bomb. Her scarred palm throbs as the bomb hisses
+  louder; she keeps the whistle steady while danger remains.
+beats:
+- beat:knife-glint-lucy
+- beat:lucy-urgency-1
+choices:
+- label: Blow the whistle as the bomb ticks behind us
+  to: passage:p-knife-evac

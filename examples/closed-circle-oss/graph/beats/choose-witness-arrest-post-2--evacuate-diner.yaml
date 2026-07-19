@@ -1,0 +1,17 @@
+id: beat:choose-witness-arrest-post-2--evacuate-diner
+created_by: grow
+summary: Harriet handcuffs Edgar while Thea slips a warning note about unseen threats into
+  her palm. Lucy yells for evacuation, ushering trembling patrons into the night as the bomb
+  hisses silently. The town’s order fractures under accusation and whispered peril.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:choose-witness
+  effect: reveals
+entities:
+- character:thea-swan
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+belongs_to:
+- path:arrest-edgar

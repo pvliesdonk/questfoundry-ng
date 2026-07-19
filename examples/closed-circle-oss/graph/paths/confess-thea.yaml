@@ -1,0 +1,7 @@
+id: path:confess-thea
+explores: answer:confess-thea
+consequences:
+- id: consequence:thea-truth-known
+  text: Thea's scandal is exposed, damaging her reputation.
+- id: consequence:thea-allies
+  text: Some townsfolk admire her honesty.

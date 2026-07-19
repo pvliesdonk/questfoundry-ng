@@ -1,0 +1,13 @@
+id: beat:ledger-burn-burn-post-1
+summary: Flames consume the pages, black ash drifting away, erasing the secrets.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:ledger-burn
+  effect: advances
+entities:
+- object:ledger-blackwood
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:burn-ledger

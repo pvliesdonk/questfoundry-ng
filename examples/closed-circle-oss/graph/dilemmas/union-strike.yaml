@@ -1,0 +1,16 @@
+id: dilemma:union-strike
+question: Should Harriet suppress the farmer union's protest or side with them against the
+  town's elite?
+why_it_matters: Suppressing the protest upholds law and order but fuels resentment; supporting
+  the union could destabilize the town's power structure.
+role: soft
+residue_weight: light
+ending_salience: low
+answers:
+- id: answer:suppress-protest
+  text: Harriet arrests the protestors.
+- id: answer:support-protest
+  text: Harriet backs the union, refusing to use force.
+anchored_to:
+- character:harriet-wellman
+- faction:farmer-union

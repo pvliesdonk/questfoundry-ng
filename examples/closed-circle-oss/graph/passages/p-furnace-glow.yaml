@@ -1,0 +1,18 @@
+id: passage:p-furnace-glow
+summary: Lucy points out the coal‑fed furnace behind the mill's iron beams, noting it can
+  consume documents in its flames. Thea watches the glow, the flickering fire reminding her
+  of the heat of a past scandal.
+entities:
+- character:lucy-frost
+- character:thea-swan
+prose_summary: Lucy notes the coal furnace, grips her revolver strap, and points at its flame;
+  Thea Swan watches, her scandal memory surfaces; the furnace roars and a stone stair beside
+  it leads down to a basement; Lucy feels the decision weight, costing possible destruction
+  of papers.
+beats:
+- beat:alt-16
+- beat:alt-17
+- beat:alt-18
+choices:
+- label: Enter the furnace‑lit basement of the Old Mill
+  to: passage:p-union-chant

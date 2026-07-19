@@ -1,0 +1,39 @@
+id: passage:p-diner-bomb-defuse
+summary: Lucy grabs a wrench, slices the bomb's red wire, the timer sputters, and the device
+  partially erupts, tearing her forearm.
+entities:
+- character:lucy-frost
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Lucy takes a wrench, cuts the bomb’s red wire, causing a spark and partial
+  detonation that shrapnel wounds her forearm. She presses the wound, grabs a blood‑stained
+  ivory knife, opens a hidden metal latch under the table, revealing a dark passage, and meets
+  Deputy Harriet’s stare.
+beats:
+- beat:diner-bomb-defuse-commit
+- beat:diner-bomb-defuse-post-1
+- beat:diner-bomb-defuse-post-2
+choices:
+- label: step toward Deputy Harriet’s scarred gaze
+  requires:
+  - flag:above-ground-search
+  grants:
+  - flag:cw-diner-escape-harriet-1
+  to: passage:p-harriet-scar
+- label: grip the blood‑stained ivory knife
+  grants:
+  - flag:cw-diner-escape-knife-1
+  to: passage:p-diner-knife-witness
+- label: pull the hidden latch beneath the table
+  grants:
+  - flag:cw-diner-escape-well-1
+  to: passage:p-diner-secret-exit
+- label: step toward Deputy Harriet’s scarred gaze
+  requires:
+  - flag:secret-passage-used
+  grants:
+  - flag:cw-diner-escape-harriet-1
+  to: passage:p-harriet-scar--s1

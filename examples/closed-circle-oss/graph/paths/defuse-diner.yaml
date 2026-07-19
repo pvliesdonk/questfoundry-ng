@@ -1,0 +1,7 @@
+id: path:defuse-diner
+explores: answer:defuse-diner
+consequences:
+- id: consequence:bomb-defused
+  text: Lucy disables the bomb, capturing the saboteur.
+- id: consequence:lucy-injured
+  text: Lucy sustains injuries in the process.

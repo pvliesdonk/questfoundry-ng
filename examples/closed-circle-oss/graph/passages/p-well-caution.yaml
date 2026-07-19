@@ -1,0 +1,22 @@
+id: passage:p-well-caution
+summary: Old Man Well warns Harriet that force could shatter the fragile peace.
+entities:
+- character:old-man-well
+- character:harriet-wellman
+prose_summary: Lucy Frost stands by the iron door and furnace; Blackwood Ledger lies on iron
+  slab. Old Man Well warns Harriet Wellman heavy action could fracture town calm. Lucy secures
+  revolver, adds kindling to furnace, ash smears ledger. She inserts ledger into door slot,
+  bolts shut, and notes future choices now rest on locked ledger and fire.
+beats:
+- beat:alt-28
+choices:
+- label: Add kindling to the furnace
+  grants:
+  - flag:ledger-destroyed
+  - flag:mayor-power-boost
+  to: passage:p-ledger-burn-ash
+- label: Lock the ledger behind the clerk’s iron door
+  grants:
+  - flag:ledger-hidden
+  - flag:mayor-ambivalence
+  to: passage:p-ledger-hidden

@@ -1,0 +1,19 @@
+id: passage:p-ledger-knife
+summary: Silas "Old Man" Well tells the party that the ledger‑blackwood is slipped into a
+  hidden compartment, and a flash of orange firelight catches an ornate knife jutting from
+  a splintered beam.
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+- location:old-mill
+- object:ornate-knife
+prose_summary: Harriet stands at the old mill; Old Man Well whispers the Blackwood ledger
+  hides beneath floorboards. He uses a rusted nail to open a dusty cavity, revealing ledger
+  pages. A furnace flare lights an ivory‑handled knife stuck in a beam. Harriet takes the
+  ledger, leaving the knife in place. She now holds the ledger clue and sees the knife clue.
+beats:
+- beat:sidetack-1
+- beat:sidetack-2
+choices:
+- label: Slide your fingers over the concealed ledger‑blackwood and move onward
+  to: passage:p-tunnel-escape

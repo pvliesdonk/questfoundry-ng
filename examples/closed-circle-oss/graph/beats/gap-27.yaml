@@ -1,0 +1,13 @@
+id: bridge:gap-27
+created_by: grow
+summary: Mayor Caldwell's eyes scan the ledger's debts as Harriet steps forward to question
+  Clifford about the knife.
+beat_class: structural
+purpose: bridge
+entities:
+- character:mayor-caldwell
+- object:ledger-blackwood
+- character:harriet-wellman
+- character:clifford-moon
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

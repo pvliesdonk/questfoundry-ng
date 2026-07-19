@@ -1,0 +1,32 @@
+id: character:harriet-wellman
+name: Harriet Wellman
+concept: the town's stern deputy sheriff, mid‑40s, scar on cheek
+pronouns: she/her
+base:
+  appearance: short, greying hair, trench coat
+  manner: no‑nonsense, pragmatic
+  badge_position: pressed to chest
+arc:
+  begins: Harriet is a pragmatic deputy sheriff, weary of the council clerk's murder.
+  pivots:
+  - beat: beat:setup-2
+    becomes: Harriet notes the unsolved killing and rising town fear in her journal.
+  - beat: bridge:gap-27
+    becomes: Harriet confronts Clifford about the ornate knife, demanding answers.
+  - beat: beat:harriet-debt-1
+    becomes: Harriet becomes aware that the Blackwood Ledger can ruin families.
+  - beat: beat:union-strike-support-commit
+    becomes: Harriet publicly backs the Farmer Union, siding with the protesters.
+  - beat: beat:union-strike-suppress-commit
+    becomes: Harriet orders arrests, cracking down on the farmer protest.
+  ends:
+  - path: path:arrest-edgar
+    state: Harriet has arrested Edgar, emphasizing law over doubt.
+  - path: path:release-edgar
+    state: Harriet has released Edgar, showing mercy and skepticism.
+  - path: path:support-protest
+    state: Harriet aligned with the union, actively supporting the protest.
+  - path: path:suppress-protest
+    state: Harriet chose repression, ordering arrests against the protest.
+pov_head: true
+interlude_carrier: true

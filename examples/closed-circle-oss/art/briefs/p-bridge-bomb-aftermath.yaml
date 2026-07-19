@@ -1,0 +1,12 @@
+passage: passage:p-bridge-bomb-aftermath
+priority: 7
+caption: Harriet coordinates the bomb squad as Marjorie watches the empty doorway and Edgar
+  lingers nearby.
+prompt: Noir illustration, heavy shadows, muted browns with a crimson highlight on Harriet's
+  scar. Show Harriet Wellman kneeling near a discarded bomb, radio pressed to her ear, Marjorie
+  Lynch in a flour‑dusted apron staring at an empty doorway, and a shadowed figure of Edgar
+  Barnes lingering in the background, rain drumming the stone street.
+entities:
+- character:harriet-wellman
+- character:marjorie-lynch
+- character:edgar-barnes

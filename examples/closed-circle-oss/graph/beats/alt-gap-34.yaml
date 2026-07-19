@@ -1,0 +1,15 @@
+id: beat:alt-gap-34
+created_by: polish
+summary: Silas's hushed directions echo as Harriet Wellman takes the ornate knife and seals
+  it as evidence.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:old-man-well
+- character:harriet-wellman
+- object:ornate-knife
+scene_type: micro_beat
+narration_scope: limited
+mirrors: bridge:gap-34
+texture_premise: Crisp, clear dawn light bathes the hidden tunnels beneath the Old Mill as
+  the investigation unfolds.

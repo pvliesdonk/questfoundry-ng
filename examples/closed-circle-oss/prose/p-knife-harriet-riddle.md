@@ -1,0 +1,9 @@
+Clifford Moon stood in the market square, the cold wind rattling the shutters behind the stalls. He felt the ornate knife at his hip, its ivory handle dulled by soot, and he resolved to place it in lawful hands. He stepped forward, lifted the sheath, and pressed the cold steel into Harriet Wellman's palm, his thumb grazing the metal as if sealing a pact. Her badge caught the faint lantern glow, the scar on her cheek framed her stern expression.
+
+Edgar Barnes lingered near the far table, his thin frame hunched over a stack of papers. He slipped a folded note across the wood to Harriet, the paper crisp and the ink sharp. The words formed a riddle: “the heart of stone and river's mouth.” Clifford watched the note land beside the knife, the edge of the parchment catching a glint.
+
+Harriet unfolded the note, her eyes narrowing as she read. She traced the line “heart of stone” with a finger, then glanced toward the silhouette of the abandoned mill on the far edge of town. A low murmur escaped her lips, “Stone heart… river mouth,” a phrase she seemed to have heard in the old stories told by the river folk. Her gaze lingered on the mill’s ruined tower, and she pressed the knife tighter, as if the metal might answer the question.
+
+The market’s murmur faded beneath the distant toll of the bell. Clifford noted the two routes that now lay before them. One opening led to rain‑soaked tunnels beneath the old mill, arches slick with recent storms, the stone walls dripping in darkness. The other promised a crisp, dawn‑lit passage, the floor dusted with pale light that hinted at clearer footing. He heard the clatter of distant gears as a memory of the town’s machinery, the contrast striking like unseen teeth.
+
+Harriet folded the note back, her grip firm on the knife, and turned her shoulders toward the shadows. Clifford’s heart thudded in his chest, the metal in his hand a cold promise that the law could be both shield and key.

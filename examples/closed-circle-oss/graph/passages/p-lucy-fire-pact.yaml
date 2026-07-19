@@ -1,0 +1,21 @@
+id: passage:p-lucy-fire-pact
+summary: Harriet's scar throbs with bitter resolve while Lucy lets the fire consume the evidence,
+  a pact of preservation over justice.
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+- location:old-mill
+- faction:farmer-union
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Lucy stands at furnace, Harriet Wellman guards badge and scar. A hidden bundle
+  of papers is evidence. Lucy drops timber, burns the bundle, destroying the evidence. Harriet
+  watches, does not stop fire. Lucy decides to preserve town peace, sacrificing truth.
+beats:
+- beat:fork-lucy-fist-1
+choices:
+- label: Press my scarred hand to the still‑warm ash and move onward
+  to: passage:p-old-man-reflection

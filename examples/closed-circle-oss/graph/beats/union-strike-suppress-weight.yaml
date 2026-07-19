@@ -1,0 +1,12 @@
+id: beat:union-strike-suppress-weight
+created_by: polish
+summary: Harriet’s journal records the heavy cost of order, the town’s alleys feel tighter,
+  the night grows denser.
+beat_class: structural
+purpose: residue
+entities:
+- character:harriet-wellman
+- character:clifford-moon
+- character:mayor-caldwell
+requires_flags:
+- flag:harriet-unpopularity

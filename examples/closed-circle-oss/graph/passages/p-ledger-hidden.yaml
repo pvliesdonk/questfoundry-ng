@@ -1,0 +1,25 @@
+id: passage:p-ledger-hidden
+summary: Caldwell locks the ledger in a hidden safe, keeping its contents intact; Harriet
+  grows wary, questioning his opaque motives. The sealed ledger sits in the clerk’s vault
+  as the farmer union’s cries for transparency swell.
+entities:
+- object:ledger-blackwood
+- character:mayor-caldwell
+- character:harriet-wellman
+- faction:farmer-union
+prose_summary: Mayor Caldwell enters clerk’s vault, closes iron door, takes warm Blackwood
+  Ledger from metal tray, places it in hidden safe behind false panel installed by his aide,
+  locks it. Harriet Wellman observes, Lucy Frost watches the sealed ledger. Farmer union chants
+  demand transparency. Caldwell sees Old Mill lantern, notices ornamental knife glint, sees
+  hooded figure enter mill.
+beats:
+- beat:ledger-burn-keep-commit
+- beat:ledger-burn-keep-post-1
+- bridge:gap-24
+choices:
+- label: Slip into the Old Mill, following the flickering lantern and the knife’s glint
+  grants:
+  - flag:cw-cosmetic-fork-1
+  to: passage:p-cosmetic-fork
+- label: Watch the Farmer Union chant rise while Lucy eyes the sealed ledger
+  to: passage:p-ledger-tension

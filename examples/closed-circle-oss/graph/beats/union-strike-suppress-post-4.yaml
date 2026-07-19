@@ -1,0 +1,14 @@
+id: beat:union-strike-suppress-post-4
+summary: Harriet's journal records the heavy cost of order; a weight settles on her conscience.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: advances
+entities:
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:harriet-wellman
+interlude: true
+belongs_to:
+- path:suppress-protest

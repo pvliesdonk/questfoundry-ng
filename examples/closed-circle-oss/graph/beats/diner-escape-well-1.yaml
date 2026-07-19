@@ -1,0 +1,13 @@
+id: beat:diner-escape-well-1
+created_by: polish
+summary: A hidden latch clicks under the table, leaving the sense that unseen exits linger
+  in the chaos.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:old-man-well
+- character:clifford-moon
+- character:lucy-frost
+grants_flags:
+- flag:cw-diner-escape-well-1
+texture_premise: Through Old Man Well's concealed passage

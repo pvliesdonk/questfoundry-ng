@@ -1,0 +1,25 @@
+id: passage:p-leeches-aftermath
+summary: Marjorie tails the target to the abandoned mill, where a shadowy figure swaps contraband
+  and she snaps a decisive photograph. She rushes back to the diner, handing the incriminating
+  image to Harriet and priming a direct confrontation.
+entities:
+- character:marjorie-lynch
+- character:clifford-moon
+- location:old-mill
+- character:harriet-wellman
+prose_summary: Clifford Moon reaches abandoned mill; Marjorie Lynch follows with brass camera.
+  A cloaked stranger hands crate then vanishes. Marjorie photographs handoff; photo drops
+  as she returns. Clifford follows draft through mill’s hatch into narrow crawlway, emerges
+  in courtyard. At Marjorie's diner Lucy Frost warns Ornate Knife lethal; Harriet Wellman
+  takes and studies photograph, implying confrontation.
+beats:
+- beat:marjorie-leeches-aftermath-1
+- beat:marjorie-leeches-aftermath-2
+- beat:marjorie-leeches-aftermath-3
+choices:
+- label: Lean against the counter and listen to Lucy’s low warning about the Ornate Knife
+  grants:
+  - flag:cw-detour-knife-1
+  to: passage:p-detour-knife
+- label: Follow the faint draft and trace the hidden tunnel beneath the mill
+  to: passage:p-old-man-secret

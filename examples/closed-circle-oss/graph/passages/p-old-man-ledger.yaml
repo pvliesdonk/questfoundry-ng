@@ -1,0 +1,16 @@
+id: passage:p-old-man-ledger
+summary: Old Man Well mutters that a ledger is hidden in the Old Mill, hinting at a looming
+  hidden debt.
+entities:
+- character:old-man-well
+- object:ledger-blackwood
+- location:old-mill
+prose_summary: Silas Well stands in his workshop, informs himself that a ledger is hidden
+  behind the furnace soot in the Old Mill, identifies the ledger as tied to the Blackwood
+  family and a looming ruin, acknowledges the dangerous passage beneath the mill floor, and
+  decides to retrieve the ledger, costing his time and risking danger.
+beats:
+- beat:fork-old-man-1
+choices:
+- label: grasp the weight of the old man’s whispered ledger
+  to: passage:p-calm-dissent

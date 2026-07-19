@@ -1,0 +1,43 @@
+id: passage:p-knife-evac
+summary: Harriet receives Thea's note, handcuffs Edgar as the ornate knife catches a stray
+  beam, and Lucy blows the whistle to evacuate patrons while a bomb ticks in the kitchen;
+  the knife's reveal ignites townwide wrath, and a distant gunshot rings as Harriet logs the
+  evidence.
+entities:
+- character:thea-swan
+- character:harriet-wellman
+- character:edgar-barnes
+- object:ornate-knife
+irrelevant_flags:
+- flag:above-ground-search
+- flag:harriet-unpopularity
+- flag:killer-escape
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+- flag:political-strain
+- flag:protest-quashed
+- flag:secret-passage-used
+- flag:thea-allies
+- flag:thea-paranoia
+- flag:thea-secret-kept
+- flag:thea-truth-known
+- flag:trap-risk
+- flag:union-empowered
+prose_summary: Harriet handcuffs Edgar, takes note containing Thea's folded note; Lucy sounds
+  whistle, crowd moves to door; bomb ticks in back room; knife on desk flashes; townsfolk
+  react angry; Harriet records knife serial and distant gunshot, guides diners out; door slams;
+  bomb silent; Harriet slips into dim corridor on stone bridge, disappearing; Edgar watches,
+  remembering knife flash.
+beats:
+- beat:choose-witness-arrest-post-3--evacuate-diner
+- bridge:gap-1
+- bridge:gap-3
+choices:
+- label: Slip into the bridge’s dim corridor
+  grants:
+  - flag:cw-fork-ledger-whisper-1
+  to: passage:p-ledger-knife-glint
+- label: Log the distant gunshot while guiding the diners out
+  to: passage:p-diner-evac-leave

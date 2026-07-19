@@ -1,0 +1,13 @@
+passage: passage:p-cellar-discovery
+priority: 9
+caption: Harriet descends into the old mill’s cellar, Lucy’s lantern cutting through dust,
+  Marjorie nearby.
+prompt: Noir illustration, thick shadows, muted greys, crimson glint on Lucy's scar. Portray
+  Harriet Wellman stepping through a rusted hatch into a shadowy cellar beneath the crumbling
+  old mill, Lucy Frost holding a lantern that pierces the dust over stacked tables, and Marjorie
+  Lynch clutching a flour‑dusted apron, the stone walls rough and damp.
+entities:
+- character:harriet-wellman
+- location:old-mill
+- character:lucy-frost
+- character:marjorie-lynch

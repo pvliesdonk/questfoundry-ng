@@ -1,0 +1,14 @@
+id: beat:union-strike-suppress-post-3
+summary: Mayor Caldwell thanks Harriet, yet the town's polished image shows cracks.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: reveals
+entities:
+- character:mayor-caldwell
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:mayor-caldwell
+belongs_to:
+- path:suppress-protest

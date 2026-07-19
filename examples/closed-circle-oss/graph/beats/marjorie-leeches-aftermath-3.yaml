@@ -1,0 +1,14 @@
+id: beat:marjorie-leeches-aftermath-3
+summary: She returns to the diner, sharing the evidence with Harriet, setting up a confrontation.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:marjorie-leeches
+  effect: reveals
+entities:
+- character:marjorie-lynch
+- character:harriet-wellman
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:clifford-moon
+belongs_to:
+- path:silent-investigate

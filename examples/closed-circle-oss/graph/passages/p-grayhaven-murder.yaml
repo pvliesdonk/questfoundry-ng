@@ -1,0 +1,12 @@
+id: passage:p-grayhaven-murder
+summary: Grayhaven lies shrouded in lingering fog, its streets eerily quiet after the council
+  clerk’s murder, leaving tension coiled like a spring.
+prose_summary: Lucy Frost moves along stone road in fog, notes the clerk's empty desk and
+  blood‑stained ledger, grips her revolver, approaches Marjorie's diner with door ajar, observes
+  a figure open the door, enters the diner, sees patrons around stew, prepares for potential
+  threat.
+beats:
+- beat:setup-1
+choices:
+- label: Step into the diner as the doors swing open
+  to: passage:p-journal-doors

@@ -1,0 +1,22 @@
+id: passage:harriet-journal-weights
+summary: Harriet records the heavy cost of order in her journal; the town’s alleys feel tighter
+  and the night grows denser.
+entities:
+- character:harriet-wellman
+- character:clifford-moon
+- character:mayor-caldwell
+irrelevant_flags:
+- flag:ledger-destroyed
+- flag:ledger-hidden
+- flag:mayor-ambivalence
+- flag:mayor-power-boost
+prose_summary: Harriet Wellman writes a journal entry recording the cost of arrests she ordered,
+  noting limp farmer‑union banners, narrowed market alleys, and thick night darkness. She
+  records that the quiet enforced by cuffed protesters costs the community more than fines
+  and widens the gap between her badge and villagers. She views the ivory‑handled knife and
+  Edgar’s folded note, feeling burdened.
+beats:
+- beat:union-strike-suppress-weight
+choices:
+- label: Take the ornate knife and unfold Edgar’s note
+  to: passage:p-knife-harriet-riddle

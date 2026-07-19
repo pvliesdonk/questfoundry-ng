@@ -1,0 +1,10 @@
+id: beat:side-ash-contrast
+created_by: polish
+summary: The lingering scent of burnt ledger‑blackwood ash mixes with the cold draft from
+  the hatch, imprinting a contrast of lingering fire and hidden doors onto the scene.
+beat_class: structural
+purpose: false_branch
+entities:
+- object:ledger-blackwood
+- location:old-mill
+texture_premise: 'Hidden infrastructure: rumors of a secret hatch beneath the Old Mill.'

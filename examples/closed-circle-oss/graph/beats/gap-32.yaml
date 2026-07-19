@@ -1,0 +1,11 @@
+id: bridge:gap-32
+created_by: grow
+summary: Clifford's low whisper about "the leeches" drifts as Lucy steps in, cautioning Marjorie.
+beat_class: structural
+purpose: bridge
+entities:
+- character:clifford-moon
+- character:lucy-frost
+- character:marjorie-lynch
+texture_premise: Rain‑soaked midnight cloaks the hidden tunnels beneath the Old Mill as the
+  investigation unfolds.

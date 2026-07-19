@@ -1,0 +1,12 @@
+id: beat:arm-edgar-1
+created_by: polish
+summary: Retired teacher Edgar Barnes mutters a cryptic clock riddle as he passes, his words
+  echoing the bomb’s steady tick and imprinting a feeling of inevitable collapse amidst ordered
+  routine.
+beat_class: structural
+purpose: false_branch
+entities:
+- character:edgar-barnes
+grants_flags:
+- flag:cw-arm-edgar-1
+texture_premise: Edgar's riddling chant about relentless time

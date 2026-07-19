@@ -1,0 +1,9 @@
+id: bridge:gap-35
+created_by: grow
+summary: Thea doubts the hidden passage while Lucy follows fresh footprints toward a concealed
+  cellar door.
+beat_class: structural
+purpose: bridge
+entities:
+- character:thea-swan
+- character:lucy-frost

@@ -1,0 +1,26 @@
+id: passage:p-ledger-knife-glint
+summary: Harriet catches a fragment of Old Man Well's mutter that links the Blackwood Ledger
+  to the distant gunshot, imprinting a sense of concealed corruption as the diner doors swing
+  shut, and Lucy spots the missing Ornate Knife's tip catching the river's sheen, adding a
+  cold, metallic tension beneath the fragile calm.
+entities:
+- character:harriet-wellman
+- character:old-man-well
+- object:ledger-blackwood
+- character:lucy-frost
+- object:ornate-knife
+irrelevant_flags:
+- flag:harriet-unpopularity
+- flag:political-strain
+- flag:protest-quashed
+- flag:union-empowered
+prose_summary: Harriet pins badge to chest, watches bridge railing. Old Man Well shuffles
+  forward, mutters ledger, Blackwood, gunshot, linking hidden account to distant shot; shot
+  echoes off canal. Diner doors slam, sealing room. Lucy, scarred palm, lifts brass lantern,
+  looks at river; Harriet sees missing tip of Ornate Knife drop into water, danger persists.
+beats:
+- beat:fork-knife-glint-2
+- beat:fork-ledger-whisper-1
+choices:
+- label: Observe the gunshot’s echo and the knife’s glint
+  to: passage:p-diner-evac-leave

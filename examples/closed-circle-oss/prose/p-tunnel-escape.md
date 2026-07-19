@@ -1,0 +1,9 @@
+Silas leaned against the cold stone of the old mill as night settled over Grayhaven. He heard the sharp bark of Deputy Harriet Wellman ordering the gathered men to stay back, her scar catching the lantern light. A figure slipped past the dim glow, disappearing into the narrow seam between timber and earth that Silas had spoken of before. The murderer staggered out of the hidden tunnel, mud staining his coat, breath ragged, and vanished into the shadows before any hand could seize him.
+
+The furnace door creaked open and a flash of orange light illuminated a second corpse slumped against the coal grate. The throat bore the same clean slash that had ended the clerk’s life days before, and the body lay still as the soot‑blackened walls reflected its pallor. Silas stared at the fresh victim, a cold dread sinking into his bones as the realization settled that the killer had not fled alone.
+
+Word of the second body spread quickly through the mill courtyard. Silas watched townsfolk gather at the entrance, their faces turned away from the hearth, breath forming mist in the winter air. Fear moved through the crowd like a cold wind, tightening around shutters and door hinges. He heard Harriet raise her voice, sharp and urgent, urging the men to form a perimeter, but the murmur of terror held them in place.
+
+Lucy Frost stood near the furnace, her hand clenched around the grip of her revolver as a sudden flare leapt upward, casting the room in a brief orange glare. Silas noted the way her fist tightened, eyes fixed on the blaze that threatened to consume the evidence hidden in the shadows.
+
+Later, as he passed the doorway of Marjorie's diner, Edgar Barnes leaned close to the counter and whispered a riddling verse about the ledger’s cursed ink. Silas heard the low cadence of his words and the uneasy glint in Edgar’s eye, a hint of danger that lingered long after the whisper faded.

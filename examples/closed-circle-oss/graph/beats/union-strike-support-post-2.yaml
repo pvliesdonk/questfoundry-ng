@@ -1,0 +1,13 @@
+id: beat:union-strike-support-post-2
+summary: Elite council members frown, political pressure builds on Harriet's department.
+beat_class: narrative
+dilemma_impacts:
+- dilemma: dilemma:union-strike
+  effect: complicates
+entities:
+- character:mayor-caldwell
+scene_type: scene
+narration_scope: limited
+viewpoint: character:marjorie-lynch
+belongs_to:
+- path:support-protest

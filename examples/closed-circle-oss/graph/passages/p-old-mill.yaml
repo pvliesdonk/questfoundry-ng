@@ -1,0 +1,18 @@
+id: passage:p-old-mill
+summary: At the Old Mill, ash‑colored light filters through cracked windows, exposing the
+  Blackwood Ledger amid the debris, while a low murmur from the Farmer Union drifts through
+  the smoke, suggesting a guarded, collective silence.
+entities:
+- location:old-mill
+- object:ledger-blackwood
+- faction:farmer-union
+prose_summary: Harriet Wellman enters the Old Mill, discovers the ash‑smudged Blackwood Ledger,
+  feels its weight, and hears distant farmer union murmurs and a debate. She decides to either
+  hide the ledger in her coat and rejoin the rally or stay in the mill to secure the evidence.
+  She leaves shaken.
+beats:
+- beat:arm-old-mill-1
+- beat:arm-old-mill-2
+choices:
+- label: Slip the smudged ledger into your coat and head for the diner's heated debate
+  to: passage:p-ink-confess-aftermath

@@ -1,0 +1,14 @@
+id: beat:alt-16
+created_by: polish
+summary: Lucy mentions the coal‑fed furnace behind the mill's iron beams that could consume
+  documents quickly.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:lucy-frost
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:lucy-frost
+mirrors: beat:ledger-burn-pre-4
+texture_premise: 'Backdrop: The abandoned Old Mill''s basement, where a coal‑fed furnace replaces
+  the firepit and the townsfolk gather under its iron beams.'

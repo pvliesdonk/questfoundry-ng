@@ -1,0 +1,11 @@
+id: bridge:gap-42
+created_by: grow
+summary: The farmers chant in the square as Harriet watches from the perimeter, noting the
+  growing rift.
+beat_class: structural
+purpose: bridge
+entities:
+- faction:farmer-union
+- character:harriet-wellman
+texture_premise: 'Backdrop: The town''s central diner district, using the rusted firepit behind
+  town hall as a makeshift incinerator for the Blackwood Ledger.'

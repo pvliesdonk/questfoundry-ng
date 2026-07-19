@@ -1,0 +1,7 @@
+id: path:arrest-edgar
+explores: answer:arrest-edgar
+consequences:
+- id: consequence:edgar-imprisoned
+  text: Edgar is detained, stirring town suspicion.
+- id: consequence:harriet-scrutiny
+  text: Harriet faces criticism for arresting a beloved teacher.

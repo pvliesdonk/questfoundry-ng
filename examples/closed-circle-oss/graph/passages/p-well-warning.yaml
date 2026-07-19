@@ -1,0 +1,22 @@
+id: passage:p-well-warning
+summary: Old Man Well warns Harriet that using force could shatter the fragile peace.
+entities:
+- character:old-man-well
+- character:harriet-wellman
+prose_summary: Lucy stands by iron firepit; the half‑burned Blackwood Ledger lies on a metal
+  tray. Old Man Well emerges, puts a hand in his coat pocket and warns Harriet. Harriet places
+  revolver at her hip. Lucy sees scar on Harriet, a vaulted safe behind the furnace, and must
+  choose to burn the ledger or lock it in safe, risking town's future.
+beats:
+- beat:union-strike-pre-5
+choices:
+- label: Force the ledger into the furnace
+  grants:
+  - flag:ledger-destroyed
+  - flag:mayor-power-boost
+  to: passage:p-ledger-burn-ash
+- label: Seal the ledger in a hidden safe
+  grants:
+  - flag:ledger-hidden
+  - flag:mayor-ambivalence
+  to: passage:p-ledger-hidden

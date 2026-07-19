@@ -1,0 +1,14 @@
+id: beat:hall-bomb-3
+created_by: polish
+summary: Harriet arrives, sees Lucy’s alarmed face, and asks what troubles the patrons.
+beat_class: structural
+purpose: texture_world
+entities:
+- character:harriet-wellman
+- character:lucy-frost
+scene_type: sequel
+narration_scope: limited
+viewpoint: character:edgar-barnes
+mirrors: beat:diner-bomb-pre-4
+texture_premise: In the town's community hall, a ticking bomb triggers panic and uncovers
+  a hidden murder mystery.

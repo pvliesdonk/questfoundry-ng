@@ -1,0 +1,10 @@
+id: bridge:gap-10
+created_by: grow
+summary: Marjorie's gaze lingers on the journal as Harriet compares Edgar's alibi with the
+  testimonies.
+beat_class: structural
+purpose: bridge
+entities:
+- character:marjorie-lynch
+- character:harriet-wellman
+- character:edgar-barnes

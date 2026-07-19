@@ -1,0 +1,12 @@
+passage: passage:p-lucy-guard
+priority: 20
+caption: Lucy shields a patron while spotting the Ornate Knife glinting beneath a table in
+  the mill.
+prompt: Noir line art, thick shadows, muted palette, crimson accent on Lucy's scar. Depict
+  Lucy Frost, shaved head, pulling a trembling patron away from a wooden table in the old
+  mill, a glint of an ivory‑handled ornate knife visible under the table edge, lantern light
+  flickering overhead.
+entities:
+- character:lucy-frost
+- object:ornate-knife
+- location:old-mill

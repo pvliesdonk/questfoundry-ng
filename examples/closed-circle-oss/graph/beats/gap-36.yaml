@@ -1,0 +1,10 @@
+id: bridge:gap-36
+created_by: grow
+summary: Lucy's discovery of the footprints leads Mayor Caldwell to warn Harriet against chasing
+  rumors.
+beat_class: structural
+purpose: bridge
+entities:
+- character:lucy-frost
+- character:mayor-caldwell
+- character:harriet-wellman

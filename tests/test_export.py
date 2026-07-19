@@ -67,3 +67,47 @@ def test_twee_export_shape(golden):
     # every passage present
     for slug in ("p-arrival", "p-tremor", "p-counsel", "p-long-watch", "p-wide-water"):
         assert f":: {slug}\n" in twee
+
+
+def _cosmetic_diamond_runtime(n: int) -> dict:
+    """A runtime doc of n spine passages d0..dn where each di (i<n) offers two
+    choices to d(i+1), each granting a distinct UNCONSUMED cosmetic flag
+    (nothing ever `requires` them). A player reaching di can hold any subset of
+    the granted flags, so d(n) is reachable with 2**n flag-sets. Before the fix
+    validate_runtime keyed its walk on (passage, accumulated-flags) and blew up
+    to 2**n states — the cosmetic-keyword OOM that killed `qf export` on the
+    live medium run. No gate ever tests a granted flag, so all are inert."""
+    passages: dict = {}
+    flags: dict = {}
+    for i in range(n + 1):
+        if i == n:
+            passages[f"d{i}"] = {
+                "prose": "end.", "choices": [], "ending": {"id": "e", "title": "End"}
+            }
+            continue
+        choices = []
+        for arm in ("a", "b"):
+            fid = f"flag:cw-{i}-{arm}"
+            flags[fid] = {}
+            choices.append(
+                {"label": f"{i}{arm}", "to": f"d{i + 1}", "requires": [], "grants": [fid]}
+            )
+        passages[f"d{i}"] = {"prose": "on.", "choices": choices, "ending": None}
+    return {
+        "format": "questfoundry-runtime",
+        "version": 1,
+        "meta": {"title": "t", "author": "a", "scope": "micro"},
+        "start": "d0",
+        "passages": passages,
+        "flags": flags,
+        "entities": {},
+        "codex": [],
+        "art": [],
+    }
+
+
+def test_validate_runtime_does_not_explode_on_unconsumed_cosmetic_grants():
+    # 2**24 flag-sets reach the last passage pre-fix; the gate-relevant
+    # projection keeps the walk linear because no choice tests these flags.
+    data = _cosmetic_diamond_runtime(24)
+    assert validate_runtime(data) == []

@@ -16,6 +16,42 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-18 (the scheme pass treated the `pov_hint` as law, not a hint —
+  the deepest of the day's four defects):** The comprehensive medium run's
+  FILL escalated a second time at `write:p-diner-evacuation` — POV break every
+  round: the beats brief Harriet's (the investigator's) interiority, but the
+  passage is headed by **Lucy**, a suspect who merely sounds an alarm. Author
+  correction, in three steps, walking the diagnosis up its true altitude: (1)
+  "the prompt is still the problem, just a *previous* prompt" — not FILL, the
+  upstream head assignment; (2) "you are diving into specifics for this story
+  — the `pov_hint` is misleading and maybe wrong"; (3) **"the point is that
+  `pov_hint` is *vision* and a *hint*, not *law*."** The root: `grow_scheme.j2`
+  told the model "*nothing else here is a judgment call*", "*do not add a
+  character the scheme excludes*", and blessed "*an investigator's journal
+  amid rotating suspects is normal*" — i.e. implement the hint's literal scope
+  as a spec. So a `pov_hint` that names "each key **suspect**" for rotation and
+  the "**investigator's** journal" for interludes resolved, on some samples, to
+  the investigator as **carrier-only** (out of the base-head roster) — which
+  leaves every scene she dramatically centers with no valid head, so annotate
+  hangs a present bystander (Lucy) on it. This is the repo's own DREAM doctrine
+  (A17 / 2026-07-14) applied one pass over: the model must *see* the authored
+  inclination, but reinterpreting it into a workable scheme is the pipeline's
+  job. Fix (prompt-only; the schema/apply/I17 already permit a character to be
+  head AND carrier): `grow_scheme.j2` now frames the `pov_hint` as an
+  inclination to TRANSLATE into a scheme that can narrate the whole story — a
+  scene-driving character is a head even if the hint named them only for a
+  deviant register (the register is *added* to the role); a carrier-alone is
+  reserved for a *pure chronicler*. Deterministic render test. **Empirical
+  (3 live samples each, `gpt-oss:120b-cloud`, unbilled):** the OLD prompt gave
+  three different rosters — 8-heads/no-carrier, 8-heads/Harriet-carrier,
+  7-heads/carrier-only — the last being the bug the run drew; the NEW prompt
+  gave the coherent scheme (8 heads + Harriet carrier) all three times. The
+  under-determined prompt sampled the gap; the constraint-complete one
+  resolves it stably — and this had been quietly distorting POV across the
+  whole *Closed Circle* validation series. The live run itself was patched to
+  finish (the stuck passage's two beats re-headed to Harriet — the fix's
+  outcome applied locally — rather than a full GROW backtrack at 92% of FILL).
+
 - **2026-07-18 (FILL — cosmetic keyword flags flooded WORLD STATE, an
   unresolvable state_dishonesty halt):** The comprehensive medium run's FILL
   operator-loop escalated at `write:p-knife-bomb` after the 3-strike guard —

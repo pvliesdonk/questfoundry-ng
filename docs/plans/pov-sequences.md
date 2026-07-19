@@ -91,9 +91,13 @@ unrepresentable.
    marked beats under a declared register) is owned by this epic: the
    scheme pass also resolves the deviant register's **carrier** from the
    `pov_hint` (which character's voice; enum-pinned to retained
-   characters — the carrier may be OFF-roster: *Closed Circle*'s journal
-   entries belong to the investigator, who is not a rotating suspect
-   head), and the annotate prompt then carries an explicit expectation
+   characters — the carrier may be OFF-roster, but only for a *pure
+   chronicler* who merely records; a scene-driving investigator is a head
+   AND the carrier, so *Closed Circle*'s Harriet belongs in both — the
+   scheme pass translates the `pov_hint` into a scheme that can narrate
+   every scene, not its literal wording, corrected 2026-07-18 after the
+   old prompt's carrier-only draw left her scenes bystander-headed;
+   decision log), and the annotate prompt then carries an explicit expectation
    ("the scheme declares a register carried by {name}; a reflective beat
    in that voice is a candidate — a story with a declared register
    normally marks a handful") instead of an unused option. B11 reports a

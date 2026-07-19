@@ -1,8 +1,12 @@
-Resolve this story's narration scheme into exact character ids. The scheme
-below is prose; downstream passes need the ids it means. You decide WHO the
-narration follows — nothing else here is a judgment call.
+Resolve this story's narration scheme into exact character ids. The POV hint
+below is the author's INCLINATION, written in prose — your job is to TRANSLATE
+it into a viewpoint scheme the story can actually be told through, not to
+implement its wording literally. A hint that reads sensibly can still, taken at
+face value, leave scenes with no one to narrate them; you reconcile it against
+who the story actually follows.
 
-POINT OF VIEW SCHEME: {{ vision.pov_hint or "one limited viewpoint" }}.
+POINT OF VIEW HINT (an inclination to honor, not a spec to obey):
+{{ vision.pov_hint or "one limited viewpoint" }}.
 
 THE RETAINED CAST (ids are exact — copy them verbatim, never derive one from
 a name):
@@ -12,16 +16,26 @@ a name):
 
 Return two fields:
 
-- "heads": the characters whose heads the narration follows — the story's
-  viewpoint roster. A single-viewpoint scheme names exactly ONE character
-  (the scheme's protagonist — the perceiving center of the premise). A
-  rotating scheme names each character the scheme rotates among: where it
-  says "the suspects", "the crew", "each sibling", list those characters
-  individually. Follow the scheme's own scope — do not add a character the
-  scheme excludes (a victim, a bystander) and do not trim one it includes.
-- "interlude_head": ONLY when the scheme names a deviant register — journal
-  entries, letters, diary pages, recordings in a specific character's voice
-  — the character who narrates that register. This may be a character NOT in
-  "heads" (an investigator's journal amid rotating suspects is normal). When
-  the scheme names no such register, return "".
+- "heads": the viewpoint roster — every character the narration follows. A
+  single-viewpoint scheme names exactly ONE (the perceiving center of the
+  premise). A rotating scheme names each character it rotates among: where the
+  hint says "the suspects", "the crew", "each sibling", list those individually.
+  The test for a head is the one the writer applies to every scene: whose
+  perception, stakes, and inner reaction does the story live inside — who
+  uncovers, suspects, decides, fears. Apply it against the whole story, not the
+  hint's phrasing: a character who drives central scenes is a head even if the
+  hint named them only for a deviant register. An investigator whose journal the
+  hint mentions still narrates her own investigation in the base register — the
+  journal is ADDED to her role, not the whole of it; a lead the story follows is
+  never left as a bystander's subject. Leave out only a character the story
+  genuinely never follows (a murder victim, a walk-on). A roster that cannot
+  narrate the story's own central scenes is the exact failure this pass exists
+  to prevent.
+- "interlude_head": ONLY when the hint names a deviant register — journal
+  entries, letters, diary pages, recordings in a specific character's voice —
+  the character who narrates that register (return "" when the hint names none).
+  That character is USUALLY also a head: the same investigator narrates her
+  scenes and writes her journal, so she belongs in "heads" above as well. Only a
+  character the story never otherwise follows — a pure chronicler who merely
+  records events they witness — is a carrier alone, absent from "heads".
 {% include "_shared.j2" %}

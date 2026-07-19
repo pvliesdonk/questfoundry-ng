@@ -180,6 +180,23 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Validation & experiments
 
+- [ ] **Prose-quality epic — the two exit remainders** (epic shipped
+  2026-07-19, these dropped here). DRESS at scale is reached
+  (`examples/closed-circle-oss`), but the full exit criterion also wants:
+  (1) a **corpus-grounded** run — closed-circle-oss skipped research (no
+  craft corpus), so the craft-retrieval half of the prose engine is
+  unexercised at DRESS scale; and (2) an **author prose read** of a
+  generated DRESS-complete story (the "reads without prose-quality rework"
+  half). Both are measurement, not machinery.
+- [ ] **POV sequences — the formal live A/B** (epic shipped 2026-07-19; the
+  machinery is merged #106/#107/#108 and the scheme half was validated +
+  fixed live via #113, but the A/B was never formally measured). Rerun grow
+  on a COPY of a run-6-era graph, `--keep` every pass but scheme/annotate,
+  then POLISH; acceptance: mid-sequence switches ≈ 0 (B11 quiet or every
+  switch justified), passage count toward the ~114 (−28%) counterfactual,
+  interlude register firing, head shares matching the scheme. Direct A/B
+  against run-6 on identical structure (contract: `plans/pov-sequences.md`
+  §"Live validation").
 - [ ] **Local `qwen3.5`-class Ollama confirmation** — the cloud tier is
   validated end-to-end; a local-daemon run is still wanted when a host is
   reachable (needs a GPU box with the daemon logged in to ollama.com).

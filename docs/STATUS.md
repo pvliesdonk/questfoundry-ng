@@ -17,71 +17,38 @@ Where to look for the rest:
 
 _Last updated: 2026-07-19._
 
-## Current epics (two threads, roadmap "Now")
+## Current epics — Now is open
 
-**Prose quality at scale — DRESS at scale reached (2026-07-19)**: a fresh
-comprehensive medium run on current `main` (`gpt-oss:120b-cloud`, unbilled)
-completed **DREAM→DRESS gate-clean**, its HTML/PDF exports round-tripped
-(0 problems), and it was then illustrated (20 Gemini images, 0 refusals) —
-the first project ever taken all the way through DRESS + illustration +
-export. Checked in as [`examples/closed-circle-oss/`](../examples/closed-circle-oss/)
-(with rendered art — a first for the examples; exports stay out per
-convention, the author holds the HTML/PDF). The run's real yield was
-**five pipeline defects fixed** (#110 labels schema+nudge, #111 I13
-powerset OOM, #112 cosmetic flags flooding FILL WORLD STATE, #113 scheme
-treating `pov_hint` as law, #114 the I13 blowup's two export copies) plus
-two operator-loop refinements — every one confirming the doctrine (never
-the model). **Remaining for the epic's full exit:** a *corpus-grounded*
-run (this one skipped research — no craft corpus) and an author prose read.
+**Both "Now" epics shipped 2026-07-19 (author call)** — details in the
+roadmap Shipped section:
 
-**POV sequences — run-unit viewpoint annotation** (design agreed with the
-author 2026-07-17, from their read of the run-6 graph): annotate head-hops
-at beat granularity and I14 shatters linear runs into thin no-choice
-passages (76 of 172 passages are pure POV splits; heads held per run would
-give −28% passages). The redesign — the **sequence** (maximal choice-free
-run, computed) as the unit of viewpoint assignment, one head per sequence,
-split/wide-cutaway as justified escape valves, a **head roster** resolved
-from `pov_hint` pinning the viewpoint enum (also closes the off-scheme-head
-gap), B11 advisory, `Voice` reads the roster — is specified in the roadmap
-"Now" entry; numbers in the decision log (2026-07-17). **PR-A (#106) and
-PR-B (#107) merged** (roster + sequence-unit annotate restructure, mini-ADR
-A25). **PR-C (#108) merged**: the interlude register, which had never fired
-live across three prior runs on two tiers, now fires — a three-probe live
-series (`cc-int-probe`, moment-based criterion + an enforced commit-guard
-apply check) took it from 0 marks to 14/14 correctly placed in one repair
-round; recorded as a doctrine exhibit in the decision log (2026-07-17).
-**Open: the live A/B itself** — the scheme half was validated on the
-2026-07-19 comprehensive run (the `pov_hint`-as-law fix, #113); the formal
-A/B measurement against the run-6 counterfactual is still owed (next steps).
+- **Prose quality at scale — engine + DRESS at scale.** A weak-tier
+  medium (`gpt-oss:120b-cloud`, unbilled) completed DREAM→DRESS gate-clean,
+  exports round-tripped, and was illustrated — the first project through
+  DRESS + illustration + export, checked in as
+  [`examples/closed-circle-oss/`](../examples/closed-circle-oss/) (the
+  first example with rendered art). Yield: **five pipeline defects fixed**
+  (#110–#114) + two operator-loop refinements. Remainders in BACKLOG: a
+  corpus-grounded run + author prose read.
+- **POV sequences — run-unit viewpoint annotation.** Machinery merged
+  (roster/annotate/interlude, #106/#107/#108, A25); the scheme half
+  validated + hardened live (#113, the `pov_hint`-as-law fix). Remainder in
+  BACKLOG: the formal live A/B against the run-6 counterfactual.
 
-**Shipped 2026-07-17 (author call): structural depth** (#77/#78/#79/#81;
-texture-trial through DRESS gate-clean, `examples/letter-and-frontier`)
-**and cosmetic forks** (#87–#103; run-6 author-read "a much better shape").
-Details now live in the roadmap Shipped section and the plan docs.
-**No residual: PR-6 (print acknowledgments) was scoped and closed without
-building, 2026-07-17** — form 1 (keyword-gated rendering) already delivers
-real print consumption end-to-end; an unconsumed keyword already gets zero
-print footprint today, which is correct (decision log). The epic is
-complete.
+Earlier: **structural depth** and **cosmetic forks** shipped 2026-07-17.
+
+**Now is unscoped** — the next milestone hasn't been chosen. Small
+follow-on work is in flight (author); the roadmap "Next" candidates
+(weave linearization, M9 retrieval refinement) are the standing options.
 
 ## Immediate next steps
 
-1. **The comprehensive run: DONE (2026-07-19).** DREAM→DRESS gate-clean,
-   exports round-trip, illustrated — checked in as
-   [`examples/closed-circle-oss/`](../examples/closed-circle-oss/). It
-   surfaced and fixed five pipeline defects (#110–#114, all merged) — the
-   record is in the decision log (2026-07-18/19). **Still open** from the
-   prose epic's exit: a *corpus-grounded* run (this skipped research) and
-   an author prose read of the generated story.
-2. **POV sequences — the scheme half validated, the A/B still owed.** The
-   `pov_hint`-as-law defect (#113) was found and fixed on this run (the
-   investigator was resolvable to carrier-only, leaving her own scenes
-   bystander-headed); the fix's outcome was applied to this run's graph to
-   let it finish. NOT yet done: the formal live A/B against the run-6
-   counterfactual (B11 quiet/justified, passages toward −28%, interlude
-   register firing) — a clean rerun-grow measurement, still owed.
-3. **Then:** the recalibration items (BACKLOG) as calibration data
-   accumulates.
+The next milestone is unscoped; the author has small follow-on work in
+flight first. When a milestone is chosen, the standing options are the
+roadmap "Next" candidates (weave linearization, M9 retrieval refinement),
+and the shipped epics' BACKLOG remainders (the prose-quality corpus-grounded
+run + author read; the POV-sequences live A/B) are pick-up-able measurement
+work needing no new machinery.
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.

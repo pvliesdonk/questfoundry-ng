@@ -21,18 +21,30 @@ CHOICES LEAVING IT — write exactly {{ dests | length }} label{{ "s" if dests |
 
 REQUIREMENTS:
 - labels: exactly one entry per destination above, {"to": N, "label": "..."}.
-- A label is the player's voice: a concrete present-tense action, no outcomes
-  revealed. No meta-language — "continue", "go to the next scene" are failures;
-  even a single onward choice deserves a diegetic line.
-{% if dests | length > 1 %}- Labels leaving this passage must differ from one another.
-{% endif %}- Match the tone. Never mention flags, dilemmas, or structure in a label.
+- A label is a SHORT ACTION in the player's voice: an imperative verb and its
+  object — the move the player makes. "Enter the diner", "Descend to the mill
+  basement", "Open the journal", "Order the arrests". Aim for a handful of
+  words: a label is a button the player clicks, not a sentence.
+- The mood and scenery are already carried by the prose the reader just read
+  and by the scene they are about to enter — so keep them OUT of the label. The
+  tone lives in the VERB you choose ("slip into" vs "stride into"), never in an
+  atmospheric clause tacked on: "Enter the diner" is right; "Enter the diner,
+  the firepit ablaze with the ledger" is the failure this rule exists to
+  prevent. Do not append a "…, the X <-ing>" clause or bolt a named object on
+  for flavour.
+- No meta-language — "continue", "go to the next scene" are failures; a single
+  onward choice still names a concrete act in the character's own diction.
+{% if dests | length > 1 %}- Labels leaving this passage must differ by naming different ACTIONS, not by
+  piling different scenery onto the same move.
+{% endif %}- Never mention flags, dilemmas, or structure in a label.
 {% if is_rendering %}
 - THIS PASSAGE is one rendering of a cosmetic fork, rejoining a road the reader
-  could have walked plainly. Its rejoin label must voice THIS rendering's
-  residue — the mood, image, or small knowing the reader now carries — so it
-  reads differently from simply walking on. Never re-offer an action a parallel
-  passage already labels onto the same destination (marked ALREADY OFFERED
-  above): same road reached, a different memory of reaching it.
+  could have walked plainly. Its rejoin label should read differently from
+  simply walking on — but that difference lives in the ACTION and diction (a
+  wearier verb, a different thing the character reaches for), still a short
+  clean action, NOT a mood clause tacked onto it. Never re-offer an action a
+  parallel passage already labels onto the same destination (marked ALREADY
+  OFFERED above): same road reached, a different move made.
 {% endif %}
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

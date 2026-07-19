@@ -16,6 +16,38 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-19 (choice labels over-stuffed with atmosphere — a prompt
+  shape defect):** Author read of `examples/closed-circle-oss` (passage 64)
+  flagged choice labels as "weird/farfetched" and recurring — e.g. "Enter
+  the diner district, the firepit ablaze with the Blackwood Ledger",
+  "Descend into the Old Mill's basement, the furnace roaring beneath iron
+  beams". A grep of the graph confirmed it systemic: most labels followed
+  "**[imperative action], [atmospheric absolute clause naming an object]**".
+  Root cause (prompt, not model): `polish_labels.j2` and `fill_write.j2`
+  never gave a label a *shape* — `polish_labels` invited "a diegetic line"
+  and (for cosmetic renderings) told the model to "voice THIS rendering's
+  residue — the mood, image", while `fill_write` mandated "every label must
+  name something on the page" — the three compounding to pull scenery and
+  named objects into every label, with "Match the tone" (noir) filling the
+  vacuum. Fix (surgical, per the repo's "fix the loose instruction, don't
+  accrete rules" doctrine): both prompts now shape a **short imperative
+  action** (verb + object, "Enter the diner") and state that mood/scenery
+  belong in the prose the reader just read, not the label — the tone lives
+  in the verb chosen. The rendering-residue rule now differentiates through
+  the *action and diction*, not an appended mood clause; `fill_write`'s
+  grounding rule is made one-directional (a label may name only what is
+  present — it need not name an object, and must not be padded to feel
+  grounded). Render-guard test; the existing plural-differ test updated to
+  the reworded line. **Live proof (3 samples each, `gpt-oss:120b-cloud`,
+  unbilled, the flagged passage):** OLD gave the over-stuffed pattern every
+  time ("step down into the Old Mill's iron-bound cellar" | "stay at
+  Marjorie's diner, polishing the firepit's ash"); NEW gave clean short
+  actions, stably ("Descend to the mill" | "Enter the diner"). The passage
+  was `is_rendering=False`, confirming the primary driver was the missing
+  shape constraint, not only the residue rule. `examples/closed-circle-oss`
+  is left as the run snapshot (its labels document the defect); the fix
+  applies to future runs.
+
 - **2026-07-19, later (two more epics shipped — author call; roadmap
   reconciled):** After the comprehensive medium run reached DREAM→DRESS
   gate-clean + illustration + export (the day's five defect fixes below),

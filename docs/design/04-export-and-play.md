@@ -29,7 +29,8 @@ The exported subset of the graph — the persistent boundary. Working data
   "flags": { "cartographer_knows": { "codeword": "CONFESSED" } },  // codeword only if projected
   "entities": { "character:keeper": { "base": {…}, "overlays": [ { "when": [...], "details": {…} } ] } },
   "codex":  [ { "entity": "character:keeper", "title": "…", "body": "…md…" } ],
-  "art":    [ { "passage": "p-017", "image": "images/017.png", "caption": "…" } ]
+  "art":    [ { "passage": "p-017", "image": "images/017.png", "caption": "…" } ],
+  "cover":  { "image": "art/images/cover.png" }   // present only once the cover image is rendered
 }
 ```
 
@@ -54,10 +55,12 @@ satisfiability, and ending reachability (I10/I13 at the export boundary).
 
 One self-contained file: embedded runtime JSON + a small dependency-free
 JS player + inlined (base64) images. Works from `file://`, no network, no
-build step. Features: passage rendering, choice handling, a codex panel,
-an optional "journey so far" recap (list of passages visited), and a
-save/restore slot in `localStorage`. Deliberately minimal — anyone
-wanting more should consume the JSON or the Twee export.
+build step. Features: an optional **cover screen** (the cover image with
+the title, a "Begin" control) shown first when a `cover` is present,
+passage rendering, choice handling, a codex panel, an optional "journey so
+far" recap (list of passages visited), and a save/restore slot in
+`localStorage`. Deliberately minimal — anyone wanting more should consume
+the JSON or the Twee export.
 
 ## 3. Twee 3
 
@@ -108,11 +111,12 @@ The most format-specific pipeline, in five deterministic steps:
    `--seed`), so re-export is stable unless the graph changed. At tiny
    passage counts the constraints may be unsatisfiable; the best
    assignment is kept and the compromises reported as warnings.
-4. **Layout.** Typst template: front matter (title, how-to-play, codeword
-   log page), numbered sections with illustrations, choice lines in a
-   consistent typographic form, codex as an appendix ("The Keeper's
-   Almanac"), and an ending index by ending id (unnumbered-title only, to
-   stay spoiler-safe).
+4. **Layout.** Typst template: an optional full-page **cover** (the cover
+   image with the title set over it) when a `cover` is present, then front
+   matter (title page, how-to-play, codeword log page), numbered sections
+   with illustrations, choice lines in a consistent typographic form, codex
+   as an appendix ("The Keeper's Almanac"), and an ending index by ending id
+   (unnumbered-title only, to stay spoiler-safe).
 5. **Lint.** Every "turn to N" resolves; every codeword is granted before
    any test of it on every arc; section count matches passage count; no
    passage orphaned by the shuffle.

@@ -1,0 +1,62 @@
+{% if arbitration %}
+ARBITRATION. A first-line reviewer failed this cover twice; its newest findings
+are:
+{% for i in arbitration %}
+- {{ i }}
+{% endfor %}
+You are the senior arbiter and your verdict is final. A blocking finding
+(assessment "fail", confidence "high" or "medium") is warranted ONLY if the
+cover prompt PLAINLY depicts a specific plot event or the ending — atmosphere,
+setting, and mood are exactly what a cover should carry, never a defect. A
+blocking finding halts the stage, so be certain.
+{% endif %}
+Review this book's COVER prompt for spoiler safety. The cover is the front-page
+image, seen before a word is read — it should set mood and genre, not reveal how
+the story goes. State a top-level `verdict` and report every objection as a
+structured FINDING. `verdict` is "approved" when the cover is spoiler-safe (it
+auto-accepts) or "needs_work" when you have a finding worth raising. A
+"needs_work" verdict does not itself halt the author: the engine reworks only on
+a FAIL finding at high or medium confidence and otherwise accepts anyway.
+
+VISION: {{ vision.genre }}{% if vision.subgenre %} ({{ vision.subgenre }}){% endif %},
+{{ vision.tone }}. Premise: {{ vision.premise }}
+
+REQUIRED (this is correct — never fault the cover for it): atmosphere, setting,
+weather, mood, genre iconography, and a single emblematic object or silhouette.
+A cover SHOULD be evocative and wide. Showing the world is not a spoiler; showing
+its outcome is.
+
+The rules — objective defects when present:
+
+- plot_event_shown — the prompt depicts a specific narrative EVENT or twist (a
+  murder in progress, an arrest, a betrayal, a discovery that turns the plot),
+  rather than atmosphere. Naming a place, an object, or a mood is NOT an event;
+  staging a scene where something happens between characters is.
+- ending_shown — the prompt shows how the story turns out: an ending scene, a
+  character's fate (dead, triumphant, imprisoned), the villain revealed, the
+  outcome of the central question{% if ending_titles %}. Endings in this story: {{ ending_titles | join(", ") }}{% endif %}.
+
+TASTE IS A WARN, NEVER A FAIL. Whether the composition is strong or the imagery
+apt is a matter of degree — grade it "warn" at most. If your `reason` needs
+"risks", "could", or "might", it is not a high-confidence defect.
+
+Set `confidence` to how sure you are the named rule is broken by the prompt:
+"high" when it plainly is, "low" when you are reaching.
+
+{% if prior_issues %}
+PREVIOUSLY FLAGGED — THE WRITER REVISED FOR THESE:
+{% for i in prior_issues %}
+- {{ i }}
+{% endfor %}
+Judge persistence first: does any previously named defect remain? A round that
+finds only brand-new complaints is judging taste.
+{% endif %}
+THE COVER PROMPT:
+{{ prompt }}
+
+Report a `verdict` ("approved" or "needs_work") and a `findings` list. Each
+finding is {"rule": "plot_event_shown" or "ending_shown", "assessment": "fail"
+or "warn", "confidence": "high" | "medium" | "low", "quote": the offending phrase
+of the prompt, "reason": how it breaks THAT rule, "recovery_action": the specific
+fix the author should make}. Use "approved" with an empty list when the cover is
+spoiler-safe.

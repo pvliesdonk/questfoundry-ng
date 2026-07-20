@@ -103,7 +103,8 @@ def test_plan_orders_by_priority_then_slug(golden_copy):
     project = load_project(golden_copy)
     plan = plan_renders(project)
     slugs = [b.passage for b in plan.to_render]
-    assert slugs == ["passage:p-arrival", "passage:p-lamp-room", "passage:p-tremor"]
+    # the cover (priority 0) sorts first, then the passage briefs
+    assert slugs == ["cover", "passage:p-arrival", "passage:p-lamp-room", "passage:p-tremor"]
 
 
 def test_plan_skips_existing_unless_forced(golden_copy):
@@ -112,20 +113,42 @@ def test_plan_skips_existing_unless_forced(golden_copy):
     existing.parent.mkdir(parents=True)
     existing.write_bytes(b"png")
     plan = plan_renders(project)
-    assert len(plan.to_render) == 2
+    assert len(plan.to_render) == 3  # cover + 2 remaining briefs
     assert [b.passage for b in plan.skipped_existing] == ["passage:p-arrival"]
     forced = plan_renders(project, force=True)
-    assert len(forced.to_render) == 3
+    assert len(forced.to_render) == 4  # cover + 3 briefs
 
 
 def test_plan_priority_floor_and_budget(golden_copy):
     project = load_project(golden_copy)
     plan = plan_renders(project, priority_floor=2)
-    assert [b.priority for b in plan.to_render] == [1, 2]
+    assert [b.priority for b in plan.to_render] == [0, 1, 2]  # cover(0) + briefs 1,2
     assert [b.priority for b in plan.skipped_priority] == [3]
+    # budget 1 renders the COVER first (the feature: the cover is never skipped
+    # for a passage brief)
     capped = plan_renders(project, budget=1)
-    assert len(capped.to_render) == 1
-    assert len(capped.skipped_budget) == 2
+    assert [b.passage for b in capped.to_render] == ["cover"]
+    assert len(capped.skipped_budget) == 3
+
+
+def test_plan_has_no_cover_when_none_set(golden_copy):
+    project = load_project(golden_copy)
+    project.enrichment.cover = None
+    plan = plan_renders(project)
+    assert [b.passage for b in plan.to_render] == [
+        "passage:p-arrival", "passage:p-lamp-room", "passage:p-tremor"
+    ]
+
+
+def test_cover_renders_to_cover_png(golden_copy):
+    project = load_project(golden_copy)
+    plan = plan_renders(project, budget=1)  # the cover only
+    provider = _RefusingProvider()  # renders anything without 'forbidden'
+    outcomes = render_briefs(project, _stub_service(project, provider), "stub", plan.to_render)
+    assert outcomes[0].path == golden_copy / "art" / "images" / "cover.png"
+    assert outcomes[0].path.exists()
+    # the cover prompt carried the art direction + the cover scene, no entity
+    assert "Style:" in provider.calls[0] and "Scene:" in provider.calls[0]
 
 
 # -- provider construction ---------------------------------------------------
@@ -304,9 +327,9 @@ def test_cli_illustrate_placeholder_end_to_end(golden_copy):
         app, ["illustrate", "--dir", str(golden_copy), "--provider", "placeholder", "--yes"]
     )
     assert result.exit_code == 0, result.output
-    assert "3 image(s) rendered" in result.output
+    assert "4 image(s) rendered" in result.output  # cover + 3 passage briefs
 
-    for slug in ("p-arrival", "p-lamp-room", "p-tremor"):
+    for slug in ("cover", "p-arrival", "p-lamp-room", "p-tremor"):
         png = golden_copy / "art" / "images" / f"{slug}.png"
         assert png.exists()
         assert png.read_bytes().startswith(b"\x89PNG")
@@ -316,7 +339,7 @@ def test_cli_illustrate_placeholder_end_to_end(golden_copy):
         for line in (golden_copy / "reports" / "ledger.jsonl").read_text().splitlines()
     ]
     image_entries = [e for e in entries if e.get("kind") == "image"]
-    assert len(image_entries) == 3
+    assert len(image_entries) == 4
     assert all(e["provider"] == "placeholder" and not e["refused"] for e in image_entries)
 
 
@@ -334,7 +357,7 @@ def test_cli_illustrate_rerun_is_free(golden_copy):
 
     forced = runner.invoke(app, args + ["--force"])
     assert forced.exit_code == 0, forced.output
-    assert "3 image(s) rendered" in forced.output
+    assert "4 image(s) rendered" in forced.output
 
 
 def test_cli_sample_first_gate_stops_on_decline(golden_copy):
@@ -389,8 +412,10 @@ def test_html_player_embeds_rendered_art(golden_copy):
     assert all(a["image"].startswith("art/images/") for a in runtime["art"])
 
     html = build_html(project)
-    assert html.count("data:image/png;base64,") == 3
+    # 3 passage illustrations + the cover, all inlined
+    assert html.count("data:image/png;base64,") == 4
     assert '<figure id="art"' in html
+    assert 'id="cover"' in html
 
 
 def test_pdf_export_compiles_with_rendered_art(golden_copy):

@@ -413,9 +413,11 @@ def test_pipeline_reaches_dress_through_one_review_round(dressed):
     # the first codex proposal leaked a conditional fact and was rewritten
     assert by_name["codex"].attempts == 2
     assert by_name["codewords"].attempts == 1
+    assert by_name["cover"].attempts == 1
     ledger = (project.root / "reports" / "ledger.jsonl").read_text().strip().splitlines()
     # 54 through FILL + direction + briefs + 2x(codex propose + review) + codewords
-    assert len(ledger) == 62
+    # + (cover propose + cover review)
+    assert len(ledger) == 64
 
 
 def test_dress_populates_enrichment(dressed):
@@ -425,6 +427,7 @@ def test_dress_populates_enrichment(dressed):
 
     retained = [e for e in g.nodes_of(Entity) if e.retained]
     assert project.enrichment.direction is not None
+    assert project.enrichment.cover is not None and project.enrichment.cover.prompt
     assert {p.entity for p in project.enrichment.profiles} == {e.id for e in retained}
     assert len(project.enrichment.briefs) == 3  # 8 passages -> max(3, min(20, 8 // 5))
     assert [b.priority for b in project.enrichment.briefs] == [1, 2, 3]

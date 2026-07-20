@@ -320,9 +320,23 @@ def _layout(
     sections: list[Section],
     projected: set[str],
     warnings: list[str],
+    *,
+    cover_path: str | None = None,
 ) -> str:
     title = runtime["meta"]["title"]
     parts: list[str] = [_PAGE_SETUP]
+
+    if cover_path is not None:
+        # a full-page cover: the art fills the frame, the title sits over it
+        # at the foot (the cover prompt leaves the top open for it)
+        parts.append(
+            "#page(margin: 0pt)[\n"
+            f'  #image("{cover_path}", width: 100%, height: 100%, fit: "cover")\n'
+            "  #place(bottom + center, dy: -8mm)[\n"
+            "    #block(fill: rgb(0, 0, 0, 160), inset: 6mm)[\n"
+            f'      #text(size: 26pt, weight: "bold", fill: white)[{_escape_typst(title)}]\n'
+            "    ]\n  ]\n]\n"
+        )
 
     parts.append(
         "#align(center + horizon)[\n"
@@ -435,7 +449,16 @@ def build_gamebook(
         )
     sections.sort(key=lambda s: s.number)
 
-    typst_source = _layout(runtime, sections, projected, warnings)
+    cover_path = None
+    cover = runtime.get("cover")
+    if cover is not None and images_dir is not None:
+        cover_file = images_dir / "cover.png"
+        if cover_file.exists():
+            if root is None:
+                raise ValueError("images_dir requires root (the typst compilation root)")
+            cover_path = "/" + cover_file.resolve().relative_to(root.resolve()).as_posix()
+
+    typst_source = _layout(runtime, sections, projected, warnings, cover_path=cover_path)
 
     return Gamebook(
         sections=sections,

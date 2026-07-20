@@ -657,7 +657,8 @@ which the passage graph is compiled.
 
 DRESS adds, without changing the story: an **art direction** record
 (style, palette), per-entity **visual profiles**, per-passage
-**illustration briefs** (caption + image prompt, prioritized), generated
+**illustration briefs** (caption + image prompt, prioritized), a **cover
+brief** (the atmospheric, spoiler-safe front-page image), generated
 or commissioned **illustrations**, and a diegetic **codex** (in-world
 encyclopedia entries for major entities).
 

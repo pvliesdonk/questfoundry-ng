@@ -1463,6 +1463,16 @@ def check_g6_art_direction(ctx: Context) -> None:
             ctx.error("G6", f"retained entity {entity_id} has {count} visual profiles, need 1")
 
 
+def check_g6_cover(ctx: Context) -> None:
+    """G6: the cover brief, when present, has a non-empty prompt. The cover is
+    optional (a project may ship none — `None` is legal, as the exports only
+    render it when set), so this fires only on a present-but-empty cover,
+    matching how every other DRESS artifact enforces non-empty content."""
+    cover = ctx.enrichment.cover
+    if cover is not None and not cover.prompt.strip():
+        ctx.error("G6", "the cover brief has an empty prompt")
+
+
 def check_g6_briefs(ctx: Context) -> None:
     """G6.2: >=1 brief, each on a real passage, <=1 per passage, priorities
     dense 1..N, non-empty caption/prompt, and the mechanical half of
@@ -1479,6 +1489,14 @@ def check_g6_briefs(ctx: Context) -> None:
     for b in briefs:
         by_passage[b.passage] = by_passage.get(b.passage, 0) + 1
         priorities.append(b.priority)
+        if b.passage.split(":", 1)[-1] == "cover":
+            # the cover renders to art/images/cover.png; a passage brief with
+            # the slug "cover" would map to the same file and overwrite it
+            ctx.error(
+                "G6",
+                f"brief passage {b.passage!r} uses the reserved slug 'cover' "
+                "(it collides with the cover image); rename the passage",
+            )
         passage = passages.get(b.passage)
         if passage is None:
             ctx.error("G6", f"brief references unknown passage {b.passage!r}")
@@ -1611,6 +1629,7 @@ GATES: dict[Stage, list] = {
     ],
     Stage.DRESS: [
         check_g6_art_direction,
+        check_g6_cover,
         check_g6_briefs,
         check_g6_codex,
         check_g6_codewords,

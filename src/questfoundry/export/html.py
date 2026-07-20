@@ -44,9 +44,22 @@ _TEMPLATE = """<!DOCTYPE html>
   details { margin-top: 1rem; font-size: .85rem; color: #78909c; }
   #codex article { margin-top: .8rem; }
   #codex h3 { margin: 0 0 .3rem; font-size: 1rem; color: #9db4c0; font-weight: normal; }
+  #cover { position: fixed; inset: 0; background: #0d0f11; display: flex;
+       flex-direction: column; align-items: center; justify-content: center;
+       gap: 1.5rem; padding: 2rem; text-align: center; z-index: 10; }
+  #cover img { max-width: min(90vw, 34rem); max-height: 66vh; border-radius: 4px; }
+  #cover h1 { font-size: 2rem; letter-spacing: .14em; color: #e6dfce; margin: 0; }
+  #cover button { font: inherit; background: #1d2226; color: #cfd8dc;
+       border: 1px solid #90a4ae; border-radius: 4px; padding: .6rem 1.8rem; cursor: pointer; }
+  #cover button:hover { background: #263238; }
 </style>
 </head>
 <body>
+<div id="cover" hidden>
+  <img alt="Cover">
+  <h1 id="cover-title"></h1>
+  <button id="begin">Begin</button>
+</div>
 <main>
   <h1 id="title"></h1>
   <figure id="art" hidden><img alt=""><figcaption></figcaption></figure>
@@ -109,7 +122,19 @@ el("load").onclick = () => {
   const s = localStorage.getItem(KEY);
   if (s) { state = JSON.parse(s); render(); }
 };
-render();
+
+function start() {
+  if (STORY.cover) {
+    const c = el("cover");
+    c.querySelector("img").src = STORY.cover.image;
+    el("cover-title").textContent = STORY.meta.title;
+    el("begin").onclick = () => { c.hidden = true; render(); };
+    c.hidden = false;
+  } else {
+    render();
+  }
+}
+start();
 </script>
 </body>
 </html>
@@ -146,6 +171,11 @@ def build_html(project: Project) -> str:
     for entry in data["art"]:
         image_bytes = (project.root / entry["image"]).read_bytes()
         entry["image"] = "data:image/png;base64," + base64.b64encode(image_bytes).decode("ascii")
+    if data.get("cover"):
+        cover_bytes = (project.root / data["cover"]["image"]).read_bytes()
+        data["cover"]["image"] = (
+            "data:image/png;base64," + base64.b64encode(cover_bytes).decode("ascii")
+        )
     story = json.dumps(data, ensure_ascii=False)
     # a literal "</script>" inside the JSON would end the script element
     story = story.replace("</", "<\\/")

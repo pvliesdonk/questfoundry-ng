@@ -66,7 +66,8 @@ def build_runtime(project: Project) -> dict:
     data = {
         "format": FORMAT,
         "version": VERSION,
-        "meta": {"title": project.name, "scope": project.vision.scope},
+        # the reader-facing title is the story's, not the admin project name
+        "meta": {"title": project.vision.title or project.name, "scope": project.vision.scope},
         "start": _slug(starts[0]),
         "passages": passages,
         "flags": flags,

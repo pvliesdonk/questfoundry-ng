@@ -140,8 +140,8 @@ def test_dream_themes_count_is_enforced() -> None:
 
     from questfoundry.pipeline.stages.dream import DreamProposal
 
-    DreamProposal(genre="g", tone="t", themes=["a", "b"])  # 2 — ok
-    DreamProposal(genre="g", tone="t", themes=["a", "b", "c", "d"])  # 4 — ok
+    DreamProposal(title="T", genre="g", tone="t", themes=["a", "b"])  # 2 — ok
+    DreamProposal(title="T", genre="g", tone="t", themes=["a", "b", "c", "d"])  # 4 — ok
     for bad in (["only-one"], ["a", "b", "c", "d", "e"]):
         with pytest.raises(ValidationError):
-            DreamProposal(genre="g", tone="t", themes=bad)
+            DreamProposal(title="T", genre="g", tone="t", themes=bad)

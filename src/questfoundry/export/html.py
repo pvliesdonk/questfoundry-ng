@@ -57,7 +57,6 @@ _TEMPLATE = """<!DOCTYPE html>
 <body>
 <div id="cover" hidden>
   <img alt="Cover">
-  <h1 id="cover-title"></h1>
   <button id="begin">Begin</button>
 </div>
 <main>
@@ -126,8 +125,7 @@ el("load").onclick = () => {
 function start() {
   if (STORY.cover) {
     const c = el("cover");
-    c.querySelector("img").src = STORY.cover.image;
-    el("cover-title").textContent = STORY.meta.title;
+    c.querySelector("img").src = STORY.cover.image;  // the image carries the title
     el("begin").onclick = () => { c.hidden = true; render(); };
     c.hidden = false;
   } else {

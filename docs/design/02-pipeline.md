@@ -133,9 +133,10 @@ never patched downstream (Principle 4).
 | Out | **Vision** record |
 | Gate G0 | Vision complete; scope budgets resolved; `words_target` (when set) inside the scope's words band; content boundaries explicit |
 
-The LLM expands the premise into genre/subgenre, tone, themes, audience,
-content boundaries, and a POV hint; the engine binds the scope preset's
-budgets — coupled to the author's `words_target` when one is set (the soft
+The LLM expands the premise into a **title** (reader-facing, kept verbatim
+when the author pre-set one — the `pov_hint`/A17 pattern), genre/subgenre,
+tone, themes, audience, content boundaries, and a POV hint; the engine binds
+the scope preset's budgets — coupled to the author's `words_target` when one is set (the soft
 dilemma budget scales so the scope earns its length or shrinks; 01 §2,
 structural-depth W1). Premise, scope, and words target are the author's;
 DREAM never invents them. Cheapest stage to iterate on — the author should churn here, not

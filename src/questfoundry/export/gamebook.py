@@ -327,15 +327,13 @@ def _layout(
     parts: list[str] = [_PAGE_SETUP]
 
     if cover_path is not None:
-        # a full-page cover: the art fills the frame, the title sits over it
-        # at the foot (the cover prompt leaves the top open for it)
+        # a full-page cover; the image already carries the title (drawn by the
+        # image backend or composited at illustrate time), so the layout just
+        # places the art full-bleed
         parts.append(
             "#page(margin: 0pt)[\n"
             f'  #image("{cover_path}", width: 100%, height: 100%, fit: "cover")\n'
-            "  #place(bottom + center, dy: -8mm)[\n"
-            "    #block(fill: rgb(0, 0, 0, 160), inset: 6mm)[\n"
-            f'      #text(size: 26pt, weight: "bold", fill: white)[{_escape_typst(title)}]\n'
-            "    ]\n  ]\n]\n"
+            "]\n"
         )
 
     parts.append(

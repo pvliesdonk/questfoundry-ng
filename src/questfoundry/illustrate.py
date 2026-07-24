@@ -49,6 +49,61 @@ class IllustrateError(Exception):
 
 COVER_SLUG = "cover"
 
+# A cover is a book cover: portrait, not the landscape passage default.
+COVER_ASPECT_RATIO = "2:3"
+
+# Backends that render embedded text cleanly get the title drawn INTO the art;
+# everything else (diffusion, the placeholder) has the title composited on with
+# PIL afterwards, since diffusion models garble lettering.
+TEXT_CAPABLE_PROVIDERS = frozenset({"openai", "gemini"})
+
+
+def cover_title(project: Project) -> str:
+    """The reader-facing title drawn on the cover — the story's, falling back
+    to the admin project name (same source as the export `meta.title`)."""
+    return project.vision.title or project.name
+
+
+def _title_instruction(title: str) -> str:
+    return (
+        f'\nAcross the open space at the top of the frame, render the book\'s title '
+        f'in large, clean lettering that fits the art\'s style: "{title}".'
+    )
+
+
+def _composite_title(path: Path, title: str) -> None:
+    """Draw the title into the reserved band at the top of a rendered cover
+    (for backends that don't set text). Crisp vector text over a translucent
+    band for legibility; the cover prompt leaves this space open."""
+    from PIL import Image, ImageDraw, ImageFont
+
+    img = Image.open(path).convert("RGBA")
+    w, h = img.size
+    font = ImageFont.load_default(size=max(24, w // 14))
+    draw = ImageDraw.Draw(img)
+    # wrap the title to the frame width
+    words, lines, line = title.split(), [], ""
+    for word in words:
+        trial = f"{line} {word}".strip()
+        if draw.textlength(trial, font=font) <= w * 0.86 or not line:
+            line = trial
+        else:
+            lines.append(line)
+            line = word
+    lines.append(line)
+    ascent, descent = font.getmetrics()
+    lh = ascent + descent
+    band = int(lh * len(lines) + h * 0.06)
+    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.rectangle([0, 0, w, band], fill=(0, 0, 0, 150))
+    y = (band - lh * len(lines)) // 2
+    for ln in lines:
+        x = (w - draw.textlength(ln, font=font)) // 2
+        od.text((x, y), ln, font=font, fill=(255, 255, 255, 255))
+        y += lh
+    Image.alpha_composite(img, overlay).convert("RGB").save(path, format="PNG")
+
 
 def passage_slug(brief: IllustrationBrief) -> str:
     # [-1] tolerates the cover's colon-less sentinel key ("cover") as well as
@@ -219,6 +274,8 @@ def render_briefs(
     from image_generation_mcp.providers.types import ImageContentPolicyError
 
     kwargs = generate_kwargs or {}
+    title = cover_title(project)
+    text_capable = provider_name in TEXT_CAPABLE_PROVIDERS
 
     async def _run() -> list[RenderOutcome]:
         # one event loop for the whole batch: async provider clients are
@@ -226,12 +283,18 @@ def render_briefs(
         outcomes: list[RenderOutcome] = []
         confirmed = confirm_batch is None
         for brief in briefs:
+            is_cover = brief.passage == COVER_SLUG
+            # the cover is portrait; a text-capable backend draws the title
+            # into the art, else PIL composites it after the write
+            call_kwargs = {**kwargs, "aspect_ratio": COVER_ASPECT_RATIO} if is_cover else kwargs
             prompt = assemble_prompt(brief, project.enrichment)
+            if is_cover and text_capable:
+                prompt += _title_instruction(title)
             outcome = RenderOutcome(brief=brief, path=None)
             try:
-                _, result = await service.generate(prompt, provider=provider_name, **kwargs)
+                _, result = await service.generate(prompt, provider=provider_name, **call_kwargs)
             except ImageContentPolicyError as refusal:
-                _log_image(project, provider_name, brief, kwargs, refused=True)
+                _log_image(project, provider_name, brief, call_kwargs, refused=True)
                 if reformulate is None:
                     outcome.refusal = str(refusal)
                     outcomes.append(outcome)
@@ -239,16 +302,20 @@ def render_briefs(
                 outcome.reformulated = True
                 prompt = reformulate(prompt, str(refusal))
                 try:
-                    _, result = await service.generate(prompt, provider=provider_name, **kwargs)
+                    _, result = await service.generate(
+                        prompt, provider=provider_name, **call_kwargs
+                    )
                 except ImageContentPolicyError as second:
-                    _log_image(project, provider_name, brief, kwargs, refused=True)
+                    _log_image(project, provider_name, brief, call_kwargs, refused=True)
                     outcome.refusal = str(second)
                     outcomes.append(outcome)
                     continue
             target = image_path(project.root, brief)
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(_as_png(result.image_data))
-            _log_image(project, provider_name, brief, kwargs, refused=False)
+            if is_cover and not text_capable:
+                _composite_title(target, title)
+            _log_image(project, provider_name, brief, call_kwargs, refused=False)
             outcome.path = target
             outcomes.append(outcome)
             if on_rendered is not None:

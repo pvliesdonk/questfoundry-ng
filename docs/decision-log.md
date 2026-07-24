@@ -16,6 +16,29 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-24 (story title + a real cover — author-requested):** The first
+  cover surfaced that the reader-facing title everywhere (cover, HTML/print
+  title, Twee) was `project.name` — an *administrative* label, so
+  `examples/closed-circle-oss` (named "Closed Circle (gpt-oss)") would print
+  "(gpt-oss)" on its cover; and that the cover carried no title and rendered
+  landscape. Brainstormed + spec'd
+  ([`plans/story-title-and-cover.md`](plans/story-title-and-cover.md)),
+  built one PR, TDD. Three parts: (1) a generated **`Vision.title`** —
+  DREAM's envision writes it from the premise, keeps an author-set one (the
+  `pov_hint`/A17 pattern); exports use `vision.title or project.name`, so
+  `project.name` is a pure admin label again. (2) The cover renders
+  **portrait `2:3`** (a book cover), passages stay landscape `3:2`. (3) The
+  title lands **on the cover image**, backend-aware — text-capable backends
+  (`gemini`, `openai`) get the title appended to the cover prompt and draw it
+  into the art (they set text cleanly now — author call); diffusion/placeholder
+  get the title **composited with PIL** afterwards (they garble lettering).
+  Because the image now carries the title, the HTML/print layouts stopped
+  overlaying their own. Live proof: `closed-circle-oss`'s cover re-rendered
+  portrait with "Closed Circle" drawn crisply by Gemini (the checked-in
+  exemplar). Golden e2e envision fixtures gain `title`; examples backfilled
+  (`keepers-bargain`, `closed-circle-oss`); the rest fall back to
+  `project.name`. Docs: 01 §2, 02 DREAM, 04 §1/§2/§4.
+
 - **2026-07-19 (DRESS cover page — author-requested):** DRESS now writes a
   **cover brief** (the book's front-page image) alongside its per-passage
   briefs. Author-agreed shape (brainstorm 2026-07-19): an *illustrated*

@@ -432,9 +432,14 @@ def test_print_cover_page_when_image_exists(golden_copy):
     book = build_gamebook(
         runtime, seed=1, images_dir=golden_copy / "art" / "images", root=golden_copy
     )
-    # a full-page cover renders ahead of the title page, with the title over it
+    # a full-page cover image renders ahead of the title page; the image itself
+    # carries the title (drawn/composited at illustrate time), so the layout
+    # places it full-bleed with no title text overlaid
     assert "art/images/cover.png" in book.typst
-    assert book.typst.count(_escape_title(runtime["meta"]["title"])) >= 2  # cover + title page
+    assert 'fit: "cover"' in book.typst
+    assert "rgb(0, 0, 0, 160)" not in book.typst  # the old title-overlay band is gone
+    # the title appears once — on the interior title page, not on the cover
+    assert book.typst.count(_escape_title(runtime["meta"]["title"])) == 1
     # it compiles
     assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
 

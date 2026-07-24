@@ -14,6 +14,7 @@ from questfoundry.project.io import Project
 class DreamProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    title: str
     genre: str
     subgenre: str = ""
     tone: str
@@ -32,6 +33,7 @@ def _context(project: Project) -> dict:
         "budget": project.vision.budget,
         "words_target": project.vision.words_target,
         "pov_hint": project.vision.pov_hint,
+        "title": project.vision.title,
     }
 
 
@@ -43,10 +45,15 @@ def _apply(proposal: DreamProposal, project: Project) -> list[str]:
     # two live runs rewrote the scheme simply because the prompt was blind
     # to it). A validation that needs the scheme pinned pins it at the
     # operator level, not here.
+    # An author-set title is honored (kept), not reinterpreted — unlike the
+    # pov_hint (an inclination DREAM translates), a title is a name. Blank ->
+    # the generated one.
+    title = project.vision.title.strip() or proposal.title.strip()
     project.vision = Vision(
         premise=project.vision.premise,
         scope=project.vision.scope,
         words_target=project.vision.words_target,
+        title=title,
         genre=proposal.genre,
         subgenre=proposal.subgenre,
         tone=proposal.tone,
@@ -57,7 +64,10 @@ def _apply(proposal: DreamProposal, project: Project) -> list[str]:
         ),
         pov_hint=proposal.pov_hint,
     )
-    return [f"vision: {proposal.genre} / {proposal.tone} / {len(proposal.themes)} theme(s)"]
+    return [
+        f"vision: {title!r} — {proposal.genre} / {proposal.tone} / "
+        f"{len(proposal.themes)} theme(s)"
+    ]
 
 
 DREAM_STAGE = StageImpl(

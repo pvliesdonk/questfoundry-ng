@@ -540,7 +540,7 @@ def test_dream_sees_an_authored_pov_hint_but_is_not_bound_by_it(tmp_path):
     assert "deliberate reinterpretation is yours" in rendered
 
     proposal = DreamProposal(
-        genre="g", tone="t", themes=["a v b", "c v d"],
+        title="Four Suspects", genre="g", tone="t", themes=["a v b", "c v d"],
         pov_hint="rotating third limited among the four suspects, journal interludes",
     )
     _apply(proposal, project)
@@ -554,3 +554,35 @@ def test_dream_sees_an_authored_pov_hint_but_is_not_bound_by_it(tmp_path):
         runner._environment(), "dream.j2", "", **dream_context(project2)
     )
     assert "stated point-of-view inclination" not in rendered2
+
+
+def test_dream_generates_a_title_and_keeps_an_authored_one(tmp_path):
+    from questfoundry.pipeline import runner
+    from questfoundry.pipeline.stages.dream import DreamProposal, _apply
+    from questfoundry.project.io import scaffold_project
+
+    project = scaffold_project(tmp_path / "p", "Working Name", "micro")
+    project.vision.premise = "A lighthouse keeper trades a secret for the tide."
+
+    # no authored title -> the generated one lands on the vision
+    _apply(DreamProposal(title="The Long Watch", genre="g", tone="t",
+                         themes=["a v b", "c v d"]), project)
+    assert project.vision.title == "The Long Watch"
+
+    # an authored title is kept, not reinterpreted
+    project.vision.title = "The Keeper's Bargain"
+    _apply(DreamProposal(title="Something Else", genre="g", tone="t",
+                         themes=["a v b", "c v d"]), project)
+    assert project.vision.title == "The Keeper's Bargain"
+    # and the prompt tells the model to return it unchanged
+    rendered = _render(runner._environment(), "dream.j2", "", **dream_context(project))
+    assert "return it UNCHANGED" in rendered and "The Keeper's Bargain" in rendered
+
+
+def test_runtime_meta_title_uses_vision_title_then_falls_back_to_name(golden):
+    from questfoundry.export.runtime_json import build_runtime
+
+    # golden's vision has no title yet -> falls back to the project name
+    assert build_runtime(golden)["meta"]["title"] == golden.name
+    golden.vision.title = "The Salt Ledger"
+    assert build_runtime(golden)["meta"]["title"] == "The Salt Ledger"

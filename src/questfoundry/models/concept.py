@@ -314,6 +314,11 @@ class Vision(BaseModel):
     audience: str = ""
     content_notes: ContentNotes = ContentNotes()
     pov_hint: str = ""
+    # The reader-facing story title (cover, title page, browser tab, Twee).
+    # DREAM generates it from the premise, or keeps an author-set one (the
+    # pov_hint / A17 pattern). Distinct from `project.name`, which is an
+    # administrative label; exports fall back to the name when this is blank.
+    title: str = ""
     scope: str = "micro"
     # An author-chosen point inside the scope's words_total band — an
     # economic input like scope itself, never invented by DREAM's LLM.

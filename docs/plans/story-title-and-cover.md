@@ -1,8 +1,8 @@
 # Story title & a real cover (build spec)
 
-> Status: **spec** (brainstormed with the author 2026-07-23/24). Design
-> author-approved: a generated story title, a portrait titled cover.
-> One PR, TDD.
+> Status: **BUILT** (2026-07-24, one PR, TDD). Brainstormed with the author
+> 2026-07-23/24. A generated story title, a portrait titled cover. See the
+> decision-log entry 2026-07-24.
 
 ## The problem
 

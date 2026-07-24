@@ -140,6 +140,22 @@ def test_plan_has_no_cover_when_none_set(golden_copy):
     ]
 
 
+class _RecordingProvider:
+    """Records prompt + kwargs; renders a solid portrait-ish PNG."""
+
+    def __init__(self):
+        self.calls: list[tuple[str, dict]] = []
+
+    async def generate(self, prompt, **kwargs):
+        from image_generation_mcp.providers.types import ImageResult
+
+        self.calls.append((prompt, kwargs))
+        return ImageResult(image_data=_tiny_png())
+
+    async def discover_capabilities(self):  # pragma: no cover - unused
+        raise NotImplementedError
+
+
 def test_cover_renders_to_cover_png(golden_copy):
     project = load_project(golden_copy)
     plan = plan_renders(project, budget=1)  # the cover only
@@ -149,6 +165,47 @@ def test_cover_renders_to_cover_png(golden_copy):
     assert outcomes[0].path.exists()
     # the cover prompt carried the art direction + the cover scene, no entity
     assert "Style:" in provider.calls[0] and "Scene:" in provider.calls[0]
+
+
+def test_cover_renders_portrait_and_passages_landscape(golden_copy):
+    project = load_project(golden_copy)
+    provider = _RecordingProvider()
+    render_briefs(
+        project, _stub_service(project, provider), "stub", plan_renders(project).to_render,
+        generate_kwargs={"aspect_ratio": "3:2"},
+    )
+    aspects = [kw["aspect_ratio"] for _, kw in provider.calls]
+    # the cover (priority 0) renders first and portrait; the rest stay landscape
+    assert aspects[0] == "2:3"
+    assert aspects.count("2:3") == 1 and all(a == "3:2" for a in aspects[1:])
+
+
+def test_text_capable_backend_draws_the_title_non_text_composites(golden_copy, monkeypatch):
+    project = load_project(golden_copy)
+    project.vision.title = "The Salt Ledger"
+    cover_only = plan_renders(project, budget=1).to_render
+
+    # gemini/openai: the title is appended to the cover PROMPT (model draws it)
+    gem = _RecordingProvider()
+    svc = _stub_service(project, gem, name="gemini")
+    render_briefs(project, svc, "gemini", cover_only)
+    assert 'render the book\'s title' in gem.calls[0][0]
+    assert "The Salt Ledger" in gem.calls[0][0]
+
+    # a non-text backend: the title is NOT in the prompt; it is composited on.
+    # spy on the composite to confirm it fires for the cover only.
+    from questfoundry import illustrate
+
+    composited: list = []
+    monkeypatch.setattr(illustrate, "_composite_title",
+                        lambda path, title: composited.append((path.name, title)))
+    plain = _RecordingProvider()
+    # clear the rendered cover so it re-renders
+    (golden_copy / "art" / "images" / "cover.png").unlink()
+    render_briefs(project, _stub_service(project, plain, name="placeholder"), "placeholder",
+                  plan_renders(project, budget=1).to_render)
+    assert "The Salt Ledger" not in plain.calls[0][0]  # not in the prompt
+    assert composited == [("cover.png", "The Salt Ledger")]  # composited instead
 
 
 # -- provider construction ---------------------------------------------------
@@ -207,11 +264,11 @@ class _RefusingProvider:
         raise NotImplementedError
 
 
-def _stub_service(project, provider):
+def _stub_service(project, provider, name="stub"):
     from image_generation_mcp.domain import ImageService
 
     service = ImageService(scratch_dir=project.root / "cache" / "images")
-    service.register_provider("stub", provider)
+    service.register_provider(name, provider)
     return service
 
 

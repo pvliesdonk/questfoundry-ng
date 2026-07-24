@@ -14,7 +14,7 @@ The exported subset of the graph — the persistent boundary. Working data
 {
   "format": "questfoundry-runtime",
   "version": 1,
-  "meta": { "title": "...", "author": "...", "scope": "micro" },
+  "meta": { "title": "...", "author": "...", "scope": "micro" },  // title = vision.title, else project.name
   "start": "p-001",
   "passages": {
     "p-017": {
@@ -55,8 +55,9 @@ satisfiability, and ending reachability (I10/I13 at the export boundary).
 
 One self-contained file: embedded runtime JSON + a small dependency-free
 JS player + inlined (base64) images. Works from `file://`, no network, no
-build step. Features: an optional **cover screen** (the cover image with
-the title, a "Begin" control) shown first when a `cover` is present,
+build step. Features: an optional **cover screen** (the cover image — which
+carries its own title — with a "Begin" control) shown first when a `cover`
+is present,
 passage rendering, choice handling, a codex panel, an optional "journey so
 far" recap (list of passages visited), and a save/restore slot in
 `localStorage`. Deliberately minimal — anyone wanting more should consume
@@ -112,8 +113,9 @@ The most format-specific pipeline, in five deterministic steps:
    passage counts the constraints may be unsatisfiable; the best
    assignment is kept and the compromises reported as warnings.
 4. **Layout.** Typst template: an optional full-page **cover** (the cover
-   image with the title set over it) when a `cover` is present, then front
-   matter (title page, how-to-play, codeword log page), numbered sections
+   image, full-bleed — it already carries its own title, drawn by the image
+   backend or composited at illustrate time) when a `cover` is present, then
+   front matter (title page, how-to-play, codeword log page), numbered sections
    with illustrations, choice lines in a consistent typographic form, codex
    as an appendix ("The Keeper's Almanac"), and an ending index by ending id
    (unnumbered-title only, to stay spoiler-safe).

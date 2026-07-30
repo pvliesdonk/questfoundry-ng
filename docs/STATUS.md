@@ -17,40 +17,41 @@ Where to look for the rest:
 
 _Last updated: 2026-07-30._
 
-## Current epics — Now is open
+## Current epic — export styling
 
-**Both "Now" epics shipped 2026-07-19 (author call)** — details in the
-roadmap Shipped section:
+**Export styling — gamebook layout directions** is the current epic
+(author call, 2026-07-30): the author's Claude Design layout project,
+imported as [`plans/gamebook-layouts.md`](plans/gamebook-layouts.md),
+becomes selectable print/HTML export styles with a shared WCAG contract
+and PDF/UA-1 output. The contract's open decisions were **ratified by
+the author in-session 2026-07-30** (art-ratio menu bounded by provider
+support; alt + kind + document metadata; large print as a modifier;
+first build 1a Paperback + 1d Shelf) — see the plan's "Ratified
+decisions". Template work is next.
 
-- **Prose quality at scale — engine + DRESS at scale.** A weak-tier
-  medium (`gpt-oss:120b-cloud`, unbilled) completed DREAM→DRESS gate-clean,
-  exports round-tripped, and was illustrated — the first project through
-  DRESS + illustration + export, checked in as
-  [`examples/closed-circle-oss/`](../examples/closed-circle-oss/) (the
-  first example with rendered art). Yield: **five pipeline defects fixed**
-  (#110–#114) + two operator-loop refinements. Remainders in BACKLOG: a
-  corpus-grounded run + author prose read.
-- **POV sequences — run-unit viewpoint annotation.** Machinery merged
-  (roster/annotate/interlude, #106/#107/#108, A25); the scheme half
-  validated + hardened live (#113, the `pov_hint`-as-law fix). Remainder in
-  BACKLOG: the formal live A/B against the run-6 counterfactual.
-
-Earlier: **structural depth** and **cosmetic forks** shipped 2026-07-17.
-
-**Now is unscoped** — the next milestone hasn't been chosen. Small
-follow-on work is in flight (author); the roadmap "Next" candidates
-(weave linearization, M9 retrieval refinement) are the standing options.
+Earlier epics — prose quality at scale, POV sequences (2026-07-19),
+structural depth, cosmetic forks (2026-07-17) — are in the roadmap
+Shipped section; their measurement remainders live in the BACKLOG.
 
 ## Immediate next steps
 
-The next milestone is unscoped; the author has small follow-on work in
-flight first. When a milestone is chosen, the standing options are the
-roadmap "Next" candidates (weave linearization, M9 retrieval refinement,
-and export styling — the author's gamebook-layout design project, imported
-2026-07-30, `plans/gamebook-layouts.md`, pending its four open decisions),
-and the shipped epics' BACKLOG remainders (the prose-quality corpus-grounded
-run + author read; the POV-sequences live A/B) are pick-up-able measurement
-work needing no new machinery.
+Build the epic's first slice (contract: `plans/gamebook-layouts.md`):
+
+1. **Alt-text plumbing** — `alt` on the DRESS brief + runtime JSON art
+   entries + both templates; compile print with
+   `pdf_standards=("ua-1",)` (typst 0.15.0 supports it).
+2. **The shared style layer** — tokens (contrast-checked ramp) + Typst
+   template module + HTML template hooks; then **1a Paperback** (A5,
+   continuous flow, running heads) and **1d Shelf** (title screen,
+   reading modes, WCAG semantics) as the first two styles.
+3. **Ratio-as-data** — per-image ratio (menu: 2:3/3:2/1:1) through
+   brief → illustrate → runtime → placement rules.
+
+Still standing as later options: the roadmap "Next" candidates (weave
+linearization, M9 retrieval refinement) and the BACKLOG measurement
+remainders (prose-quality corpus-grounded run + author read — being
+served by the in-flight star-swabber run — and the POV-sequences live
+A/B).
 
 In flight now (2026-07-30): the **star-swabber live run** — a
 corpus-grounded medium run on `kimi-k2.6` (Ollama cloud, unbilled),

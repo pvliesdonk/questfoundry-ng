@@ -1,15 +1,15 @@
 # Gamebook layouts — styled print & HTML export (Design Input)
 
-> Status: **DESIGN INPUT — not yet scoped as an epic.** The layout
-> directions come from the author's Claude Design project
-> ("Questfoundry gamebook layout directions", project
-> `5147ccb0-3922-4b92-84c4-a55032396ad0`), authored over four design
-> turns and imported into the repo administration 2026-07-30 at the
-> author's direction. The *mockups and their rationale are the design
-> project's*; the code-grounding notes and recommendations below are
-> **this session's (agent) framing** for author ratification — per the
-> AGENTS.md documentation contract, nothing here is author-ratified
-> until the open decisions get explicit answers.
+> Status: **CURRENT EPIC (author call, 2026-07-30) — decisions
+> ratified, build not started.** The layout directions come from the
+> author's Claude Design project ("Questfoundry gamebook layout
+> directions", project `5147ccb0-3922-4b92-84c4-a55032396ad0`),
+> authored over four design turns and imported into the repo
+> administration 2026-07-30 at the author's direction. The *mockups
+> and their rationale are the design project's*; the code-grounding
+> notes are this session's (agent). The open decisions were **answered
+> by the author in-session 2026-07-30** — see "Ratified decisions"
+> below.
 
 The design project drafts **three print directions and two HTML player
 directions**, all set with real output from *The Letter and the
@@ -102,30 +102,47 @@ one plate per spread.
   page margins per style). The style presets become Typst template
   modules the generator selects, not Quarto formats.
 
-## The open decisions (need author answers)
+## Ratified decisions (author, in-session 2026-07-30)
 
-1. **Per-image aspect ratio as data.** Let runtime JSON carry the
-   ratio per image (and DRESS choose it per scene: portrait for a
-   character, landscape for a vista); each style declares which ratios
-   it can place (inline / full-width / full-bleed / margin). A new
-   ratio becomes data, not a template rewrite. *Touches:*
-   `runtime_json.py`, `illustrate.py`, DRESS brief schema.
-2. **Passage-text metadata.** The higher-leverage ask: tags for
-   passage kind (opening / beat / hub / ending), codeword spans,
-   in-world documents (a letter set as a letter), dialogue-heavy
-   no-justify. One annotation pass serves both layout and PDF/UA
-   semantics. Guard: add a tag only when ≥2 styles render it
-   differently. **Alt text first regardless — it is mandatory for
-   UA-1** and the DRESS brief already writes the scene description
-   that can seed it.
-3. **Style naming & pairing.** Proposed `--style
-   paperback|bound|compendium` (print) and `screen|table` (HTML);
-   large-print as a *modifier* combinable with any style; whether a
-   style bundles a print+HTML pair or stays per-medium.
-4. **Section numbering.** Shuffled (current, seeded, anti-spoiler) vs
-   sequential — decides whether running heads and "turn to" ranges are
-   real navigation. Recommend keeping the shuffle and adding the 1a
-   running heads (they make the shuffle navigable).
+1. **Art ratios: provider capability is the binding constraint**
+   (author's framing — the deciding axis is what the image providers
+   can actually produce, not what the templates would like).
+   Measured against `image-generation-mcp`:
+   - OpenAI (gpt-image): exactly `1:1, 3:2, 2:3, 16:9, 9:16`, max
+     edge **1536px**. Gemini: 14 ratios (adds 3:4, 4:3, 21:9…), up
+     to 2K. **Portable intersection: `1:1, 3:2, 2:3, 16:9, 9:16`.**
+   - Therefore: per-image ratio becomes runtime-JSON data, but the
+     menu is the provider-portable, book-shaped subset — **2:3
+     (portrait), 3:2 (landscape), 1:1 (square)** — and DRESS may pick
+     per scene from that menu only. Each style declares which ratios
+     it places (inline / full-width / full-bleed / margin). A new
+     ratio is a menu change, gated on provider support.
+   - Resolution reality: no provider reaches the ~1750×2625px floor
+     for 300dpi full-bleed A5 (1536px tall ≈ 186dpi). **Inset is the
+     default print treatment**; full-bleed is an explicit opt-in that
+     accepts the dpi. *Touches:* `runtime_json.py`, `illustrate.py`,
+     DRESS brief schema.
+2. **Passage metadata: alt text + passage kind + in-world documents**
+   (author, 2026-07-30). Alt text on every image (mandatory for
+   UA-1 — the DRESS brief's scene description seeds it), passage kind
+   (opening / beat / hub / ending), and in-world document marking (a
+   letter set as a letter). Codeword spans, dialogue-heavy no-justify,
+   and tone wait for demonstrated need (the two-styles rule).
+3. **Large print is a modifier** (author, 2026-07-30): combinable
+   with any print style — type scale, leading, and measure over the
+   style's own palette and furniture.
+4. **First build: 1a (Paperback) + 1d (Shelf)** (author, 2026-07-30).
+   The shared token/template layer is proven on the simplest print
+   furniture and the calmer title screen; 1b/1c/1e follow as
+   variations.
+
+Adopted without objection (agent proposal, presented 2026-07-30):
+style names `--style paperback|bound|compendium` (print) /
+`screen|table` (HTML); **numbering stays shuffled** (the seeded
+anti-spoiler shuffle is deliberate; sequential would reintroduce
+adjacency spoilers) with 1a's running heads making the shuffle
+navigable. Print/HTML pairing stays per-medium for now; a bundled
+preset is CLI ergonomics the build can add if it earns its place.
 
 ## Imported artifacts
 

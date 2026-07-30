@@ -26,8 +26,12 @@ history; the decisions it recorded are captured below and in the design docs.
   answered by the author in-session: **art ratios are bounded by
   image-provider capability** (the author's own framing — the menu is
   the provider-portable subset 2:3/3:2/1:1, carried per-image in the
-  runtime JSON, DRESS picks per scene; no provider reaches 300dpi
-  full-bleed A5, so inset is the default print treatment); metadata is
+  runtime JSON, DRESS picks per scene; the session's "no provider
+  reaches 300dpi full-bleed A5" claim was **corrected by the author
+  in-session**: Gemini goes to 4K and OpenAI gpt-image-2 takes
+  arbitrary sizes — the ceiling is the installed image-generation-mcp
+  adapter, so the epic gains an adapter task and inset becomes the
+  below-floor fallback, not the default); metadata is
   **alt + passage kind + in-world documents** (alt mandatory for
   PDF/UA-1 — runtime art entries had no alt field at all); **large
   print is a modifier**, not a style; **first build is 1a Paperback +

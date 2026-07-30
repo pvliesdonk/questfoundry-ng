@@ -117,11 +117,22 @@ one plate per spread.
      per scene from that menu only. Each style declares which ratios
      it places (inline / full-width / full-bleed / margin). A new
      ratio is a menu change, gated on provider support.
-   - Resolution reality: no provider reaches the ~1750×2625px floor
-     for 300dpi full-bleed A5 (1536px tall ≈ 186dpi). **Inset is the
-     default print treatment**; full-bleed is an explicit opt-in that
-     accepts the dpi. *Touches:* `runtime_json.py`, `illustrate.py`,
-     DRESS brief schema.
+   - Resolution (**author correction, 2026-07-30**): the providers DO
+     reach the ~1750×2625px floor for 300dpi full-bleed A5 — Gemini's
+     image API takes `image_size` up to **4K** on current image
+     models, and OpenAI's **gpt-image-2** accepts arbitrary `size`
+     (beyond 2560×1440 total pixels is documented as experimental);
+     only the older gpt-image-1.x is fixed at 1536px. The 1536/2K
+     ceiling is the **installed `image-generation-mcp` adapter
+     surface** (Gemini adapter exposes 1K/2K via its `hd` flag; the
+     OpenAI adapter pins gpt-image-1.5's size table) — so the epic
+     includes an **adapter task**: request high resolution for covers
+     and full-bleed plates (library upgrade or adapter extension).
+     Full-bleed at 300dpi is a supported target; **inset is the
+     fallback** when a rendered file falls short of its placement's
+     floor, checked at export time. *Touches:* `runtime_json.py`,
+     `illustrate.py`, DRESS brief schema, the image-generation-mcp
+     seam.
 2. **Passage metadata: alt text + passage kind + in-world documents**
    (author, 2026-07-30). Alt text on every image (mandatory for
    UA-1 — the DRESS brief's scene description seeds it), passage kind

@@ -127,7 +127,10 @@ one plate per spread.
      surface** (Gemini adapter exposes 1K/2K via its `hd` flag; the
      OpenAI adapter pins gpt-image-1.5's size table) — so the epic
      includes an **adapter task**: request high resolution for covers
-     and full-bleed plates (library upgrade or adapter extension).
+     and full-bleed plates (filed as
+     [image-generation-mcp#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337);
+     the 2K cap dates to its #162 quality wiring, which knew of the 4K
+     tier but recorded no reason for stopping at 2K).
      Full-bleed at 300dpi is a supported target; **inset is the
      fallback** when a rendered file falls short of its placement's
      floor, checked at export time. *Touches:* `runtime_json.py`,

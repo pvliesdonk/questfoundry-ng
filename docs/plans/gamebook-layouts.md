@@ -137,8 +137,12 @@ one plate per spread.
    variations.
 
 Adopted without objection (agent proposal, presented 2026-07-30):
-style names `--style paperback|bound|compendium` (print) /
-`screen|table` (HTML); **numbering stays shuffled** (the seeded
+style names `--style paperback|bound|compendium` (print, mapping
+1a/1b/1c in that order) and `screen|table` (HTML, mapping **1d Shelf →
+`screen`**, **1e Room → `table`** — the calmer object-on-a-shelf title
+screen is the conventional screen player; the cover-as-the-room
+direction is the immersive at-the-table one); **numbering stays
+shuffled** (the seeded
 anti-spoiler shuffle is deliberate; sequential would reintroduce
 adjacency spoilers) with 1a's running heads making the shuffle
 navigable. Print/HTML pairing stays per-medium for now; a bundled

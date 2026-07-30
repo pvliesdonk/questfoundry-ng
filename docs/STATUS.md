@@ -15,7 +15,7 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-19._
+_Last updated: 2026-07-30._
 
 ## Current epics — Now is open
 
@@ -45,10 +45,19 @@ follow-on work is in flight (author); the roadmap "Next" candidates
 
 The next milestone is unscoped; the author has small follow-on work in
 flight first. When a milestone is chosen, the standing options are the
-roadmap "Next" candidates (weave linearization, M9 retrieval refinement),
+roadmap "Next" candidates (weave linearization, M9 retrieval refinement,
+and export styling — the author's gamebook-layout design project, imported
+2026-07-30, `plans/gamebook-layouts.md`, pending its four open decisions),
 and the shipped epics' BACKLOG remainders (the prose-quality corpus-grounded
 run + author read; the POV-sequences live A/B) are pick-up-able measurement
 work needing no new machinery.
+
+In flight now (2026-07-30): the **star-swabber live run** — a
+corpus-grounded medium run on `kimi-k2.6` (Ollama cloud, unbilled),
+premise "pulp space opera in the style of the 'space quest' computer
+games", serving the corpus-grounded-run BACKLOG remainder. DREAM→POLISH
+gate-clean (103 beats frozen; POLISH: 143 passages), FILL in progress.
+Scratch project under `runs/` (gitignored, PR #121).
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.

@@ -136,6 +136,19 @@ milestone is unscoped; small follow-on work is in flight (author), and the
   POV-sequences redesign. Touches the scaffold shape, intersections, and
   the capsule placement the shape presets encode.
 
+- **Export styling — gamebook layout directions.** Turn the author's
+  Claude Design layout project (imported 2026-07-30, contract:
+  [`../plans/gamebook-layouts.md`](../plans/gamebook-layouts.md)) into
+  styled exports: three print directions (paperback / bound /
+  compendium) and two HTML player directions as selectable styles, a
+  shared WCAG contract (contrast-checked ramps, gates-in-words, real
+  semantics, axe-core in CI), PDF/UA-1 compilation, and the art-geometry
+  rules (2:3 cover, 3:2 plates, per-style crop rules). Blocked on the
+  plan's four open decisions (per-image ratio as data, passage-text
+  metadata with alt text first, style naming, numbering) — author
+  answers needed before template work starts. Stays on bare Typst
+  (recommendation recorded in the contract).
+
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved
   exemplar mechanism**: style exemplars belong at the voice pass as a contrasting

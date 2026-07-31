@@ -110,12 +110,13 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   files in `cache/llm/` from the failure window, keeping adjacent
   passages' legitimate writes — then re-run) cleared the pass on a
   fresh sample in 2 attempts. **The re-roll should be automatic**
-  (author, 2026-07-31): the pipeline is fully automated and no human
-  has chosen one result over another at this point, so halting for
-  manual cache surgery is incoherent — on repair exhaustion the runner
-  itself should drop that pass's cached call chain and re-roll with
-  fresh samples under a per-passage retry cap, halting only when
-  fresh-sample re-rolls also exhaust. (Same mechanism the operator-loop
+  (author correction, 2026-07-31, in-session, verbatim: "I would
+  imagine an automatic re-roll. manual does not make sense here: the
+  whole pipeline is automated and the human has not yet chosen one
+  result over another"): on repair exhaustion the runner itself should
+  drop that pass's cached call chain and re-roll with fresh samples
+  under a per-passage retry cap, halting only when fresh-sample
+  re-rolls also exhaust. (Same mechanism the operator-loop
   epic's external prototype validated; this piece is runner-side and
   small enough to pull forward ahead of the full operator loop.)
 

@@ -222,6 +222,9 @@ exports/
 cache/
 inflight/
 
+# Scratch live-run projects (a run graduates to examples/ deliberately, by name)
+runs/
+
 # Scratch live-validation runs (throwaway A/B experiments, never preserved
 # as examples; a real exit-run example is added deliberately by name).
 examples/weir-coat/

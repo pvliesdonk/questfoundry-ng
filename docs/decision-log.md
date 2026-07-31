@@ -16,6 +16,37 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-07-30 (export styling becomes the current epic — author call;
+  decisions ratified in-session):** The author's Claude Design project
+  ("Questfoundry gamebook layout directions", four design turns: three
+  print + two HTML directions, a shared WCAG contract, art geometry,
+  and a hand-over of open decisions) was imported as
+  [`plans/gamebook-layouts.md`](plans/gamebook-layouts.md) and the
+  epic moved Next → Now the same day (author). The open decisions were
+  answered by the author in-session: **art ratios are bounded by
+  image-provider capability** (the author's own framing — the menu is
+  the provider-portable subset 2:3/3:2/1:1, carried per-image in the
+  runtime JSON, DRESS picks per scene; the session's "no provider
+  reaches 300dpi full-bleed A5" claim was **corrected by the author
+  in-session**: Gemini goes to 4K and OpenAI gpt-image-2 takes
+  arbitrary sizes — the ceiling is the installed image-generation-mcp
+  adapter, so the epic gains an adapter task and inset becomes the
+  below-floor fallback, not the default); metadata is
+  **alt + passage kind + in-world documents** (alt mandatory for
+  PDF/UA-1 — runtime art entries had no alt field at all); **large
+  print is a modifier**, not a style; **first build is 1a Paperback +
+  1d Shelf**. Adopted unobjected: style names
+  paperback/bound/compendium/screen/table, numbering stays the seeded
+  anti-spoiler shuffle. Tooling: bare Typst, no Quarto layer (the
+  exporter generates its own markup; typst 0.15.0 already exposes
+  `pdf_standards`). Also this session: the **star-swabber** live run
+  (corpus-grounded medium, `kimi-k2.6` Ollama cloud, premise "pulp
+  space opera in the style of the 'space quest' computer games") —
+  DREAM→POLISH gate-clean with zero non-transport halts; three
+  transport drops + several platform container restarts all resumed
+  free from the A16 journal, more live evidence for M10 stage-level
+  auto-resume.
+
 - **2026-07-24 (story title + a real cover — author-requested):** The first
   cover surfaced that the reader-facing title everywhere (cover, HTML/print
   title, Twee) was `project.name` — an *administrative* label, so

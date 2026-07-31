@@ -114,9 +114,19 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
 
 ## Now
 
-_Open — the two "Now" epics shipped 2026-07-19 (author call). The next
-milestone is unscoped; small follow-on work is in flight (author), and the
-"Next" candidates below (weave linearization, M9) are the standing options._
+- **Export styling — gamebook layout directions** (author call,
+  2026-07-30). Turn the author's Claude Design layout project (imported
+  2026-07-30, contract:
+  [`../plans/gamebook-layouts.md`](../plans/gamebook-layouts.md)) into
+  styled exports: three print directions (paperback / bound /
+  compendium) and two HTML player directions as selectable styles, a
+  shared WCAG contract (contrast-checked ramps, gates-in-words, real
+  semantics, axe-core in CI), PDF/UA-1 compilation, and the art-geometry
+  rules (2:3 cover, 3:2 plates, per-style crop rules). Stays on bare
+  Typst. The contract's open decisions were ratified by the author
+  in-session 2026-07-30 (provider-bounded ratio menu, alt + kind +
+  document metadata, large-print modifier, first build 1a + 1d) — see
+  the plan's "Ratified decisions".
 
 ## Next
 

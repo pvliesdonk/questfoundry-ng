@@ -109,11 +109,15 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   The manual re-roll (delete the failing chain's cache entries — newest
   files in `cache/llm/` from the failure window, keeping adjacent
   passages' legitimate writes — then re-run) cleared the pass on a
-  fresh sample in 2 attempts. Consequence for the operator-loop epic
-  (roadmap Later, which already plans "re-roll a failed pass's cached
-  call chain"): the re-roll wants first-class support (a `qf reroll
-  <pass>` that drops exactly that pass's chain), not hand-picked cache
-  deletions.
+  fresh sample in 2 attempts. **The re-roll should be automatic**
+  (author, 2026-07-31): the pipeline is fully automated and no human
+  has chosen one result over another at this point, so halting for
+  manual cache surgery is incoherent — on repair exhaustion the runner
+  itself should drop that pass's cached call chain and re-roll with
+  fresh samples under a per-passage retry cap, halting only when
+  fresh-sample re-rolls also exhaust. (Same mechanism the operator-loop
+  epic's external prototype validated; this piece is runner-side and
+  small enough to pull forward ahead of the full operator loop.)
 
 ## Structure & scale
 

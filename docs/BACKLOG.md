@@ -99,7 +99,21 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   summary style should give each beat ITS OWN event (no neighbor
   restating), and the POV-sequences redesign removes most of the
   boundaries. Until either lands: expect a few re-rolls per FILL run at
-  these seams.
+  these seams. **Confirmed live + a sharper finding (star-swabber run,
+  2026-07-31):** `write:p-clerical-lien` exhausted 4 repairs echoing an
+  adjacent passage's line ("in the shuttle bay the express elevator
+  chimes" from `p-warranty-transfer`), and — the new part — **exhaustion
+  is sticky by design**: the cache is content-addressed by prompt and a
+  retry issues identical prompts, so every subsequent `qf run` replayed
+  the identical failed chain from cache and re-failed deterministically.
+  The manual re-roll (delete the failing chain's cache entries — newest
+  files in `cache/llm/` from the failure window, keeping adjacent
+  passages' legitimate writes — then re-run) cleared the pass on a
+  fresh sample in 2 attempts. Consequence for the operator-loop epic
+  (roadmap Later, which already plans "re-roll a failed pass's cached
+  call chain"): the re-roll wants first-class support (a `qf reroll
+  <pass>` that drops exactly that pass's chain), not hand-picked cache
+  deletions.
 
 ## Structure & scale
 

@@ -227,6 +227,14 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   prompt engineering on the write prompt first, spent-image statistics
   as the maybe, validated cheaply by rewriting the opening passages
   under variant prompts (unbilled tier) and reading side by side.
+  **Spec'd 2026-08-04** after the 7-arm rewrite experiment (continuation
+  framing + budget won; rationale-only failed; ban-lists broke
+  contracts): the build contract is
+  [`plans/register-conformance.md`](plans/register-conformance.md) —
+  manuscript-first write prompt, depth-2 look-behind, Voice-declared
+  recurring devices (absorbs the echo-guard canonical-utterance gap
+  above), richer story-so-far entries. Three PRs + live validation, not
+  yet built.
 - [ ] **POV sequences — the formal live A/B** (epic shipped 2026-07-19; the
   machinery is merged #106/#107/#108 and the scheme half was validated +
   fixed live via #113, but the A/B was never formally measured). Rerun grow

@@ -299,6 +299,11 @@ FILL_REVIEW_RULES = (
     # it holds — a contradiction of an established fact is a defect, a
     # gratuitous restatement a concern (author-directed, 2026-07-12).
     "micro_detail",
+    # the passage spends more figurative flourishes than its intensity budget
+    # (plain passages 1, scene passages 3) — countable, so it is arithmetic
+    # rather than taste, but it stays warn-level while the write prompt is the
+    # fix under test (register-conformance contract §6).
+    "register_budget",
 )
 FILL_REVIEW_SCHEMA = build_verdict_schema("FillReview", FILL_REVIEW_RULES)
 
@@ -443,11 +448,12 @@ def _story_route(project: Project, passage_id: str) -> list[str]:
 
 
 def _story_so_far(project: Project, passage_id: str) -> tuple[list[str], int]:
-    """Summaries along the route, oldest first, minus the direct
-    predecessors (their full prose is the window). Returns the rendered
-    list and the count elided by the cap."""
+    """Summaries along the route, oldest first, minus every passage the
+    manuscript window shows in full (all its depth levels — the notes
+    must not double-carry a page whose prose is already on display).
+    Returns the rendered list and the count elided by the cap."""
     g = project.graph
-    window_ids = {e.src for e in g.in_edges(passage_id, EdgeKind.CHOICE)}
+    window_ids = {pid for level in _window_ids(g, passage_id) for pid in level}
     entries = [
         g.node(p).prose_summary
         for p in _story_route(project, passage_id)
@@ -471,15 +477,86 @@ def _passage_head(g, passage_id: str) -> tuple[Entity | None, bool]:
     return entity, vp.interlude
 
 
+# The manuscript window's look-behind depth and its fan-in guard: up to
+# WINDOW_DEPTH predecessor passages of real prose per arriving route, capped
+# at WINDOW_CAP passages total, nearest wins (register-conformance contract
+# §5 — the story-so-far is notes, "not a replacement for look behind").
+WINDOW_DEPTH = 2
+WINDOW_CAP = 4
+
+
+def _window_ids(g, passage_id: str) -> list[list[str]]:
+    """The window's passage ids, one canonically-sorted list per depth
+    level (level 0 = direct predecessors), deduplicated across levels and
+    capped at WINDOW_CAP with the nearest level surviving whole. Canonical
+    order, not store order: choice edges reload from disk grouped by
+    source file, so store order differs between a live run and a resumed
+    one — a shifted window changes prompt bytes and breaks cache replay
+    (STATUS 2026-07-08)."""
+    levels: list[list[str]] = []
+    frontier = [passage_id]
+    seen_ids: set[str] = {passage_id}
+    for _ in range(WINDOW_DEPTH):
+        found: set[str] = set()
+        for pid in frontier:
+            for e in g.in_edges(pid, EdgeKind.CHOICE):
+                if e.src not in seen_ids and g.node(e.src).prose:
+                    found.add(e.src)
+        if not found:
+            break
+        level = sorted(found)
+        seen_ids.update(level)
+        levels.append(level)
+        frontier = level
+    kept: list[list[str]] = []
+    budget = WINDOW_CAP
+    for level in levels:
+        take = level[:budget]
+        if take:
+            kept.append(take)
+        budget -= len(take)
+        if budget <= 0:
+            break
+    return kept
+
+
+def _window_prose(g, passage_id: str) -> list[dict]:
+    """The manuscript-so-far window: rendered oldest first (deepest level
+    first) so the nearest page sits last, in reading order. A depth-1
+    entry carries the label of its edge into this passage; deeper entries
+    carry no label (no direct edge)."""
+    levels = _window_ids(g, passage_id)
+    out: list[dict] = []
+    for depth in range(len(levels), 0, -1):
+        for pid in levels[depth - 1]:
+            other = g.node(pid)
+            assert isinstance(other, Passage)
+            labels = sorted(
+                e.payload.get("label", "")
+                for e in g.out_edges(pid, EdgeKind.CHOICE)
+                if e.dst == passage_id
+            )
+            head, _ = _passage_head(g, pid)
+            out.append(
+                {
+                    "passage": other,
+                    "label": labels[0] if depth == 1 and labels else "",
+                    # the neighbor's head, so the writer sees a switch and does
+                    # not bleed the adjacent passage's interiority across it
+                    "head": head.name if head else "",
+                    "depth": depth,
+                }
+            )
+    return out
+
+
 def _neighbor_prose(g, passage_id: str, direction: str) -> list[dict]:
-    edges = (
-        g.in_edges(passage_id, EdgeKind.CHOICE)
-        if direction == "in"
-        else g.out_edges(passage_id, EdgeKind.CHOICE)
-    )
+    if direction == "in":
+        return _window_prose(g, passage_id)
+    edges = g.out_edges(passage_id, EdgeKind.CHOICE)
     seen = []
     for e in edges:
-        other_id = e.src if direction == "in" else e.dst
+        other_id = e.dst
         other = g.node(other_id)
         assert isinstance(other, Passage)
         if other.prose:

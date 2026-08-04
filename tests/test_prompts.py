@@ -260,7 +260,12 @@ def test_fill_write_states_the_input_roles(golden):
     context = _write_context_for("passage:p-tremor")(golden)
     rendered = _render(env, "fill_write.j2", "", **context)
     assert "CONSTRAINTS, not choreography" in rendered
-    assert "continuity, not a style template" in rendered
+    # the window is the writer's own manuscript, not a reference dump
+    # (register-conformance contract §5): established things get plain
+    # references, its material is spent, its register is the baseline
+    assert "THE MANUSCRIPT SO FAR" in rendered
+    assert "ON STAGE ALREADY" in rendered
+    assert "THEIR MATERIAL IS SPENT" in rendered
     assert "note form" in rendered
 
 
@@ -285,13 +290,37 @@ def test_fill_write_renders_the_voice_palette_only_when_set(golden):
 
 
 def test_fill_write_frames_style_as_story_level_with_a_plain_baseline():
+    """The abstract restraint paragraph became a countable budget
+    (register-conformance contract §3.8: rationale alone does not ration —
+    the six-arm experiment's V3 result)."""
     source = (PROMPTS_DIR / "fill_write.j2").read_text(encoding="utf-8")
-    assert "STYLE BELONGS TO THE STORY, NOT TO THIS PARAGRAPH" in source
-    assert "OVER-WRITTEN" in source
-    # names the concrete failure modes the assessment measured
-    assert "coin a new compound in every clause" in source
-    assert "strobe of short fragments" in source
+    assert "REGISTER BUDGET — HARD LIMIT, COUNT BEFORE RETURNING" in source
+    # the countable constraint and its self-check
+    assert "THREE figurative" in source and "ONE figurative flourish" in source
+    assert "count your flourishes" in source
+    # the failure modes the assessment measured stay named (matched short
+    # of the template's line wrap)
+    assert "strobe of short" in source
     assert "Clarity outranks atmosphere" in source
+
+
+def test_fill_write_and_review_render_the_register_budget_by_intensity(golden):
+    """The budget renders from the passage's aggregate intensity on both
+    the writer and reviewer sides, and the lookahead carries the
+    convergence rules (contract §3.5, §6)."""
+    env = runner._environment()
+    ctx = _write_context_for("passage:p-tremor")(golden)
+    rendered = _render(env, "fill_write.j2", "", **ctx)
+    if ctx["intensity"] == "scene":
+        assert "THREE figurative" in rendered
+    else:
+        assert "ONE figurative flourish" in rendered
+    if ctx["lookahead"]:
+        assert "DO NOT PRE-MINT ITS MATERIAL" in rendered
+        assert "ESTABLISH WHAT IT ASSUMES" in rendered
+    review_src = (PROMPTS_DIR / "fill_review.j2").read_text(encoding="utf-8")
+    assert "register_budget" in review_src
+    assert "IN BOTH DIRECTIONS" in review_src
 
 
 def test_fill_voice_asks_for_restraint_and_a_plain_baseline():

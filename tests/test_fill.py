@@ -486,6 +486,41 @@ def test_window_order_is_canonical_not_wiring_order():
     assert windows[0] == windows[1]
 
 
+def test_window_cap_truncates_nearest_wins(golden_fill, monkeypatch):
+    """The fan-in guard: under the cap the nearest level survives whole,
+    and a truncated passage reappears as a story-so-far note instead of
+    vanishing from both blocks."""
+    from questfoundry.pipeline.stages import fill as fill_mod
+    from questfoundry.pipeline.stages.fill import _story_so_far, _window_ids
+
+    levels = _window_ids(golden_fill.graph, "passage:p-tremor")
+    assert len(levels) == 2  # golden reaches depth 2 here
+    depth1 = levels[0]
+    monkeypatch.setattr(fill_mod, "WINDOW_CAP", len(depth1))
+    capped = _window_ids(golden_fill.graph, "passage:p-tremor")
+    assert capped == [depth1]  # nearest wins; depth-2 truncated away
+    entries, _ = _story_so_far(golden_fill, "passage:p-tremor")
+    assert entries  # the truncated depth-2 passage returns as a note
+
+
+def test_window_renders_depth_marker_and_label_suppression(golden_fill):
+    """A depth-2 page renders with the 'earlier,' prefix and no arrival
+    label (no direct edge); a depth-1 page carries its label."""
+    from questfoundry.pipeline import runner
+
+    ctx = _write_context_for("passage:p-tremor")(golden_fill)
+    depths = {w["passage"].id: w.get("depth") for w in ctx["window"]}
+    assert 2 in depths.values() and 1 in depths.values()
+    env = runner._environment()
+    rendered = env.get_template("fill_write.j2").render(
+        **ctx, notes="", repair_errors=[], research=""
+    )
+    deep = next(pid for pid, d in depths.items() if d == 2)
+    near = next(pid for pid, d in depths.items() if d == 1)
+    assert f"earlier, from {deep}:" in rendered  # no label on a deep page
+    assert f"from {near} (arrived via" in rendered
+
+
 def test_write_context_survives_a_save_load_round_trip(tmp_path, vision):
     """The stronger form: the write context built from the live in-memory
     graph must equal the one built after save + reload, or resuming a
@@ -778,17 +813,27 @@ def test_summary_apply_enforces_the_cap_and_stores(golden_fill):
 
 
 def test_story_so_far_is_route_notes_minus_the_window(golden_fill):
-    """p-tremor's direct predecessors are the window (full prose shown);
-    the story-so-far carries the route's earlier passages as notes."""
-    from questfoundry.pipeline.stages.fill import _story_so_far
+    """The manuscript window shows full prose two levels deep
+    (register-conformance contract §5); the story-so-far carries only the
+    route's passages BEYOND the window, as notes — never double-carrying
+    a page whose prose is already on display."""
+    from questfoundry.pipeline.stages.fill import _story_so_far, _window_ids
 
+    # p-tremor's whole short route fits inside the two-level window
+    levels = _window_ids(golden_fill.graph, "passage:p-tremor")
+    assert "passage:p-arrival" in {p for level in levels for p in level}
     entries, elided = _story_so_far(golden_fill, "passage:p-tremor")
-    assert elided == 0
-    assert entries == [golden_fill.graph.node("passage:p-arrival").prose_summary]
-    # an ending passage sees the whole route
+    assert elided == 0 and entries == []
+    # an ending passage's route is longer than the window: the earliest
+    # passages remain as notes, and none of them is also in the window
     entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
     assert golden_fill.graph.node("passage:p-arrival").prose_summary in entries
-    assert len(entries) >= 2
+    windowed = {p for lv in _window_ids(golden_fill.graph, "passage:p-long-watch") for p in lv}
+    assert all(
+        golden_fill.graph.node(p).prose_summary not in entries
+        for p in windowed
+        if golden_fill.graph.node(p).prose_summary
+    )
 
 
 def test_story_route_is_deterministic_and_prefers_the_reference_arc(golden_fill):

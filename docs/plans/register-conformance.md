@@ -1,6 +1,12 @@
 # Register Conformance — continuation framing, declared recurrence, richer notes (Build Contract)
 
-> Status: **SPEC — ratified in-session 2026-08-04, not yet built.** Follows
+> Status: **PR-1 BUILT** (manuscript-first `fill_write.j2`, depth-2
+> window + fan-in cap, lookahead convergence rules, register budget on
+> both writer and reviewer sides, `register_budget` warn rule; design
+> doc 02 FILL section updated; acceptance harness re-run on the
+> star-swabber opening). PR-2 (declared recurrence) and PR-3 (richer
+> story-so-far) not yet built; live validation pending. Spec ratified
+> in-session 2026-08-04. Follows
 > from the star-swabber prose read (decision log 2026-08-04; BACKLOG
 > "Register conformance"): the author read the finished book as
 > **over-stylized** and directed "primarily prompt engineering" on the

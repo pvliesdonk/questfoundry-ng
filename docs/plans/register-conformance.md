@@ -5,7 +5,7 @@
 > "Register conformance"): the author read the finished book as
 > **over-stylized** and directed "primarily prompt engineering" on the
 > writer side. Every design decision below was settled in the same
-> session with the author; the experimental evidence is a 7-arm rewrite
+> session with the author; the experimental evidence is a six-arm rewrite
 > experiment on the star-swabber opening passages (kimi-k2.6, unbilled,
 > fresh samples — arms summarized in §2). Frontier-authored; the PR-1
 > prompt work is frontier-lane (narrative semantics); PR-2/PR-3 are
@@ -41,7 +41,7 @@ passage level**.
 
 ## 2. What the experiment established
 
-Seven arms, three opening passages, same context/schema/model, fresh
+Six arms, three opening passages, same context/schema/model, fresh
 samples (harness: session scratch; outputs read by the author):
 
 | Arm | Result |
@@ -60,7 +60,9 @@ declared contract (§4), not a loophole.
 ## 3. Decisions (author, in-session 2026-08-04)
 
 1. **Primarily writer-prompt engineering** (verbatim quote in the BACKLOG
-   item). Reviewer and metrics change minimally in v1 (§6, §7).
+   item). The reviewer and the metrics are changed only where this
+   contract says so — each exclusion in §7 is a design decision with a
+   recorded trigger, not license to build less.
 2. **Continuation framing** (author: "maybe the prompt just had to say:
    the preceding passages were these: read them. we are continuing the
    story as follows"): the write prompt is restructured manuscript-first;
@@ -133,26 +135,42 @@ against its rule — recurrence review becomes contract-based, not taste.
   renders the aggregate counts beside the story-so-far. Entries stay
   ≤ ~80 words.
 
-## 6. The reviewer (minimal in v1)
+## 6. The reviewer
 
 `fill_review.j2` gets the same declarations: the manuscript frame, the
 budget, and the recurring-devices contract. Its register rule gains the
 symmetric clause — an ornamented `sequel`/`micro_beat` is a finding, and
 with the budget it is *countable* ("N flourishes against a budget of 1",
-quote them) — but stays at **warn** in v1: the write prompt is the fix
-under test, and warn-level findings feed the arbiter without
-manufacturing non-convergence (the 2026-07-15 doctrine: never fix a loop
-by adding reviewer strictness). Escalating register to fail is the
-recorded fallback if the prompt alone doesn't hold on a live run.
+quote them). The finding level is **warn, by design and not as a
+shortcut**: the write prompt is the fix under test, and warn-level
+findings feed the arbiter without manufacturing non-convergence (the
+2026-07-15 doctrine: never fix a loop by adding reviewer strictness).
+This is the *complete* reviewer change this contract specifies — build
+all of it. Escalating register to fail is the recorded follow-up
+decision if the prompt alone doesn't hold on a live run, taken then,
+not pre-built now.
 
-## 7. Explicitly not in this slice
+## 7. Deliberate exclusions (design decisions, not deferrals)
 
-- `_overwriting_finding` stays as-is: it mis-proxies this failure
-  (hyphen coinage vs figurative density), but changing measurement while
-  changing the prompt confounds both. Re-measure after PR-1; a
-  figurative-density metric is the recorded follow-up if needed.
-- Per-passage device/motif annotation (decision 6's escalation).
-- Any G-gate or invariant: all advisory/prompt-level in v1.
+Nothing here is a corner cut or an "MVP" trim — each exclusion is a
+decision with a reason and a trigger for revisiting. Everything the
+contract *does* specify (§4–§6, §8) is to be built completely.
+
+- `_overwriting_finding` stays as-is — **reason**: it mis-proxies this
+  failure (hyphen coinage vs figurative density), and changing the
+  measurement while changing the prompt confounds both. **Trigger**:
+  re-measure after PR-1's live validation; a figurative-density metric
+  is the recorded follow-up if the read still finds density the budget
+  missed.
+- Per-passage device/motif annotation stays unbuilt — **reason**: the
+  `scene_type` precedent (annotations are added on a demonstrated live
+  gap, never speculatively). **Trigger**: a live run where the
+  Voice-level declaration + counts provably under-determines placement.
+- No G-gate or invariant — **reason**: register conformance is
+  prompt-level behavior under test; gating it before the prompt fix is
+  measured would violate the fix-the-loop-without-adding-rules
+  doctrine. **Trigger**: same live validation, if warn findings show
+  systematic nonconformance surviving the new prompt.
 
 ## 8. Slices
 

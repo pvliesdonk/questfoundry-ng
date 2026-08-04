@@ -227,7 +227,7 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   prompt engineering on the write prompt first, spent-image statistics
   as the maybe, validated cheaply by rewriting the opening passages
   under variant prompts (unbilled tier) and reading side by side.
-  **Spec'd 2026-08-04** after the 7-arm rewrite experiment (continuation
+  **Spec'd 2026-08-04** after the six-arm rewrite experiment (continuation
   framing + budget won; rationale-only failed; ban-lists broke
   contracts): the build contract is
   [`plans/register-conformance.md`](plans/register-conformance.md) —

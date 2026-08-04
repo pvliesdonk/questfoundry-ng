@@ -199,14 +199,31 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Validation & experiments
 
-- [ ] **Prose-quality epic — the two exit remainders** (epic shipped
-  2026-07-19, these dropped here). DRESS at scale is reached
-  (`examples/closed-circle-oss`), but the full exit criterion also wants:
-  (1) a **corpus-grounded** run — closed-circle-oss skipped research (no
-  craft corpus), so the craft-retrieval half of the prose engine is
-  unexercised at DRESS scale; and (2) an **author prose read** of a
-  generated DRESS-complete story (the "reads without prose-quality rework"
-  half). Both are measurement, not machinery.
+- [ ] **Register conformance — writer-prompt engineering (author-directed
+  2026-08-04, from the star-swabber prose read).** Both prose-quality exit
+  remainders are now served: the **corpus-grounded run** is
+  `runs/star-swabber` (kimi-k2.6, DREAM→DRESS gate-clean, exports 0
+  problems), and the **author prose read** happened — verdict:
+  **over-stylized**, "as if the model tried to press all of the exemplar
+  into the single passage, probably due to the construction of writing one
+  passage at a time" (author, in-session). The session trace of the built
+  modulation machinery on that run: the `scene_type` signal is healthy
+  (131 sequel / 63 scene) and B8 fired; the passages that run hottest are
+  tagged *plain* (the opening is three sequels; the hottest sampled
+  passage is a `false_branch` micro-beat) — so the leak is downstream of
+  the signal: (a) `fill_write.j2` states restraint once, abstractly,
+  against a vivid prop-inventory Voice (and a deadpan-comedy Voice's
+  "reserved for cosmic ironies" clause licenses ornament everywhere);
+  (b) `fill_review.j2`'s register rule is one-directional ("do not fault
+  a plain sequel" has no ornamented-sequel counterpart) and taste is
+  warn-never-fail; (c) `_overwriting_finding` counts hyphen-compound
+  coinage — kimi-k2.6 over-figures in plain syntax, so it scored 0 on a
+  uniformly hot run. **Author direction: foremost a writer-prompt issue —
+  primarily prompt engineering; possibly add usage statistics (which
+  images/conceits the book has already spent) to the write context.
+  Validation is cheap: the defect is visible in the first few passages,
+  so iterate by rewriting just those under variant prompts/reviewers**
+  (unbilled tier) and reading the results side by side.
 - [ ] **POV sequences — the formal live A/B** (epic shipped 2026-07-19; the
   machinery is merged #106/#107/#108 and the scheme half was validated +
   fixed live via #113, but the A/B was never formally measured). Rerun grow

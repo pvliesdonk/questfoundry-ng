@@ -99,7 +99,26 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   summary style should give each beat ITS OWN event (no neighbor
   restating), and the POV-sequences redesign removes most of the
   boundaries. Until either lands: expect a few re-rolls per FILL run at
-  these seams.
+  these seams. **Confirmed live + a sharper finding (star-swabber run,
+  2026-07-31):** `write:p-clerical-lien` exhausted 4 repairs echoing an
+  adjacent passage's line ("in the shuttle bay the express elevator
+  chimes" from `p-warranty-transfer`), and — the new part — **exhaustion
+  is sticky by design**: the cache is content-addressed by prompt and a
+  retry issues identical prompts, so every subsequent `qf run` replayed
+  the identical failed chain from cache and re-failed deterministically.
+  The manual re-roll (delete the failing chain's cache entries — newest
+  files in `cache/llm/` from the failure window, keeping adjacent
+  passages' legitimate writes — then re-run) cleared the pass on a
+  fresh sample in 2 attempts. **The re-roll should be automatic**
+  (author correction, 2026-07-31, in-session, verbatim: "I would
+  imagine an automatic re-roll. manual does not make sense here: the
+  whole pipeline is automated and the human has not yet chosen one
+  result over another"): on repair exhaustion the runner itself should
+  drop that pass's cached call chain and re-roll with fresh samples
+  under a per-passage retry cap, halting only when fresh-sample
+  re-rolls also exhaust. (Same mechanism the operator-loop
+  epic's external prototype validated; this piece is runner-side and
+  small enough to pull forward ahead of the full operator loop.)
 
 ## Structure & scale
 
@@ -180,14 +199,42 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
 
 ## Validation & experiments
 
-- [ ] **Prose-quality epic — the two exit remainders** (epic shipped
-  2026-07-19, these dropped here). DRESS at scale is reached
-  (`examples/closed-circle-oss`), but the full exit criterion also wants:
-  (1) a **corpus-grounded** run — closed-circle-oss skipped research (no
-  craft corpus), so the craft-retrieval half of the prose engine is
-  unexercised at DRESS scale; and (2) an **author prose read** of a
-  generated DRESS-complete story (the "reads without prose-quality rework"
-  half). Both are measurement, not machinery.
+- [ ] **Register conformance — writer-prompt engineering (author-directed
+  2026-08-04, from the star-swabber prose read).** Both prose-quality exit
+  remainders are now served: the **corpus-grounded run** is
+  `runs/star-swabber` (kimi-k2.6, DREAM→DRESS gate-clean, exports 0
+  problems), and the **author prose read** happened — verdict:
+  **over-stylized**, "as if the model tried to press all of the exemplar
+  into the single passage, probably due to the construction of writing one
+  passage at a time" (author, in-session). The session trace of the built
+  modulation machinery on that run: the `scene_type` signal is healthy
+  (131 sequel / 63 scene) and B8 fired; the passages that run hottest are
+  tagged *plain* (the opening is three sequels; the hottest sampled
+  passage is a `false_branch` micro-beat) — so the leak is downstream of
+  the signal: (a) `fill_write.j2` states restraint once, abstractly,
+  against a vivid prop-inventory Voice (and a deadpan-comedy Voice's
+  "reserved for cosmic ironies" clause licenses ornament everywhere);
+  (b) `fill_review.j2`'s register rule is one-directional ("do not fault
+  a plain sequel" has no ornamented-sequel counterpart) and taste is
+  warn-never-fail; (c) `_overwriting_finding` counts hyphen-compound
+  coinage — kimi-k2.6 over-figures in plain syntax, so it scored 0 on a
+  uniformly hot run. **Author direction** (in-session 2026-08-04,
+  verbatim: "I *think* this is foremost a writer prompt issue. and maybe
+  we need some statistics about what has been used already. but
+  primarily prompt engineering. […] this is relatively easy. we already
+  know that this is visible in the first few passages, so [we] can just
+  attempt a rewrite of the first few with different prompts/reviewers"):
+  prompt engineering on the write prompt first, spent-image statistics
+  as the maybe, validated cheaply by rewriting the opening passages
+  under variant prompts (unbilled tier) and reading side by side.
+  **Spec'd 2026-08-04** after the six-arm rewrite experiment (continuation
+  framing + budget won; rationale-only failed; ban-lists broke
+  contracts): the build contract is
+  [`plans/register-conformance.md`](plans/register-conformance.md) —
+  manuscript-first write prompt, depth-2 look-behind, Voice-declared
+  recurring devices (absorbs the echo-guard canonical-utterance gap
+  above), richer story-so-far entries. Three PRs + live validation, not
+  yet built.
 - [ ] **POV sequences — the formal live A/B** (epic shipped 2026-07-19; the
   machinery is merged #106/#107/#108 and the scheme half was validated +
   fixed live via #113, but the A/B was never formally measured). Rerun grow

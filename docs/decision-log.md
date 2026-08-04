@@ -16,6 +16,51 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-04 (register-conformance build contract — six-arm experiment
+  + in-session ratification):** Same session as the prose read below,
+  resolved into
+  [`plans/register-conformance.md`](plans/register-conformance.md). A
+  six-arm rewrite experiment on the star-swabber opening (fresh kimi
+  samples, unbilled, harness in session scratch) established: rationale
+  alone does not ration (V3 as hot as baseline — the constraint-
+  completeness doctrine confirmed experimentally); a countable
+  per-passage budget works (V1); ban-lists break contracts (V2 broke POV
+  and drone continuity); **continuation framing won** (V5 — the author's
+  own reframe, "the preceding passages were these: read them. we are
+  continuing the story as follows"). Eight decisions ratified in-session
+  (all attributed in the contract §3): manuscript-first prompt, depth-2
+  look-behind, refer-plainly for established referents ("it can just be
+  'the drone'"), mirrored lookahead rules at convergences,
+  Voice-declared recurring devices (absorbing the echo-guard
+  canonical-utterance gap), enriched story-so-far entries, budget as the
+  hard floor. Also author process rule, same session: **no "v1"/MVP
+  framing in specs** — an implementing agent reads "v1" as license to
+  cut corners; exclusions must be recorded as design decisions with
+  reasons and triggers (contract §7 rewritten accordingly).
+
+- **2026-08-04 (star-swabber prose read — over-stylization traced through
+  the modulation machinery; author-directed follow-up):** The star-swabber
+  run (kimi-k2.6, corpus-grounded, DREAM→DRESS gate-clean 2026-07-31;
+  ~42.9k words, 141 passages, 4 endings; one genuine pass failure the
+  whole run — the clerical-lien echo seam, PR #122) got its author prose
+  read: **over-stylized**, every passage running the full register.
+  Session trace of why the scene_type machinery didn't prevent it: signal
+  healthy (131 sequel / 63 scene, B8 firing) but the hottest passages are
+  tagged plain — the leak is (a) the write prompt's abstract restraint
+  paragraph losing to the concrete Voice inventory, amplified by a
+  comedy Voice whose "reserved for cosmic ironies" licenses ornament
+  everywhere; (b) the review's one-directional register rule (guards
+  against flatness-faulting only) with taste warn-never-fail; (c) the
+  overwriting metric counting hyphen-coinage while kimi-k2.6 over-figures
+  in plain syntax (0 findings on a hot run). Author direction, verbatim:
+  "I *think* this is foremost a writer prompt issue. and maybe we need
+  some statistics about what has been used already. but primarily prompt
+  engineering" — validated cheaply by rewriting the first few passages
+  under variant prompts (the author's own suggestion, same message).
+  Recorded in BACKLOG ("Register conformance"); both
+  prose-quality exit remainders (corpus-grounded run + author read) are
+  now served and closed into that item.
+
 - **2026-07-30 (export styling becomes the current epic — author call;
   decisions ratified in-session):** The author's Claude Design project
   ("Questfoundry gamebook layout directions", four design turns: three

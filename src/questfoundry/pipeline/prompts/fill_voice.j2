@@ -94,4 +94,17 @@ Decide:
   the construction that would puncture the tone, never a word ordinary
   sentences need.
 - notes: one line of guidance for the writer.
+- recurring_devices: the genre's DELIBERATE repetitions, declared up front so
+  writers and reviewers can tell a device from a defect (everything undeclared
+  that recurs is treated as a defect). 0-4 devices; an empty list is a valid
+  decision. Each is {"name": a short handle, "description": what it is and
+  when it returns, "rule": one of "escalate" | "verbatim" | "texture",
+  "text": ""}. Choose the rule by how the device may return: "escalate" — a
+  running gag, refrain, or motif that returns only BIGGER or varied, always in
+  new words (most devices); "verbatim" — a fixed utterance that must repeat
+  EXACTLY (a spell, an oath, a legal formula, a catchphrase) — then `text`
+  carries the exact utterance, required; "texture" — a vocabulary vein the
+  diction may draw on freely (it colors word choice, never repeats as a
+  figure). Declare only devices this story genuinely wants — a device is a
+  commitment the whole book honors, not a decoration.
 {% include "_shared.j2" %}

@@ -49,6 +49,13 @@ VOICE (binding — this owns how everything sounds):
 {% endfor %}
 {% endif %}
 - Notes: {{ voice.notes }}
+{% if voice.recurring_devices %}
+- Declared recurring devices — the book's DELIBERATE repetitions; any other
+  recurrence is a defect. Use each only per its rule:
+{% for d in voice.recurring_devices %}
+  - {{ d.name }} ({{ d.rule }}): {{ d.description }}{% if d.rule == "escalate" %} — may return only bigger or varied, in NEW words; a flat repeat is a defect{% elif d.rule == "verbatim" %} — repeats EXACTLY as: "{{ d.text }}" (this exact utterance is exempt from the lift check; the words around it are not){% else %} — a vocabulary vein for diction; never a repeated figure{% endif %}
+{% endfor %}
+{% endif %}
 When you need a description, reach for the voice's imagery palette — sparingly,
 at the charged moments named below, never as the default texture of every
 sentence — and never for the wording of a fact or a phrase from an earlier
@@ -192,6 +199,14 @@ THE ROADS NOT TAKEN (shadows — let their weight color the prose, never name th
 - {{ s.dilemma.question }} {% for a in s.answers %}[{{ a.text }}{% if not a.explored %} — never explored{% endif %}] {% endfor %}
 {% endfor %}
 
+{% if device_counts %}
+DEVICE USAGE SO FAR (declared devices, times used on this route — counts
+inform, the register budget enforces): {% for name, n, rule in device_counts %}{{ name }} ({{ rule }}) ×{{ n }}{% if not loop.last %}, {% endif %}{% endfor %}.
+An `escalate` device at ×2 or more is well-mined: reach for fresh material,
+or return it only as a genuine escalation, in new words. `verbatim` and
+`texture` devices repeat by contract — their counts are informational, never
+a reason to avoid them.
+{% endif %}
 {% if story_so_far %}
 THE STORY SO FAR (one route to this passage, in notes — context, not material:
 the reader lived these events, so the prose may lean on them without retelling

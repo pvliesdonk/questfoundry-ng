@@ -10,6 +10,7 @@ from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
     LabelRewrite,
+    SummaryProposal,
     VoiceProposal,
     WriteProposal,
     _choice_menu,
@@ -17,6 +18,7 @@ from questfoundry.pipeline.stages.fill import (
     _flag_status,
     _passes,
     _review_for,
+    _summary_apply_for,
     _voice_apply,
     _write_apply_for,
     _write_context_for,
@@ -601,6 +603,49 @@ def test_window_echo_fails_apply(golden_fill):
     assert "say it in NEW words" in str(exc.value)
 
 
+def test_declared_verbatim_device_exempts_the_utterance(golden_fill):
+    """The canonical-utterance class (register-conformance §4): a lift
+    that IS a declared-verbatim device's text passes; the same lift
+    stays a defect undeclared (the violating construction), and a run
+    extending past the declared utterance stays a defect too (the
+    laundering bound)."""
+    from questfoundry.models.concept import RecurringDevice
+
+    lifted = "She waits for slack tide, when the water holds its breath"
+    apply = _write_apply_for("passage:p-tremor")
+
+    # undeclared: the lift fails (the construction the exemption must not erode)
+    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+        apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+
+    # declared verbatim: the exact utterance is exempt
+    golden_fill.voice.recurring_devices = [
+        RecurringDevice(name="tide-oath", rule="verbatim", text=lifted)
+    ]
+    try:
+        apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+
+        # laundering bound: the utterance plus lifted surrounding prose is
+        # a longer shared run that no longer fits inside the declaration
+        neighbor = golden_fill.graph.node("passage:p-lamp-room").prose
+        start = neighbor.index("She waits for slack tide")
+        extended = neighbor[start : start + len(lifted) + 40]
+        with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+            apply(WriteProposal(prose=_padded(extended)), golden_fill)
+    finally:
+        golden_fill.voice.recurring_devices = []
+
+
+def test_verbatim_device_requires_its_text():
+    from pydantic import ValidationError
+
+    from questfoundry.models.concept import RecurringDevice
+
+    with pytest.raises(ValidationError, match="provide `text`"):
+        RecurringDevice(name="oath", rule="verbatim")
+    assert RecurringDevice(name="gag", rule="escalate").text == ""
+
+
 def test_window_echoes_are_batched_into_one_error(golden_fill):
     """Several independent lifts from one neighbor surface in ONE error
     (texture-trial live run: raising the first per round fed the repair
@@ -804,8 +849,18 @@ def test_summary_apply_enforces_the_cap_and_stores(golden_fill):
 
     apply = _summary_apply_for("passage:p-arrival")
     with pytest.raises(ApplyError, match="cap"):
-        apply(SummaryProposal(summary="w " * (SUMMARY_MAX_WORDS + 1)), golden_fill)
-    apply(SummaryProposal(summary="Elias lands; the soundings are wrong."), golden_fill)
+        apply(
+            SummaryProposal(
+                summary="w " * (SUMMARY_MAX_WORDS + 1), on_stage=[], devices_used=[]
+            ),
+            golden_fill,
+        )
+    apply(
+        SummaryProposal(
+            summary="Elias lands; the soundings are wrong.", on_stage=[], devices_used=[]
+        ),
+        golden_fill,
+    )
     assert (
         golden_fill.graph.node("passage:p-arrival").prose_summary
         == "Elias lands; the soundings are wrong."
@@ -834,6 +889,67 @@ def test_story_so_far_is_route_notes_minus_the_window(golden_fill):
         for p in windowed
         if golden_fill.graph.node(p).prose_summary
     )
+
+
+def test_story_so_far_carries_the_ledger_and_counts(golden_fill):
+    """Register-conformance §5: entries carry the on-stage referents a
+    later writer refers to plainly, and declared-device usage aggregates
+    into route counts (counts inform, the budget enforces)."""
+    from questfoundry.graph import mutations
+    from questfoundry.pipeline.stages.fill import _device_counts, _story_so_far
+
+    g = golden_fill.graph
+    # give an early passage a ledgered entry (through the mutation layer)
+    mutations.set_passage_prose_summary(
+        g, "passage:p-arrival", "Maren takes the light.",
+        on_stage=["the brass ledger"], devices=["tide-oath", "tide-oath"],
+    )
+    entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
+    assert any("[on stage: the brass ledger]" in e for e in entries)
+    counts = _device_counts(golden_fill, "passage:p-long-watch")
+    # undeclared names default to the escalate rule (informational)
+    assert ("tide-oath", 2, "escalate") in counts
+    ctx = _write_context_for("passage:p-long-watch")(golden_fill)
+    assert ctx["device_counts"] == counts
+
+
+def test_summary_apply_validates_the_ledger(golden_fill):
+    """devices_used must name declared devices (repairable, names listed);
+    on_stage entries stay plain handles."""
+    from questfoundry.models.concept import RecurringDevice
+
+    apply = _summary_apply_for("passage:p-arrival")
+    golden_fill.voice.recurring_devices = [
+        RecurringDevice(name="tide-oath", rule="escalate")
+    ]
+    try:
+        with pytest.raises(ApplyError, match=r"use only\s+declared device names: tide-oath"):
+            apply(
+                SummaryProposal(
+                    summary="s", on_stage=[], devices_used=["made-up-gag"]
+                ),
+                golden_fill,
+            )
+        with pytest.raises(ApplyError, match=r"plain\s+handle"):
+            apply(
+                SummaryProposal(
+                    summary="s",
+                    on_stage=["a whole sentence describing the thing at length"],
+                    devices_used=[],
+                ),
+                golden_fill,
+            )
+        apply(
+            SummaryProposal(
+                summary="s", on_stage=["the ledger"], devices_used=["tide-oath"]
+            ),
+            golden_fill,
+        )
+        node = golden_fill.graph.node("passage:p-arrival")
+        assert node.summary_on_stage == ["the ledger"]
+        assert node.summary_devices == ["tide-oath"]
+    finally:
+        golden_fill.voice.recurring_devices = []
 
 
 def test_story_route_is_deterministic_and_prefers_the_reference_arc(golden_fill):
@@ -1184,11 +1300,13 @@ def test_voice_proposal_requires_an_interlude_decision(golden_fill):
         VoiceProposal(
             pov="third person limited (Maren)", tense="past", diction="d",
             rhythm="r", imagery="i", dialogue="g",
-        )
+        recurring_devices=[],
+    )
     proposal = VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
         rhythm="r", imagery="i", dialogue="g",
         interlude="first-person past-tense journal entries (Elias Wren)",
+        recurring_devices=[],
     )
     golden_fill.voice = None
     lines = _voice_apply(proposal, golden_fill)
@@ -1200,6 +1318,7 @@ def _interlude_proposal(interlude: str) -> VoiceProposal:
     return VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
         rhythm="r", imagery="i", dialogue="g", interlude=interlude,
+        recurring_devices=[],
     )
 
 

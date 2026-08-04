@@ -6,7 +6,9 @@ Scope presets bind the hard budgets that make cost a contract
 
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from questfoundry.models.structure import SceneType
 
@@ -275,6 +277,40 @@ class ContentNotes(BaseModel):
     avoid: list[str] = []
 
 
+class RecurringDevice(BaseModel):
+    """One declared recurrence contract (register-conformance §4): a
+    device the book's genre wants to repeat, with the rule governing HOW
+    it may return. Everything undeclared stays a defect when it recurs;
+    declared recurrence is judged against its rule — contract, not taste.
+
+    Rules: ``escalate`` — may return only bigger or varied, in new words
+    (a flat re-mint is still a defect); ``verbatim`` — a fixed utterance
+    that must repeat exactly (a canonical alibi, a spell, a legal
+    formula) — the echo guard exempts exactly its text, nothing around
+    it; ``texture`` — a vocabulary vein that may recur freely as diction,
+    never as a repeated figure."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    description: str = ""
+    rule: Literal["escalate", "verbatim", "texture"]
+    # rule "verbatim" only: the exact fixed utterance the echo guard
+    # exempts. The guard's laundering bound needs the literal text — a
+    # description cannot be matched against prose runs.
+    text: str = ""
+
+    @model_validator(mode="after")
+    def _verbatim_carries_its_text(self) -> RecurringDevice:
+        if self.rule == "verbatim" and not self.text.strip():
+            raise ValueError(
+                f"recurring device {self.name!r} is rule 'verbatim' but carries no "
+                "text — the exemption needs the exact utterance; provide `text`, "
+                "or use rule 'escalate' for a device with no fixed wording"
+            )
+        return self
+
+
 class Voice(BaseModel):
     """Singleton prose contract created by FILL before any prose — the
     operational descendant of the vision (design doc 01 §2)."""
@@ -299,6 +335,9 @@ class Voice(BaseModel):
     # (beats annotated `interlude` at GROW) is written and reviewed against
     # this instead of the book-default pov/tense (rotating-pov-build.md).
     interlude: str = ""
+    # The genre's declared recurrence contract (register-conformance §4).
+    # Defaults empty so author-provided voice.yaml files load unchanged.
+    recurring_devices: list[RecurringDevice] = []
 
 
 class Vision(BaseModel):

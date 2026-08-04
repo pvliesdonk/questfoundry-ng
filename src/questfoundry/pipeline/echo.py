@@ -58,6 +58,18 @@ def _contains(hay: tuple[str, ...], needle: tuple[str, ...]) -> bool:
     return any(hay[i : i + n] == needle for i in range(len(hay) - n + 1))
 
 
+def is_subrun(phrase: str, container: str) -> bool:
+    """True when `phrase`'s token run appears contiguously inside
+    `container`'s. The declared-verbatim exemption's laundering bound
+    (register-conformance §4): a shared run is exempt only when it fits
+    entirely inside the declared utterance — a run that extends past it
+    (the utterance plus lifted surrounding prose) does not fit and stays
+    a defect."""
+    needle = tuple(tokens(phrase))
+    hay = tuple(tokens(container))
+    return bool(needle) and _contains(hay, needle)
+
+
 def shared_runs(a: str, b: str, min_tokens: int) -> list[str]:
     """Every maximal contiguous token run shared by `a` and `b` that
     reaches `min_tokens`, as space-joined phrases in order of appearance

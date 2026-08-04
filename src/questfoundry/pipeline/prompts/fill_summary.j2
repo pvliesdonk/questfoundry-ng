@@ -7,9 +7,18 @@ THE PROSE ({{ passage.id }}):
 {{ prose }}
 ---
 
-Respond {"summary": "..."}: at most {{ max_words }} words, plain declarative
+Respond {"summary": "...", "on_stage": [...], "devices_used": [...]}.
+`summary`: at most {{ max_words }} words, plain declarative
 present tense — who does what, what changes, what it now costs. Name every
 event, reveal, decision, and significant object. A summary is a note, never
 prose: no imagery, no phrases quoted from the text, no mood performance —
 name a mood only when a later writer needs it ("she leaves shaken").
+`on_stage`: the referents this passage INTRODUCES to the reader — objects,
+people, standing facts a later writer should refer to plainly instead of
+re-introducing. Plain handles of at most 6 words each ("the recall drone",
+"the graffiti prophecy"); only genuinely new things, [] when the passage
+introduces nothing.
+`devices_used`: which of the book's declared recurring devices this
+passage's prose actually used — exact names from the list below, [] when
+none{% if devices %}. Declared devices: {% for d in devices %}"{{ d.name }}"{% if not loop.last %}, {% endif %}{% endfor %}{% else %} (this book declares none — always []){% endif %}.
 {% include "_shared.j2" %}

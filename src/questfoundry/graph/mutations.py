@@ -283,15 +283,26 @@ def set_entity_arc(g: StoryGraph, entity_id: str, arc: EntityArc) -> None:
     entity.arc = arc
 
 
-def set_passage_prose_summary(g: StoryGraph, passage_id: str, summary: str) -> None:
+def set_passage_prose_summary(
+    g: StoryGraph,
+    passage_id: str,
+    summary: str,
+    *,
+    on_stage: list[str] | None = None,
+    devices: list[str] | None = None,
+) -> None:
     """FILL's rolling story-so-far entry: the utility-summarized note a
-    later passage's write context reads instead of this passage's prose."""
+    later passage's write context reads instead of this passage's prose —
+    plus its ledger lines (register-conformance §5): the referents the
+    passage put on stage and the declared recurring devices it used."""
     passage = g.get(passage_id)
     if not isinstance(passage, Passage):
         raise MutationError(f"{passage_id!r} is not a passage")
     if not summary.strip():
         raise MutationError(f"prose summary for {passage_id} is empty")
     passage.prose_summary = summary
+    passage.summary_on_stage = list(on_stage or [])
+    passage.summary_devices = list(devices or [])
 
 
 def add_entity_detail(g: StoryGraph, entity_id: str, key: str, value: str) -> None:

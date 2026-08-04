@@ -28,7 +28,7 @@ from pydantic import BaseModel, ConfigDict, Field, create_model
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import Issue, Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.concept import Voice
+from questfoundry.models.concept import RecurringDevice, Voice
 from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import (
@@ -109,6 +109,10 @@ class VoiceProposal(BaseModel):
     # the scheme's marked deviant register ("" when the scheme has none);
     # required so the pass decides explicitly rather than omitting
     interlude: str
+    # the genre's declared recurrence contract (register-conformance §4);
+    # required so the pass decides explicitly — an empty list is a valid
+    # decision (a book with no deliberate recurring devices)
+    recurring_devices: list[RecurringDevice]
 
 
 def _voice_skip(project: Project) -> str | None:
@@ -454,13 +458,41 @@ def _story_so_far(project: Project, passage_id: str) -> tuple[list[str], int]:
     Returns the rendered list and the count elided by the cap."""
     g = project.graph
     window_ids = {pid for level in _window_ids(g, passage_id) for pid in level}
+
+    def entry(pid: str) -> str:
+        node = g.node(pid)
+        line = node.prose_summary
+        if node.summary_on_stage:
+            line += " [on stage: " + ", ".join(node.summary_on_stage) + "]"
+        return line
+
     entries = [
-        g.node(p).prose_summary
+        entry(p)
         for p in _story_route(project, passage_id)
         if p not in window_ids and g.node(p).prose_summary
     ]
     elided = max(0, len(entries) - STORY_SO_FAR_MAX)
     return entries[elided:], elided
+
+
+def _device_counts(project: Project, passage_id: str) -> list[tuple[str, int, str]]:
+    """Declared-device usage tallied over the whole route to this passage
+    (window included — usage is usage), most-used first: the statistics
+    that steer later passages off over-mined veins (register-conformance
+    §5 — counts inform, the per-passage budget enforces, so nothing
+    starves)."""
+    g = project.graph
+    tally: dict[str, int] = {}
+    for pid in _story_route(project, passage_id):
+        for name in g.node(pid).summary_devices:
+            tally[name] = tally.get(name, 0) + 1
+    rules = {
+        d.name: d.rule for d in (project.voice.recurring_devices if project.voice else [])
+    }
+    return sorted(
+        ((name, n, rules.get(name, "escalate")) for name, n in tally.items()),
+        key=lambda t: (-t[1], t[0]),
+    )
 
 
 def _passage_head(g, passage_id: str) -> tuple[Entity | None, bool]:
@@ -670,6 +702,7 @@ def _write_context_for(passage_id: str, last_draft: dict | None = None):
             "shadows": _shadows(g),
             "story_so_far": story_so_far,
             "story_elided": story_elided,
+            "device_counts": _device_counts(project, passage_id),
             "window": _neighbor_prose(g, passage.id, "in"),
             "lookahead": _neighbor_prose(g, passage.id, "out"),
             "choices": _choice_menu(g, passage.id),
@@ -692,13 +725,17 @@ def _resolve_entity(g, ref: str) -> str:
     return resolve_entity_ref(g, ref)
 
 
-def _check_echoes(g, passage_id: str, prose: str) -> None:
+def _check_echoes(g, passage_id: str, prose: str, voice: Voice | None = None) -> None:
     """The deterministic floor under the input-role framing (plan W1):
     a rendered fact performed verbatim, or a run lifted from adjacent
     prose, is the stamping failure live run 8 read at book scale. All
     echoes are batched into ONE error (texture-trial live run: a draft
     carried several lifts from one neighbor, and raising the first per
-    round fed the repair loop one lift at a time until it exhausted)."""
+    round fed the repair loop one lift at a time until it exhausted).
+    A run that fits entirely inside a declared-verbatim recurring
+    device's text is exempt (register-conformance §4 — the canonical-
+    utterance class: Marta's alibi MUST repeat); a run extending past
+    the declared utterance stays a lift (the laundering bound)."""
     passage = g.node(passage_id)
     fact_echoes: list[str] = []
     for entity_id in passage.entities:
@@ -714,10 +751,15 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
                     f'prose restates an established fact verbatim: "{value}" '
                     f"({entity_id}.{key})"
                 )
+    exempt = [
+        d.text for d in (voice.recurring_devices if voice else []) if d.rule == "verbatim"
+    ]
     lifts: list[str] = []
     for direction in ("in", "out"):
         for w in _neighbor_prose(g, passage_id, direction):
             for run in echo.shared_runs(prose, w["passage"].prose, echo.WINDOW_ECHO_TOKENS):
+                if any(echo.is_subrun(run, text) for text in exempt):
+                    continue
                 line = f'prose repeats {w["passage"].id} verbatim: "{run}"'
                 if line not in lifts:
                     lifts.append(line)
@@ -770,7 +812,7 @@ def _write_apply_for(
         # rework or padding — the reviewer's confidence scales with distance,
         # so only a large miss blocks (author-directed, 2026-07-12). Runaway or
         # skimpy prose is still caught, just as a finding the engine weighs.
-        _check_echoes(g, passage_id, proposal.prose)
+        _check_echoes(g, passage_id, proposal.prose, project.voice)
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
         # Label rewrites land BEFORE the review runs (review rebuilds its
@@ -839,16 +881,22 @@ class SummaryProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     summary: str
+    # the ledger lines (register-conformance §5) — required so the pass
+    # decides explicitly; empty lists are the common case
+    on_stage: list[str]
+    devices_used: list[str]
 
 
 def _summary_context_for(passage_id: str):
     def build(project: Project) -> dict:
         passage = project.graph.node(passage_id)
         assert isinstance(passage, Passage)
+        voice = project.voice
         return {
             "passage": passage,
             "prose": passage.prose,
             "max_words": SUMMARY_MAX_WORDS,
+            "devices": voice.recurring_devices if voice else [],
         }
 
     return build
@@ -862,7 +910,32 @@ def _summary_apply_for(passage_id: str):
                 f"story-so-far summary for {passage_id} is {count} words; the "
                 f"cap is {SUMMARY_MAX_WORDS} — a note for later writers, not prose"
             )
-        mutations.set_passage_prose_summary(project.graph, passage_id, proposal.summary)
+        # devices are a finite declared set; the voice pass ran before any
+        # summary, so validate against it (repairable — the declared names
+        # are in the prompt)
+        declared = {
+            d.name for d in (project.voice.recurring_devices if project.voice else [])
+        }
+        unknown = [d for d in proposal.devices_used if d not in declared]
+        if unknown:
+            valid = ", ".join(sorted(declared)) or "(none declared)"
+            raise ApplyError(
+                f"devices_used names undeclared device(s) {unknown} — use only "
+                f"declared device names: {valid}; drop anything not on that list"
+            )
+        for ref in proposal.on_stage:
+            if len(ref.split()) > 6:
+                raise ApplyError(
+                    f'on_stage entry "{ref}" is {len(ref.split())} words — a plain '
+                    "handle for a referent (≤6 words), not a sentence; shorten it"
+                )
+        mutations.set_passage_prose_summary(
+            project.graph,
+            passage_id,
+            proposal.summary,
+            on_stage=proposal.on_stage,
+            devices=proposal.devices_used,
+        )
         return [f"{passage_id}: story-so-far entry, {count} words"]
 
     return apply

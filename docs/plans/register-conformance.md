@@ -1,11 +1,19 @@
 # Register Conformance — continuation framing, declared recurrence, richer notes (Build Contract)
 
-> Status: **PR-1 BUILT** (manuscript-first `fill_write.j2`, depth-2
-> window + fan-in cap, lookahead convergence rules, register budget on
-> both writer and reviewer sides, `register_budget` warn rule; design
-> doc 02 FILL section updated; acceptance harness re-run on the
-> star-swabber opening). PR-2 (declared recurrence) and PR-3 (richer
-> story-so-far) not yet built; live validation pending. Spec ratified
+> Status: **PR-1 + PR-2 BUILT.** PR-1: manuscript-first `fill_write.j2`,
+> depth-2 window + fan-in cap, lookahead convergence rules, register
+> budget on both writer and reviewer sides, `register_budget` warn rule;
+> design doc 02 FILL section updated; acceptance harness re-run on the
+> star-swabber opening (plain register, depth-2 window firing). PR-2:
+> `Voice.recurring_devices` (escalate/verbatim/texture), the voice-pass
+> declaration, the echo guard's declared-verbatim exemption with the
+> laundering bound + violating-construction tests, writer/reviewer
+> device rendering; design doc 01 Voice section updated. PR-3: the
+> story-so-far ledger — `SummaryProposal.on_stage`/`devices_used`
+> (validated against the declaration, repairable), entries carry
+> "[on stage: …]", declared-device usage aggregates into route counts
+> rendered as DEVICE USAGE SO FAR in the write prompt. Live validation
+> pending. Spec ratified
 > in-session 2026-08-04. Follows
 > from the star-swabber prose read (decision log 2026-08-04; BACKLOG
 > "Register conformance"): the author read the finished book as
@@ -135,11 +143,16 @@ against its rule — recurrence review becomes contract-based, not taste.
   wins). Framed as THE MANUSCRIPT SO FAR, read as the writer's own.
 - **Lookahead** (unchanged depth): reframed per decision 5 — no
   pre-minting, establishment obligation, register handoff.
-- **Story-so-far entries** (summarize pass) gain two lines: `on stage:`
-  (referents this passage introduced) and `devices:` (declared devices
-  used, with running count — "warranty-gag ×3"). The write context
-  renders the aggregate counts beside the story-so-far. Entries stay
-  ≤ ~80 words.
+- **Story-so-far entries** (summarize pass) carry the ledger: each
+  entry gains an `[on stage: …]` line (referents this passage
+  introduced), and each passage records which declared devices it used.
+  Device usage is rendered ONLY as the aggregate route counts beside
+  the story-so-far (DEVICE USAGE SO FAR, rule-annotated, with the
+  well-mined caution scoped to `escalate` devices — `verbatim`/
+  `texture` repeat by contract), not as a per-entry line: the counts
+  are the actionable form, a per-entry device line would duplicate
+  them, and entries stay short (built simplification, PR-3 review).
+  Entries stay ≤ ~80 words.
 
 ## 6. The reviewer
 

@@ -218,12 +218,15 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   a plain sequel" has no ornamented-sequel counterpart) and taste is
   warn-never-fail; (c) `_overwriting_finding` counts hyphen-compound
   coinage — kimi-k2.6 over-figures in plain syntax, so it scored 0 on a
-  uniformly hot run. **Author direction: foremost a writer-prompt issue —
-  primarily prompt engineering; possibly add usage statistics (which
-  images/conceits the book has already spent) to the write context.
-  Validation is cheap: the defect is visible in the first few passages,
-  so iterate by rewriting just those under variant prompts/reviewers**
-  (unbilled tier) and reading the results side by side.
+  uniformly hot run. **Author direction** (in-session 2026-08-04,
+  verbatim: "I *think* this is foremost a writer prompt issue. and maybe
+  we need some statistics about what has been used already. but
+  primarily prompt engineering. […] this is relatively easy. we already
+  know that this is visible in the first few passages, so [we] can just
+  attempt a rewrite of the first few with different prompts/reviewers"):
+  prompt engineering on the write prompt first, spent-image statistics
+  as the maybe, validated cheaply by rewriting the opening passages
+  under variant prompts (unbilled tier) and reading side by side.
 - [ ] **POV sequences — the formal live A/B** (epic shipped 2026-07-19; the
   machinery is merged #106/#107/#108 and the scheme half was validated +
   fixed live via #113, but the A/B was never formally measured). Rerun grow

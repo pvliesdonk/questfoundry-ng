@@ -30,10 +30,12 @@ history; the decisions it recorded are captured below and in the design docs.
   everywhere; (b) the review's one-directional register rule (guards
   against flatness-faulting only) with taste warn-never-fail; (c) the
   overwriting metric counting hyphen-coinage while kimi-k2.6 over-figures
-  in plain syntax (0 findings on a hot run). Author: foremost a
-  writer-prompt issue — prompt engineering first, maybe spent-image
-  statistics; validate cheaply by rewriting the first few passages under
-  variant prompts. Recorded in BACKLOG ("Register conformance"); both
+  in plain syntax (0 findings on a hot run). Author direction, verbatim:
+  "I *think* this is foremost a writer prompt issue. and maybe we need
+  some statistics about what has been used already. but primarily prompt
+  engineering" — validated cheaply by rewriting the first few passages
+  under variant prompts (the author's own suggestion, same message).
+  Recorded in BACKLOG ("Register conformance"); both
   prose-quality exit remainders (corpus-grounded run + author read) are
   now served and closed into that item.
 

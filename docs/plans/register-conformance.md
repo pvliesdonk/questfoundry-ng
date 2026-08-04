@@ -8,8 +8,12 @@
 > `Voice.recurring_devices` (escalate/verbatim/texture), the voice-pass
 > declaration, the echo guard's declared-verbatim exemption with the
 > laundering bound + violating-construction tests, writer/reviewer
-> device rendering; design doc 01 Voice section updated. PR-3 (richer
-> story-so-far) not yet built; live validation pending. Spec ratified
+> device rendering; design doc 01 Voice section updated. PR-3: the
+> story-so-far ledger — `SummaryProposal.on_stage`/`devices_used`
+> (validated against the declaration, repairable), entries carry
+> "[on stage: …]", declared-device usage aggregates into route counts
+> rendered as DEVICE USAGE SO FAR in the write prompt. Live validation
+> pending. Spec ratified
 > in-session 2026-08-04. Follows
 > from the star-swabber prose read (decision log 2026-08-04; BACKLOG
 > "Register conformance"): the author read the finished book as

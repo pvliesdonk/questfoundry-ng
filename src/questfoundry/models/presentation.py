@@ -46,3 +46,9 @@ class Passage(Node):
     # register): a note for the writers of later passages, never
     # player-facing — exports must not ship it.
     prose_summary: str = ""
+    # The entry's ledger lines (register-conformance §5), same channel and
+    # audience as prose_summary: referents this passage put ON STAGE (later
+    # writers refer to them plainly, never re-introduce), and the declared
+    # recurring devices it used (aggregated into usage counts downstream).
+    summary_on_stage: list[str] = []
+    summary_devices: list[str] = []

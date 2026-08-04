@@ -10,6 +10,7 @@ from questfoundry.models.concept import Voice
 from questfoundry.pipeline.review import ReviewFinding, ReviewVerdict
 from questfoundry.pipeline.stages.fill import (
     LabelRewrite,
+    SummaryProposal,
     VoiceProposal,
     WriteProposal,
     _choice_menu,
@@ -17,6 +18,7 @@ from questfoundry.pipeline.stages.fill import (
     _flag_status,
     _passes,
     _review_for,
+    _summary_apply_for,
     _voice_apply,
     _write_apply_for,
     _write_context_for,
@@ -812,8 +814,18 @@ def test_summary_apply_enforces_the_cap_and_stores(golden_fill):
 
     apply = _summary_apply_for("passage:p-arrival")
     with pytest.raises(ApplyError, match="cap"):
-        apply(SummaryProposal(summary="w " * (SUMMARY_MAX_WORDS + 1)), golden_fill)
-    apply(SummaryProposal(summary="Elias lands; the soundings are wrong."), golden_fill)
+        apply(
+            SummaryProposal(
+                summary="w " * (SUMMARY_MAX_WORDS + 1), on_stage=[], devices_used=[]
+            ),
+            golden_fill,
+        )
+    apply(
+        SummaryProposal(
+            summary="Elias lands; the soundings are wrong.", on_stage=[], devices_used=[]
+        ),
+        golden_fill,
+    )
     assert (
         golden_fill.graph.node("passage:p-arrival").prose_summary
         == "Elias lands; the soundings are wrong."
@@ -842,6 +854,66 @@ def test_story_so_far_is_route_notes_minus_the_window(golden_fill):
         for p in windowed
         if golden_fill.graph.node(p).prose_summary
     )
+
+
+def test_story_so_far_carries_the_ledger_and_counts(golden_fill):
+    """Register-conformance §5: entries carry the on-stage referents a
+    later writer refers to plainly, and declared-device usage aggregates
+    into route counts (counts inform, the budget enforces)."""
+    from questfoundry.graph import mutations
+    from questfoundry.pipeline.stages.fill import _device_counts, _story_so_far
+
+    g = golden_fill.graph
+    # give an early passage a ledgered entry (through the mutation layer)
+    mutations.set_passage_prose_summary(
+        g, "passage:p-arrival", "Maren takes the light.",
+        on_stage=["the brass ledger"], devices=["tide-oath", "tide-oath"],
+    )
+    entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
+    assert any("[on stage: the brass ledger]" in e for e in entries)
+    counts = _device_counts(golden_fill, "passage:p-long-watch")
+    assert ("tide-oath", 2) in counts
+    ctx = _write_context_for("passage:p-long-watch")(golden_fill)
+    assert ctx["device_counts"] == counts
+
+
+def test_summary_apply_validates_the_ledger(golden_fill):
+    """devices_used must name declared devices (repairable, names listed);
+    on_stage entries stay plain handles."""
+    from questfoundry.models.concept import RecurringDevice
+
+    apply = _summary_apply_for("passage:p-arrival")
+    golden_fill.voice.recurring_devices = [
+        RecurringDevice(name="tide-oath", rule="escalate")
+    ]
+    try:
+        with pytest.raises(ApplyError, match="use only\s+declared device names: tide-oath"):
+            apply(
+                SummaryProposal(
+                    summary="s", on_stage=[], devices_used=["made-up-gag"]
+                ),
+                golden_fill,
+            )
+        with pytest.raises(ApplyError, match="plain\s+handle"):
+            apply(
+                SummaryProposal(
+                    summary="s",
+                    on_stage=["a whole sentence describing the thing at length"],
+                    devices_used=[],
+                ),
+                golden_fill,
+            )
+        apply(
+            SummaryProposal(
+                summary="s", on_stage=["the ledger"], devices_used=["tide-oath"]
+            ),
+            golden_fill,
+        )
+        node = golden_fill.graph.node("passage:p-arrival")
+        assert node.summary_on_stage == ["the ledger"]
+        assert node.summary_devices == ["tide-oath"]
+    finally:
+        golden_fill.voice.recurring_devices = []
 
 
 def test_story_route_is_deterministic_and_prefers_the_reference_arc(golden_fill):

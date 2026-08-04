@@ -1,9 +1,36 @@
-Write the prose for ONE passage. {{ words_min }}-{{ words_max }} words of finished,
-publishable markdown paragraphs (no headings, no lists). This is the passage the
-player reads. Everything below is context; each block says what it is FOR and
-what you may do with it — none of it may leak as jargon, and none of it is
-material to copy: the only prose in this prompt is prose the reader has
+You are the writer of an ongoing gamebook, continuing your own manuscript.
+Write the prose for the NEXT passage: {{ words_min }}-{{ words_max }} words of
+finished, publishable markdown paragraphs (no headings, no lists). This is the
+passage the player reads. Everything below is context; each block says what it
+is FOR and what you may do with it — none of it may leak as jargon, and none of
+it is material to copy: the only prose in this prompt is prose the reader has
 already read.
+
+{% if window %}
+THE MANUSCRIPT SO FAR (your own pages — the reader has just read them, most
+recent last): continue from them seamlessly. Their events happened; their
+objects and weather persist. Read them as their author:
+- ON STAGE ALREADY: everything these pages introduced needs only its plain
+  name or definite reference from here — "the drone", "the locker" — never a
+  re-introduction or a fresh description, unless this passage's action changes
+  the thing or turns on a new detail. Re-describing an established thing is a
+  defect, not color.
+- THEIR MATERIAL IS SPENT: every image and joke on these pages is told.
+  A lifted run of words is rejected mechanically; a callback returns only if
+  it escalates, in NEW words — even inside dialogue: a character restating
+  something said there says it in new words, or the narration notes the
+  repetition ("she said it again, the same words") without re-transcribing it.
+- THEIR REGISTER IS THE BOOK'S BASELINE: continue it; do not restart it or
+  try to outdo it.
+- A page told from a DIFFERENT viewpoint is still continuity of events — but
+  its narrator's interiority stays there; this passage opens fresh inside its
+  own head.
+{% for w in window %}
+--- {% if w.get("depth", 1) > 1 %}earlier, {% endif %}from {{ w.passage.id }}{% if w.label %} (arrived via "{{ w.label }}"){% endif %}{% if w.head and (not viewpoint or w.head != viewpoint.name) %} — told from {{ w.head }}'s viewpoint{% endif %}:
+{{ w.passage.prose }}
+{% endfor %}
+We now continue the story with the next passage. The brief follows.
+{% endif %}
 
 VOICE (binding — this owns how everything sounds):
 - POV: {{ voice.pov }} | tense: {{ voice.tense }} | diction: {{ voice.diction }}
@@ -27,20 +54,24 @@ at the charged moments named below, never as the default texture of every
 sentence — and never for the wording of a fact or a phrase from an earlier
 passage.
 
-STYLE BELONGS TO THE STORY, NOT TO THIS PARAGRAPH. The VOICE above is how the
-whole book sounds across its arc — it is not a quota to hit in every sentence.
-Write most of this passage as plain, clear, load-bearing prose: a straightforward
-grammatical spine — who does what, what happens next — that a reader navigating
-choices can follow without effort. Reach for the voice's heightened register (its
-imagery, its most distinctive cadence, its richest diction) at only a FEW charged
-moments here — an opening image, the beat this scene turns on, the last line — and
-let the prose between them stay unadorned. A passage where every sentence strains
-for effect is OVER-WRITTEN: it reads as airless and exhausting even when each line
-is fine in isolation, and it is the most common prose failure at book scale. So do
-not open a fresh metaphor or coin a new compound in every clause; do not dissolve
-the prose into a strobe of short fragments; keep sentences complete and varied in
-length. Clarity outranks atmosphere — after reading, a player must be able to say
-plainly what just happened.
+REGISTER BUDGET — HARD LIMIT, COUNT BEFORE RETURNING. The VOICE above is how
+the whole book sounds across its arc — it is not a quota to hit in every
+sentence, and there is a lot of book left: every heightened line spent on a
+plain passage flattens a peak that comes later. This is a {{ intensity }}
+passage: it gets AT MOST {% if intensity == "scene" %}THREE figurative
+flourishes{% else %}ONE figurative flourish{% endif %} in the whole passage — a
+coined image, a satirical aside, a metaphor, or an ironic flourish each count
+as one. Every other sentence is plain declarative prose that advances events
+in concrete physical detail: a straightforward grammatical spine — who does
+what, what happens next — that a reader navigating choices can follow without
+effort. The flourishes land BECAUSE the surrounding sentences are plain; a
+passage where every sentence performs has no punchline, reads as airless and
+exhausting even when each line is fine in isolation, and is the most common
+prose failure at book scale. Do not dissolve the prose into a strobe of short
+fragments; keep sentences complete and varied in length. Before returning,
+count your flourishes; if you are over budget, replace the excess with plain
+statements of what happens. Clarity outranks atmosphere — after reading, a
+player must be able to say plainly what just happened.
 
 {% if interlude %}
 THIS PASSAGE IS AN INTERLUDE — a marked deviation from the book's base narration:
@@ -91,12 +122,12 @@ Each beat is tagged with its INTENSITY (where the prose may rise) and its SCOPE
 {% for b in beats %}
 - [{{ beat_scene[b.id] }} · {{ beat_scope[b.id] }}] {{ b.summary }}
 {% endfor %}
-INTENSITY makes "style belongs to the story" concrete per beat: a `scene` beat is
-active conflict — the turn this passage exists for, where the heightened register
-may come out and the words may run a little longer. A `sequel` beat is reactive —
-a character absorbing what just happened; write it plain and brief. A `micro_beat`
-is a transition; keep it to the fewest clear sentences. Most beats are not scenes —
-hold the ornament for the ones that are.
+INTENSITY makes the register budget concrete per beat: a `scene` beat is
+active conflict — the turn this passage exists for, where the budgeted
+flourishes belong and the words may run a little longer. A `sequel` beat is
+reactive — a character absorbing what just happened; write it plain and brief.
+A `micro_beat` is a transition; keep it to the fewest clear sentences. Most
+beats are not scenes — hold the ornament for the ones that are.
 SCOPE tells you the POV frame per beat: a `limited` beat obeys the POV rules above
 (no other minds, distance may widen). A `wide` beat is a CODA — you may step back
 to a detached register and narrate what the viewpoint character could not know:
@@ -174,23 +205,17 @@ happened for every reader — WORLD STATE above governs what you may assert):
 {% endfor %}
 {% endif %}
 
-{% if window %}
-WHAT THE READER JUST READ (continuity, not a style template): continue from it
-seamlessly — its events happened, its objects and weather persist. Do not
-reuse its imagery or repeat its phrasing; the reader just read those words,
-and a lifted run is rejected — even inside dialogue: when a character restates
-something said there (a theory repeated to the room, a callback), they say it
-in NEW words, or the narration notes the repetition without re-transcribing
-the line. A neighbor told from a DIFFERENT viewpoint is
-still continuity of events — but its narrator's interiority stays there; this
-passage opens fresh inside its own head:
-{% for w in window %}
---- from {{ w.passage.id }} (arrived via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
-{{ w.passage.prose }}
-{% endfor %}
-{% endif %}
 {% if lookahead %}
-WHAT AWAITS (already written — land so it follows naturally, without echoing it):
+WHAT AWAITS (the next page is already written and CANNOT CHANGE — land so it
+follows naturally):
+- DO NOT PRE-MINT ITS MATERIAL: its images, jokes, and reveals belong to that
+  page; leave them unspent here — a punchline delivered early flattens a page
+  that cannot be revised, which is worse than repetition.
+- ESTABLISH WHAT IT ASSUMES: anything that page refers to plainly (an object,
+  a person on stage, a fact) must be present on YOUR page before the handoff.
+- LAND AT ITS REGISTER: end at the register its opening expects — a closing
+  flourish into a plain opening, or a flat close into a heightened one, makes
+  the seam visible.
 {% for w in lookahead %}
 --- toward {{ w.passage.id }} (via "{{ w.label }}"{% if w.head and (not viewpoint or w.head != viewpoint.name) %}; told from {{ w.head }}'s viewpoint{% endif %}):
 {{ w.passage.prose }}
@@ -255,8 +280,11 @@ Targeted edits converge; fresh derivations whack-a-mole:
 {% endif %}
 The rejection list below carries the reasons this draft was rejected. Most are
 FINDINGS, labeled [rule · ASSESSMENT · confidence] — including a `word_budget`
-finding when the prose is outside its length band, and an `overwriting` finding
-when it coins too many hyphen-compounds (say most of them plainly). A FINDING
+finding when the prose is outside its length band, an `overwriting` finding
+when it coins too many hyphen-compounds (say most of them plainly), and a
+`register_budget` finding when it spends more figurative flourishes than this
+passage's budget allows (keep the strongest, replace the rest with plain
+statements of what happens). A FINDING
 marked FAIL is blocking — resolve each; a FINDING marked WARN, or one of low
 confidence, is a concern to weigh and decide, not a mandate — do not over-correct.
 A rejection with no such label (a lifted phrase) is a hard requirement: fix it.

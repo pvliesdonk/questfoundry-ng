@@ -778,17 +778,27 @@ def test_summary_apply_enforces_the_cap_and_stores(golden_fill):
 
 
 def test_story_so_far_is_route_notes_minus_the_window(golden_fill):
-    """p-tremor's direct predecessors are the window (full prose shown);
-    the story-so-far carries the route's earlier passages as notes."""
-    from questfoundry.pipeline.stages.fill import _story_so_far
+    """The manuscript window shows full prose two levels deep
+    (register-conformance contract §5); the story-so-far carries only the
+    route's passages BEYOND the window, as notes — never double-carrying
+    a page whose prose is already on display."""
+    from questfoundry.pipeline.stages.fill import _story_so_far, _window_ids
 
+    # p-tremor's whole short route fits inside the two-level window
+    levels = _window_ids(golden_fill.graph, "passage:p-tremor")
+    assert "passage:p-arrival" in {p for level in levels for p in level}
     entries, elided = _story_so_far(golden_fill, "passage:p-tremor")
-    assert elided == 0
-    assert entries == [golden_fill.graph.node("passage:p-arrival").prose_summary]
-    # an ending passage sees the whole route
+    assert elided == 0 and entries == []
+    # an ending passage's route is longer than the window: the earliest
+    # passages remain as notes, and none of them is also in the window
     entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
     assert golden_fill.graph.node("passage:p-arrival").prose_summary in entries
-    assert len(entries) >= 2
+    windowed = {p for lv in _window_ids(golden_fill.graph, "passage:p-long-watch") for p in lv}
+    assert all(
+        golden_fill.graph.node(p).prose_summary not in entries
+        for p in windowed
+        if golden_fill.graph.node(p).prose_summary
+    )
 
 
 def test_story_route_is_deterministic_and_prefers_the_reference_arc(golden_fill):

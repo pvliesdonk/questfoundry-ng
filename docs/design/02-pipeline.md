@@ -438,17 +438,29 @@ passage's **texture-world premise** when its beats carry one
 (structural-depth W4, the context lever: the writer grounds the parallel
 world it is in, named the way world truths are named, instead of
 inferring it from summaries alone), full
-entity state (base + active overlays), a sliding window of preceding prose,
+entity state (base + active overlays), a sliding window of preceding prose
+(two levels deep along each arriving route, fan-in capped, framed as **the
+manuscript so far** — the writer continues their own book, so everything
+the window introduced gets a plain definite reference, its images and
+jokes are spent, and its register is the baseline to continue;
+register-conformance contract, 2026-08-04),
 character-arc position (from POLISH's arc metadata: the aspect in play
 now, the turn this scene carries, where the entity is heading),
 the story so far (each already-written passage along one deterministic
-route contributes a utility-summarized note — deep continuity at note
-prices, where a full prose look-back would blow up tokens), active
+route beyond the window contributes a utility-summarized note — deep
+continuity at note prices, where a full prose look-back would blow up
+tokens), active
 flags, the *shadows* (what didn't happen — so prose can carry the weight
-of it), and convergence lookahead. Every block states its role in the
-prompt: facts are constraints, not choreography; the window is
-continuity, not a style template (prose-quality effort — live run 8's
-verbatim-recurrence findings). The apply enforces the deterministic
+of it), and convergence lookahead (the fixed next page's material may not
+be pre-minted, what it assumes must be established, and the seam lands at
+its register). Every block states its role in the
+prompt: facts are constraints, not choreography. The write prompt carries
+a countable **register budget** rendered from the passage's aggregate
+`scene_type` (a plain passage gets one figurative flourish, a `scene`
+three, counted before returning), and the review mirrors it as the
+warn-level `register_budget` finding — arithmetic, not taste (six-arm
+experiment, 2026-08-04: rationale alone does not ration). The apply
+enforces the deterministic
 floor: an **echo check** rejects prose that restates a rendered entity
 fact or lifts a long verbatim run from adjacent prose. The **word budget**
 is no longer an apply gate — it is a graded `word_budget` review finding

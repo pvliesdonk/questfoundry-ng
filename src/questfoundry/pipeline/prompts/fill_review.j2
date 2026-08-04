@@ -168,13 +168,21 @@ same way — or "warn" for a concern or a matter of taste. The rules:
   in `reason`.
 {% endif %}
 
-INTENSITY GOVERNS REGISTER. Each beat's tag sets its intended register: a
-`sequel` or `micro_beat` beat is MEANT to be plain and brief (reactive processing
-or a transition), and a `scene` beat is where the heightened register belongs. Do
-not fault a plain sequel or micro_beat as "too spare" or "underwritten" — that
-plainness is the story modulating, and grading it down (even as a warn) fights the
-design. Judge a beat's events against its summary; judge its register against its
-INTENSITY.
+INTENSITY GOVERNS REGISTER — IN BOTH DIRECTIONS. Each beat's tag sets its
+intended register: a `sequel` or `micro_beat` beat is MEANT to be plain and brief
+(reactive processing or a transition), and a `scene` beat is where the heightened
+register belongs. Do not fault a plain sequel or micro_beat as "too spare" or
+"underwritten" — that plainness is the story modulating, and grading it down
+(even as a warn) fights the design. The mirror holds too, and it is COUNTABLE,
+not taste (rule `register_budget`): this is a {{ intensity }} passage, whose
+budget is at most {% if intensity == "scene" %}THREE figurative flourishes{% else %}ONE figurative flourish{% endif %}
+in the whole passage — a coined image, a satirical aside, a metaphor, or an
+ironic flourish each count as one. Count them; when the passage is over budget,
+report one `register_budget` finding (assessment "warn"): state the count
+against the budget in `reason`, quote the clearest excess flourish in `quote`,
+and in `recovery_action` name which flourishes to keep and say the rest should
+become plain statements of what happens. Judge a beat's events against its
+summary; judge its register against its INTENSITY.
 
 TASTE IS A WARN, NEVER A FAIL. Register, rhythm, metaphor and simile quality,
 imagery, figurative language, cliché, sentimentality, and "too literary / too

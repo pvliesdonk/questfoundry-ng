@@ -142,8 +142,19 @@ means (grade-level metrics are anti-correlated: the most readable sample
 scored the *highest* Flesch–Kincaid, the least readable the lowest; see
 `docs/plans/reading-difficulty.md`). Both the voice pass and the FILL
 write prompt frame the voice as a story-level property applied with
-restraint, never a per-paragraph quota. As with register generally,
-style intensity is taste — no gate grades it, the fence is the framing.
+restraint, never a per-paragraph quota — since the register-conformance
+work (2026-08-04) the write prompt makes the restraint *countable* (a
+per-passage flourish budget from the beat intensity) rather than
+framed-only, after a live read showed framing alone does not ration.
+The voice also declares the book's **recurring devices**
+(register-conformance §4): the genre's deliberate repetitions — an
+escalating running gag, a fixed `verbatim` utterance (a spell, an oath —
+its exact text is exempt from the echo guard's lift check, nothing
+around it), a `texture` vocabulary vein. Writer, reviewer, and echo
+guard read one declaration, so recurrence is judged as contract, not
+taste; undeclared recurrence stays a defect. As with register generally,
+style intensity beyond the countable budget is taste — no gate grades
+it; the budget itself surfaces as a warn-level review finding.
 
 ## 3. World layer
 

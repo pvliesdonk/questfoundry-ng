@@ -566,6 +566,49 @@ def test_window_echo_fails_apply(golden_fill):
     assert "say it in NEW words" in str(exc.value)
 
 
+def test_declared_verbatim_device_exempts_the_utterance(golden_fill):
+    """The canonical-utterance class (register-conformance §4): a lift
+    that IS a declared-verbatim device's text passes; the same lift
+    stays a defect undeclared (the violating construction), and a run
+    extending past the declared utterance stays a defect too (the
+    laundering bound)."""
+    from questfoundry.models.concept import RecurringDevice
+
+    lifted = "She waits for slack tide, when the water holds its breath"
+    apply = _write_apply_for("passage:p-tremor")
+
+    # undeclared: the lift fails (the construction the exemption must not erode)
+    with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+        apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+
+    # declared verbatim: the exact utterance is exempt
+    golden_fill.voice.recurring_devices = [
+        RecurringDevice(name="tide-oath", rule="verbatim", text=lifted)
+    ]
+    try:
+        apply(WriteProposal(prose=_padded(lifted)), golden_fill)
+
+        # laundering bound: the utterance plus lifted surrounding prose is
+        # a longer shared run that no longer fits inside the declaration
+        neighbor = golden_fill.graph.node("passage:p-lamp-room").prose
+        start = neighbor.index("She waits for slack tide")
+        extended = neighbor[start : start + len(lifted) + 40]
+        with pytest.raises(ApplyError, match="repeats passage:p-lamp-room"):
+            apply(WriteProposal(prose=_padded(extended)), golden_fill)
+    finally:
+        golden_fill.voice.recurring_devices = []
+
+
+def test_verbatim_device_requires_its_text():
+    from pydantic import ValidationError
+
+    from questfoundry.models.concept import RecurringDevice
+
+    with pytest.raises(ValidationError, match="provide `text`"):
+        RecurringDevice(name="oath", rule="verbatim")
+    assert RecurringDevice(name="gag", rule="escalate").text == ""
+
+
 def test_window_echoes_are_batched_into_one_error(golden_fill):
     """Several independent lifts from one neighbor surface in ONE error
     (texture-trial live run: raising the first per round fed the repair
@@ -1149,11 +1192,13 @@ def test_voice_proposal_requires_an_interlude_decision(golden_fill):
         VoiceProposal(
             pov="third person limited (Maren)", tense="past", diction="d",
             rhythm="r", imagery="i", dialogue="g",
-        )
+        recurring_devices=[],
+    )
     proposal = VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
         rhythm="r", imagery="i", dialogue="g",
         interlude="first-person past-tense journal entries (Elias Wren)",
+        recurring_devices=[],
     )
     golden_fill.voice = None
     lines = _voice_apply(proposal, golden_fill)
@@ -1165,6 +1210,7 @@ def _interlude_proposal(interlude: str) -> VoiceProposal:
     return VoiceProposal(
         pov="third person limited (Maren)", tense="past", diction="d",
         rhythm="r", imagery="i", dialogue="g", interlude=interlude,
+        recurring_devices=[],
     )
 
 

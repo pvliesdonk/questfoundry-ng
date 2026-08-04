@@ -28,7 +28,7 @@ from pydantic import BaseModel, ConfigDict, Field, create_model
 from questfoundry.graph import mutations, queries
 from questfoundry.graph.validate import Issue, Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
-from questfoundry.models.concept import Voice
+from questfoundry.models.concept import RecurringDevice, Voice
 from questfoundry.models.drama import Answer, Dilemma
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import (
@@ -109,6 +109,10 @@ class VoiceProposal(BaseModel):
     # the scheme's marked deviant register ("" when the scheme has none);
     # required so the pass decides explicitly rather than omitting
     interlude: str
+    # the genre's declared recurrence contract (register-conformance §4);
+    # required so the pass decides explicitly — an empty list is a valid
+    # decision (a book with no deliberate recurring devices)
+    recurring_devices: list[RecurringDevice]
 
 
 def _voice_skip(project: Project) -> str | None:
@@ -692,13 +696,17 @@ def _resolve_entity(g, ref: str) -> str:
     return resolve_entity_ref(g, ref)
 
 
-def _check_echoes(g, passage_id: str, prose: str) -> None:
+def _check_echoes(g, passage_id: str, prose: str, voice: Voice | None = None) -> None:
     """The deterministic floor under the input-role framing (plan W1):
     a rendered fact performed verbatim, or a run lifted from adjacent
     prose, is the stamping failure live run 8 read at book scale. All
     echoes are batched into ONE error (texture-trial live run: a draft
     carried several lifts from one neighbor, and raising the first per
-    round fed the repair loop one lift at a time until it exhausted)."""
+    round fed the repair loop one lift at a time until it exhausted).
+    A run that fits entirely inside a declared-verbatim recurring
+    device's text is exempt (register-conformance §4 — the canonical-
+    utterance class: Marta's alibi MUST repeat); a run extending past
+    the declared utterance stays a lift (the laundering bound)."""
     passage = g.node(passage_id)
     fact_echoes: list[str] = []
     for entity_id in passage.entities:
@@ -714,10 +722,15 @@ def _check_echoes(g, passage_id: str, prose: str) -> None:
                     f'prose restates an established fact verbatim: "{value}" '
                     f"({entity_id}.{key})"
                 )
+    exempt = [
+        d.text for d in (voice.recurring_devices if voice else []) if d.rule == "verbatim"
+    ]
     lifts: list[str] = []
     for direction in ("in", "out"):
         for w in _neighbor_prose(g, passage_id, direction):
             for run in echo.shared_runs(prose, w["passage"].prose, echo.WINDOW_ECHO_TOKENS):
+                if any(echo.is_subrun(run, text) for text in exempt):
+                    continue
                 line = f'prose repeats {w["passage"].id} verbatim: "{run}"'
                 if line not in lifts:
                     lifts.append(line)
@@ -770,7 +783,7 @@ def _write_apply_for(
         # rework or padding — the reviewer's confidence scales with distance,
         # so only a large miss blocks (author-directed, 2026-07-12). Runaway or
         # skimpy prose is still caught, just as a finding the engine weighs.
-        _check_echoes(g, passage_id, proposal.prose)
+        _check_echoes(g, passage_id, proposal.prose, project.voice)
         mutations.set_passage_prose(project.graph, passage_id, proposal.prose)
         lines = [f"{passage_id}: {count} words"]
         # Label rewrites land BEFORE the review runs (review rebuilds its

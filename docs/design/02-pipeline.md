@@ -449,7 +449,10 @@ now, the turn this scene carries, where the entity is heading),
 the story so far (each already-written passage along one deterministic
 route beyond the window contributes a utility-summarized note — deep
 continuity at note prices, where a full prose look-back would blow up
-tokens), active
+tokens; since register-conformance PR-3 each note also carries the
+referents its passage put ON STAGE and which declared recurring devices
+it used, the usage tallied into route counts the write prompt renders —
+counts inform, the budget enforces), active
 flags, the *shadows* (what didn't happen — so prose can carry the weight
 of it), and convergence lookahead (the fixed next page's material may not
 be pre-minted, what it assumes must be established, and the seam lands at

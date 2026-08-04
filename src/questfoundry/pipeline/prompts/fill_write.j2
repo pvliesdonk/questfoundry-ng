@@ -199,6 +199,14 @@ THE ROADS NOT TAKEN (shadows — let their weight color the prose, never name th
 - {{ s.dilemma.question }} {% for a in s.answers %}[{{ a.text }}{% if not a.explored %} — never explored{% endif %}] {% endfor %}
 {% endfor %}
 
+{% if device_counts %}
+DEVICE USAGE SO FAR (declared devices, times used on this route — counts
+inform, the register budget enforces): {% for name, n, rule in device_counts %}{{ name }} ({{ rule }}) ×{{ n }}{% if not loop.last %}, {% endif %}{% endfor %}.
+An `escalate` device at ×2 or more is well-mined: reach for fresh material,
+or return it only as a genuine escalation, in new words. `verbatim` and
+`texture` devices repeat by contract — their counts are informational, never
+a reason to avoid them.
+{% endif %}
 {% if story_so_far %}
 THE STORY SO FAR (one route to this passage, in notes — context, not material:
 the reader lived these events, so the prose may lean on them without retelling

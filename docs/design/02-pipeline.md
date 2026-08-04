@@ -462,7 +462,11 @@ warn-level `register_budget` finding — arithmetic, not taste (six-arm
 experiment, 2026-08-04: rationale alone does not ration). The apply
 enforces the deterministic
 floor: an **echo check** rejects prose that restates a rendered entity
-fact or lifts a long verbatim run from adjacent prose. The **word budget**
+fact or lifts a long verbatim run from adjacent prose — with one declared
+carve-out (register-conformance §4): a run that fits entirely inside a
+`verbatim` recurring device's declared text is exempt (the
+canonical-utterance class), while a run extending past the utterance
+stays a lift (the laundering bound). The **word budget**
 is no longer an apply gate — it is a graded `word_budget` review finding
 (above): a near-miss is a low-confidence finding the engine weighs, a large
 miss blocks, so good-but-terse prose is not force-reworked into padding. A

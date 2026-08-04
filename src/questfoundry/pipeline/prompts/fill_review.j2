@@ -184,6 +184,17 @@ and in `recovery_action` name which flourishes to keep and say the rest should
 become plain statements of what happens. Judge a beat's events against its
 summary; judge its register against its INTENSITY.
 
+{% if voice.recurring_devices %}
+DECLARED RECURRING DEVICES — the book's deliberate repetitions. Judge
+recurrence against this contract, not taste: a device returning per its rule
+is correct (never a finding); an "escalate" device returning FLAT (same size,
+same wording reworded) is a `continuity` warn; a "verbatim" device's utterance
+repeating exactly is correct by declaration. Recurrence of anything NOT
+declared here is judged by the ordinary rules:
+{% for d in voice.recurring_devices %}
+- {{ d.name }} ({{ d.rule }}): {{ d.description }}{% if d.rule == "verbatim" %} — fixed utterance: "{{ d.text }}"{% endif %}
+{% endfor %}
+{% endif %}
 TASTE IS A WARN, NEVER A FAIL. Register, rhythm, metaphor and simile quality,
 imagery, figurative language, cliché, sentimentality, and "too literary / too
 spare" are matters of degree — a writer cannot converge on taste under a

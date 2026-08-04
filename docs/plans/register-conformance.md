@@ -1,10 +1,14 @@
 # Register Conformance — continuation framing, declared recurrence, richer notes (Build Contract)
 
-> Status: **PR-1 BUILT** (manuscript-first `fill_write.j2`, depth-2
-> window + fan-in cap, lookahead convergence rules, register budget on
-> both writer and reviewer sides, `register_budget` warn rule; design
-> doc 02 FILL section updated; acceptance harness re-run on the
-> star-swabber opening). PR-2 (declared recurrence) and PR-3 (richer
+> Status: **PR-1 + PR-2 BUILT.** PR-1: manuscript-first `fill_write.j2`,
+> depth-2 window + fan-in cap, lookahead convergence rules, register
+> budget on both writer and reviewer sides, `register_budget` warn rule;
+> design doc 02 FILL section updated; acceptance harness re-run on the
+> star-swabber opening (plain register, depth-2 window firing). PR-2:
+> `Voice.recurring_devices` (escalate/verbatim/texture), the voice-pass
+> declaration, the echo guard's declared-verbatim exemption with the
+> laundering bound + violating-construction tests, writer/reviewer
+> device rendering; design doc 01 Voice section updated. PR-3 (richer
 > story-so-far) not yet built; live validation pending. Spec ratified
 > in-session 2026-08-04. Follows
 > from the star-swabber prose read (decision log 2026-08-04; BACKLOG

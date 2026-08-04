@@ -143,11 +143,16 @@ against its rule — recurrence review becomes contract-based, not taste.
   wins). Framed as THE MANUSCRIPT SO FAR, read as the writer's own.
 - **Lookahead** (unchanged depth): reframed per decision 5 — no
   pre-minting, establishment obligation, register handoff.
-- **Story-so-far entries** (summarize pass) gain two lines: `on stage:`
-  (referents this passage introduced) and `devices:` (declared devices
-  used, with running count — "warranty-gag ×3"). The write context
-  renders the aggregate counts beside the story-so-far. Entries stay
-  ≤ ~80 words.
+- **Story-so-far entries** (summarize pass) carry the ledger: each
+  entry gains an `[on stage: …]` line (referents this passage
+  introduced), and each passage records which declared devices it used.
+  Device usage is rendered ONLY as the aggregate route counts beside
+  the story-so-far (DEVICE USAGE SO FAR, rule-annotated, with the
+  well-mined caution scoped to `escalate` devices — `verbatim`/
+  `texture` repeat by contract), not as a per-entry line: the counts
+  are the actionable form, a per-entry device line would duplicate
+  them, and entries stay short (built simplification, PR-3 review).
+  Entries stay ≤ ~80 words.
 
 ## 6. The reviewer
 

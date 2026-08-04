@@ -475,7 +475,7 @@ def _story_so_far(project: Project, passage_id: str) -> tuple[list[str], int]:
     return entries[elided:], elided
 
 
-def _device_counts(project: Project, passage_id: str) -> list[tuple[str, int]]:
+def _device_counts(project: Project, passage_id: str) -> list[tuple[str, int, str]]:
     """Declared-device usage tallied over the whole route to this passage
     (window included — usage is usage), most-used first: the statistics
     that steer later passages off over-mined veins (register-conformance
@@ -486,7 +486,13 @@ def _device_counts(project: Project, passage_id: str) -> list[tuple[str, int]]:
     for pid in _story_route(project, passage_id):
         for name in g.node(pid).summary_devices:
             tally[name] = tally.get(name, 0) + 1
-    return sorted(tally.items(), key=lambda t: (-t[1], t[0]))
+    rules = {
+        d.name: d.rule for d in (project.voice.recurring_devices if project.voice else [])
+    }
+    return sorted(
+        ((name, n, rules.get(name, "escalate")) for name, n in tally.items()),
+        key=lambda t: (-t[1], t[0]),
+    )
 
 
 def _passage_head(g, passage_id: str) -> tuple[Entity | None, bool]:

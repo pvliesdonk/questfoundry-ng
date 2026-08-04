@@ -907,7 +907,8 @@ def test_story_so_far_carries_the_ledger_and_counts(golden_fill):
     entries, _ = _story_so_far(golden_fill, "passage:p-long-watch")
     assert any("[on stage: the brass ledger]" in e for e in entries)
     counts = _device_counts(golden_fill, "passage:p-long-watch")
-    assert ("tide-oath", 2) in counts
+    # undeclared names default to the escalate rule (informational)
+    assert ("tide-oath", 2, "escalate") in counts
     ctx = _write_context_for("passage:p-long-watch")(golden_fill)
     assert ctx["device_counts"] == counts
 
@@ -922,14 +923,14 @@ def test_summary_apply_validates_the_ledger(golden_fill):
         RecurringDevice(name="tide-oath", rule="escalate")
     ]
     try:
-        with pytest.raises(ApplyError, match="use only\s+declared device names: tide-oath"):
+        with pytest.raises(ApplyError, match=r"use only\s+declared device names: tide-oath"):
             apply(
                 SummaryProposal(
                     summary="s", on_stage=[], devices_used=["made-up-gag"]
                 ),
                 golden_fill,
             )
-        with pytest.raises(ApplyError, match="plain\s+handle"):
+        with pytest.raises(ApplyError, match=r"plain\s+handle"):
             apply(
                 SummaryProposal(
                     summary="s",

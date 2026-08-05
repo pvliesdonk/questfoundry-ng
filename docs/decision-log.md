@@ -16,6 +16,27 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-05 (register conformance validated; medium A/B skipped by
+  author; `runs/register-short` designated the register exemplar):** The
+  three-PR stack (built 2026-08-04/05, landed via #126) was validated
+  live on `runs/register-short` — same premise verbatim, short scope,
+  kimi-k2.6 unbilled: 122/122 FILL passes, zero repair exhaustions
+  (star-swabber baseline: 1), voice pass declared 3 sensible devices
+  unprompted. Author read the openings: register fixed; one defect
+  surfaced — **staccato** (uniformly short sentences). The tune is PR
+  #127: the agent's first elaborated clause was corrected by the author
+  ("this does start to sound like the over specification we had
+  before" — the same accretion reflex AGENTS.md names) down to one
+  clause: "plain does not mean short". The author then **closed
+  validation without the planned medium-scope A/B** (verbatim: "no
+  medium scope a/b. we have plenty of evidence this is an improvement.
+  update the status to reflect that and add this ru[n] as exemplar") —
+  the run stands as the register exemplar; record in
+  [`plans/register-conformance.md`](plans/register-conformance.md) §10.
+  BACKLOG register item closed; the echo-guard canonical-utterance item
+  updated (declared-verbatim devices absorbed; drama-mandated classes
+  stay open).
+
 - **2026-08-04 (register-conformance build contract — six-arm experiment
   + in-session ratification):** Same session as the prose read below,
   resolved into

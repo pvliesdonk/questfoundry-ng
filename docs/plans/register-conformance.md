@@ -1,6 +1,12 @@
 # Register Conformance — continuation framing, declared recurrence, richer notes (Build Contract)
 
-> Status: **PR-1 + PR-2 BUILT.** PR-1: manuscript-first `fill_write.j2`,
+> Status: **BUILT AND VALIDATED** (2026-08-05). All three PRs merged;
+> the live validation run passed and the author closed the loop —
+> **no medium-scope A/B** ("we have plenty of evidence this is an
+> improvement", author, in-session 2026-08-05). The validation record,
+> including the run that now stands as the register exemplar, is §10.
+>
+> Build detail: PR-1: manuscript-first `fill_write.j2`,
 > depth-2 window + fan-in cap, lookahead convergence rules, register
 > budget on both writer and reviewer sides, `register_budget` warn rule;
 > design doc 02 FILL section updated; acceptance harness re-run on the
@@ -12,8 +18,7 @@
 > story-so-far ledger — `SummaryProposal.on_stage`/`devices_used`
 > (validated against the declaration, repairable), entries carry
 > "[on stage: …]", declared-device usage aggregates into route counts
-> rendered as DEVICE USAGE SO FAR in the write prompt. Live validation
-> pending. Spec ratified
+> rendered as DEVICE USAGE SO FAR in the write prompt. Spec ratified
 > in-session 2026-08-04. Follows
 > from the star-swabber prose read (decision log 2026-08-04; BACKLOG
 > "Register conformance"): the author read the finished book as
@@ -223,3 +228,57 @@ contract *does* specify (§4–§6, §8) is to be built completely.
 4. Whether the establishment obligation at convergences needs engine
    support (checking an arm actually staged what the fixed text assumes)
    — only if live runs show the seam.
+
+## 10. Validation record (2026-08-05) — the exemplar run
+
+The **Validation** slice ran as `runs/register-short`: a fresh
+short-scope live run, same premise verbatim ("pulp space opera in the
+style of the 'space quest' computer games"), kimi-k2.6 on Ollama cloud
+(unbilled), corpus-grounded, the full three-PR stack live. Outcome:
+
+- **122/122 FILL passes, 60 passages, zero repair exhaustions, zero
+  failed passages.** 41 passes used the repair loop (attempts=2–3, all
+  converged) — no manufactured non-convergence. Echo exhaustions at
+  seams: 0 (star-swabber baseline: 1).
+- **The voice pass declared 3 sensible devices unprompted** (open
+  question 3 answered): Board Invoicing (escalate), Retro Game Over
+  (escalate), Vacuum-Tube Spite (texture) — no spurious verbatim.
+- **Author read of the opening passages: register fixed.** Plain
+  declaratives carry the scene, comedy is situational, ~1–2 flourishes
+  per passage; the refer-plainly rule visibly holds ("The Omega Mop
+  Bucket hums", not fresh re-description). One rhythm defect surfaced —
+  **staccato**: uniformly short subject–verb–object sentences. The
+  author agreed and directed a one-clause tune; the elaborated first
+  version was itself corrected ("this does start to sound like the over
+  specification we had before", author, in-session) down to the minimal
+  clause that ships in PR #127: *"plain does not mean short — keep
+  sentences complete and varied in length."*
+- **Author closed validation without the medium-scope A/B** (in-session
+  2026-08-05, verbatim: "no medium scope a/b. we have plenty of
+  evidence this is an improvement. update the status to reflect that
+  and add this ru[n] as exemplar"). `runs/register-short` therefore
+  stands as the **register exemplar** — the reference for what
+  conforming output looks like.
+
+Exemplar passages (final prose, `runs/register-short/prose/`):
+
+**Opening (`p-menial-calamity`, written pre-tune)** — plain register,
+situational comedy, staccato rhythm visible:
+
+> You push your mop cart across Deck 7 of Starbase Mop-Top. The
+> bulkheads groan around you. Your hazard vest catches the spark of a
+> dying tube light. […] MAUDE announces that protonic reversal is
+> imminent. It suggests you update your will. You sigh.
+
+**Post-tune (`p-midcentury-apocalypse`, written after the PR #127
+clause landed mid-run)** — same register, varied rhythm:
+
+> The corridor neon flickers and settles into a warm showroom glow. A
+> woman in stained coveralls braces her boots against the ice and
+> slides into a theatrical bow. Her pose carries the rigid cheer of a
+> midcentury appliance demonstration. […] You try again.
+
+(The comparison is indicative, not pure — later passages also carry a
+deeper manuscript window. Budget knobs plain=1/scene=3 survived the
+read unchanged; open question 1 is settled at those values until a
+future read says otherwise.)

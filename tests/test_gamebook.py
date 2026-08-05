@@ -714,3 +714,13 @@ def test_cli_html_large_print_writes_its_own_edition(golden_copy):
     assert result.exit_code == 0, result.output
     page = golden_copy / "exports" / "the-keepers-bargain-screen-large-print.html"
     assert "--measure: 54ch;" in page.read_text(encoding="utf-8")
+
+
+def test_cli_large_print_is_rejected_on_the_unstyled_formats(golden_copy):
+    """The same actionable rejection --style gets: silently ignoring a flag
+    is the failure mode AGENTS.md's error-message rule exists to prevent."""
+    runner = CliRunner()
+    for fmt in ("json", "twee"):
+        result = runner.invoke(app, ["export", fmt, "--dir", str(golden_copy), "--large-print"])
+        assert result.exit_code == 2, result.output
+        assert "--large-print applies to the styled formats" in result.output

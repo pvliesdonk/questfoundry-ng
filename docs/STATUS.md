@@ -31,7 +31,7 @@ decisions".
 
 **The first slice is built (2026-08-05).** Alt text runs end to end
 (brief → DRESS → runtime → both templates) and print compiles with
-`pdf_standards=("ua-1",)`, so the Typst compiler refuses a build with a
+`pdf_standards="ua-1"`, so the Typst compiler refuses a build with a
 missing alt or title. Ratio is per-image data (2:3/3:2/1:1) from the
 brief through `qf illustrate` to each style's placement rule. The shared
 layer is `export/style.py` — contrast-checked ramps whose failure blocks

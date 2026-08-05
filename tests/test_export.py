@@ -237,3 +237,37 @@ def test_validate_checks_the_cover_on_the_same_terms(golden):
     data = build_runtime(golden)
     data["cover"] = {"image": "art/images/cover.png", "alt": "", "ratio": "2:3"}
     assert any("cover entry has no alt text" in p for p in validate_runtime(data))
+
+
+def test_cover_alt_containing_a_quote_stays_inside_its_attribute(golden, tmp_path):
+    """Alt text is prose, and nothing forbids it a quotation mark ("a door
+    marked "keep out" in chalk"). The cover's alt is the one place it is
+    string-templated into HTML rather than assigned as a JS property, so a
+    text-content escape here would end the attribute early and spill the
+    rest of the sentence into the page as markup."""
+    import base64
+    import shutil
+
+    from questfoundry.project import load_project
+
+    dest = tmp_path / "keepers-bargain"
+    shutil.copytree(golden.root, dest)
+    (dest / "art" / "images").mkdir(parents=True, exist_ok=True)
+    (dest / "art" / "images" / "cover.png").write_bytes(
+        base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk"
+            "+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+        )
+    )
+    project = load_project(dest)
+    project.enrichment.cover.alt = (
+        'A lantern glows over a door marked "keep out" in chalk, <script>, & rain.'
+    )
+
+    html = build_html(project)
+    tag = html.split('<img id="cover-art"', 1)[1].split(">", 1)[0]
+    assert '"keep out"' not in tag  # the raw quotes never reach the attribute
+    assert "&quot;keep out&quot;" in tag
+    assert "&lt;script&gt;" in tag and "&amp; rain" in tag
+    # and the tag is the only thing between the delimiters: nothing spilled
+    assert tag.count('alt="') == 1

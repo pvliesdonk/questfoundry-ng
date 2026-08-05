@@ -133,7 +133,7 @@ The most format-specific pipeline, in five deterministic steps:
    illustrations, choice lines in a consistent typographic form, codex as
    an appendix ("The Keeper's Almanac"), and an ending index by ending id
    (unnumbered-title only, to stay spoiler-safe). The PDF is compiled with
-   `pdf_standards=("ua-1",)`, so the compiler refuses a document missing
+   `pdf_standards="ua-1"`, so the compiler refuses a document missing
    alt text or a title.
 5. **Lint.** Every "turn to N" resolves; every codeword is granted before
    any test of it on every arc; section count matches passage count; no
@@ -256,7 +256,7 @@ failing silently.
   cross-fade collapses to 0 under `prefers-reduced-motion`; the measure is
   in `ch`, so it reflows to 320px and survives 200% zoom without a
   horizontal scrollbar.
-- **PDF/UA-1 (print).** Compiled with `pdf_standards=("ua-1",)`, so the
+- **PDF/UA-1 (print).** Compiled with `pdf_standards="ua-1"`, so the
   compiler refuses a build with a missing alt text or document title.
   Section numbers are real headings, so the PDF outline is the book's own
   numbering and a screen reader can move section to section.

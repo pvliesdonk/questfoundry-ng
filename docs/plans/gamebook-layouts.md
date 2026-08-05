@@ -177,7 +177,7 @@ Shipped in one slice, because the three next-steps were one seam:
   proposed by DRESS under mechanical checks (6–40 words, no
   "Illustration of…" opening, never a verbatim copy of the caption),
   carried in the runtime JSON, read by both templates. Print compiles
-  with `pdf_standards=("ua-1",)`: the Typst compiler itself refuses a
+  with `pdf_standards="ua-1"`: the Typst compiler itself refuses a
   build with a missing alt or document title. Four checks localize the
   failure rather than duplicating it — see mini-ADR **A26**.
 - **Ratio as data.** `2:3 | 3:2 | 1:1` on the brief, chosen by DRESS per

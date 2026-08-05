@@ -343,9 +343,14 @@ def export(
     )
     from questfoundry.export.twee import build_twee
 
-    if style is not None and fmt not in {"pdf", "html"}:
-        console.print(f"[red]--style applies to 'pdf' and 'html', not {fmt!r}[/red]")
-        raise typer.Exit(2)
+    if fmt not in {"pdf", "html"}:
+        for flag, given in (("--style", style is not None), ("--large-print", large_print)):
+            if given:
+                console.print(
+                    f"[red]{flag} applies to the styled formats 'pdf' and 'html', "
+                    f"not {fmt!r} — drop the flag, or export pdf or html[/red]"
+                )
+                raise typer.Exit(2)
 
     project = load_project(directory)
     problems = validate_runtime(build_runtime(project))

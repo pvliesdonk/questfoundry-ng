@@ -300,7 +300,18 @@ start();
 
 
 def _escape(text: str) -> str:
+    """For text content — between tags, where `&` and `<` are the only
+    characters that can end it."""
     return text.replace("&", "&amp;").replace("<", "&lt;")
+
+
+def _escape_attr(text: str) -> str:
+    """For an attribute *value*, where the quote delimiting it also has to
+    go. Alt text is author/DRESS prose and nothing forbids it a quotation
+    mark ("a door marked \"keep out\" in chalk"), so a text-content escape
+    used here would end the attribute early and spill the rest of the
+    sentence into the page as markup."""
+    return _escape(text).replace('"', "&quot;").replace(">", "&gt;")
 
 
 def _codex_panel(codex: list[dict]) -> str:
@@ -328,7 +339,7 @@ def _cover_img(cover: dict | None) -> str:
     story whose cover has not been rendered yet."""
     if not cover:
         return ""
-    return f'<img id="cover-art" src="" alt="{_escape(cover.get("alt", ""))}">'
+    return f'<img id="cover-art" src="" alt="{_escape_attr(cover.get("alt", ""))}">'
 
 
 def build_html(project: Project, *, style: ScreenStyle | None = None) -> str:

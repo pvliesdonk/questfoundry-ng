@@ -116,7 +116,19 @@ carries hand-authored enrichment — now including a locked dilemma (what
 ended the previous keeper's watch), the residue diamond, a tensored
 arm (a texture choice that exists only for players who told Elias the
 truth), character arcs for its two leads, and per-passage story-so-far
-notes — and prints end-to-end:
+notes — and prints end-to-end.
+The exports are now **styled**: `--style paperback` sets an A5 paperback
+whose sections flow continuously, whose running heads carry the spread's
+section range, and whose "turn to" numbers sit bold at the right margin;
+`--style screen` gives the HTML player a title screen with the cover as
+an inset object, a reading-mode control, and the WCAG contract as real
+elements — choices as buttons in a labelled `nav`, focus moving to the
+section on every turn, a measure that reflows to 320px. Both draw on a
+shared contrast-checked colour ramp that fails the build if a role misses
+its floor, both place illustrations by the ratio DRESS chose for the
+scene, and the PDF compiles as **PDF/UA-1**, so a missing alt text is a
+build error rather than an accessibility debt. `--large-print` is a
+modifier over either.
 
 ```console
 $ uv sync --group dev
@@ -125,6 +137,7 @@ The Keeper's Bargain @ dress: 0 error(s), 0 warning(s)
 all gates pass
 $ uv run qf export pdf --dir examples/keepers-bargain
 exported examples/keepers-bargain/exports/the-keepers-bargain.typ and …/the-keepers-bargain.pdf
+$ uv run qf export pdf --dir examples/keepers-bargain --large-print   # same book, bigger type
 $ uv run qf export html --dir examples/keepers-bargain    # browser player + codex panel
 $ uv run qf play examples/keepers-bargain     # or play it in the terminal
 $ uv run qf export twee --dir examples/keepers-bargain   # take it to Twine

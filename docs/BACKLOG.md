@@ -203,6 +203,18 @@ notable one a dated entry in [`decision-log.md`](decision-log.md).
   back as a reference for the rest of the batch (M7's documented escalation).
   The live run showed *style* drift, not character drift; wire the reference
   path when a run demands it.
+- [ ] **An author/DRESS accent override for the style ramps** — the layout
+  contract wants "DRESS may pick hue freely; the validator fails the build when
+  the accent lands outside the ramp". The validator is built and guards every
+  ramp (design doc 04 §7); the hue source is not. One LLM-chosen hex cannot
+  clear the floor against both a light print page and a dark screen page, so
+  this needs a decision first: per-medium accents, or an author-set accent in
+  `project.yaml` that a style may reject. Agent decision 2026-08-05, recorded in
+  [`plans/gamebook-layouts.md`](plans/gamebook-layouts.md) §"What is built".
+- [ ] **"Cap one plate per spread" in print** — an art-geometry rule from the
+  layout contract that needs page-break knowledge only Typst has at layout time
+  (a `context`/`query` pass over the placed plates). Briefs are sparse (≤20 per
+  book) so it has never bound; left unbuilt rather than approximated.
 
 ## Validation & experiments
 

@@ -16,6 +16,51 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-05 (export styling: first slice built — alt text + UA-1,
+  ratio-as-data, the shared style layer, 1a Paperback and 1d Shelf):**
+  The three next-steps STATUS listed were built as one change, because
+  they are one seam: a style cannot place an image without its ratio,
+  and cannot compile to UA-1 without its alt text. Durable rules landed
+  in design doc **04 §7**; the architecture decision is mini-ADR **A26**
+  (styles are data + per-medium furniture, and the accessibility
+  contract is made mechanical rather than reviewed).
+  Notable calls, all the agent's:
+  (1) **1a replaces the old print layout rather than joining it.** The
+  hard-coded 130×200mm one-section-per-page layout was not one of the
+  design's directions, so it retires; `paperback` is the default and
+  `--style` names what exists.
+  (2) **Alt text is checked four times** (DRESS apply → runtime boundary
+  → print lint → Typst under `ua-1`). Not redundancy but *localization*:
+  the compiler's "missing alt text" names neither the passage nor the
+  file, so the earlier checks say where to fix it and the compiler
+  exists so no path can skip it.
+  (3) **The DRESS-picks-hue half of the ramp contract was NOT built.**
+  One LLM-chosen hex cannot clear the 4.5:1 floor against both a light
+  print page and a dark screen page; the alternatives are two accents or
+  an auto-adaptation that can never fail — and an auto-adaptation makes
+  the validator dead, which is the opposite of what the contract asks
+  for. Each style ships a checked accent; the validator guards every
+  ramp at build time and is ready for an override. Filed in the BACKLOG
+  as a decision, not a TODO.
+  (4) **The contract's "locked choices stay visible with the reason"
+  clause is print-only**, resolving an apparent conflict with design doc
+  04 §1 rule 2 (a digital runtime *hides* an unavailable choice). The
+  clause is about not signalling a locked state by colour alone; on
+  paper that state is unavoidable, on screen it does not exist. The
+  reading is written into 04 §7 rather than left as a divergence.
+  (5) **"Cap one plate per spread" is unbuilt**, not approximated: it
+  needs page-break knowledge only Typst has at layout time, and with ≤20
+  briefs per book it has never bound.
+  Validation was **unbilled**: the golden story exported to both media
+  with the placeholder image provider, the PDF read page by page, and
+  the HTML player driven in a real browser (title screen → begin → turn,
+  focus landing on the article each turn, no console errors, no
+  horizontal scroll at 320px). No live styled run yet — that is STATUS's
+  next check. The DRESS replay fixtures (056 briefs, 062 cover) were
+  hand-patched with the new fields rather than re-recorded, since the
+  schema change is mechanical and re-recording would spend billed calls
+  for no signal.
+
 - **2026-08-05 (register conformance validated; medium A/B skipped by
   author; `runs/register-short` designated the register exemplar):** The
   three-PR stack (built 2026-08-04/05, landed via #126) was validated

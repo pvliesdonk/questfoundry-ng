@@ -586,3 +586,23 @@ def test_compress_images_quantizes_in_place_and_never_grows_a_file(tmp_path):
 
     _, tiny_before, tiny_after = report[1]
     assert tiny_before == tiny_after  # already smaller than any quantized encode: kept
+
+
+def test_cli_illustrate_compress_reports_and_exits_without_rendering(golden_copy, tmp_path):
+    from questfoundry.project import scaffold_project
+
+    images = golden_copy / "art" / "images"
+    images.mkdir(parents=True, exist_ok=True)
+    (images / "plate.png").write_bytes(_noisy_png(optimize=True))
+
+    runner = CliRunner()
+    result = runner.invoke(app, ["illustrate", "--dir", str(golden_copy), "--compress"])
+    assert result.exit_code == 0
+    assert "compressed plate.png" in result.output
+    assert "% saved" in result.output
+    assert "rendered" not in result.output  # compress renders nothing
+
+    scaffold_project(tmp_path / "bare", name="Bare", scope="micro")
+    result = runner.invoke(app, ["illustrate", "--dir", str(tmp_path / "bare"), "--compress"])
+    assert result.exit_code == 0
+    assert "no rendered images" in result.output

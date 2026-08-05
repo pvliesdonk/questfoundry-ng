@@ -465,6 +465,12 @@ def illustrate(
     yes: bool = typer.Option(
         False, "--yes", help="Skip the sample-first confirmation and render the whole batch"
     ),
+    compress: bool = typer.Option(
+        False,
+        "--compress",
+        help="Lossily recompress the rendered images in place (adaptive palette) and exit — "
+        "renders nothing; rendering always applies lossless optimization on its own",
+    ),
 ) -> None:
     """Render DRESS illustration briefs to art/images/<slug>.png
     (mini-ADR A18: a post-DRESS command, not a stage — cloud providers
@@ -474,12 +480,36 @@ def illustrate(
         IllustrateError,
         RenderOutcome,
         build_service,
+        compress_images,
         image_path,
         plan_renders,
         render_briefs,
     )
 
     project = load_project(directory)
+
+    if compress:
+        report = compress_images(project.root)
+        if not report:
+            console.print("[yellow]no rendered images under art/images/ to compress[/yellow]")
+            return
+        for path, before, after in report:
+            if after < before:
+                console.print(
+                    f"[green]compressed[/green] {path.name}: "
+                    f"{before // 1024}k -> {after // 1024}k"
+                )
+            else:
+                console.print(
+                    f"[dim]kept {path.name}: already smaller than a quantized encode[/dim]"
+                )
+        total_before = sum(before for _, before, _ in report)
+        total_after = sum(after for _, _, after in report)
+        console.print(
+            f"{len(report)} image(s): {total_before // 1024}k -> {total_after // 1024}k "
+            f"({100 - total_after * 100 // max(total_before, 1)}% saved)"
+        )
+        return
     if not project.enrichment.briefs:
         console.print("[red]no illustration briefs — run the pipeline through dress first[/red]")
         raise typer.Exit(1)

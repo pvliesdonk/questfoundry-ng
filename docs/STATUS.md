@@ -58,15 +58,18 @@ Shipped section; their measurement remainders live in the BACKLOG.
 What is left of the epic (contract: `plans/gamebook-layouts.md`, and its
 "What is built" section for what the build deliberately left):
 
-1. **axe-core in CI** over a handful of exported sections per HTML style
-   — the one part of the WCAG contract still checked by reading rather
-   than by a machine.
-2. **The `image-generation-mcp` resolution adapter task**
+1. **The `image-generation-mcp` resolution adapter task**
    ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337)):
    until it lands, cloud covers sit below the 300dpi full-bleed floor
    and take the inset fallback the export already reports. (1c's floor
    is lower, since its band is shorter than a full page — but it is
    **not** exempt: a band still runs the full page width.)
+
+Done 2026-08-05: **axe-core in CI** (`tests/test_a11y.py` + the CI
+`a11y` job) — WCAG-A/AA scans of both screen styles over the title
+screen, opening section, and a handful of turns, the large-print
+modifier, and a planted-violation self-test; the job fails rather than
+skips when the browser is missing.
 
 A **live styled export has not been run.** Every style was validated on
 the golden story with the placeholder image provider: all three print

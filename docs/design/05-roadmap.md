@@ -136,8 +136,9 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   Paperback** (`--style paperback`, the default, replacing the hard-coded
   130×200 one-section-per-page layout), **1b Bound**, **1c Compendium**,
   **1d Shelf** and **1e Room**. Durable rules: design doc
-  [04 §7](04-export-and-play.md); mini-ADR **A26**. Remaining in this
-  epic: the axe-core CI pass, the `image-generation-mcp` resolution
+  [04 §7](04-export-and-play.md); mini-ADR **A26**. The axe-core CI
+  pass landed 2026-08-05 (`tests/test_a11y.py` + the CI `a11y` job).
+  Remaining in this epic: the `image-generation-mcp` resolution
   adapter task
   ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
   that full-bleed covers wait on, and a live styled read.

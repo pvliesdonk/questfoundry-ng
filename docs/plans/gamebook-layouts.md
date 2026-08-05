@@ -263,8 +263,12 @@ Two further decisions came with the remaining styles (agent):
    recognisably 1c — and the warning names the band rather than claiming
    an inset page the style never had.
 
-Still open from the contract: the **axe-core CI pass** over exported HTML,
-and the **image-generation-mcp resolution adapter task**
+The **axe-core CI pass** landed 2026-08-05 (`tests/test_a11y.py` + the CI
+`a11y` job): WCAG-A/AA-scoped scans of both screen styles across the title
+screen, the opening section, and a handful of turns, plus the large-print
+modifier and a planted-violation self-test; a missing browser fails the CI
+job (`QF_A11Y_STRICT=1`) rather than silently passing. Still open from the
+contract: the **image-generation-mcp resolution adapter task**
 ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
 — until that lands, cloud renders sit below the full-bleed floor and take
 the inset fallback. 1c's floor is lower (its band is shorter), so it is

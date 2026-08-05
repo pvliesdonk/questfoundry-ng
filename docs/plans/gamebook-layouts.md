@@ -1,7 +1,10 @@
 # Gamebook layouts — styled print & HTML export (Design Input)
 
-> Status: **CURRENT EPIC (author call, 2026-07-30) — decisions
-> ratified, build not started.** The layout directions come from the
+> Status: **CURRENT EPIC (author call, 2026-07-30) — first slice
+> BUILT (2026-08-05): alt text + PDF/UA-1, ratio-as-data, the shared
+> style layer, 1a Paperback and 1d Shelf. See "What is built" below for
+> what shipped and what is deliberately still open.** The layout
+> directions come from the
 > author's Claude Design project ("Questfoundry gamebook layout
 > directions", project `5147ccb0-3922-4b92-84c4-a55032396ad0`),
 > authored over four design turns and imported into the repo
@@ -161,6 +164,64 @@ anti-spoiler shuffle is deliberate; sequential would reintroduce
 adjacency spoilers) with 1a's running heads making the shuffle
 navigable. Print/HTML pairing stays per-medium for now; a bundled
 preset is CLI ergonomics the build can add if it earns its place.
+
+## What is built (2026-08-05)
+
+The durable rules now live in **design doc 04 §7** ("Export styles and
+the accessibility contract") — read that first; this section records what
+the build actually settled and what it deliberately left.
+
+Shipped in one slice, because the three next-steps were one seam:
+
+- **Alt text end to end.** `IllustrationBrief.alt` / `CoverBrief.alt`,
+  proposed by DRESS under mechanical checks (6–40 words, no
+  "Illustration of…" opening, never a verbatim copy of the caption),
+  carried in the runtime JSON, read by both templates. Print compiles
+  with `pdf_standards="ua-1"`: the Typst compiler itself refuses a
+  build with a missing alt or document title. Four checks localize the
+  failure rather than duplicating it — see mini-ADR **A26**.
+- **Ratio as data.** `2:3 | 3:2 | 1:1` on the brief, chosen by DRESS per
+  scene, honoured by `qf illustrate`, carried in the runtime, turned into
+  a width fraction by each style's placement table. Cover fixed at 2:3.
+  Full-bleed below 1750×2625px falls back to inset, with a warning.
+- **The shared style layer** (`export/style.py`): contrast-checked ramps
+  (a role that misses its WCAG floor fails the build), the
+  ratio/placement tables, and large print as a modifier over any style.
+- **1a Paperback** and **1d Shelf**, selectable with `--style`, plus
+  `--large-print` writing its own edition.
+
+Decisions this build made (agent, not author-ratified):
+
+1. **The ramp is a style token; the DRESS-picks-hue idea is not built.**
+   The contract says "DRESS may pick hue freely; a validator fails the
+   build when the accent lands outside the ramp." Making an LLM-chosen
+   hex work across a light print page *and* a dark screen page is either
+   two accents or an auto-adaptation that can never fail — and an
+   auto-adaptation makes the validator dead. So each style ships a
+   checked accent, and the validator guards every ramp at build time,
+   ready for an override. Filed in the BACKLOG.
+2. **The "locked choices stay visible with the reason" clause is print
+   only.** Design doc 04 §1 rule 2 is authoritative: a digital runtime
+   *hides* an unavailable choice — the reader must not see the machinery.
+   The clause is about not signalling a locked state by colour alone, and
+   on paper that state is unavoidable (residue-variant lowering spells
+   the gate into the sentence). There is no conflict to resolve; the
+   reading is written into 04 §7.
+3. **The polite live region announces status, not codewords.** There are
+   no player-visible codewords in a digital runtime — projection is a
+   print concern. The region carries save/load/restart/reading-mode
+   confirmations, which are exactly the changes that do not move focus.
+4. **"Cap one plate per spread" is not enforced.** It needs page-break
+   knowledge only Typst has at layout time. Briefs are sparse (≤20 for a
+   whole book), so it has never bound in practice; left unbuilt rather
+   than approximated. Filed in the BACKLOG.
+
+Still open from the contract: **1b Bound / 1c Compendium / 1e Room**
+(asking for one names what is built), the **axe-core CI pass** over
+exported HTML, and the **image-generation-mcp resolution adapter task**
+([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
+— until that lands, cloud renders sit below the full-bleed floor and take
+the inset fallback.
 
 ## Imported artifacts
 

@@ -71,8 +71,9 @@ def test_html_cover_screen_when_image_exists(golden, tmp_path):
     (dest / "art" / "images" / "cover.png").write_bytes(png)
 
     html = build_html(load_project(dest))
-    # the cover screen, its image inlined as a data URI, and a Begin control
-    assert 'id="cover"' in html
+    # the title screen sets the cover as an inset object, its image inlined
+    # as a data URI, beside the Begin control
+    assert 'id="cover-art"' in html
     assert '"cover": {"image": "data:image/png;base64,' in html
     assert 'id="begin"' in html
     # still self-contained
@@ -141,3 +142,132 @@ def test_validate_runtime_does_not_explode_on_unconsumed_cosmetic_grants():
     # projection keeps the walk linear because no choice tests these flags.
     data = _cosmetic_diamond_runtime(24)
     assert validate_runtime(data) == []
+
+
+# -- 1d Shelf: the accessibility contract is structural (design doc 04 §7) ----
+
+
+def test_player_semantics_are_real_elements_not_styled_divs(golden):
+    html = build_html(golden)
+    # choices are buttons in a labelled nav; the section is an article that
+    # can take focus and is named by its heading
+    assert '<nav id="choices-nav" aria-label="Choices">' in html
+    assert 'b.type = "button"' in html
+    assert '<article id="section" tabindex="-1" aria-labelledby="section-heading">' in html
+    assert 'el("section").focus();' in html
+    # status changes reach a screen reader without stealing focus
+    assert 'id="announce" class="visually-hidden" role="status" aria-live="polite"' in html
+
+
+def test_player_honours_reduced_motion_in_both_css_and_the_turn(golden):
+    html = build_html(golden)
+    assert "@media (prefers-reduced-motion: reduce) { :root { --turn: 0ms; } }" in html
+    # the JS turn must collapse too, or the fade would still delay the render
+    assert 'matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 180' in html
+
+
+def test_player_measure_is_ch_based_so_it_reflows_and_zooms(golden):
+    html = build_html(golden)
+    assert "--measure: 66ch;" in html
+    assert "max-width: var(--measure);" in html
+
+
+def test_reading_mode_control_is_a_pressed_toggle_over_two_checked_ramps(golden):
+    from questfoundry.export.style import SHELF
+
+    html = build_html(golden)
+    assert 'data-mode="dark" aria-pressed="true"' in html
+    assert 'data-mode="light" aria-pressed="false"' in html
+    # both ramps are shipped, and both are the contrast-checked ones
+    assert SHELF.ramp.page in html and SHELF.light_ramp.page in html
+    assert ':root[data-mode="light"]' in html
+
+
+def test_choices_are_omitted_not_disabled_when_their_gate_is_unmet(golden):
+    """Runtime semantics (§1 rule 2): the reader must not see the
+    machinery. Nothing in the player renders an unavailable choice."""
+    html = build_html(golden)
+    assert "p.choices.filter(c => has(c.requires))" in html
+    # no element is ever rendered in a disabled state
+    assert "disabled" not in html.replace("never disabled", "")
+
+
+def test_art_carries_alt_and_reserves_its_ratio_before_loading(golden):
+    html = build_html(golden)
+    assert 'img.alt = art.alt || "";' in html
+    # the frame is reserved from the declared ratio, so nothing shifts mid-turn
+    assert 'img.style.aspectRatio = (art.ratio || "3:2").replace(":", " / ");' in html
+    assert '"1:1": "82%"' in html  # the screen placement table reaches the page
+
+
+def test_large_print_html_scales_type_and_narrows_the_measure(golden):
+    from questfoundry.export.style import screen_style
+
+    large = build_html(golden, style=screen_style("screen", large_print=True))
+    assert "--measure: 54ch;" in large
+    assert "--body: 24px;" in large
+    assert "http://" not in large and "https://" not in large  # still self-contained
+
+
+# -- image metadata at the persistent boundary --------------------------------
+
+
+def test_validate_rejects_art_without_alt_text(golden):
+    data = build_runtime(golden)
+    data["art"] = [
+        {"passage": "p-arrival", "image": "art/images/p-arrival.png",
+         "caption": "c", "alt": "   ", "ratio": "3:2"}
+    ]
+    (problem,) = validate_runtime(data)
+    assert "p-arrival" in problem and "no alt text" in problem and "PDF/UA-1" in problem
+
+
+def test_validate_rejects_a_ratio_outside_the_provider_portable_menu(golden):
+    data = build_runtime(golden)
+    data["art"] = [
+        {"passage": "p-arrival", "image": "art/images/p-arrival.png",
+         "caption": "c", "alt": "A lighthouse stands on iron stilts under a storm sky.",
+         "ratio": "16:9"}
+    ]
+    (problem,) = validate_runtime(data)
+    assert "16:9" in problem and "2:3, 3:2, 1:1" in problem
+
+
+def test_validate_checks_the_cover_on_the_same_terms(golden):
+    data = build_runtime(golden)
+    data["cover"] = {"image": "art/images/cover.png", "alt": "", "ratio": "2:3"}
+    assert any("cover entry has no alt text" in p for p in validate_runtime(data))
+
+
+def test_cover_alt_containing_a_quote_stays_inside_its_attribute(golden, tmp_path):
+    """Alt text is prose, and nothing forbids it a quotation mark ("a door
+    marked "keep out" in chalk"). The cover's alt is the one place it is
+    string-templated into HTML rather than assigned as a JS property, so a
+    text-content escape here would end the attribute early and spill the
+    rest of the sentence into the page as markup."""
+    import base64
+    import shutil
+
+    from questfoundry.project import load_project
+
+    dest = tmp_path / "keepers-bargain"
+    shutil.copytree(golden.root, dest)
+    (dest / "art" / "images").mkdir(parents=True, exist_ok=True)
+    (dest / "art" / "images" / "cover.png").write_bytes(
+        base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk"
+            "+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+        )
+    )
+    project = load_project(dest)
+    project.enrichment.cover.alt = (
+        'A lantern glows over a door marked "keep out" in chalk, <script>, & rain.'
+    )
+
+    html = build_html(project)
+    tag = html.split('<img id="cover-art"', 1)[1].split(">", 1)[0]
+    assert '"keep out"' not in tag  # the raw quotes never reach the attribute
+    assert "&quot;keep out&quot;" in tag
+    assert "&lt;script&gt;" in tag and "&amp; rain" in tag
+    # and the tag is the only thing between the delimiters: nothing spilled
+    assert tag.count('alt="') == 1

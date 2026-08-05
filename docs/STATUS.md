@@ -27,7 +27,21 @@ and PDF/UA-1 output. The contract's open decisions were **ratified by
 the author in-session 2026-07-30** (art-ratio menu bounded by provider
 support; alt + kind + document metadata; large print as a modifier;
 first build 1a Paperback + 1d Shelf) — see the plan's "Ratified
-decisions". Template work is next.
+decisions".
+
+**The first slice is built (2026-08-05).** Alt text runs end to end
+(brief → DRESS → runtime → both templates) and print compiles with
+`pdf_standards="ua-1"`, so the Typst compiler refuses a build with a
+missing alt or title. Ratio is per-image data (2:3/3:2/1:1) from the
+brief through `qf illustrate` to each style's placement rule. The shared
+layer is `export/style.py` — contrast-checked ramps whose failure blocks
+the build, the ratio/placement tables, large print as a modifier. Two
+styles ship: **1a Paperback** (`--style paperback`, now the default —
+A5, continuous flow, running heads carrying the spread's section range,
+turn-to numbers bold at the right margin) and **1d Shelf**
+(`--style screen` — title screen with the cover inset, reading-mode
+control, WCAG semantics as real elements). Durable rules: design doc
+[04 §7](design/04-export-and-play.md); mini-ADR **A26**.
 
 Earlier epics — prose quality at scale, POV sequences (2026-07-19),
 structural depth, cosmetic forks (2026-07-17) — are in the roadmap
@@ -35,17 +49,28 @@ Shipped section; their measurement remainders live in the BACKLOG.
 
 ## Immediate next steps
 
-Build the epic's first slice (contract: `plans/gamebook-layouts.md`):
+Continue the epic (contract: `plans/gamebook-layouts.md`, and its "What
+is built" section for what the first slice deliberately left):
 
-1. **Alt-text plumbing** — `alt` on the DRESS brief + runtime JSON art
-   entries + both templates; compile print with
-   `pdf_standards=("ua-1",)` (typst 0.15.0 supports it).
-2. **The shared style layer** — tokens (contrast-checked ramp) + Typst
-   template module + HTML template hooks; then **1a Paperback** (A5,
-   continuous flow, running heads) and **1d Shelf** (title screen,
-   reading modes, WCAG semantics) as the first two styles.
-3. **Ratio-as-data** — per-image ratio (menu: 2:3/3:2/1:1) through
-   brief → illustrate → runtime → placement rules.
+1. **The remaining directions as variations** — **1b Bound** (marginal
+   numerals, italic instruction blocks, Codex as a spoiler-safe
+   appendix) and **1c Compendium** (band cover, type-driven front
+   matter) for print; **1e Room** (`--style table`, cover filled to the
+   viewport) for HTML. The style layer is proven on 1a/1d, so each is a
+   record plus its own furniture.
+2. **axe-core in CI** over a handful of exported sections per style —
+   the one part of the WCAG contract still checked by reading rather
+   than by a machine.
+3. **The `image-generation-mcp` resolution adapter task**
+   ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337)):
+   until it lands, cloud covers sit below the 300dpi full-bleed floor
+   and take the inset fallback the export already reports.
+
+A **live styled export has not been run** — the slice was validated on
+the golden story with the placeholder image provider (both media driven
+end to end, the HTML in a real browser). Reading a full styled book is
+the natural next check, and needs no billed calls beyond a `qf
+illustrate` batch on an existing run.
 
 Still standing as later options: the roadmap "Next" candidates (weave
 linearization, M9 retrieval refinement) and the BACKLOG POV-sequences

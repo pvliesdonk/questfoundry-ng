@@ -316,6 +316,16 @@ def export(
     seed: int | None = typer.Option(
         None, "--seed", help="Section-numbering seed for 'pdf' (default: project.print_seed or 1)"
     ),
+    style: str | None = typer.Option(
+        None,
+        "--style",
+        help="Layout style for 'pdf' or 'html' (default: paperback / screen)",
+    ),
+    large_print: bool = typer.Option(
+        False,
+        "--large-print",
+        help="Large-print modifier: bigger type, more leading, a narrower measure",
+    ),
 ) -> None:
     """Export the story (design doc 04). The runtime JSON is canonical;
     HTML and Twee are derived from it."""
@@ -324,7 +334,23 @@ def export(
 
     from questfoundry.export.html import build_html
     from questfoundry.export.runtime_json import build_runtime, validate_runtime
+    from questfoundry.export.style import (
+        DEFAULT_PRINT_STYLE,
+        DEFAULT_SCREEN_STYLE,
+        StyleError,
+        print_style,
+        screen_style,
+    )
     from questfoundry.export.twee import build_twee
+
+    if fmt not in {"pdf", "html"}:
+        for flag, given in (("--style", style is not None), ("--large-print", large_print)):
+            if given:
+                console.print(
+                    f"[red]{flag} applies to the styled formats 'pdf' and 'html', "
+                    f"not {fmt!r} — drop the flag, or export pdf or html[/red]"
+                )
+                raise typer.Exit(2)
 
     project = load_project(directory)
     problems = validate_runtime(build_runtime(project))
@@ -338,7 +364,12 @@ def export(
         content = jsonlib.dumps(build_runtime(project), indent=2, ensure_ascii=False) + "\n"
         suffix = "json"
     elif fmt == "html":
-        content = build_html(project)
+        try:
+            chosen = screen_style(style or DEFAULT_SCREEN_STYLE, large_print=large_print)
+        except StyleError as problem:
+            console.print(f"[red]{problem}[/red]")
+            raise typer.Exit(2) from None
+        content = build_html(project, style=chosen)
         suffix = "html"
     elif fmt == "twee":
         if not project.ifid:
@@ -368,12 +399,19 @@ def export(
             meta["print_seed"] = print_seed
             meta_path.write_text(yamllib.safe_dump(meta, sort_keys=False, allow_unicode=True))
 
+        try:
+            chosen = print_style(style or DEFAULT_PRINT_STYLE, large_print=large_print)
+        except StyleError as problem:
+            console.print(f"[red]{problem}[/red]")
+            raise typer.Exit(2) from None
+
         images_dir = project.root / "art" / "images"
         book = build_gamebook(
             build_runtime(project),
             seed=print_seed,
             images_dir=images_dir if images_dir.is_dir() else None,
             root=project.root,
+            style=chosen,
         )
         lint_errors = lint_gamebook(book)
         if lint_errors:
@@ -384,7 +422,11 @@ def export(
         for warning in book.warnings:
             console.print(f"[yellow]{warning}[/yellow]")
 
+        # a non-default style is a second edition of the same book, so it gets
+        # its own filename instead of overwriting the first
         slug = project.name.lower().replace(" ", "-").replace("'", "")
+        if chosen.name != DEFAULT_PRINT_STYLE:
+            slug = f"{slug}-{chosen.name}"
         typ_target = out or (project.root / "exports" / f"{slug}.typ")
         pdf_target = typ_target.with_suffix(".pdf")
         typ_target.parent.mkdir(parents=True, exist_ok=True)
@@ -397,6 +439,8 @@ def export(
         raise typer.Exit(2)
 
     slug = project.name.lower().replace(" ", "-").replace("'", "")
+    if fmt == "html" and chosen.name != DEFAULT_SCREEN_STYLE:
+        slug = f"{slug}-{chosen.name}"
     target = out or (project.root / "exports" / f"{slug}.{suffix}")
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(content, encoding="utf-8")

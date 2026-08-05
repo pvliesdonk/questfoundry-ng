@@ -7,7 +7,16 @@ graph on the Project (like the Voice) and ships only through exports.
 
 from __future__ import annotations
 
+from typing import Literal, get_args
+
 from pydantic import BaseModel, ConfigDict
+
+# The provider-portable, book-shaped ratio menu (author ratification,
+# 2026-07-30): the intersection of what the image providers can actually
+# produce, narrowed to the ratios a page or a screen places well. A new
+# ratio is a menu change, gated on provider support — never a free string.
+Ratio = Literal["2:3", "3:2", "1:1"]
+RATIOS: tuple[Ratio, ...] = get_args(Ratio)
 
 
 class ArtDirection(BaseModel):
@@ -42,6 +51,14 @@ class IllustrationBrief(BaseModel):
     caption: str
     prompt: str  # image prompt; may reference only established visual facts
     entities: list[str] = []  # entity ids depicted (subset of the passage's)
+    # Accessibility metadata, not decoration: the caption is *beside* the
+    # picture (both sighted and screen readers get it), the alt text stands
+    # *for* it. PDF/UA-1 makes it mandatory — the Typst compiler refuses a
+    # build whose image has none. Defaulted so a project dressed before this
+    # field existed still loads; the export refuses to place an image without
+    # it, and DRESS refuses to propose one.
+    alt: str = ""
+    ratio: Ratio = "3:2"  # landscape suits a plate over prose in both media
 
 
 class CoverBrief(BaseModel):
@@ -55,6 +72,12 @@ class CoverBrief(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     prompt: str  # image prompt; established visual facts + art direction only
+    alt: str = ""  # see IllustrationBrief.alt; the cover is an image like any other
+
+
+COVER_RATIO: Ratio = "2:3"
+"""The cover's ratio is fixed, not per-image data: a book cover is portrait,
+and every style places it at the same geometry (design doc 04 §7)."""
 
 
 class CodexEntry(BaseModel):

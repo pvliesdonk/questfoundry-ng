@@ -26,13 +26,15 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from questfoundry.llm import ledger
-from questfoundry.models.enrichment import Enrichment, IllustrationBrief
+from questfoundry.models.enrichment import COVER_RATIO, Enrichment, IllustrationBrief
 from questfoundry.project.io import Project
 
 PROVIDERS = ("placeholder", "openai", "gemini")
 
-# Landscape suits an illustration sitting above prose in both the HTML
-# player and the print page; overridable via the `images:` block.
+# The ratio a brief carries when it predates the per-image menu; a current
+# brief always states its own (models/enrichment.py `Ratio`). The project's
+# `images:` block can still pin one ratio for the whole book — an author
+# override of DRESS's per-scene choice, not the default path.
 DEFAULT_ASPECT_RATIO = "3:2"
 
 REFORMULATE_SYSTEM = (
@@ -49,8 +51,9 @@ class IllustrateError(Exception):
 
 COVER_SLUG = "cover"
 
-# A cover is a book cover: portrait, not the landscape passage default.
-COVER_ASPECT_RATIO = "2:3"
+# A cover is a book cover: portrait, and fixed — every style places it at
+# the same geometry, so it is not per-image data like a plate's ratio.
+COVER_ASPECT_RATIO = COVER_RATIO
 
 # Backends that render embedded text cleanly get the title drawn INTO the art;
 # everything else (diffusion, the placeholder) has the title composited on with
@@ -118,7 +121,13 @@ def _cover_brief(cover) -> IllustrationBrief:
     direction + the cover scene. It is never added to `enrichment.briefs`, so
     it never leaks into the per-passage `art` list."""
     return IllustrationBrief(
-        passage=COVER_SLUG, priority=0, caption="Cover", prompt=cover.prompt, entities=[]
+        passage=COVER_SLUG,
+        priority=0,
+        caption="Cover",
+        prompt=cover.prompt,
+        alt=cover.alt,
+        ratio=COVER_RATIO,
+        entities=[],
     )
 
 
@@ -235,7 +244,11 @@ def build_service(project: Project, provider_override: str | None = None):
     service = ImageService(scratch_dir=scratch, default_provider=name)
     service.register_provider(name, provider)
 
-    kwargs: dict = {"aspect_ratio": config.get("aspect_ratio", DEFAULT_ASPECT_RATIO)}
+    # An `images.aspect_ratio` pins every render to one ratio (author
+    # override); left unset, each brief's own ratio is used per render.
+    kwargs: dict = {}
+    if config.get("aspect_ratio"):
+        kwargs["aspect_ratio"] = config["aspect_ratio"]
     if config.get("quality"):
         kwargs["quality"] = config["quality"]
     if config.get("model"):
@@ -284,9 +297,14 @@ def render_briefs(
         confirmed = confirm_batch is None
         for brief in briefs:
             is_cover = brief.passage == COVER_SLUG
-            # the cover is portrait; a text-capable backend draws the title
-            # into the art, else PIL composites it after the write
-            call_kwargs = {**kwargs, "aspect_ratio": COVER_ASPECT_RATIO} if is_cover else kwargs
+            call_kwargs = dict(kwargs)
+            if is_cover:
+                # a cover is portrait whatever else is configured
+                call_kwargs["aspect_ratio"] = COVER_ASPECT_RATIO
+            else:
+                # a plate takes the ratio DRESS chose for its scene, unless
+                # `images.aspect_ratio` pins one shape for the whole book
+                call_kwargs.setdefault("aspect_ratio", brief.ratio)
             prompt = assemble_prompt(brief, project.enrichment)
             if is_cover and text_capable:
                 prompt += _title_instruction(title)

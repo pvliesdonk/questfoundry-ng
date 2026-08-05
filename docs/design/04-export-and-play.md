@@ -29,10 +29,23 @@ The exported subset of the graph — the persistent boundary. Working data
   "flags": { "cartographer_knows": { "codeword": "CONFESSED" } },  // codeword only if projected
   "entities": { "character:keeper": { "base": {…}, "overlays": [ { "when": [...], "details": {…} } ] } },
   "codex":  [ { "entity": "character:keeper", "title": "…", "body": "…md…" } ],
-  "art":    [ { "passage": "p-017", "image": "images/017.png", "caption": "…" } ],
-  "cover":  { "image": "art/images/cover.png" }   // present only once the cover image is rendered
+  "art":    [ { "passage": "p-017", "image": "images/017.png", "caption": "…",
+                "alt": "…", "ratio": "3:2" } ],
+  "cover":  { "image": "art/images/cover.png", "alt": "…", "ratio": "2:3" }
+                                        // present only once the cover image is rendered
 }
 ```
+
+Every image entry carries two pieces of metadata besides its caption, and
+both are load-bearing rather than decorative (§7):
+
+- **`alt`** — what a reader who cannot see the picture is told *instead of*
+  it. The caption sits beside the picture and every reader gets it; the alt
+  text stands in for it, so it never repeats the caption. It is mandatory:
+  a PDF/UA-1 build cannot be produced without it, and `validate_runtime`
+  refuses an entry that has none.
+- **`ratio`** — the frame's shape, from the fixed menu `2:3 | 3:2 | 1:1`
+  (§7). A cover's ratio is stated rather than chosen: a cover is portrait.
 
 Runtime semantics (all players implement exactly this):
 
@@ -55,11 +68,11 @@ satisfiability, and ending reachability (I10/I13 at the export boundary).
 
 One self-contained file: embedded runtime JSON + a small dependency-free
 JS player + inlined (base64) images. Works from `file://`, no network, no
-build step. Features: an optional **cover screen** (the cover image — which
-carries its own title — with a "Begin" control) shown first when a `cover`
-is present,
-passage rendering, choice handling, a codex panel, an optional "journey so
-far" recap (list of passages visited), and a save/restore slot in
+build step. Features: a **title screen** (§7, style `screen`) setting the
+cover as an inset object — the image carries its own title — beside
+begin / continue / how-to-read and a reading-mode control; passage
+rendering, choice handling, a codex panel, an optional "journey so far"
+recap (list of passages visited), and a save/restore slot in
 `localStorage`. Deliberately minimal — anyone wanting more should consume
 the JSON or the Twee export.
 
@@ -112,16 +125,21 @@ The most format-specific pipeline, in five deterministic steps:
    `--seed`), so re-export is stable unless the graph changed. At tiny
    passage counts the constraints may be unsatisfiable; the best
    assignment is kept and the compromises reported as warnings.
-4. **Layout.** Typst template: an optional full-page **cover** (the cover
-   image, full-bleed — it already carries its own title, drawn by the image
-   backend or composited at illustrate time) when a `cover` is present, then
-   front matter (title page, how-to-play, codeword log page), numbered sections
-   with illustrations, choice lines in a consistent typographic form, codex
-   as an appendix ("The Keeper's Almanac"), and an ending index by ending id
-   (unnumbered-title only, to stay spoiler-safe).
+4. **Layout.** A Typst template chosen from the print styles in §7 (default
+   `paperback`): an optional full-page **cover** (the cover image — it
+   already carries its own title, drawn by the image backend or composited
+   at illustrate time) when a `cover` is present, then front matter (title
+   page, how-to-play, codeword log page), numbered sections with
+   illustrations, choice lines in a consistent typographic form, codex as
+   an appendix ("The Keeper's Almanac"), and an ending index by ending id
+   (unnumbered-title only, to stay spoiler-safe). The PDF is compiled with
+   `pdf_standards="ua-1"`, so the compiler refuses a document missing
+   alt text or a title.
 5. **Lint.** Every "turn to N" resolves; every codeword is granted before
    any test of it on every arc; section count matches passage count; no
-   passage orphaned by the shuffle.
+   passage orphaned by the shuffle; every placed illustration has alt text.
+   The last of those duplicates a check the compiler also makes, on
+   purpose: Typst's message names neither the section nor the brief to fix.
 
 ## 5. Play & QA tooling
 
@@ -183,3 +201,88 @@ Style-reference conditioning (feeding a rendered image back as a
 reference for the rest of the batch — the library's edit path supports
 it on both cloud providers) is the documented escalation if sample
 images show character drift; not built until a live run demands it.
+
+**Ratio** is per-image data, not a global setting: each brief carries one
+(§7's menu), and `qf illustrate` renders at it. An `images.aspect_ratio`
+in `project.yaml` pins one shape for the whole book — an author override
+of DRESS's per-scene choice. The cover is always portrait, whatever else
+is configured.
+
+## 7. Export styles and the accessibility contract
+
+The exports are **styled**, and the styles are selectable: `qf export pdf
+--style <name>` and `qf export html --style <name>`, with `--large-print`
+as a modifier over either. The style layer is
+[`export/style.py`](../../src/questfoundry/export/style.py); the furniture
+each style needs lives with its medium (`gamebook.py`, `html.py`),
+because what print and screen genuinely share is the contract below, not
+running heads and title screens. The directions come from the author's
+layout design project, imported as
+[`plans/gamebook-layouts.md`](../plans/gamebook-layouts.md).
+
+**Built:**
+
+| Style | Medium | Direction |
+|---|---|---|
+| `paperback` | print | 1a — A5, sections flow continuously, running heads carry the spread's section range, instructions hang-indent with the turn-to number bold at the right margin |
+| `screen` | HTML | 1d — the cover as an object on a shelf: a title screen with the cover inset, begin/continue/how-to-read, a reading-mode control |
+
+`bound` (1b) and `compendium` (1c) for print and `table` (1e) for HTML are
+designed but not built; asking for one names what is built rather than
+failing silently.
+
+### The contract every style obeys
+
+- **A contrast-checked colour ramp.** Five roles — `page`, `ink`, `muted`,
+  `accent`, `rule` — each measured against that style's own page colour
+  and each carrying the WCAG floor its use demands: body ink ≥ 7:1 (a whole
+  book is read at that size), text roles ≥ 4.5:1 (1.4.3), non-text
+  roles — borders, dividers, the focus ring — ≥ 3:1 (1.4.11). A ramp that
+  misses a floor **fails the build**, with the measured ratio, the floor,
+  and the direction to move. Light and dark screen modes are two ramps,
+  both checked.
+- **Never colour alone** (1.4.1). No role carries meaning: colour makes a
+  page legible, a word or a glyph carries the information. On paper, gates
+  are written into the sentence ("If you have RAVEN…") and codewords are
+  named, never merely tinted. *The contract's "locked choices stay visible
+  with the reason" clause is a print concern only:* paper cannot hide a
+  choice, so residue-variant lowering (§4 step 2) spells the gate out. A
+  digital runtime **hides** an unavailable choice (§1 rule 2) — the reader
+  must not see the machinery — so there is no locked state to label.
+- **Semantics and motion (HTML).** Choices are `<button>`s inside a
+  `<nav aria-label="Choices">`; the passage is an `<article>` named by its
+  heading that takes focus on every turn; status changes announce through
+  a polite live region rather than stealing focus; the turn's 180ms
+  cross-fade collapses to 0 under `prefers-reduced-motion`; the measure is
+  in `ch`, so it reflows to 320px and survives 200% zoom without a
+  horizontal scrollbar.
+- **PDF/UA-1 (print).** Compiled with `pdf_standards="ua-1"`, so the
+  compiler refuses a build with a missing alt text or document title.
+  Section numbers are real headings, so the PDF outline is the book's own
+  numbering and a screen reader can move section to section.
+- **Large print is a modifier, not a style** (author, 2026-07-30): type
+  scale, leading and measure over the style's own palette and furniture,
+  combinable with any of them. The measure narrows as the type grows, so
+  characters-per-line — the thing that actually governs readability —
+  stays near where the style set it. It writes its own edition
+  (`<slug>-<style>-large-print`) rather than overwriting the plain one.
+
+### Art geometry
+
+The ratio menu is `2:3` (portrait) | `3:2` (landscape) | `1:1` (square) —
+the **provider-portable** intersection, narrowed to what a page or a
+screen places well (author ratification, 2026-07-30: provider capability
+is the binding constraint). DRESS chooses one per scene; a new ratio is a
+menu change gated on provider support, never a free string. The cover is
+fixed at 2:3.
+
+Each style declares the width its placement gives each ratio, as a
+fraction of the text measure. A landscape plate sits at the measure; a
+portrait plate is capped so a tall frame leaves prose on the page with it.
+**Height always follows from the ratio** — letterboxing distorts, and a
+distorted plate is a bug. A ratio outside the menu (a hand-edited brief)
+is placed as landscape and reported as a warning; the page still builds.
+
+A **full-bleed** cover needs 1750×2625px (300dpi at A5 trim plus bleed).
+Below that floor the export places the same art **inset** and says so,
+rather than handing the printer an upscale to soften: the honest fallback.

@@ -1,6 +1,6 @@
 Write the image prompt for this story's COVER — the single illustration a reader
-sees before they have read a word. Return one field: prompt (the image
-generator's instructions for the cover art).
+sees before they have read a word. Return two fields: prompt (the image
+generator's instructions for the cover art) and alt (the alt text for it).
 
 The cover is ATMOSPHERIC and SPOILER-SAFE. It sets the mood and genre a reader is
 about to enter — like a back-cover blurb in a picture. Show setting, atmosphere,
@@ -24,5 +24,12 @@ Write the prompt as a single vivid description an image model can render directl
 the scene or emblem, the light and mood, and a line pinning the style/palette
 above. Leave room at the top or bottom of the frame for a title to be set later in
 the layout — describe the composition so it does not fill every corner. Name no
-specific plot beat; establish the world, not its outcome.
+specific plot beat; establish the world, not its outcome. The cover is portrait
+(2:3); compose for a tall frame.
+
+Then write `alt`: one sentence of {{ alt_min_words }}-{{ alt_max_words }} words telling a reader who
+cannot see the cover what is on it — subject, setting, mood, in that order. Start
+with the subject; do not write "Cover illustration of", "Image of" or "Picture of",
+which a screen reader announces already. It is spoiler-safe on the same terms as
+the prompt: describe the picture, never the story's outcome.
 {% include "_shared.j2" %}

@@ -530,3 +530,59 @@ def test_build_gamebook_rejects_images_without_root(golden_copy):
         build_gamebook(
             build_runtime(project), seed=1, images_dir=golden_copy / "art" / "images"
         )
+
+
+def _noisy_png(*, optimize: bool) -> bytes:
+    import io
+    import zlib
+
+    from PIL import Image
+
+    img = Image.new("RGB", (64, 64))
+    # deterministic non-uniform pixels so the deflate pass has real work
+    seed = zlib.crc32(b"qf").to_bytes(4, "big") * 1024
+    img.putdata([(r % 256, (r * 7) % 256, (r * 13) % 256) for r in seed])
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG", optimize=optimize, compress_level=1 if not optimize else 9)
+    return buffer.getvalue()
+
+
+def test_as_png_losslessly_recompresses_unoptimized_streams():
+    import io
+
+    from PIL import Image, ImageChops
+
+    from questfoundry.illustrate import _as_png
+
+    loose = _noisy_png(optimize=False)
+    out = _as_png(loose)
+    assert out.startswith(b"\x89PNG\r\n\x1a\n")
+    assert len(out) < len(loose)
+    diff = ImageChops.difference(Image.open(io.BytesIO(loose)), Image.open(io.BytesIO(out)))
+    assert diff.getbbox() is None  # identical pixels: the recompression is lossless
+
+    # an already-optimal stream is passed through, never grown
+    tight = _noisy_png(optimize=True)
+    assert len(_as_png(tight)) <= len(tight)
+
+
+def test_compress_images_quantizes_in_place_and_never_grows_a_file(tmp_path):
+    from PIL import Image
+
+    from questfoundry.illustrate import compress_images
+
+    images = tmp_path / "art" / "images"
+    images.mkdir(parents=True)
+    (images / "plate.png").write_bytes(_noisy_png(optimize=True))
+    Image.new("P", (8, 8)).save(images / "tiny.png", format="PNG", optimize=True)
+
+    report = compress_images(tmp_path)
+    assert [p.name for p, _, _ in report] == ["plate.png", "tiny.png"]
+
+    plate, before, after = report[0]
+    assert after < before  # quantized encode won and was written
+    reopened = Image.open(plate)
+    assert reopened.size == (64, 64)
+
+    _, tiny_before, tiny_after = report[1]
+    assert tiny_before == tiny_after  # already smaller than any quantized encode: kept

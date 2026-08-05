@@ -189,7 +189,13 @@ re-running the command costs zero API calls, and `--force` re-renders.
   batch continues.
 - **Bytes are normalized to PNG at the single write site** — providers
   return what they like (Gemini hands back JPEG) while everything
-  downstream keys on the `.png` contract.
+  downstream keys on the `.png` contract. The same site **losslessly
+  recompresses** every write (generators don't optimize their encodes;
+  the smaller of the two identical-pixel streams wins). **Lossy
+  compression is opt-in only**: `qf illustrate --compress` quantizes the
+  rendered images in place (adaptive palette), rewrites a file only when
+  that actually shrinks it, and renders nothing — the render path never
+  degrades pixels on its own.
 - **Consumers**: the runtime JSON `art` entries key on file presence
   (§1); the HTML player inlines rendered images as data URIs (the
   player stays one self-contained file) above the passage prose; the

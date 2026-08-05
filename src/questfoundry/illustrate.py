@@ -105,7 +105,7 @@ def _composite_title(path: Path, title: str) -> None:
         x = (w - draw.textlength(ln, font=font)) // 2
         od.text((x, y), ln, font=font, fill=(255, 255, 255, 255))
         y += lh
-    Image.alpha_composite(img, overlay).convert("RGB").save(path, format="PNG")
+    Image.alpha_composite(img, overlay).convert("RGB").save(path, format="PNG", optimize=True)
 
 
 def passage_slug(brief: IllustrationBrief) -> str:
@@ -354,17 +354,52 @@ def _as_png(data: bytes) -> bytes:
     """Everything downstream keys on `art/images/<slug>.png` — presence
     skip, runtime JSON, data-URI mime, typst decode — but providers
     return what they like (Gemini hands back JPEG; found live, M7 exit
-    run). Normalize at the only write site. PIL ships with the image
-    library's core."""
-    if data.startswith(_PNG_MAGIC):
-        return data
+    run), and none of them optimize their encodes. Normalize and
+    losslessly recompress at the only write site: re-encode through
+    Pillow's optimize pass and keep the smaller stream — identical
+    pixels either way. PIL ships with the image library's core."""
     import io
 
     from PIL import Image
 
     buffer = io.BytesIO()
-    Image.open(io.BytesIO(data)).save(buffer, format="PNG")
-    return buffer.getvalue()
+    Image.open(io.BytesIO(data)).save(buffer, format="PNG", optimize=True)
+    optimized = buffer.getvalue()
+    if data.startswith(_PNG_MAGIC) and len(data) <= len(optimized):
+        return data
+    return optimized
+
+
+def compress_images(root: Path, *, colors: int = 256) -> list[tuple[Path, int, int]]:
+    """Lossy in-place recompression of every rendered image (adaptive
+    palette quantization). Opt-in only (`qf illustrate --compress`) — the
+    render path never degrades pixels on its own. A file is rewritten
+    only when the quantized encode is actually smaller; the report
+    carries (path, bytes_before, bytes_after) either way, so a skipped
+    file shows before == after."""
+    import io
+
+    from PIL import Image
+
+    report: list[tuple[Path, int, int]] = []
+    for path in sorted((root / "art" / "images").glob("*.png")):
+        before = path.stat().st_size
+        img = Image.open(path)
+        if img.mode in ("RGBA", "LA") or "transparency" in img.info:
+            quantized = img.convert("RGBA").quantize(
+                colors=colors, method=Image.Quantize.FASTOCTREE
+            )
+        else:
+            quantized = img.convert("RGB").quantize(colors=colors)
+        buffer = io.BytesIO()
+        quantized.save(buffer, format="PNG", optimize=True)
+        data = buffer.getvalue()
+        after = before
+        if len(data) < before:
+            path.write_bytes(data)
+            after = len(data)
+        report.append((path, before, after))
+    return report
 
 
 def _log_image(

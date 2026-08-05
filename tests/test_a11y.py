@@ -66,7 +66,6 @@ def _scan(axe, page, state: str, violations: list[str]) -> None:
 
 def _player_page(browser, tmp_path: Path, style_name: str, *, large_print: bool = False):
     from questfoundry.project import load_project
-
     from tests.conftest import GOLDEN
 
     html = build_html(

@@ -822,3 +822,54 @@ def test_how_to_play_describes_the_furniture_the_reader_is_holding(golden_copy):
     assert "right-hand margin" not in bound
     assert "printed in the outer margin" in bound
     assert "beside the section number in the margin" in bound
+
+
+def test_a_band_cover_below_its_own_floor_insets_rather_than_upscaling(golden_copy):
+    """A band is not exempt from the resolution floor, only shorter than a
+    full page (it still runs the full page width). Below its floor it takes
+    the same honest fallback every treatment does — the art inset above the
+    same display type — and the warning names the band, not an inset page
+    it never had. (Review finding, PR #130.)"""
+    from questfoundry.export.style import COMPENDIUM, cover_floor, print_style
+
+    floor = cover_floor(COMPENDIUM)
+    _write_cover_png(golden_copy, size=(floor[0], floor[1] - 1))
+    project = load_project(golden_copy)
+    book = build_gamebook(
+        build_runtime(project),
+        seed=1,
+        images_dir=golden_copy / "art" / "images",
+        root=golden_copy,
+        style=print_style("compendium"),
+    )
+    assert 'fit: "cover"' not in book.typst  # the band is not filled
+    assert "art/images/cover.png" in book.typst  # the art is still placed
+    assert "A QUESTFOUNDRY GAMEBOOK" in book.typst  # over the same type
+    (warning,) = [w for w in book.warnings if w.startswith("cover:")]
+    assert "band" in warning and "compendium" in warning
+    assert f"{floor[0]}×{floor[1]}px" in warning
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def test_a_cover_that_clears_the_band_floor_but_not_a_page_still_bands(golden_copy):
+    """The floors differ per treatment, so the same file can be enough for
+    1c's band and not enough for 1a's full-bleed page."""
+    from questfoundry.export.style import COMPENDIUM, cover_floor, print_style
+
+    _write_cover_png(golden_copy, size=cover_floor(COMPENDIUM))
+    project = load_project(golden_copy)
+    runtime = build_runtime(project)
+    images = golden_copy / "art" / "images"
+
+    banded = build_gamebook(
+        runtime, seed=1, images_dir=images, root=golden_copy,
+        style=print_style("compendium"),
+    )
+    assert 'fit: "cover"' in banded.typst
+    assert [w for w in banded.warnings if w.startswith("cover:")] == []
+
+    paged = build_gamebook(
+        runtime, seed=1, images_dir=images, root=golden_copy,
+        style=print_style("paperback"),
+    )
+    assert [w for w in paged.warnings if w.startswith("cover:")]

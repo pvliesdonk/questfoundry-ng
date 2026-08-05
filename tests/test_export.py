@@ -299,7 +299,7 @@ def test_room_fills_the_viewport_with_the_cover_and_scrims_the_type(golden, tmp_
 
     project = _with_cover(golden, tmp_path)
     room = build_html(project, style=screen_style("table"))
-    assert '<div id="title-screen" data-variant="room">' in room
+    assert '<div id="title-screen" data-variant="room" data-scrim>' in room
     assert '<div id="scrim"></div>' in room
     assert 'position: fixed; inset: 0;\n       width: 100%; height: 100%; object-fit: cover' in room
 
@@ -348,7 +348,35 @@ def test_room_re_measures_its_controls_against_the_scrim_not_the_page(golden, tm
 
     project = _with_cover(golden, tmp_path)
     room = build_html(project, style=screen_style("table"))
-    override = room.split('#title-screen[data-variant="room"] #reading-mode button')[1]
+    override = room.split('#title-screen[data-scrim] #reading-mode button')[1]
     assert "color: #FFFFFF" in override.split("}")[0]
     # and the pressed state is never carried by colour alone (WCAG 1.4.1)
     assert "border-color: #F2EFE8" in override.split("}")[0]
+
+
+def test_a_room_with_no_cover_keeps_the_ramp_and_stays_legible_in_both_modes(golden):
+    """The scrim-measured literals are only valid over a scrim. Without a
+    cover there is none, so the room must fall back to the ramp's own
+    checked roles — forcing near-white type onto the light page would be a
+    1.03:1 contrast failure (found in review of PR #130)."""
+    from questfoundry.export.style import contrast_ratio, screen_style
+
+    style = screen_style("table")
+    room = build_html(golden, style=style)  # the golden has no rendered cover
+    # the element carries no scrim attribute and no scrim is drawn, so none
+    # of the scrim-measured rules can match
+    assert '<div id="title-screen" data-variant="room">' in room
+    assert "data-scrim>" not in room
+    assert '<div id="scrim">' not in room
+
+    # and no rule sets a forced literal outside a [data-scrim] selector, so a
+    # future edit cannot reintroduce near-white type on the light page
+    css = room.split("<style>")[1].split("</style>")[0]
+    for rule in css.split("}"):
+        if "#F2EFE8" in rule or "#D6D2C8" in rule or "#E6E2DA" in rule:
+            assert "[data-scrim]" in rule, rule
+
+    # what the type actually renders against, in both modes, clears the floor
+    for ramp in (style.ramp, style.light_ramp):
+        assert contrast_ratio(ramp.ink, ramp.page) >= 7.0
+        assert contrast_ratio(ramp.muted, ramp.page) >= 4.5

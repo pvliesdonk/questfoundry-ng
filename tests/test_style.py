@@ -9,6 +9,7 @@ the build rather than warning about it (AGENTS.md iron rule 6).
 from __future__ import annotations
 
 import dataclasses
+import math
 
 import pytest
 
@@ -152,9 +153,29 @@ def test_an_unknown_ratio_falls_back_to_landscape_rather_than_crashing():
 
 
 def test_full_bleed_floor_is_300dpi_at_a5_plus_bleed():
-    assert S.full_bleed_ok(S.FULL_BLEED_MIN_PIXELS)
-    assert not S.full_bleed_ok((S.FULL_BLEED_MIN_PIXELS[0] - 1, S.FULL_BLEED_MIN_PIXELS[1]))
-    assert not S.full_bleed_ok((S.FULL_BLEED_MIN_PIXELS[0], S.FULL_BLEED_MIN_PIXELS[1] - 1))
+    assert S.cover_floor(S.PAPERBACK) == S.FULL_BLEED_MIN_PIXELS
+    assert S.cover_fits(S.PAPERBACK, S.FULL_BLEED_MIN_PIXELS)
+    for short in ((-1, 0), (0, -1)):
+        size = (S.FULL_BLEED_MIN_PIXELS[0] + short[0], S.FULL_BLEED_MIN_PIXELS[1] + short[1])
+        assert not S.cover_fits(S.PAPERBACK, size)
+
+
+def test_a_band_is_shorter_than_a_full_bleed_page_but_no_less_dense():
+    """Cropping the frame does not reduce the density the printer renders it
+    at: the band still runs the full page width, so only its height scales.
+    (The layout plan first recorded the band as exempt from the floor; that
+    was wrong, and the reviewer of PR #130 was right to call it.)"""
+    full_w, full_h = S.FULL_BLEED_MIN_PIXELS
+    band_w, band_h = S.cover_floor(S.COMPENDIUM)
+    assert band_w == full_w  # same width, same density across the page
+    assert band_h == math.ceil(full_h * S.COMPENDIUM.cover_band_fraction) < full_h
+
+    # an image tall enough for the band but not a full page fits 1c, not 1a
+    banded = (full_w, band_h)
+    assert S.cover_fits(S.COMPENDIUM, banded)
+    assert not S.cover_fits(S.PAPERBACK, banded)
+    # and one too narrow fails both, however tall it is
+    assert not S.cover_fits(S.COMPENDIUM, (full_w - 1, full_h))
 
 
 # -- geometry (1b's marginal column) --------------------------------------------

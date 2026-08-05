@@ -94,17 +94,21 @@ _TEMPLATE = """<!DOCTYPE html>
   #scrim { position: fixed; inset: 0; z-index: -1;
        background: linear-gradient(180deg, rgb(6 8 10 / .62) 0%,
                    rgb(6 8 10 / .78) 55%, rgb(6 8 10 / .90) 100%); }
-  #title-screen[data-variant="room"] #title-block { color: #F2EFE8; }
-  #title-screen[data-variant="room"] button { color: #F2EFE8;
+
+  /* These literals are measured against the SCRIM, so every one of them is
+     scoped to [data-scrim] — the attribute is present only when a cover is
+     actually behind them. Without one the room falls back to the ramp, whose
+     roles are checked against the page they sit on; forcing near-white type
+     onto a light page instead would be a 1.03:1 contrast failure. */
+  #title-screen[data-scrim] #title-block { color: #F2EFE8; }
+  #title-screen[data-scrim] button { color: #F2EFE8;
        border-color: rgb(242 239 232 / .65); background: rgb(6 8 10 / .35); }
-  #title-screen[data-variant="room"] button:hover { border-color: #F2EFE8; }
-  #title-screen[data-variant="room"] .byline,
-  #title-screen[data-variant="room"] #reading-mode legend { color: #D6D2C8; }
-  #title-screen[data-variant="room"] #howto { color: #E6E2DA;
+  #title-screen[data-scrim] button:hover { border-color: #F2EFE8; }
+  #title-screen[data-scrim] .byline,
+  #title-screen[data-scrim] #reading-mode legend { color: #D6D2C8; }
+  #title-screen[data-scrim] #howto { color: #E6E2DA;
        border-color: rgb(242 239 232 / .45); background: rgb(6 8 10 / .45); }
-  /* the pressed control is measured against the scrim, not the reading
-     surface — the ramp's accent belongs to the page it was checked on */
-  #title-screen[data-variant="room"] #reading-mode button[aria-pressed="true"] {
+  #title-screen[data-scrim] #reading-mode button[aria-pressed="true"] {
        color: #FFFFFF; border-color: #F2EFE8; background: rgb(242 239 232 / .20); }
 
   #story-title { font-size: clamp(1.6rem, 6vw, 2.3rem); letter-spacing: .1em;
@@ -379,15 +383,16 @@ def _title_screen(cover: dict | None, style: ScreenStyle, title: str) -> str:
     art = _cover_img(cover)
     block = _TITLE_BLOCK.replace("__TITLE__", title)
     if style.title_screen == "room":
-        # the scrim only exists to sit over art; without a cover the room is
-        # just the reading surface, and a scrim over nothing would darken it
-        scrim = '  <div id="scrim"></div>\n' if art else ""
+        # The scrim only exists to sit over art; without a cover the room is
+        # just the reading surface, and a scrim over nothing would darken it.
+        # `data-scrim` is what gates the scrim-measured colours in the CSS, so
+        # a room with no cover keeps the ramp's own checked roles.
+        if not art:
+            return '<div id="title-screen" data-variant="room">\n' + block + "\n</div>"
         return (
-            '<div id="title-screen" data-variant="room">\n'
-            + (f"  {art}\n" if art else "")
-            + scrim
-            + block
-            + "\n</div>"
+            '<div id="title-screen" data-variant="room" data-scrim>\n'
+            f"  {art}\n"
+            '  <div id="scrim"></div>\n' + block + "\n</div>"
         )
     return (
         '<div id="title-screen" data-variant="shelf">\n'

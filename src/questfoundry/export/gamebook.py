@@ -29,10 +29,10 @@ import typst
 from questfoundry.export.style import (
     COVER_RATIO,
     DEFAULT_PRINT_STYLE,
-    FULL_BLEED_MIN_PIXELS,
     RATIOS,
     PrintStyle,
-    full_bleed_ok,
+    cover_fits,
+    cover_floor,
     image_width,
     print_style,
 )
@@ -558,36 +558,52 @@ def _render_section(s: Section, style: PrintStyle) -> str:
     return out + "#pagebreak()\n" if style.section_per_page else out
 
 
-# 1c crops its cover to a band across the top of the page and lets type
-# carry the rest — so the band is the one placement that may crop, and it
-# only needs to clear the floor across its own height.
-BAND_HEIGHT_FRACTION = 0.46
+def _band_cover(cover: Plate, style: PrintStyle, title: str, *, fits: bool) -> str:
+    """1c's cover page: art across the top, the title set beneath it in
+    display type. A band is not exempt from the resolution floor — it runs
+    the full page width, so it needs the same horizontal density and only
+    its own share of the height (`style.cover_floor`). Below that it takes
+    the same honest fallback every other treatment does: the art placed
+    inset, at a size it can actually fill, above the same type."""
+    path, alt = _typst_string(cover.path), _typst_string(cover.alt)
+    if fits:
+        art = (
+            "  #block(width: 100%, height: "
+            f"{round(style.cover_band_fraction * 100)}%, clip: true)[\n"
+            f'    #image({path}, width: 100%, height: 100%, fit: "cover", alt: {alt})\n'
+            "  ]\n"
+        )
+        top = "14mm"
+    else:
+        fraction = image_width(style.placement, cover.ratio)
+        art = (
+            f"  #block(width: 100%, inset: (x: {style.margin_inside}mm, top: 14mm))[\n"
+            f"    #align(center)[#image({path}, width: {fraction * 100}%, alt: {alt})]\n"
+            "  ]\n"
+        )
+        top = "8mm"
+    return (
+        "#page(margin: 0pt, header: none)[\n"
+        + art
+        + f"  #block(inset: (x: {style.margin_inside}mm, top: {top}))[\n"
+        f'    #text(size: 34pt, weight: "bold", fill: qf-ink, tracking: -0.01em)'
+        f"[{_escape_typst(title)}]\n"
+        "    #v(0.7em)\n"
+        "    #line(length: 34%, stroke: 2pt + qf-accent)\n"
+        "    #v(0.7em)\n"
+        '    #text(size: 11pt, tracking: 0.2em, fill: qf-muted)[A QUESTFOUNDRY GAMEBOOK]\n'
+        "  ]\n"
+        "]\n"
+    )
 
 
 def _cover_block(cover: Plate, style: PrintStyle, title: str, *, full_bleed: bool) -> str:
     """Full-bleed when the rendered file clears the 300dpi floor for this
     trim; otherwise the honest fallback — the same art inset on its own
-    page, never upscaled into softness (design plan, ratified decision 1).
-    1c takes neither: its cover is a top-anchored band with the title set
-    beneath it, which is a composition, not a fallback."""
+    page, never upscaled into softness (design plan, ratified decision 1)."""
     path, alt = _typst_string(cover.path), _typst_string(cover.alt)
     if style.cover_treatment == "band":
-        return (
-            "#page(margin: 0pt, header: none)[\n"
-            "  #block(width: 100%, height: "
-            f"{round(BAND_HEIGHT_FRACTION * 100)}%, clip: true)[\n"
-            f'    #image({path}, width: 100%, height: 100%, fit: "cover", alt: {alt})\n'
-            "  ]\n"
-            f"  #block(inset: (x: {style.margin_inside}mm, top: 14mm))[\n"
-            f'    #text(size: 34pt, weight: "bold", fill: qf-ink, tracking: -0.01em)'
-            f"[{_escape_typst(title)}]\n"
-            "    #v(0.7em)\n"
-            "    #line(length: 34%, stroke: 2pt + qf-accent)\n"
-            "    #v(0.7em)\n"
-            '    #text(size: 11pt, tracking: 0.2em, fill: qf-muted)[A QUESTFOUNDRY GAMEBOOK]\n'
-            "  ]\n"
-            "]\n"
-        )
+        return _band_cover(cover, style, title, fits=full_bleed)
     if full_bleed:
         return (
             "#page(margin: 0pt, header: none)[\n"
@@ -814,13 +830,17 @@ def build_gamebook(
             )
             warnings.extend(_plate_warnings(cover_plate, "the cover"))
             size = _image_size(cover_file)
-            cover_full_bleed = size is None or full_bleed_ok(size)
+            cover_full_bleed = size is None or cover_fits(style, size)
             if not cover_full_bleed:
+                floor = cover_floor(style)
+                # each treatment has its own floor and its own full-size form,
+                # so the warning names the one this style actually wanted
+                wanted = "band" if style.cover_treatment == "band" else "full-bleed page"
                 warnings.append(
                     f"cover: the rendered image is {size[0]}×{size[1]}px, below the "  # type: ignore[index]
-                    f"{FULL_BLEED_MIN_PIXELS[0]}×{FULL_BLEED_MIN_PIXELS[1]}px needed for "
-                    "a 300dpi full-bleed page — placed inset instead; re-render the cover "
-                    "at a higher resolution for a full-bleed front"
+                    f"{floor[0]}×{floor[1]}px needed for a 300dpi {wanted} in style "
+                    f"{style.name!r} — placed inset instead; re-render the cover at a "
+                    "higher resolution to get the full-size treatment"
                 )
 
     typst_source = _layout(

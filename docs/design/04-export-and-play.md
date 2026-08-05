@@ -305,6 +305,10 @@ portrait plate is capped so a tall frame leaves prose on the page with it.
 distorted plate is a bug. A ratio outside the menu (a hand-edited brief)
 is placed as landscape and reported as a warning; the page still builds.
 
-A **full-bleed** cover needs 1750×2625px (300dpi at A5 trim plus bleed).
-Below that floor the export places the same art **inset** and says so,
-rather than handing the printer an upscale to soften: the honest fallback.
+Every cover treatment carries a **resolution floor**, and below it the
+export places the same art **inset** and says so, rather than handing the
+printer an upscale to soften: the honest fallback. A full-bleed page needs
+1750×2625px (300dpi at A5 trim plus bleed). A band is *not exempt* — it
+still runs the full page width, so it needs the same horizontal density
+and only its own share of the height (`cover_floor`). Cropping a frame
+does not reduce the density the printer renders it at.

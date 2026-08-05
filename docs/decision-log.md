@@ -52,6 +52,23 @@ history; the decisions it recorded are captured below and in the design docs.
   Validated unbilled: all three print styles lint clean and compile under
   `ua-1`, both HTML styles driven in a real browser. **No live styled
   read yet** — that is STATUS's remaining check.
+  **Two defects found in review (PR #130), both in the places that had
+  stepped outside the checked machinery — the pattern is worth keeping:**
+  (a) 1e's scrim-measured CSS literals applied whenever the variant was
+  `room`, but the markup only draws a scrim when a cover exists, so a
+  cover-less room in light mode put near-white type on a near-white page
+  at **1.03:1**. Every literal is now scoped to a `data-scrim` attribute
+  the markup sets only alongside a real scrim, and a test asserts no rule
+  carrying one of those literals escapes that selector. (b) 1c's band
+  ignored the resolution floor entirely while `build_gamebook` still
+  emitted a warning claiming the art had been "placed inset instead" —
+  false for a style that never insets. **The reasoning recorded for that
+  exemption was simply wrong**: cropping the frame does not reduce the
+  density the printer renders it at, and a band runs the *full page
+  width*, so it needs the same horizontal density and only its own share
+  of the height. Floors are now per-treatment (`cover_floor`), the band
+  has the same honest inset fallback as everything else, and the warning
+  names the treatment it actually wanted.
 
 - **2026-08-05 (export styling: first slice built — alt text + UA-1,
   ratio-as-data, the shared style layer, 1a Paperback and 1d Shelf):**

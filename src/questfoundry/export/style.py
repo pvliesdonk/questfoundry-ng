@@ -16,6 +16,7 @@ dark screen style are held to the same standard without sharing a palette.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, replace
 from typing import Literal
 
@@ -216,6 +217,10 @@ class PrintStyle:
     section_head: SectionHead = "inline"
     instruction_form: InstructionForm = "hanging"
     cover_treatment: CoverTreatment = "full-bleed"
+    # Only meaningful when `cover_treatment` is "band": the fraction of the
+    # page height the band occupies. The layout sets it, and `cover_floor`
+    # scales the resolution floor by it — one number, two readers.
+    cover_band_fraction: float = 0.0
     front_matter: FrontMatter = "plain"
     # Only meaningful when `section_head` is "margin": the width of the
     # marginal column and the gutter between it and the text block. They
@@ -328,6 +333,7 @@ COMPENDIUM = PrintStyle(
     running_heads=True,
     section_per_page=False,
     cover_treatment="band",
+    cover_band_fraction=0.46,
     front_matter="heavy",
 )
 
@@ -434,16 +440,32 @@ def image_width(placement: dict[str, Placement], ratio: str) -> float:
 
 # -- art resolution -------------------------------------------------------------
 
-# 300dpi at A5 trim plus bleed. A full-bleed placement below this floor is
-# upscaled by the printer into visible softness, so the export falls back
-# to an inset plate instead — the honest fallback (design plan, "Ratified
-# decisions" §1), reported as a warning rather than silently shipped.
+# 300dpi at A5 trim plus bleed. A placement below its floor is upscaled by
+# the printer into visible softness, so the export falls back to an inset
+# plate instead — the honest fallback (design plan, "Ratified decisions"
+# §1), reported as a warning rather than silently shipped.
 FULL_BLEED_MIN_PIXELS = (1750, 2625)
 
 
-def full_bleed_ok(size: tuple[int, int]) -> bool:
-    width, height = size
-    return width >= FULL_BLEED_MIN_PIXELS[0] and height >= FULL_BLEED_MIN_PIXELS[1]
+def cover_floor(style: PrintStyle) -> tuple[int, int]:
+    """The pixels a cover needs for *this* style's treatment.
+
+    A band is not exempt from the floor, only shorter: it still runs the
+    full page width, so it needs the same horizontal density and only its
+    own fraction of the height. (An earlier note in the layout plan called
+    the band "the one placement that does not need the floor"; that was
+    wrong — cropping the frame does not reduce the density the printer
+    renders it at.)
+    """
+    width, height = FULL_BLEED_MIN_PIXELS
+    if style.cover_treatment == "band":
+        return width, math.ceil(height * style.cover_band_fraction)
+    return width, height
+
+
+def cover_fits(style: PrintStyle, size: tuple[int, int]) -> bool:
+    floor = cover_floor(style)
+    return size[0] >= floor[0] and size[1] >= floor[1]
 
 
 __all__ = [
@@ -467,8 +489,9 @@ __all__ = [
     "StyleError",
     "check_geometry",
     "check_ramp",
+    "cover_fits",
+    "cover_floor",
     "contrast_ratio",
-    "full_bleed_ok",
     "image_width",
     "large_print_of",
     "print_style",

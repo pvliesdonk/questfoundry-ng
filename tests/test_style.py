@@ -34,6 +34,8 @@ def test_parse_hex_rejects_a_non_hex_colour_with_the_way_out():
     ("name", "ramp"),
     [
         ("paperback", S.PAPERBACK_RAMP),
+        ("bound", S.BOUND_RAMP),
+        ("compendium", S.COMPENDIUM_RAMP),
         ("shelf dark", S.SHELF_RAMP),
         ("shelf light", S.SHELF_LIGHT_RAMP),
     ],
@@ -72,10 +74,26 @@ def test_print_style_refuses_to_ship_a_style_whose_ramp_fails(monkeypatch):
 
 
 def test_unknown_style_names_list_what_is_available():
-    with pytest.raises(S.StyleError, match="paperback"):
-        S.print_style("bound")  # 1b: designed, not built yet
-    with pytest.raises(S.StyleError, match="screen"):
-        S.screen_style("table")  # 1e: same
+    with pytest.raises(S.StyleError) as print_exc:
+        S.print_style("folio")
+    for built in ("paperback", "bound", "compendium"):
+        assert built in str(print_exc.value)
+
+    with pytest.raises(S.StyleError) as screen_exc:
+        S.screen_style("kiosk")
+    for built in ("screen", "table"):
+        assert built in str(screen_exc.value)
+
+
+def test_every_style_in_the_registry_is_selectable_and_passes_its_own_gates():
+    """Registering a style is what makes `--style` offer it, so every entry
+    must survive the ramp and geometry checks selection runs."""
+    for name in S.PRINT_STYLES:
+        assert S.print_style(name).name == name
+        S.print_style(name, large_print=True)  # the modifier must not break it
+    for name in S.SCREEN_STYLES:
+        assert S.screen_style(name).name == name
+        S.screen_style(name, large_print=True)
 
 
 def test_large_print_is_a_modifier_over_the_style_not_a_separate_style():
@@ -137,3 +155,41 @@ def test_full_bleed_floor_is_300dpi_at_a5_plus_bleed():
     assert S.full_bleed_ok(S.FULL_BLEED_MIN_PIXELS)
     assert not S.full_bleed_ok((S.FULL_BLEED_MIN_PIXELS[0] - 1, S.FULL_BLEED_MIN_PIXELS[1]))
     assert not S.full_bleed_ok((S.FULL_BLEED_MIN_PIXELS[0], S.FULL_BLEED_MIN_PIXELS[1] - 1))
+
+
+# -- geometry (1b's marginal column) --------------------------------------------
+
+
+def test_a_marginal_column_that_does_not_fit_its_margin_fails_the_build():
+    """A column wider than its margin silently overprints the page edge —
+    a defect no ramp check sees and no reader of the Typst notices."""
+    too_wide = dataclasses.replace(S.BOUND, margin_note_width=40.0, margin_note_gutter=6.0)
+    (problem,) = S.check_geometry(too_wide)
+    assert "46.0mm" in problem and "38.0mm" in problem
+    assert "widen the outer margin or narrow the column" in problem
+
+
+def test_a_margin_head_with_no_column_width_fails_the_build():
+    (problem,) = S.check_geometry(dataclasses.replace(S.BOUND, margin_note_width=0.0))
+    assert "margin_note_width is 0" in problem
+
+
+def test_geometry_is_clean_for_every_built_style():
+    for style in S.PRINT_STYLES.values():
+        assert S.check_geometry(style) == []
+
+
+def test_bound_narrows_the_measure_which_is_what_costs_it_pages():
+    """1b's wide outer margin is the direction, and the narrower measure is
+    its documented cost (~15% more pages than 1a)."""
+    assert S.BOUND.measure_mm < S.PAPERBACK.measure_mm
+    assert S.BOUND.margin_outside > S.BOUND.margin_inside  # the column's home
+
+
+def test_the_furniture_axes_actually_vary_across_the_built_print_styles():
+    """Each axis on PrintStyle earned its place by differing between styles;
+    an axis with one value across all three would be a knob, not a choice."""
+    styles = list(S.PRINT_STYLES.values())
+    for axis in ("section_head", "instruction_form", "cover_treatment", "front_matter"):
+        assert len({getattr(s, axis) for s in styles}) > 1, f"{axis} never varies"
+    assert len({s.title_screen for s in S.SCREEN_STYLES.values()}) > 1

@@ -2,10 +2,11 @@
 embedded runtime JSON + a small dependency-free JS player. Works from
 file://, no network, no build step.
 
-The style is **1d, "the cover as an object on a shelf"**: a title screen
-that sets the cover as an inset object with begin/continue/how-to-read
-beside it, then a calm reading view. Everything the shared accessibility
-contract asks for is structural rather than styled — choices are real
+Two directions share one reading view and differ only in the way in:
+**1d "shelf"** (`--style screen`) sets the cover as an inset object with
+begin/continue/how-to-read beside it; **1e "room"** (`--style table`)
+fills the viewport with it and sets the type over a scrim. Everything the
+shared accessibility contract asks for is structural rather than styled — choices are real
 buttons inside a labelled `nav`, the section is an `article` that takes
 focus on every turn, status changes announce through a polite live region,
 the measure is in `ch` so it reflows to 320px and survives 200% zoom, and
@@ -67,16 +68,45 @@ _TEMPLATE = """<!DOCTYPE html>
        padding: .6rem 1.1rem; cursor: pointer; }
   button:hover { border-color: var(--accent); }
 
-  /* -- title screen: the cover as an object standing on a shelf -- */
+  /* -- title screen (both directions share the block; the cover differs) -- */
   #title-screen { min-height: 100vh; display: flex; flex-direction: column;
        align-items: center; justify-content: center; gap: 1.4rem;
        padding: 2.5rem 1rem 3.5rem; text-align: center; }
+  #title-block { display: flex; flex-direction: column; align-items: center;
+       gap: 1.4rem; }
+
+  /* 1d "shelf": the cover as an object standing on a shelf */
   #shelf { display: flex; flex-direction: column; align-items: center; }
-  #cover-art { width: min(58vw, 17rem); aspect-ratio: __COVER_RATIO__;
+  #shelf #cover-art { width: min(58vw, 17rem); aspect-ratio: __COVER_RATIO__;
        object-fit: cover; border: 1px solid var(--rule); border-radius: 2px;
        box-shadow: 0 14px 28px rgb(0 0 0 / .38); }
   #shelf-line { width: min(72vw, 22rem); height: 1px; margin-top: .9rem;
        background: var(--rule); }
+
+  /* 1e "room": the cover filled to the viewport, the type set over it. The
+     scrim is not decoration — it is what puts the title and the controls
+     above their contrast floor on art the exporter has never seen, so it
+     stays in both reading modes. */
+  #title-screen[data-variant="room"] { position: relative; isolation: isolate; }
+  #title-screen[data-variant="room"] #cover-art { position: fixed; inset: 0;
+       width: 100%; height: 100%; object-fit: cover; object-position: center;
+       z-index: -2; }
+  #scrim { position: fixed; inset: 0; z-index: -1;
+       background: linear-gradient(180deg, rgb(6 8 10 / .62) 0%,
+                   rgb(6 8 10 / .78) 55%, rgb(6 8 10 / .90) 100%); }
+  #title-screen[data-variant="room"] #title-block { color: #F2EFE8; }
+  #title-screen[data-variant="room"] button { color: #F2EFE8;
+       border-color: rgb(242 239 232 / .65); background: rgb(6 8 10 / .35); }
+  #title-screen[data-variant="room"] button:hover { border-color: #F2EFE8; }
+  #title-screen[data-variant="room"] .byline,
+  #title-screen[data-variant="room"] #reading-mode legend { color: #D6D2C8; }
+  #title-screen[data-variant="room"] #howto { color: #E6E2DA;
+       border-color: rgb(242 239 232 / .45); background: rgb(6 8 10 / .45); }
+  /* the pressed control is measured against the scrim, not the reading
+     surface — the ramp's accent belongs to the page it was checked on */
+  #title-screen[data-variant="room"] #reading-mode button[aria-pressed="true"] {
+       color: #FFFFFF; border-color: #F2EFE8; background: rgb(242 239 232 / .20); }
+
   #story-title { font-size: clamp(1.6rem, 6vw, 2.3rem); letter-spacing: .1em;
        margin: .4rem 0 0; font-weight: normal; }
   .byline { color: var(--muted); font-style: italic; margin: 0; }
@@ -117,33 +147,7 @@ _TEMPLATE = """<!DOCTYPE html>
 </style>
 </head>
 <body>
-<div id="title-screen">
-  <div id="shelf">
-    __COVER_IMG__
-    <div id="shelf-line"></div>
-  </div>
-  <h1 id="story-title">__TITLE__</h1>
-  <p class="byline">a QuestFoundry gamebook</p>
-  <nav id="start-actions" aria-label="Start reading">
-    <button id="begin">Begin</button>
-    <button id="continue" hidden>Continue</button>
-    <button id="howto-open" aria-expanded="false" aria-controls="howto">How to read</button>
-  </nav>
-  <div id="howto" hidden>
-    <p>Each screen gives you a piece of the story and the moves open to you.
-       Choose one and the story turns to what follows.</p>
-    <p>Only the moves you can actually make are shown, so what you have done
-       earlier changes what you are offered later. There is nothing to track
-       yourself.</p>
-    <p>Your place is kept with <em>Save</em> and picked up again with
-       <em>Continue</em>. <em>Restart</em> begins the story over.</p>
-  </div>
-  <fieldset id="reading-mode">
-    <legend>Reading mode</legend>
-    <button data-mode="dark" aria-pressed="true">Dark</button>
-    <button data-mode="light" aria-pressed="false">Light</button>
-  </fieldset>
-</div>
+__TITLE_SCREEN__
 
 <main id="reader" hidden>
   <article id="section" tabindex="-1" aria-labelledby="section-heading">
@@ -334,12 +338,64 @@ def _codex_panel(codex: list[dict]) -> str:
 
 
 def _cover_img(cover: dict | None) -> str:
-    """The cover as an inset object on the shelf. Absent, the title screen
-    still stands — type carries it, which is also the honest fallback for a
-    story whose cover has not been rendered yet."""
+    """Absent a cover, the title screen still stands — type carries it,
+    which is also the honest fallback for a story whose cover has not been
+    rendered yet."""
     if not cover:
         return ""
     return f'<img id="cover-art" src="" alt="{_escape_attr(cover.get("alt", ""))}">'
+
+
+_TITLE_BLOCK = """  <div id="title-block">
+    <h1 id="story-title">__TITLE__</h1>
+    <p class="byline">a QuestFoundry gamebook</p>
+    <nav id="start-actions" aria-label="Start reading">
+      <button id="begin">Begin</button>
+      <button id="continue" hidden>Continue</button>
+      <button id="howto-open" aria-expanded="false" aria-controls="howto">How to read</button>
+    </nav>
+    <div id="howto" hidden>
+      <p>Each screen gives you a piece of the story and the moves open to you.
+         Choose one and the story turns to what follows.</p>
+      <p>Only the moves you can actually make are shown, so what you have done
+         earlier changes what you are offered later. There is nothing to track
+         yourself.</p>
+      <p>Your place is kept with <em>Save</em> and picked up again with
+         <em>Continue</em>. <em>Restart</em> begins the story over.</p>
+    </div>
+    <fieldset id="reading-mode">
+      <legend>Reading mode</legend>
+      <button data-mode="dark" aria-pressed="true">Dark</button>
+      <button data-mode="light" aria-pressed="false">Light</button>
+    </fieldset>
+  </div>"""
+
+
+def _title_screen(cover: dict | None, style: ScreenStyle, title: str) -> str:
+    """The two ways in. Both wrap the same block of type and controls — the
+    direction is entirely how the cover is set (design doc 04 §7). The title
+    is substituted here rather than left for the template's single pass,
+    which never revisits what it has already inserted."""
+    art = _cover_img(cover)
+    block = _TITLE_BLOCK.replace("__TITLE__", title)
+    if style.title_screen == "room":
+        # the scrim only exists to sit over art; without a cover the room is
+        # just the reading surface, and a scrim over nothing would darken it
+        scrim = '  <div id="scrim"></div>\n' if art else ""
+        return (
+            '<div id="title-screen" data-variant="room">\n'
+            + (f"  {art}\n" if art else "")
+            + scrim
+            + block
+            + "\n</div>"
+        )
+    return (
+        '<div id="title-screen" data-variant="shelf">\n'
+        "  <div id=\"shelf\">\n"
+        f"    {art}\n"
+        '    <div id="shelf-line"></div>\n'
+        "  </div>\n" + block + "\n</div>"
+    )
 
 
 def build_html(project: Project, *, style: ScreenStyle | None = None) -> str:
@@ -369,7 +425,7 @@ def build_html(project: Project, *, style: ScreenStyle | None = None) -> str:
         "__TITLE__": title,
         "__STORY__": story,
         "__CODEX__": _codex_panel(data["codex"]),
-        "__COVER_IMG__": _cover_img(cover),
+        "__TITLE_SCREEN__": _title_screen(cover, style, title),
         "__COVER_RATIO__": (cover["ratio"] if cover else COVER_RATIO).replace(":", " / "),
         "__RATIO_WIDTH__": json.dumps(ratio_widths),
         "__PLATE_WIDTH__": ratio_widths["3:2"],

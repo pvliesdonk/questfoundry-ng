@@ -1,9 +1,10 @@
 # Gamebook layouts — styled print & HTML export (Design Input)
 
-> Status: **CURRENT EPIC (author call, 2026-07-30) — first slice
-> BUILT (2026-08-05): alt text + PDF/UA-1, ratio-as-data, the shared
-> style layer, 1a Paperback and 1d Shelf. See "What is built" below for
-> what shipped and what is deliberately still open.** The layout
+> Status: **CURRENT EPIC (author call, 2026-07-30) — all five layout
+> directions BUILT (2026-08-05): 1a Paperback, 1b Bound, 1c Compendium,
+> 1d Shelf and 1e Room, over the alt-text/UA-1 spine, ratio-as-data and
+> the shared style layer. See "What is built" below for what shipped and
+> what is deliberately still open.** The layout
 > directions come from the
 > author's Claude Design project ("Questfoundry gamebook layout
 > directions", project `5147ccb0-3922-4b92-84c4-a55032396ad0`),
@@ -190,6 +191,25 @@ Shipped in one slice, because the three next-steps were one seam:
 - **1a Paperback** and **1d Shelf**, selectable with `--style`, plus
   `--large-print` writing its own edition.
 
+Then the remaining three directions (same day), which the style layer
+absorbed as records plus their own furniture — no new machinery:
+
+- **1b Bound** (`--style bound`): a wide outer margin carrying the section
+  numerals and their codewords (a `place` that swaps sides with the
+  binding, so it is always the *outer* margin), indented italic
+  instruction blocks with the number inline.
+- **1c Compendium** (`--style compendium`): the cover cropped to a
+  top-anchored band with display type beneath it; heavy front matter. Its
+  cover page sets the title in type, so it does not also get a title page.
+- **1e Room** (`--style table`): the cover filled to the viewport with the
+  type over a scrim, sharing 1d's reading view exactly.
+
+Four furniture axes on `PrintStyle` and one on `ScreenStyle` came out of
+this — each because the built styles *differ* on it, none speculative.
+Two checks were added with them: `check_geometry` fails a build whose
+marginal column does not fit its margin, and the how-to-play page now
+describes the edition in hand rather than always describing 1a.
+
 Decisions this build made (agent, not author-ratified):
 
 1. **The ramp is a style token; the DRESS-picks-hue idea is not built.**
@@ -216,12 +236,24 @@ Decisions this build made (agent, not author-ratified):
    whole book), so it has never bound in practice; left unbuilt rather
    than approximated. Filed in the BACKLOG.
 
-Still open from the contract: **1b Bound / 1c Compendium / 1e Room**
-(asking for one names what is built), the **axe-core CI pass** over
-exported HTML, and the **image-generation-mcp resolution adapter task**
+Two further decisions came with the remaining styles (agent):
+
+5. **1e offers both reading modes, but its title screen is always
+   scrimmed.** The reading view is text on a page colour, so light mode is
+   as valid there as in 1d. Over a cover the exporter has never seen,
+   though, only a scrim can hold the contrast floor — and a role checked
+   against the *page* stops being valid over it, which is why 1e
+   re-measures its pressed control rather than reusing `--accent`.
+6. **1c's cover page replaces its title page** rather than preceding one.
+   The band sets the title in display type; a title page after it would
+   say the same thing twice on facing pages.
+
+Still open from the contract: the **axe-core CI pass** over exported HTML,
+and the **image-generation-mcp resolution adapter task**
 ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
 — until that lands, cloud renders sit below the full-bleed floor and take
-the inset fallback.
+the inset fallback (1c is unaffected: its band crops by design, so it is
+the one placement that does not need the floor).
 
 ## Imported artifacts
 

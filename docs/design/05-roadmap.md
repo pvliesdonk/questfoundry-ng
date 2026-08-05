@@ -128,18 +128,19 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   document metadata, large-print modifier, first build 1a + 1d) — see
   the plan's "Ratified decisions".
 
-  **First slice built 2026-08-05.** Alt text end-to-end with PDF/UA-1
-  compilation, ratio-as-data (2:3/3:2/1:1) from brief to placement, the
-  shared style layer (contrast-checked ramps whose failure blocks the
-  build, per-style placement tables, large print as a modifier), and the
-  first two styles: **1a Paperback** (`--style paperback`, the default,
-  replacing the hard-coded 130×200 one-section-per-page layout) and
-  **1d Shelf** (`--style screen`). Durable rules: design doc
+  **All five directions built 2026-08-05.** Alt text end-to-end with
+  PDF/UA-1 compilation, ratio-as-data (2:3/3:2/1:1) from brief to
+  placement, the shared style layer (contrast-checked ramps and a
+  marginal-column geometry check, both build-failing; per-style placement
+  tables; large print as a modifier), and the styles themselves: **1a
+  Paperback** (`--style paperback`, the default, replacing the hard-coded
+  130×200 one-section-per-page layout), **1b Bound**, **1c Compendium**,
+  **1d Shelf** and **1e Room**. Durable rules: design doc
   [04 §7](04-export-and-play.md); mini-ADR **A26**. Remaining in this
-  epic: 1b Bound, 1c Compendium, 1e Room, the axe-core CI pass, and the
-  `image-generation-mcp` resolution adapter task
+  epic: the axe-core CI pass, the `image-generation-mcp` resolution
+  adapter task
   ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
-  that full-bleed covers wait on.
+  that full-bleed covers wait on, and a live styled read.
 
 ## Next
 

@@ -71,13 +71,15 @@ screen, opening section, and a handful of turns, the large-print
 modifier, and a planted-violation self-test; the job fails rather than
 skips when the browser is missing.
 
-A **live styled export has not been run.** Every style was validated on
-the golden story with the placeholder image provider: all three print
-styles lint clean and compile under PDF/UA-1, and both HTML styles were
-driven in a real browser. What that cannot show is how a style holds a
-*whole* book with real art — reading one is the natural next check, and
-it needs no billed calls beyond a `qf illustrate` batch on an existing
-run.
+The **live styled export has now been run (2026-08-05)** — no billed
+calls needed: `examples/closed-circle-oss` already carried 20 rendered
+Gemini plates + a cover. Its briefs predate the alt contract, so the
+UA-1 gate refused the build until every brief (and the cover) got alt
+text — written by hand against the actual images, which is exactly the
+gate working. All five styles then exported clean with real art; the
+below-floor Gemini cover took the documented inset fallback in every
+print style (the #337 dependency behaving as designed). The styled set
+was delivered to the author; their read verdict is pending.
 
 After that the epic is done, and the roadmap "Next" candidates (weave
 linearization, M9 retrieval refinement) are the open field.

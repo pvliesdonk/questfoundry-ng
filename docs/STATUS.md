@@ -51,6 +51,11 @@ Still standing as later options: the roadmap "Next" candidates (weave
 linearization, M9 retrieval refinement) and the BACKLOG POV-sequences
 live A/B.
 
+GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
+tracked here and in the BACKLOG.
+
+## Recently shipped (see roadmap "Shipped" + the decision log)
+
 **Register conformance: BUILT AND VALIDATED (2026-08-05).** The
 star-swabber run (medium, kimi-k2.6, corpus-grounded) completed
 DREAM→DRESS gate-clean but the author read the prose as over-stylized;
@@ -65,11 +70,6 @@ the run as the **register exemplar** — the full validation record with
 exemplar passages is `plans/register-conformance.md` §10. A staccato
 rhythm defect found during the read was tuned with one clause (PR
 #127, "plain does not mean short").
-
-GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
-tracked here and in the BACKLOG.
-
-## Recently shipped (see roadmap "Shipped" + the decision log)
 
 M0–M8 complete, plus the two 2026-07-19-shipped epics **prose quality at
 scale** and **POV sequences**, and the two 2026-07-17-shipped epics

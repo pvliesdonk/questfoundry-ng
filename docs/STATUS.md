@@ -29,18 +29,24 @@ support; alt + kind + document metadata; large print as a modifier;
 first build 1a Paperback + 1d Shelf) — see the plan's "Ratified
 decisions".
 
-**The first slice is built (2026-08-05).** Alt text runs end to end
-(brief → DRESS → runtime → both templates) and print compiles with
+**All five layout directions are built (2026-08-05).** Alt text runs end
+to end (brief → DRESS → runtime → every template) and print compiles with
 `pdf_standards="ua-1"`, so the Typst compiler refuses a build with a
 missing alt or title. Ratio is per-image data (2:3/3:2/1:1) from the
 brief through `qf illustrate` to each style's placement rule. The shared
 layer is `export/style.py` — contrast-checked ramps whose failure blocks
-the build, the ratio/placement tables, large print as a modifier. Two
-styles ship: **1a Paperback** (`--style paperback`, now the default —
-A5, continuous flow, running heads carrying the spread's section range,
-turn-to numbers bold at the right margin) and **1d Shelf**
-(`--style screen` — title screen with the cover inset, reading-mode
-control, WCAG semantics as real elements). Durable rules: design doc
+the build, a geometry check that does the same for a marginal column, the
+ratio/placement tables, large print as a modifier.
+
+Print: **1a Paperback** (`--style paperback`, the default — A5,
+continuous flow, running heads carrying the spread's section range,
+turn-to numbers bold at the right margin), **1b Bound** (`--style bound` —
+numerals and codewords in a wide outer margin that swaps sides with the
+binding, italic instruction blocks), **1c Compendium**
+(`--style compendium` — banded cover, heavy type carrying the front
+matter). HTML: **1d Shelf** (`--style screen`) and **1e Room**
+(`--style table` — the cover filled to the viewport under a scrim),
+sharing one reading view. Durable rules: design doc
 [04 §7](design/04-export-and-play.md); mini-ADR **A26**.
 
 Earlier epics — prose quality at scale, POV sequences (2026-07-19),
@@ -49,32 +55,31 @@ Shipped section; their measurement remainders live in the BACKLOG.
 
 ## Immediate next steps
 
-Continue the epic (contract: `plans/gamebook-layouts.md`, and its "What
-is built" section for what the first slice deliberately left):
+What is left of the epic (contract: `plans/gamebook-layouts.md`, and its
+"What is built" section for what the build deliberately left):
 
-1. **The remaining directions as variations** — **1b Bound** (marginal
-   numerals, italic instruction blocks, Codex as a spoiler-safe
-   appendix) and **1c Compendium** (band cover, type-driven front
-   matter) for print; **1e Room** (`--style table`, cover filled to the
-   viewport) for HTML. The style layer is proven on 1a/1d, so each is a
-   record plus its own furniture.
-2. **axe-core in CI** over a handful of exported sections per style —
-   the one part of the WCAG contract still checked by reading rather
+1. **axe-core in CI** over a handful of exported sections per HTML style
+   — the one part of the WCAG contract still checked by reading rather
    than by a machine.
-3. **The `image-generation-mcp` resolution adapter task**
+2. **The `image-generation-mcp` resolution adapter task**
    ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337)):
    until it lands, cloud covers sit below the 300dpi full-bleed floor
-   and take the inset fallback the export already reports.
+   and take the inset fallback the export already reports. (1c's floor
+   is lower, since its band is shorter than a full page — but it is
+   **not** exempt: a band still runs the full page width.)
 
-A **live styled export has not been run** — the slice was validated on
-the golden story with the placeholder image provider (both media driven
-end to end, the HTML in a real browser). Reading a full styled book is
-the natural next check, and needs no billed calls beyond a `qf
-illustrate` batch on an existing run.
+A **live styled export has not been run.** Every style was validated on
+the golden story with the placeholder image provider: all three print
+styles lint clean and compile under PDF/UA-1, and both HTML styles were
+driven in a real browser. What that cannot show is how a style holds a
+*whole* book with real art — reading one is the natural next check, and
+it needs no billed calls beyond a `qf illustrate` batch on an existing
+run.
 
-Still standing as later options: the roadmap "Next" candidates (weave
-linearization, M9 retrieval refinement) and the BACKLOG POV-sequences
-live A/B.
+After that the epic is done, and the roadmap "Next" candidates (weave
+linearization, M9 retrieval refinement) are the open field.
+
+Also still standing: the BACKLOG POV-sequences live A/B.
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.

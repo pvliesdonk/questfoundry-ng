@@ -29,10 +29,10 @@ import typst
 from questfoundry.export.style import (
     COVER_RATIO,
     DEFAULT_PRINT_STYLE,
-    FULL_BLEED_MIN_PIXELS,
     RATIOS,
     PrintStyle,
-    full_bleed_ok,
+    cover_fits,
+    cover_floor,
     image_width,
     print_style,
 )
@@ -351,6 +351,91 @@ def _codeword_log(n: int) -> str:
     return f"= Codeword Log\n{lines}\n"
 
 
+def _section_head(style: PrintStyle) -> str:
+    """The section head, in the two forms the directions take. Either way it
+    is a real `heading`, so the PDF outline is the book's own numbering and
+    a screen reader can move section to section — 1b only moves where that
+    heading is *drawn*, out into the margin beside the text block."""
+    if style.section_head != "margin":
+        return f"""
+#show heading.where(level: 1): it => block(above: 1.5em, below: 0.85em)[
+  #set text(size: {style.section_size}pt, weight: "bold", fill: qf-accent, tracking: 0.08em)
+  #it.body
+]
+
+#let qf-section(n, marginalia, body) = {{
+  [#metadata(n)<qf-section>]
+  heading(level: 1)[#n]
+  body
+}}
+"""
+    # The marginal column sits in the OUTER margin, so it swaps sides with
+    # the binding: right on a recto, left on a verso.
+    offset = style.margin_note_width + style.margin_note_gutter
+    return f"""
+#let qf-margin(dy, body) = context {{
+  let recto = calc.odd(here().page())
+  place(
+    if recto {{ right }} else {{ left }},
+    dx: if recto {{ {offset}mm }} else {{ -{offset}mm }},
+    dy: dy,
+    box(
+      width: {style.margin_note_width}mm,
+      align(if recto {{ left }} else {{ right }}, body),
+    ),
+  )
+}}
+
+// `place` takes the numeral out of the flow, so the block contributes only
+// the space that separates one section from the last. `width: 100%` is
+// load-bearing: a block sized to its contents collapses to zero here (its
+// only child is out of flow), and the placement would then be measured
+// from the text block's edge instead of the measure's.
+#show heading.where(level: 1): it => block(width: 100%, above: 1.7em, below: 0.5em)[
+  #qf-margin(0pt)[
+    #text(size: {style.section_size}pt, weight: "bold", fill: qf-accent)[#it.body]
+  ]
+]
+
+// The codewords join the numeral in the margin rather than interrupting the
+// prose; the offset clears the numeral's own line.
+#let qf-section(n, marginalia, body) = {{
+  [#metadata(n)<qf-section>]
+  heading(level: 1)[#n]
+  if marginalia != none {{
+    qf-margin({round(style.section_size * 1.25, 1)}pt)[
+      #set text(size: 8pt, fill: qf-accent)
+      #set par(justify: false, leading: 0.5em)
+      #marginalia
+    ]
+  }}
+  body
+}}
+"""
+
+
+def _instruction_form(style: PrintStyle) -> str:
+    if style.instruction_form == "italic-block":
+        # 1b: an indented italic block, the number inline at full size — the
+        # instructions read as a set-apart voice rather than a list.
+        return """
+#let qf-instruction(body, number) = block(
+  width: 100%, above: 0.95em, inset: (left: 1.6em), breakable: false,
+)[
+  #set par(justify: false, hanging-indent: 0em)
+  #emph[#body#if number != none [ #text(weight: "bold", fill: qf-accent)[#number].]]
+]
+"""
+    # 1a/1c: hanging indent, the section named at the right margin in bold —
+    # the reader's eye finds the number without reading the sentence again.
+    return """
+#let qf-instruction(body, number) = block(width: 100%, above: 1.15em, breakable: false)[
+  #set par(hanging-indent: 1.4em, justify: false)
+  #body#if number != none [ #box(width: 1fr) #text(weight: "bold", fill: qf-accent)[#number]]
+]
+"""
+
+
 def _preamble(style: PrintStyle, title: str) -> str:
     """Page geometry, type, colour roles and the reusable furniture, all
     read off the style record. The running head is a `context` block: it
@@ -411,25 +496,8 @@ def _preamble(style: PrintStyle, title: str) -> str:
 #set text(size: {style.body_size}pt, fill: qf-ink, lang: "en")
 #set par(justify: true, leading: {style.leading}em)
 {head}
-// A section head is a real heading, so the PDF outline is the book's own
-// numbering and a screen reader can jump section to section.
-#show heading.where(level: 1): it => block(above: 1.5em, below: 0.85em)[
-  #set text(size: {style.section_size}pt, weight: "bold", fill: qf-accent, tracking: 0.08em)
-  #it.body
-]
-
-#let qf-section(n, body) = {{
-  [#metadata(n)<qf-section>]
-  heading(level: 1)[#n]
-  body
-}}
-
-// Hanging indent, and the section named at the right margin in bold: the
-// reader's eye finds the number without reading the sentence again.
-#let qf-instruction(body, number) = block(width: 100%, above: 1.15em, breakable: false)[
-  #set par(hanging-indent: 1.4em, justify: false)
-  #body#if number != none [ #box(width: 1fr) #text(weight: "bold", fill: qf-accent)[#number]]
-]
+{_section_head(style)}
+{_instruction_form(style)}
 
 // A plate sits at the measure (or a fraction of it for a tall frame); the
 // height always follows the ratio, so nothing is ever letterboxed.
@@ -456,6 +524,10 @@ def _render_plate(plate: Plate, style: PrintStyle) -> str:
 
 
 def _render_section(s: Section, style: PrintStyle) -> str:
+    # 1b hoists the codewords into the marginal column beside the numeral;
+    # the other styles keep them in the text block, above the instructions.
+    in_margin = style.section_head == "margin"
+    marginalia = "none"
     body: list[str] = []
     if s.illustration:
         body.append(_render_plate(s.illustration, style))
@@ -471,23 +543,67 @@ def _render_section(s: Section, style: PrintStyle) -> str:
         body.append("#align(center)[See the Ending Index.]")
     else:
         if s.hoisted_lines:
-            body.append("\n\n".join(s.hoisted_lines))
-            body.append("")
+            if in_margin:
+                marginalia = "[" + "\n\n".join(s.hoisted_lines) + "]"
+            else:
+                body.append("\n\n".join(s.hoisted_lines))
+                body.append("")
         for line in s.choice_lines:
             # the parenthesised call form: inside a markup content block a
             # bare `[7]` is the literal characters, not a nested block
             number = "none" if line.number is None else f"[{line.number}]"
             body.append(f"#qf-instruction([{line.text}], {number})")
     rendered = "\n".join(body)
-    out = f"#qf-section({s.number})[\n{rendered}\n]\n"
+    out = f"#qf-section({s.number}, {marginalia})[\n{rendered}\n]\n"
     return out + "#pagebreak()\n" if style.section_per_page else out
 
 
-def _cover_block(cover: Plate, style: PrintStyle, *, full_bleed: bool) -> str:
+def _band_cover(cover: Plate, style: PrintStyle, title: str, *, fits: bool) -> str:
+    """1c's cover page: art across the top, the title set beneath it in
+    display type. A band is not exempt from the resolution floor — it runs
+    the full page width, so it needs the same horizontal density and only
+    its own share of the height (`style.cover_floor`). Below that it takes
+    the same honest fallback every other treatment does: the art placed
+    inset, at a size it can actually fill, above the same type."""
+    path, alt = _typst_string(cover.path), _typst_string(cover.alt)
+    if fits:
+        art = (
+            "  #block(width: 100%, height: "
+            f"{round(style.cover_band_fraction * 100)}%, clip: true)[\n"
+            f'    #image({path}, width: 100%, height: 100%, fit: "cover", alt: {alt})\n'
+            "  ]\n"
+        )
+        top = "14mm"
+    else:
+        fraction = image_width(style.placement, cover.ratio)
+        art = (
+            f"  #block(width: 100%, inset: (x: {style.margin_inside}mm, top: 14mm))[\n"
+            f"    #align(center)[#image({path}, width: {fraction * 100}%, alt: {alt})]\n"
+            "  ]\n"
+        )
+        top = "8mm"
+    return (
+        "#page(margin: 0pt, header: none)[\n"
+        + art
+        + f"  #block(inset: (x: {style.margin_inside}mm, top: {top}))[\n"
+        f'    #text(size: 34pt, weight: "bold", fill: qf-ink, tracking: -0.01em)'
+        f"[{_escape_typst(title)}]\n"
+        "    #v(0.7em)\n"
+        "    #line(length: 34%, stroke: 2pt + qf-accent)\n"
+        "    #v(0.7em)\n"
+        '    #text(size: 11pt, tracking: 0.2em, fill: qf-muted)[A QUESTFOUNDRY GAMEBOOK]\n'
+        "  ]\n"
+        "]\n"
+    )
+
+
+def _cover_block(cover: Plate, style: PrintStyle, title: str, *, full_bleed: bool) -> str:
     """Full-bleed when the rendered file clears the 300dpi floor for this
     trim; otherwise the honest fallback — the same art inset on its own
     page, never upscaled into softness (design plan, ratified decision 1)."""
     path, alt = _typst_string(cover.path), _typst_string(cover.alt)
+    if style.cover_treatment == "band":
+        return _band_cover(cover, style, title, fits=full_bleed)
     if full_bleed:
         return (
             "#page(margin: 0pt, header: none)[\n"
@@ -501,6 +617,33 @@ def _cover_block(cover: Plate, style: PrintStyle, *, full_bleed: bool) -> str:
         f"    #image({path}, width: {fraction * 100}%, alt: {alt})\n"
         "  ]\n"
         "]\n"
+    )
+
+
+def _title_page(style: PrintStyle, title: str) -> str:
+    """1c's front matter is display type doing the work the cover art does
+    elsewhere; 1a and 1b keep the quiet centred page."""
+    escaped = _escape_typst(title)
+    if style.front_matter == "heavy":
+        return (
+            "#page(header: none)[\n"
+            "  #v(2.2em)\n"
+            "  #line(length: 100%, stroke: 3pt + qf-ink)\n"
+            "  #v(0.8em)\n"
+            f'  #text(size: 40pt, weight: "bold", tracking: -0.015em)[{escaped}]\n'
+            "  #v(0.5em)\n"
+            "  #line(length: 100%, stroke: 3pt + qf-ink)\n"
+            "  #v(1.1em)\n"
+            '  #text(size: 11pt, tracking: 0.24em, fill: qf-accent)[A QUESTFOUNDRY GAMEBOOK]\n'
+            "]\n"
+        )
+    return (
+        "#page(header: none)[\n"
+        "#align(center + horizon)[\n"
+        f'  #text(size: 24pt, weight: "bold")[{escaped}]\n'
+        "  #v(1em)\n"
+        '  #text(size: 12pt, style: "italic", fill: qf-muted)[a QuestFoundry gamebook]\n'
+        "]\n]\n"
     )
 
 
@@ -518,38 +661,51 @@ def _layout(
     parts: list[str] = [_preamble(style, title)]
 
     if cover is not None:
-        # the image already carries the title (drawn by the image backend or
-        # composited at illustrate time), so the layout only places the art
-        parts.append(_cover_block(cover, style, full_bleed=cover_full_bleed))
+        # For 1a/1b the image already carries the title (drawn by the image
+        # backend or composited at illustrate time), so the layout only places
+        # the art; 1c's band sets the title itself, beneath the band.
+        parts.append(_cover_block(cover, style, title, full_bleed=cover_full_bleed))
 
-    parts.append(
-        "#page(header: none)[\n"
-        "#align(center + horizon)[\n"
-        f'  #text(size: 24pt, weight: "bold")[{_escape_typst(title)}]\n'
-        "  #v(1em)\n"
-        '  #text(size: 12pt, style: "italic", fill: qf-muted)[a QuestFoundry gamebook]\n'
-        "]\n]\n"
+    # 1c's cover already carries the title in type, so a second title page
+    # would say it twice on facing pages
+    if not (cover is not None and style.cover_treatment == "band"):
+        parts.append(_title_page(style, title))
+
+    # How-to-play describes the furniture the reader is actually holding, so
+    # it varies with the style rather than describing 1a in every edition.
+    where_numbers = (
+        "the section numbers are printed in the outer margin"
+        if style.section_head == "margin"
+        else "the running head on each page names the sections printed across that spread"
     )
-
+    find_the_number = (
+        "the number closes each instruction, set in bold"
+        if style.instruction_form == "italic-block"
+        else "the number is set in bold at the right-hand margin"
+    )
     howto = [
         "= How to Play",
         "",
         "This book is made of numbered sections, not pages: when an",
         "instruction tells you to turn to a section, find that number,",
-        "not the next page. Begin at section 1. The running head on each",
-        "page names the sections printed across that spread.",
+        f"not the next page. Begin at section 1. To find your way, {where_numbers}.",
         "",
         "Each section ends with one or more instructions. Follow the one",
-        "that matches your situation and turn to the section it names —",
-        "the number is set in bold at the right-hand margin.",
+        f"that matches your situation and turn to the section it names — {find_the_number}.",
     ]
     if projected:
+        where_codewords = (
+            "printed beside the section number in the margin"
+            if style.section_head == "margin"
+            else "printed at the head of the section"
+        )
         howto += [
             "",
             "Some sections tell you to write a codeword down in the",
-            "Codeword Log. Some instructions only apply if you have",
-            "written down a particular codeword — you may only follow",
-            "those once you have recorded the word.",
+            f"Codeword Log; those instructions are {where_codewords}.",
+            "Some instructions only apply if you have written down a",
+            "particular codeword — you may only follow those once you",
+            "have recorded the word.",
         ]
     parts.append("\n".join(howto) + "\n#pagebreak()\n")
 
@@ -674,13 +830,17 @@ def build_gamebook(
             )
             warnings.extend(_plate_warnings(cover_plate, "the cover"))
             size = _image_size(cover_file)
-            cover_full_bleed = size is None or full_bleed_ok(size)
+            cover_full_bleed = size is None or cover_fits(style, size)
             if not cover_full_bleed:
+                floor = cover_floor(style)
+                # each treatment has its own floor and its own full-size form,
+                # so the warning names the one this style actually wanted
+                wanted = "band" if style.cover_treatment == "band" else "full-bleed page"
                 warnings.append(
                     f"cover: the rendered image is {size[0]}×{size[1]}px, below the "  # type: ignore[index]
-                    f"{FULL_BLEED_MIN_PIXELS[0]}×{FULL_BLEED_MIN_PIXELS[1]}px needed for "
-                    "a 300dpi full-bleed page — placed inset instead; re-render the cover "
-                    "at a higher resolution for a full-bleed front"
+                    f"{floor[0]}×{floor[1]}px needed for a 300dpi {wanted} in style "
+                    f"{style.name!r} — placed inset instead; re-render the cover at a "
+                    "higher resolution to get the full-size treatment"
                 )
 
     typst_source = _layout(

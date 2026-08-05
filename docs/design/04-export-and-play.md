@@ -220,16 +220,31 @@ running heads and title screens. The directions come from the author's
 layout design project, imported as
 [`plans/gamebook-layouts.md`](../plans/gamebook-layouts.md).
 
-**Built:**
-
 | Style | Medium | Direction |
 |---|---|---|
 | `paperback` | print | 1a — A5, sections flow continuously, running heads carry the spread's section range, instructions hang-indent with the turn-to number bold at the right margin |
+| `bound` | print | 1b — a wide outer margin carries the section numerals and their codewords; instructions are indented italic blocks with the number inline at full size. The narrower measure is what costs it its extra pages |
+| `compendium` | print | 1c — the cover cropped to a top-anchored band with display type beneath it; heavy type carries the front matter |
 | `screen` | HTML | 1d — the cover as an object on a shelf: a title screen with the cover inset, begin/continue/how-to-read, a reading-mode control |
+| `table` | HTML | 1e — the cover as the room: filled to the viewport, the type set over a scrim |
 
-`bound` (1b) and `compendium` (1c) for print and `table` (1e) for HTML are
-designed but not built; asking for one names what is built rather than
-failing silently.
+Asking for a style that does not exist names the ones that do.
+
+A style is a **record plus its medium's furniture**, never a template of
+its own. `PrintStyle` carries geometry, type, its ramp, and four furniture
+axes — where the section numeral sits (`inline` / `margin`), how an
+instruction is set (`hanging` / `italic-block`), how the cover is placed
+(`full-bleed` / `band`), and what the front matter is (`plain` / `heavy`);
+`ScreenStyle` carries one (`shelf` / `room`). Each axis exists because the
+built styles actually differ on it. Two consequences worth stating:
+
+- **A marginal column is checked like a ramp.** `check_geometry` fails the
+  build when the column plus its gutter does not fit the outer margin —
+  otherwise it overprints the page edge, which no colour check sees and no
+  reader of the generated Typst notices.
+- **The how-to-play page describes the edition in hand.** An edition that
+  prints its numbers in the margin must not tell the reader to look at the
+  right-hand margin of a line, so that page varies with the furniture.
 
 ### The contract every style obeys
 
@@ -249,6 +264,13 @@ failing silently.
   choice, so residue-variant lowering (§4 step 2) spells the gate out. A
   digital runtime **hides** an unavailable choice (§1 rule 2) — the reader
   must not see the machinery — so there is no locked state to label.
+- **A role is checked against the page it belongs to.** Where a style sets
+  type over something that is not its page colour — 1e's scrimmed cover —
+  the roles are re-measured there rather than carried across. `--accent` in
+  light mode is a dark ink-blue: right on paper-on-screen, unreadable on a
+  near-black scrim. That is also why 1e scrims at all: the exporter has
+  never seen the cover art, so the scrim is what makes the floor hold
+  whatever the image turns out to be.
 - **Semantics and motion (HTML).** Choices are `<button>`s inside a
   `<nav aria-label="Choices">`; the passage is an `<article>` named by its
   heading that takes focus on every turn; status changes announce through
@@ -283,6 +305,10 @@ portrait plate is capped so a tall frame leaves prose on the page with it.
 distorted plate is a bug. A ratio outside the menu (a hand-edited brief)
 is placed as landscape and reported as a warning; the page still builds.
 
-A **full-bleed** cover needs 1750×2625px (300dpi at A5 trim plus bleed).
-Below that floor the export places the same art **inset** and says so,
-rather than handing the printer an upscale to soften: the honest fallback.
+Every cover treatment carries a **resolution floor**, and below it the
+export places the same art **inset** and says so, rather than handing the
+printer an upscale to soften: the honest fallback. A full-bleed page needs
+1750×2625px (300dpi at A5 trim plus bleed). A band is *not exempt* — it
+still runs the full page width, so it needs the same horizontal density
+and only its own share of the height (`cover_floor`). Cropping a frame
+does not reduce the density the printer renders it at.

@@ -117,18 +117,24 @@ ended the previous keeper's watch), the residue diamond, a tensored
 arm (a texture choice that exists only for players who told Elias the
 truth), character arcs for its two leads, and per-passage story-so-far
 notes — and prints end-to-end.
-The exports are now **styled**: `--style paperback` sets an A5 paperback
-whose sections flow continuously, whose running heads carry the spread's
-section range, and whose "turn to" numbers sit bold at the right margin;
-`--style screen` gives the HTML player a title screen with the cover as
-an inset object, a reading-mode control, and the WCAG contract as real
-elements — choices as buttons in a labelled `nav`, focus moving to the
-section on every turn, a measure that reflows to 320px. Both draw on a
-shared contrast-checked colour ramp that fails the build if a role misses
-its floor, both place illustrations by the ratio DRESS chose for the
-scene, and the PDF compiles as **PDF/UA-1**, so a missing alt text is a
-build error rather than an accessibility debt. `--large-print` is a
-modifier over either.
+The exports are now **styled**, in five selectable directions. Print:
+`--style paperback` sets an A5 paperback whose sections flow continuously
+and whose "turn to" numbers sit bold at the right margin; `--style bound`
+moves the section numerals and their codewords into a wide outer margin
+that swaps sides with the binding, and sets the instructions as italic
+blocks; `--style compendium` crops the cover to a top-anchored band and
+lets display type carry the front matter. HTML: `--style screen` gives
+the player a title screen with the cover as an inset object on a shelf,
+and `--style table` fills the viewport with it and sets the type over a
+scrim — the same reading view behind both.
+
+All five draw on a shared contrast-checked colour ramp that fails the
+build if a role misses its floor, all place illustrations by the ratio
+DRESS chose for the scene, and the PDFs compile as **PDF/UA-1**, so a
+missing alt text is a build error rather than an accessibility debt. The
+WCAG contract is structural, not styled — choices are buttons in a
+labelled `nav`, focus moves to the section on every turn, the measure
+reflows to 320px. `--large-print` is a modifier over any of them.
 
 ```console
 $ uv sync --group dev
@@ -137,6 +143,7 @@ The Keeper's Bargain @ dress: 0 error(s), 0 warning(s)
 all gates pass
 $ uv run qf export pdf --dir examples/keepers-bargain
 exported examples/keepers-bargain/exports/the-keepers-bargain.typ and …/the-keepers-bargain.pdf
+$ uv run qf export pdf --dir examples/keepers-bargain --style bound   # marginal numerals
 $ uv run qf export pdf --dir examples/keepers-bargain --large-print   # same book, bigger type
 $ uv run qf export html --dir examples/keepers-bargain    # browser player + codex panel
 $ uv run qf play examples/keepers-bargain     # or play it in the terminal

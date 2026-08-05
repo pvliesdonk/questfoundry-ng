@@ -271,3 +271,112 @@ def test_cover_alt_containing_a_quote_stays_inside_its_attribute(golden, tmp_pat
     assert "&lt;script&gt;" in tag and "&amp; rain" in tag
     # and the tag is the only thing between the delimiters: nothing spilled
     assert tag.count('alt="') == 1
+
+
+# -- 1e Room: the other way in (design doc 04 §7) -----------------------------
+
+
+def _with_cover(golden, tmp_path):
+    import base64
+    import shutil
+
+    from questfoundry.project import load_project
+
+    dest = tmp_path / "keepers-bargain"
+    shutil.copytree(golden.root, dest)
+    (dest / "art" / "images").mkdir(parents=True, exist_ok=True)
+    (dest / "art" / "images" / "cover.png").write_bytes(
+        base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk"
+            "+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+        )
+    )
+    return load_project(dest)
+
+
+def test_room_fills_the_viewport_with_the_cover_and_scrims_the_type(golden, tmp_path):
+    from questfoundry.export.style import screen_style
+
+    project = _with_cover(golden, tmp_path)
+    room = build_html(project, style=screen_style("table"))
+    assert '<div id="title-screen" data-variant="room" data-scrim>' in room
+    assert '<div id="scrim"></div>' in room
+    assert 'position: fixed; inset: 0;\n       width: 100%; height: 100%; object-fit: cover' in room
+
+
+def test_shelf_and_room_differ_only_in_the_way_in(golden, tmp_path):
+    """The reading view is shared: a direction is how the cover is set, not
+    a second player."""
+    from questfoundry.export.style import screen_style
+
+    project = _with_cover(golden, tmp_path)
+    shelf = build_html(project, style=screen_style("screen"))
+    room = build_html(project, style=screen_style("table"))
+
+    assert '<div id="shelf">' in shelf and '<div id="shelf">' not in room
+    assert '<div id="scrim"></div>' in room and '<div id="scrim"></div>' not in shelf
+    # everything past the title screen is the same player
+    assert shelf.split("<main id=\"reader\"")[1] == room.split("<main id=\"reader\"")[1]
+
+
+def test_room_still_names_the_story_and_offers_the_same_controls(golden, tmp_path):
+    from questfoundry.export.style import screen_style
+
+    project = _with_cover(golden, tmp_path)
+    room = build_html(project, style=screen_style("table"))
+    assert "<h1 id=\"story-title\">The Keeper" in room  # the title is substituted, not left raw
+    assert "__TITLE__" not in room
+    for control in ('id="begin"', 'id="continue"', 'id="howto-open"', 'id="reading-mode"'):
+        assert control in room
+
+
+def test_room_without_a_cover_drops_the_scrim_rather_than_darkening_nothing(golden):
+    from questfoundry.export.style import screen_style
+
+    # the golden ships a cover brief but no rendered cover.png
+    room = build_html(golden, style=screen_style("table"))
+    assert 'data-variant="room"' in room
+    assert '<div id="scrim"></div>' not in room
+    assert 'id="cover-art"' not in room
+
+
+def test_room_re_measures_its_controls_against_the_scrim_not_the_page(golden, tmp_path):
+    """A ramp role is checked against the page colour it belongs to. Over a
+    scrimmed cover that page is gone, so the pressed control cannot keep
+    using `--accent` — in light mode that is a dark blue on near-black."""
+    from questfoundry.export.style import screen_style
+
+    project = _with_cover(golden, tmp_path)
+    room = build_html(project, style=screen_style("table"))
+    override = room.split('#title-screen[data-scrim] #reading-mode button')[1]
+    assert "color: #FFFFFF" in override.split("}")[0]
+    # and the pressed state is never carried by colour alone (WCAG 1.4.1)
+    assert "border-color: #F2EFE8" in override.split("}")[0]
+
+
+def test_a_room_with_no_cover_keeps_the_ramp_and_stays_legible_in_both_modes(golden):
+    """The scrim-measured literals are only valid over a scrim. Without a
+    cover there is none, so the room must fall back to the ramp's own
+    checked roles — forcing near-white type onto the light page would be a
+    1.03:1 contrast failure (found in review of PR #130)."""
+    from questfoundry.export.style import contrast_ratio, screen_style
+
+    style = screen_style("table")
+    room = build_html(golden, style=style)  # the golden has no rendered cover
+    # the element carries no scrim attribute and no scrim is drawn, so none
+    # of the scrim-measured rules can match
+    assert '<div id="title-screen" data-variant="room">' in room
+    assert "data-scrim>" not in room
+    assert '<div id="scrim">' not in room
+
+    # and no rule sets a forced literal outside a [data-scrim] selector, so a
+    # future edit cannot reintroduce near-white type on the light page
+    css = room.split("<style>")[1].split("</style>")[0]
+    for rule in css.split("}"):
+        if "#F2EFE8" in rule or "#D6D2C8" in rule or "#E6E2DA" in rule:
+            assert "[data-scrim]" in rule, rule
+
+    # what the type actually renders against, in both modes, clears the floor
+    for ramp in (style.ramp, style.light_ramp):
+        assert contrast_ratio(ramp.ink, ramp.page) >= 7.0
+        assert contrast_ratio(ramp.muted, ramp.page) >= 4.5

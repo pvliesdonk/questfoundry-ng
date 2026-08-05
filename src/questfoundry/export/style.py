@@ -16,7 +16,9 @@ dark screen style are held to the same standard without sharing a palette.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, replace
+from typing import Literal
 
 from questfoundry.models.enrichment import COVER_RATIO, RATIOS, Ratio
 
@@ -120,6 +122,19 @@ SHELF_LIGHT_RAMP = Ramp(
     page="#F4F2EC", ink="#1A1B1D", muted="#55585C", accent="#1F3C63", rule="#6B6E73"
 )
 
+# 1b reads as a bound edition rather than a mass-market paperback: a
+# cooler sheet and an oxblood accent, the traditional second colour of a
+# cloth-bound book.
+BOUND_RAMP = Ramp(
+    page="#F7F5F0", ink="#191715", muted="#57534E", accent="#6E1F2A", rule="#6A645E"
+)
+
+# 1c is type-driven, so its accent has to hold at display sizes as well as
+# at codeword size: a saturated rust against a flatter, brighter sheet.
+COMPENDIUM_RAMP = Ramp(
+    page="#F2F1EC", ink="#111111", muted="#54524E", accent="#8A3B12", rule="#666158"
+)
+
 
 # -- placement ------------------------------------------------------------------
 
@@ -154,10 +169,36 @@ SCREEN_PLACEMENT: dict[str, Placement] = {
 # -- styles ---------------------------------------------------------------------
 
 
+# The axes the three print directions actually differ on. Each of these
+# earned its place by varying across the built styles — none is a knob
+# added for a style that might exist later.
+SectionHead = Literal["inline", "margin"]
+"""Where a section's numeral sits: in the text block (1a, 1c) or out in a
+wide outer margin (1b), where its codewords join it."""
+
+InstructionForm = Literal["hanging", "italic-block"]
+"""How an instruction is set: hanging-indent with the turn-to number bold
+at the right margin (1a, 1c), or an indented italic block whose number
+stays inline at full size (1b)."""
+
+CoverTreatment = Literal["full-bleed", "band"]
+"""A whole page of art (1a, 1b) versus a top-anchored band with the title
+set beneath it (1c)."""
+
+FrontMatter = Literal["plain", "heavy"]
+"""A quiet centred title page (1a, 1b) versus display type carrying the
+front matter (1c)."""
+
+TitleScreen = Literal["shelf", "room"]
+"""The HTML way in: the cover as an inset object standing on a shelf (1d)
+or filled to the viewport with the title set over it (1e)."""
+
+
 @dataclass(frozen=True)
 class PrintStyle:
-    """A print direction: page geometry, type, and its ramp. Lengths are
-    millimetres, type sizes points — the units Typst takes."""
+    """A print direction: page geometry, type, its ramp, and the four
+    furniture choices above. Lengths are millimetres, type sizes points —
+    the units Typst takes."""
 
     name: str
     page_width: float
@@ -173,10 +214,51 @@ class PrintStyle:
     placement: dict[str, Placement]
     running_heads: bool
     section_per_page: bool
+    section_head: SectionHead = "inline"
+    instruction_form: InstructionForm = "hanging"
+    cover_treatment: CoverTreatment = "full-bleed"
+    # Only meaningful when `cover_treatment` is "band": the fraction of the
+    # page height the band occupies. The layout sets it, and `cover_floor`
+    # scales the resolution floor by it — one number, two readers.
+    cover_band_fraction: float = 0.0
+    front_matter: FrontMatter = "plain"
+    # Only meaningful when `section_head` is "margin": the width of the
+    # marginal column and the gutter between it and the text block. They
+    # must fit inside `margin_outside`, which `check_geometry` enforces.
+    margin_note_width: float = 0.0
+    margin_note_gutter: float = 0.0
 
     @property
     def measure_mm(self) -> float:
         return self.page_width - self.margin_inside - self.margin_outside
+
+
+def check_geometry(style: PrintStyle) -> list[str]:
+    """A marginal column that does not fit its margin silently overprints
+    the page edge, which no test of the *ramp* would catch and no reader
+    of the Typst would notice. Checked like the ramp: build-failing, with
+    the numbers and the way out."""
+    problems = []
+    if style.section_head == "margin":
+        needed = style.margin_note_width + style.margin_note_gutter
+        if style.margin_note_width <= 0:
+            problems.append(
+                f"print style {style.name!r} sets its section head in the margin but "
+                "margin_note_width is 0 — give the marginal column a width"
+            )
+        elif needed >= style.margin_outside:
+            problems.append(
+                f"print style {style.name!r}: the marginal column needs "
+                f"{needed}mm (width {style.margin_note_width} + gutter "
+                f"{style.margin_note_gutter}) but margin_outside is only "
+                f"{style.margin_outside}mm — widen the outer margin or narrow the column"
+            )
+    if style.measure_mm <= 0:
+        problems.append(
+            f"print style {style.name!r}: the margins leave no text measure on a "
+            f"{style.page_width}mm page — narrow them"
+        )
+    return problems
 
 
 @dataclass(frozen=True)
@@ -191,6 +273,7 @@ class ScreenStyle:
     measure_ch: int
     body_px: int
     placement: dict[str, Placement]
+    title_screen: TitleScreen = "shelf"
 
 
 PAPERBACK = PrintStyle(
@@ -211,6 +294,49 @@ PAPERBACK = PrintStyle(
     section_per_page=False,
 )
 
+BOUND = PrintStyle(
+    name="bound",
+    page_width=148.0,
+    page_height=210.0,
+    # the wide outer margin is the direction: it carries the numerals and
+    # codewords, and the narrower measure is what costs 1b its extra pages
+    margin_inside=18.0,
+    margin_outside=38.0,
+    margin_top=17.0,
+    margin_bottom=17.0,
+    body_size=10.5,
+    leading=0.66,
+    section_size=15.0,
+    ramp=BOUND_RAMP,
+    placement=PRINT_PLACEMENT,
+    running_heads=True,
+    section_per_page=False,
+    section_head="margin",
+    instruction_form="italic-block",
+    margin_note_width=26.0,
+    margin_note_gutter=6.0,
+)
+
+COMPENDIUM = PrintStyle(
+    name="compendium",
+    page_width=148.0,
+    page_height=210.0,
+    margin_inside=17.0,
+    margin_outside=15.0,
+    margin_top=18.0,
+    margin_bottom=16.0,
+    body_size=10.0,
+    leading=0.6,
+    section_size=20.0,  # display-weight numerals: the type carries the book
+    ramp=COMPENDIUM_RAMP,
+    placement=PRINT_PLACEMENT,
+    running_heads=True,
+    section_per_page=False,
+    cover_treatment="band",
+    cover_band_fraction=0.46,
+    front_matter="heavy",
+)
+
 SHELF = ScreenStyle(
     name="screen",
     ramp=SHELF_RAMP,
@@ -220,8 +346,26 @@ SHELF = ScreenStyle(
     placement=SCREEN_PLACEMENT,
 )
 
-PRINT_STYLES: dict[str, PrintStyle] = {PAPERBACK.name: PAPERBACK}
-SCREEN_STYLES: dict[str, ScreenStyle] = {SHELF.name: SHELF}
+# 1e: the same reading view, a different way in — the cover fills the
+# viewport with the title set over it. Light mode is deliberately not
+# offered: type over a photographic cover needs a dark scrim to clear its
+# contrast floor, and a light scrim over the same art would not.
+ROOM = ScreenStyle(
+    name="table",
+    ramp=SHELF_RAMP,
+    light_ramp=SHELF_LIGHT_RAMP,
+    measure_ch=64,
+    body_px=18,
+    placement=SCREEN_PLACEMENT,
+    title_screen="room",
+)
+
+PRINT_STYLES: dict[str, PrintStyle] = {
+    PAPERBACK.name: PAPERBACK,
+    BOUND.name: BOUND,
+    COMPENDIUM.name: COMPENDIUM,
+}
+SCREEN_STYLES: dict[str, ScreenStyle] = {SHELF.name: SHELF, ROOM.name: ROOM}
 
 DEFAULT_PRINT_STYLE = PAPERBACK.name
 DEFAULT_SCREEN_STYLE = SHELF.name
@@ -241,6 +385,7 @@ def print_style(name: str, *, large_print: bool = False) -> PrintStyle:
     if large_print:
         style = large_print_of(style)
     problems = check_ramp(style.ramp, where=f"print style {style.name!r}")
+    problems += check_geometry(style)
     if problems:
         raise StyleError("\n".join(problems))
     return style
@@ -295,19 +440,37 @@ def image_width(placement: dict[str, Placement], ratio: str) -> float:
 
 # -- art resolution -------------------------------------------------------------
 
-# 300dpi at A5 trim plus bleed. A full-bleed placement below this floor is
-# upscaled by the printer into visible softness, so the export falls back
-# to an inset plate instead — the honest fallback (design plan, "Ratified
-# decisions" §1), reported as a warning rather than silently shipped.
+# 300dpi at A5 trim plus bleed. A placement below its floor is upscaled by
+# the printer into visible softness, so the export falls back to an inset
+# plate instead — the honest fallback (design plan, "Ratified decisions"
+# §1), reported as a warning rather than silently shipped.
 FULL_BLEED_MIN_PIXELS = (1750, 2625)
 
 
-def full_bleed_ok(size: tuple[int, int]) -> bool:
-    width, height = size
-    return width >= FULL_BLEED_MIN_PIXELS[0] and height >= FULL_BLEED_MIN_PIXELS[1]
+def cover_floor(style: PrintStyle) -> tuple[int, int]:
+    """The pixels a cover needs for *this* style's treatment.
+
+    A band is not exempt from the floor, only shorter: it still runs the
+    full page width, so it needs the same horizontal density and only its
+    own fraction of the height. (An earlier note in the layout plan called
+    the band "the one placement that does not need the floor"; that was
+    wrong — cropping the frame does not reduce the density the printer
+    renders it at.)
+    """
+    width, height = FULL_BLEED_MIN_PIXELS
+    if style.cover_treatment == "band":
+        return width, math.ceil(height * style.cover_band_fraction)
+    return width, height
+
+
+def cover_fits(style: PrintStyle, size: tuple[int, int]) -> bool:
+    floor = cover_floor(style)
+    return size[0] >= floor[0] and size[1] >= floor[1]
 
 
 __all__ = [
+    "BOUND",
+    "COMPENDIUM",
     "COVER_RATIO",
     "DEFAULT_PRINT_STYLE",
     "DEFAULT_SCREEN_STYLE",
@@ -315,6 +478,7 @@ __all__ = [
     "PAPERBACK",
     "PRINT_STYLES",
     "RATIOS",
+    "ROOM",
     "SCREEN_STYLES",
     "SHELF",
     "Placement",
@@ -323,9 +487,11 @@ __all__ = [
     "Ratio",
     "ScreenStyle",
     "StyleError",
+    "check_geometry",
     "check_ramp",
+    "cover_fits",
+    "cover_floor",
     "contrast_ratio",
-    "full_bleed_ok",
     "image_width",
     "large_print_of",
     "print_style",

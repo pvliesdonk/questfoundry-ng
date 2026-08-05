@@ -678,9 +678,11 @@ def _write_plate_pngs(root: Path) -> None:
 
 def test_cli_rejects_an_unknown_style_and_lists_the_built_ones(golden_copy):
     runner = CliRunner()
-    result = runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy), "--style", "bound"])
+    result = runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy), "--style", "folio"])
     assert result.exit_code == 2
-    assert "unknown print style" in result.output and "paperback" in result.output
+    assert "unknown print style" in result.output
+    for built in ("paperback", "bound", "compendium"):
+        assert built in result.output
 
 
 def test_cli_style_only_applies_to_the_styled_formats(golden_copy):
@@ -724,3 +726,150 @@ def test_cli_large_print_is_rejected_on_the_unstyled_formats(golden_copy):
         result = runner.invoke(app, ["export", fmt, "--dir", str(golden_copy), "--large-print"])
         assert result.exit_code == 2, result.output
         assert "--large-print applies to the styled formats" in result.output
+
+
+# -- 1b Bound and 1c Compendium furniture (design doc 04 §7) -------------------
+
+
+def _book(golden_copy, style_name: str, *, with_art: bool = False):
+    from questfoundry.export.style import print_style
+
+    if with_art:
+        _write_plate_pngs(golden_copy)
+        _write_cover_png(golden_copy)
+    project = load_project(golden_copy)
+    images = golden_copy / "art" / "images"
+    return build_gamebook(
+        build_runtime(project),
+        seed=1,
+        images_dir=images if images.is_dir() else None,
+        root=golden_copy,
+        style=print_style(style_name),
+    )
+
+
+@pytest.mark.parametrize("style_name", ["paperback", "bound", "compendium"])
+def test_every_print_style_lints_clean_and_compiles_under_ua_1(golden_copy, style_name):
+    book = _book(golden_copy, style_name, with_art=True)
+    assert lint_gamebook(book) == []
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def test_bound_sets_its_numerals_and_codewords_in_the_outer_margin(golden_copy):
+    """1b's direction: the numerals and codewords leave the text block. The
+    column swaps sides with the binding, so it is always the OUTER margin."""
+    book = _book(golden_copy, "bound")
+    assert "#let qf-margin(dy, body)" in book.typst
+    assert "calc.odd(here().page())" in book.typst  # recto/verso, not a fixed side
+    # the codewords ride along in the marginal column, not in the prose
+    hoisting = [s for s in book.sections if s.hoisted_lines]
+    assert hoisting, "the golden must exercise a hoisted codeword"
+    for s in hoisting:
+        call = book.typst.split(f"#qf-section({s.number}, ")[1].split(")[\n")[0]
+        assert "Write down the codeword" in call
+
+
+def test_bound_sets_instructions_as_italic_blocks_with_the_number_inline(golden_copy):
+    book = _book(golden_copy, "bound")
+    assert "#emph[#body" in book.typst  # the italic block
+    assert "#box(width: 1fr)" not in book.typst  # no right-margin number
+
+
+def test_paperback_keeps_its_codewords_in_the_text_block(golden_copy):
+    """The margin is 1b's, not a shared behaviour: 1a's hoisted codewords
+    stay above the instructions where they always were."""
+    book = _book(golden_copy, "paperback")
+    assert "qf-margin" not in book.typst
+    hoisting = [s for s in book.sections if s.hoisted_lines]
+    for s in hoisting:
+        call = book.typst.split(f"#qf-section({s.number}, ")[1].split(")[\n")[0]
+        assert call == "none"
+        body = book.typst.split(f"#qf-section({s.number}, none)[\n")[1].split("\n]\n")[0]
+        assert "Write down the codeword" in body
+
+
+def test_compendium_bands_its_cover_and_sets_the_title_in_type(golden_copy):
+    """1c crops the cover to a top-anchored band and lets display type carry
+    the front matter — so the title is typeset once, on the cover page, and
+    the separate title page would be a second saying of the same thing."""
+    book = _book(golden_copy, "compendium", with_art=True)
+    assert 'fit: "cover"' in book.typst  # the band crops
+    assert "height: 46%" in book.typst
+    escaped = _escape_title("The Keeper's Bargain")
+    body = book.typst.split("\n", 1)[1]
+    assert body.count(escaped) == 1
+    assert "A QUESTFOUNDRY GAMEBOOK" in book.typst  # heavy front matter
+
+
+def test_compendium_without_a_cover_still_gets_its_heavy_title_page(golden_copy):
+    book = _book(golden_copy, "compendium")  # golden has no rendered cover.png
+    assert "art/images/cover.png" not in book.typst
+    assert "A QUESTFOUNDRY GAMEBOOK" in book.typst
+    assert 'size: 40pt' in book.typst
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def test_how_to_play_describes_the_furniture_the_reader_is_holding(golden_copy):
+    """The instructions are style-local: an edition that prints its numbers
+    in the margin must not tell the reader to look at the right-hand margin
+    of a line."""
+    paperback = _book(golden_copy, "paperback").typst
+    bound = _book(golden_copy, "bound").typst
+
+    assert "right-hand margin" in paperback
+    assert "running head on each page names the sections" in paperback
+
+    assert "right-hand margin" not in bound
+    assert "printed in the outer margin" in bound
+    assert "beside the section number in the margin" in bound
+
+
+def test_a_band_cover_below_its_own_floor_insets_rather_than_upscaling(golden_copy):
+    """A band is not exempt from the resolution floor, only shorter than a
+    full page (it still runs the full page width). Below its floor it takes
+    the same honest fallback every treatment does — the art inset above the
+    same display type — and the warning names the band, not an inset page
+    it never had. (Review finding, PR #130.)"""
+    from questfoundry.export.style import COMPENDIUM, cover_floor, print_style
+
+    floor = cover_floor(COMPENDIUM)
+    _write_cover_png(golden_copy, size=(floor[0], floor[1] - 1))
+    project = load_project(golden_copy)
+    book = build_gamebook(
+        build_runtime(project),
+        seed=1,
+        images_dir=golden_copy / "art" / "images",
+        root=golden_copy,
+        style=print_style("compendium"),
+    )
+    assert 'fit: "cover"' not in book.typst  # the band is not filled
+    assert "art/images/cover.png" in book.typst  # the art is still placed
+    assert "A QUESTFOUNDRY GAMEBOOK" in book.typst  # over the same type
+    (warning,) = [w for w in book.warnings if w.startswith("cover:")]
+    assert "band" in warning and "compendium" in warning
+    assert f"{floor[0]}×{floor[1]}px" in warning
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def test_a_cover_that_clears_the_band_floor_but_not_a_page_still_bands(golden_copy):
+    """The floors differ per treatment, so the same file can be enough for
+    1c's band and not enough for 1a's full-bleed page."""
+    from questfoundry.export.style import COMPENDIUM, cover_floor, print_style
+
+    _write_cover_png(golden_copy, size=cover_floor(COMPENDIUM))
+    project = load_project(golden_copy)
+    runtime = build_runtime(project)
+    images = golden_copy / "art" / "images"
+
+    banded = build_gamebook(
+        runtime, seed=1, images_dir=images, root=golden_copy,
+        style=print_style("compendium"),
+    )
+    assert 'fit: "cover"' in banded.typst
+    assert [w for w in banded.warnings if w.startswith("cover:")] == []
+
+    paged = build_gamebook(
+        runtime, seed=1, images_dir=images, root=golden_copy,
+        style=print_style("paperback"),
+    )
+    assert [w for w in paged.warnings if w.startswith("cover:")]

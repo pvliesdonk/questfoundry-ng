@@ -16,6 +16,60 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-05 (export styling: the remaining three directions — 1b
+  Bound, 1c Compendium, 1e Room):** Built directly on the slice below,
+  same day. The load-bearing result is that **no new machinery was
+  needed**: each direction is a `PrintStyle`/`ScreenStyle` record plus
+  its own furniture, which is what mini-ADR A26 predicted and had not yet
+  been tested. Four furniture axes came out of it (`section_head`,
+  `instruction_form`, `cover_treatment`, `front_matter`) plus one on the
+  screen side (`title_screen`), each introduced only because the built
+  styles differ on it — a test asserts every axis actually varies, so a
+  future speculative knob fails CI rather than accumulating quietly.
+  Two checks were added with the styles: **`check_geometry`**, which
+  fails a build whose marginal column does not fit its outer margin (it
+  would otherwise overprint the page edge — invisible to every colour
+  check and to anyone reading the generated Typst), and a **style-local
+  how-to-play page**, since an edition that prints its numbers in the
+  margin must not tell the reader to look at the right-hand margin of a
+  line.
+  Two decisions, both the agent's: **1e offers both reading modes but
+  always scrims its title screen** (the reading view is text on a page
+  colour, so light mode is valid there; over cover art the exporter has
+  never seen, only a scrim holds the floor) — and with it the rule that
+  **a ramp role is only valid on the page it was checked against**, found
+  by eye: in light mode the pressed reading-mode control rendered
+  `--accent`, a dark ink-blue, on a near-black scrim. **1c's banded cover
+  replaces its title page** rather than preceding one, since the band
+  already sets the title in display type.
+  Two Typst findings worth keeping: a `block` sized to its contents
+  **collapses to zero** when its only child is `place`d out of flow, so
+  the marginal column measured from the text block's edge instead of the
+  measure's and landed on the prose on rectos (`width: 100%` is the fix,
+  and it was caught by reading rendered pages, not by a test); and the
+  section head can stay a real `heading` — outline and screen-reader
+  navigation intact — while a show rule draws it in the margin.
+  Validated unbilled: all three print styles lint clean and compile under
+  `ua-1`, both HTML styles driven in a real browser. **No live styled
+  read yet** — that is STATUS's remaining check.
+  **Two defects found in review (PR #130), both in the places that had
+  stepped outside the checked machinery — the pattern is worth keeping:**
+  (a) 1e's scrim-measured CSS literals applied whenever the variant was
+  `room`, but the markup only draws a scrim when a cover exists, so a
+  cover-less room in light mode put near-white type on a near-white page
+  at **1.03:1**. Every literal is now scoped to a `data-scrim` attribute
+  the markup sets only alongside a real scrim, and a test asserts no rule
+  carrying one of those literals escapes that selector. (b) 1c's band
+  ignored the resolution floor entirely while `build_gamebook` still
+  emitted a warning claiming the art had been "placed inset instead" —
+  false for a style that never insets. **The reasoning recorded for that
+  exemption was simply wrong**: cropping the frame does not reduce the
+  density the printer renders it at, and a band runs the *full page
+  width*, so it needs the same horizontal density and only its own share
+  of the height. Floors are now per-treatment (`cover_floor`), the band
+  has the same honest inset fallback as everything else, and the warning
+  names the treatment it actually wanted.
+
 - **2026-08-05 (export styling: first slice built — alt text + UA-1,
   ratio-as-data, the shared style layer, 1a Paperback and 1d Shelf):**
   The three next-steps STATUS listed were built as one change, because

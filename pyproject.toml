@@ -45,6 +45,8 @@ dev = [
     # illustrate tests drive the real ImageService through the hermetic
     # zero-network placeholder provider — library core, no cloud extras
     "image-generation-mcp>=1.11,<2",
+    "playwright>=1.62.0",
+    "axe-playwright-python>=0.1.8",
 ]
 
 [build-system]
@@ -67,3 +69,6 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "a11y: axe-core browser scans of exported HTML (skip without a chromium; QF_A11Y_STRICT=1 makes that a failure)",
+]

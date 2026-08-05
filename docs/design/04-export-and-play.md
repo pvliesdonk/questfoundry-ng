@@ -288,6 +288,12 @@ built styles actually differ on it. Two consequences worth stating:
   characters-per-line — the thing that actually governs readability —
   stays near where the style set it. It writes its own edition
   (`<slug>-<style>-large-print`) rather than overwriting the plain one.
+- **The HTML contract is machine-checked.** CI runs axe-core
+  (WCAG-A/AA-scoped) over both screen styles — title screen, opening
+  section, and a handful of turns — plus the large-print modifier
+  (`tests/test_a11y.py`, the `a11y` job); a missing browser fails the
+  job rather than skipping. This is the screen counterpart of PDF/UA-1's
+  compile-time refusal: neither surface ships unchecked.
 
 ### Art geometry
 

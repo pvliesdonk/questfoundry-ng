@@ -15,7 +15,7 @@ Where to look for the rest:
 - **`design/00–04`** — the authoritative rules for each area (the history for
   *your* area is here, not in the decision log).
 
-_Last updated: 2026-07-30._
+_Last updated: 2026-08-05._
 
 ## Current epic — export styling
 
@@ -48,22 +48,28 @@ Build the epic's first slice (contract: `plans/gamebook-layouts.md`):
    brief → illustrate → runtime → placement rules.
 
 Still standing as later options: the roadmap "Next" candidates (weave
-linearization, M9 retrieval refinement) and the BACKLOG measurement
-remainders (prose-quality corpus-grounded run + author read — being
-served by the in-flight star-swabber run — and the POV-sequences live
-A/B).
-
-In flight now (2026-07-30): the **star-swabber live run** — a
-corpus-grounded medium run on `kimi-k2.6` (Ollama cloud, unbilled),
-premise "pulp space opera in the style of the 'space quest' computer
-games", serving the corpus-grounded-run BACKLOG remainder. DREAM→POLISH
-gate-clean (103 beats frozen; POLISH: 143 passages), FILL in progress.
-Scratch project under `runs/` (gitignored, PR #121).
+linearization, M9 retrieval refinement) and the BACKLOG POV-sequences
+live A/B.
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
+
+**Register conformance: BUILT AND VALIDATED (2026-08-05).** The
+star-swabber run (medium, kimi-k2.6, corpus-grounded) completed
+DREAM→DRESS gate-clean but the author read the prose as over-stylized;
+the fix — manuscript-first continuation framing, countable register
+budget, depth-2 look-behind, Voice-declared recurring devices, richer
+story-so-far — was spec'd, built as a three-PR stack, and validated
+live on `runs/register-short` (same premise, short scope): 122/122
+passes, zero repair exhaustions, register fixed on the author's read.
+The author closed the loop **without a medium-scope A/B** (verbatim:
+"we have plenty of evidence this is an improvement") and designated
+the run as the **register exemplar** — the full validation record with
+exemplar passages is `plans/register-conformance.md` §10. A staccato
+rhythm defect found during the read was tuned with one clause (PR
+#127, "plain does not mean short").
 
 M0–M8 complete, plus the two 2026-07-19-shipped epics **prose quality at
 scale** and **POV sequences**, and the two 2026-07-17-shipped epics

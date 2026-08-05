@@ -34,6 +34,10 @@ from questfoundry.pipeline.stages.dress import (
 from questfoundry.pipeline.types import ApplyError
 from questfoundry.project.io import Project
 
+# a cover alt that clears the mechanical checks, so a test about the *prompt*
+# is never failed by its alt text
+_SAFE_ALT = "A foghorn throws a slow glow across a black harbor under low cloud."
+
 
 def g6_errors(g, vision, enrichment):
     issues = run_checks(g, vision, Stage.DRESS, enrichment=enrichment)
@@ -274,7 +278,10 @@ def test_enrichment_and_codewords_roundtrip(golden, tmp_path):
 def test_cover_apply_sets_the_cover(golden):
     project = copy.deepcopy(golden)
     project.enrichment.cover = None
-    log = _cover_apply(CoverProposal(prompt="A foghorn glow over a black harbor"), project)
+    log = _cover_apply(CoverProposal(
+        prompt="A foghorn glow over a black harbor",
+        alt="A foghorn throws a slow glow across a black harbor under low cloud.",
+    ), project)
     assert project.enrichment.cover is not None
     assert project.enrichment.cover.prompt == "A foghorn glow over a black harbor"
     assert log == ["cover set"]
@@ -282,7 +289,9 @@ def test_cover_apply_sets_the_cover(golden):
 
 def test_cover_apply_rejects_empty_prompt(golden):
     with pytest.raises(ApplyError, match="cover prompt is empty"):
-        _cover_apply(CoverProposal(prompt="   "), copy.deepcopy(golden))
+        _cover_apply(
+            CoverProposal(prompt="   ", alt=_SAFE_ALT), copy.deepcopy(golden)
+        )
 
 
 def test_cover_skips_without_direction_or_when_already_set(golden):
@@ -291,7 +300,7 @@ def test_cover_skips_without_direction_or_when_already_set(golden):
     project.enrichment.cover = None
     assert _cover_skip(project) is None
     # already set -> skip
-    _cover_apply(CoverProposal(prompt="x"), project)
+    _cover_apply(CoverProposal(prompt="x", alt=_SAFE_ALT), project)
     assert (_cover_skip(project) or "").startswith("cover already")
     # no direction -> skip (a cover has nothing to match)
     project.enrichment.cover = None
@@ -333,7 +342,10 @@ def test_cover_review_blocks_a_spoiler_and_passes_a_safe_cover(golden, monkeypat
 
     env = Environment(loader=DictLoader({"dress_cover_review.j2": "review {{ prompt }}"}))
     monkeypatch.setattr(runner, "_environment", lambda: env)
-    proposal = CoverProposal(prompt="the murderer plunges the knife into the mayor at the climax")
+    proposal = CoverProposal(
+        prompt="the murderer plunges the knife into the mayor at the climax",
+        alt="A knife is raised over a seated figure in a lamplit council chamber.",
+    )
 
     spoiler = ReviewVerdict(
         verdict="needs_work",
@@ -431,7 +443,13 @@ def test_runtime_json_art_populated_when_image_exists(golden, tmp_path):
     )
     data = build_runtime(project)
     assert data["art"] == [
-        {"passage": slug, "image": f"art/images/{slug}.png", "caption": brief.caption}
+        {
+            "passage": slug,
+            "image": f"art/images/{slug}.png",
+            "caption": brief.caption,
+            "alt": brief.alt,
+            "ratio": brief.ratio,
+        }
     ]
 
 
@@ -462,7 +480,11 @@ def test_runtime_json_cover_ships_only_when_image_exists(golden, tmp_path):
         enrichment=golden.enrichment,
     )
     data = build_runtime(project)
-    assert data["cover"] == {"image": "art/images/cover.png"}
+    assert data["cover"] == {
+        "image": "art/images/cover.png",
+        "alt": golden.enrichment.cover.alt,
+        "ratio": "2:3",  # a cover is portrait, and fixed
+    }
     assert validate_runtime(data) == []
     # a cover with no image is a validation error
     data["cover"] = {"image": ""}
@@ -603,3 +625,107 @@ def test_codex_double_fail_escalates_to_architect_arbitration(golden, monkeypatc
     )
     assert "real defect" in review(proposal, golden, adapter)[0]
     assert "confirmed" in review(proposal, golden, adapter)[0]
+
+
+# -- alt text: the checks are mechanical, and every message says what to do ----
+
+
+def _brief(**overrides):
+    from questfoundry.pipeline.stages.dress import BriefItem
+
+    base = {
+        "passage": "passage:p-arrival",
+        "priority": 1,
+        "caption": "Elias lands at the Stilt Light.",
+        "prompt": "A lighthouse on iron stilts under a storm sky.",
+        "alt": "A lighthouse stands on rust-streaked iron stilts under a slate storm sky.",
+        "ratio": "3:2",
+        "entities": [],
+    }
+    return BriefItem(**{**base, **overrides})
+
+
+def _briefs_proposal(first, golden):
+    """The full-size proposal the apply expects, with `first` swapped in —
+    so an alt-text test fails on its alt, never on the brief count."""
+    from questfoundry.pipeline.stages.dress import BriefsProposal, _target_brief_count
+
+    target = _target_brief_count(golden)
+    others = [b for b in golden.enrichment.briefs if b.passage != first.passage]
+    rest = [
+        _brief(passage=b.passage, priority=i + 2, caption=b.caption, prompt=b.prompt)
+        for i, b in enumerate(others[: target - 1])
+    ]
+    return BriefsProposal(briefs=[first, *rest])
+
+
+@pytest.mark.parametrize(
+    ("alt", "expected"),
+    [
+        ("", "no alt text"),
+        ("Illustration of a lighthouse standing on iron stilts.", "already announces"),
+        ("A cover illustration of a lighthouse on iron stilts.", "already announces"),
+        ("A lighthouse.", "at least"),
+        (" ".join(["lighthouse"] * 60), "at most"),
+    ],
+)
+def test_alt_text_rules_are_enforced_with_a_recovery_action(alt, expected, golden):
+    from questfoundry.pipeline.stages.dress import _briefs_apply
+
+    proposal = _briefs_proposal(_brief(alt=alt), golden)
+    with pytest.raises(ApplyError) as exc:
+        _briefs_apply(proposal, copy.deepcopy(golden))
+    message = str(exc.value)
+    assert expected in message
+    assert "passage:p-arrival" in message  # the message names its subject
+
+
+def test_alt_text_may_not_simply_repeat_the_caption(golden):
+    from questfoundry.pipeline.stages.dress import _briefs_apply
+
+    caption = "Elias Wren lands at the Stilt Light as storm season closes in."
+    proposal = _briefs_proposal(_brief(caption=caption, alt=caption), golden)
+    with pytest.raises(ApplyError, match="repeats the caption"):
+        _briefs_apply(proposal, copy.deepcopy(golden))
+
+
+def test_cover_alt_faces_the_same_checks(golden):
+    with pytest.raises(ApplyError, match="no alt text"):
+        _cover_apply(
+            CoverProposal(prompt="A foghorn glow over a black harbor", alt="  "),
+            copy.deepcopy(golden),
+        )
+
+
+def test_briefs_apply_stores_alt_and_ratio(golden):
+    from questfoundry.pipeline.stages.dress import _briefs_apply
+
+    project = copy.deepcopy(golden)
+    proposal = _briefs_proposal(_brief(ratio="1:1"), project)
+    _briefs_apply(proposal, project)
+    first = next(b for b in project.enrichment.briefs if b.priority == 1)
+    assert first.ratio == "1:1"
+    assert first.alt.startswith("A lighthouse stands on")
+
+
+def test_the_prompt_quotes_the_same_word_bounds_the_apply_enforces(golden):
+    """A prompt that asks for one length and a check that enforces another
+    is a repair loop that cannot converge — both read one constant."""
+    from questfoundry.pipeline import runner
+    from questfoundry.pipeline.stages.dress import (
+        _ALT_MAX_WORDS,
+        _ALT_MIN_WORDS,
+        _briefs_context,
+    )
+
+    rendered = runner._environment().get_template("dress_briefs.j2").render(
+        **_briefs_context(golden),
+        research="",
+        notes=[],
+        repair_errors=None,
+        voice=golden.voice,
+    )
+    assert f"{_ALT_MIN_WORDS}-{_ALT_MAX_WORDS} words" in rendered
+    # and the ratio menu is quoted in full, so the model never guesses one
+    for ratio in ("3:2", "2:3", "1:1"):
+        assert f'"{ratio}"' in rendered

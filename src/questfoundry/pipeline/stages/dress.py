@@ -40,6 +40,7 @@ from questfoundry.models.enrichment import (
     CodexEntry,
     CoverBrief,
     IllustrationBrief,
+    Ratio,
     VisualProfile,
 )
 from questfoundry.models.presentation import Passage
@@ -73,6 +74,58 @@ COVER_REVIEW_RULES = (
     "ending_shown",  # shows how it turns out — an ending scene, a fate, the outcome
 )
 COVER_REVIEW_SCHEMA = build_verdict_schema("CoverReview", COVER_REVIEW_RULES)
+
+
+# -- alt text ------------------------------------------------------------------
+
+# Alt text is the one piece of image metadata a PDF/UA-1 build cannot be
+# produced without, so its rules are checked mechanically here rather than
+# only asked for in the prompt (AGENTS.md: enforce structurally, don't
+# state and trust). The floors are WCAG craft, not arbitrary: a redundant
+# "Illustration of…" prefix is announced twice by a screen reader, and alt
+# that merely repeats the caption gives a non-sighted reader nothing the
+# caption did not already say.
+_ALT_MIN_WORDS = 6
+_ALT_MAX_WORDS = 40
+_ALT_REDUNDANT_PREFIXES = ("image of", "picture of", "illustration of", "artwork of", "drawing of")
+_ALT_LEADING_WORDS = ("a", "an", "the", "cover", "an atmospheric", "a cover")
+# the same numbers the prompts quote, so the asked-for and the enforced
+# bounds can never drift apart
+_ALT_CONTEXT = {"alt_min_words": _ALT_MIN_WORDS, "alt_max_words": _ALT_MAX_WORDS}
+
+
+def _check_alt(alt: str, subject: str) -> None:
+    text = alt.strip()
+    if not text:
+        raise ApplyError(
+            f"{subject} has no alt text — write one sentence describing what a reader "
+            "who cannot see the picture needs to know from it"
+        )
+    # match past any leading article/qualifier, so "A cover illustration of …"
+    # is caught as readily as "Illustration of …"
+    lowered = text.lower()
+    stems = [lowered] + [
+        lowered[len(word) + 1 :] for word in _ALT_LEADING_WORDS if lowered.startswith(word + " ")
+    ]
+    for prefix in _ALT_REDUNDANT_PREFIXES:
+        if any(stem.startswith(prefix) for stem in stems):
+            raise ApplyError(
+                f"{subject}: alt text opens with {prefix!r}, which a screen reader "
+                "already announces — delete that opening and start the sentence with "
+                "the subject of the picture itself"
+            )
+    words = len(text.split())
+    if words < _ALT_MIN_WORDS:
+        raise ApplyError(
+            f"{subject}: alt text is {words} word(s) — rewrite it as one full sentence "
+            f"of at least {_ALT_MIN_WORDS} words naming the subject, the setting and "
+            "what is happening"
+        )
+    if words > _ALT_MAX_WORDS:
+        raise ApplyError(
+            f"{subject}: alt text is {words} words — cut it to at most {_ALT_MAX_WORDS}, "
+            "keeping only what a reader needs from the picture, not the full scene"
+        )
 
 
 # -- pass 1: direction ---------------------------------------------------------
@@ -161,6 +214,7 @@ class CoverProposal(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     prompt: str
+    alt: str
 
 
 def _cover_skip(project: Project) -> str | None:
@@ -172,13 +226,18 @@ def _cover_skip(project: Project) -> str | None:
 
 
 def _cover_context(project: Project) -> dict:
-    return {"vision": project.vision, "direction": project.enrichment.direction}
+    return {
+        "vision": project.vision,
+        "direction": project.enrichment.direction,
+        **_ALT_CONTEXT,
+    }
 
 
 def _cover_apply(proposal: CoverProposal, project: Project) -> list[str]:
     if not proposal.prompt.strip():
         raise ApplyError("the cover prompt is empty; describe an atmospheric, spoiler-safe cover")
-    project.enrichment.cover = CoverBrief(prompt=proposal.prompt)
+    _check_alt(proposal.alt, "the cover")
+    project.enrichment.cover = CoverBrief(prompt=proposal.prompt, alt=proposal.alt)
     return ["cover set"]
 
 
@@ -234,6 +293,8 @@ class BriefItem(BaseModel):
     priority: int
     caption: str
     prompt: str
+    alt: str
+    ratio: Ratio
     entities: list[str] = []
 
 
@@ -259,6 +320,7 @@ def _briefs_context(project: Project) -> dict:
         "profiles": project.enrichment.profiles,
         "passages": rendered,
         "target": _target_brief_count(project),
+        **_ALT_CONTEXT,
     }
 
 
@@ -295,6 +357,13 @@ def _briefs_apply(proposal: BriefsProposal, project: Project) -> list[str]:
             )
         if not item.caption.strip() or not item.prompt.strip():
             raise ApplyError(f"brief for {item.passage} needs a non-empty caption and prompt")
+        _check_alt(item.alt, f"brief for {item.passage}")
+        if item.alt.strip().lower() == item.caption.strip().lower():
+            raise ApplyError(
+                f"brief for {item.passage}: alt text repeats the caption verbatim — the "
+                "caption sits beside the picture and every reader gets it; the alt text "
+                "stands in for the picture, so describe what is depicted instead"
+            )
     if sorted(priorities) != list(range(1, target + 1)):
         raise ApplyError(
             f"priorities must be exactly 1..{target}, dense and unique; got {sorted(priorities)}"
@@ -307,6 +376,8 @@ def _briefs_apply(proposal: BriefsProposal, project: Project) -> list[str]:
                 priority=item.priority,
                 caption=item.caption,
                 prompt=item.prompt,
+                alt=item.alt,
+                ratio=item.ratio,
                 entities=item.entities,
             )
             for item in proposal.briefs

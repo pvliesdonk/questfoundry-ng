@@ -15,6 +15,7 @@ from typer.testing import CliRunner
 from questfoundry.cli import app
 from questfoundry.export.gamebook import build_gamebook, compile_pdf, lint_gamebook
 from questfoundry.export.runtime_json import build_runtime
+from questfoundry.export.style import FULL_BLEED_MIN_PIXELS
 from questfoundry.project import load_project
 
 
@@ -146,7 +147,8 @@ def test_gamebook_smoke_shape(golden):
     runtime = build_runtime(golden)
     book = build_gamebook(runtime, seed=1)
     assert len(book.sections) == len(runtime["passages"])
-    assert book.typst.startswith("#set page")
+    # the document title comes first: PDF/UA-1 refuses a build without one
+    assert book.typst.startswith("#set document(title:")
 
 
 # -- hand-built unit tests ----------------------------------------------------
@@ -220,12 +222,12 @@ def test_grant_hoisting_common_vs_asymmetric():
     # both incoming choices to hub1 grant g1 -> hoisted, not inline
     assert any("GONE" in line for line in by_passage["hub1"].hoisted_lines)
     for line in by_passage["start"].choice_lines:
-        assert "GONE" not in line
+        assert "GONE" not in line.sentence
 
     # hub2's incoming choices grant DIFFERENT flags -> nothing common, no hoist
     assert by_passage["hub2"].hoisted_lines == ()
-    mid_line = by_passage["mid"].choice_lines[0]
-    side_line = by_passage["side"].choice_lines[0]
+    mid_line = by_passage["mid"].choice_lines[0].sentence
+    side_line = by_passage["side"].choice_lines[0].sentence
     assert "GTWO" in mid_line and "GTHREE" not in mid_line
     assert "GTHREE" in side_line and "GTWO" not in side_line
 
@@ -252,7 +254,7 @@ def test_variant_lowering_gated_pair_and_ungated_otherwise():
     book = build_gamebook(runtime, seed=1)
     start = next(s for s in book.sections if s.passage == "start")
     assert len(start.choice_lines) == 1
-    line = start.choice_lines[0]
+    line = start.choice_lines[0].sentence
     assert line.startswith("Proceed: ")
     assert "if you have XCODE" in line
     assert "if you have YCODE" in line
@@ -281,7 +283,7 @@ def test_variant_lowering_two_gated_no_ungated_has_no_otherwise():
     runtime = _rt(passages, start="start", flags=flags)
     book = build_gamebook(runtime, seed=1)
     start = next(s for s in book.sections if s.passage == "start")
-    line = start.choice_lines[0]
+    line = start.choice_lines[0].sentence
     assert "otherwise" not in line
 
 
@@ -310,14 +312,14 @@ def test_singleton_no_requires_and_singleton_with_requires_forms():
     by_passage = {s.passage: s for s in book.sections}
 
     assert by_passage["mid"].hoisted_lines == ()  # not unanimous: "Sneak around" grants nothing
-    start_lines = by_passage["start"].choice_lines
+    start_lines = [line.sentence for line in by_passage["start"].choice_lines]
     walk_line = next(line for line in start_lines if line.startswith("Walk forward"))
     sneak_line = next(line for line in start_lines if line.startswith("Sneak around"))
     assert walk_line == (
         f"Walk forward: write down the codeword TORCH, then turn to {by_passage['mid'].number}."
     )
     assert sneak_line == f"Sneak around: turn to {by_passage['mid'].number}."
-    mid_line = by_passage["mid"].choice_lines[0]
+    mid_line = by_passage["mid"].choice_lines[0].sentence
     assert mid_line == (
         f"If you have TORCH, you may ask the guide what she knows: "
         f"turn to {by_passage['end'].number}."
@@ -338,7 +340,7 @@ def test_unprojected_grants_render_nowhere():
     assert "flag:never-tested" not in book.codewords
     start = next(s for s in book.sections if s.passage == "start")
     assert start.hoisted_lines == ()
-    assert "write down" not in start.choice_lines[0].lower()
+    assert "write down" not in start.choice_lines[0].sentence.lower()
     assert "Write down" not in book.typst or "never-tested" not in book.typst
 
 
@@ -413,13 +415,13 @@ def golden_copy(tmp_path):
     return dest
 
 
-def _write_cover_png(root: Path) -> None:
+def _write_cover_png(root: Path, size: tuple[int, int] = FULL_BLEED_MIN_PIXELS) -> None:
     import io
 
     from PIL import Image
 
     buf = io.BytesIO()
-    Image.new("RGB", (8, 12), (30, 40, 50)).save(buf, format="PNG")
+    Image.new("RGB", size, (30, 40, 50)).save(buf, format="PNG")
     (root / "art" / "images").mkdir(parents=True, exist_ok=True)
     (root / "art" / "images" / "cover.png").write_bytes(buf.getvalue())
 
@@ -438,9 +440,30 @@ def test_print_cover_page_when_image_exists(golden_copy):
     assert "art/images/cover.png" in book.typst
     assert 'fit: "cover"' in book.typst
     assert "rgb(0, 0, 0, 160)" not in book.typst  # the old title-overlay band is gone
-    # the title appears once — on the interior title page, not on the cover
-    assert book.typst.count(_escape_title(runtime["meta"]["title"])) == 1
+    # the title is set once as document metadata (PDF/UA-1 requires it) and
+    # typeset once, on the interior title page — never over the cover art
+    body = book.typst.split("\n", 1)[1]
+    assert book.typst.startswith("#set document(title:")
+    assert body.count(_escape_title(runtime["meta"]["title"])) == 1
     # it compiles
+    assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
+
+
+def test_cover_below_the_dpi_floor_falls_back_to_inset(golden_copy):
+    """Full-bleed at 300dpi is a supported target, not an assumption: a
+    render that cannot fill an A5 page at that density is placed inset
+    rather than upscaled into softness (design plan, ratified decision 1)."""
+    _write_cover_png(golden_copy, size=(600, 900))
+    project = load_project(golden_copy)
+    book = build_gamebook(
+        build_runtime(project),
+        seed=1,
+        images_dir=golden_copy / "art" / "images",
+        root=golden_copy,
+    )
+    assert 'fit: "cover"' not in book.typst  # not full-bleed
+    assert "art/images/cover.png" in book.typst  # still placed
+    assert any("600×900px" in w and "inset" in w for w in book.warnings)
     assert compile_pdf(book.typst, root=golden_copy).startswith(b"%PDF")
 
 
@@ -498,3 +521,196 @@ def test_cli_export_pdf_explicit_seed_overrides_and_persists_once(golden_copy):
     assert result2.exit_code == 0, result2.output
     reloaded = load_project(golden_copy)
     assert reloaded.print_seed == 42
+
+
+# -- 1a Paperback furniture (design doc 04 §7) --------------------------------
+
+
+def test_paperback_flows_continuously_and_is_set_at_a5(golden):
+    """1a's defining difference from the layout it replaces: sections flow
+    into one another instead of taking a page each, at A5 rather than the
+    old 130x200 trim."""
+    book = build_gamebook(build_runtime(golden), seed=1)
+    assert "width: 148.0mm" in book.typst and "height: 210.0mm" in book.typst
+    # exactly the deliberate breaks — front matter and the two appendices —
+    # never one per section
+    assert book.typst.count("#pagebreak()") < len(book.sections)
+
+
+def test_running_head_reads_the_sections_on_the_spread(golden):
+    book = build_gamebook(build_runtime(golden), seed=1)
+    # the head is computed from the marks laid down by the sections
+    # themselves, not from a counter that guesses
+    assert "<qf-section>" in book.typst
+    assert "qf-spread-range" in book.typst
+    assert "query(<qf-section>)" in book.typst
+
+
+def test_single_target_instruction_puts_its_number_at_the_margin():
+    passages = {
+        "start": _passage("Start.", [_choice("Walk on", "end")]),
+        "end": _passage("Done.", ending={"id": "e-end", "title": "The End"}),
+    }
+    book = build_gamebook(_rt(passages, start="start"), seed=1)
+    start = next(s for s in book.sections if s.passage == "start")
+    (line,) = start.choice_lines
+    assert line.text == "Walk on: turn to"
+    assert line.number == 2
+    assert line.sentence == "Walk on: turn to 2."
+    # the number reaches the template as a value, not as literal brackets
+    assert "#qf-instruction([Walk on: turn to], [2])" in book.typst
+
+
+def test_multi_clause_instruction_keeps_every_number_inline():
+    """A group lowered to several codeword clauses names several sections,
+    so none of them can go to the margin."""
+    passages = {
+        "start": _passage(
+            "Junction.",
+            [
+                _choice("Proceed", "va", requires=["flag:xflag"]),
+                _choice("Proceed", "vb"),
+            ],
+        ),
+        "va": _passage("A.", ending={"id": "e-a", "title": "Ending A"}),
+        "vb": _passage("B.", ending={"id": "e-b", "title": "Ending B"}),
+    }
+    flags = {"flag:xflag": {"description": "d", "codeword": "XCODE"}}
+    book = build_gamebook(_rt(passages, start="start", flags=flags), seed=1)
+    start = next(s for s in book.sections if s.passage == "start")
+    (line,) = start.choice_lines
+    assert line.number is None
+    assert line.sentence.endswith(".")
+    assert "], none)" in book.typst
+
+
+def test_large_print_scales_the_type_but_keeps_the_page(golden):
+    from questfoundry.export.style import print_style
+
+    runtime = build_runtime(golden)
+    plain = build_gamebook(runtime, seed=1)
+    large = build_gamebook(runtime, seed=1, style=print_style("paperback", large_print=True))
+    assert f"size: {plain.style.body_size}pt" in plain.typst
+    assert f"size: {large.style.body_size}pt" in large.typst
+    assert large.style.body_size > plain.style.body_size
+    assert "width: 148.0mm" in large.typst  # same trim, same furniture
+    assert compile_pdf(large.typst).startswith(b"%PDF")
+
+
+# -- alt text and PDF/UA-1 -----------------------------------------------------
+
+
+def test_plate_carries_alt_and_its_ratio_decides_the_width(golden_copy):
+    from questfoundry.export.style import PRINT_PLACEMENT
+
+    _write_plate_pngs(golden_copy)
+    project = load_project(golden_copy)
+    book = build_gamebook(
+        build_runtime(project),
+        seed=1,
+        images_dir=golden_copy / "art" / "images",
+        root=golden_copy,
+    )
+    plates = {s.passage: s.illustration for s in book.sections if s.illustration}
+    # the golden's lamp-room brief is a square study, the others landscape
+    assert plates["p-lamp-room"].ratio == "1:1"
+    assert plates["p-arrival"].ratio == "3:2"
+    for plate in plates.values():
+        assert plate.alt.strip()
+        assert f'"{plate.alt}"' in book.typst  # reaches the template verbatim
+        assert f", {PRINT_PLACEMENT[plate.ratio].width})" in book.typst
+
+
+def test_lint_names_the_section_whose_illustration_has_no_alt(golden_copy):
+    _write_plate_pngs(golden_copy)
+    project = load_project(golden_copy)
+    runtime = build_runtime(project)
+    for entry in runtime["art"]:
+        entry["alt"] = ""
+    book = build_gamebook(
+        runtime, seed=1, images_dir=golden_copy / "art" / "images", root=golden_copy
+    )
+    errors = lint_gamebook(book)
+    assert errors, "a plate with no alt text must block the export"
+    assert all("no alt text" in e and "PDF/UA-1" in e for e in errors)
+    # the message names a section and a passage, so the brief is findable
+    assert any("p-arrival" in e for e in errors)
+
+
+def test_the_compiler_itself_refuses_a_build_with_no_alt_text(golden_copy):
+    """The contract is mechanical, not merely checked by us: `compile_pdf`
+    passes pdf_standards=ua-1, so Typst rejects an image with no alt — the
+    backstop behind the lint above, and the reason alt is not optional."""
+    _write_plate_pngs(golden_copy)
+    source = (
+        '#set document(title: "Probe")\n'
+        "= A section\n"
+        '#image("/art/images/p-arrival.png", width: 40%)\n'
+    )
+    with pytest.raises(Exception, match="alt text"):
+        compile_pdf(source, root=golden_copy)
+    # the same document with alt compiles
+    with_alt = source.replace('width: 40%', 'width: 40%, alt: "a grey plate"')
+    assert compile_pdf(with_alt, root=golden_copy).startswith(b"%PDF")
+
+
+def test_the_compiler_itself_refuses_a_build_with_no_document_title(golden):
+    book = build_gamebook(build_runtime(golden), seed=1)
+    titleless = book.typst.split("\n", 1)[1]
+    with pytest.raises(Exception, match="document title"):
+        compile_pdf(titleless)
+
+
+def _write_plate_pngs(root: Path) -> None:
+    import io
+
+    from PIL import Image
+
+    (root / "art" / "images").mkdir(parents=True, exist_ok=True)
+    for slug in ("p-arrival", "p-lamp-room", "p-tremor"):
+        buf = io.BytesIO()
+        Image.new("RGB", (60, 40), (90, 90, 80)).save(buf, format="PNG")
+        (root / "art" / "images" / f"{slug}.png").write_bytes(buf.getvalue())
+
+
+# -- style selection through the CLI -------------------------------------------
+
+
+def test_cli_rejects_an_unknown_style_and_lists_the_built_ones(golden_copy):
+    runner = CliRunner()
+    result = runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy), "--style", "bound"])
+    assert result.exit_code == 2
+    assert "unknown print style" in result.output and "paperback" in result.output
+
+
+def test_cli_style_only_applies_to_the_styled_formats(golden_copy):
+    runner = CliRunner()
+    result = runner.invoke(
+        app, ["export", "json", "--dir", str(golden_copy), "--style", "paperback"]
+    )
+    assert result.exit_code == 2
+    assert "--style applies to" in result.output
+
+
+def test_cli_large_print_writes_its_own_edition(golden_copy):
+    """A modifier produces a second edition of the same book, so it gets its
+    own filename instead of overwriting the plain one."""
+    runner = CliRunner()
+    assert runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy)]).exit_code == 0
+    result = runner.invoke(app, ["export", "pdf", "--dir", str(golden_copy), "--large-print"])
+    assert result.exit_code == 0, result.output
+
+    exports = golden_copy / "exports"
+    assert (exports / "the-keepers-bargain.pdf").exists()
+    large = exports / "the-keepers-bargain-paperback-large-print.typ"
+    assert large.exists()
+    assert large.with_suffix(".pdf").read_bytes().startswith(b"%PDF")
+    assert "size: 14.2pt" in large.read_text(encoding="utf-8")
+
+
+def test_cli_html_large_print_writes_its_own_edition(golden_copy):
+    runner = CliRunner()
+    result = runner.invoke(app, ["export", "html", "--dir", str(golden_copy), "--large-print"])
+    assert result.exit_code == 0, result.output
+    page = golden_copy / "exports" / "the-keepers-bargain-screen-large-print.html"
+    assert "--measure: 54ch;" in page.read_text(encoding="utf-8")

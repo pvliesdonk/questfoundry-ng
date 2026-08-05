@@ -13,6 +13,7 @@ from collections import deque
 
 from questfoundry.graph import queries
 from questfoundry.models.base import EdgeKind
+from questfoundry.models.enrichment import COVER_RATIO, RATIOS
 from questfoundry.models.presentation import Passage
 from questfoundry.models.structure import StateFlag
 from questfoundry.models.world import Entity
@@ -85,12 +86,17 @@ def _cover(project: Project) -> dict | None:
     """The cover ships only once its image exists (`art/images/cover.png`),
     mirroring `_art`: a cover brief without a rendered image simply doesn't
     ship (design doc 04 §4). The title is already in `meta.title` — the export
-    layout draws it over the art."""
+    layout draws it over the art. The ratio is fixed (a cover is portrait),
+    so it is stated here rather than carried per image."""
     if project.enrichment.cover is None:
         return None
     if not (project.root / "art" / "images" / "cover.png").exists():
         return None
-    return {"image": "art/images/cover.png"}
+    return {
+        "image": "art/images/cover.png",
+        "alt": project.enrichment.cover.alt,
+        "ratio": COVER_RATIO,
+    }
 
 
 def _codex(project: Project) -> list[dict]:
@@ -110,9 +116,35 @@ def _art(project: Project) -> list[dict]:
         if not (project.root / "art" / "images" / f"{slug}.png").exists():
             continue
         entries.append(
-            {"passage": slug, "image": f"art/images/{slug}.png", "caption": brief.caption}
+            {
+                "passage": slug,
+                "image": f"art/images/{slug}.png",
+                "caption": brief.caption,
+                # the two pieces of image metadata every style needs: what
+                # the picture says to a reader who cannot see it, and what
+                # shape to reserve for it (design doc 04 §7)
+                "alt": brief.alt,
+                "ratio": brief.ratio,
+            }
         )
     return entries
+
+
+def _image_problems(entry: dict, where: str) -> list[str]:
+    problems = []
+    if not str(entry.get("alt", "")).strip():
+        problems.append(
+            f"{where} has no alt text — add `alt:` to the brief in art/ (one sentence "
+            "describing the picture), or rerun DRESS so it proposes one; a PDF/UA-1 "
+            "build is refused without it"
+        )
+    ratio = entry.get("ratio")
+    if ratio not in RATIOS:
+        problems.append(
+            f"{where} has ratio {ratio!r}; use one of {', '.join(RATIOS)} — the menu is "
+            "the ratios every configured image provider can render"
+        )
+    return problems
 
 
 def validate_runtime(data: dict) -> list[str]:
@@ -147,12 +179,19 @@ def validate_runtime(data: dict) -> list[str]:
     for entry in data.get("codex", []):
         if entry["entity"] not in known_entities:
             problems.append(f"codex entry references unknown entity {entry['entity']!r}")
+    # Image metadata is validated here, at the persistent boundary, so a
+    # hand-edited brief faces the same check a DRESS proposal does. Alt text
+    # is not advisory: a PDF/UA-1 build cannot be produced without it, and a
+    # missing one would surface as a Typst compile error pages later.
     for entry in data.get("art", []):
         if entry["passage"] not in passages:
             problems.append(f"art entry references unknown passage {entry['passage']!r}")
+        problems += _image_problems(entry, f"art entry for passage {entry['passage']!r}")
     cover = data.get("cover")
-    if cover is not None and not str(cover.get("image", "")).strip():
-        problems.append("cover entry has no image")
+    if cover is not None:
+        if not str(cover.get("image", "")).strip():
+            problems.append("cover entry has no image")
+        problems += _image_problems(cover, "cover entry")
 
     # Walk with flag state, as every player will. The visited-set key carries
     # only GATE-RELEVANT flags (those some choice `requires`): a grant nothing

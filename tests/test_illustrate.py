@@ -167,7 +167,24 @@ def test_cover_renders_to_cover_png(golden_copy):
     assert "Style:" in provider.calls[0] and "Scene:" in provider.calls[0]
 
 
-def test_cover_renders_portrait_and_passages_landscape(golden_copy):
+def test_cover_renders_portrait_and_plates_take_their_brief_ratio(golden_copy):
+    """Ratio is per-image data (design doc 04 §6): each plate renders at the
+    ratio its brief chose, and the cover is portrait regardless."""
+    project = load_project(golden_copy)
+    provider = _RecordingProvider()
+    briefs = plan_renders(project).to_render
+    render_briefs(project, _stub_service(project, provider), "stub", briefs)
+    aspects = [kw["aspect_ratio"] for _, kw in provider.calls]
+    # the cover (priority 0) renders first and portrait
+    assert aspects[0] == "2:3"
+    # every plate carries its own brief's ratio, in render order
+    assert aspects[1:] == [b.ratio for b in briefs[1:]]
+    assert "1:1" in aspects[1:]  # the golden's lamp-room plate is a square study
+
+
+def test_project_aspect_ratio_pins_plates_but_never_the_cover(golden_copy):
+    """`images.aspect_ratio` is the author saying "one shape for the whole
+    book"; it outranks DRESS's per-scene choice. A cover is still a cover."""
     project = load_project(golden_copy)
     provider = _RecordingProvider()
     render_briefs(
@@ -175,9 +192,8 @@ def test_cover_renders_portrait_and_passages_landscape(golden_copy):
         generate_kwargs={"aspect_ratio": "3:2"},
     )
     aspects = [kw["aspect_ratio"] for _, kw in provider.calls]
-    # the cover (priority 0) renders first and portrait; the rest stay landscape
     assert aspects[0] == "2:3"
-    assert aspects.count("2:3") == 1 and all(a == "3:2" for a in aspects[1:])
+    assert all(a == "3:2" for a in aspects[1:])
 
 
 def test_text_capable_backend_draws_the_title_non_text_composites(golden_copy, monkeypatch):
@@ -472,7 +488,7 @@ def test_html_player_embeds_rendered_art(golden_copy):
     # 3 passage illustrations + the cover, all inlined
     assert html.count("data:image/png;base64,") == 4
     assert '<figure id="art"' in html
-    assert 'id="cover"' in html
+    assert 'id="cover-art"' in html  # the cover, inset on the title screen
 
 
 def test_pdf_export_compiles_with_rendered_art(golden_copy):
@@ -492,7 +508,7 @@ def test_pdf_export_compiles_with_rendered_art(golden_copy):
     assert result.exit_code == 0, result.output
 
     typ = (golden_copy / "exports" / "the-keepers-bargain.typ").read_text(encoding="utf-8")
-    assert '#image("/art/images/p-arrival.png"' in typ
+    assert '#qf-plate("/art/images/p-arrival.png"' in typ
     pdf = golden_copy / "exports" / "the-keepers-bargain.pdf"
     assert pdf.read_bytes().startswith(b"%PDF")
 

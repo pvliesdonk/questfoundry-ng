@@ -19,7 +19,24 @@ CANDIDATE PASSAGES:
 For each of the {{ target }} briefs, return {"passage": "<id>", "priority": an integer
 1..{{ target }} (dense, unique, one per brief), "caption": "one spoiler-safe sentence
 for a reader arriving at that passage", "prompt": "an image prompt using only the
-established visual facts above", "entities": [entity ids depicted, a subset of that
+established visual facts above", "alt": "the alt text (rules below)", "ratio": one of
+"3:2", "2:3", "1:1" (rules below), "entities": [entity ids depicted, a subset of that
 passage's own entities]}. At most one brief per passage.
+
+ALT TEXT — what a reader who cannot see the picture is told instead of it. The
+caption sits beside the picture and every reader gets it; the alt text stands in
+for the picture, so it must not repeat the caption. Write one sentence of
+{{ alt_min_words }}-{{ alt_max_words }} words naming the subject, the setting, and what is happening,
+in the same order a viewer's eye would take them. Start with the subject: do not
+write "Illustration of", "Image of" or "Picture of" — a screen reader announces
+that already. Describe what is depicted, not what it means.
+
+RATIO — the shape of the frame, chosen for the scene, from exactly these three:
+- "3:2" (landscape) — the default: a wide scene, a horizon, two or more figures,
+  a room read across.
+- "2:3" (portrait) — a single figure or object read top to bottom, a tall space,
+  a descent or a climb.
+- "1:1" (square) — a close study: one face, one hand, one object held.
+Pick per scene. No other ratio exists.
 {% include "_craft.j2" %}
 {% include "_shared.j2" %}

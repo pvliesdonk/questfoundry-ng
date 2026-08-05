@@ -64,8 +64,9 @@ What is left of the epic (contract: `plans/gamebook-layouts.md`, and its
 2. **The `image-generation-mcp` resolution adapter task**
    ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337)):
    until it lands, cloud covers sit below the 300dpi full-bleed floor
-   and take the inset fallback the export already reports. (1c is
-   unaffected — its banded cover crops by design.)
+   and take the inset fallback the export already reports. (1c's floor
+   is lower, since its band is shorter than a full page — but it is
+   **not** exempt: a band still runs the full page width.)
 
 A **live styled export has not been run.** Every style was validated on
 the golden story with the placeholder image provider: all three print

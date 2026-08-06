@@ -715,6 +715,10 @@ def check_b9_bridge_share(ctx: Context) -> None:
 
 
 B12_ARC_CAP = 32  # deterministic bound on arcs measured per graph
+# A couple of stray single-beat runs are healthy texture (the golden
+# story's hand-authored arcs carry 2); a warn needs a pattern. The
+# penalty still counts every single, so candidate ranking sees them all.
+B12_PING_PONG_MIN = 3
 
 
 def check_b12_braid(ctx: Context) -> None:
@@ -772,6 +776,13 @@ def check_b12_braid(ctx: Context) -> None:
             f"{score.late_intros} storyline(s) first appear outside the arc's "
             "intro window — deliberate late twists are legitimate; anything "
             "else should introduce earlier (advisory)",
+        )
+    if score.ping_pong >= B12_PING_PONG_MIN:
+        ctx.warn(
+            "B12",
+            f"{score.ping_pong} single-beat storyline run(s) in some arc's "
+            "middle — beat-by-beat alternation never lets a scene breathe; "
+            "the braid wants blocks of two or three (advisory)",
         )
 
 

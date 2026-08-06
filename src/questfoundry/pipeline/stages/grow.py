@@ -299,8 +299,10 @@ def _weave_apply(proposal: WeaveChoice, project: Project) -> list[str]:
     lines = [
         f"interleaving #{proposal.choice}: " + " -> ".join(order),
         f"chosen order {braid.describe(score)}",
-        f"orderings rewired: +{report.added} -{report.removed}",
     ]
+    if proposal.rationale:
+        lines.append(f"chooser's rationale: {proposal.rationale}")
+    lines.append(f"orderings rewired: +{report.added} -{report.removed}")
     for template, ids in sorted(report.clones.items()):
         lines.append(f"{template} instantiated per world: {', '.join(ids)}")
     if report.de_ended:

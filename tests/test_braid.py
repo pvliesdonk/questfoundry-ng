@@ -203,6 +203,28 @@ def test_b12_is_quiet_on_a_braided_chain(vision):
     assert not _b12(g, vision)
 
 
+def test_b12_warns_on_beat_by_beat_ping_pong(vision):
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(
+        g,
+        [("a0", da, pa, False), ("b0", db, pb, False)]
+        + [
+            (f"a{i}", da, pa, False) if i % 2 else (f"b{i}", db, pb, False)
+            for i in range(1, 8)
+        ]
+        + [
+            ("ac", da, pa, True),
+            ("b8", db, pb, False),
+            ("b9", db, pb, False),
+            ("bc", db, pb, True),
+        ],
+    )
+    issues = _b12(g, vision)
+    assert any("never lets a scene breathe" in i.message for i in issues)
+
+
 def test_b12_is_quiet_below_the_thread_floor(vision):
     g = StoryGraph()
     da, pa, _ = make_dilemma(g, "aa", explore=1)

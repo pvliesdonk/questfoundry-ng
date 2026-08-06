@@ -91,8 +91,8 @@ rhythm defect found during the read was tuned with one clause (PR
 
 M0–M8 complete, plus the two 2026-07-19-shipped epics **prose quality at
 scale** and **POV sequences**, and the two 2026-07-17-shipped epics
-**structural depth** and **cosmetic forks** (see "Current epics" above and
-the roadmap Shipped section). Earlier post-M8 efforts: the administration
+**structural depth** and **cosmetic forks** (see the roadmap Shipped
+section). Earlier post-M8 efforts: the administration
 restructure (PR #73),
 the POLISH passages-pass decomposition (A21, PR #71), `scene_type` /
 `narration_scope` annotations + B8, the review contract, reference-pinning

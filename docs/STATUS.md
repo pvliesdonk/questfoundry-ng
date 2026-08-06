@@ -59,8 +59,10 @@ phase doctrine in the chooser prompt, B12 at the gate (live signal on
 both medium examples), the freeze-clarification doc letter. **PR-2 —
 the repair primitive** (2026-08-06): `swap_linear_beats` with every
 pin enforced at the mutation layer, returning the stale beats (the
-re-contextualization price); invariant I18 (group contiguity) + gate
-check + violating constructions.
+re-contextualization price). No gate invariant behind the group pin —
+contiguity is not a graph invariant (the golden story legally
+separates its group's members); the pin holds by construction since
+any arrangement-changing swap touches a member and is refused.
 
 1. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
    preference, fork-loop site preference, insertion placement.

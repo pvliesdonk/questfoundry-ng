@@ -595,7 +595,10 @@ def swap_linear_beats(g: StoryGraph, first: str, second: str) -> list[str]:
     to a linear run (the branching topology — forks, convergences,
     roots, endings — is untouchable, per the freeze's letter), shares no
     storyline (within-thread chain order is pinned), touches no
-    intersection group (the shared scene stays contiguous, I18), and
+    intersection group (a group's internal arrangement is pinned — note
+    contiguity itself is NOT a graph invariant: the hand-authored golden
+    story legally separates group members with a beat between them; the
+    pin protects the arrangement, whatever it is), and
     crosses no adopted temporal hint. Returns the beats whose
     predecessors changed — their contextualized content is now stale,
     and the caller MUST re-contextualize them before prose runs (the
@@ -636,9 +639,10 @@ def swap_linear_beats(g: StoryGraph, first: str, second: str) -> list[str]:
     for b in (first, second):
         if g.in_ids(b, EdgeKind.IN_GROUP) or g.out_ids(b, EdgeKind.IN_GROUP):
             raise MutationError(
-                f"beat {b} belongs to an intersection group; the shared scene "
-                "stays contiguous (I18) — swap beats outside the group, or "
-                "move the whole group by swapping at its edges"
+                f"beat {b} belongs to an intersection group; a group's internal "
+                "arrangement is pinned — swap beats outside the group instead "
+                "(any swap that could change member spacing touches a member, "
+                "so refusing members preserves the arrangement by construction)"
             )
     first_beat, second_beat = g.node(first), g.node(second)
     assert isinstance(first_beat, Beat) and isinstance(second_beat, Beat)

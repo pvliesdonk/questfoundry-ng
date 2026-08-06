@@ -329,7 +329,7 @@ def test_swap_refuses_intersection_group_members():
         IntersectionGroup(id="intersection:x", created_by=St.GROW),
         ["beat:b0", "beat:a1"],
     )
-    with pytest.raises(mutations.MutationError, match=r"stays contiguous \(I18\)"):
+    with pytest.raises(mutations.MutationError, match=r"arrangement is pinned"):
         mutations.swap_linear_beats(g, "beat:b0", "beat:a1")
 
 
@@ -357,30 +357,39 @@ def test_swap_refuses_to_cross_a_temporal_hint():
         mutations.swap_linear_beats(g, "beat:a1", "beat:bc")
 
 
-def test_i18_scattered_group_fails_and_contiguous_passes(vision):
+def test_swaps_cannot_change_a_groups_internal_arrangement():
+    # No gate check exists behind the group pin, deliberately: contiguity
+    # is not a graph invariant (the golden story legally separates its
+    # group's members). The guarantee is by construction — any adjacent
+    # swap that could alter member spacing has a member in the pair, and
+    # members are refused. Golden-shaped construction: m1 -> x -> m2.
+    import pytest
+
     from questfoundry.models.base import Stage as St
     from questfoundry.models.structure import IntersectionGroup
 
-    def issues(g):
-        return [
-            i
-            for i in run_checks(g, vision, Stage.GROW)
-            if i.check == "I18" and i.severity == Severity.ERROR
-        ]
-
     g = StoryGraph()
     da, pa, db, pb = _two_locked(g)
-    _alternating(g, da, pa, db, pb)
+    dc, pc, _ = make_dilemma(g, "cc", explore=1)
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("m1", db, pb, False),
+            ("x", dc, pc, False),
+            ("m2", da, pa, False),
+            ("b1", db, pb, False),
+            ("cc0", dc, pc, True),
+            ("ac", da, pa, True),
+            ("bc", db, pb, True),
+        ],
+    )
     mutations.add_intersection(
         g,
         IntersectionGroup(id="intersection:x", created_by=St.GROW),
-        ["beat:b0", "beat:a1"],
+        ["beat:m1", "beat:m2"],
     )
-    assert not issues(g)  # b0 -> a1 adjacent: contiguous
-    # scatter the group: an outsider beat lands between its members
-    mutations.remove_ordering(g, "beat:b0", "beat:a1")
-    mutations.add_beat(g, narrative_beat("outsider", da), [pa])
-    mutations.add_ordering(g, "beat:b0", "beat:outsider")
-    mutations.add_ordering(g, "beat:outsider", "beat:a1")
-    violations = issues(g)
-    assert violations and "scattered" in violations[0].message
+    # moving x out from between the members requires swapping it with one
+    for pair in (("beat:m1", "beat:x"), ("beat:x", "beat:m2")):
+        with pytest.raises(mutations.MutationError, match=r"arrangement is pinned"):
+            mutations.swap_linear_beats(g, *pair)

@@ -7,9 +7,14 @@
 > the repair primitive — `swap_linear_beats` with every §4 pin enforced
 > at the mutation layer (interior-pair, same-storyline, intersection,
 > hint-crossing), returning the stale beats whose re-contextualization
-> is the move's price; invariant **I18** (group contiguity) with its
-> gate check and violating constructions. PR-3 (braid-respecting
-> POLISH) pending; validation (cc-struct checkpoint rerun) after it.
+> is the move's price. **No gate invariant behind the group pin**,
+> found during the build: group *contiguity* is not a graph invariant —
+> the hand-authored golden story legally separates its group's members
+> — and since swaps move only adjacent pairs, any swap that could
+> change a group's internal arrangement touches a member and is
+> refused: the pin holds by construction (design doc 01 §5; violating
+> constructions in tests). PR-3 (braid-respecting POLISH) pending;
+> validation (cc-struct checkpoint rerun) after it.
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was

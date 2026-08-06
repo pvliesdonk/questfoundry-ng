@@ -1,6 +1,11 @@
 # Weave Linearization — drama-layer braiding (Build Contract)
 
-> Status: **SPEC RATIFIED, in-session 2026-08-06.** Not yet built.
+> Status: **SPEC RATIFIED, in-session 2026-08-06. PR-1 BUILT** (the
+> braid decided at the weave: `graph/braid.py` metrics, per-arc
+> candidate scoring, ranked+scored candidates in the chooser prompt,
+> B12 at the gate, the freeze-clarification doc letter). PR-2
+> (`swap_linear_beats`) and PR-3 (braid-respecting POLISH) pending;
+> validation (cc-struct checkpoint rerun) after them.
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was

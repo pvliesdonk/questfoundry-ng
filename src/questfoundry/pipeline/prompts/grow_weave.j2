@@ -16,15 +16,29 @@ multiplies the endings.
 "(dilemma:x, locked subplot)" marks a beat of a fork-less storyline every
 player walks.
 
+Each candidate carries an engine-measured "braid" line: how the order reads on
+its worst playthrough. A story braids its storylines — introductions cluster at
+the opening, development interleaves through the middle in short runs (two or
+three beats of one storyline, then another), commits spread out, consequences
+cluster at the end. "Longest middle run" over the cap means one storyline plays
+out as an uninterrupted lump mid-story; "ping-pong" means beat-by-beat
+alternation that never lets a scene breathe. Lower penalty is better braiding.
+Prefer well-braided candidates — but the braid is not the whole of drama: a
+deliberately late-introduced twist storyline, for instance, scores worse and
+can still be the right story. If you pick a high-penalty candidate, your
+rationale must say what dramatic value outweighs the braid.
+
 CANDIDATES:
 {% for c in candidates %}
-#{{ c.index }}:
+#{{ c.index }} ({{ c.braid }}):
 {% for step in c.steps %}
   {{ loop.index }}. {{ step }}
 {% endfor %}
 {% endfor %}
 
 JUDGE BY:
+- The braid (above): short interleaved runs through the middle, no mid-story
+  lumps, no beat-by-beat ping-pong.
 - Commit points distributed, not clustered — let tension breathe between points of
   no return.
 - Subplots resolving inside the backbone's rising tension, not tacked on before or

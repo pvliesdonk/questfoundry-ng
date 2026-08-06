@@ -53,18 +53,20 @@ design doc 01 get their letter sharpened in PR-1).
 
 ## Immediate next steps
 
-1. **PR-1 — the braid decided** (frontier): per-candidate arc-order
-   induction, the scorer, enumeration bias, chooser-prompt doctrine,
-   B12 at GROW, and the freeze-clarification doc changes. Acceptance:
-   on the cc-struct-medium GROW checkpoint, worst-arc middle run ≤ 3
-   where run-6 scored 6.
-2. **PR-2 — `swap_linear_beats`** (mid-tier): the repair primitive
+Done: **PR-1 — the braid decided** (2026-08-06): per-candidate
+arc-order induction, the scorer, ranked+scored candidates with the
+phase doctrine in the chooser prompt, B12 at the gate (live signal on
+both medium examples), the freeze-clarification doc letter.
+
+1. **PR-2 — `swap_linear_beats`** (mid-tier): the repair primitive
    with pin checks, new invariant + violating-construction tests,
    mandatory re-contextualization, B12 at POLISH entry.
-3. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
+2. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
    preference, fork-loop site preference, insertion placement.
-4. **Validation**: unbilled GROW-from-weave rerun on the checkpoint,
-   B12 before/after, author read of one arc.
+3. **Validation**: unbilled GROW-from-weave rerun on the
+   cc-struct-medium checkpoint (acceptance: worst-arc middle run ≤ 3
+   where run-6 scored 6), B12 before/after, author read of one arc —
+   also the calibration read for the metric knobs (N, K, S).
 
 Also still standing: the BACKLOG POV-sequences live A/B; the
 export-styling residual (upstream

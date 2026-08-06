@@ -16,6 +16,46 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-06 (weave-linearization build contract ratified; the freeze
+  clarified):** Brainstorm session with the author resolved into
+  [`plans/weave-linearization.md`](plans/weave-linearization.md). The
+  load-bearing rulings, verbatim: iron rule 4's freeze "meant the
+  tensor of the dilemmas; the shape after grow... and in a sense we
+  meant (modulo these linear stretches) because they don't really
+  change the branching topology" — so the freeze is the **branching
+  topology**, and linear-stretch beat order is a distinct mutable
+  degree of freedom; there are "multiple moments of interest. 1. near
+  the beginning of grow when we have just tensored the Y-shaped. 2. at
+  the very start of polish. 3. during polish", with one move set — "in
+  a linear sequence of beats, their positions can be switched (up to a
+  point). and that holds for all three of those moments" — and "moment
+  one is load-bearing" (later moments exist because "grow and polish
+  introduce more beats, e.g. for pacing, which can lead to *new* linear
+  stretches"). Session groundwork: the heritage phase model
+  (how-branching-stories-work §Interleaving) adopted as the objective's
+  shape — clusters at the ends are correct, the middle interleaves,
+  commits distribute — and the per-arc ground-truth insight (a spine
+  braid is not an experienced braid; soft diamonds contribute one
+  branch per arc). Agent-proposed and author-ratified ("Sounds good to
+  me"): prefer-don't-prune scoring with the LLM keeping the pick,
+  atomic soft diamonds, block-shaping (runs of 2–3) for head
+  contiguity. Iron rule 4 / design doc 01 wording sharpening assigned
+  to PR-1.
+
+- **2026-08-05 (both epics called done; braiding is the current epic):**
+  Author, in-session, verbatim: "I'm calling both epics done for now.
+  with the high resolution pending an update of upstream. we will move
+  on to the braiding epic." Export styling moves to Shipped with one
+  pending-upstream residual (image-generation-mcp#337, handled in a
+  separate session; full-bleed covers take the inset fallback until it
+  lands) — the styled-read verdict is subsumed in the call. Register
+  conformance was already closed earlier the same day (entry below).
+  **Weave linearization — drama-layer braiding** (roadmap Next since
+  2026-07-17) becomes the current epic; it has no build contract yet,
+  so the first step is a frontier-lane spec session against
+  `pipeline/weave.py` and the 2026-07-17 capsule-interleaving findings
+  (STATUS "Immediate next steps").
+
 - **2026-08-05 (export styling: the remaining three directions — 1b
   Bound, 1c Compendium, 1e Room):** Built directly on the slice below,
   same day. The load-bearing result is that **no new machinery was

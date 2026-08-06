@@ -104,8 +104,15 @@ examples/keepers-bargain/   # hand-authored golden story (must always pass)
 3. **Answers are strictly equal.** Never add a default / primary /
    canonical marker to answers or paths — this was removed deliberately
    (bias vector). FILL's writing order is FILL-local scheduling state.
-4. **The topology freeze is absolute.** After GROW, beats are never
-   deleted and dilemma forks/convergences never move. POLISH adds only.
+4. **The topology freeze is absolute — and the frozen thing is the
+   *branching topology*.** After GROW, beats are never deleted and
+   dilemma forks/convergences never move ("the tensor of the dilemmas;
+   the shape after grow" — author, 2026-08-06). Beat order *within a
+   linear stretch* is linearization state, not topology: legal to
+   change under the braid pin algebra
+   (`docs/plans/weave-linearization.md` §4), at each moment's price.
+   POLISH adds, and reorders only within linear runs — it never
+   touches the branching shape.
 5. **Fix structure upstream, never patch with prose.** A passage that
    can't be written well is a POLISH/GROW bug, not a writing problem.
 6. **Invariants are numbered and cited.** New structural rules get an

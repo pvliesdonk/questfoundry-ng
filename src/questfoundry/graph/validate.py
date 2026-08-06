@@ -12,7 +12,7 @@ from collections import deque
 from dataclasses import dataclass, field
 from enum import StrEnum
 
-from questfoundry.graph import queries
+from questfoundry.graph import braid, queries
 from questfoundry.graph.mutations import CODEWORD_RE
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
@@ -711,6 +711,67 @@ def check_b9_bridge_share(ctx: Context) -> None:
             "sustaining its length with connective tissue instead of dramatic "
             "material; fix upstream (denser scaffolds sharing entities, or a "
             "dilemma budget matching the words target), not with prose (advisory)",
+        )
+
+
+B12_ARC_CAP = 32  # deterministic bound on arcs measured per graph
+
+
+def check_b12_braid(ctx: Context) -> None:
+    """B12 (advisory; plans/weave-linearization.md §5–6): per-arc braid
+    quality of the realized graph against the heritage phase model —
+    introductions cluster, the middle interleaves in short runs, commits
+    spread, consequences cluster. Measured per arc (a reader reads an
+    arc; each soft diamond contributes one branch, so spine order is not
+    experienced order), aggregated by worst arc. Advisory by design
+    (contract §3.5, prefer-don't-prune): the braid is decided at the
+    weave, where the same metrics score the candidates; here the chosen
+    braid stays visible — including on the new linear stretches later
+    passes create. Quiet below the thread floor (contract §9.4: a story
+    with little to braid must not warn about structurally unavoidable
+    runs)."""
+    g = ctx.g
+    order = queries.topological_order(g)
+    if order is None:
+        return  # I4 owns the cycle report
+    scores = []
+    for selection in queries.arc_selections(g)[:B12_ARC_CAP]:
+        view = queries.arc_view(g, selection)
+        tokens = []
+        for beat_id in order:
+            if beat_id not in view:
+                continue
+            beat = g.node(beat_id)
+            assert isinstance(beat, Beat)
+            threads = frozenset(
+                queries.dilemma_of_path(g, p) for p in queries.paths_of_beat(g, beat_id)
+            )
+            tokens.append(braid.BraidToken(threads, commit=bool(beat.commits_dilemmas)))
+        scores.append(braid.score_arc(tokens))
+    score = braid.worst(scores)
+    if score.degenerate:
+        return
+    if score.middle_run > braid.MIDDLE_RUN_MAX:
+        ctx.warn(
+            "B12",
+            f"worst arc carries a {score.middle_run}-beat single-storyline run in "
+            f"its middle (cap {braid.MIDDLE_RUN_MAX}) — a capsule: one dilemma "
+            "plays out uninterrupted where threads should interleave (advisory; "
+            "decided at the weave, repairable by linear-stretch swaps)",
+        )
+    if score.commit_gap is not None and score.commit_gap < braid.COMMIT_GAP_MIN:
+        ctx.warn(
+            "B12",
+            f"two commits sit {score.commit_gap} beat(s) apart on some arc "
+            f"(floor {braid.COMMIT_GAP_MIN}) — points of no return are "
+            "clustering instead of distributing (advisory)",
+        )
+    if score.late_intros:
+        ctx.warn(
+            "B12",
+            f"{score.late_intros} storyline(s) first appear outside the arc's "
+            "intro window — deliberate late twists are legitimate; anything "
+            "else should introduce earlier (advisory)",
         )
 
 
@@ -1605,6 +1666,7 @@ GATES: dict[Stage, list] = {
         check_g3_flag_derivation,
         check_budget_arc_beats,
         check_b9_bridge_share,
+        check_b12_braid,
     ],
     Stage.POLISH: [
         check_b10_choice_stretch,

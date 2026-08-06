@@ -41,7 +41,7 @@ import copy
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from questfoundry.graph import mutations, queries
+from questfoundry.graph import braid, mutations, queries
 from questfoundry.graph.validate import Issue, Severity, run_checks
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Answer, Dilemma, DilemmaRole, Path
@@ -223,9 +223,19 @@ def _unit_label(g, planned: weave.WeavePlan, key: str) -> str:
     return summaries
 
 
-def _shown_candidates(project: Project) -> tuple[weave.WeavePlan, list[list[str]]]:
-    planned = weave.plan(project.graph)
-    return planned, _spread(weave.candidates(planned), MAX_CANDIDATES_SHOWN)
+def _shown_candidates(
+    project: Project,
+) -> tuple[weave.WeavePlan, list[tuple[list[str], braid.BraidScore]]]:
+    """Candidates scored by worst-arc braid and shown across the score
+    range, best first (contract §3.5: the chooser sees the spread and
+    keeps the pick — a deliberately late twist stays choosable, eyes
+    open). Sort is deterministic: (penalty, enumeration index)."""
+    g = project.graph
+    planned = weave.plan(g)
+    orders = weave.candidates(planned)
+    scored = [(order, weave.braid_score_for(g, planned, order)) for order in orders]
+    ranked = sorted(enumerate(scored), key=lambda t: (t[1][1].penalty(), t[0]))
+    return planned, _spread([pair for _, pair in ranked], MAX_CANDIDATES_SHOWN)
 
 
 def _weave_context(project: Project) -> dict:
@@ -233,7 +243,7 @@ def _weave_context(project: Project) -> dict:
     planned, shown = _shown_candidates(project)
     multi_hard = len(planned.hard_resolves) > 1
     rendered = []
-    for i, order in enumerate(shown):
+    for i, (order, score) in enumerate(shown):
         steps = []
         in_worlds = False
         for key in order:
@@ -252,7 +262,7 @@ def _weave_context(project: Project) -> dict:
             steps.append(label)
             if key in planned.hard_resolves:
                 in_worlds = True
-        rendered.append({"index": i, "steps": steps})
+        rendered.append({"index": i, "steps": steps, "braid": braid.describe(score)})
     return {"vision": project.vision, "candidates": rendered, "multi_hard": multi_hard}
 
 
@@ -284,10 +294,11 @@ def _weave_apply(proposal: WeaveChoice, project: Project) -> list[str]:
     planned, shown = _shown_candidates(project)
     if not 0 <= proposal.choice < len(shown):
         raise ApplyError(f"choice {proposal.choice} is out of range 0..{len(shown) - 1}")
-    order = shown[proposal.choice]
+    order, score = shown[proposal.choice]
     report = weave.realize(g, planned, order)
     lines = [
         f"interleaving #{proposal.choice}: " + " -> ".join(order),
+        f"chosen order {braid.describe(score)}",
         f"orderings rewired: +{report.added} -{report.removed}",
     ]
     for template, ids in sorted(report.clones.items()):

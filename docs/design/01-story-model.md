@@ -457,7 +457,14 @@ means "comes before." The DAG *is* the story's structure:
 **After GROW, the dilemma topology is frozen.** Beats are never deleted;
 forks and convergences never move. POLISH may only add structural beats
 and reorder within linear runs. This freeze is what makes prose writing
-safe.
+safe. The frozen thing is the **branching topology** — "the tensor of
+the dilemmas; the shape after grow... (modulo these linear stretches)
+because they don't really change the branching topology" (author
+ratification, 2026-08-06): beat order *within* a linear stretch is
+linearization state, a distinct degree of freedom governed by the braid
+pin algebra (`docs/plans/weave-linearization.md` §4) — decided free at
+the weave, movable later only at that moment's re-contextualization
+price.
 
 **Arcs are computed, never stored.** An arc — one complete playthrough,
 one path choice per dilemma — is a walk of the DAG from root to a

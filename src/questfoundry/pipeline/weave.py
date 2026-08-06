@@ -32,7 +32,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from questfoundry.graph import mutations, queries
+from questfoundry.graph import braid, mutations, queries
 from questfoundry.graph.store import StoryGraph
 from questfoundry.models.base import EdgeKind, Stage
 from questfoundry.models.drama import Dilemma, DilemmaRole
@@ -528,6 +528,71 @@ def _orders_fair(keys: list[str], constraints: set[tuple[str, str]], cap: int) -
 
     rec(cap)
     return results
+
+
+def _beat_threads(shape_list: list[DilemmaShape]) -> dict[str, frozenset[str]]:
+    threads: dict[str, set[str]] = {}
+    for s in shape_list:
+        for b in s.pre:
+            threads.setdefault(b, set()).add(s.dilemma)
+        for chain in s.chains.values():
+            for b in chain:
+                threads.setdefault(b, set()).add(s.dilemma)
+    return {b: frozenset(ts) for b, ts in threads.items()}
+
+
+def arc_selections_of_plan(planned: WeavePlan, cap: int = 32) -> list[dict[str, str]]:
+    """One chosen chain per branched dilemma — the arcs a candidate
+    order induces, before any of them exists as a graph walk. Bounded
+    and deterministic (sorted dilemmas, sorted chains, first `cap` of
+    the product)."""
+    from itertools import islice, product
+
+    branched = sorted(
+        (s for s in planned.shapes if not s.locked), key=lambda s: s.dilemma
+    )
+    if not branched:
+        return [{}]
+    options = [sorted(s.chains) for s in branched]
+    names = [s.dilemma for s in branched]
+    return [
+        dict(zip(names, combo, strict=True)) for combo in islice(product(*options), cap)
+    ]
+
+
+def braid_score_for(
+    g: StoryGraph, planned: WeavePlan, order: list[str], cap: int = 32
+) -> braid.BraidScore:
+    """Worst-arc braid score of one candidate order (contract §5: the
+    phase model's ground truth is the arc — each soft diamond
+    contributes only the selected chain, so spine interleaving is not
+    experienced interleaving)."""
+    threads = _beat_threads(planned.shapes)
+    shape_of = {s.dilemma: s for s in planned.shapes}
+
+    def is_commit(beat_id: str) -> bool:
+        node = g.node(beat_id)
+        assert isinstance(node, Beat)
+        return bool(node.commits_dilemmas)
+
+    scores = []
+    for selection in arc_selections_of_plan(planned, cap):
+        tokens: list[braid.BraidToken] = []
+        for key in order:
+            if key.startswith("resolve:"):
+                dilemma = key.removeprefix("resolve:")
+                chain = shape_of[dilemma].chains[selection[dilemma]]
+                tokens.extend(
+                    braid.BraidToken(frozenset({dilemma}), commit=(b == chain[0]))
+                    for b in chain
+                )
+            else:
+                tokens.extend(
+                    braid.BraidToken(threads.get(b, frozenset()), commit=is_commit(b))
+                    for b in planned.units[key].beats
+                )
+        scores.append(braid.score_arc(tokens))
+    return braid.worst(scores)
 
 
 def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:

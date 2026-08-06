@@ -237,11 +237,21 @@ The hardest stage, split deliberately:
   derivation (branched paths only: a locked outcome is a world fact on
   every arc, never a gateable flag — G3 rejects flags on locked paths),
   arc enumeration and validation. This is graph algorithm territory; a
-  model adds nothing but risk.
+  model adds nothing but risk. **Braid scoring** (the weave-linearization
+  contract): every candidate order is scored per *induced arc* — each
+  soft diamond contributes only the selected chain, so spine order is
+  not experienced order — against the heritage phase-model metrics
+  (`graph/braid.py`: introduction latency, middle run-length, commit
+  spacing, block shape), aggregated by worst arc; candidates are shown
+  best-braided first across the score range, and B12 keeps the chosen
+  braid visible at the gate. Prefer, never prune: a deliberately
+  late-introduced twist scores worse and stays choosable.
 - **LLM judgment calls:** choosing among valid interleavings for dramatic
-  pacing (commits distributed, not clustered — and, with several hard
-  dilemmas, which fork is the climax: candidates cover every viable
-  nesting, wraps/serial between hards constrain it); proposing
+  pacing (the braid: short interleaved runs through the middle, commits
+  distributed, not clustered — the engine measures, the model judges,
+  its rationale owes an answer when it picks a high-penalty order — and,
+  with several hard dilemmas, which fork is the climax: candidates cover
+  every viable nesting, wraps/serial between hards constrain it); proposing
   intersections from shared entities + flexibility annotations over
   beats every player sees — shared pre-commit beats and locked-chain
   beats alike (each accepted intersection resolves the scene's

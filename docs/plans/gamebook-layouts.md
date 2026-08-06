@@ -1,10 +1,13 @@
 # Gamebook layouts — styled print & HTML export (Design Input)
 
-> Status: **CURRENT EPIC (author call, 2026-07-30) — all five layout
-> directions BUILT (2026-08-05): 1a Paperback, 1b Bound, 1c Compendium,
-> 1d Shelf and 1e Room, over the alt-text/UA-1 spine, ratio-as-data and
-> the shared style layer. See "What is built" below for what shipped and
-> what is deliberately still open.** The layout
+> Status: **EPIC DONE (author call, in-session 2026-08-05: "I'm calling
+> both epics done for now. with the high resolution pending an update of
+> upstream").** All five layout directions BUILT: 1a Paperback, 1b Bound,
+> 1c Compendium, 1d Shelf and 1e Room, over the alt-text/UA-1 spine,
+> ratio-as-data and the shared style layer; axe-core CI pass landed; live
+> styled read run on `examples/closed-circle-oss`. One residual pending
+> upstream: the image-generation-mcp resolution adapter (#337) that
+> full-bleed covers wait on. See "What is built" below. The layout
 > directions come from the
 > author's Claude Design project ("Questfoundry gamebook layout
 > directions", project `5147ccb0-3922-4b92-84c4-a55032396ad0`),

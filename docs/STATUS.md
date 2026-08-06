@@ -17,79 +17,62 @@ Where to look for the rest:
 
 _Last updated: 2026-08-05._
 
-## Current epic — export styling
+## Current epic — weave linearization (drama-layer braiding)
 
-**Export styling — gamebook layout directions** is the current epic
-(author call, 2026-07-30): the author's Claude Design layout project,
-imported as [`plans/gamebook-layouts.md`](plans/gamebook-layouts.md),
-becomes selectable print/HTML export styles with a shared WCAG contract
-and PDF/UA-1 output. The contract's open decisions were **ratified by
-the author in-session 2026-07-30** (art-ratio menu bounded by provider
-support; alt + kind + document metadata; large print as a modifier;
-first build 1a Paperback + 1d Shelf) — see the plan's "Ratified
-decisions".
-
-**All five layout directions are built (2026-08-05).** Alt text runs end
-to end (brief → DRESS → runtime → every template) and print compiles with
-`pdf_standards="ua-1"`, so the Typst compiler refuses a build with a
-missing alt or title. Ratio is per-image data (2:3/3:2/1:1) from the
-brief through `qf illustrate` to each style's placement rule. The shared
-layer is `export/style.py` — contrast-checked ramps whose failure blocks
-the build, a geometry check that does the same for a marginal column, the
-ratio/placement tables, large print as a modifier.
-
-Print: **1a Paperback** (`--style paperback`, the default — A5,
-continuous flow, running heads carrying the spread's section range,
-turn-to numbers bold at the right margin), **1b Bound** (`--style bound` —
-numerals and codewords in a wide outer margin that swaps sides with the
-binding, italic instruction blocks), **1c Compendium**
-(`--style compendium` — banded cover, heavy type carrying the front
-matter). HTML: **1d Shelf** (`--style screen`) and **1e Room**
-(`--style table` — the cover filled to the viewport under a scrim),
-sharing one reading view. Durable rules: design doc
-[04 §7](design/04-export-and-play.md); mini-ADR **A26**.
-
-Earlier epics — prose quality at scale, POV sequences (2026-07-19),
-structural depth, cosmetic forks (2026-07-17) — are in the roadmap
-Shipped section; their measurement remainders live in the BACKLOG.
+**Weave linearization — drama-layer braiding** is the current epic
+(author call, in-session 2026-08-05: "we will move on to the braiding
+epic"). The problem, from the author read of the run-6 graph
+(2026-07-17): an unexplored dilemma's beats weave as one consecutive
+capsule (`call-out-farmers`: 6 uninterrupted beats right after setup,
+no other thread interleaved) — the fork loop braids the *choice* layer;
+nothing braids the *drama* layer. The epic: use the weave's
+linearization freedom deliberately — interleave capsule blocks
+thread-by-thread, and reorder for head-candidate contiguity. Legal
+moves are stable cross-thread interleavings: within-thread order,
+intersection adjacencies, and temporal hints stay pinned. **Recorded
+design constraint (2026-07-17): linearization policy is weave-side and
+pre-contextualize** — after contextualize the summaries chain
+narratively and reordering would force re-contextualization; before
+it, reorder is a pure engine step. Builds on the POV-sequences
+sequence concept; touches the scaffold shape, intersections, and the
+capsule placement the shape presets encode. Roadmap entry: 05 §Now.
 
 ## Immediate next steps
 
-What is left of the epic (contract: `plans/gamebook-layouts.md`, and its
-"What is built" section for what the build deliberately left):
+The epic has a roadmap entry and a recorded design constraint but **no
+build contract yet** — no `docs/plans/` doc exists. Next steps:
 
-1. **The `image-generation-mcp` resolution adapter task**
-   ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337)):
-   until it lands, cloud covers sit below the 300dpi full-bleed floor
-   and take the inset fallback the export already reports. (1c's floor
-   is lower, since its band is shorter than a full page — but it is
-   **not** exempt: a band still runs the full page width.)
+1. **Spec session (frontier lane)** — this is GROW/weave narrative-DAG
+   semantics, the hard part of the codebase. Produce the build contract
+   (`docs/plans/weave-linearization.md`): the braiding objective made
+   countable (what "interleaved enough" means, on which graph), the
+   legal-move set stated precisely against `pipeline/weave.py`'s
+   current linearization, the policy knobs, and the validation plan
+   (the run-6-era graph and `call-out-farmers` are the known bad
+   exemplar to measure against).
+2. Skim first: roadmap entry (05 §Now), the 2026-07-17 decision-log
+   entries on capsule interleaving, `docs/plans/pov-sequences.md`
+   (the sequence concept it builds on), and `pipeline/weave.py`.
 
-Done 2026-08-05: **axe-core in CI** (`tests/test_a11y.py` + the CI
-`a11y` job) — WCAG-A/AA scans of both screen styles over the title
-screen, opening section, and a handful of turns, the large-print
-modifier, and a planted-violation self-test; the job fails rather than
-skips when the browser is missing.
-
-The **live styled export has now been run (2026-08-05)** — no billed
-calls needed: `examples/closed-circle-oss` already carried 20 rendered
-Gemini plates + a cover. Its briefs predate the alt contract, so the
-UA-1 gate refused the build until every brief (and the cover) got alt
-text — written by hand against the actual images, which is exactly the
-gate working. All five styles then exported clean with real art; the
-below-floor Gemini cover took the documented inset fallback in every
-print style (the #337 dependency behaving as designed). The styled set
-was delivered to the author; their read verdict is pending.
-
-After that the epic is done, and the roadmap "Next" candidates (weave
-linearization, M9 retrieval refinement) are the open field.
-
-Also still standing: the BACKLOG POV-sequences live A/B.
+Also still standing: the BACKLOG POV-sequences live A/B; the
+export-styling residual (upstream
+[#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337),
+handled in a separate session — full-bleed covers take the inset
+fallback until it lands).
 
 GitHub *issues* are NOT used for this repo (author, 2026-07-15) — work is
 tracked here and in the BACKLOG.
 
 ## Recently shipped (see roadmap "Shipped" + the decision log)
+
+**Export styling: DONE (author call, in-session 2026-08-05: "I'm
+calling both epics done for now. with the high resolution pending an
+update of upstream").** All five layout directions as selectable
+styles over the shared style layer, alt text + PDF/UA-1 end-to-end,
+ratio-as-data, axe-core in CI, image compression (lossless at the
+render write site, `qf illustrate --compress` lossy opt-in), and the
+live styled read on `examples/closed-circle-oss` with real art. Full
+record: roadmap Shipped entry; mini-ADR A26; design doc 04 §7.
 
 **Register conformance: BUILT AND VALIDATED (2026-08-05).** The
 star-swabber run (medium, kimi-k2.6, corpus-grounded) completed

@@ -112,38 +112,29 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   [`../plans/pov-sequences.md`](../plans/pov-sequences.md) (A25). Residual
   in BACKLOG: the formal live A/B against the run-6 counterfactual.
 
-## Now
-
-- **Export styling — gamebook layout directions** (author call,
-  2026-07-30). Turn the author's Claude Design layout project (imported
-  2026-07-30, contract:
-  [`../plans/gamebook-layouts.md`](../plans/gamebook-layouts.md)) into
-  styled exports: three print directions (paperback / bound /
-  compendium) and two HTML player directions as selectable styles, a
-  shared WCAG contract (contrast-checked ramps, gates-in-words, real
-  semantics, axe-core in CI), PDF/UA-1 compilation, and the art-geometry
-  rules (2:3 cover, 3:2 plates, per-style crop rules). Stays on bare
-  Typst. The contract's open decisions were ratified by the author
-  in-session 2026-07-30 (provider-bounded ratio menu, alt + kind +
-  document metadata, large-print modifier, first build 1a + 1d) — see
-  the plan's "Ratified decisions".
-
-  **All five directions built 2026-08-05.** Alt text end-to-end with
-  PDF/UA-1 compilation, ratio-as-data (2:3/3:2/1:1) from brief to
-  placement, the shared style layer (contrast-checked ramps and a
-  marginal-column geometry check, both build-failing; per-style placement
-  tables; large print as a modifier), and the styles themselves: **1a
-  Paperback** (`--style paperback`, the default, replacing the hard-coded
-  130×200 one-section-per-page layout), **1b Bound**, **1c Compendium**,
-  **1d Shelf** and **1e Room**. Durable rules: design doc
-  [04 §7](04-export-and-play.md); mini-ADR **A26**. The axe-core CI
-  pass landed 2026-08-05 (`tests/test_a11y.py` + the CI `a11y` job).
-  Remaining in this epic: the `image-generation-mcp` resolution
-  adapter task
+- **Export styling — gamebook layout directions** (author call
+  2026-07-30; **called done 2026-08-05**, author, in-session: "I'm
+  calling both epics done for now. with the high resolution pending an
+  update of upstream"). All five layout directions as selectable styles
+  — print **1a Paperback** (default) / **1b Bound** / **1c Compendium**,
+  HTML **1d Shelf** (`screen`) / **1e Room** (`table`) — over a shared
+  style layer (contrast-checked ramps and marginal-column geometry,
+  both build-failing; per-style placement tables; large print as a
+  modifier), alt text end-to-end with PDF/UA-1 compilation, ratio-as-data
+  (2:3/3:2/1:1) from brief to placement, the axe-core CI pass
+  (`tests/test_a11y.py` + the `a11y` job), and image compression
+  (lossless at the render write site; `qf illustrate --compress` lossy
+  opt-in). Live styled read run on `examples/closed-circle-oss` (real
+  Gemini art, alt text hand-written to the contract). Contract:
+  [`../plans/gamebook-layouts.md`](../plans/gamebook-layouts.md);
+  durable rules: design doc [04 §7](04-export-and-play.md); mini-ADR
+  **A26**. Residual, pending upstream: the `image-generation-mcp`
+  resolution adapter
   ([#337](https://github.com/pvliesdonk/image-generation-mcp/issues/337))
-  that full-bleed covers wait on, and a live styled read.
+  — until it lands, full-bleed covers take the documented inset
+  fallback.
 
-## Next
+## Now
 
 - **Weave linearization — drama-layer braiding** (from the author read of
   the run-6 graph, 2026-07-17). An unexplored dilemma's beats weave as one
@@ -159,7 +150,11 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   narratively and reordering would force re-contextualization; before it,
   reorder is a pure engine step. Builds on the sequence concept from the
   POV-sequences redesign. Touches the scaffold shape, intersections, and
-  the capsule placement the shape presets encode.
+  the capsule placement the shape presets encode. **Made the current
+  epic 2026-08-05** (author, in-session: "we will move on to the
+  braiding epic").
+
+## Next
 
 - **M9 — Retrieval refinement (exemplars & standing queries).** The two
   retrieval findings from M6's exit run, made first-class. (1) **A reserved

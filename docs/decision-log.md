@@ -16,6 +16,20 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-05 (both epics called done; braiding is the current epic):**
+  Author, in-session, verbatim: "I'm calling both epics done for now.
+  with the high resolution pending an update of upstream. we will move
+  on to the braiding epic." Export styling moves to Shipped with one
+  pending-upstream residual (image-generation-mcp#337, handled in a
+  separate session; full-bleed covers take the inset fallback until it
+  lands) — the styled-read verdict is subsumed in the call. Register
+  conformance was already closed earlier the same day (entry below).
+  **Weave linearization — drama-layer braiding** (roadmap Next since
+  2026-07-17) becomes the current epic; it has no build contract yet,
+  so the first step is a frontier-lane spec session against
+  `pipeline/weave.py` and the 2026-07-17 capsule-interleaving findings
+  (STATUS "Immediate next steps").
+
 - **2026-08-05 (export styling: the remaining three directions — 1b
   Bound, 1c Compendium, 1e Room):** Built directly on the slice below,
   same day. The load-bearing result is that **no new machinery was

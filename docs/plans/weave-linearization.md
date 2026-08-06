@@ -1,11 +1,15 @@
 # Weave Linearization — drama-layer braiding (Build Contract)
 
-> Status: **SPEC RATIFIED, in-session 2026-08-06. PR-1 BUILT** (the
-> braid decided at the weave: `graph/braid.py` metrics, per-arc
-> candidate scoring, ranked+scored candidates in the chooser prompt,
-> B12 at the gate, the freeze-clarification doc letter). PR-2
-> (`swap_linear_beats`) and PR-3 (braid-respecting POLISH) pending;
-> validation (cc-struct checkpoint rerun) after them.
+> Status: **SPEC RATIFIED, in-session 2026-08-06. PR-1 + PR-2 BUILT.**
+> PR-1: the braid decided at the weave (`graph/braid.py` metrics,
+> per-arc candidate scoring, ranked+scored candidates in the chooser
+> prompt, B12 at the gate, the freeze-clarification doc letter). PR-2:
+> the repair primitive — `swap_linear_beats` with every §4 pin enforced
+> at the mutation layer (interior-pair, same-storyline, intersection,
+> hint-crossing), returning the stale beats whose re-contextualization
+> is the move's price; invariant **I18** (group contiguity) with its
+> gate check and violating constructions. PR-3 (braid-respecting
+> POLISH) pending; validation (cc-struct checkpoint rerun) after it.
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was

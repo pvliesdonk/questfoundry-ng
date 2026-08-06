@@ -802,6 +802,37 @@ def check_i8_intersections(ctx: Context) -> None:
                 seen[impact.dilemma] = beat_id
 
 
+def check_i18_group_contiguity(ctx: Context) -> None:
+    """I18: post-realization, an intersection group's members form one
+    contiguous PREDECESSOR chain — the shared scene never scatters
+    (weave-linearization contract §4: intersection adjacency is a pin;
+    `swap_linear_beats` refuses group members, and this check makes a
+    scattered group loud however it was produced)."""
+    for group in sorted(ctx.g.nodes_of(IntersectionGroup), key=lambda n: n.id):
+        members = sorted(ctx.g.in_ids(group.id, EdgeKind.IN_GROUP))
+        if len(members) < 2:
+            continue
+        member_set = set(members)
+        internal = {
+            m: [s for s in queries.successors(ctx.g, m) if s in member_set] for m in members
+        }
+        heads = [m for m in members if not any(m in internal[o] for o in members)]
+        chained = 1
+        cursor = heads[0] if len(heads) == 1 else None
+        while cursor is not None and len(internal[cursor]) == 1:
+            (cursor,) = internal[cursor]
+            chained += 1
+        if len(heads) != 1 or chained != len(members):
+            ctx.error(
+                "I18",
+                f"intersection {group.id} members are not one contiguous "
+                f"chain ({', '.join(members)}); the shared scene has "
+                "scattered — restore adjacency (the weave realizes group "
+                "members consecutively; linear-stretch swaps must not "
+                "separate them)",
+            )
+
+
 def check_i9_freeze(ctx: Context) -> None:
     record = ctx.g.frozen
     if record is None:
@@ -1671,6 +1702,7 @@ GATES: dict[Stage, list] = {
         check_i7_convergence_by_role,
         check_i8_intersections,
         check_i9_freeze,
+        check_i18_group_contiguity,
         check_g3_viewpoint_refs,
         check_i17_scheme_conformance,
         check_b11_sequence_health,

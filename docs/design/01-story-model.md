@@ -806,6 +806,15 @@ design.
   story. No roster → the check skips (pre-scheme projects are the legal
   degenerate case). The scheme/annotate schemas make pipeline violations
   unrepresentable; the gate holds hand edits to the same rule.
+- **I18** Intersection-group contiguity
+  (`docs/plans/weave-linearization.md` §4; author-ratified 2026-08-06):
+  post-realization, a group's members form one contiguous PREDECESSOR
+  chain — the shared scene never scatters. Intersection adjacency is a
+  pin of the linearization algebra: `swap_linear_beats` (the braid
+  repair primitive) refuses group members, refuses anything outside a
+  strictly interior linear pair, refuses same-storyline pairs and
+  hint-crossing pairs — so a pipeline violation is unrepresentable —
+  and the gate holds hand edits to the same rule.
 
 ## 9. Where the mapping breaks (danger zones)
 

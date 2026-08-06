@@ -230,3 +230,157 @@ def test_b12_is_quiet_below_the_thread_floor(vision):
     da, pa, _ = make_dilemma(g, "aa", explore=1)
     _chain(g, [(f"a{i}", da, pa, False) for i in range(6)] + [("ac", da, pa, True)])
     assert not _b12(g, vision)
+
+
+# -- swap_linear_beats: the repair primitive (moment 2) -----------------------
+
+
+def _two_locked(g: StoryGraph):
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    return da, pa, db, pb
+
+
+def _alternating(g: StoryGraph, da, pa, db, pb):
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("b0", db, pb, False),
+            ("a1", da, pa, False),
+            ("b1", db, pb, False),
+            ("ac", da, pa, True),
+            ("b2", db, pb, False),
+            ("bc", db, pb, True),
+        ],
+    )
+
+
+def test_swap_rewires_the_pair_and_returns_the_stale_beats():
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _alternating(g, da, pa, db, pb)
+    affected = mutations.swap_linear_beats(g, "beat:b0", "beat:a1")
+    assert affected == ["beat:a1", "beat:b0", "beat:b1"]
+    from questfoundry.models.base import EdgeKind
+
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a0", "beat:a1")
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:a1", "beat:b0")
+    assert g.has_edge(EdgeKind.PREDECESSOR, "beat:b0", "beat:b1")
+    assert not g.has_edge(EdgeKind.PREDECESSOR, "beat:b0", "beat:a1")
+
+
+def test_swap_refuses_a_non_adjacent_pair():
+    import pytest
+
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _alternating(g, da, pa, db, pb)
+    with pytest.raises(mutations.MutationError, match=r"not adjacent"):
+        mutations.swap_linear_beats(g, "beat:a0", "beat:a1")
+
+
+def test_swap_refuses_the_walls_of_the_linear_run():
+    import pytest
+
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _alternating(g, da, pa, db, pb)
+    # beat:a0 is the root: not strictly interior
+    with pytest.raises(mutations.MutationError, match=r"not strictly interior"):
+        mutations.swap_linear_beats(g, "beat:a0", "beat:b0")
+    # beat:bc is terminal
+    with pytest.raises(mutations.MutationError, match=r"not strictly interior"):
+        mutations.swap_linear_beats(g, "beat:b2", "beat:bc")
+
+
+def test_swap_refuses_a_same_storyline_pair():
+    import pytest
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("a1", da, pa, False),
+            ("a2", da, pa, False),
+            ("b0", db, pb, False),
+            ("ac", da, pa, True),
+            ("bc", db, pb, True),
+        ],
+    )
+    with pytest.raises(mutations.MutationError, match=r"same storyline"):
+        mutations.swap_linear_beats(g, "beat:a1", "beat:a2")
+
+
+def test_swap_refuses_intersection_group_members():
+    import pytest
+
+    from questfoundry.models.base import Stage as St
+    from questfoundry.models.structure import IntersectionGroup
+
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _alternating(g, da, pa, db, pb)
+    mutations.add_intersection(
+        g,
+        IntersectionGroup(id="intersection:x", created_by=St.GROW),
+        ["beat:b0", "beat:a1"],
+    )
+    with pytest.raises(mutations.MutationError, match=r"stays contiguous \(I18\)"):
+        mutations.swap_linear_beats(g, "beat:b0", "beat:a1")
+
+
+def test_swap_refuses_to_cross_a_temporal_hint():
+    import pytest
+
+    from questfoundry.models.structure import HintPosition, TemporalHint
+
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("b0", db, pb, False),
+            ("a1", da, pa, False),
+            ("bc", db, pb, True),
+            ("a2", da, pa, False),
+            ("ac", da, pa, True),
+        ],
+    )
+    hinted = g.node("beat:a1")
+    hinted.temporal_hints = [TemporalHint(dilemma=db, position=HintPosition.BEFORE_COMMIT)]
+    with pytest.raises(mutations.MutationError, match=r"cross the hint"):
+        mutations.swap_linear_beats(g, "beat:a1", "beat:bc")
+
+
+def test_i18_scattered_group_fails_and_contiguous_passes(vision):
+    from questfoundry.models.base import Stage as St
+    from questfoundry.models.structure import IntersectionGroup
+
+    def issues(g):
+        return [
+            i
+            for i in run_checks(g, vision, Stage.GROW)
+            if i.check == "I18" and i.severity == Severity.ERROR
+        ]
+
+    g = StoryGraph()
+    da, pa, db, pb = _two_locked(g)
+    _alternating(g, da, pa, db, pb)
+    mutations.add_intersection(
+        g,
+        IntersectionGroup(id="intersection:x", created_by=St.GROW),
+        ["beat:b0", "beat:a1"],
+    )
+    assert not issues(g)  # b0 -> a1 adjacent: contiguous
+    # scatter the group: an outsider beat lands between its members
+    mutations.remove_ordering(g, "beat:b0", "beat:a1")
+    mutations.add_beat(g, narrative_beat("outsider", da), [pa])
+    mutations.add_ordering(g, "beat:b0", "beat:outsider")
+    mutations.add_ordering(g, "beat:outsider", "beat:a1")
+    violations = issues(g)
+    assert violations and "scattered" in violations[0].message

@@ -152,7 +152,13 @@ live-validated by the first weak-tier medium to finish FILL gate-clean —
   POV-sequences redesign. Touches the scaffold shape, intersections, and
   the capsule placement the shape presets encode. **Made the current
   epic 2026-08-05** (author, in-session: "we will move on to the
-  braiding epic").
+  braiding epic"). **Build contract ratified 2026-08-06**:
+  [`../plans/weave-linearization.md`](../plans/weave-linearization.md)
+  — heritage phase model, per-arc countable metrics, one commutation
+  algebra across three moments (weave / POLISH entry / during POLISH),
+  moment 1 load-bearing, and the author's freeze clarification (the
+  freeze is the branching topology; linear-stretch order is mutable
+  linearization state under the pin algebra).
 
 ## Next
 

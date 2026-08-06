@@ -37,22 +37,34 @@ it, reorder is a pure engine step. Builds on the POV-sequences
 sequence concept; touches the scaffold shape, intersections, and the
 capsule placement the shape presets encode. Roadmap entry: 05 §Now.
 
+**The build contract is ratified** (in-session 2026-08-06):
+[`plans/weave-linearization.md`](plans/weave-linearization.md) — the
+heritage phase model as the objective (clusters at the ends, dense
+interleaving in the middle, commits distributed), countable per-arc
+metrics (introduction latency, middle run-length ≤ 3, commit spacing,
+block shape), one commutation algebra across three moments (weave /
+POLISH entry / during POLISH) with a monotone move-cost gradient,
+moment 1 load-bearing, prefer-don't-prune candidate scoring with the
+LLM keeping the pick, soft diamonds atomic, block-shaping for head
+contiguity. Includes the author's freeze clarification: the frozen
+thing is the **branching topology**; linear-stretch order is
+linearization state, mutable under the pin algebra (iron rule 4 and
+design doc 01 get their letter sharpened in PR-1).
+
 ## Immediate next steps
 
-The epic has a roadmap entry and a recorded design constraint but **no
-build contract yet** — no `docs/plans/` doc exists. Next steps:
-
-1. **Spec session (frontier lane)** — this is GROW/weave narrative-DAG
-   semantics, the hard part of the codebase. Produce the build contract
-   (`docs/plans/weave-linearization.md`): the braiding objective made
-   countable (what "interleaved enough" means, on which graph), the
-   legal-move set stated precisely against `pipeline/weave.py`'s
-   current linearization, the policy knobs, and the validation plan
-   (the run-6-era graph and `call-out-farmers` are the known bad
-   exemplar to measure against).
-2. Skim first: roadmap entry (05 §Now), the 2026-07-17 decision-log
-   entries on capsule interleaving, `docs/plans/pov-sequences.md`
-   (the sequence concept it builds on), and `pipeline/weave.py`.
+1. **PR-1 — the braid decided** (frontier): per-candidate arc-order
+   induction, the scorer, enumeration bias, chooser-prompt doctrine,
+   B12 at GROW, and the freeze-clarification doc changes. Acceptance:
+   on the cc-struct-medium GROW checkpoint, worst-arc middle run ≤ 3
+   where run-6 scored 6.
+2. **PR-2 — `swap_linear_beats`** (mid-tier): the repair primitive
+   with pin checks, new invariant + violating-construction tests,
+   mandatory re-contextualization, B12 at POLISH entry.
+3. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
+   preference, fork-loop site preference, insertion placement.
+4. **Validation**: unbilled GROW-from-weave rerun on the checkpoint,
+   B12 before/after, author read of one arc.
 
 Also still standing: the BACKLOG POV-sequences live A/B; the
 export-styling residual (upstream

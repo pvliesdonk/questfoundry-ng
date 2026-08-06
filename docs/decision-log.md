@@ -16,6 +16,32 @@ history; the decisions it recorded are captured below and in the design docs.
 
 ---
 
+- **2026-08-06 (weave-linearization build contract ratified; the freeze
+  clarified):** Brainstorm session with the author resolved into
+  [`plans/weave-linearization.md`](plans/weave-linearization.md). The
+  load-bearing rulings, verbatim: iron rule 4's freeze "meant the
+  tensor of the dilemmas; the shape after grow... and in a sense we
+  meant (modulo these linear stretches) because they don't really
+  change the branching topology" — so the freeze is the **branching
+  topology**, and linear-stretch beat order is a distinct mutable
+  degree of freedom; there are "multiple moments of interest. 1. near
+  the beginning of grow when we have just tensored the Y-shaped. 2. at
+  the very start of polish. 3. during polish", with one move set — "in
+  a linear sequence of beats, their positions can be switched (up to a
+  point). and that holds for all three of those moments" — and "moment
+  one is load-bearing" (later moments exist because "grow and polish
+  introduce more beats, e.g. for pacing, which can lead to *new* linear
+  stretches"). Session groundwork: the heritage phase model
+  (how-branching-stories-work §Interleaving) adopted as the objective's
+  shape — clusters at the ends are correct, the middle interleaves,
+  commits distribute — and the per-arc ground-truth insight (a spine
+  braid is not an experienced braid; soft diamonds contribute one
+  branch per arc). Agent-proposed and author-ratified ("Sounds good to
+  me"): prefer-don't-prune scoring with the LLM keeping the pick,
+  atomic soft diamonds, block-shaping (runs of 2–3) for head
+  contiguity. Iron rule 4 / design doc 01 wording sharpening assigned
+  to PR-1.
+
 - **2026-08-05 (both epics called done; braiding is the current epic):**
   Author, in-session, verbatim: "I'm calling both epics done for now.
   with the high resolution pending an update of upstream. we will move

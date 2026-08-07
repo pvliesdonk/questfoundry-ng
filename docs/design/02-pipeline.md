@@ -357,7 +357,14 @@ Two phases:
    the words ceiling (interruption outranks length until the density
    calibration lands; a stretch with no free seam is left to B10) — then
    **B6 fine-tuning** on the remaining seams, words-gated. The loop
-   terminates when a round admits nothing.
+   terminates when a round admits nothing. **Site selection is
+   braid-respecting** (weave-linearization §6, moment 3): a stretch
+   break prefers a seam at a thread switch when one sits within two
+   seams of the middle, fine-tuning takes switch seams before mid-block
+   seams, and passage collapse's cap-splitting cuts at the latest
+   thread switch in the tail half of the cap window — POLISH's additive
+   machinery follows the braid's own seams instead of chopping the
+   blocks the weave built.
    Because a segment inside a rendering is just a segment a later round
    may fork, recursion falls out — worlds nest, diamonds land inside
    arms — and renderings keep budget parity, not structural parity:

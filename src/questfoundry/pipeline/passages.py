@@ -41,6 +41,41 @@ def _beat(g: StoryGraph, beat_id: str) -> Beat:
     return node
 
 
+def _threads_of(g: StoryGraph, beat_id: str) -> frozenset[str]:
+    return frozenset(
+        queries.dilemma_of_path(g, p) for p in queries.paths_of_beat(g, beat_id)
+    )
+
+
+def thread_switch(g: StoryGraph, a: str, b: str) -> bool:
+    """True when the a -> b boundary changes storyline — no shared
+    dilemma (a beat with no storyline, e.g. a bridge, switches against
+    anything). The braid-respecting cut points (weave-linearization §6,
+    moment 3): a passage boundary or an interruption here follows the
+    braid's own seams instead of chopping a block."""
+    return not (_threads_of(g, a) & _threads_of(g, b))
+
+
+def _chunk_run(g: StoryGraph, run: list[str], cap: int) -> list[list[str]]:
+    """Cut a linear run into cap-sized passages, preferring cuts at
+    thread switches: the latest switch boundary inside the tail half of
+    the cap window wins; a window with no switch cuts at the cap (the
+    pre-braid behavior). The half-window floor keeps chunks from
+    shrinking so far that the cap stops paging."""
+    chunks: list[list[str]] = []
+    start = 0
+    while len(run) - start > cap:
+        cut = start + cap
+        for j in range(start + cap, start + cap - cap // 2, -1):
+            if thread_switch(g, run[j - 1], run[j]):
+                cut = j
+                break
+        chunks.append(run[start:cut])
+        start = cut
+    chunks.append(run[start:])
+    return chunks
+
+
 def collapse_groups(
     g: StoryGraph, max_beats: int | None = None, *, split_viewpoints: bool = False
 ) -> list[list[str]]:
@@ -97,11 +132,7 @@ def collapse_groups(
     group_head: dict[int, tuple[str, bool]] = {}
     for b in order:
         preds = queries.predecessors(g, b)
-        if (
-            len(preds) == 1
-            and merges(preds[0], b)
-            and not (max_beats and len(groups[group_of[preds[0]]]) >= max_beats)
-        ):
+        if len(preds) == 1 and merges(preds[0], b):
             idx = group_of[preds[0]]
             groups[idx].append(b)
             group_of[b] = idx
@@ -112,6 +143,15 @@ def collapse_groups(
             h = head(b)
             if h is not None:
                 group_head[group_of[b]] = h
+    if max_beats:
+        # cap-splitting is braid-aware: cuts prefer thread switches, so
+        # passage boundaries follow the braid's seams instead of chopping
+        # a block mid-run (weave-linearization §6, moment 3)
+        groups = [
+            chunk
+            for grp in groups
+            for chunk in (_chunk_run(g, grp, max_beats) if len(grp) > max_beats else [grp])
+        ]
     return groups
 
 
@@ -1022,8 +1062,20 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
             if not candidates:
                 unbreakable.add(frozenset(beats_in))
                 continue
+            # nearest the stretch's middle, but a thread switch wins over a
+            # mid-block cut when the detour costs at most two seams — an
+            # interruption at the braid's own seam reads as a natural cut
+            # (weave-linearization §6, moment 3)
             mid = len(beats_in) / 2
-            before, after = min(candidates, key=lambda e: (abs(pos[e[0]] - mid), e[0]))
+            best = min(abs(pos[e[0]] - mid) for e in candidates)
+            before, after = min(
+                candidates,
+                key=lambda e: (
+                    not (thread_switch(g, *e) and abs(pos[e[0]] - mid) <= best + 2),
+                    abs(pos[e[0]] - mid),
+                    e[0],
+                ),
+            )
             admit_edge(before, after, cycle[(offset + k) % len(cycle)])
             progressed = True
             break  # stretches shift with every break: re-measure
@@ -1043,7 +1095,16 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
         ]
         for run in edge_runs
     ]
-    capacity = [[run[j] for j in _bisection_order(len(run))] for run in capacity if run]
+    # within each run, seams at thread switches come first (bisection order
+    # within each class): fine-tuning interrupts at the braid's seams before
+    # it ever cuts inside a block (weave-linearization §6, moment 3)
+    def switches_first(run_edges: list[tuple[str, str]]) -> list[tuple[str, str]]:
+        ordered = [run_edges[j] for j in _bisection_order(len(run_edges))]
+        return [e for e in ordered if thread_switch(g, *e)] + [
+            e for e in ordered if not thread_switch(g, *e)
+        ]
+
+    capacity = [switches_first(run) for run in capacity if run]
     taken = [0] * len(capacity)
     while projected_worst(scratch) > target:
         open_runs = [i for i in range(len(capacity)) if taken[i] < len(capacity[i])]

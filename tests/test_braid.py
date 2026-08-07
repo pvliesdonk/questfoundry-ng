@@ -393,3 +393,64 @@ def test_swaps_cannot_change_a_groups_internal_arrangement():
     for pair in (("beat:m1", "beat:x"), ("beat:x", "beat:m2")):
         with pytest.raises(mutations.MutationError, match=r"arrangement is pinned"):
             mutations.swap_linear_beats(g, *pair)
+
+
+# -- braid-respecting POLISH (moment 3) ---------------------------------------
+
+
+def test_collapse_cap_cut_prefers_a_thread_switch():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    # linear run: a0 a1 a2 | b0 b1 b2 — the switch sits one short of the cap
+    _chain(
+        g,
+        [(f"a{i}", da, pa, False) for i in range(3)]
+        + [(f"b{i}", db, pb, i == 2) for i in range(3)],
+    )
+    groups = pc.collapse_groups(g, max_beats=4)
+    # greedy would cut [a0 a1 a2 b0][b1 b2]; the braid-aware cutter follows
+    # the switch: [a0 a1 a2][b0 b1 b2]
+    assert groups == [
+        ["beat:a0", "beat:a1", "beat:a2"],
+        ["beat:b0", "beat:b1", "beat:b2"],
+    ]
+
+
+def test_collapse_cap_without_a_switch_cuts_at_the_cap():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    _chain(g, [(f"a{i}", da, pa, i == 5) for i in range(6)])
+    groups = pc.collapse_groups(g, max_beats=4)
+    assert [len(grp) for grp in groups] == [4, 2]  # the pre-braid behavior
+
+
+def test_thread_switch_definition():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(g, [("a0", da, pa, False), ("b0", db, pb, False), ("b1", db, pb, True)])
+    assert pc.thread_switch(g, "beat:a0", "beat:b0")  # different storylines
+    assert not pc.thread_switch(g, "beat:b0", "beat:b1")  # same storyline
+    # a beat with no storyline (bridge-like) switches against anything
+    from questfoundry.models.base import Stage as St
+    from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
+
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:bridge",
+            created_by=St.GROW,
+            summary="b",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        [],
+    )
+    assert pc.thread_switch(g, "beat:b1", "beat:bridge")

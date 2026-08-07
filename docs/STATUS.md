@@ -64,9 +64,11 @@ contiguity is not a graph invariant (the golden story legally
 separates its group's members); the pin holds by construction since
 any arrangement-changing swap touches a member and is refused.
 
-1. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
-   preference, fork-loop site preference, insertion placement.
-2. **Validation**: unbilled GROW-from-weave rerun on the
+**PR-3 — braid-respecting POLISH** (2026-08-06): collapse
+cap-splitting cuts at thread switches, stretch breaks prefer switch
+seams near the middle, B6 fine-tuning takes switch seams first.
+
+1. **Validation**: unbilled GROW-from-weave rerun on the
    cc-struct-medium checkpoint (acceptance: worst-arc middle run ≤ 3
    where run-6 scored 6), B12 before/after, author read of one arc —
    also the calibration read for the metric knobs (N, K, S).

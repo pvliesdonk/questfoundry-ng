@@ -13,8 +13,13 @@
 > — and since swaps move only adjacent pairs, any swap that could
 > change a group's internal arrangement touches a member and is
 > refused: the pin holds by construction (design doc 01 §5; violating
-> constructions in tests). PR-3 (braid-respecting POLISH) pending;
-> validation (cc-struct checkpoint rerun) after it.
+> constructions in tests). PR-3 BUILT:
+> braid-respecting POLISH — collapse cap-splitting cuts at the latest
+> thread switch in the tail half of the cap window, stretch breaks
+> prefer switch seams within two of the middle, B6 fine-tuning takes
+> switch seams first (`thread_switch` in `pipeline/passages.py`).
+> Remaining: validation (cc-struct checkpoint rerun + author read +
+> knob calibration).
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was

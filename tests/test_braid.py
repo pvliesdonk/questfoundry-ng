@@ -393,3 +393,119 @@ def test_swaps_cannot_change_a_groups_internal_arrangement():
     for pair in (("beat:m1", "beat:x"), ("beat:x", "beat:m2")):
         with pytest.raises(mutations.MutationError, match=r"arrangement is pinned"):
             mutations.swap_linear_beats(g, *pair)
+
+
+# -- braid-respecting POLISH (moment 3) ---------------------------------------
+
+
+def test_collapse_cap_cut_prefers_a_thread_switch():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    # linear run: a0 a1 a2 | b0 b1 b2 — the switch sits one short of the cap
+    _chain(
+        g,
+        [(f"a{i}", da, pa, False) for i in range(3)]
+        + [(f"b{i}", db, pb, i == 2) for i in range(3)],
+    )
+    groups = pc.collapse_groups(g, max_beats=4)
+    # greedy would cut [a0 a1 a2 b0][b1 b2]; the braid-aware cutter follows
+    # the switch: [a0 a1 a2][b0 b1 b2]
+    assert groups == [
+        ["beat:a0", "beat:a1", "beat:a2"],
+        ["beat:b0", "beat:b1", "beat:b2"],
+    ]
+
+
+def test_collapse_cap_without_a_switch_cuts_at_the_cap():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    _chain(g, [(f"a{i}", da, pa, i == 5) for i in range(6)])
+    groups = pc.collapse_groups(g, max_beats=4)
+    assert [len(grp) for grp in groups] == [4, 2]  # the pre-braid behavior
+
+
+def test_thread_switch_definition():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(g, [("a0", da, pa, False), ("b0", db, pb, False), ("b1", db, pb, True)])
+    assert pc.thread_switch(g, "beat:a0", "beat:b0")  # different storylines
+    assert not pc.thread_switch(g, "beat:b0", "beat:b1")  # same storyline
+    # a beat with no storyline (bridge-like) switches against anything
+    from questfoundry.models.base import Stage as St
+    from questfoundry.models.structure import Beat, BeatClass, StructuralPurpose
+
+    mutations.add_beat(
+        g,
+        Beat(
+            id="beat:bridge",
+            created_by=St.GROW,
+            summary="b",
+            beat_class=BeatClass.STRUCTURAL,
+            purpose=StructuralPurpose.BRIDGE,
+        ),
+        [],
+    )
+    assert pc.thread_switch(g, "beat:b1", "beat:bridge")
+
+
+def test_stretch_seam_pick_prefers_a_nearby_switch_over_the_exact_middle():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    # a2 -> a3 sits at the middle (same storyline); a4 -> b0 is a switch
+    # two seams away — the switch wins within the two-seam slack
+    _chain(
+        g,
+        [(f"a{i}", da, pa, False) for i in range(5)]
+        + [("b0", db, pb, False), ("b1", db, pb, False)]
+        + [("ac", da, pa, True), ("bc", db, pb, True)],
+    )
+    beats = [f"beat:a{i}" for i in range(5)] + ["beat:b0", "beat:b1"]
+    pos = {b: i for i, b in enumerate(beats)}
+    seams = [(beats[i], beats[i + 1]) for i in range(len(beats) - 1)]
+    picked = pc.pick_stretch_seam(g, seams, pos, len(beats) / 2)
+    assert picked == ("beat:a4", "beat:b0")  # the switch, not the mid-block cut
+    # with no switch in reach, the nearest-middle rule is the fallback
+    same_thread = seams[:4]  # a0..a4 seams only
+    assert pc.pick_stretch_seam(g, same_thread, pos, len(beats) / 2) == (
+        "beat:a3",
+        "beat:a4",
+    )  # nearest the middle (mid 3.5 -> pos 3 wins)
+
+
+def test_fine_tuning_takes_switch_seams_first():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("a1", da, pa, False),
+            ("b0", db, pb, False),
+            ("b1", db, pb, False),
+            ("ac", da, pa, True),
+            ("bc", db, pb, True),
+        ],
+    )
+    ordered = [
+        ("beat:a0", "beat:a1"),  # mid-block
+        ("beat:a1", "beat:b0"),  # switch
+        ("beat:b0", "beat:b1"),  # mid-block
+    ]
+    result = pc.switch_seams_first(g, ordered)
+    assert result[0] == ("beat:a1", "beat:b0")
+    # original order preserved within each class
+    assert result[1:] == [("beat:a0", "beat:a1"), ("beat:b0", "beat:b1")]

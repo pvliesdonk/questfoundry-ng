@@ -133,8 +133,14 @@ separates them. The pin inventory (identical at every moment):
 
 - **Within-thread chain order** — a storyline's own beats keep their
   scaffold order (heritage: each path's beats read coherently alone).
-- **Intersection adjacency** — group members stay adjacent (the unit is
-  atomic in the weave; the collapsed passage pins it later).
+- **Intersection arrangement** — a group's internal arrangement is
+  pinned as it stands (the unit is atomic in the weave; the collapsed
+  passage pins it later). Found in the PR-2 build: *contiguity* is not
+  a graph invariant — the hand-authored golden story legally separates
+  its group's members — so the pin protects whatever arrangement
+  exists, never asserts adjacency; it holds by construction because any
+  arrangement-changing adjacent swap touches a member and members are
+  refused (design doc 01 §5).
 - **Temporal hints** — adopted hints stay satisfied.
 - **Commit/convergence walls** — no beat crosses into or out of a fork
   region; resolve units are atomic (§3.6).

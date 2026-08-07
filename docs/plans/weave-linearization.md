@@ -1,11 +1,20 @@
 # Weave Linearization — drama-layer braiding (Build Contract)
 
-> Status: **SPEC RATIFIED, in-session 2026-08-06. PR-1 BUILT** (the
-> braid decided at the weave: `graph/braid.py` metrics, per-arc
-> candidate scoring, ranked+scored candidates in the chooser prompt,
-> B12 at the gate, the freeze-clarification doc letter). PR-2
-> (`swap_linear_beats`) and PR-3 (braid-respecting POLISH) pending;
-> validation (cc-struct checkpoint rerun) after them.
+> Status: **SPEC RATIFIED, in-session 2026-08-06. PR-1 + PR-2 BUILT.**
+> PR-1: the braid decided at the weave (`graph/braid.py` metrics,
+> per-arc candidate scoring, ranked+scored candidates in the chooser
+> prompt, B12 at the gate, the freeze-clarification doc letter). PR-2:
+> the repair primitive — `swap_linear_beats` with every §4 pin enforced
+> at the mutation layer (interior-pair, same-storyline, intersection,
+> hint-crossing), returning the stale beats whose re-contextualization
+> is the move's price. **No gate invariant behind the group pin**,
+> found during the build: group *contiguity* is not a graph invariant —
+> the hand-authored golden story legally separates its group's members
+> — and since swaps move only adjacent pairs, any swap that could
+> change a group's internal arrangement touches a member and is
+> refused: the pin holds by construction (design doc 01 §5; violating
+> constructions in tests). PR-3 (braid-respecting POLISH) pending;
+> validation (cc-struct checkpoint rerun) after it.
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was
@@ -124,8 +133,14 @@ separates them. The pin inventory (identical at every moment):
 
 - **Within-thread chain order** — a storyline's own beats keep their
   scaffold order (heritage: each path's beats read coherently alone).
-- **Intersection adjacency** — group members stay adjacent (the unit is
-  atomic in the weave; the collapsed passage pins it later).
+- **Intersection arrangement** — a group's internal arrangement is
+  pinned as it stands (the unit is atomic in the weave; the collapsed
+  passage pins it later). Found in the PR-2 build: *contiguity* is not
+  a graph invariant — the hand-authored golden story legally separates
+  its group's members — so the pin protects whatever arrangement
+  exists, never asserts adjacency; it holds by construction because any
+  arrangement-changing adjacent swap touches a member and members are
+  refused (design doc 01 §5).
 - **Temporal hints** — adopted hints stay satisfied.
 - **Commit/convergence walls** — no beat crosses into or out of a fork
   region; resolve units are atomic (§3.6).

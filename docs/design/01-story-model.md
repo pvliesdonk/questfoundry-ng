@@ -464,7 +464,17 @@ ratification, 2026-08-06): beat order *within* a linear stretch is
 linearization state, a distinct degree of freedom governed by the braid
 pin algebra (`docs/plans/weave-linearization.md` §4) — decided free at
 the weave, movable later only at that moment's re-contextualization
-price.
+price. The repair primitive is `swap_linear_beats` (mutation layer):
+one adjacent pair at a time, refused at every pin — outside a strictly
+interior linear pair, same-storyline pairs, intersection-group members,
+hint-crossing pairs — so a violating move is unrepresentable; it
+returns the beats whose predecessors changed, which MUST be
+re-contextualized. There is deliberately **no gate check** behind it:
+group *contiguity* is not a graph invariant (the hand-authored golden
+story legally separates its group's members), and since swaps move only
+adjacent pairs, any swap that could change a group's internal
+arrangement necessarily touches a member and is refused — the pin holds
+by construction.
 
 **Arcs are computed, never stored.** An arc — one complete playthrough,
 one path choice per dilemma — is a walk of the DAG from root to a

@@ -588,6 +588,85 @@ def set_beat_ending(g: StoryGraph, beat_id: str, *, is_ending: bool) -> None:
     beat.is_ending = is_ending
 
 
+def swap_linear_beats(g: StoryGraph, first: str, second: str) -> list[str]:
+    """Swap two adjacent beats inside a linear stretch — the braid repair
+    primitive (docs/plans/weave-linearization.md §4/§6, moment 2). Legal
+    exactly where the pin algebra allows: the pair is strictly interior
+    to a linear run (the branching topology — forks, convergences,
+    roots, endings — is untouchable, per the freeze's letter), shares no
+    storyline (within-thread chain order is pinned), touches no
+    intersection group (a group's internal arrangement is pinned — note
+    contiguity itself is NOT a graph invariant: the hand-authored golden
+    story legally separates group members with a beat between them; the
+    pin protects the arrangement, whatever it is), and
+    crosses no adopted temporal hint. Returns the beats whose
+    predecessors changed — their contextualized content is now stale,
+    and the caller MUST re-contextualize them before prose runs (the
+    move's price; contract §4)."""
+    for b in (first, second):
+        if not isinstance(g.get(b), Beat):
+            raise MutationError(f"{b!r} is not a beat")
+    if not g.has_edge(EdgeKind.PREDECESSOR, first, second):
+        raise MutationError(
+            f"beats {first} and {second} are not adjacent ({first} does not "
+            f"directly precede {second}); a linear-stretch swap moves one "
+            "adjacent pair at a time — swap neighbors, repeatedly, to move "
+            "a beat further"
+        )
+    firsts_preds = queries.predecessors(g, first)
+    seconds_succs = queries.successors(g, second)
+    if (
+        len(firsts_preds) != 1
+        or len(queries.successors(g, first)) != 1
+        or len(queries.predecessors(g, second)) != 1
+        or len(seconds_succs) != 1
+    ):
+        raise MutationError(
+            f"the pair {first} -> {second} is not strictly interior to a "
+            "linear run (one of them is a fork, convergence, root, or "
+            "ending — the branching topology, frozen after GROW); pick a "
+            "pair where each beat has exactly one predecessor and one "
+            "successor"
+        )
+    shared = set(queries.paths_of_beat(g, first)) & set(queries.paths_of_beat(g, second))
+    if shared:
+        raise MutationError(
+            f"beats {first} and {second} advance the same storyline "
+            f"({', '.join(sorted(shared))}); within-thread chain order is "
+            "pinned — interleave a different storyline's beat between them "
+            "instead of reordering a storyline against itself"
+        )
+    for b in (first, second):
+        if g.in_ids(b, EdgeKind.IN_GROUP) or g.out_ids(b, EdgeKind.IN_GROUP):
+            raise MutationError(
+                f"beat {b} belongs to an intersection group; a group's internal "
+                "arrangement is pinned — swap beats outside the group instead "
+                "(any swap that could change member spacing touches a member, "
+                "so refusing members preserves the arrangement by construction)"
+            )
+    first_beat, second_beat = g.node(first), g.node(second)
+    assert isinstance(first_beat, Beat) and isinstance(second_beat, Beat)
+    for hinted, other in ((first_beat, second_beat), (second_beat, first_beat)):
+        for hint in hinted.temporal_hints:
+            if hint.dilemma in other.commits_dilemmas:
+                raise MutationError(
+                    f"beat {hinted.id} carries a temporal hint about "
+                    f"{hint.dilemma}, which {other.id} commits; this swap "
+                    "would cross the hint — leave the pair in place, or move "
+                    "the hinted beat past a neutral neighbor instead"
+                )
+    (pred,) = firsts_preds
+    (succ,) = seconds_succs
+    g._remove_edge(EdgeKind.PREDECESSOR, pred, first)
+    g._remove_edge(EdgeKind.PREDECESSOR, first, second)
+    g._remove_edge(EdgeKind.PREDECESSOR, second, succ)
+    g._add_edge(Edge(kind=EdgeKind.PREDECESSOR, src=pred, dst=second))
+    g._add_edge(Edge(kind=EdgeKind.PREDECESSOR, src=second, dst=first))
+    g._add_edge(Edge(kind=EdgeKind.PREDECESSOR, src=first, dst=succ))
+    # every beat whose predecessor changed reads differently now
+    return [second, first, succ]
+
+
 def freeze_topology(g: StoryGraph) -> FreezeRecord:
     """Record the dilemma topology at the end of GROW (I9)."""
     forks: dict[str, list[str]] = {}

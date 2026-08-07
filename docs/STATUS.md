@@ -56,14 +56,17 @@ design doc 01 get their letter sharpened in PR-1).
 Done: **PR-1 — the braid decided** (2026-08-06): per-candidate
 arc-order induction, the scorer, ranked+scored candidates with the
 phase doctrine in the chooser prompt, B12 at the gate (live signal on
-both medium examples), the freeze-clarification doc letter.
+both medium examples), the freeze-clarification doc letter. **PR-2 —
+the repair primitive** (2026-08-06): `swap_linear_beats` with every
+pin enforced at the mutation layer, returning the stale beats (the
+re-contextualization price). No gate invariant behind the group pin —
+contiguity is not a graph invariant (the golden story legally
+separates its group's members); the pin holds by construction since
+any arrangement-changing swap touches a member and is refused.
 
-1. **PR-2 — `swap_linear_beats`** (mid-tier): the repair primitive
-   with pin checks, new invariant + violating-construction tests,
-   mandatory re-contextualization, B12 at POLISH entry.
-2. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
+1. **PR-3 — braid-respecting POLISH** (mid-tier): collapse boundary
    preference, fork-loop site preference, insertion placement.
-3. **Validation**: unbilled GROW-from-weave rerun on the
+2. **Validation**: unbilled GROW-from-weave rerun on the
    cc-struct-medium checkpoint (acceptance: worst-arc middle run ≤ 3
    where run-6 scored 6), B12 before/after, author read of one arc —
    also the calibration read for the metric knobs (N, K, S).

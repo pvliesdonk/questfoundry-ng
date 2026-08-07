@@ -56,6 +56,39 @@ def thread_switch(g: StoryGraph, a: str, b: str) -> bool:
     return not (_threads_of(g, a) & _threads_of(g, b))
 
 
+def pick_stretch_seam(
+    g: StoryGraph,
+    candidates: list[tuple[str, str]],
+    pos: dict[str, int],
+    mid: float,
+) -> tuple[str, str]:
+    """Phase A's break-site choice: nearest the stretch's middle, but a
+    thread switch wins over a mid-block cut when the detour costs at
+    most two seams — an interruption at the braid's own seam reads as a
+    natural cut (weave-linearization §6, moment 3)."""
+    best = min(abs(pos[e[0]] - mid) for e in candidates)
+    return min(
+        candidates,
+        key=lambda e: (
+            not (thread_switch(g, *e) and abs(pos[e[0]] - mid) <= best + 2),
+            abs(pos[e[0]] - mid),
+            e[0],
+        ),
+    )
+
+
+def switch_seams_first(
+    g: StoryGraph, ordered: list[tuple[str, str]]
+) -> list[tuple[str, str]]:
+    """Phase C's seam ordering: switch seams before mid-block seams,
+    original (bisection) order preserved within each class — fine-tuning
+    interrupts at the braid's seams before it ever cuts inside a block
+    (weave-linearization §6, moment 3)."""
+    return [e for e in ordered if thread_switch(g, *e)] + [
+        e for e in ordered if not thread_switch(g, *e)
+    ]
+
+
 def _chunk_run(g: StoryGraph, run: list[str], cap: int) -> list[list[str]]:
     """Cut a linear run into cap-sized passages, preferring cuts at
     thread switches: the latest switch boundary inside the tail half of
@@ -88,8 +121,10 @@ def collapse_groups(
     gated beat.
 
     ``max_beats`` caps a passage's beat count (scope preset,
-    ``passage_beats_max``): a run longer than the cap splits front-to-back
-    into cap-sized passages. Every beat is a story moment with a prose
+    ``passage_beats_max``): a run longer than the cap splits front-to-back,
+    each cut preferring the latest thread switch in the tail half of the
+    cap window (so passage boundaries follow the braid's seams); a window
+    with no switch cuts at the cap. Every beat is a story moment with a prose
     claim, but a passage's word budget is fixed per scope — unbounded
     collapse crushes a deep run into one passage and the story mints no
     pages from its added structure. The cap is the choice-free cutter;
@@ -1062,20 +1097,7 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
             if not candidates:
                 unbreakable.add(frozenset(beats_in))
                 continue
-            # nearest the stretch's middle, but a thread switch wins over a
-            # mid-block cut when the detour costs at most two seams — an
-            # interruption at the braid's own seam reads as a natural cut
-            # (weave-linearization §6, moment 3)
-            mid = len(beats_in) / 2
-            best = min(abs(pos[e[0]] - mid) for e in candidates)
-            before, after = min(
-                candidates,
-                key=lambda e: (
-                    not (thread_switch(g, *e) and abs(pos[e[0]] - mid) <= best + 2),
-                    abs(pos[e[0]] - mid),
-                    e[0],
-                ),
-            )
+            before, after = pick_stretch_seam(g, candidates, pos, len(beats_in) / 2)
             admit_edge(before, after, cycle[(offset + k) % len(cycle)])
             progressed = True
             break  # stretches shift with every break: re-measure
@@ -1095,16 +1117,11 @@ def fork_plan(g: StoryGraph, preset, words_target: int | None = None) -> list[Fo
         ]
         for run in edge_runs
     ]
-    # within each run, seams at thread switches come first (bisection order
-    # within each class): fine-tuning interrupts at the braid's seams before
-    # it ever cuts inside a block (weave-linearization §6, moment 3)
-    def switches_first(run_edges: list[tuple[str, str]]) -> list[tuple[str, str]]:
-        ordered = [run_edges[j] for j in _bisection_order(len(run_edges))]
-        return [e for e in ordered if thread_switch(g, *e)] + [
-            e for e in ordered if not thread_switch(g, *e)
-        ]
-
-    capacity = [switches_first(run) for run in capacity if run]
+    capacity = [
+        switch_seams_first(g, [run[j] for j in _bisection_order(len(run))])
+        for run in capacity
+        if run
+    ]
     taken = [0] * len(capacity)
     while projected_worst(scratch) > target:
         open_runs = [i for i in range(len(capacity)) if taken[i] < len(capacity[i])]

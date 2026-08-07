@@ -454,3 +454,58 @@ def test_thread_switch_definition():
         [],
     )
     assert pc.thread_switch(g, "beat:b1", "beat:bridge")
+
+
+def test_stretch_seam_pick_prefers_a_nearby_switch_over_the_exact_middle():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    # a2 -> a3 sits at the middle (same storyline); a4 -> b0 is a switch
+    # two seams away — the switch wins within the two-seam slack
+    _chain(
+        g,
+        [(f"a{i}", da, pa, False) for i in range(5)]
+        + [("b0", db, pb, False), ("b1", db, pb, False)]
+        + [("ac", da, pa, True), ("bc", db, pb, True)],
+    )
+    beats = [f"beat:a{i}" for i in range(5)] + ["beat:b0", "beat:b1"]
+    pos = {b: i for i, b in enumerate(beats)}
+    seams = [(beats[i], beats[i + 1]) for i in range(len(beats) - 1)]
+    picked = pc.pick_stretch_seam(g, seams, pos, len(beats) / 2)
+    assert picked == ("beat:a4", "beat:b0")  # the switch, not the mid-block cut
+    # with no switch in reach, the nearest-middle rule is the fallback
+    same_thread = seams[:4]  # a0..a4 seams only
+    assert pc.pick_stretch_seam(g, same_thread, pos, len(beats) / 2) == (
+        "beat:a3",
+        "beat:a4",
+    )  # nearest the middle (mid 3.5 -> pos 3 wins)
+
+
+def test_fine_tuning_takes_switch_seams_first():
+    from questfoundry.pipeline import passages as pc
+
+    g = StoryGraph()
+    da, pa, _ = make_dilemma(g, "aa", explore=1)
+    db, pb, _ = make_dilemma(g, "bb", explore=1)
+    _chain(
+        g,
+        [
+            ("a0", da, pa, False),
+            ("a1", da, pa, False),
+            ("b0", db, pb, False),
+            ("b1", db, pb, False),
+            ("ac", da, pa, True),
+            ("bc", db, pb, True),
+        ],
+    )
+    ordered = [
+        ("beat:a0", "beat:a1"),  # mid-block
+        ("beat:a1", "beat:b0"),  # switch
+        ("beat:b0", "beat:b1"),  # mid-block
+    ]
+    result = pc.switch_seams_first(g, ordered)
+    assert result[0] == ("beat:a1", "beat:b0")
+    # original order preserved within each class
+    assert result[1:] == [("beat:a0", "beat:a1"), ("beat:b0", "beat:b1")]

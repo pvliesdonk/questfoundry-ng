@@ -18,8 +18,13 @@
 > thread switch in the tail half of the cap window, stretch breaks
 > prefer switch seams within two of the middle, B6 fine-tuning takes
 > switch seams first (`thread_switch` in `pipeline/passages.py`).
-> Remaining: validation (cc-struct checkpoint rerun + author read +
-> knob calibration).
+> **VALIDATION RUN 2026-08-07** (§10): the star-swabber SEED-snapshot
+> rerun exposed the enumeration corner (all 64 candidates identical),
+> answered by the PR-4 follow-up — `braided_order`, a greedy
+> phase-model-aware generator joined to the candidate list (penalty
+> 22 -> 14 offline) — and surfaced two structural calibration findings
+> (the atomic diamond floor; serial-forced late intros) awaiting the
+> author's ruling, plus the arc read.
 > Follows from the author read of the run-6 graph (2026-07-17, decision
 > log; the `call-out-farmers` capsule) and the epic call of 2026-08-05
 > ("we will move on to the braiding epic"). Every decision below was
@@ -280,3 +285,54 @@ resolve unit's span). No LLM involvement in measurement.
    have little to braid — B12 should stay quiet rather than warn on
    structurally unavoidable runs; the scorer needs a floor beneath
    which phases don't apply.
+
+## 10. Validation record (2026-08-07)
+
+Run on the star-swabber SEED snapshot (medium, kimi-k2.6, unbilled):
+B12 on the shipped pre-braid weave as baseline, then `qf rerun grow` on
+a scratch copy with the braid machinery live, then offline scoring of
+the full candidate set. Three findings, one build:
+
+- **The enumeration corner is real and total.** All 64 enumerated
+  candidates scored identically (middle run 7, penalty 22): the
+  lexicographic/fair-split enumerators explore one corner of the order
+  space and every corner order lumps. Ranking and selection cannot
+  spread scores that do not vary — §3.5's "biased to spread candidates
+  across the braid-score range" required *generation*, not selection.
+  Built in response (the PR-4 follow-up): `braided_order` — a greedy
+  phase-model-aware topological order (open storylines early, blocks of
+  two-to-three, defer crowding commits; deterministic), one per feasible
+  climax, joined to the candidate list. Offline effect on the same
+  graph: best candidate penalty 22 → 14, ping-pong → ~0, middle run
+  7 → 4. On small graphs exhaustive enumeration still wins (the greedy
+  is myopic); its value case — several storylines, enumeration stuck in
+  the corner — is the tested construction.
+- **The atomic floor.** The rerun's chosen order and the braided
+  candidates bottom out at middle run 4–5 because the longest soft
+  diamond on this graph (`glorps-sacrifice`/`spare-glorp`) is a 5-beat
+  atomic chain — unreachable below by design (§3.6). K = 3 is not a
+  reachable cap on a graph whose post-commit chains run longer.
+  **Calibration question for the author**: raise K per scope, or refine
+  the metric to exempt the interior of a single dilemma's post-commit
+  region (measuring only *avoidable* lumping — the metric's actual
+  target)? The exemption reads truer to intent but changes what B12
+  means; not built without a ruling.
+- **Serial relations force late intros.** The late-intro count (5 on
+  every candidate, all orders) is invariant because two `serial`
+  dilemmas structurally cannot introduce before their predecessors
+  resolve — the ordering relation's intent, not a braiding failure.
+  Same calibration question: exempt serial-successor dilemmas from
+  introduction latency (engine-known, like the heritage twist clause)?
+- **The chooser's override works as designed.** The live rerun's LLM
+  pick took a penalty-20 candidate over better-braided ones with a
+  substantive dramatic rationale (recall-notice continuity, commit
+  spacing, climax causality) — §3.5's prefer-don't-prune behaving
+  exactly as ratified, and the rationale landing in the apply report as
+  built. Whether the chooser *should* weigh braid more heavily is knob
+  material for the author's read.
+- **Net live effect** (pre-braid shipped weave → braid-aware rerun):
+  late intros 5 → 3, ping-pong 14 → 8, middle run 4 → 5 (within the
+  atomic floor's noise; both values sit at structure, not policy).
+
+Remaining for the author: the calibration ruling on the two metric
+exemptions and K; a read of one re-woven arc against the shipped one.

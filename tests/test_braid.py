@@ -509,3 +509,44 @@ def test_fine_tuning_takes_switch_seams_first():
     assert result[0] == ("beat:a1", "beat:b0")
     # original order preserved within each class
     assert result[1:] == [("beat:a0", "beat:a1"), ("beat:b0", "beat:b1")]
+
+
+# -- the braided generator (validation follow-up) -----------------------------
+
+
+def test_braided_order_is_a_valid_deterministic_topological_order():
+    g = StoryGraph()
+    seeded_story(g)
+    planned = weave.plan(g)
+    keys = sorted(planned.units)
+    cons = weave._climax_constraints(keys, planned.constraints, planned.hard_resolves[0])
+    order = weave.braided_order(planned, cons, keys)
+    assert order is not None and sorted(order) == keys
+    position = {k: i for i, k in enumerate(order)}
+    assert all(position[a] < position[b] for a, b in cons)
+    assert order == weave.braided_order(planned, cons, keys)  # deterministic
+
+
+def test_braided_order_beats_the_enumeration_corner_on_a_threaded_graph():
+    # The generator's value case: with several locked storylines the
+    # enumerators lump each chain consecutively (the corner the
+    # star-swabber validation measured: all 64 candidates identical);
+    # the greedy braided order interleaves them.
+    from tests.conftest import make_locked_chain
+
+    g = StoryGraph()
+    seeded_story(g)
+    for slug in ("cc", "dd", "ee", "ff"):
+        d, pa, _ = make_dilemma(g, slug, explore=1)
+        make_locked_chain(g, slug, d, pa)
+    planned = weave.plan(g)
+    orders = weave.candidates(planned)
+    keys = sorted(planned.units)
+    cons = weave._climax_constraints(keys, planned.constraints, planned.hard_resolves[0])
+    braided = weave.braided_order(planned, cons, keys)
+    assert braided in orders
+    braided_penalty = weave.braid_score_for(g, planned, braided).penalty()
+    enumerated = [o for o in orders if o != braided]
+    assert braided_penalty < min(
+        weave.braid_score_for(g, planned, o).penalty() for o in enumerated
+    )

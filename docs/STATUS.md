@@ -68,10 +68,21 @@ any arrangement-changing swap touches a member and is refused.
 cap-splitting cuts at thread switches, stretch breaks prefer switch
 seams near the middle, B6 fine-tuning takes switch seams first.
 
-1. **Validation**: unbilled GROW-from-weave rerun on the
-   cc-struct-medium checkpoint (acceptance: worst-arc middle run ≤ 3
-   where run-6 scored 6), B12 before/after, author read of one arc —
-   also the calibration read for the metric knobs (N, K, S).
+**Validation run (2026-08-07)** on the star-swabber SEED snapshot
+(medium, kimi-k2.6, unbilled) — full record:
+`plans/weave-linearization.md` §10. Headline: the enumerators explore
+a corner where all 64 candidates score identically; the PR-4 follow-up
+adds `braided_order` (greedy phase-model generation, penalty 22 -> 14
+offline, ping-pong ~0). Two structural findings await the author:
+middle-run values bottom out at the **atomic diamond floor** (longest
+chain 5 > K = 3 — raise K, or exempt post-commit interiors from the
+metric?), and **serial relations force late intros** (exempt
+serial-successor dilemmas?). Chooser override observed working as
+ratified (penalty-20 pick with a substantive dramatic rationale).
+
+1. **Author calibration ruling** on the two metric exemptions and K,
+   plus a read of one re-woven arc against the shipped star-swabber
+   arc — then the epic closes.
 
 Also still standing: the BACKLOG POV-sequences live A/B; the
 export-styling residual (upstream

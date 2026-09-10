@@ -595,6 +595,102 @@ def braid_score_for(
     return braid.worst(scores)
 
 
+def _unit_thread(planned: WeavePlan, key: str) -> str | None:
+    """The storyline a unit advances, unit-level: resolve units carry
+    their dilemma, single-beat units their beat's dilemma, groups and
+    setup are neutral (multi-thread / no thread)."""
+    if key.startswith("resolve:"):
+        return key.removeprefix("resolve:")
+    unit = planned.units[key]
+    if key.startswith("pre:") and len(unit.beats) == 1:
+        threads = _beat_threads(planned.shapes).get(unit.beats[0], frozenset())
+        if len(threads) == 1:
+            (thread,) = threads
+            return thread
+    return None
+
+
+def braided_order(
+    planned: WeavePlan, constraints: set[tuple[str, str]], keys: list[str]
+) -> list[str] | None:
+    """One greedy braid-optimizing topological order under `constraints`
+    (weave-linearization §5, the phase model at generation time): among
+    the ready units, prefer introducing an unseen storyline while the
+    intro window is open, then continuing the current storyline into a
+    block of two or three beats, then switching threads; defer resolve
+    units while commits would crowd. Deterministic (lexicographic
+    tie-break). The plain enumerators explore one corner of the order
+    space and every corner order lumps — the validation rerun measured
+    all 64 candidates at identical scores — so the braided order is what
+    puts a genuinely braided candidate in front of the chooser; the
+    choice stays the LLM's."""
+    thread_of = {k: _unit_thread(planned, k) for k in keys}
+    total_beats = sum(len(planned.units[k].beats) for k in keys)
+    succ: dict[str, set[str]] = {k: set() for k in keys}
+    indeg = dict.fromkeys(keys, 0)
+    for a, b in constraints:
+        if b not in succ[a]:
+            succ[a].add(b)
+            indeg[b] += 1
+
+    order: list[str] = []
+    placed_beats = 0
+    seen_threads: set[str] = set()
+    all_threads = {t for t in thread_of.values() if t is not None}
+    run_thread: str | None = None
+    run_len = 0
+    beats_since_commit = braid.COMMIT_GAP_MIN  # the first commit is unconstrained
+
+    def cost(k: str) -> tuple:
+        thread = thread_of[k]
+        n = len(planned.units[k].beats)
+        is_resolve = k.startswith("resolve:")
+        intro_open = placed_beats < -(-total_beats // braid.INTRO_WINDOW_FRACTION)
+        lump = (
+            thread is not None
+            and thread == run_thread
+            and run_len + n > braid.MIDDLE_RUN_MAX
+        )
+        crowded = is_resolve and beats_since_commit < braid.COMMIT_GAP_MIN
+        introduces = thread is not None and thread not in seen_threads
+        # blocks of 2-3: continue the current thread while the run is short,
+        # otherwise a switch is free and a fresh thread comes first
+        continues_block = thread is not None and thread == run_thread and run_len < 2
+        return (
+            lump,  # never extend a lump if avoidable
+            crowded,  # don't cluster commits
+            not (introduces and intro_open),  # open storylines early
+            not continues_block,  # then build the block out to 2
+            k,  # deterministic
+        )
+
+    ready = sorted(k for k in keys if indeg[k] == 0)
+    while ready:
+        k = min(ready, key=cost)
+        order.append(k)
+        thread = thread_of[k]
+        n = len(planned.units[k].beats)
+        if thread is not None and thread == run_thread:
+            run_len += n
+        else:
+            run_thread = thread
+            run_len = n if thread is not None else 0
+        if thread is not None:
+            seen_threads.add(thread)
+        beats_since_commit = 0 if k.startswith("resolve:") else beats_since_commit + n
+        placed_beats += n
+        ready.remove(k)
+        for s in succ[k]:
+            indeg[s] -= 1
+            if indeg[s] == 0:
+                ready.append(s)
+        ready.sort()
+    if len(order) != len(keys):
+        return None
+    assert seen_threads <= all_threads
+    return order
+
+
 def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
     """Candidate interleavings, up to `cap`. One enumeration per feasible
     climax choice (which hard dilemma resolves last — the nesting order),
@@ -602,7 +698,10 @@ def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
     always show every viable nesting. Plain lexicographic enumeration is
     kept while it samples honestly (recorded stories reproduce
     byte-stable); it switches to fair-split only when its share was
-    truncated inside one subtree and an early choice went unsampled."""
+    truncated inside one subtree and an early choice went unsampled.
+    Per feasible climax, one greedy **braided order** (phase-model-aware
+    generation) joins the list first — the enumerators alone explore a
+    corner where every order lumps."""
     keys = sorted(planned.units)
     feasible = []
     for climax in planned.hard_resolves:
@@ -614,9 +713,12 @@ def candidates(planned: WeavePlan, cap: int = CANDIDATE_CAP) -> list[list[str]]:
     results: list[list[str]] = []
     share = max(1, cap // len(feasible))
     for cons in feasible:
+        braided = braided_order(planned, cons, keys)
         orders = _orders(keys, cons, share)
         if len(orders) == share and _prefix_degenerate(orders, keys, cons):
             orders = _orders_fair(keys, cons, share)
+        if braided is not None and braided not in orders:
+            orders = [braided, *orders]
         results.extend(orders)
     return results[:cap]
 
